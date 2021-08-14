@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Memory module | C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">C2nxt <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          Memory <span class="m-thin">module</span></h1>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#typedef-members">Typedefs</a></li>
+                <li><a href="#func-members">Functions</a></li>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>C2nxt provides abstractions and ergonomics features for dealing with memory allocation, deallocation, and handling custom allocators</p>
+        <section id="nested-classes">
+          <h2><a href="#nested-classes">Classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              struct <a href="structStdAllocator.html" class="m-doc">StdAllocator</a>
+            </dt>
+            <dd>A <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> is a convenient abstraction for wrapping memory allocation and deallocation, making it simple and easy to write allocator-configurable and/or allocator aware software.</dd>
+            <dt>
+              struct <a href="structStdMemory.html" class="m-doc">StdMemory</a>
+            </dt>
+            <dd><code><a href="structStdMemory.html" class="m-doc">StdMemory</a></code> is a basic wrapper for passing chunks of allocated memory</dd>
+          </dl>
+        </section>
+        <section id="typedef-members">
+          <h2><a href="#typedef-members">Typedefs</a></h2>
+          <dl class="m-doc">
+            <dt id="gafff9ccacf6b96bfb8999dc0f61e45911">
+              using <a href="#gafff9ccacf6b96bfb8999dc0f61e45911" class="m-doc-self">allocator_function</a> = void*(*)(usize)
+            </dt>
+            <dd>A memory allocation function used with <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> must follow this signature.</dd>
+            <dt id="ga0c4d366461199b781d4d8bc259b1f21a">
+              using <a href="#ga0c4d366461199b781d4d8bc259b1f21a" class="m-doc-self">deallocator_function</a> = void(*)(void*)
+            </dt>
+            <dd>A memory deallocation function used with <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> must follow this signature.</dd>
+            <dt id="ga6b0410ce215227f84826869a08d29bf9">
+              using <a href="#ga6b0410ce215227f84826869a08d29bf9" class="m-doc-self">StdAllocator</a> = struct <a href="structStdAllocator.html" class="m-doc">StdAllocator</a>
+            </dt>
+            <dd>A <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> is a convenient abstraction for wrapping memory allocation and deallocation, making it simple and easy to write allocator-configurable and/or allocator aware software.</dd>
+            <dt id="ga579324b3006e01c0cfa0cd32d804e5bf">
+              using <a href="#ga579324b3006e01c0cfa0cd32d804e5bf" class="m-doc-self">StdMemory</a> = struct <a href="structStdMemory.html" class="m-doc">StdMemory</a>
+            </dt>
+            <dd><code><a href="structStdMemory.html" class="m-doc">StdMemory</a></code> is a basic wrapper for passing chunks of allocated memory</dd>
+          </dl>
+        </section>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdAllocator.html" class="m-doc">StdAllocator</a> <a href="#ga90a23097eccfe2929f06c027625cfaa8" class="m-doc">std_allocator_new</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Creates a new <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> with the default allocation and default deallocation functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdAllocator.html" class="m-doc">StdAllocator</a> <a href="#ga9e541e33fcc77f3bf3f91c63a214321f" class="m-doc">std_allocator_from_custom_allocator</a>(</span><span class="m-doc-wrap"><a href="group__memory.html#gafff9ccacf6b96bfb8999dc0f61e45911" class="m-doc">allocator_<wbr />function</a> allocator,
+              <a href="group__memory.html#ga0c4d366461199b781d4d8bc259b1f21a" class="m-doc">deallocator_<wbr />function</a> deallocator)</span>
+            </dt>
+            <dd>Creates a new <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> with the given custom allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdMemory.html" class="m-doc">StdMemory</a> <a href="#gad7b9e070f84e9c4e5643eef198f2df21" class="m-doc">std_allocator_allocate</a>(</span><span class="m-doc-wrap"><a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> size_bytes)</span>
+            </dt>
+            <dd>Allocates new memory with the given <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdMemory.html" class="m-doc">StdMemory</a> <a href="#gaee64d30cc04db89deab52dff43abc9aa" class="m-doc">std_allocator_allocate_array</a>(</span><span class="m-doc-wrap"><a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_elements,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> element_size_bytes)</span>
+            </dt>
+            <dd>Allocates new memory for an array of the given size with the given <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdMemory.html" class="m-doc">StdMemory</a> <a href="#ga073642b42161534be700bcc8b3221183" class="m-doc">std_allocator_reallocate</a>(</span><span class="m-doc-wrap"><a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <a href="structStdMemory.html" class="m-doc">StdMemory</a> memory,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> new_size_bytes)</span>
+            </dt>
+            <dd>Allocates new memory large enough to store <code>new_size_bytes</code> bytes of data, and copies the old contents over.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdMemory.html" class="m-doc">StdMemory</a> <a href="#ga80a26bc754538e5e2f747723b19fe8de" class="m-doc">std_allocator_reallocate_array</a>(</span><span class="m-doc-wrap"><a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <a href="structStdMemory.html" class="m-doc">StdMemory</a> memory,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> new_num_elements,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> element_size_bytes)</span>
+            </dt>
+            <dd>Allocates new memory large enough to store <code>new_num_elements</code> elements of size <code>element_size_bytes</code>, and copies the old contents over.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga683d1b0d4f7def92fc6d4fa6c653cffb" class="m-doc">std_allocator_deallocate</a>(</span><span class="m-doc-wrap"><a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <a href="structStdMemory.html" class="m-doc">StdMemory</a> memory)</span>
+            </dt>
+            <dd>Deallocates (aka frees) the given memory with the given <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code></dd>
+          </dl>
+        </section>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt id="ga3f4bd5b3fb04f273f312b38512f44ca2">
+              <span class="m-doc-wrap-bumper">#define <a href="#ga3f4bd5b3fb04f273f312b38512f44ca2" class="m-doc-self">STD_DEFAULT_ALLOCATOR_FUNCTION</a></span>
+            </dt>
+            <dd>The default <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> allocation function Define this to your desired function to override the default allocation function.</dd>
+            <dt id="ga39d2b15d81c0c611a4681e6da9ad702f">
+              <span class="m-doc-wrap-bumper">#define <a href="#ga39d2b15d81c0c611a4681e6da9ad702f" class="m-doc-self">STD_DEFAULT_DEALLOCATOR_FUNCTION</a></span>
+            </dt>
+            <dd>The default <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> deallocation (free) function Define this to your desired function to override the default deallocation function.</dd>
+            <dt id="ga8bd8bd2f9d75ff36c9ca62c37c9de4d8">
+              <span class="m-doc-wrap-bumper">#define <a href="#ga8bd8bd2f9d75ff36c9ca62c37c9de4d8" class="m-doc-self">STD_DEFAULT_ALLOCATOR</a></span>
+            </dt>
+            <dd>The default <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> Define this to your desired <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> compound literal to override the default <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code></dd>
+            <dt id="gafb57d2d10165f9a71769c00299d99f19">
+              <span class="m-doc-wrap-bumper">#define <a href="#gafb57d2d10165f9a71769c00299d99f19" class="m-doc-self">STD_ALLOCATOR_ABORT_ON_ALLOCATION_FAILURE</a></span>
+            </dt>
+            <dd><code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> allocation failure strategy. By default allocation failure will abort the process. Define this to false to disable this behavior</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga623096906bd091a3460453f59ec0faac" class="m-doc">std_allocator_allocate_t</a>(</span><span class="m-doc-wrap">T,
+              allocator)</span>
+            </dt>
+            <dd>Allocates enough new memory to store a type <code>T</code> with the given <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gafbf07a097f2e35a7849619b2f0ce7020" class="m-doc">std_allocator_allocate_array_t</a>(</span><span class="m-doc-wrap">T,
+              allocator,
+              num_elements)</span>
+            </dt>
+            <dd>Allocates enough new memory to store an array of <code>num_elements</code> of type <code>T</code> with the given <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaa20494d7b6a7711484b50a8cbb409084" class="m-doc">std_allocator_reallocate_t</a>(</span><span class="m-doc-wrap">T,
+              allocator,
+              memory)</span>
+            </dt>
+            <dd>Allocates new memory large enough to store a <code>T</code>, and copies the old contents over.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9bea656130e7a62f9a863277b7fe7091" class="m-doc">std_allocator_reallocate_array_t</a>(</span><span class="m-doc-wrap">T,
+              allocator,
+              memory,
+              new_num_elements)</span>
+            </dt>
+            <dd>Allocates new memory large enough to store <code>new_num_elements</code> elements of type <code>T</code>, and copies the old contents over.</dd>
+            <dt id="ga604c5c4b9dd207855c22597a4097213e">
+              <span class="m-doc-wrap-bumper">#define <a href="#ga604c5c4b9dd207855c22597a4097213e" class="m-doc-self">std_allocator_deallocate_t</a>(</span><span class="m-doc-wrap">T,
+              allocator,
+              data_ptr)</span>
+            </dt>
+            <dd>Deallocates the memory at <code>data_ptr</code>, of type <code>T</code>, with the given <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code></dd>
+            <dt id="ga5fde1777b02424fdf8ed1d441a7ff022">
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5fde1777b02424fdf8ed1d441a7ff022" class="m-doc-self">std_allocator_deallocate_array_t</a>(</span><span class="m-doc-wrap">T,
+              allocator,
+              data_ptr,
+              num_elements)</span>
+            </dt>
+            <dd>Deallocates the memory for an array of type <code>T</code>s at <code>data_ptr</code> of <code>num_elements</code> size.</dd>
+            <dt id="gaab51da99f3397a2243a24da8c92be939">
+              <span class="m-doc-wrap-bumper">#define <a href="#gaab51da99f3397a2243a24da8c92be939" class="m-doc-self">std_memcpy</a>(</span><span class="m-doc-wrap">T,
+              dest_ptr,
+              src_ptr,
+              num_elements)</span>
+            </dt>
+            <dd>Copies memory containing an array of type <code>T</code> from <code>src_ptr</code> to <code>dst_ptr</code></dd>
+            <dt id="ga5cf4d533bf5d87bd773a486f7bdc16b5">
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5cf4d533bf5d87bd773a486f7bdc16b5" class="m-doc-self">std_memmove</a>(</span><span class="m-doc-wrap">T,
+              dest_ptr,
+              src_ptr,
+              num_elements)</span>
+            </dt>
+            <dd>Moves memory containing an array of type <code>T</code> from <code>src_ptr</code> to <code>dst_ptr</code></dd>
+            <dt id="gafdce10175916a03951bd7c928ea0d534">
+              <span class="m-doc-wrap-bumper">#define <a href="#gafdce10175916a03951bd7c928ea0d534" class="m-doc-self">std_memset</a>(</span><span class="m-doc-wrap">T,
+              dest_ptr,
+              value,
+              num_elements)</span>
+            </dt>
+            <dd>Sets the memory at <code>dest_ptr</code>, containing an array of type <code>T</code>, to the given <code>value</code></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ga90a23097eccfe2929f06c027625cfaa8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdAllocator.html" class="m-doc">StdAllocator</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga90a23097eccfe2929f06c027625cfaa8" class="m-doc-self">std_allocator_new</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Creates a new <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> with the default allocation and default deallocation functions.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>a default <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga9e541e33fcc77f3bf3f91c63a214321f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdAllocator.html" class="m-doc">StdAllocator</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga9e541e33fcc77f3bf3f91c63a214321f" class="m-doc-self">std_allocator_from_custom_allocator</a>(</span><span class="m-doc-wrap"><a href="group__memory.html#gafff9ccacf6b96bfb8999dc0f61e45911" class="m-doc">allocator_<wbr />function</a> allocator,
+              <a href="group__memory.html#ga0c4d366461199b781d4d8bc259b1f21a" class="m-doc">deallocator_<wbr />function</a> deallocator)</span></span>
+            </h3>
+            <p>Creates a new <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> with the given custom allocator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">allocator</td>
+                  <td>- The allocator&#x27;s allocation function</td>
+                </tr>
+                <tr>
+                  <td>deallocator</td>
+                  <td>- The allocator&#x27;s deallocation (aka free) function</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a custom <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gad7b9e070f84e9c4e5643eef198f2df21"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdMemory.html" class="m-doc">StdMemory</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gad7b9e070f84e9c4e5643eef198f2df21" class="m-doc-self">std_allocator_allocate</a>(</span><span class="m-doc-wrap"><a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> size_bytes)</span></span>
+            </h3>
+            <p>Allocates new memory with the given <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">allocator</td>
+                  <td>- The allocator to allocate with</td>
+                </tr>
+                <tr>
+                  <td>size_bytes</td>
+                  <td>- The size to allocate in bytes</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>newly allocated memory</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaee64d30cc04db89deab52dff43abc9aa"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdMemory.html" class="m-doc">StdMemory</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaee64d30cc04db89deab52dff43abc9aa" class="m-doc-self">std_allocator_allocate_array</a>(</span><span class="m-doc-wrap"><a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_elements,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> element_size_bytes)</span></span>
+            </h3>
+            <p>Allocates new memory for an array of the given size with the given <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">allocator</td>
+                  <td>- The allocator to allocate with</td>
+                </tr>
+                <tr>
+                  <td>num_elements</td>
+                  <td>- The number of elements in the array</td>
+                </tr>
+                <tr>
+                  <td>element_size_bytes</td>
+                  <td>- The size of an array element, in bytes</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>newly allocated memory</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga073642b42161534be700bcc8b3221183"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdMemory.html" class="m-doc">StdMemory</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga073642b42161534be700bcc8b3221183" class="m-doc-self">std_allocator_reallocate</a>(</span><span class="m-doc-wrap"><a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <a href="structStdMemory.html" class="m-doc">StdMemory</a> memory,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> new_size_bytes)</span></span>
+            </h3>
+            <p>Allocates new memory large enough to store <code>new_size_bytes</code> bytes of data, and copies the old contents over.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">allocator</td>
+                  <td>- The allocator to allocate memory with</td>
+                </tr>
+                <tr>
+                  <td>memory</td>
+                  <td>- The memory to be reallocated</td>
+                </tr>
+                <tr>
+                  <td>new_size_bytes</td>
+                  <td>- The desired new size of the memory, in bytes</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>reallocated memory</td>
+                </tr>
+              </tfoot>
+            </table>
+<aside class="m-note m-info"><h4>Note</h4><p>If reallocation fails, the original memory will be returned unchanged</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga80a26bc754538e5e2f747723b19fe8de"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdMemory.html" class="m-doc">StdMemory</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga80a26bc754538e5e2f747723b19fe8de" class="m-doc-self">std_allocator_reallocate_array</a>(</span><span class="m-doc-wrap"><a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <a href="structStdMemory.html" class="m-doc">StdMemory</a> memory,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> new_num_elements,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> element_size_bytes)</span></span>
+            </h3>
+            <p>Allocates new memory large enough to store <code>new_num_elements</code> elements of size <code>element_size_bytes</code>, and copies the old contents over.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">allocator</td>
+                  <td>- The allocator to allocate memory with</td>
+                </tr>
+                <tr>
+                  <td>memory</td>
+                  <td>- The memory to be reallocated</td>
+                </tr>
+                <tr>
+                  <td>new_num_elements</td>
+                  <td>- The desired new number of elements in the memory</td>
+                </tr>
+                <tr>
+                  <td>element_size_bytes</td>
+                  <td>- The size of a single element, in bytes</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>reallocated memory</td>
+                </tr>
+              </tfoot>
+            </table>
+<aside class="m-note m-info"><h4>Note</h4><p>If reallocation fails, the original memory will be returned unchanged</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga683d1b0d4f7def92fc6d4fa6c653cffb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga683d1b0d4f7def92fc6d4fa6c653cffb" class="m-doc-self">std_allocator_deallocate</a>(</span><span class="m-doc-wrap"><a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <a href="structStdMemory.html" class="m-doc">StdMemory</a> memory)</span></span>
+            </h3>
+            <p>Deallocates (aka frees) the given memory with the given <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">allocator</td>
+                  <td>- The allocator to deallocate with</td>
+                </tr>
+                <tr>
+                  <td>memory</td>
+                  <td>- The memory to deallocate</td>
+                </tr>
+              </tbody>
+            </table>
+<aside class="m-note m-info"><h4>Note</h4><p>it is undefined behavior to call this with an allocator that did not allocate the given memory</p></aside>
+          </div></section>
+        </section>
+        <section>
+          <h2>Define documentation</h2>
+          <section class="m-doc-details" id="ga623096906bd091a3460453f59ec0faac"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga623096906bd091a3460453f59ec0faac" class="m-doc-self">std_allocator_allocate_t</a>(</span><span class="m-doc-wrap">T,
+              allocator)</span>
+            </h3>
+            <p>Allocates enough new memory to store a type <code>T</code> with the given <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The type to allocate memory for</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>newly allocated memory</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gafbf07a097f2e35a7849619b2f0ce7020"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gafbf07a097f2e35a7849619b2f0ce7020" class="m-doc-self">std_allocator_allocate_array_t</a>(</span><span class="m-doc-wrap">T,
+              allocator,
+              num_elements)</span>
+            </h3>
+            <p>Allocates enough new memory to store an array of <code>num_elements</code> of type <code>T</code> with the given <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The type to allocate memory for</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The `StdAllocator to allocate with</td>
+                </tr>
+                <tr>
+                  <td>num_elements</td>
+                  <td>- The number of elements in the array</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>newly allocated memory</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaa20494d7b6a7711484b50a8cbb409084"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaa20494d7b6a7711484b50a8cbb409084" class="m-doc-self">std_allocator_reallocate_t</a>(</span><span class="m-doc-wrap">T,
+              allocator,
+              memory)</span>
+            </h3>
+            <p>Allocates new memory large enough to store a <code>T</code>, and copies the old contents over.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The type to allocate memory for</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate memory with</td>
+                </tr>
+                <tr>
+                  <td>memory</td>
+                  <td>- The memory to be reallocated</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>reallocated memory</td>
+                </tr>
+              </tfoot>
+            </table>
+<aside class="m-note m-info"><h4>Note</h4><p>If reallocation fails, the original memory will be returned unchanged</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga9bea656130e7a62f9a863277b7fe7091"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9bea656130e7a62f9a863277b7fe7091" class="m-doc-self">std_allocator_reallocate_array_t</a>(</span><span class="m-doc-wrap">T,
+              allocator,
+              memory,
+              new_num_elements)</span>
+            </h3>
+            <p>Allocates new memory large enough to store <code>new_num_elements</code> elements of type <code>T</code>, and copies the old contents over.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The type to allocate memory for</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate memory with</td>
+                </tr>
+                <tr>
+                  <td>memory</td>
+                  <td>- The memory to be reallocated</td>
+                </tr>
+                <tr>
+                  <td>new_num_elements</td>
+                  <td>- The desired new number of elements in the memory</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>reallocated memory</td>
+                </tr>
+              </tfoot>
+            </table>
+<aside class="m-note m-info"><h4>Note</h4><p>If reallocation fails, the original memory will be returned unchanged</p></aside>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

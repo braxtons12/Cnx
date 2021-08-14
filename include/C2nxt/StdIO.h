@@ -1,0 +1,321 @@
+#include <stdio.h>
+
+#include "StdAllocators.h"
+#include "StdBasicTypes.h"
+#include "StdError.h"
+#include "StdFormat.h"
+
+/// @defgroup io I/O
+/// C2nxt's I/O API extends its formatting API to I/O
+///
+/// Standard I/O in C2nxt has the same requirements, functionality, and syntax as string formatting
+/// via<br> `std_format(format_string, ...)` and the `StdFormat` Trait. Currently only formatted
+/// output is feature complete, but formatted input is planned.
+///
+/// Usage examples:
+/// @code {.c}
+/// // use it to perform basic logging:
+/// #define LOG(format_string, ...) println((format_string) __VA_OPT__(,) __VA_ARGS__)
+/// #define LOG_WITH_ALLOCATOR(format_string, allocator, ...) \
+/// 				println_with_allocator((format_string), allocator, __VA_OPT__(,) __VA_ARGS__)
+///
+/// void func(void) {
+/// 	let f = 0;
+/// 	let y = 24;
+/// 	let j = 42;
+/// 	// do things with them...
+///		LOG("f: {}, y: {}, j: {}", f, y, j);
+///		// continue doing things...
+/// }
+/// // use it directly:
+/// void func2(void) {
+///		let_mut vec = std_vector_new(u32);
+/// 	ranged_for(i, 0, 10) {
+///			std_vector_push_back(vec, i);
+/// 	}
+/// 	println("vec: {}", as_format_t(StdVector(u32), vec));
+/// }
+/// @endcode
+
+#ifndef STD_IO
+	/// @brief Declarations and definitions for Standard I/O
+	#define STD_IO
+
+/// @brief Formats the given arguments into the specified format string then prints it to `stdout`
+///
+/// @param format_string - The format string specifying how text and arguments should be formatted
+/// @param allocator - The allocator to allocate the formatted string with
+/// @param num_args - The number of args in the parameter pack
+/// @param ... - The parameter pack of arguments to format
+void print_(const_cstring restrict format_string, StdAllocator allocator, usize num_args, ...);
+/// @brief Formats the given arguments into the specified format string then prints it to `stderr`
+///
+/// @param format_string - The format string specifying how text and arguments should be formatted
+/// @param allocator - The allocator to allocate the formatted string with
+/// @param num_args - The number of args in the parameter pack
+/// @param ... - The parameter pack of arguments to format
+void eprint_(const_cstring restrict format_string, StdAllocator allocator, usize num_args, ...);
+/// @brief Formats the given arguments into the specified format string then prints it to the given
+/// file
+///
+/// @param file - The file to print the formatted string to
+/// @param format_string - The format string specifying how text and arguments should be formatted
+/// @param allocator - The allocator to allocate the formatted string with
+/// @param num_args - The number of args in the parameter pack
+/// @param ... - The parameter pack of arguments to format
+void fprint_(FILE* file,
+			 const_cstring restrict format_string,
+			 StdAllocator allocator,
+			 usize num_args,
+			 ...);
+/// @brief Formats the given arguments into the specified format string then prints it to `stdout`,
+/// followed by a newline
+///
+/// @param format_string - The format string specifying how text and arguments should be formatted
+/// @param allocator - The allocator to allocate the formatted string with
+/// @param num_args - The number of args in the parameter pack
+/// @param ... - The parameter pack of arguments to format
+void println_(const_cstring restrict format_string, StdAllocator allocator, usize num_args, ...);
+/// @brief Formats the given arguments into the specified format string then prints it to `stderr`,
+/// followed by a newline
+///
+/// @param format_string - The format string specifying how text and arguments should be formatted
+/// @param allocator - The allocator to allocate the formatted string with
+/// @param num_args - The number of args in the parameter pack
+/// @param ... - The parameter pack of arguments to format
+void eprintln_(const_cstring restrict format_string, StdAllocator allocator, usize num_args, ...);
+/// @brief Formats the given arguments into the specified format string then prints it to the given
+/// file, followed by a newline
+///
+/// @param file - The file to print the formatted string to
+/// @param format_string - The format string specifying how text and arguments should be formatted
+/// @param allocator - The allocator to allocate the formatted string with
+/// @param num_args - The number of args in the parameter pack
+/// @param ... - The parameter pack of arguments to format
+void fprintln_(FILE* file,
+			   const_cstring restrict format_string,
+			   StdAllocator allocator,
+			   usize num_args,
+			   ...);
+
+	/// @brief Formats the given arguments into the specified format string then prints it to the
+	/// given file
+	///
+	/// Formats the arguments according to the given format string, allocating the output string and
+	/// any intermediaries with the given allocator. Requires that the number of specifiers in the
+	/// format string matches the number of arguments in the parameter pack and that all arguments
+	/// in the parameter pack have an accessible automatic conversion to `StdFormat` via
+	/// @ref STD_AS_FORMAT_USER_SUPPLIED_TYPES or have been explicitly converted to `StdFormat`
+	/// already.
+	///
+	/// @param file_ptr - The file to print the formatted string to
+	/// @param format_string - The format string specifying how text and arguments should be
+	/// formatted
+	/// @param allocator - The allocator to allocate the formatted string with
+	/// @param ... - The parameter pack of arguments to format
+	/// @ingroup io
+	#define fprint_with_allocator(file_ptr, format_string, allocator, ...) \
+		fprint_(file_ptr,                                                  \
+				format_string,                                             \
+				allocator,                                                 \
+				PP_NUM_ARGS(__VA_ARGS__) __VA_OPT__(, APPLY_TO_LIST(as_format, __VA_ARGS__)))
+	/// @brief Formats the given arguments into the specified format string then prints it to the
+	/// given file
+	///
+	/// Formats the arguments according to the given format string, allocating the output string and
+	/// any intermediaries with the default system allocator. Requires that the number of specifiers
+	/// in the format string matches the number of arguments in the parameter pack and that all
+	/// arguments in the parameter pack have an accessible automatic conversion to `StdFormat` via
+	/// @ref STD_AS_FORMAT_USER_SUPPLIED_TYPES or have been explicitly converted to `StdFormat`
+	/// already.
+	///
+	/// @param file_ptr - The file to print the formatted string to
+	/// @param format_string - The format string specifying how text and arguments should be
+	/// formatted
+	/// @param ... - The parameter pack of arguments to format
+	/// @ingroup io
+	#define fprint(file_ptr, format_string, ...) \
+		fprint_with_allocator(file_ptr,          \
+							  format_string,     \
+							  std_allocator_new() __VA_OPT__(, ) __VA_ARGS__)
+	/// @brief Formats the given arguments into the specified format string then prints it to
+	/// `stdout`
+	///
+	/// Formats the arguments according to the given format string, allocating the output string and
+	/// any intermediaries with the given allocator. Requires that the number of specifiers in the
+	/// format string matches the number of arguments in the parameter pack and that all arguments
+	/// in the parameter pack have an accessible automatic conversion to `StdFormat` via
+	/// @ref STD_AS_FORMAT_USER_SUPPLIED_TYPES or have been explicitly converted to `StdFormat`
+	/// already.
+	///
+	/// @param format_string - The format string specifying how text and arguments should be
+	/// formatted
+	/// @param allocator - The allocator to allocate the formatted string with
+	/// @param ... - The parameter pack of arguments to format
+	/// @ingroup io
+	#define print_with_allocator(format_string, allocator, ...) \
+		print_(format_string,                                   \
+			   allocator,                                       \
+			   PP_NUM_ARGS(__VA_ARGS__) __VA_OPT__(, APPLY_TO_LIST(as_format, __VA_ARGS__)))
+	/// @brief Formats the given arguments into the specified format string then prints it to
+	/// `stdout`
+	///
+	/// Formats the arguments according to the given format string, allocating the output string and
+	/// any intermediaries with the default system allocator. Requires that the number of specifiers
+	/// in the format string matches the number of arguments in the parameter pack and that all
+	/// arguments in the parameter pack have an accessible automatic conversion to `StdFormat` via
+	/// @ref STD_AS_FORMAT_USER_SUPPLIED_TYPES or have been explicitly converted to `StdFormat`
+	/// already.
+	///
+	/// @param format_string - The format string specifying how text and arguments should be
+	/// formatted
+	/// @param ... - The parameter pack of arguments to format
+	/// @ingroup io
+	#define print(format_string, ...) \
+		print_with_allocator(format_string, std_allocator_new() __VA_OPT__(, ) __VA_ARGS__)
+	/// @brief Formats the given arguments into the specified format string then prints it to
+	/// `stderr`
+	///
+	/// Formats the arguments according to the given format string, allocating the output string and
+	/// any intermediaries with the given allocator. Requires that the number of specifiers in the
+	/// format string matches the number of arguments in the parameter pack and that all arguments
+	/// in the parameter pack have an accessible automatic conversion to `StdFormat` via
+	/// @ref STD_AS_FORMAT_USER_SUPPLIED_TYPES or have been explicitly converted to `StdFormat`
+	/// already.
+	///
+	/// @param format_string - The format string specifying how text and arguments should be
+	/// formatted
+	/// @param allocator - The allocator to allocate the formatted string with
+	/// @param ... - The parameter pack of arguments to format
+	/// @ingroup io
+	#define eprint_with_allocator(format_string, allocator, ...) \
+		eprint_(format_string,                                   \
+				allocator,                                       \
+				PP_NUM_ARGS(__VA_ARGS__) __VA_OPT__(, APPLY_TO_LIST(as_format, __VA_ARGS__)))
+	/// @brief Formats the given arguments into the specified format string then prints it to
+	/// `stderr`
+	///
+	/// Formats the arguments according to the given format string, allocating the output string and
+	/// any intermediaries with the default system allocator. Requires that the number of specifiers
+	/// in the format string matches the number of arguments in the parameter pack and that all
+	/// arguments in the parameter pack have an accessible automatic conversion to `StdFormat` via
+	/// @ref STD_AS_FORMAT_USER_SUPPLIED_TYPES or have been explicitly converted to `StdFormat`
+	/// already.
+	///
+	/// @param format_string - The format string specifying how text and arguments should be
+	/// formatted
+	/// @param ... - The parameter pack of arguments to format
+	/// @ingroup io
+	#define eprint(format_string, ...) \
+		eprint_with_allocator(format_string, std_allocator_new() __VA_OPT__(, ) __VA_ARGS__)
+
+	/// @brief Formats the given arguments into the specified format string then prints it to the
+	/// given file, followed by a newline
+	///
+	/// Formats the arguments according to the given format string, allocating the output string and
+	/// any intermediaries with the given allocator. Requires that the number of specifiers in the
+	/// format string matches the number of arguments in the parameter pack and that all arguments
+	/// in the parameter pack have an accessible automatic conversion to `StdFormat` via
+	/// @ref STD_AS_FORMAT_USER_SUPPLIED_TYPES or have been explicitly converted to `StdFormat`
+	/// already.
+	///
+	/// @param file_ptr - The file to print the formatted string to
+	/// @param format_string - The format string specifying how text and arguments should be
+	/// formatted
+	/// @param allocator - The allocator to allocate the formatted string with
+	/// @param ... - The parameter pack of arguments to format
+	#define fprintln_with_allocator(file_ptr, format_string, allocator, ...) \
+		fprintln_(file_ptr,                                                  \
+				  format_string,                                             \
+				  allocator,                                                 \
+				  PP_NUM_ARGS(__VA_ARGS__) __VA_OPT__(, APPLY_TO_LIST(as_format, __VA_ARGS__)))
+	/// @brief Formats the given arguments into the specified format string then prints it to the
+	/// given file, followed by a newline
+	///
+	/// Formats the arguments according to the given format string, allocating the output string and
+	/// any intermediaries with the default system allocator. Requires that the number of specifiers
+	/// in the format string matches the number of arguments in the parameter pack and that all
+	/// arguments in the parameter pack have an accessible automatic conversion to `StdFormat` via
+	/// @ref STD_AS_FORMAT_USER_SUPPLIED_TYPES or have been explicitly converted to `StdFormat`
+	/// already.
+	///
+	/// @param file_ptr - The file to print the formatted string to
+	/// @param format_string - The format string specifying how text and arguments should be
+	/// formatted
+	/// @param ... - The parameter pack of arguments to format
+	/// @ingroup io
+	#define fprintln(file_ptr, format_string, ...) \
+		fprintln_with_allocator(file_ptr,          \
+								format_string,     \
+								std_allocator_new() __VA_OPT__(, ) __VA_ARGS__)
+	/// @brief Formats the given arguments into the specified format string then prints it to
+	/// `stdout`, followed by a newline
+	///
+	/// Formats the arguments according to the given format string, allocating the output string and
+	/// any intermediaries with the given allocator. Requires that the number of specifiers in the
+	/// format string matches the number of arguments in the parameter pack and that all arguments
+	/// in the parameter pack have an accessible automatic conversion to `StdFormat` via
+	/// @ref STD_AS_FORMAT_USER_SUPPLIED_TYPES or have been explicitly converted to `StdFormat`
+	/// already.
+	///
+	/// @param format_string - The format string specifying how text and arguments should be
+	/// formatted
+	/// @param allocator - The allocator to allocate the formatted string with
+	/// @param ... - The parameter pack of arguments to format
+	/// @ingroup io
+	#define println_with_allocator(format_string, allocator, ...) \
+		println_(format_string,                                   \
+				 allocator,                                       \
+				 PP_NUM_ARGS(__VA_ARGS__) __VA_OPT__(, APPLY_TO_LIST(as_format, __VA_ARGS__)))
+	/// @brief Formats the given arguments into the specified format string then prints it to
+	/// `stdout`, followed by a newline
+	///
+	/// Formats the arguments according to the given format string, allocating the output string and
+	/// any intermediaries with the default system allocator. Requires that the number of specifiers
+	/// in the format string matches the number of arguments in the parameter pack and that all
+	/// arguments in the parameter pack have an accessible automatic conversion to `StdFormat` via
+	/// @ref STD_AS_FORMAT_USER_SUPPLIED_TYPES or have been explicitly converted to `StdFormat`
+	/// already.
+	///
+	/// @param format_string - The format string specifying how text and arguments should be
+	/// formatted
+	/// @param ... - The parameter pack of arguments to format
+	/// @ingroup io
+	#define println(format_string, ...) \
+		println_with_allocator(format_string, std_allocator_new() __VA_OPT__(, ) __VA_ARGS__)
+	/// @brief Formats the given arguments into the specified format string then prints it to
+	/// `stderr`, followed by a newline
+	///
+	/// Formats the arguments according to the given format string, allocating the output string and
+	/// any intermediaries with the given allocator. Requires that the number of specifiers in the
+	/// format string matches the number of arguments in the parameter pack and that all arguments
+	/// in the parameter pack have an accessible automatic conversion to `StdFormat` via
+	/// @ref STD_AS_FORMAT_USER_SUPPLIED_TYPES or have been explicitly converted to `StdFormat`
+	/// already.
+	///
+	/// @param format_string - The format string specifying how text and arguments should be
+	/// formatted
+	/// @param allocator - The allocator to allocate the formatted string with
+	/// @param ... - The parameter pack of arguments to format
+	/// @ingroup io
+	#define eprintln_with_allocator(format_string, allocator, ...) \
+		eprintln_(format_string,                                   \
+				  allocator,                                       \
+				  PP_NUM_ARGS(__VA_ARGS__) __VA_OPT__(, APPLY_TO_LIST(as_format, __VA_ARGS__)))
+	/// @brief Formats the given arguments into the specified format string then prints it to
+	/// `stderr`, followed by a newline
+	///
+	/// Formats the arguments according to the given format string, allocating the output string and
+	/// any intermediaries with the default system allocator. Requires that the number of specifiers
+	/// in the format string matches the number of arguments in the parameter pack and that all
+	/// arguments in the parameter pack have an accessible automatic conversion to `StdFormat` via
+	/// @ref STD_AS_FORMAT_USER_SUPPLIED_TYPES or have been explicitly converted to `StdFormat`
+	/// already.
+	///
+	/// @param format_string - The format string specifying how text and arguments should be
+	/// formatted
+	/// @param ... - The parameter pack of arguments to format
+	/// @ingroup io
+	#define eprintln(format_string, ...) \
+		eprintln_with_allocator(format_string, std_allocator_new() __VA_OPT__(, ) __VA_ARGS__)
+#endif // STD_IO

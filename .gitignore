@@ -1,0 +1,8 @@
+build/
+.cache/
+.ccls-cache/
+compile_commands.json
+test.ppm
+docs/doxygen/latex
+docs/doxygen/xml
+docs/__pycache__/
