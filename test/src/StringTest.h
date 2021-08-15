@@ -262,11 +262,11 @@ void test_string_shrink_to_fit(void) {
 
 void test_string_insert(void) {
 	let test_string_full = "This is a test test test";
-	let test_string_first = "This is ";
+	let test_string_first_ = "This is ";
 	let test_string_second = "a test ";
 	let test_string_end = "test test";
-	let_mut string = std_string_from(test_string_first);
-	let insert_pos = strlen(test_string_first);
+	let_mut string = std_string_from(test_string_first_);
+	let insert_pos = strlen(test_string_first_);
 	std_string_insert(string, test_string_end, insert_pos);
 	TEST_ASSERT_TRUE(
 		0 == memcmp(&std_string_at(string, 0), "This is test test", std_string_length(string)));

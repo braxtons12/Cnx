@@ -663,74 +663,74 @@ typedef const wchar_t_ptr* const_wchar_t_ptr_ref;
 
 	/// @brief Maximum value of a `u8`
 	/// @ingroup types
-	#define std_max_u8 UINT8_MAX
+	#define std_max_u8 static_cast(u8)(UINT8_MAX)
 	/// @brief Maximum value of a `u16`
 	/// @ingroup types
-	#define std_max_u16 UINT16_MAX
+	#define std_max_u16 static_cast(u16)(UINT16_MAX)
 	/// @brief Maximum value of a `u32`
 	/// @ingroup types
-	#define std_max_u32 UINT32_MAX
+	#define std_max_u32 static_cast(u32)(UINT32_MAX)
 	/// @brief Maximum value of a `u64`
 	/// @ingroup types
-	#define std_max_u64 UINT64_MAX
+	#define std_max_u64 static_cast(u64)(UINT64_MAX)
 	/// @brief Maximum value of a `usize`
 	/// @ingroup types
-	#define std_max_usize SIZE_MAX
+	#define std_max_usize static_cast(usize)(SIZE_MAX)
 
 	/// @brief Maximum value of an `i8`
 	/// @ingroup types
-	#define std_max_i8 INT8_MAX
+	#define std_max_i8 static_cast(i8)(INT8_MAX)
 	/// @brief Maximum value of an `i16`
 	/// @ingroup types
-	#define std_max_i16 INT16_MAX
+	#define std_max_i16 static_cast(i16)(INT16_MAX)
 	/// @brief Maximum value of an `i32`
 	/// @ingroup types
-	#define std_max_i32 INT32_MAX
+	#define std_max_i32 static_cast(i32)(INT32_MAX)
 	/// @brief Maximum value of an `i64`
 	/// @ingroup types
-	#define std_max_i64 INT64_MAX
+	#define std_max_i64 static_cast(i64)(INT64_MAX)
 	/// @brief Maximum value of an `isize`
 	/// @ingroup types
-	#define std_max_isize INT64_MAX
+	#define std_max_isize static_cast(isize)(INT64_MAX)
 
 	/// @brief Maximum value of an `f32`
 	/// @ingroup types
-	#define std_max_f32 FLT_MAX
+	#define std_max_f32 static_cast(f32)(FLT_MAX)
 	/// @brief Maximum value of an `f64`
 	/// @ingroup types
-	#define std_max_f64 DBL_MAX
+	#define std_max_f64 static_cast(f64)(DBL_MAX)
 
 	/// @brief Minimum value of a `u8`
 	/// @ingroup types
-	#define std_min_u8 0
+	#define std_min_u8 static_cast(u8)(0)
 	/// @brief Minimum value of a `u16`
 	/// @ingroup types
-	#define std_min_u16 0
+	#define std_min_u16 static_cast(u16)(0)
 	/// @brief Minimum value of a `u32`
 	/// @ingroup types
-	#define std_min_u32 0
+	#define std_min_u32 static_cast(u32)(0)
 	/// @brief Minimum value of a `u64`
 	/// @ingroup types
-	#define std_min_u64 0
+	#define std_min_u64 static_cast(u64)(0)
 	/// @brief Minimum value of a `usize`
 	/// @ingroup types
-	#define std_min_usize 0
+	#define std_min_usize static_cast(usize)(0)
 
 	/// @brief Minimum value of an `i8`
 	/// @ingroup types
-	#define std_min_i8 INT8_MIN
+	#define std_min_i8 static_cast(i8)(INT8_MIN)
 	/// @brief Minimum value of an `i16`
 	/// @ingroup types
-	#define std_min_i16 INT16_MIN
+	#define std_min_i16 static_cast(i16)(INT16_MIN)
 	/// @brief Minimum value of an `i32`
 	/// @ingroup types
-	#define std_min_i32 INT32_MIN
+	#define std_min_i32 static_cast(i32)(INT32_MIN)
 	/// @brief Minimum value of an `i64`
 	/// @ingroup types
-	#define std_min_i64 INT64_MIN
+	#define std_min_i64 static_cast(i64)(INT64_MIN)
 	/// @brief Minimum value of an `isize`
 	/// @ingroup types
-	#define std_min_isize INT64_MIN
+	#define std_min_isize static_cast(isize)(INT64_MIN)
 
 	/// @brief Minimum value of an `f32`
 	/// @ingroup types
@@ -741,10 +741,10 @@ typedef const wchar_t_ptr* const_wchar_t_ptr_ref;
 
 	/// @brief Minimum discernable difference value of an `f32`
 	/// @ingroup types
-	#define std_min_diff_f32 FLT_MIN
+	#define std_min_diff_f32 static_cast(f32)(FLT_MIN)
 	/// @brief Minimum discernable difference value of an `f64`
 	/// @ingroup types
-	#define std_min_diff_f64 DBL_MIN
+	#define std_min_diff_f64 static_cast(f64)(DBL_MIN)
 
 // clang-format off
 

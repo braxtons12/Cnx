@@ -37,6 +37,7 @@ set(IMPLEMENTATIONS
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdError.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdFormat.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdIO.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdMath.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdOption.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdRange.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdResult.c"
