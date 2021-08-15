@@ -317,7 +317,7 @@ StdString std_string_from_stringview(const StdStringView* restrict view);
 /// @ingroup std_string
 StdString std_string_from_stringview_with_allocator(const StdStringView* restrict view,
 													StdAllocator allocator);
-	// clang-format off
+// clang-format off
 /// @brief Creates a new `StdString` from the given string-like type
 ///
 /// @param string - The string-like thing to create the `StdString` from. Either a
@@ -746,8 +746,8 @@ bool std_string_ends_with_stringview(const StdString* restrict self,
 ///
 /// @return The index of the first occurrence of `substring`, or `std_option_none`
 /// @ingroup std_string
-StdOptionusize
-std_string_find_first(const StdString* restrict self, const StdString* restrict substring);
+StdOption(usize)
+	std_string_find_first(const StdString* restrict self, const StdString* restrict substring);
 /// @brief Returns the index of the first occurrence of the given substring, or `std_option_none` if
 /// the substring does not occur
 ///
@@ -757,9 +757,9 @@ std_string_find_first(const StdString* restrict self, const StdString* restrict 
 ///
 /// @return The index of the first occurrence of `substring`, or `std_option_none`
 /// @ingroup std_string
-StdOptionusize std_string_find_first_cstring(const StdString* restrict self,
-											 const_cstring restrict substring,
-											 usize substring_length);
+StdOption(usize) std_string_find_first_cstring(const StdString* restrict self,
+											   const_cstring restrict substring,
+											   usize substring_length);
 /// @brief Returns the index of the first occurrence of the given substring, or `std_option_none` if
 /// the substring does not occur
 ///
@@ -768,8 +768,8 @@ StdOptionusize std_string_find_first_cstring(const StdString* restrict self,
 ///
 /// @return The index of the first occurrence of `substring`, or `std_option_none`
 /// @ingroup std_string
-StdOptionusize std_string_find_first_stringview(const StdString* restrict self,
-												const StdStringView* restrict substring);
+StdOption(usize) std_string_find_first_stringview(const StdString* restrict self,
+												  const StdStringView* restrict substring);
 /// @brief Returns the index of the last occurrence of the given substring, or `std_option_none` if
 /// the substring does not occur
 ///
@@ -778,8 +778,8 @@ StdOptionusize std_string_find_first_stringview(const StdString* restrict self,
 ///
 /// @return The index of the last occurrence of `substring`, or `std_option_none`
 /// @ingroup std_string
-StdOptionusize
-std_string_find_last(const StdString* restrict self, const StdString* restrict substring);
+StdOption(usize)
+	std_string_find_last(const StdString* restrict self, const StdString* restrict substring);
 /// @brief Returns the index of the last occurrence of the given substring, or `std_option_none` if
 /// the substring does not occur
 ///
@@ -789,9 +789,9 @@ std_string_find_last(const StdString* restrict self, const StdString* restrict s
 ///
 /// @return The index of the last occurrence of `substring`, or `std_option_none`
 /// @ingroup std_string
-StdOptionusize std_string_find_last_cstring(const StdString* restrict self,
-											const_cstring restrict substring,
-											usize substring_length);
+StdOption(usize) std_string_find_last_cstring(const StdString* restrict self,
+											  const_cstring restrict substring,
+											  usize substring_length);
 /// @brief Returns the index of the last occurrence of the given substring, or `std_option_none` if
 /// the substring does not occur
 ///
@@ -800,8 +800,8 @@ StdOptionusize std_string_find_last_cstring(const StdString* restrict self,
 ///
 /// @return The index of the last occurrence of `substring`, or `std_option_none`
 /// @ingroup std_string
-StdOptionusize std_string_find_last_stringview(const StdString* restrict self,
-											   const StdStringView* restrict substring);
+StdOption(usize) std_string_find_last_stringview(const StdString* restrict self,
+												 const StdStringView* restrict substring);
 /// @brief Returns the length `length` substring beginning at `index`
 ///
 /// @param self - The `StdString` to get the substring from
@@ -906,7 +906,7 @@ StdString std_string_concatenate_stringviews(const StdStringView* restrict left,
 /// @ingroup std_string
 void invalid_types_passed_to_std_string_concatenate(void);
 
-// clang-format off
+	// clang-format off
 /// @brief Concatenates the two `cstring`s, `left` and `right` and returns the result as a `StdString`
 ///
 /// @param left - The left-side string of the concatenation
@@ -1080,7 +1080,7 @@ StdString std_string_concatenate_stringviews_with_allocator(const StdStringView*
 															const StdStringView* restrict right,
 															StdAllocator allocator);
 
-// clang-format off
+	// clang-format off
 /// @brief Concatenates the two `cstring`s, `left` and `right` and returns the result as a `StdString`
 ///
 /// @param left - The left-side string of the concatenation
@@ -1307,7 +1307,7 @@ void std_string_push_front(StdString* restrict self, char character);
 ///
 /// @note if the string is empty, this returns `std_option_none`
 /// @ingroup std_string
-StdOptionchar std_string_pop_back(StdString* restrict self);
+StdOption(char) std_string_pop_back(StdString* restrict self);
 /// @brief Removes the first character in the string and returns it
 ///
 /// @param self - The `StdString` to pop the first character from
@@ -1316,7 +1316,7 @@ StdOptionchar std_string_pop_back(StdString* restrict self);
 ///
 /// @note if the string is empty, this returns `std_option_none`
 /// @ingroup std_string
-StdOptionchar std_string_pop_front(StdString* restrict self);
+StdOption(char) std_string_pop_front(StdString* restrict self);
 /// @brief Appends the given string to the end of the string
 ///
 /// @param self - The `StdString` to append to
@@ -1616,7 +1616,7 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 /// @param self - The `StdString` to cleanup
 /// @ingroup std_string
 	#define std_string_free(self) std_string_free(&(self))
-	// clang-format off
+// clang-format off
 /// @brief Returns a reference to the character at the given index.
 ///
 /// @param self - The `StdString` to retrieve the character from
@@ -1627,8 +1627,8 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 #define std_string_at(self, index) *(_Generic((&(self)), 				\
 	StdString* 			: std_string_at_mut,  					\
 	const StdString* 	: std_string_at_const)(&(self), (index)))
-// clang-format on
-// clang-format off
+	// clang-format on
+	// clang-format off
 /// @brief Returns a reference to the character at the beginning of the string
 ///
 /// @param self - The `StdString` to retrieve the first character from
@@ -1638,8 +1638,8 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 #define std_string_front(self) *(_Generic((&(self)), 			\
 	StdString*  		: std_string_front_mut, 			\
 	const StdString* 	: std_string_front_const)(&(self)))
-// clang-format on
-// clang-format off
+	// clang-format on
+	// clang-format off
 /// @brief Returns a reference to the character at the end of the string
 ///
 /// @param self - The `StdString` to retrieve the last character from
@@ -1740,7 +1740,7 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 	/// @ingroup std_string
 	#define std_string_last_stringview(self, num_chars) \
 		std_string_last_stringview(&(self), (num_chars))
-// clang-format off
+	// clang-format off
 /// @brief Determines if this string and the given one are equal
 ///
 /// @param self - The `StdString` to be compared with
@@ -1769,8 +1769,8 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 										static_cast(StdString*)(to_compare)),   				   \
 	const StdString* 			: 	std_string_equal(&(self), 							   \
 										static_cast(const StdString*)(to_compare)))
-// clang-format on
-// clang-format off
+	// clang-format on
+	// clang-format off
 /// @brief Determines whether the string contains the given substring
 ///
 /// @param self - The `StdString` to search for `substring` in
@@ -1799,8 +1799,8 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 										static_cast(StdString*)(substring)), 					   \
 	const StdString* 				: std_string_contains(&(self), 						   \
 										static_cast(const StdString*)(substring)))
-	// clang-format on
-	// clang-format off
+// clang-format on
+// clang-format off
 /// @brief Determines whether the string starts with the given substring
 ///
 /// @param self - The `StdString` to search for `substring` in
@@ -1829,8 +1829,8 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 										static_cast(StdString*)(substring)), 					   \
 	const StdString* 				: std_string_starts_with(&(self), 					   \
 										static_cast(const StdString*)(substring)))
-	// clang-format on
-	// clang-format off
+// clang-format on
+// clang-format off
 /// @brief Determines whether the string ends with the given substring
 ///
 /// @param self - The `StdString` to search for `substring` in
@@ -1859,8 +1859,8 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 										static_cast(StdString*)(substring)), 					   \
 	const StdString* 				: std_string_ends_with(&(self), 						   \
 										static_cast(const StdString*)(substring)))
-// clang-format on
-// clang-format off
+	// clang-format on
+	// clang-format off
 /// @brief Finds the first occurrence of the given substring in `self`, if any
 ///
 /// @param self - The `StdString` to search for `substring` in
@@ -1890,8 +1890,8 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 										static_cast(StdString*)(substring)), 					   \
 	const StdString* 				: std_string_find_first(&(self), 						   \
 										static_cast(const StdString*)(substring)))
-// clang-format on
-// clang-format off
+	// clang-format on
+	// clang-format off
 /// @brief Finds the last occurrence of the given substring in `self`, if any
 ///
 /// @param self - The `StdString` to search for `substring` in
@@ -1971,7 +1971,7 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 	/// @param self - The `StdString` to shrink
 	/// @ingroup std_string
 	#define std_string_shrink_to_fit(self) std_string_shrink_to_fit(&(self))
-// clang-format off
+	// clang-format off
 /// @brief Inserts `to_insert` into `self` at the given index
 ///
 /// @param self - The `StdString` to insert into
@@ -2054,7 +2054,7 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 	/// @return `Some(char)` if `std_string_size(self) > 0`, else `None(char)`
 	/// @ingroup std_string
 	#define std_string_pop_front(self) std_string_pop_front(&(self))
-// clang-format off
+	// clang-format off
 /// @brief Appends `to_append` to the end of `self`
 ///
 /// @param self - The `StdString` to append to
@@ -2081,8 +2081,8 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 										static_cast(StdString*)(to_append)), 			   		   \
 	const StdString* 				: std_string_append(&(self), 							   \
 										static_cast(const StdString*)(to_append)))
-	// clang-format on
-	// clang-format off
+// clang-format on
+// clang-format off
 /// @brief Prepends `to_prepend` to the beginning of `self`
 ///
 /// @param self - The `StdString` to prepend to
@@ -2109,8 +2109,8 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 										static_cast(StdString*)(to_prepend)), 			   		   \
 	const StdString* 				: std_string_prepend(&(self), 						   \
 										static_cast(const StdString*)(to_prepend)))
-// clang-format on
-// clang-format off
+	// clang-format on
+	// clang-format off
 /// @brief Replaces the contents of `self` with `to_replace_with`, beginning at the given index
 ///
 /// @param self - The `StdString` to replace a portion of
