@@ -477,7 +477,7 @@
 												 allocator,                                    \
 												 _self->m_is_ok);                              \
 			}                                                                                  \
-			else {                                                                             \
+			else { /** NOLINT(readability-else-after-return) **/                               \
 				return std_format_with_allocator(                                              \
 					AS_STRING(StdResult(T)) ": [is_ok: {}, error: {}]",                        \
 					allocator,                                                                 \
