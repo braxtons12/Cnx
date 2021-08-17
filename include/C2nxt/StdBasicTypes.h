@@ -3,7 +3,7 @@
 /// @brief BasicTypes provides simple typedefs and limits for fixed-width types and
 /// semantic-intention-communicating typedefs for various other types
 /// @version 0.1
-/// @date 2021-07-20
+/// @date 2021-08-16
 ///
 /// MIT License
 /// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -114,7 +114,8 @@ typedef float f32;
 typedef double f64;
 
 /// @brief Type signifying how a given value compares to another
-typedef enum StdCompare {
+typedef enum StdCompare
+{
 	STD_LESS_THAN = -1,
 	STD_EQUAL = 0,
 	STD_GREATER_THAN = 1

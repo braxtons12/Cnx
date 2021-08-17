@@ -1,9 +1,8 @@
-
 /// @file StdRatio.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides lossless methods for dealing with exact fractions
 /// @version 0.1
-/// @date 2021-08-14
+/// @date 2021-08-16
 ///
 /// MIT License
 /// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>

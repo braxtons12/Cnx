@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module extends `<tgmath.h>` and provides some alternative math functions.
 /// @version 0.1
-/// @date 2021-08-14
+/// @date 2021-08-16
 ///
 /// MIT License
 /// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
