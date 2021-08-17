@@ -58,7 +58,7 @@ PROJECT_LOGO           =
 # entered, it will be relative to the location where doxygen was started. If
 # left blank the current directory will be used.
 
-OUTPUT_DIRECTORY       = "/Volumes/Seagate/git/C2nxt/docs/doxygen"
+OUTPUT_DIRECTORY       = "/home/braxton/git/C2nxt/docs/doxygen"
 
 # If the CREATE_SUBDIRS tag is set to YES then doxygen will create 4096 sub-
 # directories (in 2 levels) under the output directory of each output format and
@@ -823,8 +823,8 @@ OPTIMIZE_OUTPUT_FOR_C  = YES
 # spaces. See also FILE_PATTERNS and EXTENSION_MAPPING
 # Note: If this tag is empty the current directory is searched.
 
-						  INPUT                  = "/Volumes/Seagate/git/C2nxt/README.md" \
-													"/Volumes/Seagate/git/C2nxt/include/C2nxt"
+						  INPUT                  = "/home/braxton/git/C2nxt/README.md" \
+													"/home/braxton/git/C2nxt/include/C2nxt"
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
@@ -1136,7 +1136,7 @@ FILTER_SOURCE_FILES    = NO
 # Note: The availability of this option depends on whether or not doxygen was
 # generated with the -Duse_libclang=ON option for CMake.
 
-																			 CLANG_DATABASE_PATH    = "/Volumes/Seagate/git/C2nxt"
+																			 CLANG_DATABASE_PATH    = "/home/braxton/git/C2nxt"
 
 #---------------------------------------------------------------------------
 # Configuration options related to the alphabetical class index

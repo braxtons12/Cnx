@@ -111,33 +111,33 @@
 	#if STD_PLATFORM_APPLE
 	// clang-format off
 	
-	#define std_abs(x) _Generic((x), 					\
-			u8		:	x,								\
-			u16		:	x,								\
-			u32		:	x,								\
-			u64		:	x,								\
-			usize	:	x,								\
-			i8		: 	abs(static_cast(i32)(x)),		\
-			i16		:	abs(static_cast(i32)(x)),		\
-			i32		:	abs(static_cast(i32)(x)),		\
-			i64		: 	llabs(static_cast(i64)(x)),		\
-			isize	: 	llabs(static_cast(isize)(x)),	\
-			f32		:	fabsf(static_cast(f32)(x)),		\
+	#define std_abs(x) _Generic((x), 										\
+			u8		:	x,													\
+			u16		:	x,													\
+			u32		:	x,													\
+			u64		:	x,													\
+			usize	:	x,													\
+			i8		: 	abs(static_cast(i32)(x)),							\
+			i16		:	abs(static_cast(i32)(x)),							\
+			i32		:	abs(static_cast(i32)(x)),							\
+			i64		: 	static_cast(i64)(llabs(static_cast(i64)(x))),		\
+			isize	: 	static_cast(isize)(llabs(static_cast(isize)(x))),	\
+			f32		:	fabsf(static_cast(f32)(x)),							\
 			f64		:	fabs(static_cast(f64)(x)))
 	// clang-format on
 	#else
 	// clang-format off
 
-		#define std_abs(x) _Generic((x), 					\
-				u8		:	x,								\
-				u16		:	x,								\
-				u32		:	x,								\
-				u64		:	x,								\
-				i8		: 	abs(static_cast(i32)(x)),		\
-				i16		:	abs(static_cast(i32)(x)),		\
-				i32		:	abs(static_cast(i32)(x)),		\
-				i64		: 	llabs(static_cast(i64)(x)),		\
-				f32		:	fabsf(static_cast(f32)(x)),		\
+		#define std_abs(x) _Generic((x), 										\
+				u8		:	x,													\
+				u16		:	x,													\
+				u32		:	x,													\
+				u64		:	x,													\
+				i8		: 	abs(static_cast(i32)(x)),							\
+				i16		:	abs(static_cast(i32)(x)),							\
+				i32		:	abs(static_cast(i32)(x)),							\
+				i64		: 	static_cast(i64)(llabs(static_cast(i64)(x))),		\
+				f32		:	fabsf(static_cast(f32)(x)),							\
 				f64		:	fabs(static_cast(f64)(x)))
 	// clang-format on
 	#endif // STD_PLATFORM_APPLE
@@ -234,7 +234,7 @@ u64 std_gcd_u64(u64 left, u64 right);
 	/// @param right - One of the pair of numbers to get the gcd of
 	///
 	/// @return The gcd of the pair of numbers, as a compile-time constant
-	/// @note This algorithm is good for 10 iterations of Euclid's algorithm.
+	/// @note This algorithm is good for 8 iterations of Euclid's algorithm.
 	/// Inputs that would require further iteration will give incorrect results
 	/// @note If using clang-tidy, you probably want to disable or suppress the
 	/// "readability-function-cognitive-complexity" lint if using this within a function
@@ -301,7 +301,7 @@ u64 std_lcm_u64(u64 left, u64 right);
 	/// @param right - One of the pair of numbers to get the lcm of
 	///
 	/// @return The lcm of the pair of numbers, as a compile-time constant
-	/// @note This algorithm is good for 10 iterations of Euclid's algorithm.
+	/// @note This algorithm is good for 8 iterations of Euclid's algorithm.
 	/// Inputs that would require further iteration will give incorrect results
 	/// @note If using clang-tidy, you probably want to disable or suppress the
 	/// "readability-function-cognitive-complexity" lint if using this within a function

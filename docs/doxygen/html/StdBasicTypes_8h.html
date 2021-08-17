@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>git/C2nxt/include/C2nxt/StdBasicTypes.h file | C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <title>include/C2nxt/StdBasicTypes.h file | C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -42,7 +42,7 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="dir_9bec7083027963d9f9ceae2cc7474de5.html">git</a>/</span><span class="m-breadcrumb"><a href="dir_49b122fa8cea83c8ef01de9aa5379c17.html">C2nxt</a>/</span><span class="m-breadcrumb"><a href="dir_c28551255240bd2a80f37986fd2bd3c8.html">include</a>/</span><span class="m-breadcrumb"><a href="dir_2502210eca0f861b6a41d90e00f0922f.html">C2nxt</a>/</span>StdBasicTypes.h <span class="m-thin">file</span>
+          <span class="m-breadcrumb"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a>/</span><span class="m-breadcrumb"><a href="dir_40b8c0d86bdcbc7ff85d5199b4386121.html">C2nxt</a>/</span>StdBasicTypes.h <span class="m-thin">file</span>
         </h1>
         <p>BasicTypes provides simple typedefs and limits for fixed-width types and semantic-intention-communicating typedefs for various other types.</p>
         <div class="m-block m-default">
@@ -51,6 +51,7 @@
             <li>
               Reference
               <ul>
+                <li><a href="#enum-members">Enums</a></li>
                 <li><a href="#typedef-members">Typedefs</a></li>
                 <li><a href="#define-members">Defines</a></li>
               </ul>
@@ -58,6 +59,17 @@
           </ul>
         </div>
 <aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.1</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2021-07-20</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2021 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        <section id="enum-members">
+          <h2><a href="#enum-members">Enums</a></h2>
+          <dl class="m-doc">
+            <dt id="a122b0205d13a40785ab6b4fd16d37827">
+              <span class="m-doc-wrap-bumper">enum <a href="#a122b0205d13a40785ab6b4fd16d37827" class="m-doc-self">StdCompare</a> { </span><span class="m-doc-wrap"><a href="#a122b0205d13a40785ab6b4fd16d37827a62deb394d6b2856b8a3d75c907cd141f" class="m-doc">STD_LESS_THAN</a> = -1,
+              <a href="#a122b0205d13a40785ab6b4fd16d37827a3beb266ac3ed2078eaf2f30469fa40a4" class="m-doc">STD_EQUAL</a> = 0,
+              <a href="#a122b0205d13a40785ab6b4fd16d37827adc60e243ef85f88774f8f103ca3c3fce" class="m-doc">STD_GREATER_THAN</a> = 1 }</span>
+            </dt>
+            <dd>Type signifying how a given value compares to another.</dd>
+          </dl>
+        </section>
         <section id="typedef-members">
           <h2><a href="#typedef-members">Typedefs</a></h2>
           <dl class="m-doc">
@@ -117,6 +129,10 @@
               using <a href="group__types.html#ga94dab5770726ccbef8c7d026cfbdf8e5" class="m-doc">f64</a> = double
             </dt>
             <dd><code>f64</code> is a 64-bit floating point number</dd>
+            <dt id="a75c8899595bb4b9cc06e57c15565cfa6">
+              using <a href="#a75c8899595bb4b9cc06e57c15565cfa6" class="m-doc-self">StdCompare</a> = enum <a href="StdBasicTypes_8h.html#a122b0205d13a40785ab6b4fd16d37827" class="m-doc">StdCompare</a>
+            </dt>
+            <dd>Type signifying how a given value compares to another.</dd>
             <dt id="af1e74057c8255f0e08ad2f95816ff57e">
               using <a href="#af1e74057c8255f0e08ad2f95816ff57e" class="m-doc-self">u8_ptr</a> = <a href="group__types.html#ga92c50087ca0e64fa93fc59402c55f8ca" class="m-doc">u8</a>*
             </dt>

@@ -113,6 +113,13 @@ typedef float f32;
 /// @ingroup types
 typedef double f64;
 
+/// @brief Type signifying how a given value compares to another
+typedef enum StdCompare {
+	STD_LESS_THAN = -1,
+	STD_EQUAL = 0,
+	STD_GREATER_THAN = 1
+} StdCompare;
+
 /// @brief alias for a `u8` pointer
 typedef u8* u8_ptr;
 /// @brief alias for a `u16` pointer

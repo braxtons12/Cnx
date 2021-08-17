@@ -202,13 +202,13 @@
 	#define __std_static_gcd(left, right)                             							   \
 		_Pragma("GCC diagnostic push")                                							   \
 		_Pragma("GCC diagnostic ignored \"-Wdivision-by-zero\"")								   \
-		((left) >= (right) ? __std_static_gcd10(left, right) /** NOLINT(bugprone-branch-clone) **/ \
-						   : __std_static_gcd10(right, left))  									   \
+		((left) >= (right) ? __std_static_gcd8(left, right) /** NOLINT(bugprone-branch-clone) **/ \
+						   : __std_static_gcd8(right, left))  									   \
 		_Pragma("GCC diagnostic pop")
 #else
 	#define __std_static_gcd(left, right)                      									   \
-		((left) >= (right) ? __std_static_gcd10(left, right) /** NOLINT(bugprone-branch-clone) **/ \
-						   : __std_static_gcd10(right, left))
+		((left) >= (right) ? __std_static_gcd8(left, right) /** NOLINT(bugprone-branch-clone) **/ \
+						   : __std_static_gcd8(right, left))
 #endif
 
 // clang-format on

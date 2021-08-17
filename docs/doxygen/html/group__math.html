@@ -86,6 +86,78 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga3aa069ac3980707dae1e0530f50d59e4" class="m-doc">abs</a>(</span><span class="m-doc-wrap">x)</span>
             </dt>
             <dd>Returns the absolute value of the given one.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga850ccd6d7277a8f69078f3603d8e8379" class="m-doc">std_static_abs</a>(</span><span class="m-doc-wrap">x)</span>
+            </dt>
+            <dd>Calculates the absolute value of the given input at compile time.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga471670e9ef20e611a7b6e4262f9ddf73" class="m-doc">std_static_sign</a>(</span><span class="m-doc-wrap">x)</span>
+            </dt>
+            <dd>Calculates the sign of the given input at compile time.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab8d07644937f7a4f44394a18ed418387" class="m-doc">std_sign</a>(</span><span class="m-doc-wrap">x)</span>
+            </dt>
+            <dd>Calculates the sign of the given input.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga36043068973d67f36b7442d1038740d8" class="m-doc">std_gcd</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>Calculate the gcd of the two inputs.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga587fe9c674cc3243f2abfdeaed259c55" class="m-doc">std_static_gcd</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>Calculate the gcd of the two inputs at compile time.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga0b2884a0aa45aa7a3961266dd212535c" class="m-doc">std_lcm</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>Calculate the lcm of the two inputs.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga173a89e6132d47700577ea94b3f3d585" class="m-doc">std_static_lcm</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>Calculate the lcm of the two inputs at compile time.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gace0a4bf9c0e14995677c6965cb668e5a" class="m-doc">std_checked_add</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>Performs the checked addition of <code>left</code> and <code>right</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7aadf0797aa2c7033460480784e075f3" class="m-doc">std_static_checked_add</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>Performs the checked addition of <code>left</code> and <code>right</code> at compile-time.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1ff9fb2169fa1a29f2c90516178c5c7b" class="m-doc">std_checked_sub</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>Performs the checked subtraction of <code>right</code> from <code>left</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga3fe2fbfed9dc65adfa2f6b77459eb6ad" class="m-doc">std_static_checked_sub</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>Performs the checked subtraction of <code>right</code> from <code>left</code> at compile-time.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga67794709301cbdb30eb1804a89c4cddd" class="m-doc">std_checked_mul</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>Performs the checked multiplication of <code>left</code> and <code>right</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac996e7fd28a6b072b5dd68816af5f0bc" class="m-doc">std_static_checked_mul</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>Performs the checked multiplication of <code>left</code> and <code>right</code> at compile-time.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5799d0400f7961f1a836549d68c7621b" class="m-doc">std_checked_div</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>Performs the checked division of <code>left</code> and <code>right</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1554f94f4080c701b8a20d8153838728" class="m-doc">std_static_checked_div</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>Performs the checked divison of <code>left</code> and <code>right</code> at compile-time.</dd>
           </dl>
         </section>
         <section>
@@ -251,6 +323,421 @@
                 </tr>
               </tfoot>
             </table>
+          </div></section>
+          <section class="m-doc-details" id="ga850ccd6d7277a8f69078f3603d8e8379"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga850ccd6d7277a8f69078f3603d8e8379" class="m-doc-self">std_static_abs</a>(</span><span class="m-doc-wrap">x)</span>
+            </h3>
+            <p>Calculates the absolute value of the given input at compile time.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>- The value to get the absolute value of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the absolute value of <code>x</code>, as a compile-time constant</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga471670e9ef20e611a7b6e4262f9ddf73"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga471670e9ef20e611a7b6e4262f9ddf73" class="m-doc-self">std_static_sign</a>(</span><span class="m-doc-wrap">x)</span>
+            </h3>
+            <p>Calculates the sign of the given input at compile time.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>- The value to get the sign of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>-1</code> if negative, <code>0</code> if 0, <code>1</code> if positive</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gab8d07644937f7a4f44394a18ed418387"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab8d07644937f7a4f44394a18ed418387" class="m-doc-self">std_sign</a>(</span><span class="m-doc-wrap">x)</span>
+            </h3>
+            <p>Calculates the sign of the given input.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>- The value to get the sign of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>-1</code> if negative, <code>0</code> if 0, <code>1</code> if positive</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga36043068973d67f36b7442d1038740d8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga36043068973d67f36b7442d1038740d8" class="m-doc-self">std_gcd</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>Calculate the gcd of the two inputs.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- One of the pair of numbers to get the gcd of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- One of the pair of numbers to get the gcd of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The gcd of the pair of numbers</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga587fe9c674cc3243f2abfdeaed259c55"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga587fe9c674cc3243f2abfdeaed259c55" class="m-doc-self">std_static_gcd</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>Calculate the gcd of the two inputs at compile time.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- One of the pair of numbers to get the gcd of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- One of the pair of numbers to get the gcd of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The gcd of the pair of numbers, as a compile-time constant</td>
+                </tr>
+              </tfoot>
+            </table>
+<aside class="m-note m-info"><h4>Note</h4><p>This algorithm is good for 8 iterations of Euclid&#x27;s algorithm. Inputs that would require further iteration will give incorrect results</p><p>If using clang-tidy, you probably want to disable or suppress the &quot;readability-function-cognitive-complexity&quot; lint if using this within a function</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga0b2884a0aa45aa7a3961266dd212535c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga0b2884a0aa45aa7a3961266dd212535c" class="m-doc-self">std_lcm</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>Calculate the lcm of the two inputs.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- One of the pair of numbers to get the lcm of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- One of the pair of numbers to get the lcm of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The lcm of the pair of numbers</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga173a89e6132d47700577ea94b3f3d585"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga173a89e6132d47700577ea94b3f3d585" class="m-doc-self">std_static_lcm</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>Calculate the lcm of the two inputs at compile time.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- One of the pair of numbers to get the lcm of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- One of the pair of numbers to get the lcm of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The lcm of the pair of numbers, as a compile-time constant</td>
+                </tr>
+              </tfoot>
+            </table>
+<aside class="m-note m-info"><h4>Note</h4><p>This algorithm is good for 8 iterations of Euclid&#x27;s algorithm. Inputs that would require further iteration will give incorrect results</p><p>If using clang-tidy, you probably want to disable or suppress the &quot;readability-function-cognitive-complexity&quot; lint if using this within a function</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="gace0a4bf9c0e14995677c6965cb668e5a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gace0a4bf9c0e14995677c6965cb668e5a" class="m-doc-self">std_checked_add</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>Performs the checked addition of <code>left</code> and <code>right</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The left-hand number of the addition</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The right-hand number of the addition</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code><a href="group__std__option.html#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some(T, result)</a></code> if the addition was successful (no overflow occurred), <code><a href="group__std__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(T)</a></code> otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Performs the checked addition of <code>left</code> and <code>right</code>, returning <code><a href="group__std__option.html#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some(T, result)</a></code> if overflow did <strong>not</strong> occur or <code><a href="group__std__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(T)</a></code> if overflow occured, where <code>T</code> is the type of the passed arguments</p>
+          </div></section>
+          <section class="m-doc-details" id="ga7aadf0797aa2c7033460480784e075f3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7aadf0797aa2c7033460480784e075f3" class="m-doc-self">std_static_checked_add</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>Performs the checked addition of <code>left</code> and <code>right</code> at compile-time.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The left integer to add</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The right integer to add</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>sum of <code>left</code> and <code>right</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Performs the addition of <code>left</code> and <code>right</code> at compile-time, checking for overflow and triggering a compiler error if overflow occurs</p>
+          </div></section>
+          <section class="m-doc-details" id="ga1ff9fb2169fa1a29f2c90516178c5c7b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1ff9fb2169fa1a29f2c90516178c5c7b" class="m-doc-self">std_checked_sub</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>Performs the checked subtraction of <code>right</code> from <code>left</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The number to subtract from</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The number to subtract</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code><a href="group__std__option.html#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some(T, result)</a></code> if the subtraction was successful (no overflow occurred), <code><a href="group__std__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(T)</a></code> otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Performs the checked subtraction of <code>right</code> from <code>left</code>, returning <code><a href="group__std__option.html#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some(T, result)</a></code> if overflow did <strong>not</strong> occur or <code><a href="group__std__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(T)</a></code> if overflow occured, where <code>T</code> is the type of the passed arguments</p>
+          </div></section>
+          <section class="m-doc-details" id="ga3fe2fbfed9dc65adfa2f6b77459eb6ad"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga3fe2fbfed9dc65adfa2f6b77459eb6ad" class="m-doc-self">std_static_checked_sub</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>Performs the checked subtraction of <code>right</code> from <code>left</code> at compile-time.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The integer to subtract from</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The integer to subtract</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>subtraction of <code>right</code> from <code>left</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Performs the subtraction of <code>right</code> from <code>left</code> at compile-time, checking for overflow and triggering a compiler error if overflow occurs</p>
+          </div></section>
+          <section class="m-doc-details" id="ga67794709301cbdb30eb1804a89c4cddd"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga67794709301cbdb30eb1804a89c4cddd" class="m-doc-self">std_checked_mul</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>Performs the checked multiplication of <code>left</code> and <code>right</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The left-hand number of the multiplication</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The right-hand number of the multiplication</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code><a href="group__std__option.html#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some(T, result)</a></code> if the multiplication was successful (no overflow occurred), <code><a href="group__std__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(T)</a></code> otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Performs the checked multiplication of <code>left</code> and <code>right</code>, returning <code><a href="group__std__option.html#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some(T, result)</a></code> if overflow did <strong>not</strong> occur or <code><a href="group__std__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(T)</a></code> if overflow occured, where <code>T</code> is the type of the passed arguments</p>
+          </div></section>
+          <section class="m-doc-details" id="gac996e7fd28a6b072b5dd68816af5f0bc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac996e7fd28a6b072b5dd68816af5f0bc" class="m-doc-self">std_static_checked_mul</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>Performs the checked multiplication of <code>left</code> and <code>right</code> at compile-time.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The left integer to multiply</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The right integer to multiply</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>product of <code>left</code> and <code>right</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Performs the multiplication of <code>left</code> and <code>right</code> at compile-time, checking for overflow and triggering a compiler error if overflow occurs</p>
+          </div></section>
+          <section class="m-doc-details" id="ga5799d0400f7961f1a836549d68c7621b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5799d0400f7961f1a836549d68c7621b" class="m-doc-self">std_checked_div</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>Performs the checked division of <code>left</code> and <code>right</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The dividend</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The divisor</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code><a href="group__std__option.html#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some(T, result)</a></code> if the division was successful (no overflow occurred), <code><a href="group__std__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(T)</a></code> otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Performs the checked division of <code>left</code> and <code>right</code>, returning <code><a href="group__std__option.html#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some(T, result)</a></code> if overflow did <strong>not</strong> occur or <code><a href="group__std__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(T)</a></code> if overflow occured, where <code>T</code> is the type of the passed arguments</p>
+          </div></section>
+          <section class="m-doc-details" id="ga1554f94f4080c701b8a20d8153838728"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1554f94f4080c701b8a20d8153838728" class="m-doc-self">std_static_checked_div</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>Performs the checked divison of <code>left</code> and <code>right</code> at compile-time.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The integer dividend</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The integer divisor</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>quotient of <code>left / right</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Performs the division of <code>left</code> and <code>right</code> at compile-time, checking for overflow and triggering a compiler error if overflow occurs</p>
           </div></section>
         </section>
       </div>
