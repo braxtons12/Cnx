@@ -27,6 +27,8 @@
 
 #include "../include/C2nxt/StdRatio.h"
 
+#include "../include/C2nxt/StdError.h"
+
 StdRatio std_ratio_new(i64 numerator, i64 denominator) {
 	std_assert(denominator != 0, "Denominator of a StdRatio cannot be 0");
 	let abs_num = abs(numerator);
@@ -149,4 +151,21 @@ StdRatio std_ratio_multiply_scalar(StdRatio ratio, i64 scalar) {
 
 StdRatio std_ratio_divide_scalar(StdRatio ratio, i64 scalar) {
 	return std_ratio_new(ratio.num, ratio.den * scalar);
+}
+
+StdString std_ratio_format(const StdFormat* restrict self, StdFormatSpecifier specifier) {
+	return std_ratio_format_with_allocator(self, specifier, std_allocator_new());
+}
+
+StdString std_ratio_format_with_allocator(const StdFormat* restrict self,
+										  StdFormatSpecifier maybe_unused specifier,
+										  StdAllocator allocator) {
+	std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT,
+			   "Can't format a StdRatio with custom format specifier");
+
+	let _self = static_cast(const StdRatio*)(self->m_self);
+	return std_format_with_allocator(AS_STRING(StdRatio) ": [ num = {}, den = {}]",
+									 allocator,
+									 _self->num,
+									 _self->den);
 }

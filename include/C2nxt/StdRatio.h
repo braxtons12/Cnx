@@ -26,6 +26,7 @@
 /// SOFTWARE.
 
 #include "StdBasicTypes.h"
+#include "StdFormat.h"
 #include "StdMath.h"
 
 /// @defgroup std_ratio StdRatio
@@ -75,52 +76,52 @@ typedef struct StdRatio {
 
 /// @brief SI "atto" as a `StdRatio`
 /// @ingroup std_ratio
-static let std_atto = std_ratio(1LL, 1000000000000000000LL);
+static let maybe_unused std_atto = (StdRatio){.num = 1LL, .den = 1000000000000000000LL};
 /// @brief SI "femto" as a `StdRatio`
 /// @ingroup std_ratio
-static let std_femto = std_ratio(1LL, 1000000000000000LL);
+static let maybe_unused std_femto = (StdRatio){.num = 1LL, .den = 1000000000000000LL};
 /// @brief SI "pico" as a `StdRatio`
 /// @ingroup std_ratio
-static let std_pico = std_ratio(1LL, 1000000000000LL);
+static let maybe_unused std_pico = (StdRatio){.num = 1LL, .den = 1000000000000LL};
 /// @brief SI "nano" as a `StdRatio`
 /// @ingroup std_ratio
-static let std_nano = std_ratio(1LL, 1000000000LL);
+static let maybe_unused std_nano = (StdRatio){.num = 1LL, .den = 1000000000LL};
 /// @brief SI "micro" as a `StdRatio`
 /// @ingroup std_ratio
-static let std_micro = std_ratio(1LL, 1000000LL);
+static let maybe_unused std_micro = (StdRatio){.num = 1LL, .den = 1000000LL};
 /// @brief SI "milli" as a `StdRatio`
 /// @ingroup std_ratio
-static let std_milli = std_ratio(1LL, 1000LL);
+static let maybe_unused std_milli = (StdRatio){.num = 1LL, .den = 1000LL};
 /// @brief SI "centi" as a `StdRatio`
 /// @ingroup std_ratio
-static let std_centi = std_ratio(1LL, 100LL);
+static let maybe_unused std_centi = (StdRatio){.num = 1LL, .den = 100LL};
 /// @brief SI "deci" as a `StdRatio`
 /// @ingroup std_ratio
-static let std_deci = std_ratio(1LL, 10LL);
+static let maybe_unused std_deci = (StdRatio){.num = 1LL, .den = 10LL};
 /// @brief SI "deca" as a `StdRatio`
 /// @ingroup std_ratio
-static let std_deca = std_ratio(10LL, 1LL);
+static let maybe_unused std_deca = (StdRatio){.num = 10LL, .den = 1LL};
 /// @brief SI "hecto" as a `StdRatio`
 /// @ingroup std_ratio
-static let std_hecto = std_ratio(100LL, 1LL);
+static let maybe_unused std_hecto = (StdRatio){.num = 100LL, .den = 1LL};
 /// @brief SI "kilo" as a `StdRatio`
 /// @ingroup std_ratio
-static let std_kilo = std_ratio(1000LL, 1LL);
+static let maybe_unused std_kilo = (StdRatio){.num = 1000LL, .den = 1LL};
 /// @brief SI "mega" as a `StdRatio`
 /// @ingroup std_ratio
-static let std_mega = std_ratio(1000000LL, 1LL);
+static let maybe_unused std_mega = (StdRatio){.num = 1000000LL, .den = 1LL};
 /// @brief SI "giga" as a `StdRatio`
 /// @ingroup std_ratio
-static let std_giga = std_ratio(1000000000LL, 1LL);
+static let maybe_unused std_giga = (StdRatio){.num = 1000000000LL, .den = 1LL};
 /// @brief SI "tera" as a `StdRatio`
 /// @ingroup std_ratio
-static let std_tera = std_ratio(1000000000000LL, 1LL);
+static let maybe_unused std_tera = (StdRatio){.num = 1000000000000LL, .den = 1LL};
 /// @brief SI "peta" as a `StdRatio`
 /// @ingroup std_ratio
-static let std_peta = std_ratio(1000000000000000LL, 1LL);
+static let maybe_unused std_peta = (StdRatio){.num = 1000000000000000LL, .den = 1LL};
 /// @brief SI "exa" as a `StdRatio`
 /// @ingroup std_ratio
-static let std_exa = std_ratio(1000000000000000000LL, 1LL);
+static let maybe_unused std_exa = (StdRatio){.num = 1000000000000000000LL, .den = 1LL};
 
 /// @brief Constructs a `StdRatio`
 ///
@@ -292,5 +293,29 @@ StdRatio std_ratio_multiply_scalar(StdRatio ratio, i64 scalar);
 /// @return the `StdRatio` resulting from the division
 /// @ingroup std_ratio
 StdRatio std_ratio_divide_scalar(StdRatio ratio, i64 scalar);
+
+/// @brief Implement `StdFormat.format` for `StdRatio`
+///
+/// @param self - The `StdRatio` to format
+/// @param specifier - The format specifier
+///
+/// @return `self` formatted as a `StdString`
+StdString std_ratio_format(const StdFormat* restrict self, StdFormatSpecifier specifier);
+
+/// @brief Implement `StdFormat.format_with_allocator` for `StdRatio`
+///
+/// @param self - The `StdRatio` to format
+/// @param specifier - The format specifier
+/// @param allocator - The allocator to allocate memory for the formatted string with
+///
+/// @return `self` formatted as a `StdString`
+StdString std_ratio_format_with_allocator(const StdFormat* restrict self,
+										  StdFormatSpecifier specifier,
+										  StdAllocator allocator);
+
+/// @brief Implement `StdFormat` for `StdRatio`
+/// @ingroup std_ratio
+static maybe_unused
+	ImplTraitFor(StdFormat, StdRatio, std_ratio_format, std_ratio_format_with_allocator);
 
 #endif // STD_RATIO
