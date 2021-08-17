@@ -3,7 +3,7 @@
 /// @brief StdIO brings human readable formatted I/O, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
 /// @version 0.1
-/// @date 2021-07-20
+/// @date 2021-08-17
 ///
 /// MIT License
 /// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -28,7 +28,6 @@
 
 #include "StdAllocators.h"
 #include "StdBasicTypes.h"
-#include "StdError.h"
 #include "StdFormat.h"
 
 /// @defgroup io I/O

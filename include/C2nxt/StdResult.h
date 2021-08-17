@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a struct template for representing the value of a fallible operation
 /// @version 0.1
-/// @date 2021-07-20
+/// @date 2021-08-17
 ///
 /// MIT License
 /// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -83,9 +83,9 @@
 /// 		// maybe_value was `Err(u32)`, do something to recover
 /// 		// or report the error, eg:...
 ///			let err = std_result_unwrap_err(maybe_value);
-/// 		eprintln("Error in example: {}", err);
+/// 		eprintln("Error in example: {}", as_format_t(StdError, err));
 ///			// or, even more succinctly:
-///			eprintln("Error in example: {}", maybe_value);
+///			eprintln("Error in example: {}", as_format_t(StdResult(T), maybe_value));
 /// 	}
 /// }
 /// @endcode
@@ -482,7 +482,7 @@
 					AS_STRING(StdResult(T)) ": [is_ok: {}, error: {}]",                        \
 					allocator,                                                                 \
 					_self->m_is_ok,                                                            \
-					_self->m_error);                                                           \
+					as_format_t(StdError, _self->m_error));                                    \
 			}                                                                                  \
 		}
 

@@ -3,7 +3,7 @@
 /// @brief StdFormat bings human readable string formatting, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
 /// @version 0.1
-/// @date 2021-07-20
+/// @date 2021-08-17
 ///
 /// MIT License
 /// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -310,7 +310,6 @@ StdString std_vformat_with_allocator(const_cstring restrict format_string,
 				f64* 						: 	as_format_t(f64, x), 				\
 				nullptr_t* 					: 	as_format_t(nullptr_t, x), 			\
 				StdString* 					: 	as_format_t(StdString, x), 			\
-				StdError* 					: 	as_format_t(StdError, x), 			\
 				StdFormat* 					: 	(x), 								\
 				const char [sizeof((x))]    :   as_format_t(cstring, x), 			\
 				const bool* 				: 	as_format_t(bool, x), 				\
@@ -329,7 +328,6 @@ StdString std_vformat_with_allocator(const_cstring restrict format_string,
 				const f64* 					: 	as_format_t(f64, x), 				\
 				const nullptr_t*			: 	as_format_t(nullptr_t, x), 			\
 				const StdString*			: 	as_format_t(StdString, x), 			\
-				const StdError*				: 	as_format_t(StdError, x), 			\
 				STD_AS_FORMAT_USER_SUPPLIED_TYPES 									\
 				const StdFormat* 			: 	(x))
 	#else
@@ -360,7 +358,6 @@ StdString std_vformat_with_allocator(const_cstring restrict format_string,
 				f64* 						: 	as_format_t(f64, x), 				\
 				nullptr_t* 					: 	as_format_t(nullptr_t, x), 			\
 				StdString* 					: 	as_format_t(StdString, x), 			\
-				StdError* 					: 	as_format_t(StdError, x), 			\
 				StdFormat* 					: 	(x), 								\
 				const char (*)[sizeof((x))] :   as_format_t(cstring, x), 			\
 				const bool* 				: 	as_format_t(bool, x), 				\
@@ -379,7 +376,6 @@ StdString std_vformat_with_allocator(const_cstring restrict format_string,
 				const f64* 					: 	as_format_t(f64, x), 				\
 				const nullptr_t*			: 	as_format_t(nullptr_t, x), 			\
 				const StdString*			: 	as_format_t(StdString, x), 			\
-				const StdError*				: 	as_format_t(StdError, x), 			\
 				const StdFormat*			: 	(x))
 		// clang-format on
 		#endif // STD_AS_FORMAT_USES_USER_SUPPLIED_TYPES
@@ -411,7 +407,6 @@ StdString std_vformat_with_allocator(const_cstring restrict format_string,
 				f64* 						: 	as_format_t(f64, x), 				\
 				nullptr_t* 					: 	as_format_t(nullptr_t, x), 			\
 				StdString* 					: 	as_format_t(StdString, x), 			\
-				StdError* 					: 	as_format_t(StdError, x), 			\
 				StdFormat* 					: 	(x), 								\
 				const char [sizeof((x))]    :   as_format_t(cstring, x), 			\
 				const bool* 				: 	as_format_t(bool, x), 				\
@@ -428,7 +423,6 @@ StdString std_vformat_with_allocator(const_cstring restrict format_string,
 				const f64* 					: 	as_format_t(f64, x), 				\
 				const nullptr_t*			: 	as_format_t(nullptr_t, x), 			\
 				const StdString*			: 	as_format_t(StdString, x), 			\
-				const StdError*				: 	as_format_t(StdError, x), 			\
 				STD_AS_FORMAT_USER_SUPPLIED_TYPES 									\
 				const StdFormat* 			: 	(x))
 	#else
@@ -457,7 +451,6 @@ StdString std_vformat_with_allocator(const_cstring restrict format_string,
 				f64* 						: 	as_format_t(f64, x), 				\
 				nullptr_t* 					: 	as_format_t(nullptr_t, x), 			\
 				StdString* 					: 	as_format_t(StdString, x), 			\
-				StdError* 					: 	as_format_t(StdError, x), 			\
 				StdFormat* 					: 	(x), 								\
 				const char (*)[sizeof((x))] :   as_format_t(cstring, x), 			\
 				const bool* 				: 	as_format_t(bool, x), 				\
@@ -474,7 +467,6 @@ StdString std_vformat_with_allocator(const_cstring restrict format_string,
 				const f64* 					: 	as_format_t(f64, x), 				\
 				const nullptr_t*			: 	as_format_t(nullptr_t, x), 			\
 				const StdString*			: 	as_format_t(StdString, x), 			\
-				const StdError*				: 	as_format_t(StdError, x), 			\
 				const StdFormat*			: 	(x))
 		// clang-format on
 		#endif // STD_AS_FORMAT_USES_USER_SUPPLIED_TYPES
