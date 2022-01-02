@@ -3,10 +3,10 @@
 /// @brief This module provides collection agnostic ways for passing, modifying, and working with
 /// collections of elements as "Ranges"
 /// @version 0.1
-/// @date 2021-07-20
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@
 
 #include <stdio.h>
 
-#include "StdIterator.h"
+#include <C2nxt/StdIterator.h>
 
 /// @defgroup ranges Ranges
 /// C2nxt Ranges provides a "struct template" enabling a lazy, collection-agnostic way to view,
@@ -36,7 +36,7 @@
 ///
 /// Ranges is one of the C2nxt features that relies most heavily on GNU C extensions (currently), in
 /// particular, `__auto_type` and statement expressions. It would benefit the most from C2x
-/// standardization of `auto` and lamdas.
+/// standardization of `auto` and lambdas.
 ///
 /// Requires:
 /// 1. A C2nxt compatible collection.
@@ -74,7 +74,7 @@
 /// }
 ///
 /// // example function to pass to std_accumulate, sums all elements
-/// u32 accumulate(const u32* restrict current, const u32* restrict eleme) {
+/// u32 accumulate(const u32* restrict current, const u32* restrict elem) {
 ///		return (*current) + (*elem);
 /// }
 ///
@@ -270,7 +270,8 @@
 
 /// @brief Creates a filtered `StdRange(T)`
 ///
-/// Creates a `StdRange(T)` from the given iterators, filtered with the `StdRangeFilter(T)`, `filter`
+/// Creates a `StdRange(T)` from the given iterators, filtered with the `StdRangeFilter(T)`,
+/// `filter`
 ///
 /// @param T - The type held by the collection `StdRange(T)` will abstract over
 /// @param begin - The begin iterator for the collection
@@ -550,8 +551,8 @@
 		})
 	/// @brief "Accumulates" the elements viewed by the `StdRange(T)`
 	///
-	/// "Acummulates" the elements viewed by the given `StdRange(T)` with the
-	/// `StdRangeAccumulator(T)`, `accumulatin_function`, returning the result
+	/// "Accumulates" the elements viewed by the given `StdRange(T)` with the
+	/// `StdRangeAccumulator(T)`, `accumulation_function`, returning the result
 	///
 	/// @param range - The `StdRange(T)` to accumulate the elements of
 	/// @param accumulation_function - The `StdRangeAccumulator(T)` to accumulate elements with
@@ -569,8 +570,8 @@
 		})
 	/// @brief "Accumulates" the elements in the collection
 	///
-	/// "Acummulates" the elements in the given collection with the
-	/// `StdRangeAccumulator(T)`, `accumulatin_function`, returning the result
+	/// "Accumulates" the elements in the given collection with the
+	/// `StdRangeAccumulator(T)`, `accumulation_function`, returning the result
 	///
 	/// @param T - The type held by the collection `StdRange(T)` will abstract over
 	/// @param collection - The collection to accumulate
