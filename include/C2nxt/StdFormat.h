@@ -1,12 +1,12 @@
 /// @file StdFormat.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
-/// @brief StdFormat bings human readable string formatting, similar to C++'s `std::format` and
+/// @brief StdFormat brings human readable string formatting, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
 /// @version 0.1
-/// @date 2021-08-17
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -26,12 +26,11 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
+#include <C2nxt/StdAssert.h>
+#include <C2nxt/StdBasicTypes.h>
+#include <C2nxt/StdString.h>
+#include <C2nxt/StdTrait.h>
 #include <stdarg.h>
-
-#include "StdAssert.h"
-#include "StdBasicTypes.h"
-#include "StdString.h"
-#include "StdTrait.h"
 
 /// @defgroup format String Formatting
 /// C2nxt's formatting API creates a composable, ergonomic, human-readable way to format data into
@@ -63,7 +62,7 @@
 /// Format allows for extension and composition of formatting for user-defined types by allowing the
 /// implementation of the `StdFormat` Trait for those types.
 ///
-/// To provide an implementation of `StdFormat` for your type, only two functons and the Trait
+/// To provide an implementation of `StdFormat` for your type, only two functions and the Trait
 /// implementation are required. The functions take the following signatures:
 ///
 /// @code {.c}
@@ -147,8 +146,8 @@
 /// @endcode
 
 #ifndef STD_FORMAT
-	/// @brief Declarations and Definitons related to `std_format(format_string, ...)`, `StdFormat`,
-	/// and C2nxt string formatting
+	/// @brief Declarations and Definitions related to `std_format(format_string, ...)`,
+	/// `StdFormat`, and C2nxt string formatting
 	#define STD_FORMAT
 
 /// @brief C2nxt string formatting valid format specifiers
@@ -167,8 +166,7 @@
 /// `bool`s are special cased and do not accept a format specifier. They will format directly to
 /// "true" or "false".
 /// @ingroup format
-typedef enum StdFormatTypes
-{
+typedef enum StdFormatTypes {
 	STD_FORMAT_TYPE_DEFAULT = 0,
 	STD_FORMAT_TYPE_DECIMAL = 'd',
 	STD_FORMAT_TYPE_HEX_LOWER = 'x',
@@ -208,7 +206,7 @@ typedef struct StdFormatSpecifier {
 /// @param ... - The parameter pack of arguments to be formatted
 ///
 /// @return The formatted output string
-StdString std_format_with_allocator(const_cstring restrict format_string,
+StdString std_format_with_allocator(restrict const_cstring format_string,
 									StdAllocator allocator,
 									usize num_args,
 									...);
@@ -223,7 +221,7 @@ StdString std_format_with_allocator(const_cstring restrict format_string,
 /// @param list - The parameter pack of arguments to be formatted
 ///
 /// @return The formatted output string
-StdString std_vformat_with_allocator(const_cstring restrict format_string,
+StdString std_vformat_with_allocator(restrict const_cstring format_string,
 									 StdAllocator allocator,
 									 usize num_args,
 									 va_list list);
@@ -282,7 +280,7 @@ StdString std_vformat_with_allocator(const_cstring restrict format_string,
 
 	#if STD_PLATFORM_APPLE
 		#if STD_AS_FORMAT_USES_USER_SUPPLIED_TYPES
-		// clang-format off
+			// clang-format off
 		/// @brief Converts the given variable into its associated `StdFormat` Trait implementation
 		///
 		/// There must be an implementation of `StdFormat` for the type of `x` and `x` must be an
@@ -381,7 +379,7 @@ StdString std_vformat_with_allocator(const_cstring restrict format_string,
 		#endif // STD_AS_FORMAT_USES_USER_SUPPLIED_TYPES
 	#else
 		#if STD_AS_FORMAT_USES_USER_SUPPLIED_TYPES
-		// clang-format off
+			// clang-format off
 		/// @brief Converts the given variable into its associated `StdFormat` Trait implementation
 		///
 		/// There must be an implementation of `StdFormat` for the type of `x` and `x` must be an
@@ -534,7 +532,7 @@ StdString std_vformat_with_allocator(const_cstring restrict format_string,
 /// the default system allocator, and `format_with_allocator`, to format the associated type
 /// with a user-provided allocator.
 ///
-/// To provide an implementation of `StdFormat` for your type, only two functons and the
+/// To provide an implementation of `StdFormat` for your type, only two functions and the
 /// Trait implementation are required. The functions take the following signatures:
 ///
 /// @code {.c}
@@ -567,7 +565,7 @@ Trait(
 /// the default system allocator, and `format_with_allocator`, to format the associated type
 /// with a user-provided allocator.
 ///
-/// To provide an implementation of `StdFormat` for your type, only two functons and the
+/// To provide an implementation of `StdFormat` for your type, only two functions and the
 /// Trait implementation are required. The functions take the following signatures:
 ///
 /// @code {.c}
