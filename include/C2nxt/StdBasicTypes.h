@@ -3,10 +3,10 @@
 /// @brief BasicTypes provides simple typedefs and limits for fixed-width types and
 /// semantic-intention-communicating typedefs for various other types
 /// @version 0.1
-/// @date 2021-08-16
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -32,20 +32,20 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "StdPlatform.h"
+#include <C2nxt/StdPlatform.h>
 
 #if STD_PLATFORM_COMPILER_CLANG && STD_PLATFORM_APPLE
 _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wnonportable-include-path\"")
 #endif
 
-#include "StdDef.h"
+#include <C2nxt/StdDef.h>
 
 #if STD_PLATFORM_COMPILER_CLANG && STD_PLATFORM_APPLE
 	_Pragma("GCC diagnostic pop")
 #endif
 
 /// @defgroup types Types
-/// C2nxt provides its own typdefs for fixed-width types and typedefs for various semantic types
+/// C2nxt provides its own typedefs for fixed-width types and typedefs for various semantic types
 
 #ifndef STD_BASIC_TYPES
 	/// @brief Declarations and definitions related to C2nxt's builtin types
@@ -747,10 +747,10 @@ typedef const wchar_t_ptr* const_wchar_t_ptr_ref;
 	/// @ingroup types
 	#define std_min_f64 (-std_max_f64)
 
-	/// @brief Minimum discernable difference value of an `f32`
+	/// @brief Minimum discernible difference value of an `f32`
 	/// @ingroup types
 	#define std_min_diff_f32 static_cast(f32)(FLT_MIN)
-	/// @brief Minimum discernable difference value of an `f64`
+	/// @brief Minimum discernible difference value of an `f64`
 	/// @ingroup types
 	#define std_min_diff_f64 static_cast(f64)(DBL_MIN)
 
