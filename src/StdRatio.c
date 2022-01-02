@@ -2,10 +2,10 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides lossless methods for dealing with exact fractions
 /// @version 0.1
-/// @date 2021-08-16
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,7 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#include "../include/C2nxt/StdRatio.h"
-
-#include "../include/C2nxt/StdError.h"
+#include <C2nxt/StdRatio.h>
 
 StdRatio std_ratio_new(i64 numerator, i64 denominator) {
 	std_assert(denominator != 0, "Denominator of a StdRatio cannot be 0");
@@ -110,13 +108,13 @@ bool std_ratio_greater_than_or_equal(StdRatio lhs, StdRatio rhs) {
 
 StdCompare std_ratio_compare(StdRatio lhs, StdRatio rhs) {
 	let den = std_lcm(lhs.den, rhs.den);
-	let l = lhs.num * (den / lhs.den);
-	let r = rhs.num * (den / rhs.den);
+	let left = lhs.num * (den / lhs.den);
+	let right = rhs.num * (den / rhs.den);
 
-	if(lhs.num == rhs.num && lhs.den == rhs.den) {
+	if(lhs.den == rhs.den && lhs.num == rhs.num) {
 		return STD_EQUAL;
 	}
-	else if(l < r) {
+	else if(left < right) {
 		return STD_LESS_THAN;
 	}
 	else {

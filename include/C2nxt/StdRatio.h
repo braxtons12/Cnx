@@ -2,10 +2,10 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides lossless methods for dealing with exact fractions
 /// @version 0.1
-/// @date 2021-08-16
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,9 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#include "StdBasicTypes.h"
-#include "StdFormat.h"
-#include "StdMath.h"
+#include <C2nxt/StdBasicTypes.h>
+#include <C2nxt/StdFormat.h>
+#include <C2nxt/StdMath.h>
 
 /// @defgroup std_ratio StdRatio
 /// `StdRatio` provides lossless methods for dealing with exact fractions
@@ -278,7 +278,7 @@ StdRatio std_ratio_subtract_scalar(StdRatio ratio, i64 scalar);
 /// Multiplies the given `StdRatio` and scalar value and returns the result as a `StdRatio`
 ///
 /// @param ratio - The `StdRatio` to multiply with
-/// @param scalar - The scalar value to mutliply with
+/// @param scalar - The scalar value to multiply with
 ///
 /// @return the `StdRatio` resulting from the multiplication
 /// @ingroup std_ratio
