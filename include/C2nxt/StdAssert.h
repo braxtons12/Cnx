@@ -3,10 +3,10 @@
 /// @brief This module provides wrappers for standard C compile-time and runtime asserts and other
 /// custom asserts and assert-like facilities
 /// @version 0.1
-/// @date 2021-07-20
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -69,8 +69,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "StdBasicTypes.h"
-#include "StdTypeTraits.h"
+#include <C2nxt/StdBasicTypes.h>
+#include <C2nxt/StdTypeTraits.h>
 
 #ifndef STD_ASSERT
 	/// @brief Declarations and definitions for C2nxt asserts and assert-like facilities
@@ -94,7 +94,7 @@
 
 // clang-format off
 
-	/// @brief Asserts that the given conidition is `true`. If `false`, prints the given file, line,
+	/// @brief Asserts that the given condition is `true`. If `false`, prints the given file, line,
 	/// and error message and aborts
 	///
 	/// @param condition - The condition that must be `true`
@@ -104,7 +104,7 @@
 	void std_assert_cstring(bool condition, const_cstring error_message, const_cstring file, i64 line);
 
 		
-	/// @brief Asserts that the given conidition is `true`.
+	/// @brief Asserts that the given condition is `true`.
 	///
 	/// If `condition` is false, this will print the file and line at which the error occurred,
 	/// along with the given error message, to `stderr`, then abort.
