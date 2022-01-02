@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>git/C2nxt/include/C2nxt/StdFormat.h file | C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">C2nxt <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="dir_9bec7083027963d9f9ceae2cc7474de5.html">git</a>/</span><span class="m-breadcrumb"><a href="dir_49b122fa8cea83c8ef01de9aa5379c17.html">C2nxt</a>/</span><span class="m-breadcrumb"><a href="dir_c28551255240bd2a80f37986fd2bd3c8.html">include</a>/</span><span class="m-breadcrumb"><a href="dir_2502210eca0f861b6a41d90e00f0922f.html">C2nxt</a>/</span>StdFormat.h <span class="m-thin">file</span>
+        </h1>
+        <p><a href="structStdFormat.html" class="m-doc">StdFormat</a> brings human readable string formatting, similar to C++&#x27;s <code>std::format</code> and <code>fmtlib</code>, and Rust&#x27;s std::format, to C.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#enum-members">Enums</a></li>
+                <li><a href="#typedef-members">Typedefs</a></li>
+                <li><a href="#func-members">Functions</a></li>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.1</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2021-12-08</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2021 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        <section id="nested-classes">
+          <h2><a href="#nested-classes">Classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              struct <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a>
+            </dt>
+            <dd><code><a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a></code> provides a method for passing format specifiers to other steps in the formatting process</dd>
+          </dl>
+        </section>
+        <section id="enum-members">
+          <h2><a href="#enum-members">Enums</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">enum <a href="group__format.html#ga997b3672633f043733fc40a6b7dac136" class="m-doc">StdFormatTypes</a> { </span><span class="m-doc-wrap"><a href="#gga997b3672633f043733fc40a6b7dac136a7d7a3f522484335aa891781b5f9e9cb0" class="m-doc">STD_FORMAT_TYPE_DEFAULT</a> = 0,
+              <a href="#gga997b3672633f043733fc40a6b7dac136a8735ed4bdcf655c73e535927570980fc" class="m-doc">STD_FORMAT_TYPE_DECIMAL</a> = &#x27;d&#x27;,
+              <a href="#gga997b3672633f043733fc40a6b7dac136a3b3e0d055c8146a6601ae24b5bbabe71" class="m-doc">STD_FORMAT_TYPE_HEX_LOWER</a> = &#x27;x&#x27;,
+              <a href="#gga997b3672633f043733fc40a6b7dac136aa25f8ec8ccab0251f9199f746465cde6" class="m-doc">STD_FORMAT_TYPE_HEX_UPPER</a> = &#x27;X&#x27;,
+              <a href="#gga997b3672633f043733fc40a6b7dac136a323bc7c2f1b5420c7ad8aacdfeeb3ee5" class="m-doc">STD_FORMAT_TYPE_SCIENTIFIC</a> = &#x27;e&#x27; }</span>
+            </dt>
+            <dd>C2nxt string formatting valid format specifiers.</dd>
+          </dl>
+        </section>
+        <section id="typedef-members">
+          <h2><a href="#typedef-members">Typedefs</a></h2>
+          <dl class="m-doc">
+            <dt>
+              using <a href="group__format.html#ga988f79bcdcfd944b1d43398d9c125e38" class="m-doc">StdFormatTypes</a> = enum <a href="group__format.html#ga997b3672633f043733fc40a6b7dac136" class="m-doc">StdFormatTypes</a>
+            </dt>
+            <dd>C2nxt string formatting valid format specifiers.</dd>
+            <dt>
+              using <a href="group__format.html#gaa89f2140ff054a220ce3a81b3380f3bf" class="m-doc">StdFormatSpecifier</a> = struct <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a>
+            </dt>
+            <dd><code><a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a></code> provides a method for passing format specifiers to other steps in the formatting process</dd>
+          </dl>
+        </section>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#a7ea29ddf6b1d4195659f1b9c9913b94c" class="m-doc">std_format_with_allocator</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> restrict format_string,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
+              ...)</span>
+            </dt>
+            <dd>Formats the various parameter pack arguments into their associated place in the given format string, using the provided allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#a2def956966c76e1bb1699f113b75be80" class="m-doc">std_vformat_with_allocator</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> restrict format_string,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
+              va_list list)</span>
+            </dt>
+            <dd>Formats the various parameter pack arguments into their associated place in the given format string, using the provided allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#afbba676e2daeaaa68ae7cf3fd1a5ec3b" class="m-doc">std_format_cstring</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format</code> for the builtin <code>cstring</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#a4c17d843b887d9439c2961f69945b6da" class="m-doc">std_format_bool</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format</code> for the builtin <code>bool</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#a99028d2d3d15cdcfbafa810b20f3e654" class="m-doc">std_format_char</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format</code> for the builtin <code>char</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#af8351e8a6fdc5f34b6914b421cf0ef93" class="m-doc">std_format_u8</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format</code> for the builtin <code>u8</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#ae1be637147cd578ca48b81ca5ef96ea4" class="m-doc">std_format_u16</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format</code> for the builtin <code>u16</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#a115ba39f5e297bf3863b85742d2caef0" class="m-doc">std_format_u32</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format</code> for the builtin <code>u32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#abd62e67a4ff21d602f1763d456a92a3a" class="m-doc">std_format_u64</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format</code> for the builtin <code>u64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#af4027ee5eb61ce8bfc1eb7f5e67db5fb" class="m-doc">std_format_i8</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format</code> for the builtin <code>i8</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#aeb8642a0aaadf2aa3b0c5075b7d450a0" class="m-doc">std_format_i16</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format</code> for the builtin <code>i16</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#a9b9b8386024d40360aafddbaf8b62892" class="m-doc">std_format_i32</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format</code> for the builtin <code>i32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#a7540066af80804ccb164f1f0dbecbc85" class="m-doc">std_format_i64</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format</code> for the builtin <code>i64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#a856c65301f4341fb247a6cadd966cbb7" class="m-doc">std_format_f32</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format</code> for the builtin <code>f32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#a437290399482666fed971b7c0acadd6d" class="m-doc">std_format_f64</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format</code> for the builtin <code>f64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#af0c126002631cdf635bf23616cc5f50b" class="m-doc">std_format_ptr</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format</code> for pointers</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#a88319cd3abf1860f49cc57ae69a5212f" class="m-doc">std_format_std_string</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format</code> for <code><a href="structStdString.html" class="m-doc">StdString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#a0f0f87a9ae63cc504636a222924e1343" class="m-doc">std_format_cstring_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>cstring</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#a2defc4ef4a722da2f8f5267d82ab7c92" class="m-doc">std_format_bool_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>bool</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#a01ef8c6688a6287c26788cf04d643256" class="m-doc">std_format_char_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>char</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#ac5c6fa1341da40bcd3de313015692e50" class="m-doc">std_format_u8_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>u8</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#adc2d10d070578e6aa49235f735f40da1" class="m-doc">std_format_u16_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>u16</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#a6fa7c67375a0af79713fc3d52570ddc9" class="m-doc">std_format_u32_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>u32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#ac7602121e752a8b6cf30dde13f51c0d9" class="m-doc">std_format_u64_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>u64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#af37ab9b256b4eb2a3e06c053c5f6ab67" class="m-doc">std_format_i8_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>i8</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#a07143aa0a518188b3ca460d3f5c4381a" class="m-doc">std_format_i16_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>i16</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#a66c7941da1d3d4998b88445d043cf08f" class="m-doc">std_format_i32_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>i32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#a2270994926e3f76681302d9449e814d0" class="m-doc">std_format_i64_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>i64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#aa58eebec7b90f38ea5b3fe78d36652b9" class="m-doc">std_format_f32_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>f32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#a2844a609b62818702ba1844079c68e88" class="m-doc">std_format_f64_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>f64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#a14248bef9857dc65ced157ecb4d24453" class="m-doc">std_format_ptr_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format_with_allocator</code> for pointers</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#a185ff48c4fd8cc74a63a2a0735c04f71" class="m-doc">std_format_std_string_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>StdFormat.format_with_allocator</code> for <code><a href="structStdString.html" class="m-doc">StdString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> <a href="#a3c77c30e7c4c12789859952bed367f0d" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#ga00d8f39b4b304be8134e652bf61ff840" class="m-doc">cstring</a>,
+              <a href="StdFormat_8h.html#afbba676e2daeaaa68ae7cf3fd1a5ec3b" class="m-doc">std_<wbr />format_<wbr />cstring</a>,
+              <a href="StdFormat_8h.html#a0f0f87a9ae63cc504636a222924e1343" class="m-doc">std_<wbr />format_<wbr />cstring_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>cstring</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> <a href="#a360612c3a5a3b544d663317485fb2a7b" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              bool,
+              <a href="StdFormat_8h.html#a4c17d843b887d9439c2961f69945b6da" class="m-doc">std_<wbr />format_<wbr />bool</a>,
+              <a href="StdFormat_8h.html#a2defc4ef4a722da2f8f5267d82ab7c92" class="m-doc">std_<wbr />format_<wbr />bool_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>bool</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> <a href="#a3e326cc2bc49e88b7df09d1a46df7d68" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              char,
+              <a href="StdFormat_8h.html#a99028d2d3d15cdcfbafa810b20f3e654" class="m-doc">std_<wbr />format_<wbr />char</a>,
+              <a href="StdFormat_8h.html#a01ef8c6688a6287c26788cf04d643256" class="m-doc">std_<wbr />format_<wbr />char_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>char</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> <a href="#abb5bcbda924c02b3d514883f6b8dfe7b" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#ga92c50087ca0e64fa93fc59402c55f8ca" class="m-doc">u8</a>,
+              <a href="StdFormat_8h.html#af8351e8a6fdc5f34b6914b421cf0ef93" class="m-doc">std_<wbr />format_<wbr />u8</a>,
+              <a href="StdFormat_8h.html#ac5c6fa1341da40bcd3de313015692e50" class="m-doc">std_<wbr />format_<wbr />u8_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>u8</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> <a href="#aab7fc7f3a7b247794438ce2fba3eb718" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#gace9d960e74685e2cd84b36132dbbf8aa" class="m-doc">u16</a>,
+              <a href="StdFormat_8h.html#ae1be637147cd578ca48b81ca5ef96ea4" class="m-doc">std_<wbr />format_<wbr />u16</a>,
+              <a href="StdFormat_8h.html#adc2d10d070578e6aa49235f735f40da1" class="m-doc">std_<wbr />format_<wbr />u16_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>u16</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> <a href="#ab8147bcaaa527e910851b8f9a3be41ec" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#gafaa62991928fb9fb18ff0db62a040aba" class="m-doc">u32</a>,
+              <a href="StdFormat_8h.html#a115ba39f5e297bf3863b85742d2caef0" class="m-doc">std_<wbr />format_<wbr />u32</a>,
+              <a href="StdFormat_8h.html#a6fa7c67375a0af79713fc3d52570ddc9" class="m-doc">std_<wbr />format_<wbr />u32_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>u32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> <a href="#ac95b1dd259e022369456d7a0a58a2620" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#ga3f7e2bcbb0b4c338f3c4f6c937cd4234" class="m-doc">u64</a>,
+              <a href="StdFormat_8h.html#abd62e67a4ff21d602f1763d456a92a3a" class="m-doc">std_<wbr />format_<wbr />u64</a>,
+              <a href="StdFormat_8h.html#ac7602121e752a8b6cf30dde13f51c0d9" class="m-doc">std_<wbr />format_<wbr />u64_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>u64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> <a href="#a31626fd5b584219f68c9eb6b19cc5464" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#gae3702327b5f47e83b431e22b33da7b58" class="m-doc">i8</a>,
+              <a href="StdFormat_8h.html#af4027ee5eb61ce8bfc1eb7f5e67db5fb" class="m-doc">std_<wbr />format_<wbr />i8</a>,
+              <a href="StdFormat_8h.html#af37ab9b256b4eb2a3e06c053c5f6ab67" class="m-doc">std_<wbr />format_<wbr />i8_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>i8</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> <a href="#a50469d399d10d0b7e4ae9e33e0b8a8f8" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#gad309dbcaeea13aa602d686964156ea0b" class="m-doc">i16</a>,
+              <a href="StdFormat_8h.html#aeb8642a0aaadf2aa3b0c5075b7d450a0" class="m-doc">std_<wbr />format_<wbr />i16</a>,
+              <a href="StdFormat_8h.html#a07143aa0a518188b3ca460d3f5c4381a" class="m-doc">std_<wbr />format_<wbr />i16_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>i16</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> <a href="#a0de17be763de01af14b18ace003892f1" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#ga48d6cd8e4135fb2ff7e7f2dac84089ec" class="m-doc">i32</a>,
+              <a href="StdFormat_8h.html#a9b9b8386024d40360aafddbaf8b62892" class="m-doc">std_<wbr />format_<wbr />i32</a>,
+              <a href="StdFormat_8h.html#a66c7941da1d3d4998b88445d043cf08f" class="m-doc">std_<wbr />format_<wbr />i32_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>i32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> <a href="#a35e64f351d6e28f2e8d09c2dd70537e4" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a>,
+              <a href="StdFormat_8h.html#a7540066af80804ccb164f1f0dbecbc85" class="m-doc">std_<wbr />format_<wbr />i64</a>,
+              <a href="StdFormat_8h.html#a2270994926e3f76681302d9449e814d0" class="m-doc">std_<wbr />format_<wbr />i64_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>i64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> <a href="#ae24ff68ad94934b76803f08e69597dba" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#ga5f6906312a689f27d70e9d086649d3fd" class="m-doc">f32</a>,
+              <a href="StdFormat_8h.html#a856c65301f4341fb247a6cadd966cbb7" class="m-doc">std_<wbr />format_<wbr />f32</a>,
+              <a href="StdFormat_8h.html#aa58eebec7b90f38ea5b3fe78d36652b9" class="m-doc">std_<wbr />format_<wbr />f32_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>f32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> <a href="#aa5b6c08065121f0527fcf7446ad9d26f" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#ga94dab5770726ccbef8c7d026cfbdf8e5" class="m-doc">f64</a>,
+              <a href="StdFormat_8h.html#a437290399482666fed971b7c0acadd6d" class="m-doc">std_<wbr />format_<wbr />f64</a>,
+              <a href="StdFormat_8h.html#a2844a609b62818702ba1844079c68e88" class="m-doc">std_<wbr />format_<wbr />f64_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>f64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> <a href="#a2042859c43e910608f577f96a2d5bf26" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#ga3fb3b2ff539eeed58a5802e9979022c8" class="m-doc">nullptr_<wbr />t</a>,
+              <a href="StdFormat_8h.html#af0c126002631cdf635bf23616cc5f50b" class="m-doc">std_<wbr />format_<wbr />ptr</a>,
+              <a href="StdFormat_8h.html#a14248bef9857dc65ced157ecb4d24453" class="m-doc">std_<wbr />format_<wbr />ptr_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for pointers</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> <a href="#adb821f0b9049def30f9ae8644e80e303" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="structStdString.html" class="m-doc">StdString</a>,
+              <a href="StdFormat_8h.html#a88319cd3abf1860f49cc57ae69a5212f" class="m-doc">std_<wbr />format_<wbr />std_<wbr />string</a>,
+              <a href="StdFormat_8h.html#a185ff48c4fd8cc74a63a2a0735c04f71" class="m-doc">std_<wbr />format_<wbr />std_<wbr />string_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for <code><a href="structStdString.html" class="m-doc">StdString</a></code></dd>
+          </dl>
+        </section>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt id="a1c8b9432fade76221bf0f7e3dbcada7e">
+              <span class="m-doc-wrap-bumper">#define <a href="#a1c8b9432fade76221bf0f7e3dbcada7e" class="m-doc-self">STD_FORMAT</a></span>
+            </dt>
+            <dd>Declarations and Definitions related to <code><a href="group__format.html#ga9470755f912aae3ac2977adc596b4d61" class="m-doc">std_<wbr />format(format_<wbr />string, ...)</a></code>, <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code>, and C2nxt string formatting.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__format.html#ga0a597cb1a1e0b5be260624dd7ba131d9" class="m-doc">STD_FORMAT_DEFAULT_NUM_SIG_FIGS</a></span>
+            </dt>
+            <dd>The default number of significant figures for floating point formatting.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__format.html#ga0755f0dd16e73aac58e4f1c104d1d40b" class="m-doc">as_format_t</a>(</span><span class="m-doc-wrap">T,
+              x)</span>
+            </dt>
+            <dd>Converts the given variable into its associated <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> Trait implementation.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__format.html#ga09e6377fe4c171e0cec8be7e71d7ed93" class="m-doc">STD_AS_FORMAT_USES_USER_SUPPLIED_TYPES</a></span>
+            </dt>
+            <dd>Feature enable macro to allow specific user-defined types to be automatically converted to their <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation when passed to <code><a href="group__format.html#ga9470755f912aae3ac2977adc596b4d61" class="m-doc">std_<wbr />format(format_<wbr />string, ...)</a></code> or a similar C2nxt string formatting function.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__format.html#gaffe845bdc325ce944073222a8cd02953" class="m-doc">STD_AS_FORMAT_USER_SUPPLIED_TYPES</a></span>
+            </dt>
+            <dd>Define this macro to a comma separated list of conversions to enable specific user-defined types to be automatically converted to their <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation when passed to <code><a href="group__format.html#ga9470755f912aae3ac2977adc596b4d61" class="m-doc">std_<wbr />format(format_<wbr />string, ...)</a></code> or a similar C2nxt string formatting function.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__format.html#ga1f1f5d22f6179041556466971eb4bb61" class="m-doc">as_format</a>(</span><span class="m-doc-wrap">x)</span>
+            </dt>
+            <dd>Converts the given variable into its associated <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> Trait implementation.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__format.html#ga3679de86da3061c10e5387e0a5c9a1c2" class="m-doc">std_format_with_allocator</a>(</span><span class="m-doc-wrap">format_string,
+              allocator,
+              ...)</span>
+            </dt>
+            <dd>Formats the various parameter pack arguments into their associated place in the given format string, using the provided allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__format.html#ga9470755f912aae3ac2977adc596b4d61" class="m-doc">std_format</a>(</span><span class="m-doc-wrap">format_string,
+              ...)</span>
+            </dt>
+            <dd>Formats the various parameter pack arguments into their associated place in the given format string, using the default allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__format.html#ga9ca4ee29d5e269541872bf265a384c00" class="m-doc">std_vformat_with_allocator</a>(</span><span class="m-doc-wrap">format_string,
+              allocator,
+              num_args,
+              list)</span>
+            </dt>
+            <dd>Formats the various <code>va_list</code> parameter pack arguments into their associated place in the given format string, using the provided allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__format.html#ga57e18a51bd9c4a465f92b135ceb64dd9" class="m-doc">std_vformat</a>(</span><span class="m-doc-wrap">format_string,
+              num_args,
+              list)</span>
+            </dt>
+            <dd>Formats the various <code>va_list</code> parameter pack arguments into their associated place in the given format string, using the default allocator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a7ea29ddf6b1d4195659f1b9c9913b94c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7ea29ddf6b1d4195659f1b9c9913b94c" class="m-doc-self">std_format_with_allocator</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> restrict format_string,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
+              ...)</span></span>
+            </h3>
+            <p>Formats the various parameter pack arguments into their associated place in the given format string, using the provided allocator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">format_string</td>
+                  <td>- The string specifying the format positions, specifiers, and other text that should be present in the output string</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate the output string with</td>
+                </tr>
+                <tr>
+                  <td>num_args</td>
+                  <td>- The number of arguments in the parameter pack</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The formatted output string</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a2def956966c76e1bb1699f113b75be80"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2def956966c76e1bb1699f113b75be80" class="m-doc-self">std_vformat_with_allocator</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> restrict format_string,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
+              va_list list)</span></span>
+            </h3>
+            <p>Formats the various parameter pack arguments into their associated place in the given format string, using the provided allocator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">format_string</td>
+                  <td>- The string specifying the format positions, specifiers, and other text that should be present in the output string</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate the output string with</td>
+                </tr>
+                <tr>
+                  <td>num_args</td>
+                  <td>- The number of arguments in the parameter pack</td>
+                </tr>
+                <tr>
+                  <td>list</td>
+                  <td>- The parameter pack of arguments to be formatted</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The formatted output string</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="afbba676e2daeaaa68ae7cf3fd1a5ec3b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afbba676e2daeaaa68ae7cf3fd1a5ec3b" class="m-doc-self">std_format_cstring</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format</code> for the builtin <code>cstring</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4c17d843b887d9439c2961f69945b6da"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4c17d843b887d9439c2961f69945b6da" class="m-doc-self">std_format_bool</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format</code> for the builtin <code>bool</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a99028d2d3d15cdcfbafa810b20f3e654"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a99028d2d3d15cdcfbafa810b20f3e654" class="m-doc-self">std_format_char</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format</code> for the builtin <code>char</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af8351e8a6fdc5f34b6914b421cf0ef93"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af8351e8a6fdc5f34b6914b421cf0ef93" class="m-doc-self">std_format_u8</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format</code> for the builtin <code>u8</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae1be637147cd578ca48b81ca5ef96ea4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae1be637147cd578ca48b81ca5ef96ea4" class="m-doc-self">std_format_u16</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format</code> for the builtin <code>u16</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a115ba39f5e297bf3863b85742d2caef0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a115ba39f5e297bf3863b85742d2caef0" class="m-doc-self">std_format_u32</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format</code> for the builtin <code>u32</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="abd62e67a4ff21d602f1763d456a92a3a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abd62e67a4ff21d602f1763d456a92a3a" class="m-doc-self">std_format_u64</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format</code> for the builtin <code>u64</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af4027ee5eb61ce8bfc1eb7f5e67db5fb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af4027ee5eb61ce8bfc1eb7f5e67db5fb" class="m-doc-self">std_format_i8</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format</code> for the builtin <code>i8</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aeb8642a0aaadf2aa3b0c5075b7d450a0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aeb8642a0aaadf2aa3b0c5075b7d450a0" class="m-doc-self">std_format_i16</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format</code> for the builtin <code>i16</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a9b9b8386024d40360aafddbaf8b62892"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9b9b8386024d40360aafddbaf8b62892" class="m-doc-self">std_format_i32</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format</code> for the builtin <code>i32</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a7540066af80804ccb164f1f0dbecbc85"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7540066af80804ccb164f1f0dbecbc85" class="m-doc-self">std_format_i64</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format</code> for the builtin <code>i64</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a856c65301f4341fb247a6cadd966cbb7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a856c65301f4341fb247a6cadd966cbb7" class="m-doc-self">std_format_f32</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format</code> for the builtin <code>f32</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a437290399482666fed971b7c0acadd6d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a437290399482666fed971b7c0acadd6d" class="m-doc-self">std_format_f64</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format</code> for the builtin <code>f64</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af0c126002631cdf635bf23616cc5f50b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af0c126002631cdf635bf23616cc5f50b" class="m-doc-self">std_format_ptr</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format</code> for pointers</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a88319cd3abf1860f49cc57ae69a5212f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a88319cd3abf1860f49cc57ae69a5212f" class="m-doc-self">std_format_std_string</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format</code> for <code><a href="structStdString.html" class="m-doc">StdString</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a0f0f87a9ae63cc504636a222924e1343"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0f0f87a9ae63cc504636a222924e1343" class="m-doc-self">std_format_cstring_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>cstring</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a2defc4ef4a722da2f8f5267d82ab7c92"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2defc4ef4a722da2f8f5267d82ab7c92" class="m-doc-self">std_format_bool_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>bool</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a01ef8c6688a6287c26788cf04d643256"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a01ef8c6688a6287c26788cf04d643256" class="m-doc-self">std_format_char_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>char</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac5c6fa1341da40bcd3de313015692e50"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac5c6fa1341da40bcd3de313015692e50" class="m-doc-self">std_format_u8_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>u8</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="adc2d10d070578e6aa49235f735f40da1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adc2d10d070578e6aa49235f735f40da1" class="m-doc-self">std_format_u16_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>u16</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a6fa7c67375a0af79713fc3d52570ddc9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6fa7c67375a0af79713fc3d52570ddc9" class="m-doc-self">std_format_u32_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>u32</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac7602121e752a8b6cf30dde13f51c0d9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac7602121e752a8b6cf30dde13f51c0d9" class="m-doc-self">std_format_u64_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>u64</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af37ab9b256b4eb2a3e06c053c5f6ab67"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af37ab9b256b4eb2a3e06c053c5f6ab67" class="m-doc-self">std_format_i8_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>i8</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a07143aa0a518188b3ca460d3f5c4381a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a07143aa0a518188b3ca460d3f5c4381a" class="m-doc-self">std_format_i16_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>i16</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a66c7941da1d3d4998b88445d043cf08f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a66c7941da1d3d4998b88445d043cf08f" class="m-doc-self">std_format_i32_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>i32</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a2270994926e3f76681302d9449e814d0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2270994926e3f76681302d9449e814d0" class="m-doc-self">std_format_i64_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>i64</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa58eebec7b90f38ea5b3fe78d36652b9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa58eebec7b90f38ea5b3fe78d36652b9" class="m-doc-self">std_format_f32_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>f32</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a2844a609b62818702ba1844079c68e88"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2844a609b62818702ba1844079c68e88" class="m-doc-self">std_format_f64_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format_with_allocator</code> for the builtin <code>f64</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a14248bef9857dc65ced157ecb4d24453"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a14248bef9857dc65ced157ecb4d24453" class="m-doc-self">std_format_ptr_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format_with_allocator</code> for pointers</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a185ff48c4fd8cc74a63a2a0735c04f71"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a185ff48c4fd8cc74a63a2a0735c04f71" class="m-doc-self">std_format_std_string_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>StdFormat.format_with_allocator</code> for <code><a href="structStdString.html" class="m-doc">StdString</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3c77c30e7c4c12789859952bed367f0d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3c77c30e7c4c12789859952bed367f0d" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#ga00d8f39b4b304be8134e652bf61ff840" class="m-doc">cstring</a>,
+              <a href="StdFormat_8h.html#afbba676e2daeaaa68ae7cf3fd1a5ec3b" class="m-doc">std_<wbr />format_<wbr />cstring</a>,
+              <a href="StdFormat_8h.html#a0f0f87a9ae63cc504636a222924e1343" class="m-doc">std_<wbr />format_<wbr />cstring_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>cstring</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a360612c3a5a3b544d663317485fb2a7b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a360612c3a5a3b544d663317485fb2a7b" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              bool,
+              <a href="StdFormat_8h.html#a4c17d843b887d9439c2961f69945b6da" class="m-doc">std_<wbr />format_<wbr />bool</a>,
+              <a href="StdFormat_8h.html#a2defc4ef4a722da2f8f5267d82ab7c92" class="m-doc">std_<wbr />format_<wbr />bool_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>bool</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3e326cc2bc49e88b7df09d1a46df7d68"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3e326cc2bc49e88b7df09d1a46df7d68" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              char,
+              <a href="StdFormat_8h.html#a99028d2d3d15cdcfbafa810b20f3e654" class="m-doc">std_<wbr />format_<wbr />char</a>,
+              <a href="StdFormat_8h.html#a01ef8c6688a6287c26788cf04d643256" class="m-doc">std_<wbr />format_<wbr />char_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>char</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="abb5bcbda924c02b3d514883f6b8dfe7b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abb5bcbda924c02b3d514883f6b8dfe7b" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#ga92c50087ca0e64fa93fc59402c55f8ca" class="m-doc">u8</a>,
+              <a href="StdFormat_8h.html#af8351e8a6fdc5f34b6914b421cf0ef93" class="m-doc">std_<wbr />format_<wbr />u8</a>,
+              <a href="StdFormat_8h.html#ac5c6fa1341da40bcd3de313015692e50" class="m-doc">std_<wbr />format_<wbr />u8_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>u8</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aab7fc7f3a7b247794438ce2fba3eb718"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aab7fc7f3a7b247794438ce2fba3eb718" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#gace9d960e74685e2cd84b36132dbbf8aa" class="m-doc">u16</a>,
+              <a href="StdFormat_8h.html#ae1be637147cd578ca48b81ca5ef96ea4" class="m-doc">std_<wbr />format_<wbr />u16</a>,
+              <a href="StdFormat_8h.html#adc2d10d070578e6aa49235f735f40da1" class="m-doc">std_<wbr />format_<wbr />u16_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>u16</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab8147bcaaa527e910851b8f9a3be41ec"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab8147bcaaa527e910851b8f9a3be41ec" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#gafaa62991928fb9fb18ff0db62a040aba" class="m-doc">u32</a>,
+              <a href="StdFormat_8h.html#a115ba39f5e297bf3863b85742d2caef0" class="m-doc">std_<wbr />format_<wbr />u32</a>,
+              <a href="StdFormat_8h.html#a6fa7c67375a0af79713fc3d52570ddc9" class="m-doc">std_<wbr />format_<wbr />u32_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>u32</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac95b1dd259e022369456d7a0a58a2620"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac95b1dd259e022369456d7a0a58a2620" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#ga3f7e2bcbb0b4c338f3c4f6c937cd4234" class="m-doc">u64</a>,
+              <a href="StdFormat_8h.html#abd62e67a4ff21d602f1763d456a92a3a" class="m-doc">std_<wbr />format_<wbr />u64</a>,
+              <a href="StdFormat_8h.html#ac7602121e752a8b6cf30dde13f51c0d9" class="m-doc">std_<wbr />format_<wbr />u64_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>u64</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a31626fd5b584219f68c9eb6b19cc5464"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a31626fd5b584219f68c9eb6b19cc5464" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#gae3702327b5f47e83b431e22b33da7b58" class="m-doc">i8</a>,
+              <a href="StdFormat_8h.html#af4027ee5eb61ce8bfc1eb7f5e67db5fb" class="m-doc">std_<wbr />format_<wbr />i8</a>,
+              <a href="StdFormat_8h.html#af37ab9b256b4eb2a3e06c053c5f6ab67" class="m-doc">std_<wbr />format_<wbr />i8_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>i8</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a50469d399d10d0b7e4ae9e33e0b8a8f8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a50469d399d10d0b7e4ae9e33e0b8a8f8" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#gad309dbcaeea13aa602d686964156ea0b" class="m-doc">i16</a>,
+              <a href="StdFormat_8h.html#aeb8642a0aaadf2aa3b0c5075b7d450a0" class="m-doc">std_<wbr />format_<wbr />i16</a>,
+              <a href="StdFormat_8h.html#a07143aa0a518188b3ca460d3f5c4381a" class="m-doc">std_<wbr />format_<wbr />i16_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>i16</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a0de17be763de01af14b18ace003892f1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0de17be763de01af14b18ace003892f1" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#ga48d6cd8e4135fb2ff7e7f2dac84089ec" class="m-doc">i32</a>,
+              <a href="StdFormat_8h.html#a9b9b8386024d40360aafddbaf8b62892" class="m-doc">std_<wbr />format_<wbr />i32</a>,
+              <a href="StdFormat_8h.html#a66c7941da1d3d4998b88445d043cf08f" class="m-doc">std_<wbr />format_<wbr />i32_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>i32</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a35e64f351d6e28f2e8d09c2dd70537e4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a35e64f351d6e28f2e8d09c2dd70537e4" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a>,
+              <a href="StdFormat_8h.html#a7540066af80804ccb164f1f0dbecbc85" class="m-doc">std_<wbr />format_<wbr />i64</a>,
+              <a href="StdFormat_8h.html#a2270994926e3f76681302d9449e814d0" class="m-doc">std_<wbr />format_<wbr />i64_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>i64</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae24ff68ad94934b76803f08e69597dba"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae24ff68ad94934b76803f08e69597dba" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#ga5f6906312a689f27d70e9d086649d3fd" class="m-doc">f32</a>,
+              <a href="StdFormat_8h.html#a856c65301f4341fb247a6cadd966cbb7" class="m-doc">std_<wbr />format_<wbr />f32</a>,
+              <a href="StdFormat_8h.html#aa58eebec7b90f38ea5b3fe78d36652b9" class="m-doc">std_<wbr />format_<wbr />f32_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>f32</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa5b6c08065121f0527fcf7446ad9d26f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa5b6c08065121f0527fcf7446ad9d26f" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#ga94dab5770726ccbef8c7d026cfbdf8e5" class="m-doc">f64</a>,
+              <a href="StdFormat_8h.html#a437290399482666fed971b7c0acadd6d" class="m-doc">std_<wbr />format_<wbr />f64</a>,
+              <a href="StdFormat_8h.html#a2844a609b62818702ba1844079c68e88" class="m-doc">std_<wbr />format_<wbr />f64_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for the builtin <code>f64</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a2042859c43e910608f577f96a2d5bf26"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2042859c43e910608f577f96a2d5bf26" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="group__types.html#ga3fb3b2ff539eeed58a5802e9979022c8" class="m-doc">nullptr_<wbr />t</a>,
+              <a href="StdFormat_8h.html#af0c126002631cdf635bf23616cc5f50b" class="m-doc">std_<wbr />format_<wbr />ptr</a>,
+              <a href="StdFormat_8h.html#a14248bef9857dc65ced157ecb4d24453" class="m-doc">std_<wbr />format_<wbr />ptr_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for pointers</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="adb821f0b9049def30f9ae8644e80e303"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adb821f0b9049def30f9ae8644e80e303" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="structStdString.html" class="m-doc">StdString</a>,
+              <a href="StdFormat_8h.html#a88319cd3abf1860f49cc57ae69a5212f" class="m-doc">std_<wbr />format_<wbr />std_<wbr />string</a>,
+              <a href="StdFormat_8h.html#a185ff48c4fd8cc74a63a2a0735c04f71" class="m-doc">std_<wbr />format_<wbr />std_<wbr />string_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for <code><a href="structStdString.html" class="m-doc">StdString</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

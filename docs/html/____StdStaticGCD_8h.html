@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>git/C2nxt/include/C2nxt/math/__StdStaticGCD.h file | C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">C2nxt <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="dir_9bec7083027963d9f9ceae2cc7474de5.html">git</a>/</span><span class="m-breadcrumb"><a href="dir_49b122fa8cea83c8ef01de9aa5379c17.html">C2nxt</a>/</span><span class="m-breadcrumb"><a href="dir_c28551255240bd2a80f37986fd2bd3c8.html">include</a>/</span><span class="m-breadcrumb"><a href="dir_2502210eca0f861b6a41d90e00f0922f.html">C2nxt</a>/</span><span class="m-breadcrumb"><a href="dir_7ab3843dc716476031c6810e31075ebe.html">math</a>/</span>__StdStaticGCD.h <span class="m-thin">file</span>
+        </h1>
+        <p>Compile-time GCD calculation.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.1</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2021-08-14</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2021 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ab3c8ba9b5cee2f5302d1d6d6ee6a4b35" class="m-doc">__std_static_gcd1</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>Final iteration of static GCD calculation.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#af20a02987828f81a73cf0b68d771c75c" class="m-doc">__std_static_gcd2</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>19th iteration of static GCD calculation</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a8220f8a0b9a0f9996139f0db6cadb1d1" class="m-doc">__std_static_gcd3</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>18th iteration of static GCD calculation</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ab1986e90f81a19029b9d697925eb41d1" class="m-doc">__std_static_gcd4</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>17th iteration of static GCD calculation</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a9c813fdc8222f06598495c1ff38611d5" class="m-doc">__std_static_gcd5</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>16th iteration of static GCD calculation</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a942342cda597b51b209a15a7fad4cdd0" class="m-doc">__std_static_gcd6</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>15th iteration of static GCD calculation</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a6165c6c86ccbb4ee8b8426b06a6930cc" class="m-doc">__std_static_gcd7</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>14th iteration of static GCD calculation</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ad5d3610e8a4425e106fa85913847f634" class="m-doc">__std_static_gcd8</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>13th iteration of static GCD calculation</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a4f449608128e19d5f9718742cfc75630" class="m-doc">__std_static_gcd9</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>12th iteration of static GCD calculation</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a85718e8d470d105d623b5e23d81b6ef1" class="m-doc">__std_static_gcd10</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>11th iteration of static GCD calculation</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a914ea6583dde6a30c5c789385f7ce404" class="m-doc">__std_static_gcd11</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>10th iteration of static GCD calculation</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#aa62f44c595a9068074ddbfd27c8aad7f" class="m-doc">__std_static_gcd12</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>9th iteration of static GCD calculation</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a82df0ecc7a88311a731ba7b45b9148ec" class="m-doc">__std_static_gcd13</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>8th iteration of static GCD calculation</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ad387c6b2eb480dd7c4f6fe5dd475b762" class="m-doc">__std_static_gcd14</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>7th iteration of static GCD calculation</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a36e23ba694fa8b0566c67ffa5beaebec" class="m-doc">__std_static_gcd15</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>6th iteration of static GCD calculation</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a5e12ceab07fee772905e88b88eda7073" class="m-doc">__std_static_gcd16</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>5th iteration of static GCD calculation</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a1729c81489e3acb9b8a63b473998f0ee" class="m-doc">__std_static_gcd17</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>4th iteration of static GCD calculation</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a06d8072e9f44258e964afba58997e27d" class="m-doc">__std_static_gcd18</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>3rd iteration of static GCD calculation</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#aca613ad4e60c967a4b35664dc1fa3f79" class="m-doc">__std_static_gcd19</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>2nd iteration of static GCD calculation</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a3bc9089d658104497551a086daebfc8f" class="m-doc">__std_static_gcd20</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>1st iteration of static GCD calculation</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a33e7660dd25c2aa8b33f872638d876ca" class="m-doc">__std_static_gcd</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>Calculates the GCD of left and right.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Define documentation</h2>
+          <section class="m-doc-details" id="ab3c8ba9b5cee2f5302d1d6d6ee6a4b35"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ab3c8ba9b5cee2f5302d1d6d6ee6a4b35" class="m-doc-self">__std_static_gcd1</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>Final iteration of static GCD calculation.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af20a02987828f81a73cf0b68d771c75c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#af20a02987828f81a73cf0b68d771c75c" class="m-doc-self">__std_static_gcd2</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>19th iteration of static GCD calculation</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8220f8a0b9a0f9996139f0db6cadb1d1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a8220f8a0b9a0f9996139f0db6cadb1d1" class="m-doc-self">__std_static_gcd3</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>18th iteration of static GCD calculation</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab1986e90f81a19029b9d697925eb41d1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ab1986e90f81a19029b9d697925eb41d1" class="m-doc-self">__std_static_gcd4</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>17th iteration of static GCD calculation</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a9c813fdc8222f06598495c1ff38611d5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a9c813fdc8222f06598495c1ff38611d5" class="m-doc-self">__std_static_gcd5</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>16th iteration of static GCD calculation</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a942342cda597b51b209a15a7fad4cdd0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a942342cda597b51b209a15a7fad4cdd0" class="m-doc-self">__std_static_gcd6</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>15th iteration of static GCD calculation</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a6165c6c86ccbb4ee8b8426b06a6930cc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a6165c6c86ccbb4ee8b8426b06a6930cc" class="m-doc-self">__std_static_gcd7</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>14th iteration of static GCD calculation</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad5d3610e8a4425e106fa85913847f634"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ad5d3610e8a4425e106fa85913847f634" class="m-doc-self">__std_static_gcd8</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>13th iteration of static GCD calculation</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4f449608128e19d5f9718742cfc75630"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a4f449608128e19d5f9718742cfc75630" class="m-doc-self">__std_static_gcd9</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>12th iteration of static GCD calculation</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a85718e8d470d105d623b5e23d81b6ef1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a85718e8d470d105d623b5e23d81b6ef1" class="m-doc-self">__std_static_gcd10</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>11th iteration of static GCD calculation</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a914ea6583dde6a30c5c789385f7ce404"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a914ea6583dde6a30c5c789385f7ce404" class="m-doc-self">__std_static_gcd11</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>10th iteration of static GCD calculation</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa62f44c595a9068074ddbfd27c8aad7f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#aa62f44c595a9068074ddbfd27c8aad7f" class="m-doc-self">__std_static_gcd12</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>9th iteration of static GCD calculation</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a82df0ecc7a88311a731ba7b45b9148ec"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a82df0ecc7a88311a731ba7b45b9148ec" class="m-doc-self">__std_static_gcd13</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>8th iteration of static GCD calculation</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad387c6b2eb480dd7c4f6fe5dd475b762"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ad387c6b2eb480dd7c4f6fe5dd475b762" class="m-doc-self">__std_static_gcd14</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>7th iteration of static GCD calculation</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a36e23ba694fa8b0566c67ffa5beaebec"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a36e23ba694fa8b0566c67ffa5beaebec" class="m-doc-self">__std_static_gcd15</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>6th iteration of static GCD calculation</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a5e12ceab07fee772905e88b88eda7073"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a5e12ceab07fee772905e88b88eda7073" class="m-doc-self">__std_static_gcd16</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>5th iteration of static GCD calculation</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1729c81489e3acb9b8a63b473998f0ee"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a1729c81489e3acb9b8a63b473998f0ee" class="m-doc-self">__std_static_gcd17</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>4th iteration of static GCD calculation</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a06d8072e9f44258e964afba58997e27d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a06d8072e9f44258e964afba58997e27d" class="m-doc-self">__std_static_gcd18</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>3rd iteration of static GCD calculation</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aca613ad4e60c967a4b35664dc1fa3f79"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#aca613ad4e60c967a4b35664dc1fa3f79" class="m-doc-self">__std_static_gcd19</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>2nd iteration of static GCD calculation</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3bc9089d658104497551a086daebfc8f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a3bc9089d658104497551a086daebfc8f" class="m-doc-self">__std_static_gcd20</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>1st iteration of static GCD calculation</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a33e7660dd25c2aa8b33f872638d876ca"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a33e7660dd25c2aa8b33f872638d876ca" class="m-doc-self">__std_static_gcd</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>Calculates the GCD of left and right.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The first number of the pair to get the GCD of</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The second number of the pair to get the GCD of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The GCD of left and right</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

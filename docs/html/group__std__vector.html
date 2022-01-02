@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Collections &raquo; StdVector module | C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">C2nxt <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="group__collections.html">Collections</a> &raquo;</span>
+          StdVector <span class="m-thin">module</span></h1>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p><code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> is a struct template for a type-safe dynamic-capacity array. It&#x27;s allocator aware, provides C2nxt compatible random access iterators, and supports user-defined default constructors, copy-constructors, and destructors for its elements. It&#x27;s design is based around both C++&#x27;s <code>std::vector</code> and Rust&#x27;s <code>std::vec::Vec</code>, but with slightly expanded functionality and semantics.</p><p><code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> has a small size optimization (SSO) that is user configurable. This allows for a compile-time configurable number of elements to be stored on the stack, before resorting to heap allocation, at the cost of <code>sizeof(StdVector(T))</code> being larger than otherwise necessary. By default, this optimization allows for up to 8 elements to be stored on the stack. This number can be changed by defining <code>STD_VECTOR_SHORT_OPTIMIZATION_NUM_ELEMENTS</code> to the desired number of elements. If the small size optimization is disabled (by defining <code>STD_VECTOR_SHORT_OPTIMIZATION_NUM_ELEMENTS</code> to 0), the default heap allocation size can be configured by defining <code>STD_VECTOR_DEFAULT_LONG_CAPACITY</code> to the desired number of elements. The default for this setting is 16.</p><p>Instantiations of <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> are already provided for builtin types like <code>i32</code> and some C2nxt types, like <code><a href="structStdString.html" class="m-doc">StdString</a></code>. Instantiating it for your own types is simple and requires minimal boiler-plate.</p><p>Instantiation requirements:</p><ol><li>a <code>typedef</code> of your type to provide and alphanumeric name for it. (for template and macro parameters)</li><li>a <code>typedef</code> for pointer to your type as <code><a href="group__std__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(YourType)</a></code>, for use with the iterators.</li><li>a <code>typedef</code> for pointer to const your type as <code><a href="group__std__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(YourType)</a></code>, for use with the iterators</li><li>Instantiations for C2nxt iterators for the typedefs provided in (2) and (3)</li><li>Instantiation of <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> for your type</li></ol><p>We recommend two routes for providing instantiations for user-defined types, either:</p><ol><li>Provide the instantiation together with your type&#x27;s public interface and implementation OR</li><li>Provide it as a separate &quot;template instantiation&quot; .h/.c file pair</li></ol><p>Example of (1).</p><pre class="m-code"><span class="c1">// in `YourType.h`</span>
+<span class="cp">#include</span> <span class="cpf">&quot;C2nxt/StdVector.h&quot;</span><span class="cp"></span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">YourType</span> <span class="p">{</span>
+ <span class="c1">// members</span>
+<span class="p">}</span> <span class="n">YourType</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="n">YourType</span><span class="o">*</span> <span class="n">Ref</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+<span class="k">typedef</span> <span class="k">const</span> <span class="n">YourType</span><span class="o">*</span> <span class="n">ConstRef</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+
+<span class="n">DeclStdIterators</span><span class="p">(</span><span class="n">Ref</span><span class="p">(</span><span class="n">YourType</span><span class="p">));</span>
+<span class="n">DeclStdIterators</span><span class="p">(</span><span class="n">ConstRef</span><span class="p">(</span><span class="n">YourType</span><span class="p">));</span>
+
+<span class="n">DeclStdOption</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+
+<span class="n">DeclStdVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+
+<span class="c1">// the rest of your public interface...</span>
+
+<span class="c1">// in `YourType.c`</span>
+<span class="n">ImplStdOption</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+<span class="n">ImplStdVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+
+<span class="c1">// the rest of your implementation</span></pre><p>Example of (2):</p><pre class="m-code"><span class="c1">// in `YourType.h`</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">YourType</span> <span class="p">{</span>
+    <span class="c1">// members</span>
+<span class="p">}</span> <span class="n">YourType</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="n">YourType</span><span class="o">*</span> <span class="n">Ref</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+<span class="k">typedef</span> <span class="k">const</span> <span class="n">YourType</span><span class="o">*</span> <span class="n">ConstRef</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+
+<span class="n">DeclStdIterators</span><span class="p">(</span><span class="n">Ref</span><span class="p">(</span><span class="n">YourType</span><span class="p">));</span>
+<span class="n">DeclStdIterators</span><span class="p">(</span><span class="n">ConstRef</span><span class="p">(</span><span class="n">YourType</span><span class="p">));</span>
+<span class="c1">// the rest of your public interface</span>
+
+<span class="c1">// in `StdOptionYourType.h`</span>
+<span class="cp">#include</span> <span class="cpf">&quot;YourType.h&quot;</span><span class="cp"></span>
+<span class="n">DeclStdOption</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+
+<span class="c1">// in `StdOptionYourType.c`</span>
+<span class="cp">#include</span> <span class="cpf">&quot;StdOptionYourType.h&quot;</span><span class="cp"></span>
+<span class="n">ImplStdOption</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+
+<span class="c1">// in `StdVectorYourType.h`</span>
+<span class="cp">#include</span> <span class="cpf">&quot;YourType.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;StdOptionYourType.h&quot;</span><span class="cp"></span>
+<span class="n">DeclStdVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+
+<span class="c1">// in `StdVectorYourType.c`</span>
+<span class="cp">#include</span> <span class="cpf">&quot;StdVectorYourType.c&quot;</span><span class="cp"></span>
+<span class="n">ImplStdVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span></pre><p>Then, somewhere else in your codebase, you can easily use the instantiation:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&quot;YourType.h&quot;</span><span class="cp"></span>
+<span class="c1">// if instantiation method (2)</span>
+<span class="cp">#include</span> <span class="cpf">&quot;StdVectorYourType.h&quot;</span><span class="cp"></span>
+
+<span class="n">StdVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">)</span> <span class="n">create_and_fill_your_type_vec</span><span class="p">(</span><span class="n">usize</span> <span class="n">num_elements</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">std_vector_new_with_capacity</span><span class="p">(</span><span class="n">YourType</span><span class="p">,</span> <span class="n">num_elements</span><span class="p">);</span>
+
+    <span class="n">std_vector_resize</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">num_elements</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">vec</span><span class="p">;</span>
+<span class="p">}</span></pre><p><code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> implements <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code>, but because of its generic type, can&#x27;t be automatically converted to its <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation, so we have to cast it explicitly:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&quot;C2nxt/StdIO.h&quot;</span><span class="cp"></span>
+<span class="kt">void</span> <span class="nf">print_vec</span><span class="p">(</span><span class="k">const</span> <span class="n">StdVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">)</span><span class="o">*</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">as_format_t</span><span class="p">(</span><span class="n">StdVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">),</span> <span class="o">*</span><span class="n">vec</span><span class="p">));</span>
+<span class="p">}</span></pre><p>You can provide user-defined default-constructor, copy-constructor, and/or destructor for elements of your type, and custom allocator for all memory allocation:</p><pre class="m-code"><span class="n">YourType</span> <span class="nf">your_type_constructor</span><span class="p">(</span><span class="n">StdAllocator</span> <span class="n">allocator</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">YourType</span><span class="p">){</span><span class="mi">0</span><span class="p">};</span>
+    <span class="c1">// whatever you need to do to init your type</span>
+    <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">YourType</span> <span class="nf">your_type_copy_constructor</span><span class="p">(</span><span class="k">const</span> <span class="n">YourType</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">elem</span><span class="p">,</span> <span class="n">StdAllocator</span> <span class="n">allocator</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">YourType</span><span class="p">){</span><span class="mi">0</span><span class="p">};</span>
+    <span class="c1">// whatever you need to do to copy `elem` to `t`</span>
+    <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">your_type_destructor</span><span class="p">(</span><span class="n">YourType</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">t</span><span class="p">,</span> <span class="n">StdAllocator</span> <span class="n">allocator</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// whatever you need to do to cleanup `t`</span>
+<span class="p">}</span>
+
+<span class="n">StdVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">)</span> <span class="n">create_and_fill_your_type_vec</span><span class="p">(</span><span class="n">usize</span> <span class="n">num_elements</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// init a vec with num_elements capacity (zero size) and our custom collection data</span>
+    <span class="n">let_mut</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">std_vector_new_with_capacity_with_collection_data</span><span class="p">(</span><span class="n">YourType</span><span class="p">,</span>
+                        <span class="n">capacity</span><span class="p">,</span>
+                        <span class="c1">// This `StdCollectionData(CollectionType)` will only be</span>
+                        <span class="c1">// associated with this specific vector, not all `StdVector(YourType)`s</span>
+                        <span class="p">((</span><span class="n">StdCollectionData</span><span class="p">(</span><span class="n">StdVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">)))</span> <span class="p">{</span>
+                            <span class="c1">// can be left NULL, will be defaulted</span>
+                            <span class="p">.</span><span class="n">m_constructor</span> <span class="o">=</span> <span class="n">your_type_constructor</span><span class="p">,</span>
+                            <span class="c1">// can be left NULL, will disable `std_vector_clone(self)` for</span>
+                            <span class="c1">// this vector</span>
+                            <span class="p">.</span><span class="n">m_copy_constructor</span> <span class="o">=</span> <span class="n">your_type_copy_constructor</span><span class="p">,</span>
+                            <span class="c1">// can be left NULL, will be defaulted</span>
+                            <span class="p">.</span><span class="n">m_destructor</span> <span class="o">=</span> <span class="n">your_type_destructor</span>
+                            <span class="c1">// must explicitly provide an allocator, even just the default one,</span>
+                            <span class="c1">// if providing user-defined collection data</span>
+                            <span class="p">.</span><span class="n">m_allocator</span> <span class="o">=</span> <span class="n">std_allocator_from_custom_allocator</span><span class="p">(</span>
+                                                <span class="n">your_malloc_func</span><span class="p">,</span>
+                                                <span class="n">your_free_func</span><span class="p">)</span>
+                        <span class="p">})</span>
+                    <span class="p">);</span>
+
+    <span class="c1">// fill the vec with default constructed elements</span>
+    <span class="n">std_vector_resize</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">num_elements</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">vec</span><span class="p">;</span>
+<span class="p">}</span></pre><p><code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> also provides C2nxt random access iterators and optional scoped destruction:</p><pre class="m-code"><span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">std_vector_scoped</span><span class="p">(</span><span class="n">u32</span><span class="p">)</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">std_vector_new_with_capacity</span><span class="p">(</span><span class="n">u32</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+    <span class="n">ranged_for</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">std_vector_push_back</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// loop over the elements in the vector by value, as an iteration</span>
+    <span class="n">foreach</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">elem</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">// vec goes out of scope here and `std_vector_free(vec)` is called on it</span>
+    <span class="c1">// because we declared it as scoped</span>
+<span class="p">}</span></pre><p>Like other C2nxt collections, <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> provides its type-agnostic usage through a vtable pointer contained in the struct, and provides macros which wrap the usage of the vtable, making access simpler. If you prefer to not use this method of access, you can call the typed functions directly by in-fixing the contained type in the associated function name. IE: for <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(i32)</a></code>, <code>vec</code>, the equivalent function call for <code><a href="group__std__vector.html#ga68c1b117727513c31db46072b0d8707d" class="m-doc">std_<wbr />vector_<wbr />push_<wbr />back(vec, element)</a></code> would be <code>std_vector_i32_push_back(&amp;vec, element)</code></p>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>macro alias for a <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> containing <code>T</code>s</dd>
+            <dt id="ga8e362b243f06661623e6a2e490f0cbcc">
+              <span class="m-doc-wrap-bumper">#define <a href="#ga8e362b243f06661623e6a2e490f0cbcc" class="m-doc-self">STD_VECTOR_SHORT_OPTIMIZATION_NUM_ELEMENTS</a></span>
+            </dt>
+            <dd>The maximum number of elements storable using <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>&#x27;s small size optimization. Define this to a different value to change or disable the small size optimization.</dd>
+            <dt id="ga4e3d36e590816cf46564262e032c6651">
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4e3d36e590816cf46564262e032c6651" class="m-doc-self">STD_VECTOR_DEFAULT_LONG_CAPACITY</a></span>
+            </dt>
+            <dd>The default memory allocation size for <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> if short optimization is disabled.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaeeb06e70bd1b12b1bedbb89d7237f82d" class="m-doc">DeclStdVector</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>Use this macro to instantiate the declarations for <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> containing <code>T</code>s. This provides the struct declarations and definitions and function declarations for <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga80dae83b70ad850a72a593a495402e25" class="m-doc">std_vector_new</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with defaulted associated functions and initial capacity.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga58e564ee4252f1e25851a515d9462c9c" class="m-doc">std_vector_new_with_collection_data</a>(</span><span class="m-doc-wrap">T,
+              collection_data)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with defaulted capacity and provided associated functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga48829acef0cb046f485838671c25dc0e" class="m-doc">std_vector_new_with_capacity</a>(</span><span class="m-doc-wrap">T,
+              capacity)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with <strong>at least</strong> the given capacity and defaulted associated functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaaf9ba95030914fb6fcdceb5c9f3bc472" class="m-doc">std_vector_new_with_capacity_with_collection_data</a>(</span><span class="m-doc-wrap">T,
+              capacity,
+              collection_data)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with <strong>at least</strong> the given capacity and provided associated functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga8e1ea438ddc419dd40dda41b8d19b7e2" class="m-doc">std_vector_clone</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Clones the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1a511e50f05655edb04f97797cc6e998" class="m-doc">std_vector_at_mut</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>Returns a mutable reference to the element at the given <code>index</code> into the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga6589edf13fdd0df0ac951ddb1a67c583" class="m-doc">std_vector_at</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>Returns a const reference to the element at the given <code>index</code> into the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1080c91bd1f402fffc443336dbf59819" class="m-doc">std_vector_front_mut</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a mutable reference to the first element in the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaa71840566085765efd73bd7c03040fd8" class="m-doc">std_vector_front</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a const reference to the first element in the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4055f43ac3cec39c62c9545e6545e6cf" class="m-doc">std_vector_back_mut</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a mutable reference to the last element in the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1ec99d7fde8c83572092ae6e49a38858" class="m-doc">std_vector_back</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a const reference to the last element in the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1f0895ba20a3127a6da98526b48602c6" class="m-doc">std_vector_data_mut</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a pointer to the mutable raw array containing the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>&#x27;s elements.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga937f8387eea1bee1bbd4c1e188adc157" class="m-doc">std_vector_data</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a pointer to the const raw array containing the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>&#x27;s elements.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga71e298804b5b71fcfb0e93f97c069658" class="m-doc">std_vector_is_empty</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns whether the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>is empty.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga810d8600cd8a04bf285a18f06f7ae394" class="m-doc">std_vector_is_full</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns whether the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> is full (size equals capacity)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7a11cf4c5664aeaf61590ecf4d799d2c" class="m-doc">std_vector_size</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the current size of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab312720d4d1ecb387fa8a467b1f9e7cd" class="m-doc">std_vector_max_size</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>Returns the maximum possible size of a <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> containing type <code>T</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7ca9cfc5ae0d0ef2ff46137ce6eeb876" class="m-doc">std_vector_capacity</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the current capacity of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></dd>
+            <dt id="ga24552fe584323abe7530797b0a8e77b2">
+              <span class="m-doc-wrap-bumper">#define <a href="#ga24552fe584323abe7530797b0a8e77b2" class="m-doc-self">std_vector_reserve</a>(</span><span class="m-doc-wrap">self,
+              new_capacity)</span>
+            </dt>
+            <dd>Ensures enough memory to store at least <code>new_capacity</code> number of elements in the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, reallocating if necessary.</dd>
+            <dt id="gafcef992347280db8fa67edb7e33658dd">
+              <span class="m-doc-wrap-bumper">#define <a href="#gafcef992347280db8fa67edb7e33658dd" class="m-doc-self">std_vector_resize</a>(</span><span class="m-doc-wrap">self,
+              new_size)</span>
+            </dt>
+            <dd>Resizes the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to <code>new_size</code> number of elements. If <code>new_size</code> is greater than the current size, this will allocate memory if necessary and default-construct new elements. If <code>new_size</code> is less than the current size, this will destruct <code>size - new_size</code> number of elements and, if <code>new_size</code> is less than the SSO capacity, deallocate memory.</dd>
+            <dt id="ga88939148c235eb01e2ee3d5ecedd32b0">
+              <span class="m-doc-wrap-bumper">#define <a href="#ga88939148c235eb01e2ee3d5ecedd32b0" class="m-doc-self">std_vector_shrink_to_fit</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Shrinks the memory allocation for the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to match its current size.</dd>
+            <dt id="ga1cfd628b9ba35517df7c616a1170146a">
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1cfd628b9ba35517df7c616a1170146a" class="m-doc-self">std_vector_clear</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Clears the contents of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, destructing all of its elements.</dd>
+            <dt id="ga68c1b117727513c31db46072b0d8707d">
+              <span class="m-doc-wrap-bumper">#define <a href="#ga68c1b117727513c31db46072b0d8707d" class="m-doc-self">std_vector_push_back</a>(</span><span class="m-doc-wrap">self,
+              element)</span>
+            </dt>
+            <dd>Appends the given element to the end of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, reallocating memory if necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadae79f7f3453532c43bed03f61a148d8" class="m-doc">std_vector_pop_back</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Removes the last element in the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> and removes it, if the size is greater than zero.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaada53e9f9f14d1c285fa3f374153ef55" class="m-doc">std_vector_insert</a>(</span><span class="m-doc-wrap">self,
+              element,
+              index)</span>
+            </dt>
+            <dd>Inserts the given element at the given index in the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, moving elements backward in the vector if necessary.</dd>
+            <dt id="ga04c2b5dd6dc77534163f2e645674056d">
+              <span class="m-doc-wrap-bumper">#define <a href="#ga04c2b5dd6dc77534163f2e645674056d" class="m-doc-self">std_vector_erase</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>Removes the element at the given index from the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, moving elements forward in the vector if necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7f641eb67e40d1dad774fbdec65851fd" class="m-doc">std_vector_erase_n</a>(</span><span class="m-doc-wrap">self,
+              index,
+              num_elements)</span>
+            </dt>
+            <dd>Removes <code>num_elements</code> elements from the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, starting with the element at <code>index</code>, and moving elements forward in the vector afterward, if necessary.</dd>
+            <dt id="gaf771950b95f2c05b3ced99a4d89c8ebb">
+              <span class="m-doc-wrap-bumper">#define <a href="#gaf771950b95f2c05b3ced99a4d89c8ebb" class="m-doc-self">std_vector_free</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Frees the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, calling the element destructor on each element and freeing any allocated memory.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5b4b1078425cdfc689ce0e3b114a500d" class="m-doc">std_vector_begin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>StdRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, starting at the beginning of the iteration (pointing at the beginning of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga2533ce3e15fa1c33171641e995da3679" class="m-doc">std_vector_end</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>StdRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, starting at the end of the iteration (pointing at the end of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadb8fd919dae09f94398c2c6989c11800" class="m-doc">std_vector_rbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>StdRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, starting at the beginning of the reversed iteration (pointing at the end of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7cc4c71304c92e6d7ee16eb527c282c7" class="m-doc">std_vector_rend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>StdRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, starting at the end of the reversed iteration (pointing at the beginning of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga46dfb48c075436afc5011461f7cb9e52" class="m-doc">std_vector_iterator_equals</a>(</span><span class="m-doc-wrap">first,
+              second)</span>
+            </dt>
+            <dd>Returns whether the given pair of iterators are equal (they belong to the same collection and point to the same element), IE: if <code>first == second</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga6c4ef89f09897c19be03975fa43d4688" class="m-doc">std_vector_cbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>StdRandomAccessIterator</code> into the const iteration of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, starting at the beginning of the iteration (pointing at the beginning of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9dd7fc4eed9da2004ca86bda18766346" class="m-doc">std_vector_cend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>StdRandomAccessIterator</code> into the const iteration of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, starting at the end of the iteration (pointing at the end of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga315606be1f470ff0a2ad37e8373d8378" class="m-doc">std_vector_crbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>StdRandomAccessIterator</code> into the const iteration of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, starting at the beginning of the reversed iteration (pointing at the end of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga945fe233d65135932540ff39d0806497" class="m-doc">std_vector_crend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>StdRandomAccessIterator</code> into the const iteration of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, starting at the end of the reversed iteration (pointing at the beginning of the vector)</dd>
+            <dt id="gafaeececb27ec4fde084a6af81fd93802">
+              <span class="m-doc-wrap-bumper">#define <a href="#gafaeececb27ec4fde084a6af81fd93802" class="m-doc-self">std_vector_const_iterator_equals</a>(</span><span class="m-doc-wrap">first,
+              second)</span>
+            </dt>
+            <dd>Returns whether the given pair of const iterators are equal (they belong to the same collection and point to the same element), IE: if <code>first == second</code></dd>
+            <dt id="ga10796f2ff6a701f80a8c7977569b7761">
+              <span class="m-doc-wrap-bumper">#define <a href="#ga10796f2ff6a701f80a8c7977569b7761" class="m-doc-self">std_vector_scoped</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>declare a <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> variable with this attribute to have <code>std_vector_free</code> automatically called on it at scope end</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac4185082dbf25baa989a3ac6c077b0e6" class="m-doc">ImplStdVector</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>Use this macro to instantiate the definitions for a <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> containing <code>T</code>s. This provides the function definitions for <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Define documentation</h2>
+          <section class="m-doc-details" id="ga4079328f875ae061145d750c84c3b44c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4079328f875ae061145d750c84c3b44c" class="m-doc-self">StdVector</a>(</span><span class="m-doc-wrap">T)</span>
+            </h3>
+            <p>macro alias for a <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> containing <code>T</code>s</p>
+<p><code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> is a bounds-safe, allocator aware, generic dynamic-capacity array type. It is implemented as a struct template, which enables 100% type safety, while providing abstractions that allow type agnostic use. It has greatly increased ergonomics over manual array management and provides many useful features such as random access iterators and optional scoped destruction.</p><p>Example:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&quot;C2nxt/StdVector.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;C2nxt/StdIO.h&quot;</span><span class="cp"></span>
+
+<span class="c1">// create a `StdVector(i32)` with default allocator, element default-constructor, and</span>
+<span class="n">element</span>
+<span class="c1">// destructor</span>
+<span class="n">let_mut</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">std_vector_new</span><span class="p">(</span><span class="n">i32</span><span class="p">);</span>
+
+<span class="c1">// append 10 elements to the vector</span>
+<span class="n">ranged_for</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std_vector_push_back</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// prints information about `vec` to stdout</span>
+<span class="c1">// because `StdVector(T)` is generic, and thus can&#39;t be used in a `_Generic` match arm prior</span>
+<span class="n">to</span>
+<span class="c1">// the type&#39;s instantiation, we have to explicitly cast to the `StdFormat` Trait to get</span>
+<span class="c1">// `StdVector(T)`&#39;s implementation of the Trait</span>
+<span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">std_as_format_t</span><span class="p">(</span><span class="n">StdVector</span><span class="p">(</span><span class="n">i32</span><span class="p">),</span> <span class="n">vec</span><span class="p">));</span>
+<span class="c1">// prints `vec`&#39;s elements to stdout</span>
+<span class="n">foreach</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">elem</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">{</span>
+    <span class="n">let_mut</span> <span class="nf">std_vector_scoped</span><span class="p">(</span><span class="n">i32</span><span class="p">)</span> <span class="n">vec2</span> <span class="o">=</span> <span class="n">std_vector_new</span><span class="p">(</span><span class="n">i32</span><span class="p">);</span>
+    <span class="n">foreach</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">std_vector_push_back</span><span class="p">(</span><span class="n">vec2</span><span class="p">,</span> <span class="n">elem</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1">// `vec2` is freed here</span></pre><p>Like other C2nxt collections, <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> provides its type-agnostic usage through a vtable pointer contained in the struct, and provides macros which wrap the usage of the vtable, making access simpler. If you prefer to not use this method of access, you can call the typed functions directly by in-fixing the contained type in the associated function name. IE: for <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(i32)</a></code>, <code>vec</code>, the equivalent function call for <code><a href="group__std__vector.html#ga68c1b117727513c31db46072b0d8707d" class="m-doc">std_<wbr />vector_<wbr />push_<wbr />back(vec, element)</a></code> would be <code>std_vector_i32_push_back(&amp;vec, element)</code></p>
+          </div></section>
+          <section class="m-doc-details" id="gaeeb06e70bd1b12b1bedbb89d7237f82d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaeeb06e70bd1b12b1bedbb89d7237f82d" class="m-doc-self">DeclStdVector</a>(</span><span class="m-doc-wrap">T)</span>
+            </h3>
+            <p>Use this macro to instantiate the declarations for <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> containing <code>T</code>s. This provides the struct declarations and definitions and function declarations for <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> instantiation</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Requires that the following have been met prior to use:</p><ol><li>a <code>typedef</code> of your type to provide an alphanumeric name for it</li><li>a <code>typedef</code> for pointer to your type as <code><a href="group__std__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(YourType)</a></code></li><li>a <code>typedef</code> for pointer to const your type as <code><a href="group__std__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(YourType)</a></code></li><li>Instantiations for C2nxt iterators for the typedefs provided in (2) and (3)</li><li><p>Instantiation of <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(YourType)</a></code>, via provided macros</p><aside class="m-note m-default"><h4>See also</h4><p><code><a href="group__std__string.html#ga4bf1aba4bb8d1584235735fae6bbc360" class="m-doc">StdOption</a></code></p></aside></li></ol>
+          </div></section>
+          <section class="m-doc-details" id="ga80dae83b70ad850a72a593a495402e25"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga80dae83b70ad850a72a593a495402e25" class="m-doc-self">std_vector_new</a>(</span><span class="m-doc-wrap">T)</span>
+            </h3>
+            <p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with defaulted associated functions and initial capacity.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> instantiation to create</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with:</p><ol><li>defaulted initial capacity</li><li>defaulted associated element default-constructor</li><li>defaulted associated element copy-constructor</li><li>defaulted associated element destructor</li><li>defaulted associated memory allocator</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="ga58e564ee4252f1e25851a515d9462c9c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga58e564ee4252f1e25851a515d9462c9c" class="m-doc-self">std_vector_new_with_collection_data</a>(</span><span class="m-doc-wrap">T,
+              collection_data)</span>
+            </h3>
+            <p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with defaulted capacity and provided associated functions.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>collection_data</td>
+                  <td>- The <code><a href="group__collections.html#ga53cfd9d58fc7437fb13ca08499a131f7" class="m-doc">StdCollectionData(CollectionType)</a></code> containing the element default-constructor, element copy-constructor, element destructor, and memory allocator to use</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with:</p><ol><li>defaulted initial capacity</li><li>possibly user-provided element default-constructor</li><li>possibly user-provided associated element copy-constructor</li><li>possibly user-provided element destructor</li><li>user-provided memory allocator</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="ga48829acef0cb046f485838671c25dc0e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga48829acef0cb046f485838671c25dc0e" class="m-doc-self">std_vector_new_with_capacity</a>(</span><span class="m-doc-wrap">T,
+              capacity)</span>
+            </h3>
+            <p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with <strong>at least</strong> the given capacity and defaulted associated functions.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>capacity</td>
+                  <td>- The initial capacity of the vector</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with:</p><ol><li>given initial capacity</li><li>defaulted associated element default-constructor</li><li>defaulted associated element copy-constructor</li><li>defaulted associated element destructor</li><li>defaulted memory allocator</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="gaaf9ba95030914fb6fcdceb5c9f3bc472"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaaf9ba95030914fb6fcdceb5c9f3bc472" class="m-doc-self">std_vector_new_with_capacity_with_collection_data</a>(</span><span class="m-doc-wrap">T,
+              capacity,
+              collection_data)</span>
+            </h3>
+            <p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with <strong>at least</strong> the given capacity and provided associated functions.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>capacity</td>
+                  <td>- The initial capacity of the vector</td>
+                </tr>
+                <tr>
+                  <td>collection_data</td>
+                  <td>- The <code><a href="group__collections.html#ga53cfd9d58fc7437fb13ca08499a131f7" class="m-doc">StdCollectionData(CollectionType)</a></code> containing the element default-constructor, element copy-constructor, element destructor, and memory allocator to use</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with:</p><ol><li>given initial capacity</li><li>possibly user-provided associated element default-constructor</li><li>possibly user-provided associated element copy-constructor</li><li>possibly user-provided associated element destructor</li><li>user-provided memory allocator</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="ga8e1ea438ddc419dd40dda41b8d19b7e2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga8e1ea438ddc419dd40dda41b8d19b7e2" class="m-doc-self">std_vector_clone</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Clones the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to clone</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a clone of the given vector</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a deep copy of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> calling the associated copy constructor for each element stored in it.</p><aside class="m-note m-info"><h4>Note</h4><p>Requires that a copy constructor is defined for the elements contained in the vector, either the default one provided by the implementation, or a user-defined one. If it isn&#x27;t provided or is explicitly provided as <code>nullptr</code> when creating the <code><a href="group__collections.html#ga53cfd9d58fc7437fb13ca08499a131f7" class="m-doc">StdCollectionData(CollectionType)</a></code> associated with this vector, this <strong>may</strong> trigger a compiler error on clang, and will always trigger a runtime assert for all compilers</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga1a511e50f05655edb04f97797cc6e998"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1a511e50f05655edb04f97797cc6e998" class="m-doc-self">std_vector_at_mut</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </h3>
+            <p>Returns a mutable reference to the element at the given <code>index</code> into the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to get an element from</td>
+                </tr>
+                <tr>
+                  <td>index</td>
+                  <td>- The index of the desired element</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a mutable reference to the element at the given index</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga6589edf13fdd0df0ac951ddb1a67c583"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga6589edf13fdd0df0ac951ddb1a67c583" class="m-doc-self">std_vector_at</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </h3>
+            <p>Returns a const reference to the element at the given <code>index</code> into the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to get an element from</td>
+                </tr>
+                <tr>
+                  <td>index</td>
+                  <td>- The index of the desired element</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a const reference to the element at the given index</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga1080c91bd1f402fffc443336dbf59819"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1080c91bd1f402fffc443336dbf59819" class="m-doc-self">std_vector_front_mut</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns a mutable reference to the first element in the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to get the first element from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a mutable reference to the first element</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaa71840566085765efd73bd7c03040fd8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaa71840566085765efd73bd7c03040fd8" class="m-doc-self">std_vector_front</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns a const reference to the first element in the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to get the first element from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a const reference to the first element</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga4055f43ac3cec39c62c9545e6545e6cf"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4055f43ac3cec39c62c9545e6545e6cf" class="m-doc-self">std_vector_back_mut</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns a mutable reference to the last element in the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to get the last element from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a mutable reference to the last element</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga1ec99d7fde8c83572092ae6e49a38858"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1ec99d7fde8c83572092ae6e49a38858" class="m-doc-self">std_vector_back</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns a const reference to the last element in the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to get the last element from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a const reference to the last element</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga1f0895ba20a3127a6da98526b48602c6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1f0895ba20a3127a6da98526b48602c6" class="m-doc-self">std_vector_data_mut</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns a pointer to the mutable raw array containing the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>&#x27;s elements.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to get the raw array from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a pointer to the raw array</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga937f8387eea1bee1bbd4c1e188adc157"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga937f8387eea1bee1bbd4c1e188adc157" class="m-doc-self">std_vector_data</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns a pointer to the const raw array containing the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>&#x27;s elements.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to get the raw array from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a pointer to the raw array</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga71e298804b5b71fcfb0e93f97c069658"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga71e298804b5b71fcfb0e93f97c069658" class="m-doc-self">std_vector_is_empty</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns whether the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>is empty.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to check for emptiness</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if empty, <code>false</code> otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga810d8600cd8a04bf285a18f06f7ae394"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga810d8600cd8a04bf285a18f06f7ae394" class="m-doc-self">std_vector_is_full</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns whether the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> is full (size equals capacity)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to check for fullness</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if full, <code>false</code> otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga7a11cf4c5664aeaf61590ecf4d799d2c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7a11cf4c5664aeaf61590ecf4d799d2c" class="m-doc-self">std_vector_size</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns the current size of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to get the size of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the size of the <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gab312720d4d1ecb387fa8a467b1f9e7cd"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab312720d4d1ecb387fa8a467b1f9e7cd" class="m-doc-self">std_vector_max_size</a>(</span><span class="m-doc-wrap">T)</span>
+            </h3>
+            <p>Returns the maximum possible size of a <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> containing type <code>T</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> instantiation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The maximum possible size</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga7ca9cfc5ae0d0ef2ff46137ce6eeb876"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7ca9cfc5ae0d0ef2ff46137ce6eeb876" class="m-doc-self">std_vector_capacity</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns the current capacity of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to get the capacity of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the capacity of the <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gadae79f7f3453532c43bed03f61a148d8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadae79f7f3453532c43bed03f61a148d8" class="m-doc-self">std_vector_pop_back</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Removes the last element in the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> and removes it, if the size is greater than zero.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to get the last element from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code><a href="group__std__option.html#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some(T)</a></code> if size &gt; 0, otherwise <code><a href="group__std__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaada53e9f9f14d1c285fa3f374153ef55"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaada53e9f9f14d1c285fa3f374153ef55" class="m-doc-self">std_vector_insert</a>(</span><span class="m-doc-wrap">self,
+              element,
+              index)</span>
+            </h3>
+            <p>Inserts the given element at the given index in the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, moving elements backward in the vector if necessary.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to insert into</td>
+                </tr>
+                <tr>
+                  <td>element</td>
+                  <td>- The element to insert</td>
+                </tr>
+                <tr>
+                  <td>index</td>
+                  <td>- The index at which to insert <code>element</code></td>
+                </tr>
+              </tbody>
+            </table>
+<aside class="m-note m-info"><h4>Note</h4><p>If <code>index</code> is past the end of the <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> (<code>index</code> &gt; size), subsequent behavior of the collection is undefined</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga7f641eb67e40d1dad774fbdec65851fd"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7f641eb67e40d1dad774fbdec65851fd" class="m-doc-self">std_vector_erase_n</a>(</span><span class="m-doc-wrap">self,
+              index,
+              num_elements)</span>
+            </h3>
+            <p>Removes <code>num_elements</code> elements from the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, starting with the element at <code>index</code>, and moving elements forward in the vector afterward, if necessary.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to remove elements from</td>
+                </tr>
+                <tr>
+                  <td>index</td>
+                  <td>- The index to begin removal at</td>
+                </tr>
+                <tr>
+                  <td>num_elements</td>
+                  <td>- The number of elements to remove from the vector</td>
+                </tr>
+              </tbody>
+            </table>
+<aside class="m-note m-info"><h4>Note</h4><p>The given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> must contain the specified number of elements within the range [index, size). IE: <code>index + num_elements</code> must be strictly less than the current size of the vector</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga5b4b1078425cdfc689ce0e3b114a500d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5b4b1078425cdfc689ce0e3b114a500d" class="m-doc-self">std_vector_begin</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns a <code>StdRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, starting at the beginning of the iteration (pointing at the beginning of the vector)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the beginning of the vector</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga2533ce3e15fa1c33171641e995da3679"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga2533ce3e15fa1c33171641e995da3679" class="m-doc-self">std_vector_end</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns a <code>StdRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, starting at the end of the iteration (pointing at the end of the vector)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the end of the vector</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gadb8fd919dae09f94398c2c6989c11800"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadb8fd919dae09f94398c2c6989c11800" class="m-doc-self">std_vector_rbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns a <code>StdRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, starting at the beginning of the reversed iteration (pointing at the end of the vector)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the beginning of the reversed vector</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga7cc4c71304c92e6d7ee16eb527c282c7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7cc4c71304c92e6d7ee16eb527c282c7" class="m-doc-self">std_vector_rend</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns a <code>StdRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, starting at the end of the reversed iteration (pointing at the beginning of the vector)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the end of the reversed vector</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga46dfb48c075436afc5011461f7cb9e52"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga46dfb48c075436afc5011461f7cb9e52" class="m-doc-self">std_vector_iterator_equals</a>(</span><span class="m-doc-wrap">first,
+              second)</span>
+            </h3>
+            <p>Returns whether the given pair of iterators are equal (they belong to the same collection and point to the same element), IE: if <code>first == second</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">first</td>
+                  <td>- The LHS iterator of the equality check</td>
+                </tr>
+                <tr>
+                  <td>second</td>
+                  <td>- The RHS iterator of the equality check</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if they are equal, <code>false</code> otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga6c4ef89f09897c19be03975fa43d4688"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga6c4ef89f09897c19be03975fa43d4688" class="m-doc-self">std_vector_cbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns a <code>StdRandomAccessIterator</code> into the const iteration of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, starting at the beginning of the iteration (pointing at the beginning of the vector)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the beginning of the vector</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga9dd7fc4eed9da2004ca86bda18766346"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9dd7fc4eed9da2004ca86bda18766346" class="m-doc-self">std_vector_cend</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns a <code>StdRandomAccessIterator</code> into the const iteration of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, starting at the end of the iteration (pointing at the end of the vector)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the end of the vector</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga315606be1f470ff0a2ad37e8373d8378"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga315606be1f470ff0a2ad37e8373d8378" class="m-doc-self">std_vector_crbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns a <code>StdRandomAccessIterator</code> into the const iteration of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, starting at the beginning of the reversed iteration (pointing at the end of the vector)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the beginning of the reversed vector</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga945fe233d65135932540ff39d0806497"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga945fe233d65135932540ff39d0806497" class="m-doc-self">std_vector_crend</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns a <code>StdRandomAccessIterator</code> into the const iteration of the given <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, starting at the end of the reversed iteration (pointing at the beginning of the vector)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the end of the reversed vector</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gac4185082dbf25baa989a3ac6c077b0e6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac4185082dbf25baa989a3ac6c077b0e6" class="m-doc-self">ImplStdVector</a>(</span><span class="m-doc-wrap">T)</span>
+            </h3>
+            <p>Use this macro to instantiate the definitions for a <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> containing <code>T</code>s. This provides the function definitions for <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code>StdArray</code> instantiation</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Requires that <code><a href="group__std__vector.html#gaeeb06e70bd1b12b1bedbb89d7237f82d" class="m-doc">DeclStdVector(T)</a></code> has already been used and is in scope, and that the requirements for that have already been met.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Error Handling &raquo; Asserts module | C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">C2nxt <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="group__error__handling.html">Error Handling</a> &raquo;</span>
+          Asserts <span class="m-thin">module</span></h1>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>Asserts provides various compile-time and runtime asserts and similar facilities, some of which are wrappers for the standard C asserts, for enforcing invariants, run-time constraints/contracts, and compile-time requirements</p><p>Example</p><pre class="m-code"><span class="c1">// i must be less than 10</span>
+<span class="kt">void</span> <span class="nf">func</span><span class="p">(</span><span class="n">i32</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// enforce that i is less than 10</span>
+    <span class="n">std_assert</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">,</span> <span class="s">&quot;func called with i &gt;= 10 (i must be less than 10&quot;</span><span class="p">);</span>
+    <span class="c1">// use i somehow...</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="o">*</span> <span class="nf">my_alloc</span><span class="p">(</span><span class="n">usize</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// allocation code...</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">allocation_failed</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// runtime abort with error message</span>
+        <span class="n">std_panic</span><span class="p">(</span><span class="s">&quot;my_alloc failed to allocate memory!&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cp">#ifndef THING</span>
+    <span class="c1">// THING must be less than 20</span>
+    <span class="cp">#define THING 12</span>
+<span class="cp">#endif</span>
+<span class="c1">// enforce THING &lt; 20 at compile-time</span>
+<span class="n">std_static_assert</span><span class="p">(</span><span class="n">THING</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;THING defined as &gt;= 20 (THING must be less than 20)&quot;</span><span class="p">);</span>
+
+<span class="cp">#ifndef THING</span>
+    <span class="c1">// THING must be a usize</span>
+    <span class="cp">#define THING static_cast(usize)(12)</span>
+<span class="cp">#endif</span>
+<span class="c1">// enforce THING is a usize at compile-time</span>
+<span class="n">std_type_assert_v</span><span class="p">(</span><span class="n">usize</span><span class="p">,</span> <span class="n">THING</span><span class="p">);</span></pre>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga11fc8dfa199505608900b79b7c804307" class="m-doc">std_panic</a>(</span><span class="m-doc-wrap">error_message)</span>
+            </dt>
+            <dd>Invokes a panic with the given error message.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga368bffe3707a6b7ab410ab08c8995d68" class="m-doc">std_assert</a>(</span><span class="m-doc-wrap">condition,
+              error_message)</span>
+            </dt>
+            <dd>Asserts that the given condition is <code>true</code>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7427dccf63958fa674fb631cf81e130b" class="m-doc">std_static_assert</a>(</span><span class="m-doc-wrap">condition,
+              error_message)</span>
+            </dt>
+            <dd>Asserts that the given compile-time condition is <code>true</code>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab743dc58df527c96a99147a539d1f6aa" class="m-doc">std_type_assert</a>(</span><span class="m-doc-wrap">type1,
+              type2)</span>
+            </dt>
+            <dd>Asserts that the two types are equivalent at compile-time.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga09da01a6f77cee20131910384469ea14" class="m-doc">std_type_assert_v</a>(</span><span class="m-doc-wrap">type,
+              value)</span>
+            </dt>
+            <dd>Asserts that the type <code>type</code> and the type of <code>value</code> are equivalent at compile-time.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaf463b3f629d3c080d3ab0918a4184ea4" class="m-doc">std_type_assert_vs</a>(</span><span class="m-doc-wrap">value1,
+              value2)</span>
+            </dt>
+            <dd>Asserts that the types of the two given values are equivalent at compile-time.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Define documentation</h2>
+          <section class="m-doc-details" id="ga11fc8dfa199505608900b79b7c804307"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga11fc8dfa199505608900b79b7c804307" class="m-doc-self">std_panic</a>(</span><span class="m-doc-wrap">error_message)</span>
+            </h3>
+            <p>Invokes a panic with the given error message.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">error_message</td>
+                  <td>- The error message to print to <code>stderr</code> before aborting.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>A panic is an immediate abort with error message. Panics should only be used in extreme circumstances of absolute program failure (for example, when an invariant is irrecoverably broken or on OOM).</p>
+          </div></section>
+          <section class="m-doc-details" id="ga368bffe3707a6b7ab410ab08c8995d68"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga368bffe3707a6b7ab410ab08c8995d68" class="m-doc-self">std_assert</a>(</span><span class="m-doc-wrap">condition,
+              error_message)</span>
+            </h3>
+            <p>Asserts that the given condition is <code>true</code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">condition</td>
+                  <td>- The condition that must be <code>true</code></td>
+                </tr>
+                <tr>
+                  <td>error_message</td>
+                  <td>- The associated error message if <code>condition</code> is <code>false</code></td>
+                </tr>
+              </tbody>
+            </table>
+<p>If <code>condition</code> is false, this will print the file and line at which the error occurred, along with the given error message, to <code>stderr</code>, then abort.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga7427dccf63958fa674fb631cf81e130b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7427dccf63958fa674fb631cf81e130b" class="m-doc-self">std_static_assert</a>(</span><span class="m-doc-wrap">condition,
+              error_message)</span>
+            </h3>
+            <p>Asserts that the given compile-time condition is <code>true</code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">condition</td>
+                  <td>- The condition that must be true at compile time</td>
+                </tr>
+                <tr>
+                  <td>error_message</td>
+                  <td>- The associated error message if <code>condition</code> is <code>false</code></td>
+                </tr>
+              </tbody>
+            </table>
+<p>If <code>condition</code> is <code>false</code>, this will print the given error message and abort compilation.</p>
+          </div></section>
+          <section class="m-doc-details" id="gab743dc58df527c96a99147a539d1f6aa"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab743dc58df527c96a99147a539d1f6aa" class="m-doc-self">std_type_assert</a>(</span><span class="m-doc-wrap">type1,
+              type2)</span>
+            </h3>
+            <p>Asserts that the two types are equivalent at compile-time.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">type1</td>
+                  <td>- The first type to compare</td>
+                </tr>
+                <tr>
+                  <td>type2</td>
+                  <td>- The second type to compare</td>
+                </tr>
+              </tbody>
+            </table>
+<p>If <code>type1</code> and <code>type2</code> are not <strong>strictly</strong> equivalent, this will abort compilation with an error message.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga09da01a6f77cee20131910384469ea14"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga09da01a6f77cee20131910384469ea14" class="m-doc-self">std_type_assert_v</a>(</span><span class="m-doc-wrap">type,
+              value)</span>
+            </h3>
+            <p>Asserts that the type <code>type</code> and the type of <code>value</code> are equivalent at compile-time.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">type</td>
+                  <td>- The type to compare</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>- The value to compare the type of</td>
+                </tr>
+              </tbody>
+            </table>
+<p>If <code>type</code> and the type of <code>value</code> are not <strong>strictly</strong> equivalent, this will abort compilation with an error message.</p>
+          </div></section>
+          <section class="m-doc-details" id="gaf463b3f629d3c080d3ab0918a4184ea4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaf463b3f629d3c080d3ab0918a4184ea4" class="m-doc-self">std_type_assert_vs</a>(</span><span class="m-doc-wrap">value1,
+              value2)</span>
+            </h3>
+            <p>Asserts that the types of the two given values are equivalent at compile-time.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value1</td>
+                  <td>- The first value to compare the type of</td>
+                </tr>
+                <tr>
+                  <td>value2</td>
+                  <td>- The second value to compare the type of</td>
+                </tr>
+              </tbody>
+            </table>
+<p>If the type of <code>value1</code> and the type of <code>value2</code> are not <strong>strictly</strong> equivalent, this will abort compilation with an error message.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

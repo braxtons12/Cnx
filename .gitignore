@@ -6,3 +6,11 @@ test.ppm
 docs/doxygen/latex
 docs/doxygen/xml
 docs/__pycache__/
+/.cache/
+/build/
+/cmake-build-debug/
+/cmake-build-release/
+.idea/
+/cmake-build-debug-clang/
+/cmake-build-release-clang/
+__pycache__/

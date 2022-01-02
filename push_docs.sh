@@ -1,1 +1,1 @@
-git subtree push --prefix docs/doxygen/html origin gh-pages
+git subtree push --prefix docs/html origin gh-pages
