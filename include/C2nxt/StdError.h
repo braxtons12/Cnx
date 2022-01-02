@@ -3,10 +3,10 @@
 /// @brief This module provides an extensible type for communicating errors via both error codes and
 /// message strings.
 /// @version 0.1
-/// @date 2021-07-20
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -57,13 +57,13 @@
 /// In most cases, `StdError` would be used in tandem with `StdResult(T)` to enable concise error
 /// handling without having to use "out" parameters.
 /// @}
-#include "StdAllocators.h"
-#include "StdBasicTypes.h"
-#include "StdFormat.h"
-#include "StdString.h"
+#include <C2nxt/StdAllocators.h>
+#include <C2nxt/StdBasicTypes.h>
+#include <C2nxt/StdFormat.h>
+#include <C2nxt/StdString.h>
 
 #ifndef STD_ERROR
-	/// @brief Declarations and definitions related to `StdErrror`
+	/// @brief Declarations and definitions related to `StdError`
 	#define STD_ERROR
 
 /// @brief A `std_error_category_message_function` is a function that converts an `i64` error code
