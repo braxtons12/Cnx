@@ -3,10 +3,10 @@
 /// @brief StdAllocators provides an abstraction to modularize custom memory allocators to make
 /// custom allocator use simple and configurable
 /// @version 0.1
-/// @date 2021-07-20
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
 #include <malloc.h>
 #include <string.h>
 
-#include "StdBasicTypes.h"
+#include <C2nxt/StdBasicTypes.h>
 
 #ifndef STD_ALLOCATORS
 	#define STD_ALLOCATORS
@@ -39,7 +39,7 @@
 		/// Define this to your desired function to override the default allocation function
 		/// @ingroup memory
 		#define STD_DEFAULT_ALLOCATOR_FUNCTION malloc
-	#endif // STD_DEFAULT_ALLOCATOR_FUNCION
+	#endif // STD_DEFAULT_ALLOCATOR_FUNCTION
 
 	#ifndef STD_DEFAULT_DEALLOCATOR_FUNCTION
 		/// @brief The default `StdAllocator` deallocation (free) function
@@ -91,6 +91,10 @@ typedef struct StdMemory {
 	/// @brief the size of the memory, in bytes
 	usize m_size_bytes;
 } StdMemory;
+
+/// @brief The default `StdAllocator`
+/// @ingroup memory
+extern const StdAllocator DEFAULT_ALLOCATOR;
 
 /// @brief Creates a new `StdAllocator` with the default allocation and default deallocation
 /// functions
