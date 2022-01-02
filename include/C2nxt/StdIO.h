@@ -1,12 +1,12 @@
-/// @file StdIO.H
+/// @file StdIO.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief StdIO brings human readable formatted I/O, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
 /// @version 0.1
-/// @date 2021-08-17
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -26,9 +26,9 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#include "StdAllocators.h"
-#include "StdBasicTypes.h"
-#include "StdFormat.h"
+#include <C2nxt/StdAllocators.h>
+#include <C2nxt/StdBasicTypes.h>
+#include <C2nxt/StdFormat.h>
 
 /// @defgroup io I/O
 /// C2nxt's I/O API extends its formatting API to I/O
