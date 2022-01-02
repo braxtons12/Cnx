@@ -1,11 +1,11 @@
-/// @file __StdStaticCheckedDivision.h
+/// @file __StdStaticCheckedDiv.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Compile-time checked division function
 /// @version 0.1
-/// @date 2021-08-14
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,8 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#include "../StdAssert.h"
-#include "__StdStaticBase.h"
+#include <C2nxt/StdAssert.h>
+#include <C2nxt/math/__StdStaticBase.h>
 
 #ifndef __STD_STATIC_MATH_CHECKED_DIV
 	#define __STD_STATIC_MATH_CHECKED_DIV

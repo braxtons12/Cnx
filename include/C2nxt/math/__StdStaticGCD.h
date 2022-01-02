@@ -2,10 +2,10 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Compile-time GCD calculation
 /// @version 0.1
-/// @date 2021-08-14
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -27,8 +27,9 @@
 
 #ifndef STD_STATIC_GCD
 #define STD_STATIC_GCD
-#include "../StdBasicTypes.h"
-#include "../StdPlatform.h"
+
+#include <C2nxt/StdBasicTypes.h>
+#include <C2nxt/StdPlatform.h>
 
 /// @brief Final iteration of static GCD calculation
 /// @param left - The first number of the pair to get the GCD of
@@ -41,7 +42,7 @@
 /// @return the GCD of left and right
 #define __std_static_gcd2(left, right) \
 	(((right) == 0 && (left) == 0) ?   \
-		   1 :                           \
+		 1 :                           \
 		   ((right) == 0 ? (left) : __std_static_gcd1(right, (left) % (right))))
 /// @brief 18th iteration of static GCD calculation
 /// @param left - The first number of the pair to get the GCD of
@@ -49,7 +50,7 @@
 /// @return the GCD of left and right
 #define __std_static_gcd3(left, right) \
 	(((right) == 0 && (left) == 0) ?   \
-		   1 :                           \
+		 1 :                           \
 		   ((right) == 0 ? (left) : __std_static_gcd2(right, (left) % (right))))
 /// @brief 17th iteration of static GCD calculation
 /// @param left - The first number of the pair to get the GCD of
@@ -57,7 +58,7 @@
 /// @return the GCD of left and right
 #define __std_static_gcd4(left, right) \
 	(((right) == 0 && (left) == 0) ?   \
-		   1 :                           \
+		 1 :                           \
 		   ((right) == 0 ? (left) : __std_static_gcd3(right, (left) % (right))))
 /// @brief 16th iteration of static GCD calculation
 /// @param left - The first number of the pair to get the GCD of
@@ -65,7 +66,7 @@
 /// @return the GCD of left and right
 #define __std_static_gcd5(left, right) \
 	(((right) == 0 && (left) == 0) ?   \
-		   1 :                           \
+		 1 :                           \
 		   ((right) == 0 ? (left) : __std_static_gcd4(right, (left) % (right))))
 /// @brief 15th iteration of static GCD calculation
 /// @param left - The first number of the pair to get the GCD of
@@ -73,7 +74,7 @@
 /// @return the GCD of left and right
 #define __std_static_gcd6(left, right) \
 	(((right) == 0 && (left) == 0) ?   \
-		   1 :                           \
+		 1 :                           \
 		   ((right) == 0 ? (left) : __std_static_gcd5(right, (left) % (right))))
 /// @brief 14th iteration of static GCD calculation
 /// @param left - The first number of the pair to get the GCD of
@@ -81,7 +82,7 @@
 /// @return the GCD of left and right
 #define __std_static_gcd7(left, right) \
 	(((right) == 0 && (left) == 0) ?   \
-		   1 :                           \
+		 1 :                           \
 		   ((right) == 0 ? (left) : __std_static_gcd6(right, (left) % (right))))
 /// @brief 13th iteration of static GCD calculation
 /// @param left - The first number of the pair to get the GCD of
@@ -89,7 +90,7 @@
 /// @return the GCD of left and right
 #define __std_static_gcd8(left, right) \
 	(((right) == 0 && (left) == 0) ?   \
-		   1 :                           \
+		 1 :                           \
 		   ((right) == 0 ? (left) : __std_static_gcd7(right, (left) % (right))))
 /// @brief 12th iteration of static GCD calculation
 /// @param left - The first number of the pair to get the GCD of
@@ -97,7 +98,7 @@
 /// @return the GCD of left and right
 #define __std_static_gcd9(left, right) \
 	(((right) == 0 && (left) == 0) ?   \
-		   1 :                           \
+		 1 :                           \
 		   ((right) == 0 ? (left) : __std_static_gcd8(right, (left) % (right))))
 /// @brief 11th iteration of static GCD calculation
 /// @param left - The first number of the pair to get the GCD of
@@ -105,7 +106,7 @@
 /// @return the GCD of left and right
 #define __std_static_gcd10(left, right) \
 	(((right) == 0 && (left) == 0) ?    \
-		   1 :                            \
+		 1 :                            \
 		   ((right) == 0 ? (left) : __std_static_gcd9(right, (left) % (right))))
 /// @brief 10th iteration of static GCD calculation
 /// @param left - The first number of the pair to get the GCD of
@@ -113,7 +114,7 @@
 /// @return the GCD of left and right
 #define __std_static_gcd11(left, right) \
 	(((right) == 0 && (left) == 0) ?    \
-		   1 :                            \
+		 1 :                            \
 		   ((right) == 0 ? (left) : __std_static_gcd10(right, (left) % (right))))
 /// @brief 9th iteration of static GCD calculation
 /// @param left - The first number of the pair to get the GCD of
@@ -121,7 +122,7 @@
 /// @return the GCD of left and right
 #define __std_static_gcd12(left, right) \
 	(((right) == 0 && (left) == 0) ?    \
-		   1 :                            \
+		 1 :                            \
 		   ((right) == 0 ? (left) : __std_static_gcd11(right, (left) % (right))))
 /// @brief 8th iteration of static GCD calculation
 /// @param left - The first number of the pair to get the GCD of
@@ -129,7 +130,7 @@
 /// @return the GCD of left and right
 #define __std_static_gcd13(left, right) \
 	(((right) == 0 && (left) == 0) ?    \
-		   1 :                            \
+		 1 :                            \
 		   ((right) == 0 ? (left) : __std_static_gcd12(right, (left) % (right))))
 /// @brief 7th iteration of static GCD calculation
 /// @param left - The first number of the pair to get the GCD of
@@ -137,7 +138,7 @@
 /// @return the GCD of left and right
 #define __std_static_gcd14(left, right) \
 	(((right) == 0 && (left) == 0) ?    \
-		   1 :                            \
+		 1 :                            \
 		   ((right) == 0 ? (left) : __std_static_gcd13(right, (left) % (right))))
 /// @brief 6th iteration of static GCD calculation
 /// @param left - The first number of the pair to get the GCD of
@@ -145,7 +146,7 @@
 /// @return the GCD of left and right
 #define __std_static_gcd15(left, right) \
 	(((right) == 0 && (left) == 0) ?    \
-		   1 :                            \
+		 1 :                            \
 		   ((right) == 0 ? (left) : __std_static_gcd14(right, (left) % (right))))
 /// @brief 5th iteration of static GCD calculation
 /// @param left - The first number of the pair to get the GCD of
@@ -153,7 +154,7 @@
 /// @return the GCD of left and right
 #define __std_static_gcd16(left, right) \
 	(((right) == 0 && (left) == 0) ?    \
-		   1 :                            \
+		 1 :                            \
 		   ((right) == 0 ? (left) : __std_static_gcd15(right, (left) % (right))))
 /// @brief 4th iteration of static GCD calculation
 /// @param left - The first number of the pair to get the GCD of
@@ -161,7 +162,7 @@
 /// @return the GCD of left and right
 #define __std_static_gcd17(left, right) \
 	(((right) == 0 && (left) == 0) ?    \
-		   1 :                            \
+		 1 :                            \
 		   ((right) == 0 ? (left) : __std_static_gcd16(right, (left) % (right))))
 /// @brief 3rd iteration of static GCD calculation
 /// @param left - The first number of the pair to get the GCD of
@@ -169,7 +170,7 @@
 /// @return the GCD of left and right
 #define __std_static_gcd18(left, right) \
 	(((right) == 0 && (left) == 0) ?    \
-		   1 :                            \
+		 1 :                            \
 		   ((right) == 0 ? (left) : __std_static_gcd17(right, (left) % (right))))
 /// @brief 2nd iteration of static GCD calculation
 /// @param left - The first number of the pair to get the GCD of
@@ -177,7 +178,7 @@
 /// @return the GCD of left and right
 #define __std_static_gcd19(left, right) \
 	(((right) == 0 && (left) == 0) ?    \
-		   1 :                            \
+		 1 :                            \
 		   ((right) == 0 ? (left) : __std_static_gcd18(right, (left) % (right))))
 /// @brief 1st iteration of static GCD calculation
 /// @param left - The first number of the pair to get the GCD of
@@ -185,7 +186,7 @@
 /// @return the GCD of left and right
 #define __std_static_gcd20(left, right) \
 	(((right) == 0 && (left) == 0) ?    \
-		   1 :                            \
+		 1 :                            \
 		   ((right) == 0 ? (left) : __std_static_gcd19(right, (left) % (right))))
 
 /// @def __std_static_gcd(left, right)
@@ -198,18 +199,18 @@
 
 // maybe change these to a higher iteration in future
 // clang-format off
-#if STD_PLATFORM_COMPILER_CLANG
-	#define __std_static_gcd(left, right)                             							   \
-		_Pragma("GCC diagnostic push")                                							   \
-		_Pragma("GCC diagnostic ignored \"-Wdivision-by-zero\"")								   \
-		((left) >= (right) ? __std_static_gcd8(left, right) /** NOLINT(bugprone-branch-clone) **/ \
-						   : __std_static_gcd8(right, left))  									   \
-		_Pragma("GCC diagnostic pop")
-#else
-	#define __std_static_gcd(left, right)                      									   \
-		((left) >= (right) ? __std_static_gcd8(left, right) /** NOLINT(bugprone-branch-clone) **/ \
-						   : __std_static_gcd8(right, left))
-#endif
+	#if STD_PLATFORM_COMPILER_CLANG
+		#define __std_static_gcd(left, right)                             							   \
+			_Pragma("GCC diagnostic push")                                							   \
+			_Pragma("GCC diagnostic ignored \"-Wdivision-by-zero\"")								   \
+			((left) >= (right) ? __std_static_gcd8(left, right) /** NOLINT(bugprone-branch-clone) **/ \
+							   : __std_static_gcd8(right, left))  									   \
+			_Pragma("GCC diagnostic pop")
+	#else
+		#define __std_static_gcd(left, right)                      									   \
+			((left) >= (right) ? __std_static_gcd8(left, right) /** NOLINT(bugprone-branch-clone) **/ \
+							   : __std_static_gcd8(right, left))
+	#endif
 
 // clang-format on
 #endif
