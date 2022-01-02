@@ -3,7 +3,7 @@
 /// @brief This module macro defines for identifying the platform being compiled for (operating
 /// system, compiler, etc)
 /// @version 0.1
-/// @date 2021-07-20
+/// @date 2021-12-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -31,7 +31,7 @@
 /// @{
 ///	@defgroup std_platform Platform
 /// C2nxt provides an assortment of platform detection macros to detect operating system, compiler,
-/// little vs big endiannes, and architecture.
+/// little vs big endianness, and architecture.
 /// @note while C2nxt provides many different platform detection macros, it has currently only been
 /// tested on x86_64 Windows, x86_64 linux, and ARM64 (M1) MacOs
 /// @}
