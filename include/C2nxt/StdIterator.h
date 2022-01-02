@@ -3,10 +3,10 @@
 /// @brief This module provides iterator Trait templates similar to the different categories of
 /// iterators in C++ for C2nxt.
 /// @version 0.1
-/// @date 2021-07-20
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -26,10 +26,9 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
+#include <C2nxt/StdBasicTypes.h>
+#include <C2nxt/StdTrait.h>
 #include <memory.h>
-
-#include "StdBasicTypes.h"
-#include "StdTrait.h"
 
 /// @defgroup iterators Iterators
 /// C2nxt defines its own set of iterator SizedTrait templates that allow for simple,
@@ -43,14 +42,14 @@
 ///
 /// C2nxt defines four categories of iterators, each with different requirements and functionality.
 /// 1. Forward Iterators (`StdForwardIterator(T)`) provide forward-only (increment-only)
-/// access to the elements in an iteration. This is provided through the associated `next` fuction.
+/// access to the elements in an iteration. This is provided through the associated `next` function.
 /// 2. Reverse Iterators (`StdReverseIterator(T)`) provide reverse-on (decrement-only)
 /// access to the elements in an iteration. This is provided through the associated `next` function.
 /// 3. Bidirectional Iterators (`StdBidirectionalIterator(T)`) provide forward and reverse
 /// access to the elements in an iteration. This is provided through the associated `next` and
 /// `previous` functions.
 /// 4. Random Access Iterators (`StdRandomAccessIterator(T)`) provide bidirectional and
-/// random (indexed) access to the elements in an iteration. This is providied through the
+/// random (indexed) access to the elements in an iteration. This is provided through the
 /// associated `next`, `previous`, and `at` functions.
 ///
 /// All iterators also provide access to the current value through `current` and equality comparison
@@ -90,7 +89,7 @@
 /// @endcode
 ///
 /// Most C2nxt collections will require const and non-const iterators for their associated type to
-/// be instantiated prior to their own instantiation. This is very simple, to provide instantiatons
+/// be instantiated prior to their own instantiation. This is very simple, to provide instantiations
 /// of iterators for a collection of type `T`, just:
 ///
 /// @code {.c}
@@ -129,7 +128,7 @@
 ///
 /// and the functions for the specific iterator category you intend to provide. None of these need
 /// be part of your public API, they can remain implementation details.
-/// You'll then need to instatiate a declaration and implementation for an `into_iter` function.
+/// You'll then need to instantiate a declaration and implementation for an `into_iter` function.
 /// For example, for `StdForwardIterator(T)`, this would be:
 ///
 /// @code {.c}
@@ -160,7 +159,7 @@
 	/// @brief Declarations and definitions related to C2nxt iterators
 	#define STD_ITERATOR
 
-	/// @brief The maximum compatible size of a concrete type implementating a C2nxt iterator trait
+	/// @brief The maximum compatible size of a concrete type implementing a C2nxt iterator trait
 	///
 	/// C2nxt iterators are designed to have a maximum concrete size, as they are SizedTraits, and
 	/// to be compatible a concrete type can't exceed this (doing so would be UB and **should**
@@ -185,8 +184,8 @@
 
 	/// @brief Instantiates `StdForwardIterator(T)` for the type `T`
 	///
-	/// Instantiates the necessary declarations and defintions for `StdForwardIterator(T)`, enabling
-	/// its use elsewhere.
+	/// Instantiates the necessary declarations and definitions for `StdForwardIterator(T)`,
+	/// enabling its use elsewhere.
 	///
 	/// @param T - The reference type the iterator represents
 	/// @ingroup iterators
@@ -301,8 +300,8 @@
 
 	/// @brief Instantiates `StdReverseIterator(T)` for the type `T`
 	///
-	/// Instantiates the necessary declarations and defintions for `StdReverseIterator(T)`, enabling
-	/// its use elsewhere.
+	/// Instantiates the necessary declarations and definitions for `StdReverseIterator(T)`,
+	/// enabling its use elsewhere.
 	///
 	/// @param T - The reference type the iterator represents
 	/// @ingroup iterators
@@ -417,7 +416,7 @@
 
 	/// @brief Instantiates `StdBidirectionalIterator(T)` for the type `T`
 	///
-	/// Instantiates the necessary declarations and defintions for `StdBidirectionalIterator(T)`,
+	/// Instantiates the necessary declarations and definitions for `StdBidirectionalIterator(T)`,
 	/// enabling its use elsewhere.
 	///
 	/// @param T - The reference type the iterator represents
@@ -618,7 +617,7 @@
 
 	/// @brief Instantiates `StdRandomAccessIterator(T)` for the type `T`
 	///
-	/// Instantiates the necessary declarations and defintions for `StdRandomAccessIterator(T)`,
+	/// Instantiates the necessary declarations and definitions for `StdRandomAccessIterator(T)`,
 	/// enabling its use elsewhere.
 	///
 	/// @param T - The reference type the iterator represents
@@ -921,7 +920,7 @@
 	/// @return whether the iterators are equal
 	/// @ingroup iterators
 	#define std_iterator_equals(lhs, rhs) trait_call(equals, lhs, &(rhs))
-	/// @brief Converts the given `StdBidirectionIterator(T)` or `StdRandomAccessIterator(T)` into
+	/// @brief Converts the given `StdBidirectionalIterator(T)` or `StdRandomAccessIterator(T)` into
 	/// a `StdForwardIterator(T)`
 	///
 	/// @param iterator - The iterator to convert
@@ -933,7 +932,7 @@
 	/// @ingroup iterators
 	#define std_iterator_into_std_forward_iterator(iterator) \
 		trait_call(into_forward_iterator, iterator)
-	/// @brief Converts the given `StdBidirectionIterator(T)` or `StdRandomAccessIterator(T)` into
+	/// @brief Converts the given `StdBidirectionalIterator(T)` or `StdRandomAccessIterator(T)` into
 	/// a `StdReverseIterator(T)`
 	///
 	/// @param iterator - The iterator to convert
@@ -959,7 +958,7 @@
 
 	#if STD_PLATFORM_COMPILER_CLANG
 	// clang-format off
-	
+
 	/// @brief Loops over each element in the iteration of the given collection
 	///
 	/// This category of foreach loop iterates by value (`element` will be a copy)
@@ -975,7 +974,7 @@
 			element = std_iterator_next(UNIQUE_VAR(begin)))
 #else
 	// clang-format off
-	
+
 	/// @brief Loops over each element in the iteration of the given collection
 	///
 	/// This category of foreach loop iterates by value (`element` will be a copy)
@@ -1023,8 +1022,8 @@
 			element = &std_iterator_next(UNIQUE_VAR(begin)))
 
 	/// @brief Instantiates each iterator category for the type T
-	/// 
-	/// Instantiates the necessary declarations and defintions for each C2nxt iterator category,
+	///
+	/// Instantiates the necessary declarations and definitions for each C2nxt iterator category,
 	/// enabling their use elsewhere.
 	///
 	/// @param T - The reference type the iterator represents
@@ -1035,113 +1034,113 @@
 		DeclStdBidirectionalIterator(T); \
 		DeclStdRandomAccessIterator(T);
 
-/// @brief Declars all C2nxt iterators for the builtin `char_ref`
+/// @brief Declares all C2nxt iterators for the builtin `char_ref`
 DeclStdIterators(char_ref);
-/// @brief Declars all C2nxt iterators for the builtin `u8_ref`
+/// @brief Declares all C2nxt iterators for the builtin `u8_ref`
 DeclStdIterators(u8_ref);
-/// @brief Declars all C2nxt iterators for the builtin `u16_ref`
+/// @brief Declares all C2nxt iterators for the builtin `u16_ref`
 DeclStdIterators(u16_ref);
-/// @brief Declars all C2nxt iterators for the builtin `u32_ref`
+/// @brief Declares all C2nxt iterators for the builtin `u32_ref`
 DeclStdIterators(u32_ref);
-/// @brief Declars all C2nxt iterators for the builtin `u64_ref`
+/// @brief Declares all C2nxt iterators for the builtin `u64_ref`
 DeclStdIterators(u64_ref);
-/// @brief Declars all C2nxt iterators for the builtin `usize_ref`
+/// @brief Declares all C2nxt iterators for the builtin `usize_ref`
 DeclStdIterators(usize_ref);
-/// @brief Declars all C2nxt iterators for the builtin `i8_ref`
+/// @brief Declares all C2nxt iterators for the builtin `i8_ref`
 DeclStdIterators(i8_ref);
-/// @brief Declars all C2nxt iterators for the builtin `i16_ref`
+/// @brief Declares all C2nxt iterators for the builtin `i16_ref`
 DeclStdIterators(i16_ref);
-/// @brief Declars all C2nxt iterators for the builtin `i32_ref`
+/// @brief Declares all C2nxt iterators for the builtin `i32_ref`
 DeclStdIterators(i32_ref);
-/// @brief Declars all C2nxt iterators for the builtin `i64_ref`
+/// @brief Declares all C2nxt iterators for the builtin `i64_ref`
 DeclStdIterators(i64_ref);
-/// @brief Declars all C2nxt iterators for the builtin `isize_ref`
+/// @brief Declares all C2nxt iterators for the builtin `isize_ref`
 DeclStdIterators(isize_ref);
-/// @brief Declars all C2nxt iterators for the builtin `f32_ref`
+/// @brief Declares all C2nxt iterators for the builtin `f32_ref`
 DeclStdIterators(f32_ref);
-/// @brief Declars all C2nxt iterators for the builtin `f64_ref`
+/// @brief Declares all C2nxt iterators for the builtin `f64_ref`
 DeclStdIterators(f64_ref);
-/// @brief Declars all C2nxt iterators for the builtin `cstring_ref`
+/// @brief Declares all C2nxt iterators for the builtin `cstring_ref`
 DeclStdIterators(cstring_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_cstring_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_cstring_ref`
 DeclStdIterators(const_cstring_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_char_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_char_ref`
 DeclStdIterators(const_char_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_u8_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_u8_ref`
 DeclStdIterators(const_u8_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_u16_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_u16_ref`
 DeclStdIterators(const_u16_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_u32_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_u32_ref`
 DeclStdIterators(const_u32_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_u64_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_u64_ref`
 DeclStdIterators(const_u64_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_usize_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_usize_ref`
 DeclStdIterators(const_usize_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_i8_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_i8_ref`
 DeclStdIterators(const_i8_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_i16_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_i16_ref`
 DeclStdIterators(const_i16_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_i32_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_i32_ref`
 DeclStdIterators(const_i32_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_i64_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_i64_ref`
 DeclStdIterators(const_i64_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_isize_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_isize_ref`
 DeclStdIterators(const_isize_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_f32_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_f32_ref`
 DeclStdIterators(const_f32_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_f64_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_f64_ref`
 DeclStdIterators(const_f64_ref);
-/// @brief Declars all C2nxt iterators for the builtin `char_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `char_ptr_ref`
 DeclStdIterators(char_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `u8_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `u8_ptr_ref`
 DeclStdIterators(u8_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `u16_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `u16_ptr_ref`
 DeclStdIterators(u16_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `u32_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `u32_ptr_ref`
 DeclStdIterators(u32_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `u64_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `u64_ptr_ref`
 DeclStdIterators(u64_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `usize_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `usize_ptr_ref`
 DeclStdIterators(usize_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `i8_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `i8_ptr_ref`
 DeclStdIterators(i8_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `i16_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `i16_ptr_ref`
 DeclStdIterators(i16_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `i32_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `i32_ptr_ref`
 DeclStdIterators(i32_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `i64_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `i64_ptr_ref`
 DeclStdIterators(i64_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `isize_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `isize_ptr_ref`
 DeclStdIterators(isize_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `f32_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `f32_ptr_ref`
 DeclStdIterators(f32_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `f64_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `f64_ptr_ref`
 DeclStdIterators(f64_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_char_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_char_ptr_ref`
 DeclStdIterators(const_char_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_u8_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_u8_ptr_ref`
 DeclStdIterators(const_u8_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_u16_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_u16_ptr_ref`
 DeclStdIterators(const_u16_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_u32_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_u32_ptr_ref`
 DeclStdIterators(const_u32_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_u64_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_u64_ptr_ref`
 DeclStdIterators(const_u64_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_usize_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_usize_ptr_ref`
 DeclStdIterators(const_usize_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_i8_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_i8_ptr_ref`
 DeclStdIterators(const_i8_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_i16_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_i16_ptr_ref`
 DeclStdIterators(const_i16_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_i32_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_i32_ptr_ref`
 DeclStdIterators(const_i32_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_i64_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_i64_ptr_ref`
 DeclStdIterators(const_i64_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_isize_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_isize_ptr_ref`
 DeclStdIterators(const_isize_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_f32_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_f32_ptr_ref`
 DeclStdIterators(const_f32_ptr_ref);
-/// @brief Declars all C2nxt iterators for the builtin `const_f64_ptr_ref`
+/// @brief Declares all C2nxt iterators for the builtin `const_f64_ptr_ref`
 DeclStdIterators(const_f64_ptr_ref);
 
 #endif // STD_ITERATOR
