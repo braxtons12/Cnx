@@ -2,10 +2,10 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module extends `<tgmath.h>` and provides some alternative math functions.
 /// @version 0.1
-/// @date 2021-08-16
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -25,18 +25,17 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
+#include <C2nxt/StdAssert.h>
+#include <C2nxt/StdBasicTypes.h>
+#include <C2nxt/StdOption.h>
+#include <C2nxt/StdPlatform.h>
+#include <C2nxt/math/__StdStaticBase.h>
+#include <C2nxt/math/__StdStaticCheckedAdd.h>
+#include <C2nxt/math/__StdStaticCheckedDiv.h>
+#include <C2nxt/math/__StdStaticCheckedMul.h>
+#include <C2nxt/math/__StdStaticCheckedSub.h>
+#include <C2nxt/math/__StdStaticGCD.h>
 #include <tgmath.h>
-
-#include "StdAssert.h"
-#include "StdBasicTypes.h"
-#include "StdOption.h"
-#include "StdPlatform.h"
-#include "math/__StdStaticBase.h"
-#include "math/__StdStaticCheckedAdd.h"
-#include "math/__StdStaticCheckedDiv.h"
-#include "math/__StdStaticCheckedMul.h"
-#include "math/__StdStaticCheckedSub.h"
-#include "math/__StdStaticGCD.h"
 
 /// @defgroup math Math
 /// C2nxt provides some extensions to the C99 type-generic math library and will in the future also
@@ -112,11 +111,11 @@
 	// clang-format off
 
 	#define std_abs(x) _Generic((x), 										\
-			u8		:	x,													\
-			u16		:	x,													\
-			u32		:	x,													\
-			u64		:	x,													\
-			usize	:	x,													\
+			u8		:	(x),												\
+			u16		:	(x),												\
+			u32		:	(x),												\
+			u64		:	(x),												\
+			usize	:	(x),												\
 			i8		: 	static_cast(i8)(abs(static_cast(i32)(x))),			\
 			i16		:	static_cast(i16)(abs(static_cast(i32)(x))),			\
 			i32		:	static_cast(i32)(abs(static_cast(i32)(x))),			\
@@ -129,10 +128,10 @@
 	// clang-format off
 
 		#define std_abs(x) _Generic((x), 										\
-				u8		:	x,													\
-				u16		:	x,													\
-				u32		:	x,													\
-				u64		:	x,													\
+				u8		:	(x),												\
+				u16		:	(x),												\
+				u32		:	(x),												\
+				u64		:	(x),												\
 				i8		: 	static_cast(i8)(abs(static_cast(i32)(x))),			\
 				i16		:	static_cast(i16)(abs(static_cast(i32)(x))),			\
 				i32		:	static_cast(i32)(abs(static_cast(i32)(x))),			\
@@ -311,7 +310,7 @@ u64 std_lcm_u64(u64 left, u64 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(u8, result)`
-/// if overflow did __not__ occur or `None(u8)` if overflow occured
+/// if overflow did __not__ occur or `None(u8)` if overflow occurred
 ///
 /// @param left - The left-hand number of the addition
 /// @param right - The right-hand number of the addition
@@ -322,7 +321,7 @@ StdOption(u8) std_checked_add_u8(u8 left, u8 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(u16, result)`
-/// if overflow did __not__ occur or `None(u16)` if overflow occured
+/// if overflow did __not__ occur or `None(u16)` if overflow occurred
 ///
 /// @param left - The left-hand number of the addition
 /// @param right - The right-hand number of the addition
@@ -333,7 +332,7 @@ StdOption(u16) std_checked_add_u16(u16 left, u16 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(u32, result)`
-/// if overflow did __not__ occur or `None(u32)` if overflow occured
+/// if overflow did __not__ occur or `None(u32)` if overflow occurred
 ///
 /// @param left - The left-hand number of the addition
 /// @param right - The right-hand number of the addition
@@ -344,7 +343,7 @@ StdOption(u32) std_checked_add_u32(u32 left, u32 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(u64, result)`
-/// if overflow did __not__ occur or `None(u64)` if overflow occured
+/// if overflow did __not__ occur or `None(u64)` if overflow occurred
 ///
 /// @param left - The left-hand number of the addition
 /// @param right - The right-hand number of the addition
@@ -355,7 +354,7 @@ StdOption(u64) std_checked_add_u64(u64 left, u64 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(i8, result)`
-/// if overflow did __not__ occur or `None(i8)` if overflow occured
+/// if overflow did __not__ occur or `None(i8)` if overflow occurred
 ///
 /// @param left - The left-hand number of the addition
 /// @param right - The right-hand number of the addition
@@ -366,7 +365,7 @@ StdOption(i8) std_checked_add_i8(i8 left, i8 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(i16, result)`
-/// if overflow did __not__ occur or `None(i16)` if overflow occured
+/// if overflow did __not__ occur or `None(i16)` if overflow occurred
 ///
 /// @param left - The left-hand number of the addition
 /// @param right - The right-hand number of the addition
@@ -377,7 +376,7 @@ StdOption(i16) std_checked_add_i16(i16 left, i16 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(i32, result)`
-/// if overflow did __not__ occur or `None(i32)` if overflow occured
+/// if overflow did __not__ occur or `None(i32)` if overflow occurred
 ///
 /// @param left - The left-hand number of the addition
 /// @param right - The right-hand number of the addition
@@ -388,7 +387,7 @@ StdOption(i32) std_checked_add_i32(i32 left, i32 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(i64, result)`
-/// if overflow did __not__ occur or `None(i64)` if overflow occured
+/// if overflow did __not__ occur or `None(i64)` if overflow occurred
 ///
 /// @param left - The left-hand number of the addition
 /// @param right - The right-hand number of the addition
@@ -399,7 +398,7 @@ StdOption(i64) std_checked_add_i64(i64 left, i64 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(f32, result)`
-/// if overflow did __not__ occur or `None(f32)` if overflow occured
+/// if overflow did __not__ occur or `None(f32)` if overflow occurred
 ///
 /// @param left - The left-hand number of the addition
 /// @param right - The right-hand number of the addition
@@ -410,7 +409,7 @@ StdOption(f32) std_checked_add_f32(f32 left, f32 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(f64, result)`
-/// if overflow did __not__ occur or `None(f64)` if overflow occured
+/// if overflow did __not__ occur or `None(f64)` if overflow occurred
 ///
 /// @param left - The left-hand number of the addition
 /// @param right - The right-hand number of the addition
@@ -423,7 +422,7 @@ StdOption(f64) std_checked_add_f64(f64 left, f64 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(T, result)`
-/// if overflow did __not__ occur or `None(T)` if overflow occured, where `T` is the type
+/// if overflow did __not__ occur or `None(T)` if overflow occurred, where `T` is the type
 /// of the passed arguments
 ///
 /// @param left - The left-hand number of the addition
@@ -480,7 +479,7 @@ StdOption(f64) std_checked_add_f64(f64 left, f64 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(u8, result)`
-/// if overflow did __not__ occur or `None(u8)` if overflow occured
+/// if overflow did __not__ occur or `None(u8)` if overflow occurred
 ///
 /// @param left - The number to subtract from
 /// @param right - The number to subtract
@@ -491,7 +490,7 @@ StdOption(u8) std_checked_sub_u8(u8 left, u8 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(u16, result)`
-/// if overflow did __not__ occur or `None(u16)` if overflow occured
+/// if overflow did __not__ occur or `None(u16)` if overflow occurred
 ///
 /// @param left - The number to subtract from
 /// @param right - The number to subtract
@@ -502,7 +501,7 @@ StdOption(u16) std_checked_sub_u16(u16 left, u16 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(u32, result)`
-/// if overflow did __not__ occur or `None(u32)` if overflow occured
+/// if overflow did __not__ occur or `None(u32)` if overflow occurred
 ///
 /// @param left - The number to subtract from
 /// @param right - The number to subtract
@@ -513,7 +512,7 @@ StdOption(u32) std_checked_sub_u32(u32 left, u32 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(u64, result)`
-/// if overflow did __not__ occur or `None(u64)` if overflow occured
+/// if overflow did __not__ occur or `None(u64)` if overflow occurred
 ///
 /// @param left - The number to subtract from
 /// @param right - The number to subtract
@@ -524,7 +523,7 @@ StdOption(u64) std_checked_sub_u64(u64 left, u64 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(i8, result)`
-/// if overflow did __not__ occur or `None(i8)` if overflow occured
+/// if overflow did __not__ occur or `None(i8)` if overflow occurred
 ///
 /// @param left - The number to subtract from
 /// @param right - The number to subtract
@@ -535,7 +534,7 @@ StdOption(i8) std_checked_sub_i8(i8 left, i8 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(i16, result)`
-/// if overflow did __not__ occur or `None(i16)` if overflow occured
+/// if overflow did __not__ occur or `None(i16)` if overflow occurred
 ///
 /// @param left - The number to subtract from
 /// @param right - The number to subtract
@@ -546,7 +545,7 @@ StdOption(i16) std_checked_sub_i16(i16 left, i16 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(i32, result)`
-/// if overflow did __not__ occur or `None(i32)` if overflow occured
+/// if overflow did __not__ occur or `None(i32)` if overflow occurred
 ///
 /// @param left - The number to subtract from
 /// @param right - The number to subtract
@@ -557,7 +556,7 @@ StdOption(i32) std_checked_sub_i32(i32 left, i32 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(i64, result)`
-/// if overflow did __not__ occur or `None(i64)` if overflow occured
+/// if overflow did __not__ occur or `None(i64)` if overflow occurred
 ///
 /// @param left - The number to subtract from
 /// @param right - The number to subtract
@@ -568,7 +567,7 @@ StdOption(i64) std_checked_sub_i64(i64 left, i64 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(f32, result)`
-/// if overflow did __not__ occur or `None(f32)` if overflow occured
+/// if overflow did __not__ occur or `None(f32)` if overflow occurred
 ///
 /// @param left - The number to subtract from
 /// @param right - The number to subtract
@@ -579,7 +578,7 @@ StdOption(f32) std_checked_sub_f32(f32 left, f32 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(f64, result)`
-/// if overflow did __not__ occur or `None(f64)` if overflow occured
+/// if overflow did __not__ occur or `None(f64)` if overflow occurred
 ///
 /// @param left - The number to subtract from
 /// @param right - The number to subtract
@@ -592,7 +591,7 @@ StdOption(f64) std_checked_sub_f64(f64 left, f64 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(T, result)`
-/// if overflow did __not__ occur or `None(T)` if overflow occured, where `T` is the type
+/// if overflow did __not__ occur or `None(T)` if overflow occurred, where `T` is the type
 /// of the passed arguments
 ///
 /// @param left - The number to subtract from
@@ -650,7 +649,7 @@ StdOption(f64) std_checked_sub_f64(f64 left, f64 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(u8, result)`
-/// if overflow did __not__ occur or `None(u8)` if overflow occured
+/// if overflow did __not__ occur or `None(u8)` if overflow occurred
 ///
 /// @param left - The left-hand number of the multiplication
 /// @param right - The right-hand number of the multiplication
@@ -661,7 +660,7 @@ StdOption(u8) std_checked_mul_u8(u8 left, u8 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(u16, result)`
-/// if overflow did __not__ occur or `None(u16)` if overflow occured
+/// if overflow did __not__ occur or `None(u16)` if overflow occurred
 ///
 /// @param left - The left-hand number of the multiplication
 /// @param right - The right-hand number of the multiplication
@@ -672,7 +671,7 @@ StdOption(u16) std_checked_mul_u16(u16 left, u16 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(u32, result)`
-/// if overflow did __not__ occur or `None(u32)` if overflow occured
+/// if overflow did __not__ occur or `None(u32)` if overflow occurred
 ///
 /// @param left - The left-hand number of the multiplication
 /// @param right - The right-hand number of the multiplication
@@ -683,7 +682,7 @@ StdOption(u32) std_checked_mul_u32(u32 left, u32 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(u64, result)`
-/// if overflow did __not__ occur or `None(u64)` if overflow occured
+/// if overflow did __not__ occur or `None(u64)` if overflow occurred
 ///
 /// @param left - The left-hand number of the multiplication
 /// @param right - The right-hand number of the multiplication
@@ -694,7 +693,7 @@ StdOption(u64) std_checked_mul_u64(u64 left, u64 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(i8, result)`
-/// if overflow did __not__ occur or `None(i8)` if overflow occured
+/// if overflow did __not__ occur or `None(i8)` if overflow occurred
 ///
 /// @param left - The left-hand number of the multiplication
 /// @param right - The right-hand number of the multiplication
@@ -705,7 +704,7 @@ StdOption(i8) std_checked_mul_i8(i8 left, i8 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(i16, result)`
-/// if overflow did __not__ occur or `None(i16)` if overflow occured
+/// if overflow did __not__ occur or `None(i16)` if overflow occurred
 ///
 /// @param left - The left-hand number of the multiplication
 /// @param right - The right-hand number of the multiplication
@@ -716,7 +715,7 @@ StdOption(i16) std_checked_mul_i16(i16 left, i16 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(i32, result)`
-/// if overflow did __not__ occur or `None(i32)` if overflow occured
+/// if overflow did __not__ occur or `None(i32)` if overflow occurred
 ///
 /// @param left - The left-hand number of the multiplication
 /// @param right - The right-hand number of the multiplication
@@ -727,7 +726,7 @@ StdOption(i32) std_checked_mul_i32(i32 left, i32 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(i64, result)`
-/// if overflow did __not__ occur or `None(i64)` if overflow occured
+/// if overflow did __not__ occur or `None(i64)` if overflow occurred
 ///
 /// @param left - The left-hand number of the multiplication
 /// @param right - The right-hand number of the multiplication
@@ -738,7 +737,7 @@ StdOption(i64) std_checked_mul_i64(i64 left, i64 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(f32, result)`
-/// if overflow did __not__ occur or `None(f32)` if overflow occured
+/// if overflow did __not__ occur or `None(f32)` if overflow occurred
 ///
 /// @param left - The left-hand number of the multiplication
 /// @param right - The right-hand number of the multiplication
@@ -749,7 +748,7 @@ StdOption(f32) std_checked_mul_f32(f32 left, f32 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(f64, result)`
-/// if overflow did __not__ occur or `None(f64)` if overflow occured
+/// if overflow did __not__ occur or `None(f64)` if overflow occurred
 ///
 /// @param left - The left-hand number of the multiplication
 /// @param right - The right-hand number of the multiplication
@@ -762,7 +761,7 @@ StdOption(f64) std_checked_mul_f64(f64 left, f64 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(T, result)`
-/// if overflow did __not__ occur or `None(T)` if overflow occured, where `T` is the type
+/// if overflow did __not__ occur or `None(T)` if overflow occurred, where `T` is the type
 /// of the passed arguments
 ///
 /// @param left - The left-hand number of the multiplication
@@ -828,7 +827,7 @@ StdOption(u8) std_checked_div_u8(u8 left, u8 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(u16, result)`
-/// if overflow did __not__ occur or `None(u16)` if overflow occured
+/// if overflow did __not__ occur or `None(u16)` if overflow occurred
 ///
 /// @param left - The dividend
 /// @param right - The divisor
@@ -839,7 +838,7 @@ StdOption(u16) std_checked_div_u16(u16 left, u16 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(u32, result)`
-/// if overflow did __not__ occur or `None(u32)` if overflow occured
+/// if overflow did __not__ occur or `None(u32)` if overflow occurred
 ///
 /// @param left - The dividend
 /// @param right - The divisor
@@ -850,7 +849,7 @@ StdOption(u32) std_checked_div_u32(u32 left, u32 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(u64, result)`
-/// if overflow did __not__ occur or `None(u64)` if overflow occured
+/// if overflow did __not__ occur or `None(u64)` if overflow occurred
 ///
 /// @param left - The dividend
 /// @param right - The divisor
@@ -861,7 +860,7 @@ StdOption(u64) std_checked_div_u64(u64 left, u64 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(i8, result)`
-/// if overflow did __not__ occur or `None(i8)` if overflow occured
+/// if overflow did __not__ occur or `None(i8)` if overflow occurred
 ///
 /// @param left - The dividend
 /// @param right - The divisor
@@ -872,7 +871,7 @@ StdOption(i8) std_checked_div_i8(i8 left, i8 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(i16, result)`
-/// if overflow did __not__ occur or `None(i16)` if overflow occured
+/// if overflow did __not__ occur or `None(i16)` if overflow occurred
 ///
 /// @param left - The dividend
 /// @param right - The divisor
@@ -883,7 +882,7 @@ StdOption(i16) std_checked_div_i16(i16 left, i16 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(i32, result)`
-/// if overflow did __not__ occur or `None(i32)` if overflow occured
+/// if overflow did __not__ occur or `None(i32)` if overflow occurred
 ///
 /// @param left - The dividend
 /// @param right - The divisor
@@ -894,7 +893,7 @@ StdOption(i32) std_checked_div_i32(i32 left, i32 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(i64, result)`
-/// if overflow did __not__ occur or `None(i64)` if overflow occured
+/// if overflow did __not__ occur or `None(i64)` if overflow occurred
 ///
 /// @param left - The dividend
 /// @param right - The divisor
@@ -905,7 +904,7 @@ StdOption(i64) std_checked_div_i64(i64 left, i64 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(f32, result)`
-/// if overflow did __not__ occur or `None(f32)` if overflow occured
+/// if overflow did __not__ occur or `None(f32)` if overflow occurred
 ///
 /// @param left - The dividend
 /// @param right - The divisor
@@ -916,7 +915,7 @@ StdOption(f32) std_checked_div_f32(f32 left, f32 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(f64, result)`
-/// if overflow did __not__ occur or `None(f64)` if overflow occured
+/// if overflow did __not__ occur or `None(f64)` if overflow occurred
 ///
 /// @param left - The dividend
 /// @param right - The divisor
@@ -929,7 +928,7 @@ StdOption(f64) std_checked_div_f64(f64 left, f64 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(T, result)`
-/// if overflow did __not__ occur or `None(T)` if overflow occured, where `T` is the type
+/// if overflow did __not__ occur or `None(T)` if overflow occurred, where `T` is the type
 /// of the passed arguments
 ///
 /// @param left - The dividend
@@ -971,7 +970,7 @@ StdOption(f64) std_checked_div_f64(f64 left, f64 right);
 	// clang-format on
 	#endif // STD_PLATFORM_APPLE
 
-	/// @brief Performs the checked divison of `left` and `right` at compile-time
+	/// @brief Performs the checked division of `left` and `right` at compile-time
 	///
 	/// Performs the division of `left` and `right` at compile-time, checking for overflow and
 	/// triggering a compiler error if overflow occurs
