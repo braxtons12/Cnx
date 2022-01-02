@@ -2,10 +2,10 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Base functions for static (compile-time) math functions
 /// @version 0.1
-/// @date 2021-08-14
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#include "../StdBasicTypes.h"
+#include <C2nxt/StdBasicTypes.h>
 
 #ifndef __STD_STATIC_MATH_BASE
 	#define __STD_STATIC_MATH_BASE
@@ -42,7 +42,8 @@
 	/// @param x - The value to get the sign of
 	///
 	/// @return `-1` if negative, `0` if 0, `1` if positive
-	#define __std_static_sign(x) ((x) == 0 ? 0 : ((x) < 0 ? -1 : 1))
+	#define __std_static_sign(x) \
+		static_cast(typeof(x))((x) == 0 ? 0 : ((x) < 0 ? -1 : 1))
 
 	/// @brief maximum i64 value
 	#define __std_checked_funcs_max std_max_i64
