@@ -3,10 +3,10 @@
 /// @brief StdCollectionData is a simple wrapper for an allocator, element default-constructor, and
 /// element destructor to be used within a C2nxt collection.
 /// @version 0.1
-/// @date 2021-07-20
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -26,8 +26,8 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#include "StdAllocators.h"
-#include "StdBasicTypes.h"
+#include <C2nxt/StdAllocators.h>
+#include <C2nxt/StdBasicTypes.h>
 
 /// @brief Macro alias for an element default-constructor for type `T`
 ///
@@ -49,7 +49,7 @@
 
 /// @brief Macro alias for an element destructor for type `T`
 ///
-/// Used to generate and refer to a unique typdef name for the destructor
+/// Used to generate and refer to a unique typedef name for the destructor
 ///
 /// @param T - The type destroyed by the destructor
 /// @ingroup collections
@@ -63,10 +63,10 @@
 /// @ingroup collections
 #define StdCollectionData(CollectionType) CONCAT2(StdCollectionData, CollectionType)
 
-/// @brief Instantaties the necessary declarations and definitions for a unique `StdCollectionData`
+/// @brief Instantiates the necessary declarations and definitions for a unique `StdCollectionData`
 /// type.
 ///
-/// Instaniates a `StdCollectionData` type associated with a collection of type `CollectionType`
+/// Instantiates a `StdCollectionData` type associated with a collection of type `CollectionType`
 /// which holds `T`s.
 ///
 /// @param T - The type held by the associated collection
