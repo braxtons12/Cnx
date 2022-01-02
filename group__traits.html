@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Trait module | C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">C2nxt <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          Trait <span class="m-thin">module</span></h1>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>C2nxt provides a simple way to create and utilize polymorphic interfaces via Trait objects. Trait objects are fat pointers, containing a pointer-to-self and a vtable pointer, that allow use of polymorphic interfaces explicitly (you operate via the Trait object), without the need for a type to carry its vtable in its definition, and without the need for heap allocation (in most cases). For specific examples of Trait objects in action, look into <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> and its use through the C2nxt StdIO, and C2nxt&#x27;s iterator categories.</p><p>A general example:</p><pre class="m-code"><span class="c1">// declare a Trait `NumberGenerator` that requires the functions `generate` and `seed`</span>
+<span class="n">Trait</span><span class="p">(</span><span class="n">NumberGenerator</span><span class="p">,</span>
+      <span class="n">u32</span> <span class="p">(</span><span class="o">*</span><span class="k">const</span> <span class="n">generate</span><span class="p">)(</span><span class="n">NumberGenerator</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">self</span><span class="p">);</span>
+      <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="k">const</span> <span class="n">seed</span><span class="p">)(</span><span class="n">NumberGenerator</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">self</span><span class="p">,</span> <span class="n">u32</span> <span class="n">seed</span><span class="p">););</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">ExampleGenerator</span> <span class="p">{</span>
+    <span class="n">u32</span> <span class="n">m_seed</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">ExampleGenerator</span><span class="p">;</span>
+
+<span class="n">u32</span> <span class="nf">example_generate</span><span class="p">(</span><span class="n">NumberGenerator</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">_self</span> <span class="o">=</span> <span class="n">static_cast</span><span class="p">(</span><span class="n">ExampleGenerator</span><span class="o">*</span><span class="p">)(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">m_self</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">_self</span><span class="o">-&gt;</span><span class="n">m_seed</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">example_seed</span><span class="p">(</span><span class="n">NumberGenerator</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">self</span><span class="p">,</span> <span class="n">u32</span> <span class="n">seed</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">_self</span> <span class="o">=</span> <span class="n">static_cast</span><span class="p">(</span><span class="n">ExampleGenerator</span><span class="o">*</span><span class="p">)(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">m_self</span><span class="p">);</span>
+    <span class="n">_self</span><span class="o">-&gt;</span><span class="n">m_seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Implement `NumberGenerator` for our `ExampleGenerator` type with the `example_generate`</span>
+<span class="c1">// and `example_seed` functions.</span>
+<span class="c1">// The names of the implementation functions do not have to stem from/build on/etc the names</span>
+<span class="c1">// in the Trait definition, but it is good practice/convention to do so.</span>
+<span class="k">static</span> <span class="n">maybe_unused</span> <span class="n">ImplTraitFor</span><span class="p">(</span><span class="n">NumberGenerator</span><span class="p">,</span>
+                                 <span class="n">ExampleGenerator</span><span class="p">,</span>
+                                 <span class="n">example_generate</span><span class="p">,</span>
+                                 <span class="n">example_seed</span><span class="p">);</span>
+<span class="c1">// a function that uses the `NumberGenerator` Trait as a parameter</span>
+<span class="n">u32</span> <span class="nf">generate</span><span class="p">(</span><span class="n">NumberGenerator</span> <span class="n">generator</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">trait_call</span><span class="p">(</span><span class="n">generate</span><span class="p">,</span> <span class="n">generator</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">do_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">generator</span> <span class="o">=</span> <span class="p">(</span><span class="n">ExampleGenerator</span><span class="p">){.</span><span class="n">m_seed</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;}</span>
+    <span class="c1">// cast `generator` to its `NumberGenerator` implementation and pass that to `generate`</span>
+    <span class="n">let</span> <span class="n">num</span> <span class="o">=</span> <span class="n">generate</span><span class="p">(</span><span class="n">as_trait</span><span class="p">(</span><span class="n">NumberGenerator</span><span class="p">,</span> <span class="n">ExampleGenerator</span><span class="p">,</span> <span class="n">generator</span><span class="p">));</span>
+<span class="p">}</span></pre>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab5b2c5ef76a622d55210453643eb4dc4" class="m-doc">Trait</a>(</span><span class="m-doc-wrap">TraitName,
+              functions)</span>
+            </dt>
+            <dd>Declares a Trait.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga87c010dd34cc9dd67028b2b090ac056b" class="m-doc">SizedTrait</a>(</span><span class="m-doc-wrap">TraitName,
+              concrete_type_size,
+              functions)</span>
+            </dt>
+            <dd>Declares a SizedTrait.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad53fddb6530a9b428433caa0772908d4" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap">TraitName,
+              TypeName,
+              ...)</span>
+            </dt>
+            <dd>Implements the given trait for the given type.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gada8fa8140ec78372b040e158b14f490f" class="m-doc">as_trait</a>(</span><span class="m-doc-wrap">TraitName,
+              TypeName,
+              self)</span>
+            </dt>
+            <dd>Casts the given object to its implementation for the given Trait.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga480bacf30ac7966bad020d47ae9c7ef9" class="m-doc">as_sized_trait</a>(</span><span class="m-doc-wrap">TraitName,
+              TypeName,
+              self)</span>
+            </dt>
+            <dd>Casts the given object to its implementation for the given SizedTrait.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab0cd1b4c4d5ef6696029879dbe80a35b" class="m-doc">trait_call</a>(</span><span class="m-doc-wrap">FunctionName,
+              self,
+              ...)</span>
+            </dt>
+            <dd>Calls the trait function <code>FunctionName</code> on <code>self</code></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Define documentation</h2>
+          <section class="m-doc-details" id="gab5b2c5ef76a622d55210453643eb4dc4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab5b2c5ef76a622d55210453643eb4dc4" class="m-doc-self">Trait</a>(</span><span class="m-doc-wrap">TraitName,
+              functions)</span>
+            </h3>
+            <p>Declares a Trait.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">TraitName</td>
+                  <td>- The name to refer to the Trait</td>
+                </tr>
+                <tr>
+                  <td>functions</td>
+                  <td>- The semicolon separated list of functions, in function-pointer syntax, that the Trait requires to be implemented</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Declares a Trait with the given name which requires the semicolon separated list of functions to be implemented.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga87c010dd34cc9dd67028b2b090ac056b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga87c010dd34cc9dd67028b2b090ac056b" class="m-doc-self">SizedTrait</a>(</span><span class="m-doc-wrap">TraitName,
+              concrete_type_size,
+              functions)</span>
+            </h3>
+            <p>Declares a SizedTrait.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">TraitName</td>
+                  <td>- The name to refer to the Trait</td>
+                </tr>
+                <tr>
+                  <td>concrete_type_size</td>
+                  <td>- The maximum possible size of a concrete type implementing this Trait</td>
+                </tr>
+                <tr>
+                  <td>functions</td>
+                  <td>- The semicolon separated list of functions, in function-pointer syntax, that the Trait requires to be implemented</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Declares a SizedTrait with the given name which requires the semicolon separated list of functions to be implemented. A SizedTrait is a trait that copies its implementing type into a fixed-size, type-erased buffer instead of referring to it via pointer. This allows Trait objects to be constructed from short-lived values and used past the lifetime of said value without needing heap allocation, but requires that all types implementing the Trait fit within this fixed size buffer. All C2nxt iterators use this type of trait for their interface for these reasons.</p>
+          </div></section>
+          <section class="m-doc-details" id="gad53fddb6530a9b428433caa0772908d4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad53fddb6530a9b428433caa0772908d4" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap">TraitName,
+              TypeName,
+              ...)</span>
+            </h3>
+            <p>Implements the given trait for the given type.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">TraitName</td>
+                  <td>- The Trait to implement</td>
+                </tr>
+                <tr>
+                  <td>TypeName</td>
+                  <td>- The type implementing the trait</td>
+                </tr>
+                <tr>
+                  <td>...</td>
+                  <td>- The comma separated list of function names with which to implement the trait. They are required to be in Trait-definition order, and giving them in another order will result in either a compiler error or undefined behavior at run time (function signature and order dependent as to which would occur).</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Implements the given trait for the given type.</p>
+          </div></section>
+          <section class="m-doc-details" id="gada8fa8140ec78372b040e158b14f490f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gada8fa8140ec78372b040e158b14f490f" class="m-doc-self">as_trait</a>(</span><span class="m-doc-wrap">TraitName,
+              TypeName,
+              self)</span>
+            </h3>
+            <p>Casts the given object to its implementation for the given Trait.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">TraitName</td>
+                  <td>- The Trait to cast to</td>
+                </tr>
+                <tr>
+                  <td>TypeName</td>
+                  <td>- The type to cast from (the type of <code>self</code>)</td>
+                </tr>
+                <tr>
+                  <td>self</td>
+                  <td>- The object to cast to its Trait implementation</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Casts <code>self</code>, of type <code>TypeName</code> to its implementation of the Trait <code>TraitName</code></p>
+          </div></section>
+          <section class="m-doc-details" id="ga480bacf30ac7966bad020d47ae9c7ef9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga480bacf30ac7966bad020d47ae9c7ef9" class="m-doc-self">as_sized_trait</a>(</span><span class="m-doc-wrap">TraitName,
+              TypeName,
+              self)</span>
+            </h3>
+            <p>Casts the given object to its implementation for the given SizedTrait.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">TraitName</td>
+                  <td>- The SizedTrait to cast to</td>
+                </tr>
+                <tr>
+                  <td>TypeName</td>
+                  <td>- The type to cast from (the type of <code>self</code>)</td>
+                </tr>
+                <tr>
+                  <td>self</td>
+                  <td>- The object to cast to its SizedTrait implementation</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Casts <code>self</code>, of type <code>TypeName</code> to its implementation of the SizedTrait <code>TraitName</code></p>
+          </div></section>
+          <section class="m-doc-details" id="gab0cd1b4c4d5ef6696029879dbe80a35b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab0cd1b4c4d5ef6696029879dbe80a35b" class="m-doc-self">trait_call</a>(</span><span class="m-doc-wrap">FunctionName,
+              self,
+              ...)</span>
+            </h3>
+            <p>Calls the trait function <code>FunctionName</code> on <code>self</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">FunctionName</td>
+                  <td>- The Trait function to call on <code>self</code></td>
+                </tr>
+                <tr>
+                  <td>self</td>
+                  <td>- The Trait object to call <code>FunctionName</code> on</td>
+                </tr>
+                <tr>
+                  <td>...</td>
+                  <td>- The parameter pack of (possible, can contain no parameters) additional parameters to pass to <code>FunctionName</code></td>
+                </tr>
+              </tbody>
+            </table>
+<p>Calls the function <code>FunctionName</code> on <code>self</code>, with the parameters contained in the <code>__VA_ARGS__</code> parameter pack</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

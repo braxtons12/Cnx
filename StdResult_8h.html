@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>git/C2nxt/include/C2nxt/StdResult.h file | C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">C2nxt <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="dir_9bec7083027963d9f9ceae2cc7474de5.html">git</a>/</span><span class="m-breadcrumb"><a href="dir_49b122fa8cea83c8ef01de9aa5379c17.html">C2nxt</a>/</span><span class="m-breadcrumb"><a href="dir_c28551255240bd2a80f37986fd2bd3c8.html">include</a>/</span><span class="m-breadcrumb"><a href="dir_2502210eca0f861b6a41d90e00f0922f.html">C2nxt</a>/</span>StdResult.h <span class="m-thin">file</span>
+        </h1>
+        <p>This module provides a struct template for representing the value of a fallible operation.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#func-members">Functions</a></li>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.1</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2021-12-08</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2021 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt id="ab20d7bf0e48c6c3d80c2ce5c8a9040c5">
+              <span class="m-doc-wrap-bumper"> <a href="#ab20d7bf0e48c6c3d80c2ce5c8a9040c5" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap">bool)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>bool</code></dd>
+            <dt id="a6417bf9df71d9e9c97d6627f0eeb9e5a">
+              <span class="m-doc-wrap-bumper"> <a href="#a6417bf9df71d9e9c97d6627f0eeb9e5a" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap">char)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>char</code></dd>
+            <dt id="a5b6a206b82ce963e0b727538b045f0c9">
+              <span class="m-doc-wrap-bumper"> <a href="#a5b6a206b82ce963e0b727538b045f0c9" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga92c50087ca0e64fa93fc59402c55f8ca" class="m-doc">u8</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>u8</code></dd>
+            <dt id="ab7cfc34b829e6e6f6c41aa20cd84b4f4">
+              <span class="m-doc-wrap-bumper"> <a href="#ab7cfc34b829e6e6f6c41aa20cd84b4f4" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="group__types.html#gace9d960e74685e2cd84b36132dbbf8aa" class="m-doc">u16</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>u16</code></dd>
+            <dt id="a419e0e85a8d75029bffeb2a73acbfbee">
+              <span class="m-doc-wrap-bumper"> <a href="#a419e0e85a8d75029bffeb2a73acbfbee" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="group__types.html#gafaa62991928fb9fb18ff0db62a040aba" class="m-doc">u32</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>u32</code></dd>
+            <dt id="a51da22e644998484b5bb90181b1eac8b">
+              <span class="m-doc-wrap-bumper"> <a href="#a51da22e644998484b5bb90181b1eac8b" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga3f7e2bcbb0b4c338f3c4f6c937cd4234" class="m-doc">u64</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>u64</code></dd>
+            <dt id="a4ac23c99bee4ccdcb8e79ec642b92f69">
+              <span class="m-doc-wrap-bumper"> <a href="#a4ac23c99bee4ccdcb8e79ec642b92f69" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>usize</code></dd>
+            <dt id="aad01081f0870f76725a3bf56a28c5822">
+              <span class="m-doc-wrap-bumper"> <a href="#aad01081f0870f76725a3bf56a28c5822" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="group__types.html#gae3702327b5f47e83b431e22b33da7b58" class="m-doc">i8</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>i8</code></dd>
+            <dt id="a5a0d35625cfc992d43e1fb41e19d822a">
+              <span class="m-doc-wrap-bumper"> <a href="#a5a0d35625cfc992d43e1fb41e19d822a" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="group__types.html#gad309dbcaeea13aa602d686964156ea0b" class="m-doc">i16</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>i16</code></dd>
+            <dt id="a34c68cdda02c7e3993ffd41de5a95b7b">
+              <span class="m-doc-wrap-bumper"> <a href="#a34c68cdda02c7e3993ffd41de5a95b7b" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga48d6cd8e4135fb2ff7e7f2dac84089ec" class="m-doc">i32</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>i32</code></dd>
+            <dt id="a01443952f1585a8caa0d2976bdd47352">
+              <span class="m-doc-wrap-bumper"> <a href="#a01443952f1585a8caa0d2976bdd47352" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>i64</code></dd>
+            <dt id="a9176cd6b9342653df5d07bff3f7a8118">
+              <span class="m-doc-wrap-bumper"> <a href="#a9176cd6b9342653df5d07bff3f7a8118" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="group__types.html#gaf0649fce3fc685bc58645fa7a6399fef" class="m-doc">isize</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>isize</code></dd>
+            <dt id="a67e47c4842eaba58ea862943f8e5b4e0">
+              <span class="m-doc-wrap-bumper"> <a href="#a67e47c4842eaba58ea862943f8e5b4e0" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga5f6906312a689f27d70e9d086649d3fd" class="m-doc">f32</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>f32</code></dd>
+            <dt id="a79978a5786072a3b5d0f951fa2b44352">
+              <span class="m-doc-wrap-bumper"> <a href="#a79978a5786072a3b5d0f951fa2b44352" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga94dab5770726ccbef8c7d026cfbdf8e5" class="m-doc">f64</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>f64</code></dd>
+            <dt id="a1d8d6637b7f0a04d8519c811eeea81c9">
+              <span class="m-doc-wrap-bumper"> <a href="#a1d8d6637b7f0a04d8519c811eeea81c9" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="StdBasicTypes_8h.html#af1e74057c8255f0e08ad2f95816ff57e" class="m-doc">u8_<wbr />ptr</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>u8_ptr</code></dd>
+            <dt id="a8c6c5ce7e36921a52db3b2840bac558f">
+              <span class="m-doc-wrap-bumper"> <a href="#a8c6c5ce7e36921a52db3b2840bac558f" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="StdBasicTypes_8h.html#a235793fce2c74f3752071f72f631df53" class="m-doc">u16_<wbr />ptr</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>u16_ptr</code></dd>
+            <dt id="a98ed279b50b94feaf6719f482e9f2eb6">
+              <span class="m-doc-wrap-bumper"> <a href="#a98ed279b50b94feaf6719f482e9f2eb6" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="StdBasicTypes_8h.html#a7fc3830668efe50d5b6b9e10e94f0bd9" class="m-doc">u32_<wbr />ptr</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>u32_ptr</code></dd>
+            <dt id="af2aeb696c5747f28c2f74afecc4a7719">
+              <span class="m-doc-wrap-bumper"> <a href="#af2aeb696c5747f28c2f74afecc4a7719" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="StdBasicTypes_8h.html#a73bbee06c95999ebe57e001035cbecfe" class="m-doc">u64_<wbr />ptr</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>u64_ptr</code></dd>
+            <dt id="ac43266c1e45fc0e02026c0e0954ad8e3">
+              <span class="m-doc-wrap-bumper"> <a href="#ac43266c1e45fc0e02026c0e0954ad8e3" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="StdBasicTypes_8h.html#a3c24d86c7e186e97a5d668e9d00d9b5a" class="m-doc">usize_<wbr />ptr</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>usize_ptr</code></dd>
+            <dt id="af81a6606c905c4d5b8986c9cc28d6b59">
+              <span class="m-doc-wrap-bumper"> <a href="#af81a6606c905c4d5b8986c9cc28d6b59" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="StdBasicTypes_8h.html#a5dce9c95d0736180b19ccad97ac797f9" class="m-doc">i8_<wbr />ptr</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>i8_ptr</code></dd>
+            <dt id="a866800e6c91f0a91a0d10509a2911cf1">
+              <span class="m-doc-wrap-bumper"> <a href="#a866800e6c91f0a91a0d10509a2911cf1" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="StdBasicTypes_8h.html#af8a9b820fdbd14ed63cb1325bc11eb11" class="m-doc">i16_<wbr />ptr</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>i16_ptr</code></dd>
+            <dt id="afca6cb7e36ad4ea4ad63e78c0670e136">
+              <span class="m-doc-wrap-bumper"> <a href="#afca6cb7e36ad4ea4ad63e78c0670e136" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="StdBasicTypes_8h.html#af66074b6e38e01d8259789122a189749" class="m-doc">i32_<wbr />ptr</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>i32_ptr</code></dd>
+            <dt id="ab492678d923f8e9ceb0c4f6b35cd13bc">
+              <span class="m-doc-wrap-bumper"> <a href="#ab492678d923f8e9ceb0c4f6b35cd13bc" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="StdBasicTypes_8h.html#a7bdffa6d600d13a01c158f49794fd88a" class="m-doc">i64_<wbr />ptr</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>i64_ptr</code></dd>
+            <dt id="a82744401b9fd158402811a1603ecce2a">
+              <span class="m-doc-wrap-bumper"> <a href="#a82744401b9fd158402811a1603ecce2a" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="StdBasicTypes_8h.html#abf75176a23e77410e7e822ef8111896d" class="m-doc">isize_<wbr />ptr</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>isize_ptr</code></dd>
+            <dt id="ab05892c2a427d15b3a6f7d2df8406149">
+              <span class="m-doc-wrap-bumper"> <a href="#ab05892c2a427d15b3a6f7d2df8406149" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="StdBasicTypes_8h.html#a9cca9caaf26c163cdb323dfb04529724" class="m-doc">f32_<wbr />ptr</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>f32_ptr</code></dd>
+            <dt id="a44e35650cadabf247404ce7fd15db4a6">
+              <span class="m-doc-wrap-bumper"> <a href="#a44e35650cadabf247404ce7fd15db4a6" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="StdBasicTypes_8h.html#a4b3f79e707830caada6dbe9b588e36a0" class="m-doc">f64_<wbr />ptr</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>f64_ptr</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"> <a href="#ab81b5211b0b2206cc490f91ae4add77c" class="m-doc">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga00d8f39b4b304be8134e652bf61ff840" class="m-doc">cstring</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>cstring</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"> <a href="#afc4f15d2976a8be8b64f615e2ceecadf" class="m-doc">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>const_cstring</code></dd>
+            <dt id="ad3c53774dfc5550fa334c3e7df7b78b4">
+              <span class="m-doc-wrap-bumper"> <a href="#ad3c53774dfc5550fa334c3e7df7b78b4" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="StdBasicTypes_8h.html#a248f703f0c97bf1692e38a108722a401" class="m-doc">cstring_<wbr />ptr</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>cstring_ptr</code></dd>
+            <dt id="ae680d98ddeeac9f3c465bd46dc0f1652">
+              <span class="m-doc-wrap-bumper"> <a href="#ae680d98ddeeac9f3c465bd46dc0f1652" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="StdBasicTypes_8h.html#ab4012f4bb324f0da2de0d21045b8244a" class="m-doc">const_<wbr />cstring_<wbr />ptr</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>const_cstring_ptr</code></dd>
+            <dt id="a016b6a3ddd7d8297f3708de685f8277e">
+              <span class="m-doc-wrap-bumper"> <a href="#a016b6a3ddd7d8297f3708de685f8277e" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="structStdString.html" class="m-doc">StdString</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code><a href="structStdString.html" class="m-doc">StdString</a></code></dd>
+            <dt id="a503bf52e66baaf3c58bbf267ca372e7b">
+              <span class="m-doc-wrap-bumper"> <a href="#a503bf52e66baaf3c58bbf267ca372e7b" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="structStdStringView.html" class="m-doc">StdStringView</a>)</span>
+            </dt>
+            <dd>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code></dd>
+          </dl>
+        </section>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt id="a0a8f7d635aca9e06dff19f4b7eeb414f">
+              <span class="m-doc-wrap-bumper">#define <a href="#a0a8f7d635aca9e06dff19f4b7eeb414f" class="m-doc-self">STD_RESULT</a></span>
+            </dt>
+            <dd>Declarations and definitions related to <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>Macro Alias used to refer to an instantiation of <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for type <code>T</code></dd>
+            <dt id="afeb6d7d42fa07f6c74a19871dce57318">
+              <span class="m-doc-wrap-bumper">#define <a href="#afeb6d7d42fa07f6c74a19871dce57318" class="m-doc-self">StdResultIdentifier</a>(</span><span class="m-doc-wrap">T,
+              Identifier)</span>
+            </dt>
+            <dd>Macro to create and refer to an identifier (function, variable, struct) related to an instantiation of <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> of type <code>T</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__result.html#ga8edf2be03677e167ad8834b368f871e7" class="m-doc">DeclStdResult</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>Instantiates the declarations for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__result.html#ga45604f9f51cb2d871049f911e32047db" class="m-doc">Ok</a>(</span><span class="m-doc-wrap">T,
+              value)</span>
+            </dt>
+            <dd>Creates a <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding the given value.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__result.html#ga94ea6116cc8d169581b1f9f9dbf156f5" class="m-doc">Err</a>(</span><span class="m-doc-wrap">T,
+              error)</span>
+            </dt>
+            <dd>Creates a <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding the given error.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__result.html#gaa8a4886eba98e62dac24462137eb4c85" class="m-doc">std_result_is_ok</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns whether this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> is holding a value.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__result.html#gab64736f5d6b99da7ffe23f9805806a54" class="m-doc">std_result_is_err</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns whether this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> is holding an error.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__result.html#ga8902c1625b1ff10e24d74c4daf0b58b7" class="m-doc">std_result_as_const</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a const reference to the value stored in this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__result.html#ga8653f36c7656735f775a64e7f05eeb69" class="m-doc">std_result_as_mut</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a reference to the value stored in this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__result.html#ga8c0384f4d6cd52ac6fce6a3eecabc12f" class="m-doc">std_result_unwrap</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the value stored in this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__result.html#ga21760973e0b65c130740daf93ecbb98b" class="m-doc">std_result_unwrap_or</a>(</span><span class="m-doc-wrap">self,
+              default_value)</span>
+            </dt>
+            <dd>Returns the value stored in this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> , or <code>default_value</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__result.html#ga4a59e3453cfd07159a30c4f903b193d1" class="m-doc">std_result_unwrap_or_else</a>(</span><span class="m-doc-wrap">self,
+              default_generator)</span>
+            </dt>
+            <dd>Returns the value stored in this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> , or <code>default_generator()</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__result.html#ga4d994185bc867097574fe17ac2f1e5ff" class="m-doc">std_result_expect</a>(</span><span class="m-doc-wrap">self,
+              panic_message)</span>
+            </dt>
+            <dd>Returns the value stored in this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__result.html#ga80d98e170bf19c3eece7b577a73a243b" class="m-doc">std_result_unwrap_err</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the error stored in this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__result.html#ga8c16094ae98722a1b984763e8f505a8f" class="m-doc">std_result_as_bool</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Converts this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> to a <code>bool</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__result.html#ga1f264c515ac1ccfb45555624ef23b452" class="m-doc">ImplStdResult</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>Instantiates the definitions for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__result.html#ga80ec565de70838a5fbc5931c76c10b92" class="m-doc">DeclAndImplStdResult</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>Fully instantiates <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ab81b5211b0b2206cc490f91ae4add77c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab81b5211b0b2206cc490f91ae4add77c" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga00d8f39b4b304be8134e652bf61ff840" class="m-doc">cstring</a>)</span></span>
+            </h3>
+            <p>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>cstring</code></p>
+<p>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>char_ptr</code></p>
+          </div></section>
+          <section class="m-doc-details" id="afc4f15d2976a8be8b64f615e2ceecadf"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afc4f15d2976a8be8b64f615e2ceecadf" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a>)</span></span>
+            </h3>
+            <p>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>const_cstring</code></p>
+<p>Instantiate <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for the builtin <code>const_char_ptr</code></p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>
