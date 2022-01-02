@@ -3,10 +3,10 @@
 /// @brief This module provides a generic, type-safe, fixed-capacity, dynamic-size, stack allocated
 /// array type (`StdArray(T, N)`) similar to `std::array` in C++
 /// @version 0.1
-/// @date 2021-07-20
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@
 /// @defgroup std_array StdArray
 /// `StdArray(T, N)` is a struct template for a type-safe fixed-capacity, dynamic-size, stack
 /// allocated array type. `StdArray(T, N)` is bounds safe, allocator aware, and provides C2nxt
-/// compatible random access iterators. It supports used-defined default-cosntructors,
+/// compatible random access iterators. It supports used-defined default-constructors,
 /// copy-constructors, and destructors for its elements. It's design is based around C++'s
 /// `std::array`, but with slightly different semantics and functionality.
 ///
@@ -40,7 +40,7 @@
 /// The requirements are similar to `StdVector(T)`, and requires minimal boiler-plate:
 /// 1. a `typedef` of your type to provide an alphanumeric name for it. (for template and macro
 /// 	parameters)
-///	2. a `typedef` for pointer to your type as `Ref(YourTupe), for use with the iterators
+///	2. a `typedef` for pointer to your type as `Ref(YourTuple), for use with the iterators
 /// 3. a `typedef` for pointer to const your type as `ConstRef(YourType)`, for use with the
 /// 	iterators
 /// 4. Instantiations for C2nxt iterators for the typedefs provided in (2) and (3) (already
@@ -117,12 +117,12 @@
 ///
 /// @code {.c}
 /// YourType your_type_constructor(StdAllocator allocator) {
-///		let_mut t = (YourTyupe){0};
+///		let_mut t = (YourType){0};
 /// 	// whatever you need to do to init your type
 /// 	return t;
 /// }
 ///
-/// YourType your_type_copy_constructor(const YourType* restrict elem, StdAlloctor allocator) {
+/// YourType your_type_copy_constructor(const YourType* restrict elem, StdAllocator allocator) {
 ///		let_mut t = (YourType){0};
 /// 	// whatever you need to do to copy `elem` to `t`
 ///		return t;
@@ -182,7 +182,7 @@
 /// Like other C2nxt collections, `StdArray(T, N)` provides its type-agnostic usage through a
 /// vtable pointer contained in the struct, and provides macros which wrap the usage of the vtable,
 /// making access simpler. If you prefer to not use this method of access, you can call the typed
-/// functions directly by infixing the contained type in the assoicated function name.
+/// functions directly by in-fixing the contained type in the associated function name.
 /// IE: for `StdArray(i32, 10)`, and an array `array`, the equivalent function call for
 /// `std_array_push_back(array, element)` would be `std_array_i32_10_push_back(&array, element)`
 /// @note Note, however, that using the typed functions instead of the macros results in losing the
@@ -197,17 +197,17 @@
 /// @endcode
 /// @}
 
-#include "StdAllocators.h"
-#include "StdBasicTypes.h"
-#include "StdCollectionsData.h"
-#include "StdFormat.h"
-#include "StdIterator.h"
-#include "StdMath.h"
-#include "StdOption.h"
-#include "StdResult.h"
+#include <C2nxt/StdAllocators.h>
+#include <C2nxt/StdBasicTypes.h>
+#include <C2nxt/StdCollectionsData.h>
+#include <C2nxt/StdFormat.h>
+#include <C2nxt/StdIterator.h>
+#include <C2nxt/StdMath.h>
+#include <C2nxt/StdOption.h>
+#include <C2nxt/StdResult.h>
 
 #ifndef STD_ARRAY
-	/// @brief Declarations and Deffinitions related to `StdArray(T, N)`
+	/// @brief Declarations and Definitions related to `StdArray(T, N)`
 	#define STD_ARRAY
 
 	/// @brief Macro alias for a `StdArray(T, N)` containing up to `N` `T`s
@@ -236,7 +236,7 @@
 	///
 	/// prints information about `array` to `stdout`
 	/// because `StdArray(T, N)` is generic, and thus can't be used in a `_Generic` match arm prior
-	/// to the type's instantation, we have to explicitly cast to the `StdFormat` Trait to get
+	/// to the type's instantiation, we have to explicitly cast to the `StdFormat` Trait to get
 	/// `StdArray(T, N)`'s implementation of the Trait println("{}", std_as_format_t(StdArray(i32,
 	/// 10), array));
 	///
@@ -262,8 +262,8 @@
 	/// Like other C2nxt collections, `StdArray(T, N)` provides its type-agnostic usage through a
 	/// vtable pointer contained in the struct, and provides macros which wrap the usage of the
 	/// vtable, making access simpler. If you prefer to not use this method of access, you can call
-	/// the typed functions directly by infixing the contained type in the assoicated function name.
-	/// IE: for `StdArray(i32, 10)`, and an array `array`, the equivalent function call for
+	/// the typed functions directly by in-fixing the contained type in the associated function
+	/// name. IE: for `StdArray(i32, 10)`, and an array `array`, the equivalent function call for
 	/// `std_array_push_back(array, element)` would be `std_array_i32_10_push_back(&array, element)`
 	/// @note Note, however, that using the typed functions instead of the macros results in losing
 	/// the reference-semantics of function-macros like `std_array_at(self, index)` and will instead
@@ -296,7 +296,7 @@
 	/// 2. a `typedef` for pointer to your type as `Ref(YourType)`
 	/// 3. a `typedef` for pointer to const your type as `ConstRef(YourType)`
 	/// 4. Instantiations for C2nxt iterators for the typedefs provided in (2) and (3)
-	/// 5. Instantiaion of `StdOption(YourType)`, via provided macros (See `StdOption(T)`)
+	/// 5. Instantiation of `StdOption(YourType)`, via provided macros (See `StdOption(T)`)
 	///
 	/// @param T - The element type of the `StdArray(T, N)` instantiation
 	/// @param N - The capacity of the `StdArray(T, N)` instantiation
@@ -450,19 +450,19 @@
 		}                                                                                         \
 		StdArrayIdentifier(T, N, vtable);
 
-	/// @brief Creates a new `StdArray(T, N)` with defaulted associated functions.
-	///
-	/// Creates a new `StdArray(T, N)` with:
-	/// 1. default associated element default-constructor,
-	/// 2. default associated element destructor
-	/// 3. default associated memory allocator (potentially used in element constructor and
-	/// destructor, memory for the `StdArray(T, N)` itself is stack allocated)
-	///
-	/// @param T - The element type of the `StdArray(T, N)` instantiation to create
-	/// @param N - The capacity of the `StdArray(T, N)` instantation to create
-	///
-	/// @return a new `StdArray(T, N)`
-	/// @ingroup std_array
+/// @brief Creates a new `StdArray(T, N)` with defaulted associated functions.
+///
+/// Creates a new `StdArray(T, N)` with:
+/// 1. default associated element default-constructor,
+/// 2. default associated element destructor
+/// 3. default associated memory allocator (potentially used in element constructor and
+/// destructor, memory for the `StdArray(T, N)` itself is stack allocated)
+///
+/// @param T - The element type of the `StdArray(T, N)` instantiation to create
+/// @param N - The capacity of the `StdArray(T, N)` instantiation to create
+///
+/// @return a new `StdArray(T, N)`
+/// @ingroup std_array
 	#define std_array_new(T, N) StdArrayIdentifier(T, N, new)()
 	/// @brief Creates a new `StdArray(T, N)` with provided associated functions.
 	///
@@ -694,7 +694,7 @@
 	/// @return a random access iterator at the end of the reversed array
 	/// @ingroup std_array
 	#define std_array_rend(self) (self).m_vtable->rend(&(self))
-	/// @brief Returns whether the given pair of iterators are euqal (they belong to the same
+	/// @brief Returns whether the given pair of iterators are equal (they belong to the same
 	/// collection and point to the same element), IE: if `first == second`
 	///
 	/// @param first - The LHS iterator of the equality check
@@ -738,7 +738,7 @@
 	/// @return a random access iterator at the end of the reversed array
 	/// @ingroup std_array
 	#define std_array_crend(self) (self).m_vtable->crend(&(self))
-	/// @brief Returns whether the given pair of const iterators are euqal (they belong to the same
+	/// @brief Returns whether the given pair of const iterators are equal (they belong to the same
 	/// collection and point to the same element), IE: if `first == second`
 	///
 	/// @param first - The LHS iterator of the equality check
@@ -791,7 +791,7 @@
 	/// Requires that `DeclStdArray(T, N)` has already been used and is in scope, and that the
 	/// requirements for that have already been met.
 	///
-	/// @param T - The element type of the `StdArray(T, N)` instantation
+	/// @param T - The element type of the `StdArray(T, N)` instantiation
 	/// @param N - The capacity of the `StdArray(T, N)` instantiation
 	/// @ingroup std_array
 	#define ImplStdArray(T, N)                                                                     \
@@ -876,20 +876,20 @@
 										StdArrayIdentifier(T, N, iterator_ccurrent),               \
 										StdArrayIdentifier(T, N, iterator_cequals));               \
                                                                                                    \
-		always_inline inline static T StdArrayIdentifier(T, N, default_constructor)(               \
+		always_inline static inline T StdArrayIdentifier(T, N, default_constructor)(               \
 			StdAllocator allocator) {                                                              \
 			ignore(allocator);                                                                     \
 			return (T){0};                                                                         \
 		}                                                                                          \
                                                                                                    \
-		always_inline inline static T StdArrayIdentifier(T, N, default_copy_constructor)(          \
+		always_inline static inline T StdArrayIdentifier(T, N, default_copy_constructor)(          \
 			const T* restrict element,                                                             \
 			StdAllocator allocator) {                                                              \
 			ignore(allocator);                                                                     \
 			return *element;                                                                       \
 		}                                                                                          \
                                                                                                    \
-		always_inline inline static void StdArrayIdentifier(T, N, default_destructor)(             \
+		always_inline static inline void StdArrayIdentifier(T, N, default_destructor)(             \
 			T* restrict element, /** NOLINT(readability-non-const-parameter) **/                   \
 			StdAllocator allocator) {                                                              \
 			ignore(allocator, element);                                                            \
