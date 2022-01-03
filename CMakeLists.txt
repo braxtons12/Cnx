@@ -46,6 +46,7 @@ set(EXPORTS
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/mpl/StdPPStrings.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/mpl/detail/ArgLists.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/time/StdDuration.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdTime.h"
         )
 set(IMPLEMENTATIONS
         "${CMAKE_CURRENT_SOURCE_DIR}/src/StdAllocators.c"
