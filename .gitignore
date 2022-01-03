@@ -14,3 +14,5 @@ docs/__pycache__/
 /cmake-build-debug-clang/
 /cmake-build-release-clang/
 __pycache__/
+/Doxyfile
+/Doxyfile-mcss
