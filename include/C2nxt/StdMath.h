@@ -116,9 +116,9 @@
 			u32		:	(x),												\
 			u64		:	(x),												\
 			usize	:	(x),												\
-			i8		: 	static_cast(i8)(abs(static_cast(i32)(x))),			\
-			i16		:	static_cast(i16)(abs(static_cast(i32)(x))),			\
-			i32		:	static_cast(i32)(abs(static_cast(i32)(x))),			\
+			i8		: 	static_cast(i8)((abs)(static_cast(i32)(x))),			\
+			i16		:	static_cast(i16)((abs)(static_cast(i32)(x))),			\
+			i32		:	static_cast(i32)((abs)(static_cast(i32)(x))),			\
 			i64		: 	static_cast(i64)(llabs(static_cast(i64)(x))),		\
 			isize	: 	static_cast(isize)(llabs(static_cast(isize)(x))),	\
 			f32		:	fabsf(static_cast(f32)(x)),							\
@@ -132,9 +132,9 @@
 				u16		:	(x),												\
 				u32		:	(x),												\
 				u64		:	(x),												\
-				i8		: 	static_cast(i8)(abs(static_cast(i32)(x))),			\
-				i16		:	static_cast(i16)(abs(static_cast(i32)(x))),			\
-				i32		:	static_cast(i32)(abs(static_cast(i32)(x))),			\
+				i8		: 	static_cast(i8)((abs)(static_cast(i32)(x))),			\
+				i16		:	static_cast(i16)((abs)(static_cast(i32)(x))),			\
+				i32		:	static_cast(i32)((abs)(static_cast(i32)(x))),			\
 				i64		: 	static_cast(i64)(llabs(static_cast(i64)(x))),		\
 				f32		:	fabsf(static_cast(f32)(x)),							\
 				f64		:	fabs(static_cast(f64)(x)))
