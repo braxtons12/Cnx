@@ -3,10 +3,10 @@
 /// @brief This module provides a dynamic-array type comparable to C++'s `std::vector` and Rust's
 /// `std::vec::Vec` for C2nxt
 /// @version 0.1
-/// @date 2021-07-20
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -219,20 +219,20 @@
 /// Like other C2nxt collections, `StdVector(T)` provides its type-agnostic usage through a vtable
 /// pointer contained in the struct, and provides macros which wrap the usage of the vtable, making
 /// access simpler. If you prefer to not use this method of access, you can call the
-/// typed functions directly by infixing the contained type in the associated function name.
+/// typed functions directly by in-fixing the contained type in the associated function name.
 /// IE: for `StdVector(i32)`, `vec`, the equivalent function call for
 /// `std_vector_push_back(vec, element)` would be `std_vector_i32_push_back(&vec, element)`
 /// @}
 
-#include "StdAllocators.h"
-#include "StdBasicTypes.h"
-#include "StdCollectionsData.h"
-#include "StdFormat.h"
-#include "StdIterator.h"
-#include "StdMath.h"
-#include "StdOption.h"
-#include "StdPlatform.h"
-#include "StdResult.h"
+#include <C2nxt/StdAllocators.h>
+#include <C2nxt/StdBasicTypes.h>
+#include <C2nxt/StdCollectionsData.h>
+#include <C2nxt/StdFormat.h>
+#include <C2nxt/StdIterator.h>
+#include <C2nxt/StdMath.h>
+#include <C2nxt/StdOption.h>
+#include <C2nxt/StdPlatform.h>
+#include <C2nxt/StdResult.h>
 
 #ifndef STD_VECTOR
 	/// @brief `StdVector(T)` related declarations and definitions
@@ -242,7 +242,7 @@
 	///
 	/// `StdVector(T)` is a bounds-safe, allocator aware, generic dynamic-capacity array type. It is
 	/// implemented as a struct template, which enables 100% type safety, while providing
-	/// abstractions that allow type agnostic use. It has greatly increased ergnomics over manual
+	/// abstractions that allow type agnostic use. It has greatly increased ergonomics over manual
 	/// array management and provides many useful features such as random access iterators and
 	/// optional scoped destruction.
 	///
@@ -264,7 +264,7 @@
 	/// // prints information about `vec` to stdout
 	/// // because `StdVector(T)` is generic, and thus can't be used in a `_Generic` match arm prior
 	/// to
-	/// // the type's instantiation, we have to explictly cast to the `StdFormat` Trait to get
+	/// // the type's instantiation, we have to explicitly cast to the `StdFormat` Trait to get
 	/// // `StdVector(T)`'s implementation of the Trait
 	/// println("{}", std_as_format_t(StdVector(i32), vec));
 	/// // prints `vec`'s elements to stdout
@@ -284,8 +284,8 @@
 	/// Like other C2nxt collections, `StdVector(T)` provides its type-agnostic usage through a
 	/// vtable pointer contained in the struct, and provides macros which wrap the usage of the
 	/// vtable, making access simpler. If you prefer to not use this method of access, you can call
-	/// the typed functions directly by infixing the contained type in the associated function name.
-	/// IE: for `StdVector(i32)`, `vec`, the equivalent function call for
+	/// the typed functions directly by in-fixing the contained type in the associated function
+	/// name. IE: for `StdVector(i32)`, `vec`, the equivalent function call for
 	/// `std_vector_push_back(vec, element)` would be `std_vector_i32_push_back(&vec, element)`
 	/// @ingroup std_vector
 	#define StdVector(T) CONCAT2(StdVector, T)
@@ -302,7 +302,7 @@
 	#ifndef STD_VECTOR_SHORT_OPTIMIZATION_NUM_ELEMENTS
 		/// @brief The maximum number of elements storable using `StdVector(T)`'s small size
 		/// optimization. Define this to a different value to change or disable the small size
-		/// optimizatio
+		/// optimization
 		/// @ingroup std_vector
 		#define STD_VECTOR_SHORT_OPTIMIZATION_NUM_ELEMENTS 8U
 	#endif // STD_VECTOR_SHORT_OPTIMIZATION_NUM_ELEMENTS
@@ -318,7 +318,7 @@
 		#define STD_VECTOR_DEFAULT_LONG_CAPACITY 16U
 	#endif // STD_VECTOR_DEFAULT_LONG_CAPACITY
 
-	/// @brief Use this macro to instantatiate the declarations for `StdVector(T)` containing `T`s.
+	/// @brief Use this macro to instantiate the declarations for `StdVector(T)` containing `T`s.
 	/// This provides the struct declarations and definitions and function declarations for
 	/// `StdVector(T)`.
 	///
@@ -327,7 +327,7 @@
 	/// 2. a `typedef` for pointer to your type as `Ref(YourType)`
 	/// 3. a `typedef` for pointer to const your type as `ConstRef(YourType)`
 	/// 4. Instantiations for C2nxt iterators for the typedefs provided in (2) and (3)
-	/// 5. Instantation of `StdOption(YourType)`, via provided macros \see `StdOption`
+	/// 5. Instantiation of `StdOption(YourType)`, via provided macros \see `StdOption`
 	///
 	/// @param T - The element type of the `StdVector(T)` instantiation
 	/// @ingroup std_vector
@@ -659,7 +659,7 @@
 	#define std_vector_size(self) (self).m_vtable->size(&(self))
 	/// @brief Returns the maximum possible size of a `StdVector(T)` containing type `T`
 	///
-	/// @param T - The element type of the `StdVector(T)` instantation
+	/// @param T - The element type of the `StdVector(T)` instantiation
 	///
 	/// @return The maximum possible size
 	/// @ingroup std_vector
@@ -966,20 +966,20 @@
 										StdVectorIdentifier(T, iterator_ccurrent),                 \
 										StdVectorIdentifier(T, iterator_cequals));                 \
                                                                                                    \
-		always_inline inline static T StdVectorIdentifier(T, default_constructor)(                 \
+		always_inline static inline T StdVectorIdentifier(T, default_constructor)(                 \
 			StdAllocator allocator) {                                                              \
 			ignore(allocator);                                                                     \
 			return (T){0};                                                                         \
 		}                                                                                          \
                                                                                                    \
-		always_inline inline static T StdVectorIdentifier(T, default_copy_constructor)(            \
+		always_inline static inline T StdVectorIdentifier(T, default_copy_constructor)(            \
 			const T* restrict elem,                                                                \
 			StdAllocator allocator) {                                                              \
 			ignore(allocator);                                                                     \
 			return *elem;                                                                          \
 		}                                                                                          \
                                                                                                    \
-		always_inline inline static void StdVectorIdentifier(T, default_destructor)(               \
+		always_inline static inline void StdVectorIdentifier(T, default_destructor)(               \
 			T* restrict element, /** NOLINT(readability-non-const-parameter)**/                    \
 			StdAllocator allocator) {                                                              \
 			ignore(allocator, element);                                                            \
@@ -1030,7 +1030,7 @@
 			   .m_destructor = StdVectorIdentifier(T, default_destructor),                         \
 			   .m_allocator = STD_DEFAULT_ALLOCATOR};                                              \
                                                                                                    \
-		always_inline inline static bool StdVectorIdentifier(T, is_short)(                         \
+		always_inline static inline bool StdVectorIdentifier(T, is_short)(                         \
 			const StdVector(T)* restrict self) {                                                   \
 			return self->m_capacity <= STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(T);                  \
 		}                                                                                          \
@@ -1223,7 +1223,7 @@
 			}                                                                                      \
 		}                                                                                          \
                                                                                                    \
-		static always_inline inline usize StdVectorIdentifier(T, get_expanded_capacity)(           \
+		static inline always_inline usize StdVectorIdentifier(T, get_expanded_capacity)(           \
 			usize old_capacity,                                                                    \
 			usize num_increments) {                                                                \
 			return num_increments * ((old_capacity * 3) / 2);                                      \
