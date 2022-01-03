@@ -1,4 +1,4 @@
-#include "C2nxt/StdRatio.h"
+#include <C2nxt/StdRatio.h>
 
 void test_ratio_new_and_comparisons(void) {
 	let ratio1 = std_ratio_new(55, 65);
@@ -128,7 +128,9 @@ void test_ratio_multiply_scalar(void) {
 
 	let multiplied1 = std_ratio_multiply_scalar(ratio1, 2);
 	let multiplied2 = std_ratio_multiply_scalar(ratio2, 2);
+	// NOLINTNEXTLINE(bugprone-implicit-widening-of-multiplication-result)
 	let expected1 = std_ratio_new(55 * 2, 65);
+	// NOLINTNEXTLINE(bugprone-implicit-widening-of-multiplication-result)
 	let expected2 = std_ratio_new(77 * 2, 50);
 
 	TEST_ASSERT_TRUE(std_ratio_equal(multiplied1, expected1));
@@ -141,7 +143,9 @@ void test_ratio_divide_scalar(void) {
 
 	let divided1 = std_ratio_divide_scalar(ratio1, 2);
 	let divided2 = std_ratio_divide_scalar(ratio2, 2);
+	// NOLINTNEXTLINE(bugprone-implicit-widening-of-multiplication-result)
 	let expected1 = std_ratio_new(55, 65 * 2);
+	// NOLINTNEXTLINE(bugprone-implicit-widening-of-multiplication-result)
 	let expected2 = std_ratio_new(77, 50 * 2);
 
 	TEST_ASSERT_TRUE(std_ratio_equal(divided1, expected1));

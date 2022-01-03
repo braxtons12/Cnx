@@ -74,54 +74,102 @@ typedef struct StdRatio {
 			.den = (std_static_abs(denominator)                                                \
 					/ std_static_gcd(std_static_abs(numerator), std_static_abs(denominator)))})
 
-/// @brief SI "atto" as a `StdRatio`
-/// @ingroup std_ratio
-static let maybe_unused std_atto = (StdRatio){.num = 1LL, .den = 1000000000000000000LL};
-/// @brief SI "femto" as a `StdRatio`
-/// @ingroup std_ratio
-static let maybe_unused std_femto = (StdRatio){.num = 1LL, .den = 1000000000000000LL};
-/// @brief SI "pico" as a `StdRatio`
-/// @ingroup std_ratio
-static let maybe_unused std_pico = (StdRatio){.num = 1LL, .den = 1000000000000LL};
-/// @brief SI "nano" as a `StdRatio`
-/// @ingroup std_ratio
-static let maybe_unused std_nano = (StdRatio){.num = 1LL, .den = 1000000000LL};
-/// @brief SI "micro" as a `StdRatio`
-/// @ingroup std_ratio
-static let maybe_unused std_micro = (StdRatio){.num = 1LL, .den = 1000000LL};
-/// @brief SI "milli" as a `StdRatio`
-/// @ingroup std_ratio
-static let maybe_unused std_milli = (StdRatio){.num = 1LL, .den = 1000LL};
-/// @brief SI "centi" as a `StdRatio`
-/// @ingroup std_ratio
-static let maybe_unused std_centi = (StdRatio){.num = 1LL, .den = 100LL};
-/// @brief SI "deci" as a `StdRatio`
-/// @ingroup std_ratio
-static let maybe_unused std_deci = (StdRatio){.num = 1LL, .den = 10LL};
-/// @brief SI "deca" as a `StdRatio`
-/// @ingroup std_ratio
-static let maybe_unused std_deca = (StdRatio){.num = 10LL, .den = 1LL};
-/// @brief SI "hecto" as a `StdRatio`
-/// @ingroup std_ratio
-static let maybe_unused std_hecto = (StdRatio){.num = 100LL, .den = 1LL};
-/// @brief SI "kilo" as a `StdRatio`
-/// @ingroup std_ratio
-static let maybe_unused std_kilo = (StdRatio){.num = 1000LL, .den = 1LL};
-/// @brief SI "mega" as a `StdRatio`
-/// @ingroup std_ratio
-static let maybe_unused std_mega = (StdRatio){.num = 1000000LL, .den = 1LL};
-/// @brief SI "giga" as a `StdRatio`
-/// @ingroup std_ratio
-static let maybe_unused std_giga = (StdRatio){.num = 1000000000LL, .den = 1LL};
-/// @brief SI "tera" as a `StdRatio`
-/// @ingroup std_ratio
-static let maybe_unused std_tera = (StdRatio){.num = 1000000000000LL, .den = 1LL};
-/// @brief SI "peta" as a `StdRatio`
-/// @ingroup std_ratio
-static let maybe_unused std_peta = (StdRatio){.num = 1000000000000000LL, .den = 1LL};
-/// @brief SI "exa" as a `StdRatio`
-/// @ingroup std_ratio
-static let maybe_unused std_exa = (StdRatio){.num = 1000000000000000000LL, .den = 1LL};
+	/// @brief SI "atto" as a `StdRatio`
+	/// @ingroup std_ratio
+	#define std_atto                                 \
+		(StdRatio) {                                 \
+			.num = 1LL, .den = 1000000000000000000LL \
+		}
+	/// @brief SI "femto" as a `StdRatio`
+	/// @ingroup std_ratio
+	#define std_femto                             \
+		(StdRatio) {                              \
+			.num = 1LL, .den = 1000000000000000LL \
+		}
+	/// @brief SI "pico" as a `StdRatio`
+	/// @ingroup std_ratio
+	#define std_pico                           \
+		(StdRatio) {                           \
+			.num = 1LL, .den = 1000000000000LL \
+		}
+	/// @brief SI "nano" as a `StdRatio`
+	/// @ingroup std_ratio
+	#define std_nano                        \
+		(StdRatio) {                        \
+			.num = 1LL, .den = 1000000000LL \
+		}
+	/// @brief SI "micro" as a `StdRatio`
+	/// @ingroup std_ratio
+	#define std_micro                    \
+		(StdRatio) {                     \
+			.num = 1LL, .den = 1000000LL \
+		}
+	/// @brief SI "milli" as a `StdRatio`
+	/// @ingroup std_ratio
+	#define std_milli                 \
+		(StdRatio) {                  \
+			.num = 1LL, .den = 1000LL \
+		}
+	/// @brief SI "centi" as a `StdRatio`
+	/// @ingroup std_ratio
+	#define std_centi                \
+		(StdRatio) {                 \
+			.num = 1LL, .den = 100LL \
+		}
+	/// @brief SI "deci" as a `StdRatio`
+	/// @ingroup std_ratio
+	#define std_deci                \
+		(StdRatio) {                \
+			.num = 1LL, .den = 10LL \
+		}
+	/// @brief SI "deca" as a `StdRatio`
+	/// @ingroup std_ratio
+	#define std_deca                \
+		(StdRatio) {                \
+			.num = 10LL, .den = 1LL \
+		}
+	/// @brief SI "hecto" as a `StdRatio`
+	/// @ingroup std_ratio
+	#define std_hecto                \
+		(StdRatio) {                 \
+			.num = 100LL, .den = 1LL \
+		}
+	/// @brief SI "kilo" as a `StdRatio`
+	/// @ingroup std_ratio
+	#define std_kilo                  \
+		(StdRatio) {                  \
+			.num = 1000LL, .den = 1LL \
+		}
+	/// @brief SI "mega" as a `StdRatio`
+	/// @ingroup std_ratio
+	#define std_mega                     \
+		(StdRatio) {                     \
+			.num = 1000000LL, .den = 1LL \
+		}
+	/// @brief SI "giga" as a `StdRatio`
+	/// @ingroup std_ratio
+	#define std_giga                        \
+		(StdRatio) {                        \
+			.num = 1000000000LL, .den = 1LL \
+		}
+	/// @brief SI "tera" as a `StdRatio`
+	/// @ingroup std_ratio
+	#define std_tera                           \
+		(StdRatio) {                           \
+			.num = 1000000000000LL, .den = 1LL \
+		}
+	/// @brief SI "peta" as a `StdRatio`
+	/// @ingroup std_ratio
+	#define std_peta                              \
+		(StdRatio) {                              \
+			.num = 1000000000000000LL, .den = 1LL \
+		}
+	/// @brief SI "exa" as a `StdRatio`
+	/// @ingroup std_ratio
+	#define std_exa                                  \
+		(StdRatio) {                                 \
+			.num = 1000000000000000000LL, .den = 1LL \
+		}
 
 /// @brief Constructs a `StdRatio`
 ///
