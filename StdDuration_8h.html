@@ -51,12 +51,155 @@
             <li>
               Reference
               <ul>
+                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#typedef-members">Typedefs</a></li>
+                <li><a href="#func-members">Functions</a></li>
+                <li><a href="#var-members">Variables</a></li>
                 <li><a href="#define-members">Defines</a></li>
               </ul>
             </li>
           </ul>
         </div>
-<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.1</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2021-08-16</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2021 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.1</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-01-02</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        <section id="nested-classes">
+          <h2><a href="#nested-classes">Classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              struct <a href="structStdDuration.html" class="m-doc">StdDuration</a>
+            </dt>
+            <dd><code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> represents a duration in a particular unit of time A <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> occurs in a particular unit of time (e.g. seconds, nanoseconds, or years), and can represent a positive or negative amount of that unit</dd>
+          </dl>
+        </section>
+        <section id="typedef-members">
+          <h2><a href="#typedef-members">Typedefs</a></h2>
+          <dl class="m-doc">
+            <dt>
+              using <a href="group__std__time.html#ga3c1a62ca8aca7042392f3de6cb3dff59" class="m-doc">StdDuration</a> = struct <a href="structStdDuration.html" class="m-doc">StdDuration</a>
+            </dt>
+            <dd><code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> represents a duration in a particular unit of time A <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> occurs in a particular unit of time (e.g. seconds, nanoseconds, or years), and can represent a positive or negative amount of that unit</dd>
+          </dl>
+        </section>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdDuration.html" class="m-doc">StdDuration</a> <a href="group__std__time.html#gabd09dcb0582be35784197d887f6f24ec" class="m-doc">std_duration_cast</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> to_cast,
+              <a href="structStdRatio.html" class="m-doc">StdRatio</a> new_period)</span>
+            </dt>
+            <dd>Converts the given <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> to one with a different period Converts the given <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> to a <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> with a different period, truncating any fractional portion caused by the conversion.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdDuration.html" class="m-doc">StdDuration</a> <a href="group__std__time.html#ga667e4cd2c0da0d50a6380c707a25a26d" class="m-doc">std_duration_floor</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> to_floor,
+              <a href="structStdRatio.html" class="m-doc">StdRatio</a> new_period)</span>
+            </dt>
+            <dd>Converts the given <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> to one with a different period Converts the given <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> to a <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> with a different period, flooring any fractional portion caused by the conversion.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdDuration.html" class="m-doc">StdDuration</a> <a href="group__std__time.html#gacb788607510bd4330d15c4bcd60534b8" class="m-doc">std_duration_ceil</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> to_ceil,
+              <a href="structStdRatio.html" class="m-doc">StdRatio</a> new_period)</span>
+            </dt>
+            <dd>Converts the given <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> to one with a different period Converts the given <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> to a <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> with a different period, taking the ceiling of any fractional portion caused by the conversion.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdDuration.html" class="m-doc">StdDuration</a> <a href="group__std__time.html#gaa420633ede4372969f3964a7818675c8" class="m-doc">std_duration_round</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> to_round,
+              <a href="structStdRatio.html" class="m-doc">StdRatio</a> new_period)</span>
+            </dt>
+            <dd>Converts the given <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> to one with a different period Converts the given <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> to a <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> with a different period, rounding any fractional portion caused by the conversion.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdDuration.html" class="m-doc">StdDuration</a> <a href="group__std__time.html#ga6100b5cbf6466261ba8dcdccd2f6d691" class="m-doc">std_duration_abs</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> duration)</span>
+            </dt>
+            <dd>Takes the absolute value of the given `StdDuration.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdDuration.html" class="m-doc">StdDuration</a> <a href="group__std__time.html#ga9c03eb1fd4a372b8d4d040a9307524b9" class="m-doc">std_duration_add</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> lhs,
+              <a href="structStdDuration.html" class="m-doc">StdDuration</a> rhs)</span>
+            </dt>
+            <dd>Casts <code>rhs</code> to the same period as <code>lhs</code>, then adds the two.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdDuration.html" class="m-doc">StdDuration</a> <a href="group__std__time.html#gad74b87e693cf445a78aa0906b3368445" class="m-doc">std_duration_add_scalar</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> lhs,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> rhs)</span>
+            </dt>
+            <dd>Adds <code>rhs</code> to <code>lhs</code> as if it were a <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> of the same period.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdDuration.html" class="m-doc">StdDuration</a> <a href="group__std__time.html#ga98aa20716e55c6c76a946aa816877f48" class="m-doc">std_duration_subtract</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> lhs,
+              <a href="structStdDuration.html" class="m-doc">StdDuration</a> rhs)</span>
+            </dt>
+            <dd>Casts <code>rhs</code> to the same period as <code>lhs</code>, then subtracts <code>rhs</code> from <code>lhs</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdDuration.html" class="m-doc">StdDuration</a> <a href="group__std__time.html#ga5b899dbe516130f8e5f3e6f91c45f29b" class="m-doc">std_duration_subtract_scalar</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> lhs,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> rhs)</span>
+            </dt>
+            <dd>Subtracts <code>rhs</code> from <code>lhs</code> as if it were a <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> of the same period.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdDuration.html" class="m-doc">StdDuration</a> <a href="group__std__time.html#gad1a115e1799e845bc5773f4dc7d9f416" class="m-doc">std_duration_multiply</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> lhs,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> rhs)</span>
+            </dt>
+            <dd>Multiplies <code>lhs</code> by the scalar value <code>rhs</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdDuration.html" class="m-doc">StdDuration</a> <a href="group__std__time.html#ga4da6d4b731311cec504a8b529fd9f1b5" class="m-doc">std_duration_divide</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> lhs,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> rhs)</span>
+            </dt>
+            <dd>Divides <code>lhs</code> by the scalar value <code>rhs</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__std__time.html#gafc64d7c2484e5157033f7b8d562be66d" class="m-doc">std_duration_equal</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> lhs,
+              <a href="structStdDuration.html" class="m-doc">StdDuration</a> rhs)</span>
+            </dt>
+            <dd>Determines if the two <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code>s are equal.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__std__time.html#ga2826b1ca5f58425b289872d002a5b7b4" class="m-doc">std_duration_not_equal</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> lhs,
+              <a href="structStdDuration.html" class="m-doc">StdDuration</a> rhs)</span>
+            </dt>
+            <dd>Determines if the two <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code>s are <strong>NOT</strong> equal.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__std__time.html#gac1d524097d622258ede8141b829ecaf9" class="m-doc">std_duration_less_than</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> lhs,
+              <a href="structStdDuration.html" class="m-doc">StdDuration</a> rhs)</span>
+            </dt>
+            <dd>Determines if <code>lhs</code> is strictly less than <code>rhs</code>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__std__time.html#ga29d78abe350ee4ed2ddcdc41cfc69963" class="m-doc">std_duration_less_than_or_equal</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> lhs,
+              <a href="structStdDuration.html" class="m-doc">StdDuration</a> rhs)</span>
+            </dt>
+            <dd>Determines if <code>lhs</code> is less than or equal to <code>rhs</code>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__std__time.html#ga91f80af6654cc2c300c6d74a186682e7" class="m-doc">std_duration_greater_than</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> lhs,
+              <a href="structStdDuration.html" class="m-doc">StdDuration</a> rhs)</span>
+            </dt>
+            <dd>Determines if <code>lhs</code> is strictly greater than <code>rhs</code>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__std__time.html#ga97ad4a4d0b69a87f1b244ae1e3015908" class="m-doc">std_duration_greater_than_or_equal</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> lhs,
+              <a href="structStdDuration.html" class="m-doc">StdDuration</a> rhs)</span>
+            </dt>
+            <dd>Determines if <code>lhs</code> is greater than or equal to <code>rhs</code>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="StdBasicTypes_8h.html#a122b0205d13a40785ab6b4fd16d37827" class="m-doc">StdCompare</a> <a href="group__std__time.html#ga7de281d39fab0d6c1f17b90c8d4f8061" class="m-doc">std_duration_compare</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> lhs,
+              <a href="structStdDuration.html" class="m-doc">StdDuration</a> rhs)</span>
+            </dt>
+            <dd>Performs a three-way comparison of <code>lhs</code> to <code>rhs</code>, determining how <code>lhs</code> mathematically relates to <code>rhs</code>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="group__std__time.html#gacf090d3b1e8d49514ae4505713da2b56" class="m-doc">std_duration_format</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>Implements the allocator-unaware part of the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="group__std__time.html#ga6e30d213e6619415dbd6caf02d1aea0a" class="m-doc">std_duration_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
+            </dt>
+            <dd>Implements the allocator-aware part of the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> <a href="group__std__time.html#gaec47627e38d3e741b3281989fa9de7df" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="structStdDuration.html" class="m-doc">StdDuration</a>,
+              <a href="group__std__time.html#gacf090d3b1e8d49514ae4505713da2b56" class="m-doc">std_<wbr />duration_<wbr />format</a>,
+              <a href="group__std__time.html#ga6e30d213e6619415dbd6caf02d1aea0a" class="m-doc">std_<wbr />duration_<wbr />format_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>Implements the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code></dd>
+          </dl>
+        </section>
+        <section id="var-members">
+          <h2><a href="#var-members">Variables</a></h2>
+          <dl class="m-doc">
+            <dt>
+              static const <a href="structStdRatio.html" class="m-doc">StdRatio</a> <a href="group__std__time.html#gadb892b727fb085159937d6e413d77e9a" class="m-doc">std_duration_valid_periods</a>
+            </dt>
+            <dd>Valid periods for <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> and other time-related facilities.</dd>
+          </dl>
+        </section>
         <section id="define-members">
           <h2><a href="#define-members">Defines</a></h2>
           <dl class="m-doc">
@@ -64,6 +207,86 @@
               <span class="m-doc-wrap-bumper">#define <a href="#a3c70869499193ed69440f25a4843dbfb" class="m-doc-self">STD_DURATION</a></span>
             </dt>
             <dd>Declarations related to <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__time.html#ga996d5530a806969968ca32d700a02af1" class="m-doc">std_nanoseconds_period</a></span>
+            </dt>
+            <dd>Period representing nanoseconds for <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> and other time-related facilities.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__time.html#ga58dcb7204b27a4d2158f74bd71a20863" class="m-doc">std_microseconds_period</a></span>
+            </dt>
+            <dd>Period representing microseconds for <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> and other time-related facilities.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__time.html#ga73b2f106246a0ae2df16f6d71897a70d" class="m-doc">std_milliseconds_period</a></span>
+            </dt>
+            <dd>Period representing milliseconds for <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> and other time-related facilities.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__time.html#ga616f4ac4bfc466715ef3868ed3c0453f" class="m-doc">std_seconds_period</a></span>
+            </dt>
+            <dd>Period representing seconds for <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> and other time-related facilities.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__time.html#gaff7b2830af58ee59409a12740dc52e33" class="m-doc">std_minutes_period</a></span>
+            </dt>
+            <dd>Period representing minutes for <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> and other time-related facilities.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__time.html#ga43dd05de535ff77b68c600938200d5ac" class="m-doc">std_hours_period</a></span>
+            </dt>
+            <dd>Period representing hours for <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> and other time-related facilities.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__time.html#gad88fd4b2a442ec731c9bb14ba0509a58" class="m-doc">std_days_period</a></span>
+            </dt>
+            <dd>Period representing days for <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> and other time-related facilities.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__time.html#gadcf3e15676448ea422427caa45df126c" class="m-doc">std_weeks_period</a></span>
+            </dt>
+            <dd>Period representing weeks for <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> and other time-related facilities.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__time.html#ga346bfb90e8fa8e5681e3a03882ddcc80" class="m-doc">std_months_period</a></span>
+            </dt>
+            <dd>Period representing months for <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> and other time-related facilities.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__time.html#ga2042e010fde980822a23124c8282c197" class="m-doc">std_years_period</a></span>
+            </dt>
+            <dd>Period representing years for <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> and other time-related facilities.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__time.html#ga9bd088851cc30574f1302d6070c93ba4" class="m-doc">std_nanoseconds</a>(</span><span class="m-doc-wrap">val)</span>
+            </dt>
+            <dd>Returns a <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> representing a number of nanoseconds.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__time.html#gaab0696b2a0f0fc05169e991ea5f9327f" class="m-doc">std_microseconds</a>(</span><span class="m-doc-wrap">val)</span>
+            </dt>
+            <dd>Returns a <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> representing a number of microseconds.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__time.html#gaed35789ced44091ea9dd63f72f4c7b8e" class="m-doc">std_milliseconds</a>(</span><span class="m-doc-wrap">val)</span>
+            </dt>
+            <dd>Returns a <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> representing a number of milliseconds.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__time.html#ga81d84d3f2d308b78caf5e672308fd8d8" class="m-doc">std_seconds</a>(</span><span class="m-doc-wrap">val)</span>
+            </dt>
+            <dd>Returns a <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> representing a number of seconds.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__time.html#ga6794303f5ebfb3753e17f4ba30816479" class="m-doc">std_minutes</a>(</span><span class="m-doc-wrap">val)</span>
+            </dt>
+            <dd>Returns a <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> representing a number of minutes.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__time.html#ga0fb548b92f6b48b3e2b64a3ea1199d55" class="m-doc">std_hours</a>(</span><span class="m-doc-wrap">val)</span>
+            </dt>
+            <dd>Returns a <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> representing a number of hours.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__time.html#ga354ad2a21a30770fc29f9b1e574e6251" class="m-doc">std_days</a>(</span><span class="m-doc-wrap">val)</span>
+            </dt>
+            <dd>Returns a <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> representing a number of days.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__time.html#gae636b79020ecc805d2edc542c1434463" class="m-doc">std_weeks</a>(</span><span class="m-doc-wrap">val)</span>
+            </dt>
+            <dd>Returns a <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> representing a number of weeks.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__time.html#ga7f4802330d9abcdf794f69941cd444eb" class="m-doc">std_months</a>(</span><span class="m-doc-wrap">val)</span>
+            </dt>
+            <dd>Returns a <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> representing a number of months.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__time.html#gaa17cf720c3cf7829b9be831001a088db" class="m-doc">std_years</a>(</span><span class="m-doc-wrap">val)</span>
+            </dt>
+            <dd>Returns a <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> representing a number of years.</dd>
           </dl>
         </section>
       </div>

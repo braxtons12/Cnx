@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>StdRatio struct | C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <title>StdDuration struct | C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -42,9 +42,9 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          StdRatio <span class="m-thin">struct</span>
+          StdDuration <span class="m-thin">struct</span>
         </h1>
-        <p><code><a href="structStdRatio.html" class="m-doc">StdRatio</a></code> is a representation of an exact fraction</p>
+        <p><code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> represents a duration in a particular unit of time A <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> occurs in a particular unit of time (e.g. seconds, nanoseconds, or years), and can represent a positive or negative amount of that unit</p>
         <div class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -59,14 +59,14 @@
         <section id="pub-attribs">
           <h2><a href="#pub-attribs">Public variables</a></h2>
           <dl class="m-doc">
-            <dt id="a435470a4431171078292b9e244ebf69b">
-              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> <a href="#a435470a4431171078292b9e244ebf69b" class="m-doc-self">num</a>
+            <dt>
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> <a href="group__std__time.html#gafcd37d446c66fbcde7574ed16c7e1964" class="m-doc">count</a>
             </dt>
-            <dd>The numerator of the ratio.</dd>
-            <dt id="a546d86818a881e60f245ab5f24f03ca4">
-              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> <a href="#a546d86818a881e60f245ab5f24f03ca4" class="m-doc-self">den</a>
+            <dd>The length of the duration.</dd>
+            <dt>
+              <a href="structStdRatio.html" class="m-doc">StdRatio</a> <a href="group__std__time.html#gaf59a44027d9cede32ddca6a1e81cb752" class="m-doc">period</a>
             </dt>
-            <dd>The denominator of the ratio.</dd>
+            <dd>The unit of the duration as a <code><a href="structStdRatio.html" class="m-doc">StdRatio</a></code> For example, for a <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> in milliseconds, the <code>period</code> would be <code>std_milli</code> or <code>std_milliseconds_period</code></dd>
           </dl>
         </section>
       </div>
