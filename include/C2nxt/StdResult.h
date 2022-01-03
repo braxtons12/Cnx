@@ -2,10 +2,10 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a struct template for representing the value of a fallible operation
 /// @version 0.1
-/// @date 2021-08-17
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,9 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#include "StdAssert.h"
-#include "StdBasicTypes.h"
-#include "StdError.h"
+#include <C2nxt/StdAssert.h>
+#include <C2nxt/StdBasicTypes.h>
+#include <C2nxt/StdError.h>
 
 /// @ingroup error_handling
 /// @{
@@ -36,7 +36,7 @@
 /// enables a simple, type-safe way of returning, communicating, and handling the result of an
 /// operation that can fail, without resorting to heap-allocation and pointers or out-parameters.
 ///
-/// `StdResult(T)` allows for abitrary user-defined errors through `StdError`, and shares some
+/// `StdResult(T)` allows for arbitrary user-defined errors through `StdError`, and shares some
 /// functionality, such as `if_let(var, self)`, `with `StdOption(T)` (see @ref monadics).
 ///
 /// Example:
@@ -59,7 +59,7 @@
 /// }
 ///
 /// static const maybe_unused StdErrorCategory example_error_category
-/// 	= {.m_messag_function = example_error_message_function};
+/// 	= {.m_message_function = example_error_message_function};
 ///
 /// StdResult(u32) operation_that_can_fail(u32 important, u32 right) {
 ///		if(important != IMPORTANT_VALUE) {
@@ -94,7 +94,7 @@
 	/// @brief Declarations and definitions related to `StdResult(T)`
 	#define STD_RESULT
 
-	/// @brief Macro Alias used to refer to an instatiation of `StdResult(T)` for type `T`
+	/// @brief Macro Alias used to refer to an instantiation of `StdResult(T)` for type `T`
 	///
 	/// Used to create and refer to a typedef for an instantiation of `StdResult(T)` holding type
 	/// `T`
@@ -126,7 +126,7 @@
 			T(*const unwrap_or_else)                                                             \
 			(StdResult(T)* restrict self, T(*default_generator)(void));                          \
 			T(*const expect)                                                                     \
-			(StdResult(T)* restrict self, const_cstring restrict panic_message);                 \
+			(StdResult(T)* restrict self, restrict const_cstring panic_message);                 \
 			StdError (*const unwrap_err)(StdResult(T)* restrict self);                           \
 			bool (*const as_bool)(const StdResult(T)* restrict self);                            \
 		}                                                                                        \
@@ -196,7 +196,7 @@
 		/** @note Panics if `self` does not contain a value, **/                                 \
 		/** with the custom panic message `panic_message` **/                                    \
 		T StdResultIdentifier(T, expect)(StdResult(T)* restrict self,                            \
-										 const_cstring restrict panic_mesage);                   \
+										 restrict const_cstring panic_mesage);                   \
 		/** @brief Returns the error stored in this `StdResult` **/                              \
 		/** @param self - The `StdResult` to get the stored value from **/                       \
 		/** @return the contained value **/                                                      \
@@ -436,7 +436,7 @@
 		}                                                                                      \
                                                                                                \
 		T StdResultIdentifier(T, expect)(StdResult(T)* restrict self,                          \
-										 const_cstring restrict panic_message) {               \
+										 restrict const_cstring panic_message) {               \
 			if(!std_result_is_ok(*self)) {                                                     \
 				std_panic(panic_message);                                                      \
 			}                                                                                  \
