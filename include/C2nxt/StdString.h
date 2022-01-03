@@ -2,10 +2,10 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides string and stringview types comparable to C++ for C2nxt
 /// @version 0.1
-/// @date 2021-07-20
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
 /// @{
 /// @defgroup std_string StdString
 /// `StdString` is a bounds-safe string type that manages its own length and capacity, is fully
-/// `cstring` (aka `char*`) compatible, provides C2nxt compatible random-access iteartors over its
+/// `cstring` (aka `char*`) compatible, provides C2nxt compatible random-access iterators over its
 /// contents, and is allocator aware. It aims to provide more modern string-handling capabilities to
 /// C, with an API and functionality comparable to C++'s `std::string`. `StdString` is always
 /// null-terminated, so it's completely compatible with C's existing string functions, so long as
@@ -78,19 +78,18 @@
 /// @ingroup views
 /// @{
 /// @defgroup std_stringview StdStringView
-/// A `StdStringView` is a "view" into a `StdString`. It allows you to laziy inspect the contents of
-/// its associated string, but not modify them. It is effectively a fat reference to the contents of
-/// its associated string.
+/// A `StdStringView` is a "view" into a `StdString`. It allows you to lazily inspect the contents
+/// of its associated string, but not modify them. It is effectively a fat reference to the contents
+/// of its associated string.
 /// @}
 
 #pragma once
 
+#include <C2nxt/StdAllocators.h>
+#include <C2nxt/StdBasicTypes.h>
+#include <C2nxt/StdIterator.h>
+#include <C2nxt/StdOption.h>
 #include <wchar.h>
-
-#include "StdAllocators.h"
-#include "StdBasicTypes.h"
-#include "StdIterator.h"
-#include "StdOption.h"
 
 #ifndef STD_STRING
 	/// @brief STD_STRING
@@ -226,13 +225,13 @@ DeclStdOption(Ref(StdStringView));
 /// @brief Declares `StdOption(T)` for `ConstRef(StdStringView)`
 DeclStdOption(ConstRef(StdStringView));
 
-/// @brief Declars iterator types for `Ref(StdString)`
+/// @brief Declares iterator types for `Ref(StdString)`
 DeclStdIterators(Ref(StdString));
-/// @brief Declars iterator types for `ConstRef(StdString)`
+/// @brief Declares iterator types for `ConstRef(StdString)`
 DeclStdIterators(ConstRef(StdString));
-/// @brief Declars iterator types for `Ref(StdStringView)`
+/// @brief Declares iterator types for `Ref(StdStringView)`
 DeclStdIterators(Ref(StdStringView));
-/// @brief Declars iterator types for `ConstRef(StdStringView)`
+/// @brief Declares iterator types for `ConstRef(StdStringView)`
 DeclStdIterators(ConstRef(StdStringView));
 
 /// @brief Creates a new, empty `StdString`
@@ -269,7 +268,7 @@ StdString std_string_new_with_capacity_with_allocator(usize capacity, StdAllocat
 ///
 /// @return a `StdString`
 /// @ingroup std_string
-StdString std_string_from_cstring(const_cstring restrict string, usize length);
+StdString std_string_from_cstring(restrict const_cstring string, usize length);
 /// @brief Creates a new `StdString` from the given `cstring`
 ///
 /// @param string - The `cstring` to create the `StdString` from
@@ -278,7 +277,7 @@ StdString std_string_from_cstring(const_cstring restrict string, usize length);
 ///
 /// @return a `StdString`
 /// @ingroup std_string
-StdString std_string_from_cstring_with_allocator(const_cstring restrict string,
+StdString std_string_from_cstring_with_allocator(restrict const_cstring string,
 												 usize length,
 												 StdAllocator allocator);
 /// @brief Creates a new `StdString` from the given `wcstring`
@@ -288,7 +287,7 @@ StdString std_string_from_cstring_with_allocator(const_cstring restrict string,
 ///
 /// @return a `StdString`
 /// @ingroup std_string
-StdString std_string_from_wcstring(const_wcstring restrict string, usize length);
+StdString std_string_from_wcstring(restrict const_wcstring string, usize length);
 /// @brief Creates a new `StdString` from the given `wcstring`
 ///
 /// @param string - The `wcstring` to create the `StdString` from
@@ -297,7 +296,7 @@ StdString std_string_from_wcstring(const_wcstring restrict string, usize length)
 ///
 /// @return a `StdString`
 /// @ingroup std_string
-StdString std_string_from_wcstring_with_allocator(const_wcstring restrict string,
+StdString std_string_from_wcstring_with_allocator(restrict const_wcstring string,
 												  usize length,
 												  StdAllocator allocator);
 /// @brief Creates a new `StdString` from the given `StdStringView`
@@ -317,7 +316,7 @@ StdString std_string_from_stringview(const StdStringView* restrict view);
 /// @ingroup std_string
 StdString std_string_from_stringview_with_allocator(const StdStringView* restrict view,
 													StdAllocator allocator);
-// clang-format off
+	// clang-format off
 /// @brief Creates a new `StdString` from the given string-like type
 ///
 /// @param string - The string-like thing to create the `StdString` from. Either a
@@ -409,7 +408,7 @@ const_cstring std_string_into_cstring(const StdString* restrict self);
 ///
 /// @param self - The string to get the `wcstring` converted representation of
 ///
-/// @return the `wcstring` converted representatino
+/// @return the `wcstring` converted representation
 /// @ingroup std_string
 const_wcstring std_string_into_wcstring(const StdString* restrict self);
 /// @brief Returns the `wcstring` converted representation of this `StdString`, allocated with the
@@ -624,7 +623,7 @@ bool std_string_equal(const StdString* restrict self, const StdString* restrict 
 /// @note if the lengths of the strings are different, they are __always__ unequal
 /// @ingroup std_string
 bool std_string_equal_cstring(const StdString* restrict self,
-							  const_cstring restrict to_compare,
+							  restrict const_cstring to_compare,
 							  usize length);
 /// @brief Determines if the given strings are equal
 ///
@@ -657,9 +656,9 @@ bool std_string_contains(const StdString* restrict self, const StdString* restri
 /// this always returns false
 /// @ingroup std_string
 bool std_string_contains_cstring(const StdString* restrict self,
-								 const_cstring restrict substring,
+								 restrict const_cstring substring,
 								 usize substring_length);
-/// @brief Determines if the string containts the given substring
+/// @brief Determines if the string contains the given substring
 ///
 /// @param self - The `StdString` to search for `substring` in
 /// @param substring - The substring to search for
@@ -691,11 +690,11 @@ bool std_string_starts_with(const StdString* restrict self, const StdString* res
 /// this always returns false
 /// @ingroup std_string
 bool std_string_starts_with_cstring(const StdString* restrict self,
-									const_cstring restrict substring,
+									restrict const_cstring substring,
 									usize substring_length);
 /// @brief Determines if the string begins with the given substring
 ///
-/// @param self - The `StdString` to searcch for `substring` in
+/// @param self - The `StdString` to search for `substring` in
 /// @param substring - The substring to search for
 ///
 /// @return `true` if this begins with `substring`, `false` otherwise
@@ -725,7 +724,7 @@ bool std_string_ends_with(const StdString* restrict self, const StdString* restr
 /// this always returns false
 /// @ingroup std_string
 bool std_string_ends_with_cstring(const StdString* restrict self,
-								  const_cstring restrict substring,
+								  restrict const_cstring substring,
 								  usize substring_length);
 /// @brief Determines if the string ends with the given substring
 ///
@@ -758,7 +757,7 @@ StdOption(usize)
 /// @return The index of the first occurrence of `substring`, or `std_option_none`
 /// @ingroup std_string
 StdOption(usize) std_string_find_first_cstring(const StdString* restrict self,
-											   const_cstring restrict substring,
+											   restrict const_cstring substring,
 											   usize substring_length);
 /// @brief Returns the index of the first occurrence of the given substring, or `std_option_none` if
 /// the substring does not occur
@@ -790,7 +789,7 @@ StdOption(usize)
 /// @return The index of the last occurrence of `substring`, or `std_option_none`
 /// @ingroup std_string
 StdOption(usize) std_string_find_last_cstring(const StdString* restrict self,
-											  const_cstring restrict substring,
+											  restrict const_cstring substring,
 											  usize substring_length);
 /// @brief Returns the index of the last occurrence of the given substring, or `std_option_none` if
 /// the substring does not occur
@@ -806,7 +805,7 @@ StdOption(usize) std_string_find_last_stringview(const StdString* restrict self,
 ///
 /// @param self - The `StdString` to get the substring from
 /// @param index - The index the substring should begin at
-/// @param length - The length of the subtring to get
+/// @param length - The length of the substring to get
 ///
 /// @return the substring beginning at index and ending at length, exclusive
 /// (the bounds are [index, length))
@@ -821,7 +820,7 @@ StdString std_string_substring(const StdString* restrict self, usize index, usiz
 ///
 /// @param self - The `StdString` to get the substring from
 /// @param index - The index the substring should begin at
-/// @param length - The length of the subtring to get
+/// @param length - The length of the substring to get
 /// @param allocator - The allocator to use for memory allocation
 ///
 /// @return the substring beginning at index and ending at length, exclusive
@@ -865,7 +864,7 @@ StdString std_string_concatenate(const StdString* restrict left, const StdString
 /// @return  The concatenated string
 /// @ingroup std_string
 StdString std_string_concatenate_cstring(const StdString* restrict left,
-										 const_cstring restrict right,
+										 restrict const_cstring right,
 										 usize right_length);
 /// @brief Concatenates the two strings into a new `StdString`, using the default allocator (malloc)
 ///
@@ -876,9 +875,9 @@ StdString std_string_concatenate_cstring(const StdString* restrict left,
 ///
 /// @return The concatenated string as a `StdString`
 /// @ingroup std_string
-StdString std_string_concatenate_cstrings(const_cstring restrict left,
+StdString std_string_concatenate_cstrings(restrict const_cstring left,
 										  usize left_length,
-										  const_cstring restrict right,
+										  restrict const_cstring right,
 										  usize right_length);
 /// @brief Concatenates the two strings into a new one, using the allocator associated with
 /// `left`, if necessary
@@ -906,8 +905,9 @@ StdString std_string_concatenate_stringviews(const StdStringView* restrict left,
 /// @ingroup std_string
 void invalid_types_passed_to_std_string_concatenate(void);
 
-	// clang-format off
-/// @brief Concatenates the two `cstring`s, `left` and `right` and returns the result as a `StdString`
+// clang-format off
+/// @brief Concatenates the two `cstring`s, `left` and `right` and returns the result as a
+/// `StdString`
 ///
 /// @param left - The left-side string of the concatenation
 /// @param left_size - The size of `left_size`
@@ -937,7 +937,8 @@ void invalid_types_passed_to_std_string_concatenate(void);
 									sizeof(right)),									/** NOLINT **/ \
 	default 					: invalid_types_passed_to_std_string_concatenate())
 
-/// @brief Concatenates the two `StdStringView`s, `left` and `right` and returns the result as a `StdString`
+/// @brief Concatenates the two `StdStringView`s, `left` and `right` and returns the result as a
+/// `StdString`
 ///
 /// @param left - The left-side string of the concatenation
 /// @param right - The right-side string of the concatenation
@@ -1039,7 +1040,7 @@ StdString std_string_concatenate_with_allocator(const StdString* restrict left,
 /// @return  The concatenated string
 /// @ingroup std_string
 StdString std_string_concatenate_cstring_with_allocator(const StdString* restrict left,
-														const_cstring restrict right,
+														restrict const_cstring right,
 														usize right_length,
 														StdAllocator allocator);
 /// @brief Concatenates the two strings into a new one, using the given allocator
@@ -1063,9 +1064,9 @@ StdString std_string_concatenate_stringview_with_allocator(const StdString* rest
 ///
 /// @return  The concatenated string
 /// @ingroup std_string
-StdString std_string_concatenate_cstrings_with_allocator(const_cstring restrict left,
+StdString std_string_concatenate_cstrings_with_allocator(restrict const_cstring left,
 														 usize left_length,
-														 const_cstring restrict right,
+														 restrict const_cstring right,
 														 usize right_length,
 														 StdAllocator allocator);
 /// @brief Concatenates the two strings into a new one, using the given allocator
@@ -1080,8 +1081,9 @@ StdString std_string_concatenate_stringviews_with_allocator(const StdStringView*
 															const StdStringView* restrict right,
 															StdAllocator allocator);
 
-	// clang-format off
-/// @brief Concatenates the two `cstring`s, `left` and `right` and returns the result as a `StdString`
+// clang-format off
+/// @brief Concatenates the two `cstring`s, `left` and `right` and returns the result as a
+/// `StdString`
 ///
 /// @param left - The left-side string of the concatenation
 /// @param left_size - The size of `left_size`
@@ -1117,7 +1119,8 @@ StdString std_string_concatenate_stringviews_with_allocator(const StdStringView*
 										allocator),												   \
 		default 					: invalid_types_passed_to_std_string_concatenate())
 
-/// @brief Concatenates the two `StdStringView`s, `left` and `right` and returns the result as a `StdString`
+/// @brief Concatenates the two `StdStringView`s, `left` and `right` and returns the result as a
+/// `StdString`
 ///
 /// @param left - The left-side string of the concatenation
 /// @param right - The right-side string of the concatenation
@@ -1244,7 +1247,7 @@ void std_string_insert(StdString* restrict self, const StdString* restrict to_in
 /// @param index - The index at which to insert the string
 /// @ingroup std_string
 void std_string_insert_cstring(StdString* restrict self,
-							   const_cstring restrict to_insert,
+							   restrict const_cstring to_insert,
 							   usize to_insert_length,
 							   usize index);
 /// @brief Inserts the given string `to_insert` into `self` at the given `index`
@@ -1330,7 +1333,7 @@ void std_string_append(StdString* restrict self, const StdString* restrict to_ap
 /// @param to_append_length - The length of the string to append
 /// @ingroup std_string
 void std_string_append_cstring(StdString* restrict self,
-							   const_cstring restrict to_append,
+							   restrict const_cstring to_append,
 							   usize to_append_length);
 /// @brief Appends the given string to the end of the string
 ///
@@ -1352,7 +1355,7 @@ void std_string_prepend(StdString* restrict self, const StdString* restrict to_p
 /// @param to_prepend_length - The length of the string to prepend
 /// @ingroup std_string
 void std_string_prepend_cstring(StdString* restrict self,
-								const_cstring restrict to_prepend,
+								restrict const_cstring to_prepend,
 								usize to_prepend_length);
 /// @brief Prepends the given string to the beginning of the string
 ///
@@ -1378,7 +1381,7 @@ void std_string_replace(StdString* restrict self,
 /// @param index - The index to start replacement
 /// @ingroup std_string
 void std_string_replace_cstring(StdString* restrict self,
-								const_cstring restrict to_replace_with,
+								restrict const_cstring to_replace_with,
 								usize to_replace_with_length,
 								usize index);
 /// @brief Replaces the substring beginning at `index` with the given one
@@ -1492,7 +1495,7 @@ StdStringView std_stringview_new(const StdString* restrict string);
 ///
 /// @return a `StdStringView` into the given string
 /// @ingroup std_stringview
-StdStringView std_stringview_from(const_cstring restrict string, usize index, usize length);
+StdStringView std_stringview_from(restrict const_cstring string, usize index, usize length);
 /// @brief Returns the character in the view located at the given index
 ///
 /// @param self - The `StdStringView` to retrieve a character from
@@ -1568,14 +1571,14 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 ///
 /// @param self - The `StdString` to get the `cstring` view of
 ///
-/// @return The `cstring` represenation of `self`
+/// @return The `cstring` representation of `self`
 /// @ingroup std_string
 	#define std_string_into_cstring(self) std_string_into_cstring(&(self))
 /// @brief Returns the `wcstring` representation of the given `StdString`
 ///
 /// @param self - The `StdString` to get the `wcstring` representation of
 ///
-/// @return The `wcstring` represenation of `self`
+/// @return The `wcstring` representation of `self`
 /// @ingroup std_string
 	#define std_string_into_wcstring(self) std_string_into_wcstring(&(self))
 /// @brief Returns the `wcstring` representation of the given `StdString`
@@ -1583,7 +1586,7 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 /// @param self - The `StdString` to get the `wcstring` representation of
 /// @param allocator - The `StdAllocator` to allocator memory for the `wcstring` with
 ///
-/// @return The `wcstring` represenation of `self`
+/// @return The `wcstring` representation of `self`
 /// @ingroup std_string
 	#define std_string_into_wcstring_with_allocator(self, allocator) \
 		std_string_into_wcstring_with_allocator(&(self), (allocator))
@@ -1616,7 +1619,7 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 /// @param self - The `StdString` to cleanup
 /// @ingroup std_string
 	#define std_string_free(self) std_string_free(&(self))
-// clang-format off
+	// clang-format off
 /// @brief Returns a reference to the character at the given index.
 ///
 /// @param self - The `StdString` to retrieve the character from
@@ -1627,8 +1630,8 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 #define std_string_at(self, index) *(_Generic((&(self)), 				\
 	StdString* 			: std_string_at_mut,  					\
 	const StdString* 	: std_string_at_const)(&(self), (index)))
-	// clang-format on
-	// clang-format off
+// clang-format on
+// clang-format off
 /// @brief Returns a reference to the character at the beginning of the string
 ///
 /// @param self - The `StdString` to retrieve the first character from
@@ -1638,8 +1641,8 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 #define std_string_front(self) *(_Generic((&(self)), 			\
 	StdString*  		: std_string_front_mut, 			\
 	const StdString* 	: std_string_front_const)(&(self)))
-	// clang-format on
-	// clang-format off
+// clang-format on
+// clang-format off
 /// @brief Returns a reference to the character at the end of the string
 ///
 /// @param self - The `StdString` to retrieve the last character from
@@ -1740,7 +1743,7 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 	/// @ingroup std_string
 	#define std_string_last_stringview(self, num_chars) \
 		std_string_last_stringview(&(self), (num_chars))
-	// clang-format off
+// clang-format off
 /// @brief Determines if this string and the given one are equal
 ///
 /// @param self - The `StdString` to be compared with
@@ -1769,8 +1772,8 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 										static_cast(StdString*)(to_compare)),   				   \
 	const StdString* 			: 	std_string_equal(&(self), 							   \
 										static_cast(const StdString*)(to_compare)))
-	// clang-format on
-	// clang-format off
+// clang-format on
+// clang-format off
 /// @brief Determines whether the string contains the given substring
 ///
 /// @param self - The `StdString` to search for `substring` in
@@ -1799,8 +1802,8 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 										static_cast(StdString*)(substring)), 					   \
 	const StdString* 				: std_string_contains(&(self), 						   \
 										static_cast(const StdString*)(substring)))
-// clang-format on
-// clang-format off
+	// clang-format on
+	// clang-format off
 /// @brief Determines whether the string starts with the given substring
 ///
 /// @param self - The `StdString` to search for `substring` in
@@ -1829,8 +1832,8 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 										static_cast(StdString*)(substring)), 					   \
 	const StdString* 				: std_string_starts_with(&(self), 					   \
 										static_cast(const StdString*)(substring)))
-// clang-format on
-// clang-format off
+	// clang-format on
+	// clang-format off
 /// @brief Determines whether the string ends with the given substring
 ///
 /// @param self - The `StdString` to search for `substring` in
@@ -1859,15 +1862,15 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 										static_cast(StdString*)(substring)), 					   \
 	const StdString* 				: std_string_ends_with(&(self), 						   \
 										static_cast(const StdString*)(substring)))
-	// clang-format on
-	// clang-format off
+// clang-format on
+// clang-format off
 /// @brief Finds the first occurrence of the given substring in `self`, if any
 ///
 /// @param self - The `StdString` to search for `substring` in
 /// @param substring - The substring to search for
 ///
-/// @return `std_option_some` of the index into `self` at the beginning of the substring's occurence
-/// in `self`, if `self` contains the substring, otherwise `std_option_none`
+/// @return `std_option_some` of the index into `self` at the beginning of the substring's
+/// occurrence in `self`, if `self` contains the substring, otherwise `std_option_none`
 /// @ingroup std_string
 #define std_string_find_first(self, substring) _Generic((substring), 							   \
 	const_cstring 					: std_string_find_first_cstring(&(self), 				   \
@@ -1890,15 +1893,15 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 										static_cast(StdString*)(substring)), 					   \
 	const StdString* 				: std_string_find_first(&(self), 						   \
 										static_cast(const StdString*)(substring)))
-	// clang-format on
-	// clang-format off
+// clang-format on
+// clang-format off
 /// @brief Finds the last occurrence of the given substring in `self`, if any
 ///
 /// @param self - The `StdString` to search for `substring` in
 /// @param substring - The substring to search for
 ///
-/// @return `std_option_some` of the index into `self` at the beginning of the substring's occurence
-/// in `self`, if `self` contains the substring, otherwise `std_option_none`
+/// @return `std_option_some` of the index into `self` at the beginning of the substring's
+/// occurrence in `self`, if `self` contains the substring, otherwise `std_option_none`
 /// @ingroup std_string
 #define std_string_find_last(self, substring) _Generic((substring), 							   \
 	const_cstring 					: std_string_find_last_cstring(&(self), 				   \
@@ -1971,7 +1974,7 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 	/// @param self - The `StdString` to shrink
 	/// @ingroup std_string
 	#define std_string_shrink_to_fit(self) std_string_shrink_to_fit(&(self))
-	// clang-format off
+// clang-format off
 /// @brief Inserts `to_insert` into `self` at the given index
 ///
 /// @param self - The `StdString` to insert into
@@ -2034,7 +2037,7 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 	/// @param character - The character to append to `self`
 	/// @ingroup std_string
 	#define std_string_push_back(self, character) std_string_push_back(&(self), character)
-	/// @brief Pushes the given character onto the beginning of the givne `StdString`
+	/// @brief Pushes the given character onto the beginning of the given `StdString`
 	///
 	/// @param self - The `StdString` to prepend a character to
 	/// @param character - The character to prepend to `self`
@@ -2054,7 +2057,7 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 	/// @return `Some(char)` if `std_string_size(self) > 0`, else `None(char)`
 	/// @ingroup std_string
 	#define std_string_pop_front(self) std_string_pop_front(&(self))
-	// clang-format off
+// clang-format off
 /// @brief Appends `to_append` to the end of `self`
 ///
 /// @param self - The `StdString` to append to
@@ -2081,8 +2084,8 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 										static_cast(StdString*)(to_append)), 			   		   \
 	const StdString* 				: std_string_append(&(self), 							   \
 										static_cast(const StdString*)(to_append)))
-// clang-format on
-// clang-format off
+	// clang-format on
+	// clang-format off
 /// @brief Prepends `to_prepend` to the beginning of `self`
 ///
 /// @param self - The `StdString` to prepend to
@@ -2109,8 +2112,8 @@ StdRandomAccessIteratorconst_char_ref std_stringview_rend(const StdStringView* r
 										static_cast(StdString*)(to_prepend)), 			   		   \
 	const StdString* 				: std_string_prepend(&(self), 						   \
 										static_cast(const StdString*)(to_prepend)))
-	// clang-format on
-	// clang-format off
+// clang-format on
+// clang-format off
 /// @brief Replaces the contents of `self` with `to_replace_with`, beginning at the given index
 ///
 /// @param self - The `StdString` to replace a portion of

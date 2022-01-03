@@ -2,10 +2,10 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides string and stringview types comparable to C++ for C2nxt
 /// @version 0.1
-/// @date 2021-08-15
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -25,16 +25,14 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#include "../include/C2nxt/StdString.h"
-
+#include <C2nxt/StdString.h>
 #include <memory.h>
 //#include <uchar.h>
+#include <C2nxt/StdAssert.h>
+#include <C2nxt/StdMath.h>
+#include <C2nxt/StdPlatform.h>
+#include <C2nxt/StdRange.h>
 #include <wchar.h>
-
-#include "../include/C2nxt/StdAssert.h"
-#include "../include/C2nxt/StdMath.h"
-#include "../include/C2nxt/StdPlatform.h"
-#include "../include/C2nxt/StdRange.h"
 
 ImplStdOption(StdString);
 ImplStdOption(Ref(StdString));
@@ -318,46 +316,46 @@ static const usize std_string_capacity_mode_shift
 	= std_string_is_little_endian ? (sizeof(usize) - 1) * 8U : 0U;
 static const usize std_string_len_cap_shift = std_string_is_little_endian ? 0U : 1U;
 
-always_inline inline static u8* std_string_length_remaining(const StdString* restrict self) {
+always_inline static inline u8* std_string_length_remaining(const StdString* restrict self) {
 	return static_cast(u8*)(&(self->m_short[STD_STRING_SHORT_OPTIMIZATION_CAPACITY]));
 }
 
-always_inline inline static bool std_string_is_short(const StdString* restrict self) {
+always_inline static inline bool std_string_is_short(const StdString* restrict self) {
 	return !((self->m_capacity >> std_string_capacity_mode_shift) // NOLINT
 			 & std_string_long_mask);
 }
 
-always_inline inline static void std_string_set_long(StdString* restrict self) {
+always_inline static inline void std_string_set_long(StdString* restrict self) {
 	self->m_capacity |= (std_string_long_mask << std_string_capacity_mode_shift);
 }
 
-always_inline inline static void std_string_set_short(StdString* restrict self) {
+always_inline static inline void std_string_set_short(StdString* restrict self) {
 	self->m_capacity
 		&= ~(static_cast(usize)(std_string_long_mask << std_string_capacity_mode_shift));
 }
 
-always_inline inline static usize std_string_get_capacity(const StdString* restrict self) {
+always_inline static inline usize std_string_get_capacity(const StdString* restrict self) {
 	return std_string_is_short(self) ?
-				 STD_STRING_SHORT_OPTIMIZATION_CAPACITY :
+			   STD_STRING_SHORT_OPTIMIZATION_CAPACITY :
 				 (self->m_capacity
 				& (~(std_string_long_mask << std_string_capacity_mode_shift))
 					  >> std_string_len_cap_shift);
 }
 
-always_inline inline static void
+always_inline static inline void
 std_string_set_capacity(StdString* restrict self, usize new_capacity) {
 	std_assert(!std_string_is_short(self), "Can't set capacity on a short optimized string");
 	self->m_capacity = (new_capacity << std_string_len_cap_shift)
 					   | (std_string_long_mask << std_string_capacity_mode_shift);
 }
 
-always_inline inline static usize std_string_get_short_length(const StdString* restrict self) {
+always_inline static inline usize std_string_get_short_length(const StdString* restrict self) {
 	std_assert(std_string_is_short(self), "Can't get short length of a long string");
 	return STD_STRING_SHORT_OPTIMIZATION_CAPACITY
 		   - (static_cast(usize)(*(std_string_length_remaining(self))) >> std_string_len_cap_shift);
 }
 
-always_inline inline static void std_string_set_length(StdString* restrict self, usize new_length) {
+always_inline static inline void std_string_set_length(StdString* restrict self, usize new_length) {
 	std_assert(new_length <= std_string_capacity(*self),
 			   "Can't set string length longer than capacity");
 	if(std_string_is_short(self)) {
@@ -369,12 +367,12 @@ always_inline inline static void std_string_set_length(StdString* restrict self,
 	}
 }
 
-always_inline inline static void
+always_inline static inline void
 std_string_increase_length(StdString* restrict self, usize amount_to_increase) {
 	std_string_set_length(self, std_string_length(*self) + amount_to_increase);
 }
 
-always_inline inline static void
+always_inline static inline void
 std_string_decrease_length(StdString* restrict self, usize amount_to_decrease) {
 	std_assert(amount_to_decrease <= std_string_length(*self),
 			   "Can't decrease string length by more than length");
@@ -409,11 +407,11 @@ StdString std_string_new_with_capacity_with_allocator(usize capacity, StdAllocat
 	return string;
 }
 
-StdString std_string_from_cstring(const_cstring restrict string, usize length) {
+StdString std_string_from_cstring(restrict const_cstring string, usize length) {
 	return std_string_from_cstring_with_allocator(string, length, std_allocator_new());
 }
 
-StdString std_string_from_cstring_with_allocator(const_cstring restrict string,
+StdString std_string_from_cstring_with_allocator(restrict const_cstring string,
 												 usize length,
 												 StdAllocator allocator) {
 	let_mut std_string = std_string_new_with_capacity_with_allocator(length, allocator);
@@ -422,11 +420,11 @@ StdString std_string_from_cstring_with_allocator(const_cstring restrict string,
 	return std_string;
 }
 
-StdString std_string_from_wcstring(const_wcstring restrict string, usize length) {
+StdString std_string_from_wcstring(restrict const_wcstring string, usize length) {
 	return std_string_from_wcstring_with_allocator(string, length, std_allocator_new());
 }
 
-StdString std_string_from_wcstring_with_allocator(const_wcstring restrict string,
+StdString std_string_from_wcstring_with_allocator(restrict const_wcstring string,
 												  usize length,
 												  StdAllocator allocator) {
 	let cstring_length = static_cast(usize)(snprintf(nullptr, length, "%ls", string));
@@ -621,7 +619,7 @@ bool(std_string_equal)(const StdString* restrict self, const StdString* restrict
 }
 
 bool std_string_equal_cstring(const StdString* restrict self,
-							  const_cstring restrict to_compare,
+							  restrict const_cstring to_compare,
 							  usize length) {
 	let self_length = std_string_length(*self);
 	if(self_length != length) {
@@ -636,12 +634,12 @@ bool std_string_equal_stringview(const StdString* restrict self,
 	return std_string_equal_cstring(self, to_compare->m_view, to_compare->m_length);
 }
 
-/// @brief Deterstd_mines if the substring of `self` beginning at `index` is the same as the given
+/// @brief Determines if the substring of `self` beginning at `index` is the same as the given
 /// `substring`
-static always_inline inline StdOption(usize)
-	std_string_contains_from_left(const StdString* restrict self,
-								  const StdString* restrict substring,
-								  usize index) {
+static inline always_inline
+StdOption(usize) std_string_contains_from_left(const StdString* restrict self,
+											   const StdString* restrict substring,
+											   usize index) {
 	let sublength = std_string_length(*substring);
 	std_assert(index + sublength < std_string_length(*self),
 			   "std_string_contains_from_left called with index + substring->m_length >= "
@@ -655,12 +653,12 @@ static always_inline inline StdOption(usize)
 	}
 }
 
-/// @brief Deterstd_mines if the substring of `self` ending with `index` (inclusive)is the same as
+/// @brief Determines if the substring of `self` ending with `index` (inclusive)is the same as
 /// the given `substring`
-static always_inline inline StdOption(usize)
-	std_string_contains_from_right(const StdString* restrict self,
-								   const StdString* restrict substring,
-								   usize index) {
+static inline always_inline
+StdOption(usize) std_string_contains_from_right(const StdString* restrict self,
+												const StdString* restrict substring,
+												usize index) {
 
 	let sublength = std_string_length(*substring);
 	std_assert(index >= sublength,
@@ -702,13 +700,13 @@ bool(std_string_contains)(const StdString* restrict self, const StdString* restr
 	return false;
 }
 
-/// @brief Deterstd_mines if the substring of `self` beginning at `index` is the same as the given
+/// @brief Determines if the substring of `self` beginning at `index` is the same as the given
 /// `substring`
-static always_inline inline StdOption(usize)
-	std_string_contains_cstring_from_left(const StdString* restrict self,
-										  const_cstring restrict substring,
-										  usize substring_length,
-										  usize index) {
+static inline always_inline
+StdOption(usize) std_string_contains_cstring_from_left(const StdString* restrict self,
+													   restrict const_cstring substring,
+													   usize substring_length,
+													   usize index) {
 	std_assert(index + substring_length < std_string_length(*self),
 			   "std_string_contains_cstring_from_left called with index + substring->m_length >= "
 			   "self->m_length (indices are out of bounds)");
@@ -721,13 +719,13 @@ static always_inline inline StdOption(usize)
 	}
 }
 
-/// @brief Deterstd_mines if the substring of `self` ending with `index` (inclusive)is the same as
+/// @brief Determines if the substring of `self` ending with `index` (inclusive)is the same as
 /// the given `substring`
-static always_inline inline StdOption(usize)
-	std_string_contains_cstring_from_right(const StdString* restrict self,
-										   const_cstring restrict substring,
-										   usize substring_length,
-										   usize index) {
+static inline always_inline
+StdOption(usize) std_string_contains_cstring_from_right(const StdString* restrict self,
+														restrict const_cstring substring,
+														usize substring_length,
+														usize index) {
 	std_assert(
 		index >= substring_length,
 		"std_string_contains_cstring_from_right called with index < substring->m_length (index out "
@@ -743,7 +741,7 @@ static always_inline inline StdOption(usize)
 }
 
 bool std_string_contains_cstring(const StdString* restrict self,
-								 const_cstring restrict substring,
+								 restrict const_cstring substring,
 								 usize substring_length) {
 	let length = std_string_length(*self);
 	if(length < substring_length) {
@@ -781,7 +779,7 @@ bool(std_string_starts_with)(const StdString* restrict self, const StdString* re
 }
 
 bool std_string_starts_with_cstring(const StdString* restrict self,
-									const_cstring restrict substring,
+									restrict const_cstring substring,
 									usize substring_length) {
 	let starts_with = std_string_contains_cstring_from_left(self, substring, substring_length, 0);
 	return std_option_is_some(starts_with);
@@ -798,7 +796,7 @@ bool(std_string_ends_with)(const StdString* restrict self, const StdString* rest
 }
 
 bool std_string_ends_with_cstring(const StdString* restrict self,
-								  const_cstring restrict substring,
+								  restrict const_cstring substring,
 								  usize substring_length) {
 	let ends_with = std_string_contains_cstring_from_right(self,
 														   substring,
@@ -831,7 +829,7 @@ StdOption(usize)(std_string_find_first)(const StdString* restrict self,
 }
 
 StdOption(usize) std_string_find_first_cstring(const StdString* restrict self,
-											   const_cstring restrict substring,
+											   restrict const_cstring substring,
 											   usize substring_length) {
 	let length = std_string_length(*self);
 	std_assert(length > substring_length,
@@ -874,7 +872,7 @@ StdOption(usize)(std_string_find_last)(const StdString* restrict self,
 }
 
 StdOption(usize) std_string_find_last_cstring(const StdString* restrict self,
-											  const_cstring restrict substring,
+											  restrict const_cstring substring,
 											  usize substring_length) {
 	let length = std_string_length(*self);
 	std_assert(length > substring_length,
@@ -940,7 +938,7 @@ StdString(std_string_concatenate)(const StdString* restrict left, const StdStrin
 }
 
 StdString std_string_concatenate_cstring(const StdString* restrict left,
-										 const_cstring restrict right,
+										 restrict const_cstring right,
 										 usize right_length) {
 	return std_string_concatenate_cstring_with_allocator(left,
 														 right,
@@ -948,9 +946,9 @@ StdString std_string_concatenate_cstring(const StdString* restrict left,
 														 left->m_allocator);
 }
 
-StdString std_string_concatenate_cstrings(const_cstring restrict left,
+StdString std_string_concatenate_cstrings(restrict const_cstring left,
 										  usize left_length,
-										  const_cstring restrict right,
+										  restrict const_cstring right,
 										  usize right_length) {
 	return std_string_concatenate_cstrings_with_allocator(left,
 														  left_length,
@@ -964,6 +962,7 @@ StdString std_string_concatenate_stringview(const StdString* restrict left,
 	return std_string_concatenate_cstring(left, right->m_view, right->m_length);
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 StdString std_string_concatenate_stringviews(const StdStringView* restrict left,
 											 const StdStringView* restrict right) {
 	return std_string_concatenate_cstrings(left->m_view,
@@ -972,6 +971,7 @@ StdString std_string_concatenate_stringviews(const StdStringView* restrict left,
 										   right->m_length);
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 StdString(std_string_concatenate_with_allocator)(const StdString* restrict left,
 												 const StdString* restrict right,
 												 StdAllocator allocator) {
@@ -993,7 +993,7 @@ StdString(std_string_concatenate_with_allocator)(const StdString* restrict left,
 }
 
 StdString std_string_concatenate_cstring_with_allocator(const StdString* restrict left,
-														const_cstring restrict right,
+														restrict const_cstring right,
 														usize right_length,
 														StdAllocator allocator) {
 	let left_length = std_string_length(*left);
@@ -1009,9 +1009,9 @@ StdString std_string_concatenate_cstring_with_allocator(const StdString* restric
 	return string;
 }
 
-StdString std_string_concatenate_cstrings_with_allocator(const_cstring restrict left,
+StdString std_string_concatenate_cstrings_with_allocator(restrict const_cstring left,
 														 usize left_length,
-														 const_cstring restrict right,
+														 restrict const_cstring right,
 														 usize right_length,
 														 StdAllocator allocator) {
 	let_mut string
@@ -1092,7 +1092,8 @@ void(std_string_insert)(StdString* restrict self,
 }
 
 void std_string_insert_cstring(StdString* restrict self,
-							   const_cstring restrict to_insert,
+							   restrict const_cstring to_insert,
+							   // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 							   usize to_insert_length,
 							   usize index) {
 	let length = std_string_length(*self);
@@ -1208,8 +1209,8 @@ void std_string_resize_internal(StdString* restrict self, usize new_size) {
 	}
 }
 
-static always_inline inline usize
-std_string_get_expanded_capacity(usize old_capacity, usize num_increments) {
+static inline always_inline usize std_string_get_expanded_capacity(usize old_capacity,
+																   usize num_increments) {
 	return num_increments * ((old_capacity * 3) / 2);
 }
 
@@ -1286,7 +1287,7 @@ void(std_string_append)(StdString* restrict self, const StdString* restrict to_a
 }
 
 void std_string_append_cstring(StdString* restrict self,
-							   const_cstring restrict to_append,
+							   restrict const_cstring to_append,
 							   usize to_append_length) {
 	std_string_insert_cstring(self, to_append, to_append_length, std_string_length(*self));
 }
@@ -1301,7 +1302,7 @@ void(std_string_prepend)(StdString* restrict self, const StdString* restrict to_
 }
 
 void std_string_prepend_cstring(StdString* restrict self,
-								const_cstring restrict to_prepend,
+								restrict const_cstring to_prepend,
 								usize to_prepend_length) {
 	std_string_insert_cstring(self, to_prepend, to_prepend_length, 0U);
 }
@@ -1336,7 +1337,7 @@ void(std_string_replace)(StdString* restrict self,
 }
 
 void std_string_replace_cstring(StdString* restrict self,
-								const_cstring restrict to_replace_with,
+								restrict const_cstring to_replace_with,
 								usize to_replace_with_length,
 								usize index) {
 	let length = std_string_length(*self);
@@ -1577,7 +1578,7 @@ StdStringView std_stringview_new(const StdString* restrict string) {
 						   .m_vtable = &std_stringview_vtable};
 }
 
-StdStringView std_stringview_from(const_cstring restrict string, usize index, usize length) {
+StdStringView std_stringview_from(restrict const_cstring string, usize index, usize length) {
 	std_assert(strlen(string) >= index + length,
 			   "Can't create stringview with bounds outside the given cstring");
 	return (StdStringView){.m_view = &(string[index]),
