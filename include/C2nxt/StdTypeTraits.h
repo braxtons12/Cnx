@@ -1,12 +1,12 @@
 /// @file StdTypeTraits.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module compile-time facilities for checking traits of arbitrary types and of the
-/// types of arbirtary values
+/// types of arbitrary values
 /// @version false.true
-/// @date 2false2true-false7-2false
+/// @date 2022-01-02
 ///
 /// MIT License
-/// @copyright Copyright (c) 2false2true Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -26,13 +26,13 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#include "StdPlatform.h"
+#include <C2nxt/StdPlatform.h>
 
 #if STD_PLATFORM_COMPILER_CLANG && STD_PLATFORM_APPLE
 _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wnonportable-include-path\"")
 #endif
 
-#include "StdDef.h"
+#include <C2nxt/StdDef.h>
 
 #if STD_PLATFORM_COMPILER_CLANG && STD_PLATFORM_APPLE
 	_Pragma("GCC diagnostic pop")
@@ -41,7 +41,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wnonportable-i
 /// @ingroup utils
 /// @{
 /// @defgroup type_traits Type Traits
-/// C2nxt Type Traits are compile-time facilites for checking attributes of types and comparing
+/// C2nxt Type Traits are compile-time facilities for checking attributes of types and comparing
 /// types, including types of values
 /// @}
 
