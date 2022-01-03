@@ -162,7 +162,7 @@ StdString std_ratio_format_with_allocator(const StdFormat* restrict self,
 			   "Can't format a StdRatio with custom format specifier");
 
 	let _self = static_cast(const StdRatio*)(self->m_self);
-	return std_format_with_allocator(AS_STRING(StdRatio) ": [ num = {}, den = {}]",
+	return std_format_with_allocator(AS_STRING(StdRatio) ": [num = {}, den = {}]",
 									 allocator,
 									 _self->num,
 									 _self->den);
