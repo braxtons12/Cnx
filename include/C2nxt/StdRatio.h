@@ -51,9 +51,9 @@
 /// @ingroup std_ratio
 typedef struct StdRatio {
 	/// @brief The numerator of the ratio
-	const i64 num;
+	i64 num;
 	/// @brief The denominator of the ratio
-	const i64 den;
+	i64 den;
 } StdRatio;
 
 	/// @brief Constructs a `StdRatio` at compile time
