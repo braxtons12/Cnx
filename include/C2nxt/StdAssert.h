@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides wrappers for standard C compile-time and runtime asserts and other
 /// custom asserts and assert-like facilities
-/// @version 0.1
-/// @date 2022-01-02
+/// @version 0.1.1
+/// @date 2022-01-07
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -85,10 +85,10 @@
 	/// @param error_message - The error message to print to `stderr` before aborting.
 	/// @ingroup asserts
 	#define std_panic(error_message)                                                     \
-		{                                                                                \
+		({                                                                                \
 			fprintf(stderr, "Panic at %s:%d : %s\n", __FILE__, __LINE__, error_message); \
 			abort();                                                                     \
-		}
+		})
 
 	#if STD_PLATFORM_DEBUG && !defined(STD_DISABLE_ASSERTIONS)
 

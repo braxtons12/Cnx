@@ -1,8 +1,8 @@
 /// @file StdTimePoint.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief StdTimePoint provides functionality for working with specific points in time
-/// @version 0.1
-/// @date 2022-01-06
+/// @version 0.1.1
+/// @date 2022-01-07
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -27,6 +27,7 @@
 
 #include <C2nxt/time/StdClock.h>
 #include <C2nxt/time/StdTimePoint.h>
+#include <time.h>
 
 StdTimePoint std_time_point_new(StdDuration time_since_epoch) {
 	return std_time_point_new_with_clock(time_since_epoch, &std_system_clock);
@@ -154,6 +155,22 @@ StdCompare std_time_point_compare(StdTimePoint lhs, StdTimePoint rhs) {
 	return std_duration_compare(lhs.time_since_epoch, rhs.time_since_epoch);
 }
 
+#if STD_PLATFORM_RELEASE
+StdString std_time_point_human_readable_format(StdTimePoint self, StdAllocator allocator) {
+	let seconds = std_duration_cast(self.time_since_epoch, std_seconds_period).count;
+	let time = static_cast(time_t)(seconds);
+	let parsed = gmtime(&time);
+
+	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
+	char memory[22] = {0};
+
+	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
+	let maybe_unused written = strftime(memory, 22, "[%Y-%m-%d=%H:%M:%S]", parsed);
+	std_assert(written == 21, "Failed to format time point");
+	return std_string_from_with_allocator(memory, allocator);
+}
+#endif
+
 StdString std_time_point_format(const StdFormat* restrict self, StdFormatSpecifier specifier) {
 	return std_duration_format_with_allocator(self, specifier, DEFAULT_ALLOCATOR);
 }
@@ -165,9 +182,18 @@ StdString std_time_point_format_with_allocator(const StdFormat* restrict self,
 			   "Can't format a StdTimePoint with a custom format specifier");
 
 	let _self = static_cast(const StdTimePoint*)(self->m_self);
+#if STD_PLATFORM_DEBUG
 	return std_format_with_allocator(
 		AS_STRING(StdTimePoint) ": [time_since_epoch = {}, clock = {}]",
 		allocator,
 		as_format_t(StdDuration, _self->time_since_epoch),
 		as_format_t(StdClock, *_self->clock));
+#else
+	let time = std_time_point_human_readable_format(*_self, allocator);
+	return std_format_with_allocator(
+		AS_STRING(StdTimePoint) ": [time_since_epoch = {}, clock = {}]",
+		allocator,
+		time,
+		as_format_t(StdClock, *_self->clock));
+#endif
 }
