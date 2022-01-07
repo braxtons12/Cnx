@@ -1,8 +1,8 @@
 /// @file StdDuration.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides methods for dealing with durations of time
-/// @version 0.1
-/// @date 2022-01-02
+/// @version 0.1.1
+/// @date 2022-01-06
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -28,6 +28,13 @@
 #include <C2nxt/StdFormat.h>
 #include <C2nxt/StdRatio.h>
 
+/// @ingroup std_time
+/// @{
+/// @defgroup std_duration StdDuration
+/// `StdDuration` represents a positive or negative duration in a particular unit of time (e.g. a
+/// (signed) number of seconds, nanoseconds, or years)
+/// @}
+
 #ifndef STD_DURATION
 	/// @brief Declarations related to `StdDuration`
 	#define STD_DURATION
@@ -35,81 +42,81 @@
 /// @brief `StdDuration` represents a duration in a particular unit of time
 /// A `StdDuration` occurs in a particular unit of time (e.g. seconds, nanoseconds, or years), and
 /// can represent a positive or negative amount of that unit
-/// @ingroup std_time
+/// @ingroup std_duration
 typedef struct StdDuration {
 	/// @brief The length of the duration
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	i64 count;
 	/// @brief The unit of the duration as a `StdRatio`
 	/// For example, for a `StdDuration` in milliseconds, the `period` would be `std_milli` or
 	/// `std_milliseconds_period`
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	StdRatio period;
 } StdDuration;
 
 	/// @brief Period representing nanoseconds for `StdDuration` and other time-related facilities
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	#define std_nanoseconds_period          \
 		(StdRatio) {                        \
 			.num = 1LL, .den = 1000000000LL \
 		}
 	/// @brief Period representing microseconds for `StdDuration` and other time-related facilities
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	#define std_microseconds_period      \
 		(StdRatio) {                     \
 			.num = 1LL, .den = 1000000LL \
 		}
 	/// @brief Period representing milliseconds for `StdDuration` and other time-related facilities
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	#define std_milliseconds_period   \
 		(StdRatio) {                  \
 			.num = 1LL, .den = 1000LL \
 		}
 	/// @brief Period representing seconds for `StdDuration` and other time-related facilities
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	#define std_seconds_period     \
 		(StdRatio) {               \
 			.num = 1LL, .den = 1LL \
 		}
 	/// @brief Period representing minutes for `StdDuration` and other time-related facilities
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	#define std_minutes_period      \
 		(StdRatio) {                \
 			.num = 60LL, .den = 1LL \
 		}
 	/// @brief Period representing hours for `StdDuration` and other time-related facilities
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	#define std_hours_period          \
 		(StdRatio) {                  \
 			.num = 3600LL, .den = 1LL \
 		}
 	/// @brief Period representing days for `StdDuration` and other time-related facilities
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	#define std_days_period            \
 		(StdRatio) {                   \
 			.num = 86400LL, .den = 1LL \
 		}
 	/// @brief Period representing weeks for `StdDuration` and other time-related facilities
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	#define std_weeks_period            \
 		(StdRatio) {                    \
 			.num = 604800LL, .den = 1LL \
 		}
 	/// @brief Period representing months for `StdDuration` and other time-related facilities
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	#define std_months_period            \
 		(StdRatio) {                     \
 			.num = 2629746LL, .den = 1LL \
 		}
 	/// @brief Period representing years for `StdDuration` and other time-related facilities
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	#define std_years_period              \
 		(StdRatio) {                      \
 			.num = 31556952LL, .den = 1LL \
 		}
 
 /// @brief Valid periods for `StdDuration` and other time-related facilities
-/// @ingroup std_time
+/// @ingroup std_duration
 static const StdRatio std_duration_valid_periods[] = {std_nanoseconds_period,
 													  std_microseconds_period,
 													  std_milliseconds_period,
@@ -124,53 +131,65 @@ static const StdRatio std_duration_valid_periods[] = {std_nanoseconds_period,
 	/// @brief Returns a `StdDuration` representing a number of nanoseconds
 	/// @param val - The number of nanoseconds
 	/// @return a `StdDuration` representing a number of nanoseconds
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	#define std_nanoseconds(val) ((StdDuration){.count = (val), .period = std_nanoseconds_period})
 	/// @brief Returns a `StdDuration` representing a number of microseconds
 	/// @param val - The number of nanoseconds
 	/// @return a `StdDuration` representing a number of microseconds
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	#define std_microseconds(val) ((StdDuration){.count = (val), .period = std_microseconds_period})
 	/// @brief Returns a `StdDuration` representing a number of milliseconds
 	/// @param val - The number of nanoseconds
 	/// @return a `StdDuration` representing a number of milliseconds
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	#define std_milliseconds(val) ((StdDuration){.count = (val), .period = std_milliseconds_period})
 	/// @brief Returns a `StdDuration` representing a number of seconds
 	/// @param val - The number of nanoseconds
 	/// @return a `StdDuration` representing a number of seconds
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	#define std_seconds(val) ((StdDuration){.count = (val), .period = std_seconds_period})
 	/// @brief Returns a `StdDuration` representing a number of minutes
 	/// @param val - The number of nanoseconds
 	/// @return a `StdDuration` representing a number of minutes
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	#define std_minutes(val) ((StdDuration){.count = (val), .period = std_minutes_period})
 	/// @brief Returns a `StdDuration` representing a number of hours
 	/// @param val - The number of nanoseconds
 	/// @return a `StdDuration` representing a number of hours
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	#define std_hours(val) ((StdDuration){.count = (val), .period = std_hours_period})
 	/// @brief Returns a `StdDuration` representing a number of days
 	/// @param val - The number of nanoseconds
 	/// @return a `StdDuration` representing a number of days
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	#define std_days(val) ((StdDuration){.count = (val), .period = std_days_period})
 	/// @brief Returns a `StdDuration` representing a number of weeks
 	/// @param val - The number of nanoseconds
 	/// @return a `StdDuration` representing a number of weeks
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	#define std_weeks(val) ((StdDuration){.count = (val), .period = std_weeks_period})
 	/// @brief Returns a `StdDuration` representing a number of months
 	/// @param val - The number of nanoseconds
 	/// @return a `StdDuration` representing a number of months
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	#define std_months(val) ((StdDuration){.count = (val), .period = std_months_period})
 	/// @brief Returns a `StdDuration` representing a number of years
 	/// @param val - The number of nanoseconds
 	/// @return a `StdDuration` representing a number of years
-	/// @ingroup std_time
+	/// @ingroup std_duration
 	#define std_years(val) ((StdDuration){.count = (val), .period = std_years_period})
+
+/// @brief Creates a new `StdDuration` with the given count and period
+///
+/// @param count - The value of the duration. The number of `period`s it represents
+/// @param period - The period of the duration. The unit of time it represents (e.g. seconds, hours,
+/// etc.)
+///
+/// @return a new `StdDuration`
+/// @note period must be valid for `StdDuration`. It must be contained in
+/// `std_duration_valid_periods`
+/// @ingroup std_duration
+StdDuration std_duration_new(i64 count, StdRatio period);
 
 /// @brief Converts the given `StdDuration` to one with a different period
 /// Converts the given `StdDuration` to a `StdDuration` with a different period, truncating any
@@ -180,7 +199,7 @@ static const StdRatio std_duration_valid_periods[] = {std_nanoseconds_period,
 /// @param new_period - The `StdRatio` representing the new period
 ///
 /// @return `to_cast` converted a new period
-/// @ingroup std_time
+/// @ingroup std_duration
 StdDuration std_duration_cast(StdDuration to_cast, StdRatio new_period);
 /// @brief Converts the given `StdDuration` to one with a different period
 /// Converts the given `StdDuration` to a `StdDuration` with a different period, flooring any
@@ -190,7 +209,7 @@ StdDuration std_duration_cast(StdDuration to_cast, StdRatio new_period);
 /// @param new_period - The `StdRatio` representing the new period
 ///
 /// @return `to_cast` converted a new period
-/// @ingroup std_time
+/// @ingroup std_duration
 StdDuration std_duration_floor(StdDuration to_floor, StdRatio new_period);
 /// @brief Converts the given `StdDuration` to one with a different period
 /// Converts the given `StdDuration` to a `StdDuration` with a different period, taking the ceiling
@@ -200,7 +219,7 @@ StdDuration std_duration_floor(StdDuration to_floor, StdRatio new_period);
 /// @param new_period - The `StdRatio` representing the new period
 ///
 /// @return `to_cast` converted a new period
-/// @ingroup std_time
+/// @ingroup std_duration
 StdDuration std_duration_ceil(StdDuration to_ceil, StdRatio new_period);
 /// @brief Converts the given `StdDuration` to one with a different period
 /// Converts the given `StdDuration` to a `StdDuration` with a different period, rounding any
@@ -210,14 +229,14 @@ StdDuration std_duration_ceil(StdDuration to_ceil, StdRatio new_period);
 /// @param new_period - The `StdRatio` representing the new period
 ///
 /// @return `to_cast` converted a new period
-/// @ingroup std_time
+/// @ingroup std_duration
 StdDuration std_duration_round(StdDuration to_round, StdRatio new_period);
 /// @brief Takes the absolute value of the given `StdDuration
 ///
 /// @param duration - The `StdDuration` to get the absolute value of
 ///
 /// @return the absolute value of `duration`
-/// @ingroup std_time
+/// @ingroup std_duration
 StdDuration std_duration_abs(StdDuration duration);
 /// @brief Casts `rhs` to the same period as `lhs`, then adds the two
 ///
@@ -225,7 +244,7 @@ StdDuration std_duration_abs(StdDuration duration);
 /// @param rhs - The rhs `StdDuration` to add. Will be cast to the same period as `lhs`
 ///
 /// @return the equivalent of `lhs + std_duration_cast(rhs, lhs.period)`
-/// @ingroup std_time
+/// @ingroup std_duration
 StdDuration std_duration_add(StdDuration lhs, StdDuration rhs);
 /// @brief Adds `rhs` to `lhs` as if it were a `StdDuration` of the same period
 ///
@@ -234,7 +253,7 @@ StdDuration std_duration_add(StdDuration lhs, StdDuration rhs);
 /// `lhs`
 ///
 /// @return the sum of `lhs` and `rhs`
-/// @ingroup std_time
+/// @ingroup std_duration
 StdDuration std_duration_add_scalar(StdDuration lhs, i64 rhs);
 /// @brief Casts `rhs` to the same period as `lhs`, then subtracts `rhs` from `lhs`
 ///
@@ -242,7 +261,7 @@ StdDuration std_duration_add_scalar(StdDuration lhs, i64 rhs);
 /// @param rhs - The rhs `StdDuration` to subtract. Will be cast to the same period as `lhs`
 ///
 /// @return the equivalent of `lhs - std_duration_cast(rhs, lhs.period)`
-/// @ingroup std_time
+/// @ingroup std_duration
 StdDuration std_duration_subtract(StdDuration lhs, StdDuration rhs);
 /// @brief Subtracts `rhs` from `lhs` as if it were a `StdDuration` of the same period
 ///
@@ -251,7 +270,7 @@ StdDuration std_duration_subtract(StdDuration lhs, StdDuration rhs);
 /// as `lhs`
 ///
 /// @return the difference between `lhs` and `rhs`
-/// @ingroup std_time
+/// @ingroup std_duration
 StdDuration std_duration_subtract_scalar(StdDuration lhs, i64 rhs);
 /// @brief Multiplies `lhs` by the scalar value `rhs`
 ///
@@ -259,7 +278,7 @@ StdDuration std_duration_subtract_scalar(StdDuration lhs, i64 rhs);
 /// @param rhs - The scalar value to multiply by.
 ///
 /// @return the product of `lhs` and `rhs`
-/// @ingroup std_time
+/// @ingroup std_duration
 StdDuration std_duration_multiply(StdDuration lhs, i64 rhs);
 /// @brief Divides `lhs` by the scalar value `rhs`
 ///
@@ -267,7 +286,7 @@ StdDuration std_duration_multiply(StdDuration lhs, i64 rhs);
 /// @param rhs - The scalar value to divide by.
 ///
 /// @return the quotient of `lhs` and `rhs`
-/// @ingroup std_time
+/// @ingroup std_duration
 StdDuration std_duration_divide(StdDuration lhs, i64 rhs);
 /// @brief Determines if the two `StdDuration`s are equal.
 ///
@@ -280,7 +299,7 @@ StdDuration std_duration_divide(StdDuration lhs, i64 rhs);
 /// @param rhs - The rhs `StdDuration` to compare.
 ///
 /// @return whether `lhs` and `rhs` are equivalent
-/// @ingroup std_time
+/// @ingroup std_duration
 bool std_duration_equal(StdDuration lhs, StdDuration rhs);
 /// @brief Determines if the two `StdDuration`s are **NOT** equal.
 ///
@@ -293,7 +312,7 @@ bool std_duration_equal(StdDuration lhs, StdDuration rhs);
 /// @param rhs - The rhs `StdDuration` to compare.
 ///
 /// @return whether `lhs` and `rhs` are **NOT** equivalent
-/// @ingroup std_time
+/// @ingroup std_duration
 bool std_duration_not_equal(StdDuration lhs, StdDuration rhs);
 /// @brief Determines if `lhs` is strictly less than `rhs`.
 ///
@@ -306,7 +325,7 @@ bool std_duration_not_equal(StdDuration lhs, StdDuration rhs);
 /// @param rhs - The rhs `StdDuration` to compare.
 ///
 /// @return whether `lhs` is strictly less than `rhs`
-/// @ingroup std_time
+/// @ingroup std_duration
 bool std_duration_less_than(StdDuration lhs, StdDuration rhs);
 /// @brief Determines if `lhs` is less than or equal to `rhs`.
 ///
@@ -319,7 +338,7 @@ bool std_duration_less_than(StdDuration lhs, StdDuration rhs);
 /// @param rhs - The rhs `StdDuration` to compare.
 ///
 /// @return whether `lhs` is less than or equal to `rhs`
-/// @ingroup std_time
+/// @ingroup std_duration
 bool std_duration_less_than_or_equal(StdDuration lhs, StdDuration rhs);
 /// @brief Determines if `lhs` is strictly greater than `rhs`.
 ///
@@ -332,7 +351,7 @@ bool std_duration_less_than_or_equal(StdDuration lhs, StdDuration rhs);
 /// @param rhs - The rhs `StdDuration` to compare.
 ///
 /// @return whether `lhs` is strictly greater than `rhs`
-/// @ingroup std_time
+/// @ingroup std_duration
 bool std_duration_greater_than(StdDuration lhs, StdDuration rhs);
 /// @brief Determines if `lhs` is greater than or equal to `rhs`.
 ///
@@ -345,7 +364,7 @@ bool std_duration_greater_than(StdDuration lhs, StdDuration rhs);
 /// @param rhs - The rhs `StdDuration` to compare.
 ///
 /// @return whether `lhs` is greater than or equal to `rhs`
-/// @ingroup std_time
+/// @ingroup std_duration
 bool std_duration_greater_than_or_equal(StdDuration lhs, StdDuration rhs);
 /// @brief Performs a three-way comparison of `lhs` to `rhs`, determining how `lhs` mathematically
 /// relates to `rhs`.
@@ -359,7 +378,7 @@ bool std_duration_greater_than_or_equal(StdDuration lhs, StdDuration rhs);
 /// @param rhs - The rhs `StdDuration` to compare.
 ///
 /// @return how `lhs` mathematically compares to `rhs`
-/// @ingroup std_time
+/// @ingroup std_duration
 StdCompare std_duration_compare(StdDuration lhs, StdDuration rhs);
 
 /// @brief Implements the allocator-unaware part of the `StdFormat` trait for `StdDuration`
@@ -369,7 +388,7 @@ StdCompare std_duration_compare(StdDuration lhs, StdDuration rhs);
 /// default in the format string
 ///
 /// @return `self` formatted as a `StdString`
-/// @ingroup std_time
+/// @ingroup std_duration
 StdString std_duration_format(const StdFormat* restrict self, StdFormatSpecifier specifier);
 /// @brief Implements the allocator-aware part of the `StdFormat` trait for `StdDuration`
 ///
@@ -379,13 +398,13 @@ StdString std_duration_format(const StdFormat* restrict self, StdFormatSpecifier
 /// @param allocator - The `StdAllocator` to allocate memory with
 ///
 /// @return `self` formatted as a `StdString`
-/// @ingroup std_time
+/// @ingroup std_duration
 StdString std_duration_format_with_allocator(const StdFormat* restrict self,
 											 StdFormatSpecifier specifier,
 											 StdAllocator allocator);
 
 /// @brief Implements the `StdFormat` trait for `StdDuration`
-/// @ingroup std_time
+/// @ingroup std_duration
 static maybe_unused
 	ImplTraitFor(StdFormat, StdDuration, std_duration_format, std_duration_format_with_allocator);
 #endif // STD_DURATION

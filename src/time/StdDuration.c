@@ -1,8 +1,8 @@
 /// @file StdDuration.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides methods for dealing with durations of time
-/// @version 0.1
-/// @date 2022-01-02
+/// @version 0.1.1
+/// @date 2022-01-06
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -75,12 +75,22 @@ void duration_period_assert(StdRatio new_period) {
 	#define DURATION_PERIOD_ASSERT(new_period)
 #endif // STD_PLATFORM_DEBUG
 
+StdDuration std_duration_new(i64 count, StdRatio period) {
+	DURATION_PERIOD_ASSERT(period);
+	return (StdDuration){.count = count, .period = period};
+}
+
 static inline StdDuration
 duration_cast(StdDuration to_cast, StdRatio new_period, DurationCastType cast_type) {
-	DURATION_PERIOD_ASSERT(new_period);
-	let seconds = std_ratio_as_scalar(std_ratio_multiply_scalar(to_cast.period, to_cast.count));
-	let count = (seconds * static_cast(f64)(new_period.den)) / static_cast(f64)(new_period.num);
-	return (StdDuration){.count = cast(count, cast_type), .period = new_period};
+	if(!std_ratio_equal(to_cast.period, new_period)) {
+		DURATION_PERIOD_ASSERT(new_period);
+		let seconds = std_ratio_as_scalar(std_ratio_multiply_scalar(to_cast.period, to_cast.count));
+		let count = (seconds * static_cast(f64)(new_period.den)) / static_cast(f64)(new_period.num);
+		return (StdDuration){.count = cast(count, cast_type), .period = new_period};
+	}
+	else {
+		return to_cast;
+	}
 }
 
 StdDuration std_duration_cast(StdDuration to_cast, StdRatio new_period) {
@@ -189,7 +199,7 @@ StdString std_duration_format(const StdFormat* restrict self, StdFormatSpecifier
 }
 
 StdString std_duration_format_with_allocator(const StdFormat* restrict self,
-											 StdFormatSpecifier specifier,
+											 maybe_unused StdFormatSpecifier specifier,
 											 StdAllocator allocator) {
 	std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT,
 			   "Can't format a StdDuration with a custom format specifier");

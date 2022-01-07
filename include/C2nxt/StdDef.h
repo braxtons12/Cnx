@@ -30,11 +30,10 @@
 /// This module provides various `#define`s for performing basic tasks and macro-related functions,
 /// and some small meta-programming functionality
 
-#include <stdbool.h>
-
 #include <C2nxt/mpl/StdArgLists.h>
 #include <C2nxt/mpl/StdPPMath.h>
 #include <C2nxt/mpl/StdPPStrings.h>
+#include <stdbool.h>
 
 #ifndef STD_DEF
 	/// @brief definitions related to Standard Defines
@@ -327,4 +326,11 @@
 	/// `let_mut`
 	/// @ingroup std_def
 	#define true static_cast(bool)(1)
-#endif // STD_DEF
+
+	#if STD_PLATFORM_COMPILER_CLANG
+		#define IGNORE_RESERVED_IDENTIFIER_WARNING_START \
+			_Pragma("GCC diagnostic push")               \
+				_Pragma("GCC diagnostic ignored \"-Wreserved-identifier\"")
+		#define IGNORE_RESERVED_IDENTIFIER_WARNING_STOP _Pragma("GCC diagnostic pop")
+	#endif // STD_PLATFORM_COMPILER_CLANG
+#endif	   // STD_DEF

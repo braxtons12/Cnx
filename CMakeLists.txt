@@ -45,7 +45,9 @@ set(EXPORTS
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/mpl/StdPPMath.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/mpl/StdPPStrings.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/mpl/detail/ArgLists.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/time/StdClock.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/time/StdDuration.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/time/StdTimePoint.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdTime.h"
         )
 set(IMPLEMENTATIONS
@@ -61,7 +63,9 @@ set(IMPLEMENTATIONS
         "${CMAKE_CURRENT_SOURCE_DIR}/src/StdResult.c"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/StdString.c"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/StdVector.c"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/time/StdClock.c"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/time/StdDuration.c"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/time/StdTimePoint.c"
         )
 
 add_library(C2nxt STATIC
@@ -124,7 +128,8 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
             -Wno-gnu-case-range
             -Wno-pedantic
             -Wno-gcc-compat
-            -Wno-int-to-pointer-cast)
+            -Wno-int-to-pointer-cast
+            -Wno-c++-compat)
 else ()
     target_compile_options(Test PRIVATE
             -std=gnu11

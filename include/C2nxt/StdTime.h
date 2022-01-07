@@ -3,7 +3,7 @@
 /// @brief StdTime provides functionality for working with durations of time, points in time, dates,
 /// etc..
 /// @version 0.1
-/// @date 2022-01-02
+/// @date 2022-01-06
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -31,3 +31,5 @@
 /// etc..
 
 #include <C2nxt/time/StdDuration.h>
+#include <C2nxt/time/StdClock.h>
+#include <C2nxt/time/StdTimePoint.h>
