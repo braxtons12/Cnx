@@ -1,8 +1,8 @@
 /// @file StdRatio.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides lossless methods for dealing with exact fractions
-/// @version 0.1
-/// @date 2022-01-02
+/// @version 0.1.1
+/// @date 2022-01-07
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -158,12 +158,18 @@ StdString std_ratio_format(const StdFormat* restrict self, StdFormatSpecifier sp
 StdString std_ratio_format_with_allocator(const StdFormat* restrict self,
 										  StdFormatSpecifier maybe_unused specifier,
 										  StdAllocator allocator) {
-	std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT,
-			   "Can't format a StdRatio with custom format specifier");
+	std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT
+				   || specifier.m_type == STD_FORMAT_TYPE_DEBUG,
+			   "Can only format a StdRatio with default or debug format specifier");
 
 	let _self = static_cast(const StdRatio*)(self->m_self);
-	return std_format_with_allocator(AS_STRING(StdRatio) ": [num = {}, den = {}]",
-									 allocator,
-									 _self->num,
-									 _self->den);
+	if(specifier.m_type == STD_FORMAT_TYPE_DEBUG) {
+		return std_format_with_allocator(AS_STRING(StdRatio) ": [num = {D}, den = {D}]",
+										 allocator,
+										 _self->num,
+										 _self->den);
+	}
+	else {
+		return std_format_with_allocator("{} / {}", allocator, _self->num, _self->den);
+	}
 }

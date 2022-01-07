@@ -87,6 +87,22 @@ StdTimePoint std_time_point_round(StdTimePoint to_cast, StdTimePoint new_precisi
 		.clock = new_precision.clock};
 }
 
+time_t std_time_point_as_time_t(StdTimePoint to_cast) {
+	return static_cast(time_t)(
+		std_duration_cast(to_cast.time_since_epoch, std_seconds_period).count);
+}
+
+tm* std_time_point_as_tm(StdTimePoint to_cast) {
+	let time = std_time_point_as_time_t(to_cast);
+	return gmtime(&time);
+}
+
+StdTimePoint std_time_point_from_time_t(time_t time) {
+	let duration = std_duration_cast(std_duration_new(static_cast(i64)(time), std_seconds_period),
+									 trait_call(resolution_as_ratio, std_system_clock));
+	return std_time_point_new_with_clock(duration, &std_system_clock);
+}
+
 void std_time_point_increment(StdTimePoint* restrict self) {
 	self->time_since_epoch = std_duration_add(self->time_since_epoch,
 											  std_duration_new(1, self->time_since_epoch.period));
@@ -155,21 +171,17 @@ StdCompare std_time_point_compare(StdTimePoint lhs, StdTimePoint rhs) {
 	return std_duration_compare(lhs.time_since_epoch, rhs.time_since_epoch);
 }
 
-#if STD_PLATFORM_RELEASE
 StdString std_time_point_human_readable_format(StdTimePoint self, StdAllocator allocator) {
-	let seconds = std_duration_cast(self.time_since_epoch, std_seconds_period).count;
-	let time = static_cast(time_t)(seconds);
-	let parsed = gmtime(&time);
+	let parsed = std_time_point_as_tm(self);
 
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
-	char memory[22] = {0};
+	char memory[20] = {0};
 
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
-	let maybe_unused written = strftime(memory, 22, "[%Y-%m-%d=%H:%M:%S]", parsed);
-	std_assert(written == 21, "Failed to format time point");
+	let maybe_unused written = strftime(memory, 20, "%Y-%m-%d|%H:%M:%S", parsed);
+	std_assert(written == 19, "Failed to format time point");
 	return std_string_from_with_allocator(memory, allocator);
 }
-#endif
 
 StdString std_time_point_format(const StdFormat* restrict self, StdFormatSpecifier specifier) {
 	return std_duration_format_with_allocator(self, specifier, DEFAULT_ALLOCATOR);
@@ -178,22 +190,19 @@ StdString std_time_point_format(const StdFormat* restrict self, StdFormatSpecifi
 StdString std_time_point_format_with_allocator(const StdFormat* restrict self,
 											   maybe_unused StdFormatSpecifier specifier,
 											   StdAllocator allocator) {
-	std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT,
-			   "Can't format a StdTimePoint with a custom format specifier");
+	std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT
+				   || specifier.m_type == STD_FORMAT_TYPE_DEBUG,
+			   "Can only format a StdTimePoint with default or debug format specifier");
 
 	let _self = static_cast(const StdTimePoint*)(self->m_self);
-#if STD_PLATFORM_DEBUG
-	return std_format_with_allocator(
-		AS_STRING(StdTimePoint) ": [time_since_epoch = {}, clock = {}]",
-		allocator,
-		as_format_t(StdDuration, _self->time_since_epoch),
-		as_format_t(StdClock, *_self->clock));
-#else
-	let time = std_time_point_human_readable_format(*_self, allocator);
-	return std_format_with_allocator(
-		AS_STRING(StdTimePoint) ": [time_since_epoch = {}, clock = {}]",
-		allocator,
-		time,
-		as_format_t(StdClock, *_self->clock));
-#endif
+	if(specifier.m_type == STD_FORMAT_TYPE_DEBUG) {
+		return std_format_with_allocator(
+			AS_STRING(StdTimePoint) ": [time_since_epoch = {D}, clock = {D}]",
+			allocator,
+			as_format_t(StdDuration, _self->time_since_epoch),
+			as_format_t(StdClock, *_self->clock));
+	}
+	else {
+		return std_time_point_human_readable_format(*_self, allocator);
+	}
 }

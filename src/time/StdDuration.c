@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides methods for dealing with durations of time
 /// @version 0.1.1
-/// @date 2022-01-06
+/// @date 2022-01-07
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -201,12 +201,19 @@ StdString std_duration_format(const StdFormat* restrict self, StdFormatSpecifier
 StdString std_duration_format_with_allocator(const StdFormat* restrict self,
 											 maybe_unused StdFormatSpecifier specifier,
 											 StdAllocator allocator) {
-	std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT,
-			   "Can't format a StdDuration with a custom format specifier");
+	std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT
+				   || specifier.m_type == STD_FORMAT_TYPE_DEBUG,
+			   "Can only format a StdDuration with default or debug format specifier");
 
 	let _self = static_cast(const StdDuration*)(self->m_self);
-	return std_format_with_allocator(AS_STRING(StdDuration) ": [count = {}, period = {}]",
-									 allocator,
-									 _self->count,
-									 as_format_t(StdRatio, _self->period));
+	if(specifier.m_type == STD_FORMAT_TYPE_DEBUG) {
+		return std_format_with_allocator(AS_STRING(StdDuration) ": [count = {D}, period = {D}]",
+										 allocator,
+										 _self->count,
+										 as_format_t(StdRatio, _self->period));
+	}
+	else {
+		let seconds = std_duration_cast(*_self, std_seconds_period);
+		return std_format_with_allocator("{} seconds", allocator, seconds.count);
+	}
 }

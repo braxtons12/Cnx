@@ -27,6 +27,7 @@
 
 #include <C2nxt/StdRatio.h>
 #include <C2nxt/time/StdDuration.h>
+#include <time.h>
 
 /// @ingroup std_time
 /// @{
@@ -40,6 +41,8 @@
 	#define STD_TIME_POINT
 
 typedef struct StdClock StdClock;
+
+typedef struct tm tm;
 
 /// @brief `StdTimePoint` represents a specific point in time, since the UNIX epoch, represented in
 /// a particular level of precision
@@ -146,6 +149,30 @@ StdTimePoint std_time_point_floor(StdTimePoint to_cast, StdTimePoint new_precisi
 /// one from `to_cast`
 /// @ingroup std_time_point
 StdTimePoint std_time_point_round(StdTimePoint to_cast, StdTimePoint new_precision);
+
+/// @brief Converts the given `StdTimePoint` to `time_t`
+///
+/// @param to_cast - The `StdTimePoint` to convert
+///
+/// @return `to_cast` converted to `time_t`
+/// @ingroup std_time_point
+time_t std_time_point_as_time_t(StdTimePoint to_cast);
+
+/// @brief Converts the given `StdTimePoint` to `tm`
+///
+/// @param to_cast - The `StdTimePoint` to convert
+///
+/// @return `to_cast` converted to `tm`
+/// @ingroup std_time_point
+tm* std_time_point_as_tm(StdTimePoint to_cast);
+
+/// @brief Converts the given `time_t` to a `StdTimePoint` in the system clock precision
+///
+/// @param time - The `time_t` to convert
+///
+/// @return `time` converted to a `StdTimePoint`
+/// @ingroup std_time_point
+StdTimePoint std_time_point_from_time_t(time_t time);
 
 /// @brief Increments the given `StdTimePoint` by one unit
 ///
