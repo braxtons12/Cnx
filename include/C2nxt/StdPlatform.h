@@ -61,7 +61,7 @@
 	#endif
 
 	#if defined(__unix__) || defined(__unix) || defined(unix) \
-		|| (STD_PLATFORM_APPLE && defined(__MACH__))
+		|| (STD_PLATFORM_APPLE && defined(__MACH__)) || defined(__MVS__)
 		/// @brief Whether the compiled-for platform is a variant of UNIX
 		/// @ingroup std_platform
 		#define STD_PLATFORM_UNIX 1
@@ -90,6 +90,16 @@
 		/// @brief Whether the compiled-for platform is BSD
 		/// @ingroup std_platform
 		#define STD_PLATFORM_BSD 0
+	#endif
+
+	#if defined(__MVS__)
+		/// @brief Whether the compiled-for platform is z/OS
+		/// @ingroup std_platform
+		#define STD_PLATFORM_ZOS 1
+	#else
+		/// @brief Whether the compiled-for platform is z/OS
+		/// @ingroup std_platform
+		#define STD_PLATFORM_ZOS 0
 	#endif
 
 	#if defined(__ANDROID__)
