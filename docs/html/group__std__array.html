@@ -44,7 +44,7 @@
         <h1>
           <span class="m-breadcrumb"><a href="group__collections.html">Collections</a> &raquo;</span>
           StdArray <span class="m-thin">module</span></h1>
-        <div class="m-block m-default">
+        <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
@@ -54,7 +54,7 @@
               </ul>
             </li>
           </ul>
-        </div>
+        </nav>
 <p><code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> is a struct template for a type-safe fixed-capacity, dynamic-size, stack allocated array type. <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> is bounds safe, allocator aware, and provides C2nxt compatible random access iterators. It supports used-defined default-constructors, copy-constructors, and destructors for its elements. It&#x27;s design is based around C++&#x27;s <code>std::array</code>, but with slightly different semantics and functionality.</p><p>Because of its size, <code>N</code>, template parameter, instantiations of <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> for builtins or any C2nxt types are <strong>not</strong> provided, and will have to be instantiated by the user. The requirements are similar to <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, and requires minimal boiler-plate:</p><ol><li>a <code>typedef</code> of your type to provide an alphanumeric name for it. (for template and macro parameters)</li><li>a <code>typedef</code> for pointer to your type as <code><a href="group__std__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(YourTuple)</a>, for use with the iterators</code></li><li><code>a</code>typedef<code>for pointer to const your type as</code><a href="group__std__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(YourType)</a>`, for use with the iterators</li><li>Instantiations for C2nxt iterators for the typedefs provided in (2) and (3) (already instantiated for builtins and <code><a href="structStdString.html" class="m-doc">StdString</a></code>)</li><li>Instantiation of <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> for your type (already instantiated for builtins and <code><a href="structStdString.html" class="m-doc">StdString</a></code>)</li></ol><p>For <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> we recommend you provide the instantiation for user-define types in a separate &quot;template instantiation&quot; .h/.c file pair, but you can also provide them inline with your type like discussed in <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>&#x27;s documentation.</p><aside class="m-note m-default"><h4>See also</h4><p><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector</a></p></aside><p>Example:</p><pre class="m-code"><span class="c1">// in `YourType.h`</span>
 <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">YourType</span> <span class="p">{</span>
     <span class="c1">// members</span>

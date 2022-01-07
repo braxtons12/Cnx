@@ -43,7 +43,7 @@
       <div class="m-col-l-10 m-push-l-1">
         <h1>
           Iterators <span class="m-thin">module</span></h1>
-        <div class="m-block m-default">
+        <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
@@ -53,7 +53,7 @@
               </ul>
             </li>
           </ul>
-        </div>
+        </nav>
 <p>C2nxt defines its own set of iterator SizedTrait templates that allow for simple, collection-agnostic processing of a collection of elements in a way similar to C++ or Rust.</p><p>Iterators provide a uniform interface for accessing the elements of a collection in contained order. They act as reference-wrappers for the element associated with their current position, providing reference-like semantics for accessing values, and because of this are designed to work with pointer-to-T (<code>typedef</code>ed as <code><a href="group__std__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(T)</a></code> or <code><a href="group__std__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(T)</a></code>) as their generic parameter as opposed to T.</p><p>C2nxt defines four categories of iterators, each with different requirements and functionality.</p><ol><li>Forward Iterators (<code><a href="group__iterators.html#ga6f81be5154c35a8da1ac730d26040155" class="m-doc">StdForwardIterator(T)</a></code>) provide forward-only (increment-only) access to the elements in an iteration. This is provided through the associated <code>next</code> function.</li><li>Reverse Iterators (<code><a href="group__iterators.html#ga3096ade1ab0302b1a9d564e55b217e34" class="m-doc">StdReverseIterator(T)</a></code>) provide reverse-on (decrement-only) access to the elements in an iteration. This is provided through the associated <code>next</code> function.</li><li>Bidirectional Iterators (<code><a href="group__iterators.html#ga0b9ba4de4f41d92ae11b1a1591261e23" class="m-doc">StdBidirectionalIterator(T)</a></code>) provide forward and reverse access to the elements in an iteration. This is provided through the associated <code>next</code> and <code>previous</code> functions.</li><li>Random Access Iterators (<code><a href="group__iterators.html#ga218be3ec365146cd19e713d0eedf5488" class="m-doc">StdRandomAccessIterator(T)</a></code>) provide bidirectional and random (indexed) access to the elements in an iteration. This is provided through the associated <code>next</code>, <code>previous</code>, and <code>at</code> functions.</li></ol><p>All iterators also provide access to the current value through <code>current</code> and equality comparison through <code>equals</code>.</p><p>Using iterators are very simple.</p><pre class="m-code"><span class="n">let_mut</span> <span class="n">str</span> <span class="o">=</span> <span class="n">std_string_from</span><span class="p">(</span><span class="s">&quot;this is a string&quot;</span><span class="p">);</span>
 <span class="c1">// We can use them by hand like so:</span>
 <span class="n">let_mut</span> <span class="n">begin</span> <span class="o">=</span> <span class="n">std_string_begin</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
