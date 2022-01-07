@@ -44,7 +44,7 @@
         <h1>
           <span class="m-breadcrumb"><a href="group__collections.html">Collections</a> &raquo;</span>
           StdString <span class="m-thin">module</span></h1>
-        <div class="m-block m-default">
+        <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
@@ -57,7 +57,7 @@
               </ul>
             </li>
           </ul>
-        </div>
+        </nav>
 <p><code><a href="structStdString.html" class="m-doc">StdString</a></code> is a bounds-safe string type that manages its own length and capacity, is fully <code>cstring</code> (aka <code>char*</code>) compatible, provides C2nxt compatible random-access iterators over its contents, and is allocator aware. It aims to provide more modern string-handling capabilities to C, with an API and functionality comparable to C++&#x27;s <code>std::string</code>. <code><a href="structStdString.html" class="m-doc">StdString</a></code> is always null-terminated, so it&#x27;s completely compatible with C&#x27;s existing string functions, so long as those functions do not modify the length of the string or insert null terminators (other mutable access is acceptable).</p><p><code><a href="structStdString.html" class="m-doc">StdString</a></code> provides a small size optimization (SSO). This means that for short strings, the data associated with the string will be stored on the stack, up to a certain number of characters, before resorting to heap allocation. This does not require <code><a href="structStdString.html" class="m-doc">StdString</a></code> to take up extra stack space in order to implement, <code>sizeof(StdString)</code> would be the same regardless of this optimization. The optimization allows for up to <code>2 * sizeof(usize) + sizeof(void*) - 1</code> bytes to be stored on the stack. on x86_64, this translates to 23 characters, excluding the null terminator (24 including the null terminator).</p><p>Example:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="c1"> // for strlen</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;C2nxt/StdString.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;C2nxt/StdIO.h&quot;</span><span class="cp"></span>

@@ -44,7 +44,7 @@
         <h1>
           <span class="m-breadcrumb"><a href="group__error__handling.html">Error Handling</a> &raquo;</span>
           StdOption <span class="m-thin">module</span></h1>
-        <div class="m-block m-default">
+        <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
@@ -54,7 +54,7 @@
               </ul>
             </li>
           </ul>
-        </div>
+        </nav>
 <p><code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> is a &quot;struct template&quot; for representing an optional value. It enables a simple, type-safe way of working with values that may or may not exist or be value, without resorting to heap-allocation and pointers or out-parameters.</p><p><code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> shares some functionality, such as <code><a href="group__monadics.html#ga745eab30a42a750fe7e090cf8e49a2e5" class="m-doc">if_<wbr />let(var, self)</a></code>, with <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> (see <a href="group__monadics.html" class="m-doc">Monadic Interfaces</a>).</p><p>Example:</p><pre class="m-code"><span class="n">StdOption</span><span class="p">(</span><span class="n">u32</span><span class="p">)</span> <span class="n">checked_add</span><span class="p">(</span><span class="n">u32</span> <span class="n">left</span><span class="p">,</span> <span class="n">u32</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">left</span> <span class="o">&lt;</span> <span class="n">std_max</span><span class="p">(</span><span class="n">u32</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&amp;&amp;</span> <span class="n">right</span> <span class="o">&lt;</span> <span class="n">std_max</span><span class="p">(</span><span class="n">u32</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">?</span>
                 <span class="n">Some</span><span class="p">(</span><span class="n">u32</span><span class="p">,</span> <span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span> <span class="o">:</span>

@@ -43,7 +43,7 @@
       <div class="m-col-l-10 m-push-l-1">
         <h1>
           I/O <span class="m-thin">module</span></h1>
-        <div class="m-block m-default">
+        <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
@@ -53,7 +53,7 @@
               </ul>
             </li>
           </ul>
-        </div>
+        </nav>
 <p>C2nxt&#x27;s I/O API extends its formatting API to I/O</p><p>Standard I/O in C2nxt has the same requirements, functionality, and syntax as string formatting via<br /><code><a href="group__format.html#ga9470755f912aae3ac2977adc596b4d61" class="m-doc">std_<wbr />format(format_<wbr />string, ...)</a></code> and the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> Trait. Currently only formatted output is feature complete, but formatted input is planned.</p><p>Usage examples:</p><pre class="m-code"><span class="c1">// use it to perform basic logging:</span>
 <span class="cp">#define LOG(format_string, ...) println((format_string) __VA_OPT__(,) __VA_ARGS__)</span>
 <span class="cp">#define LOG_WITH_ALLOCATOR(format_string, allocator, ...) \</span>

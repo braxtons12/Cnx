@@ -43,7 +43,7 @@
       <div class="m-col-l-10 m-push-l-1">
         <h1>
           Trait <span class="m-thin">module</span></h1>
-        <div class="m-block m-default">
+        <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
@@ -53,7 +53,7 @@
               </ul>
             </li>
           </ul>
-        </div>
+        </nav>
 <p>C2nxt provides a simple way to create and utilize polymorphic interfaces via Trait objects. Trait objects are fat pointers, containing a pointer-to-self and a vtable pointer, that allow use of polymorphic interfaces explicitly (you operate via the Trait object), without the need for a type to carry its vtable in its definition, and without the need for heap allocation (in most cases). For specific examples of Trait objects in action, look into <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> and its use through the C2nxt StdIO, and C2nxt&#x27;s iterator categories.</p><p>A general example:</p><pre class="m-code"><span class="c1">// declare a Trait `NumberGenerator` that requires the functions `generate` and `seed`</span>
 <span class="n">Trait</span><span class="p">(</span><span class="n">NumberGenerator</span><span class="p">,</span>
       <span class="n">u32</span> <span class="p">(</span><span class="o">*</span><span class="k">const</span> <span class="n">generate</span><span class="p">)(</span><span class="n">NumberGenerator</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">self</span><span class="p">);</span>
