@@ -122,7 +122,7 @@
 	// clang-format on
 
 	#else
-		/// @brief Asserts that the given conidition is `true`.
+		/// @brief Asserts that the given condition is `true`.
 		///
 		/// If `condition` is false, this will print the file and line at which the error occurred,
 		/// along with the given error message, to `stderr`, then abort.
