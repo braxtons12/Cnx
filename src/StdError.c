@@ -2,11 +2,11 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides an extensible type for communicating errors via both error codes and
 /// message strings.
-/// @version 0.1
-/// @date 2021-08-15
+/// @version 0.1.1
+/// @date 2022-01-07
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -73,15 +73,26 @@ StdString std_error_format(const StdFormat* restrict self, StdFormatSpecifier sp
 StdString std_error_format_with_allocator(const StdFormat* restrict self,
 										  StdFormatSpecifier maybe_unused specifier,
 										  StdAllocator allocator) {
-	std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT,
-			   "Can't format StdError with custom specifier");
+	std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT
+				   || specifier.m_type == STD_FORMAT_TYPE_DEBUG,
+			   "Can only format StdError with default or debug format specifier");
 
 	let _self = static_cast(const StdError*)(self->m_self);
 	let message = std_string_from_with_allocator(
 		_self->m_error_category.m_message_function(_self->m_error_code),
 		allocator);
-	return std_format_with_allocator(AS_STRING(StdError) ": [error_code: {d}, error_message: {}]",
-									 allocator,
-									 _self->m_error_code,
-									 message);
+	if(specifier.m_type == STD_FORMAT_TYPE_DEBUG) {
+		return std_format_with_allocator(
+			AS_STRING(StdError) ": [error_code: {x}, error_message: {}]",
+			allocator,
+			_self->m_error_code,
+			message);
+	}
+	else {
+		return std_format_with_allocator(
+			"Error {x}: {}",
+			allocator,
+			_self->m_error_code,
+			message);
+	}
 }

@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a generic, type-safe, fixed-capacity, dynamic-size, stack allocated
 /// array type (`StdArray(T, N)`) similar to `std::array` in C++
-/// @version 0.1
-/// @date 2022-01-02
+/// @version 0.1.1
+/// @date 2022-01-07
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -326,6 +326,7 @@
                                                                                                   \
 		DeclStdOption(StdArray(T, N));                                                            \
 		DeclStdResult(StdArray(T, N));                                                            \
+		DeclStdResultFormat(StdArray(T, N));                                                      \
                                                                                                   \
 		StdArray(T, N) StdArrayIdentifier(T, N, new)(void);                                       \
 		StdArray(T, N) StdArrayIdentifier(T, N, new_with_collection_data)(                        \
@@ -797,6 +798,7 @@
 	#define ImplStdArray(T, N)                                                                     \
 		ImplStdOption(StdArray(T, N));                                                             \
 		ImplStdResult(StdArray(T, N));                                                             \
+		ImplStdResultFormat(StdArray(T, N), StdArray(T, N));                                       \
                                                                                                    \
 		StdArrayIterator(T, N)                                                                     \
 			StdArrayIdentifier(T, N, iterator_new)(const StdArray(T, N)* restrict self);           \
@@ -1398,8 +1400,10 @@
 			const StdFormat* restrict self,                                                        \
 			StdFormatSpecifier maybe_unused specifier,                                             \
 			StdAllocator allocator) {                                                              \
-			std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT,                                \
-					   "Can't format StdArray with custom specifier");                             \
+			std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT                                 \
+						   || specifier.m_type == STD_FORMAT_TYPE_DEBUG,                           \
+					   "Can only format StdArray with default or debug format specifier");         \
+                                                                                                   \
 			let _self = *static_cast(const StdArray(T, N)*)(self->m_self);                         \
 			let size = std_array_size(_self);                                                      \
 			let capacity = std_array_capacity(_self);                                              \

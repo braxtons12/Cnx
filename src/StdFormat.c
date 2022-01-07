@@ -640,6 +640,24 @@ StdString std_format_std_string_with_allocator(const StdFormat* restrict self,
 	return std_string_clone_with_allocator(*string, allocator);
 }
 
+
+StdString std_format_std_stringview(const StdFormat* restrict self, StdFormatSpecifier specifier) {
+	ignore(specifier);
+
+	let view = static_cast(const StdStringView*)(self->m_self);
+	return std_string_from(view);
+}
+
+StdString std_format_std_stringview_with_allocator(const StdFormat* restrict self,
+                                               StdFormatSpecifier specifier,
+                                               StdAllocator allocator) {
+	ignore(specifier);
+
+	let view = static_cast(const StdStringView*)(self->m_self);
+	return std_string_from_with_allocator(view, allocator);
+}
+
+
 StdString std_format_cstring(const StdFormat* restrict self, StdFormatSpecifier specifier) {
 	ignore(specifier);
 

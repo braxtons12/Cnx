@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a dynamic-array type comparable to C++'s `std::vector` and Rust's
 /// `std::vec::Vec` for C2nxt
-/// @version 0.1
-/// @date 2022-01-02
+/// @version 0.1.1
+/// @date 2022-01-07
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -360,6 +360,7 @@
                                                                                                    \
 		DeclStdOption(StdVector(T));                                                               \
 		DeclStdResult(StdVector(T));                                                               \
+		DeclStdResultFormat(StdVector(T));                                                         \
                                                                                                    \
 		StdVector(T) StdVectorIdentifier(T, new)(void);                                            \
 		StdVector(T) StdVectorIdentifier(T, new_with_collection_data)(                             \
@@ -886,6 +887,7 @@
 	#define ImplStdVector(T)                                                                       \
 		ImplStdOption(StdVector(T));                                                               \
 		ImplStdResult(StdVector(T));                                                               \
+		ImplStdResultFormat(StdVector(T), StdVector(T));                                           \
                                                                                                    \
 		StdVectorIterator(T)                                                                       \
 			StdVectorIdentifier(T, iterator_new)(const StdVector(T)* restrict self);               \
@@ -1635,8 +1637,10 @@
 			StdFormatSpecifier maybe_unused specifier,                                             \
 			StdAllocator allocator) {                                                              \
                                                                                                    \
-			std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT,                                \
-					   "Can't format StdVector with custom specifier");                            \
+			std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT                                 \
+						   || specifier.m_type == STD_FORMAT_TYPE_DEBUG,                           \
+					   "Can only format StdVector with default or debug specifier");               \
+                                                                                                   \
 			let _self = static_cast(const StdVector(T)*)(self->m_self);                            \
 			let size = std_vector_size(*_self);                                                    \
 			let capacity = std_vector_capacity(*_self);                                            \

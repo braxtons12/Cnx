@@ -86,85 +86,85 @@
 	///
 	/// @param T - The type stored in the `StdOption(T)`
 	/// @ingroup std_option
-	#define DeclStdOption(T)                                                                   \
-		typedef struct StdOption(T) StdOption(T);                                              \
-                                                                                               \
-		typedef struct StdOptionIdentifier(T, vtable) {                                        \
-			bool (*const is_some)(const StdOption(T)* restrict self);                          \
-			bool (*const is_none)(const StdOption(T)* restrict self);                          \
-			const T* (*const as_const)(const StdOption(T)* restrict self);                     \
-			T* (*const as_mut)(StdOption(T)* restrict self);                                   \
-			T (*const unwrap)(StdOption(T)* restrict self);                                    \
-			T (*const unwrap_or)(StdOption(T)* restrict self, T default_value);                \
-			T(*const unwrap_or_else)                                                           \
-			(StdOption(T)* restrict self, T(*default_generator)(void));                        \
-			T(*const expect)                                                                   \
-			(StdOption(T)* restrict self, const_cstring restrict panic_message);               \
-			bool (*const as_bool)(const StdOption(T)* restrict self);                          \
-		}                                                                                      \
-		StdOptionIdentifier(T, vtable);                                                        \
-                                                                                               \
-		/** @brief `StdOption` holding the type `T` **/                                        \
-		typedef struct StdOption(T) {                                                          \
-			T m_value;                                                                         \
-			bool m_is_some;                                                                    \
-			const StdOptionIdentifier(T, vtable) * m_vtable;                                   \
-		}                                                                                      \
-		StdOption(T);                                                                          \
-                                                                                               \
-		/** @brief Creates a `StdOption(T)` holding the given value **/                        \
-		/** @param value - The value to store in the `StdOption` **/                           \
-		/** @return a `StdOption` containing the given value **/                               \
-		StdOption(T) StdOptionIdentifier(T, some)(T value);                                    \
-		/** @brief Creates a `StdOption(T)` holding no value **/                               \
-		/** @return a `StdOption` containing no value **/                                      \
-		StdOption(T) StdOptionIdentifier(T, none)(void);                                       \
-		/** @brief Returns whether this `StdOption(T)` is holding a value **/                  \
-		/** @param self - The `StdOption` to check **/                                         \
-		/** @return `true` if this `StdOption(T)` is holding a value, `false` otherwise **/    \
-		bool StdOptionIdentifier(T, is_some)(const StdOption(T)* restrict self);               \
-		/** @brief Returns whether this `StdOption(T)` __isn't__ holding a value **/           \
-		/** @param self - The `StdOption` to check **/                                         \
-		/** @return `true` if this `StdOption(T)` __isn't__ holding a value, `false` otherwise \
-		 * **/                                                                                 \
-		bool StdOptionIdentifier(T, is_none)(const StdOption(T)* restrict self);               \
-		/** @brief Returns a pointer to the const value stored in this `StdOption` **/         \
-		/** @param self - The `StdOption` to get the stored value from **/                     \
-		/** @return a pointer to the contained const value **/                                 \
-		/** @note Panics if `self` does not contain a value **/                                \
-		const T* StdOptionIdentifier(T, as_const)(const StdOption(T)* restrict self);          \
-		/** @brief Returns a pointer to the value stored in this `StdOption` **/               \
-		/** @param self - The `StdOption` to get the stored value from **/                     \
-		/** @return a pointer to the contained value **/                                       \
-		/** @note Panics if `self` does not contain a value **/                                \
-		T* StdOptionIdentifier(T, as_mut)(StdOption(T)* restrict self);                        \
-		/** @brief Returns the value stored in this `StdOption` **/                            \
-		/** @param self - The `StdOption` to get the stored value from **/                     \
-		/** @return the contained value **/                                                    \
-		/** @note Panics if `self` does not contain a value **/                                \
-		T StdOptionIdentifier(T, unwrap)(StdOption(T)* restrict self);                         \
-		/** @brief Returns the value stored in this `StdOption` , or `default_value` **/       \
-		/** if this is `None` **/                                                              \
-		/** @param self - The `StdOption` to get the stored value from **/                     \
-		/** @param default_value - The value to return if this is `None` **/                   \
-		/** @return the contained value, or `default_value` **/                                \
-		T StdOptionIdentifier(T, unwrap_or)(StdOption(T)* restrict self, T default_value);     \
-		/** @brief Returns the value stored in this `StdOption` , or the value returned by **/ \
-		/** `default_generator` if this is `None` **/                                          \
-		/** @param self - The `StdOption` to get the stored value from **/                     \
-		/** @param default_generator - The function to generate the value **/                  \
-		/**  to return if this is `None` **/                                                   \
-		/** @return the contained value, or the one generated by `default_generator` **/       \
-		T StdOptionIdentifier(T, unwrap_or_else)(StdOption(T)* restrict self,                  \
-												 T(*default_generator)(void));                 \
-		/** @brief Returns the value stored in this `StdOption` **/                            \
-		/** @param self - The `StdOption` to get the stored value from **/                     \
-		/** @return the contained value **/                                                    \
-		/** @note Panics if `self` does not contain a value, **/                               \
-		/** with the custom panic message `panic_message` **/                                  \
-		T StdOptionIdentifier(T, expect)(StdOption(T)* restrict self,                          \
-										 const_cstring restrict panic_mesage);                 \
-                                                                                               \
+	#define DeclStdOption(T)                                                                    \
+		typedef struct StdOption(T) StdOption(T);                                               \
+                                                                                                \
+		typedef struct StdOptionIdentifier(T, vtable) {                                         \
+			bool (*const is_some)(const StdOption(T)* restrict self);                           \
+			bool (*const is_none)(const StdOption(T)* restrict self);                           \
+			const T* (*const as_const)(const StdOption(T)* restrict self);                      \
+			T* (*const as_mut)(StdOption(T)* restrict self);                                    \
+			T (*const unwrap)(StdOption(T)* restrict self);                                     \
+			T (*const unwrap_or)(StdOption(T)* restrict self, T default_value);                 \
+			T(*const unwrap_or_else)                                                            \
+			(StdOption(T)* restrict self, T(*default_generator)(void));                         \
+			T(*const expect)                                                                    \
+			(StdOption(T)* restrict self, restrict const_cstring panic_message);                \
+			bool (*const as_bool)(const StdOption(T)* restrict self);                           \
+		}                                                                                       \
+		StdOptionIdentifier(T, vtable);                                                         \
+                                                                                                \
+		/** @brief `StdOption` holding the type `T` **/                                         \
+		typedef struct StdOption(T) {                                                           \
+			T m_value;                                                                          \
+			bool m_is_some;                                                                     \
+			const StdOptionIdentifier(T, vtable) * m_vtable;                                    \
+		}                                                                                       \
+		StdOption(T);                                                                           \
+                                                                                                \
+		/** @brief Creates a `StdOption(T)` holding the given value **/                         \
+		/** @param value - The value to store in the `StdOption` **/                            \
+		/** @return a `StdOption` containing the given value **/                                \
+		StdOption(T) StdOptionIdentifier(T, some)(T value);                                     \
+		/** @brief Creates a `StdOption(T)` holding no value **/                                \
+		/** @return a `StdOption` containing no value **/                                       \
+		StdOption(T) StdOptionIdentifier(T, none)(void);                                        \
+		/** @brief Returns whether this `StdOption(T)` is holding a value **/                   \
+		/** @param self - The `StdOption` to check **/                                          \
+		/** @return `true` if this `StdOption(T)` is holding a value, `false` otherwise **/     \
+		bool StdOptionIdentifier(T, is_some)(const StdOption(T)* restrict self);                \
+		/** @brief Returns whether this `StdOption(T)` __isn't__ holding a value **/            \
+		/** @param self - The `StdOption` to check **/                                          \
+		/** @return `true` if this `StdOption(T)` __isn't__ holding a value, `false` otherwise  \
+		 * **/                                                                                  \
+		bool StdOptionIdentifier(T, is_none)(const StdOption(T)* restrict self);                \
+		/** @brief Returns a pointer to the const value stored in this `StdOption` **/          \
+		/** @param self - The `StdOption` to get the stored value from **/                      \
+		/** @return a pointer to the contained const value **/                                  \
+		/** @note Panics if `self` does not contain a value **/                                 \
+		const T* StdOptionIdentifier(T, as_const)(const StdOption(T)* restrict self);           \
+		/** @brief Returns a pointer to the value stored in this `StdOption` **/                \
+		/** @param self - The `StdOption` to get the stored value from **/                      \
+		/** @return a pointer to the contained value **/                                        \
+		/** @note Panics if `self` does not contain a value **/                                 \
+		T* StdOptionIdentifier(T, as_mut)(StdOption(T)* restrict self);                         \
+		/** @brief Returns the value stored in this `StdOption` **/                             \
+		/** @param self - The `StdOption` to get the stored value from **/                      \
+		/** @return the contained value **/                                                     \
+		/** @note Panics if `self` does not contain a value **/                                 \
+		T StdOptionIdentifier(T, unwrap)(StdOption(T)* restrict self);                          \
+		/** @brief Returns the value stored in this `StdOption` , or `default_value` **/        \
+		/** if this is `None` **/                                                               \
+		/** @param self - The `StdOption` to get the stored value from **/                      \
+		/** @param default_value - The value to return if this is `None` **/                    \
+		/** @return the contained value, or `default_value` **/                                 \
+		T StdOptionIdentifier(T, unwrap_or)(StdOption(T)* restrict self, T default_value);      \
+		/** @brief Returns the value stored in this `StdOption` , or the value returned by **/  \
+		/** `default_generator` if this is `None` **/                                           \
+		/** @param self - The `StdOption` to get the stored value from **/                      \
+		/** @param default_generator - The function to generate the value **/                   \
+		/**  to return if this is `None` **/                                                    \
+		/** @return the contained value, or the one generated by `default_generator` **/        \
+		T StdOptionIdentifier(T, unwrap_or_else)(StdOption(T)* restrict self,                   \
+												 T(*default_generator)(void));                  \
+		/** @brief Returns the value stored in this `StdOption` **/                             \
+		/** @param self - The `StdOption` to get the stored value from **/                      \
+		/** @return the contained value **/                                                     \
+		/** @note Panics if `self` does not contain a value, **/                                \
+		/** with the custom panic message `panic_message` **/                                   \
+		T StdOptionIdentifier(T, expect)(StdOption(T)* restrict self,                           \
+										 restrict const_cstring panic_mesage);                  \
+                                                                                                \
 		bool StdOptionIdentifier(T, as_bool)(const StdOption(T)* restrict self);
 
 	/// @brief Creates a `StdOption(T)` holding the given value
@@ -345,7 +345,7 @@
 		}                                                                                   \
                                                                                             \
 		T StdOptionIdentifier(T, expect)(StdOption(T)* restrict self,                       \
-										 const_cstring restrict panic_message) {            \
+										 restrict const_cstring panic_message) {            \
 			if(!std_option_is_some(*self)) {                                                \
 				std_panic(panic_message);                                                   \
 			}                                                                               \

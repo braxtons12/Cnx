@@ -284,7 +284,7 @@ StdString std_vformat_with_allocator(restrict const_cstring format_string,
 
 	#if STD_PLATFORM_APPLE
 		#if STD_AS_FORMAT_USES_USER_SUPPLIED_TYPES
-		// clang-format off
+			// clang-format off
 		/// @brief Converts the given variable into its associated `StdFormat` Trait implementation
 		///
 		/// There must be an implementation of `StdFormat` for the type of `x` and `x` must be an
@@ -383,7 +383,7 @@ StdString std_vformat_with_allocator(restrict const_cstring format_string,
 		#endif // STD_AS_FORMAT_USES_USER_SUPPLIED_TYPES
 	#else
 		#if STD_AS_FORMAT_USES_USER_SUPPLIED_TYPES
-		// clang-format off
+			// clang-format off
 		/// @brief Converts the given variable into its associated `StdFormat` Trait implementation
 		///
 		/// There must be an implementation of `StdFormat` for the type of `x` and `x` must be an
@@ -718,6 +718,13 @@ StdString std_format_ptr(const StdFormat* restrict self, StdFormatSpecifier spec
 ///
 /// @return a formatted string associated with `self`
 StdString std_format_std_string(const StdFormat* restrict self, StdFormatSpecifier specifier);
+/// @brief implementation of `StdFormat.format` for `StdStringView`
+///
+/// @param self - The `StdFormat` object to format
+/// @param specifier - The format specifier to follow
+///
+/// @return a formatted string associated with `self`
+StdString std_format_std_stringview(const StdFormat* restrict self, StdFormatSpecifier specifier);
 /// @brief implementation of `StdFormat.format_with_allocator` for the builtin `cstring`
 ///
 /// @param self - The `StdFormat` object to format
@@ -868,6 +875,16 @@ StdString std_format_ptr_with_allocator(const StdFormat* restrict self,
 StdString std_format_std_string_with_allocator(const StdFormat* restrict self,
 											   StdFormatSpecifier specifier,
 											   StdAllocator allocator);
+/// @brief implementation of `StdFormat.format_with_allocator` for `StdStringView`
+///
+/// @param self - The `StdFormat` object to format
+/// @param specifier - The format specifier to follow
+/// @param allocator - The `StdAllocator` to allocate the format string with
+///
+/// @return a formatted string associated with `self`
+StdString std_format_std_stringview_with_allocator(const StdFormat* restrict self,
+												   StdFormatSpecifier specifier,
+												   StdAllocator allocator);
 
 /// @brief implementation of `StdFormat` for the builtin `cstring`
 /// @return The `StdFormat` implementation
@@ -917,4 +934,10 @@ static maybe_unused
 /// @return The `StdFormat` implementation
 static maybe_unused
 	ImplTraitFor(StdFormat, StdString, std_format_std_string, std_format_std_string_with_allocator);
+/// @brief implementation of `StdFormat` for `StdStringView`
+/// @return The `StdFormat` implementation
+static maybe_unused ImplTraitFor(StdFormat,
+								 StdStringView,
+								 std_format_std_stringview,
+								 std_format_std_stringview_with_allocator);
 #endif

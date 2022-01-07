@@ -1,8 +1,8 @@
 /// @file StdResult.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a struct template for representing the value of a fallible operation
-/// @version 0.1
-/// @date 2022-01-02
+/// @version 0.1.1
+/// @date 2022-01-07
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -203,18 +203,30 @@
 		/** @note Panics if `self` does not contain an error **/                                 \
 		StdError StdResultIdentifier(T, unwrap_err)(StdResult(T)* restrict self);                \
                                                                                                  \
-		bool StdResultIdentifier(T, as_bool)(const StdResult(T)* restrict self);                 \
-                                                                                                 \
-		StdString StdResultIdentifier(T, format)(const StdFormat* restrict self,                 \
-												 StdFormatSpecifier specifier);                  \
-                                                                                                 \
-		StdString StdResultIdentifier(T, format_with_allocator)(const StdFormat* restrict self,  \
-																StdFormatSpecifier specifier,    \
-																StdAllocator allocator);         \
-                                                                                                 \
-		static maybe_unused ImplTraitFor(StdFormat,                                              \
-										 StdResult(T),                                           \
-										 StdResultIdentifier(T, format),                         \
+		bool StdResultIdentifier(T, as_bool)(const StdResult(T)* restrict self);
+
+	/// @brief Instantiates the declarations for implementing the `StdFormat` trait for
+	/// `StdResult(T)` holding type `T`
+	///
+	/// Instantiates the struct, function, and variable declarations necessary for implementing
+	/// `StdFormat` for  `StdResult(T)`. This is separate from the main declaration macro,
+	/// to make `StdFormat` support for `StdResult(T)` optional (for cases where `T` does not
+	/// support `StdFormat`)
+	///
+	/// @param T - The type stored in the `StdResult(T)`
+	/// @ingroup std_result
+	#define DeclStdResultFormat(T)                                                              \
+                                                                                                \
+		StdString StdResultIdentifier(T, format)(const StdFormat* restrict self,                \
+												 StdFormatSpecifier specifier);                 \
+                                                                                                \
+		StdString StdResultIdentifier(T, format_with_allocator)(const StdFormat* restrict self, \
+																StdFormatSpecifier specifier,   \
+																StdAllocator allocator);        \
+                                                                                                \
+		static maybe_unused ImplTraitFor(StdFormat,                                             \
+										 StdResult(T),                                          \
+										 StdResultIdentifier(T, format),                        \
 										 StdResultIdentifier(T, format_with_allocator));
 
 	/// @brief Creates a `StdResult(T)` holding the given value
@@ -454,36 +466,68 @@
                                                                                                \
 		bool StdResultIdentifier(T, as_bool)(const StdResult(T)* restrict self) {              \
 			return std_result_is_ok(*self);                                                    \
-		}                                                                                      \
-                                                                                               \
-		StdString StdResultIdentifier(T, format)(const StdFormat* restrict self,               \
-												 StdFormatSpecifier specifier) {               \
-			return StdResultIdentifier(T, format_with_allocator)(self,                         \
-																 specifier,                    \
-																 std_allocator_new());         \
-		}                                                                                      \
-                                                                                               \
-		StdString StdResultIdentifier(T, format_with_allocator)(                               \
-			const StdFormat* restrict self,                                                    \
-			StdFormatSpecifier maybe_unused specifier,                                         \
-			StdAllocator allocator) {                                                          \
-                                                                                               \
-			std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT,                            \
-					   "Can't format StdResult with custom specifier");                        \
-                                                                                               \
-			let _self = static_cast(const StdResult(T)*)(self->m_self);                        \
-			if(_self->m_is_ok) {                                                               \
-				return std_format_with_allocator(AS_STRING(StdResult(T)) ": [is_ok: {}]",      \
-												 allocator,                                    \
-												 _self->m_is_ok);                              \
-			}                                                                                  \
-			else { /** NOLINT(readability-else-after-return) **/                               \
-				return std_format_with_allocator(                                              \
-					AS_STRING(StdResult(T)) ": [is_ok: {}, error: {}]",                        \
-					allocator,                                                                 \
-					_self->m_is_ok,                                                            \
-					as_format_t(StdError, _self->m_error));                                    \
-			}                                                                                  \
+		}
+
+	/// @brief Instantiates the definitions for implementing the `StdFormat` trait for
+	/// `StdResult(T)` holding type `T`
+	///
+	/// Instantiates the function definitions required for implementing `StdFormat` for
+	/// `StdResult(T)`. This is separate from the main implementation macro,
+	//	/// to make `StdFormat` support for `StdResult(T)` optional (for cases where `T` does not
+	//	/// support `StdFormat`)
+	///
+	/// @param T - The type stored in the `StdResult(T)`
+	/// @param TypeToFormatAs - The type of the `StdFormat` implementation to use to format `T`
+	/// Not all types can generically map correctly (e.g. `usize` will map to `u64` or `u32` in a
+	/// `_Generic`, breaking deduction), so this is used to ensure correct type matching
+	/// @ingroup std_result
+	#define ImplStdResultFormat(T, TypeToFormatAs)                                              \
+		StdString StdResultIdentifier(T, format)(const StdFormat* restrict self,                \
+												 StdFormatSpecifier specifier) {                \
+			return StdResultIdentifier(T, format_with_allocator)(self,                          \
+																 specifier,                     \
+																 std_allocator_new());          \
+		}                                                                                       \
+                                                                                                \
+		StdString StdResultIdentifier(T, format_with_allocator)(                                \
+			const StdFormat* restrict self,                                                     \
+			StdFormatSpecifier maybe_unused specifier,                                          \
+			StdAllocator allocator) {                                                           \
+                                                                                                \
+			std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT                              \
+						   || specifier.m_type == STD_FORMAT_TYPE_DEBUG,                        \
+					   "Can only format StdResult with default or debug format specifier");     \
+                                                                                                \
+			let _self = static_cast(const StdResult(T)*)(self->m_self);                         \
+			if(specifier.m_type == STD_FORMAT_TYPE_DEBUG) {                                     \
+				if(_self->m_is_ok) {                                                            \
+					return std_format_with_allocator(                                           \
+						AS_STRING(StdResult(T)) ": [is_ok: {D}, ok: {D}]",                      \
+						allocator,                                                              \
+						_self->m_is_ok,                                                         \
+						as_format_t(TypeToFormatAs, _self->m_ok));                              \
+				}                                                                               \
+				else { /** NOLINT(readability-else-after-return) **/                            \
+					return std_format_with_allocator(                                           \
+						AS_STRING(StdResult(T)) ": [is_ok: {D}, error: {D}]",                   \
+						allocator,                                                              \
+						_self->m_is_ok,                                                         \
+						as_format_t(StdError, _self->m_error));                                 \
+				}                                                                               \
+			}                                                                                   \
+			else {                                                                              \
+				if(_self->m_is_ok) {                                                            \
+					return std_format_with_allocator("Ok: {}",                                  \
+													 allocator,                                 \
+													 as_format_t(TypeToFormatAs, _self->m_ok)); \
+				}                                                                               \
+				else { /** NOLINT(readability-else-after-return) **/                            \
+					return std_format_with_allocator("Error: {}",                               \
+													 allocator,                                 \
+													 _self->m_is_ok,                            \
+													 as_format_t(StdError, _self->m_error));    \
+				}                                                                               \
+			}                                                                                   \
 		}
 
 	/// @brief Fully instantiates `StdResult(T)` holding type `T`
@@ -557,13 +601,73 @@ DeclStdResult(const_cstring);
 DeclStdResult(char_ptr);
 /// @brief Instantiate `StdResult(T)` for the builtin `const_char_ptr`
 DeclStdResult(const_char_ptr);
-/// @brief Instantiate `StdResult(T)` for the builtin `cstring_ptr`
-DeclStdResult(cstring_ptr);
-/// @brief Instantiate `StdResult(T)` for the builtin `const_cstring_ptr`
-DeclStdResult(const_cstring_ptr);
 /// @brief Instantiate `StdResult(T)` for the builtin `StdString`
 DeclStdResult(StdString);
 /// @brief Instantiate `StdResult(T)` for the builtin `StdStringView`
 DeclStdResult(StdStringView);
 
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `bool`
+DeclStdResultFormat(bool);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `char`
+DeclStdResultFormat(char);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `u8`
+DeclStdResultFormat(u8);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `u16`
+DeclStdResultFormat(u16);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `u32`
+DeclStdResultFormat(u32);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `u64`
+DeclStdResultFormat(u64);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `usize`
+DeclStdResultFormat(usize);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `i8`
+DeclStdResultFormat(i8);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `i16`
+DeclStdResultFormat(i16);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `i32`
+DeclStdResultFormat(i32);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `i64`
+DeclStdResultFormat(i64);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `isize`
+DeclStdResultFormat(isize);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `f32`
+DeclStdResultFormat(f32);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `f64`
+DeclStdResultFormat(f64);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `u8_ptr`
+DeclStdResultFormat(u8_ptr);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `u16_ptr`
+DeclStdResultFormat(u16_ptr);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `u32_ptr`
+DeclStdResultFormat(u32_ptr);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `u64_ptr`
+DeclStdResultFormat(u64_ptr);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `usize_ptr`
+DeclStdResultFormat(usize_ptr);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `i8_ptr`
+DeclStdResultFormat(i8_ptr);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `i16_ptr`
+DeclStdResultFormat(i16_ptr);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `i32_ptr`
+DeclStdResultFormat(i32_ptr);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `i64_ptr`
+DeclStdResultFormat(i64_ptr);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `isize_ptr`
+DeclStdResultFormat(isize_ptr);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `f32_ptr`
+DeclStdResultFormat(f32_ptr);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `f64_ptr`
+DeclStdResultFormat(f64_ptr);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `cstring`
+DeclStdResultFormat(cstring);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `const_cstring`
+DeclStdResultFormat(const_cstring);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `char_ptr`
+DeclStdResultFormat(char_ptr);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `const_char_ptr`
+DeclStdResultFormat(const_char_ptr);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `StdString`
+DeclStdResultFormat(StdString);
+// @brief Instantiate `StdFormat` implementation for `StdResult(T)` for the builtin `StdStringView`
+DeclStdResultFormat(StdStringView);
 #endif // STD_RESULT
