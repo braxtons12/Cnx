@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief StdFormat brings human readable string formatting, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
-/// @version 0.1
-/// @date 2022-01-02
+/// @version 0.1.1
+/// @date 2022-01-07
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -160,6 +160,9 @@
 /// 3. ```'X'```: upper-case hexadecimal. Applies to integral types.
 /// 4. ```'e'```: Scientific notation. Applies to floating point types. Accepts an additional
 /// numeric postfix to set the number of digits after the decimal point.
+/// 4. ```'D'```: Debug formatting. For numeric types, this is identical to the default formatting.
+/// For other types, this should be used to request formatting in a structural representation
+/// instead of a human-presentable one
 ///
 /// The default for integral types is decimal, and the default for floating point numbers is
 /// scientific. The default number of digits after the decimal point for floating point types is 3.
@@ -171,7 +174,8 @@ typedef enum StdFormatTypes {
 	STD_FORMAT_TYPE_DECIMAL = 'd',
 	STD_FORMAT_TYPE_HEX_LOWER = 'x',
 	STD_FORMAT_TYPE_HEX_UPPER = 'X',
-	STD_FORMAT_TYPE_SCIENTIFIC = 'e'
+	STD_FORMAT_TYPE_SCIENTIFIC = 'e',
+	STD_FORMAT_TYPE_DEBUG = 'D'
 } StdFormatTypes;
 
 	/// @brief The default number of significant figures for floating point formatting
@@ -280,7 +284,7 @@ StdString std_vformat_with_allocator(restrict const_cstring format_string,
 
 	#if STD_PLATFORM_APPLE
 		#if STD_AS_FORMAT_USES_USER_SUPPLIED_TYPES
-			// clang-format off
+		// clang-format off
 		/// @brief Converts the given variable into its associated `StdFormat` Trait implementation
 		///
 		/// There must be an implementation of `StdFormat` for the type of `x` and `x` must be an
@@ -379,7 +383,7 @@ StdString std_vformat_with_allocator(restrict const_cstring format_string,
 		#endif // STD_AS_FORMAT_USES_USER_SUPPLIED_TYPES
 	#else
 		#if STD_AS_FORMAT_USES_USER_SUPPLIED_TYPES
-			// clang-format off
+		// clang-format off
 		/// @brief Converts the given variable into its associated `StdFormat` Trait implementation
 		///
 		/// There must be an implementation of `StdFormat` for the type of `x` and `x` must be an

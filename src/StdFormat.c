@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief StdFormat brings human readable string formatting, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
-/// @version 0.1
-/// @date 2022-01-02
+/// @version 0.1.1
+/// @date 2022-01-07
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -93,7 +93,7 @@ always_inline static inline u8 std_get_digit_i64(i64 num, usize digit) {
 }
 
 #if STD_PLATFORM_APPLE
-// clang-format off
+	// clang-format off
 #define std_get_digit(num, digit) _Generic((num), 		\
 		char  	: 	std_get_digit_u64, 					\
 		u8  	: 	std_get_digit_u64, 					\
@@ -108,7 +108,7 @@ always_inline static inline u8 std_get_digit_i64(i64 num, usize digit) {
 		isize 	: 	std_get_digit_i64)(num, digit)
 // clang-format on
 #else
-// clang-format off
+	// clang-format off
 #define std_get_digit(num, digit) _Generic((num), 		\
 		char  	: 	std_get_digit_u64, 					\
 		u8  	: 	std_get_digit_u64, 					\
@@ -303,7 +303,7 @@ StdString std_format_char_with_allocator(const StdFormat* restrict self,
 	std_assert(specifier.m_type != STD_FORMAT_TYPE_SCIENTIFIC,
 			   "Cannot format char as scientific notation");
 
-	if(specifier.m_type == STD_FORMAT_TYPE_DEFAULT) {
+	if(specifier.m_type == STD_FORMAT_TYPE_DEFAULT || specifier.m_type == STD_FORMAT_TYPE_DEBUG) {
 		return std_string_from_cstring_with_allocator(static_cast(const_cstring)(self->m_self),
 													  1,
 													  allocator);
@@ -330,7 +330,8 @@ StdString std_format_u8_with_allocator(const StdFormat* restrict self,
 
 	let num = *static_cast(const u8*)(self->m_self);
 	return (specifier.m_type == STD_FORMAT_TYPE_DEFAULT
-			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL) ?
+			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL
+			|| specifier.m_type == STD_FORMAT_TYPE_DEBUG) ?
 			   std_format_decimal(num, NUM_DIGITS_U8, allocator) :
 				 std_format_hex(num, NUM_HEX_DIGITS_U8, specifier.m_type, allocator);
 }
@@ -347,7 +348,8 @@ StdString std_format_u16_with_allocator(const StdFormat* restrict self,
 
 	let num = *static_cast(const u16*)(self->m_self);
 	return (specifier.m_type == STD_FORMAT_TYPE_DEFAULT
-			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL) ?
+			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL
+			|| specifier.m_type == STD_FORMAT_TYPE_DEBUG) ?
 			   std_format_decimal(num, NUM_DIGITS_U16, allocator) :
 				 std_format_hex(num, NUM_HEX_DIGITS_U16, specifier.m_type, allocator);
 }
@@ -364,7 +366,8 @@ StdString std_format_u32_with_allocator(const StdFormat* restrict self,
 
 	let num = *static_cast(const u32*)(self->m_self);
 	return (specifier.m_type == STD_FORMAT_TYPE_DEFAULT
-			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL) ?
+			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL
+			|| specifier.m_type == STD_FORMAT_TYPE_DEBUG) ?
 			   std_format_decimal(num, NUM_DIGITS_U32, allocator) :
 				 std_format_hex(num, NUM_HEX_DIGITS_U32, specifier.m_type, allocator);
 }
@@ -381,7 +384,8 @@ StdString std_format_u64_with_allocator(const StdFormat* restrict self,
 
 	let num = *static_cast(const u64*)(self->m_self);
 	return (specifier.m_type == STD_FORMAT_TYPE_DEFAULT
-			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL) ?
+			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL
+			|| specifier.m_type == STD_FORMAT_TYPE_DEBUG) ?
 			   std_format_decimal(num, NUM_DIGITS_U64, allocator) :
 				 std_format_hex(num, NUM_HEX_DIGITS_U64, specifier.m_type, allocator);
 }
@@ -398,7 +402,8 @@ StdString std_format_i8_with_allocator(const StdFormat* restrict self,
 
 	let num = *static_cast(const i8*)(self->m_self);
 	return (specifier.m_type == STD_FORMAT_TYPE_DEFAULT
-			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL) ?
+			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL
+			|| specifier.m_type == STD_FORMAT_TYPE_DEBUG) ?
 			   std_format_decimal(num, NUM_DIGITS_I8, allocator) :
 				 std_format_hex(static_cast(u64)(num),
 							  NUM_HEX_DIGITS_I8,
@@ -418,7 +423,8 @@ StdString std_format_i16_with_allocator(const StdFormat* restrict self,
 
 	let num = *static_cast(const i16*)(self->m_self);
 	return (specifier.m_type == STD_FORMAT_TYPE_DEFAULT
-			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL) ?
+			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL
+			|| specifier.m_type == STD_FORMAT_TYPE_DEBUG) ?
 			   std_format_decimal(num, NUM_DIGITS_I16, allocator) :
 				 std_format_hex(static_cast(u64)(num),
 							  NUM_HEX_DIGITS_I16,
@@ -438,7 +444,8 @@ StdString std_format_i32_with_allocator(const StdFormat* restrict self,
 
 	let num = *static_cast(const i32*)(self->m_self);
 	return (specifier.m_type == STD_FORMAT_TYPE_DEFAULT
-			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL) ?
+			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL
+			|| specifier.m_type == STD_FORMAT_TYPE_DEBUG) ?
 			   std_format_decimal(num, NUM_DIGITS_I32, allocator) :
 				 std_format_hex(static_cast(u64)(num),
 							  NUM_HEX_DIGITS_I32,
@@ -458,7 +465,8 @@ StdString std_format_i64_with_allocator(const StdFormat* restrict self,
 
 	let num = *static_cast(const i64*)(self->m_self);
 	return (specifier.m_type == STD_FORMAT_TYPE_DEFAULT
-			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL) ?
+			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL
+			|| specifier.m_type == STD_FORMAT_TYPE_DEBUG) ?
 			   std_format_decimal(num, NUM_DIGITS_I64, allocator) :
 				 std_format_hex(static_cast(u64)(num),
 							  NUM_HEX_DIGITS_I64,
@@ -542,7 +550,8 @@ std_format_f64_with_allocator__(f64 num, StdFormatSpecifier specifier, StdAlloca
 	ignore(frexp(num, &exponent_base_2));
 	let exponent = static_cast(i64)(static_cast(f32)(exponent_base_2) * LN_2 / LN_10);
 	return (specifier.m_type == STD_FORMAT_TYPE_DEFAULT
-			|| specifier.m_type == STD_FORMAT_TYPE_SCIENTIFIC) ?
+			|| specifier.m_type == STD_FORMAT_TYPE_SCIENTIFIC
+			|| specifier.m_type == STD_FORMAT_TYPE_DEBUG) ?
 			   std_format_f64_scientific(num / powers_of_10[exponent],
 										 exponent,
 										 specifier.m_num_sig_figs,
@@ -594,7 +603,8 @@ StdString std_format_ptr_with_allocator(const StdFormat* restrict self,
 	let num = static_cast(usize)(static_cast(void*)(self->m_self));
 	let_mut string = std_string_new_with_capacity_with_allocator(2 + NUM_HEX_DIGITS_PTR, allocator);
 
-	if(specifier.m_type == STD_FORMAT_TYPE_DEFAULT || specifier.m_type == STD_FORMAT_TYPE_HEX_LOWER)
+	if(specifier.m_type == STD_FORMAT_TYPE_DEFAULT || specifier.m_type == STD_FORMAT_TYPE_HEX_LOWER
+	   || specifier.m_type == STD_FORMAT_TYPE_DEBUG)
 	{
 		std_string_append(string, "0x");
 		ranged_for(i, 0U, NUM_HEX_DIGITS_PTR) {
@@ -769,7 +779,7 @@ always_inline static inline usize std_format_get_num_sig_figs_from_substring(
 bool std_format_is_char_valid_in_specifier(char character) {
 	return character == STD_FORMAT_TYPE_DECIMAL || character == STD_FORMAT_TYPE_HEX_LOWER
 		   || character == STD_FORMAT_TYPE_HEX_UPPER || character == STD_FORMAT_TYPE_SCIENTIFIC
-		   || (character >= '0' && character <= '9');
+		   || character == STD_FORMAT_TYPE_DEBUG || (character >= '0' && character <= '9');
 }
 
 StdResult(StdVector(StdFormatVariant))
@@ -889,6 +899,16 @@ StdResult(StdVector(StdFormatVariant))
 					vec,
 					std_format_pair_from(((StdFormatSpecifier){
 						.m_type = STD_FORMAT_TYPE_SCIENTIFIC,
+						.m_num_sig_figs = std_format_get_num_sig_figs_from_substring(format_string,
+																					 length,
+																					 i + 1)})));
+				pushed_specifier = true;
+			}
+			else if(format_string[i] == STD_FORMAT_TYPE_DEBUG) {
+				std_vector_push_back(
+					vec,
+					std_format_pair_from(((StdFormatSpecifier){
+						.m_type = STD_FORMAT_TYPE_DEBUG,
 						.m_num_sig_figs = std_format_get_num_sig_figs_from_substring(format_string,
 																					 length,
 																					 i + 1)})));
