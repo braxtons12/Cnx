@@ -113,6 +113,10 @@
             </dt>
             <dd>Instantiates the declarations for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></dd>
             <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaea7a1fa6af7b4a55216ccf30617e31c8" class="m-doc">DeclStdResultFormat</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>Instantiates the declarations for implementing the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></dd>
+            <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga45604f9f51cb2d871049f911e32047db" class="m-doc">Ok</a>(</span><span class="m-doc-wrap">T,
               value)</span>
             </dt>
@@ -170,6 +174,11 @@
             </dt>
             <dd>Instantiates the definitions for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></dd>
             <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5b629471bdb765a83a431dc93443a47a" class="m-doc">ImplStdResultFormat</a>(</span><span class="m-doc-wrap">T,
+              TypeToFormatAs)</span>
+            </dt>
+            <dd>Instantiates the definitions for implementing the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></dd>
+            <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga80ec565de70838a5fbc5931c76c10b92" class="m-doc">DeclAndImplStdResult</a>(</span><span class="m-doc-wrap">T)</span>
             </dt>
             <dd>Fully instantiates <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></dd>
@@ -212,6 +221,24 @@
               </tbody>
             </table>
 <p>Instantiates the struct, function, and variable declarations necessary for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></p>
+          </div></section>
+          <section class="m-doc-details" id="gaea7a1fa6af7b4a55216ccf30617e31c8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaea7a1fa6af7b4a55216ccf30617e31c8" class="m-doc-self">DeclStdResultFormat</a>(</span><span class="m-doc-wrap">T)</span>
+            </h3>
+            <p>Instantiates the declarations for implementing the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The type stored in the <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></td>
+                </tr>
+              </tbody>
+            </table>
+<p>Instantiates the struct, function, and variable declarations necessary for implementing <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code>. This is separate from the main declaration macro, to make <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> support for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> optional (for cases where <code>T</code> does not support <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code>)</p>
           </div></section>
           <section class="m-doc-details" id="ga45604f9f51cb2d871049f911e32047db"><div>
             <h3>
@@ -541,6 +568,29 @@
               </tbody>
             </table>
 <p>Instantiates the function and variable definitions required for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></p>
+          </div></section>
+          <section class="m-doc-details" id="ga5b629471bdb765a83a431dc93443a47a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5b629471bdb765a83a431dc93443a47a" class="m-doc-self">ImplStdResultFormat</a>(</span><span class="m-doc-wrap">T,
+              TypeToFormatAs)</span>
+            </h3>
+            <p>Instantiates the definitions for implementing the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The type stored in the <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></td>
+                </tr>
+                <tr>
+                  <td>TypeToFormatAs</td>
+                  <td>- The type of the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation to use to format <code>T</code> Not all types can generically map correctly (e.g. <code>usize</code> will map to <code>u64</code> or <code>u32</code> in a <code>_Generic</code>, breaking deduction), so this is used to ensure correct type matching</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Instantiates the function definitions required for implementing <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code>. This is separate from the main implementation macro,</p>
           </div></section>
           <section class="m-doc-details" id="ga80ec565de70838a5fbc5931c76c10b92"><div>
             <h3>

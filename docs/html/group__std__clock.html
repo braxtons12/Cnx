@@ -50,23 +50,750 @@
             <li>
               Reference
               <ul>
+                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#enum-members">Enums</a></li>
+                <li><a href="#typedef-members">Typedefs</a></li>
                 <li><a href="#func-members">Functions</a></li>
+                <li><a href="#var-members">Variables</a></li>
+                <li><a href="#define-members">Defines</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-<p>The <code>StdClock</code> module provides direct functions as well as the <code>StdClock</code> Trait for getting the current time and resolution from various system clocks</p>
+<p>The <code><a href="structStdClock.html" class="m-doc">StdClock</a></code> module provides types and functions for working with system, local, and global clocks. It provides functionality similar to C++&#x27;s <code>std::chrono</code> clocks and makes cross-platform time-related operations simple and straight forward. Access to and functionality of the realtime system clock, a high-resolution monotonic clock, a realtime UTC clock, and realtime local time clock are all provided.</p><p>The system clock (<code>std_system_clock</code>) and related functions always operate in local machine time, operating relative to the UNIX epoch. On Windows, machine time is traditionally in local time. On other platforms, it is usually in UTC.</p><p>The steady clock (or monotonic clock, <code>std_steady_clock</code>) is a high-resolution monotonic clock suitable for performance, timing, metrics, etc. It is only available if a monotonic clock is available and supported on the being-compiled-for platform (<code>STD_NO_MONOTONIC_CLOCK</code> must be false).</p><p>The generic high resolution clock (<code>std_high_resolution_clock</code>) is the highest resolution clock available and supported on the system. If <code>std_steady_clock</code> is available, <code>std_high_resolution_clock</code> will be equivalent to it. Otherwise, it will be <code>std_system_clock</code>. <code>std_high_resolution_clock</code> is provided for convenience, but because of the uncertainty of what clock it will actually be if perfectly accurate timing is necessary, it is preferred to check for <code>std_steady_clock</code> availability explicitly.</p><p>The UTC clock (<code>std_utc_clock</code>) and related functions operate in UTC mean time, operating relative to the UNIX epoch.</p><p>The local time clock (<code>std_local_clock</code>) and related functions operate in local timezone time, operating relative to the UNIX epoch.</p><p>Example:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&lt;C2nxt/time/StdClock.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdIO.h&gt;</span><span class="cp"></span>
+
+<span class="c1">// print the local time formatted in ISO 8601 format (YYYY-MM-DD|H:M:S+-hh:mm))</span>
+<span class="kt">void</span> <span class="nf">local_time_example</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let</span> <span class="n">current_time</span> <span class="o">=</span> <span class="n">std_clock_now</span><span class="p">(</span><span class="o">&amp;</span><span class="n">std_local_clock</span><span class="p">);</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">as_format_t</span><span class="p">(</span><span class="n">StdTimePoint</span><span class="p">,</span> <span class="n">current_time</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="c1">// time a function call and print the duration in debug format</span>
+<span class="kt">void</span> <span class="nf">time_to_call_example</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// `std_steady_clock` is only available if a monotonic clock is available</span>
+    <span class="cp">#if STD_NO_MONOTONIC_CLOCK</span>
+        <span class="n">let</span> <span class="n">timer_clock_ptr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">std_system_clock</span><span class="p">;</span>
+    <span class="cp">#else</span>
+        <span class="n">let</span> <span class="n">timer_clock_ptr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">std_steady_clock</span><span class="p">;</span>
+    <span class="cp">#endif</span>
+    <span class="c1">// at this point, `timer_clock_ptr` is equivalent to `&amp;std_high_resolution_clock`.</span>
+    <span class="c1">// On platforms when one is available, `std_high_resolution_clock` will be the monotonic</span>
+    <span class="c1">// `std_steady_clock`, otherwise it will be `std_system_clock`</span>
+    <span class="n">let</span> <span class="n">start_time</span> <span class="o">=</span> <span class="n">std_clock_now</span><span class="p">(</span><span class="n">timer_clock_ptr</span><span class="p">);</span>
+    <span class="n">local_time_example</span><span class="p">();</span>
+    <span class="n">let</span> <span class="n">end_time</span> <span class="o">=</span> <span class="n">std_clock_now</span><span class="p">(</span><span class="n">timer_clock_ptr</span><span class="p">);</span>
+    <span class="n">let</span> <span class="n">difference</span> <span class="o">=</span> <span class="n">std_time_point_subtract</span><span class="p">(</span><span class="n">end_time</span><span class="p">,</span> <span class="n">start_time</span><span class="p">).</span><span class="n">time_since_epoch</span><span class="p">;</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;Took {D} to call local_time_example()&quot;</span><span class="p">,</span> <span class="n">difference</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// print the current UTC time formatted in ISO 8601 format (YYYY-MM-DD|H:M:S+-hh:mm))</span>
+<span class="kt">void</span> <span class="nf">utc_time_example</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let</span> <span class="n">current_utc_time</span> <span class="o">=</span> <span class="n">std_clock_now</span><span class="p">(</span><span class="o">&amp;</span><span class="n">std_utc_clock</span><span class="p">);</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">as_format_t</span><span class="p">(</span><span class="n">StdTimePoint</span><span class="p">,</span> <span class="n">current_utc_time</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="c1">// print the current system time formatted in ISO 8601 format (YYYY-MM-DD|H:M:S+-hh:mm))</span>
+<span class="c1">// (This should be local time on Windows, UTC time on others)</span>
+<span class="kt">void</span> <span class="nf">system_time_example</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let</span> <span class="n">current_system_time</span> <span class="o">=</span> <span class="n">std_clock_now</span><span class="p">(</span><span class="o">&amp;</span><span class="n">std_system_clock</span><span class="p">);</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">as_format_t</span><span class="p">(</span><span class="n">StdTimePoint</span><span class="p">,</span> <span class="n">current_system_time</span><span class="p">));</span>
+<span class="p">}</span></pre>
+        <section id="nested-classes">
+          <h2><a href="#nested-classes">Classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              struct <a href="structStdClock.html" class="m-doc">StdClock</a>
+            </dt>
+            <dd>The <code><a href="structStdClock.html" class="m-doc">StdClock</a></code> trait defines the interface that must be implemented by any C2nxt-compatible clock. It intentionally mirrors the API of C++&#x27;s standard clock types, along with some additional functionality.</dd>
+          </dl>
+        </section>
+        <section id="enum-members">
+          <h2><a href="#enum-members">Enums</a></h2>
+          <dl class="m-doc">
+            <dt id="ga30dd26c5c2dc57a87c8b3204ca2dbf1f">
+              <span class="m-doc-wrap-bumper">enum <a href="#ga30dd26c5c2dc57a87c8b3204ca2dbf1f" class="m-doc-self">StdClockResolution</a> { </span><span class="m-doc-wrap"><a href="#gga30dd26c5c2dc57a87c8b3204ca2dbf1fab8f048bd1f7ea1106775d125df35da0b" class="m-doc">STD_CLOCK_NANOSECONDS</a>,
+              <a href="#gga30dd26c5c2dc57a87c8b3204ca2dbf1fab99fc9f5dd2dc56711301ef97c7ecd3f" class="m-doc">STD_CLOCK_MICROSECONDS</a>,
+              <a href="#gga30dd26c5c2dc57a87c8b3204ca2dbf1fa161443a0e631924c8714ac7fff947bf3" class="m-doc">STD_CLOCK_MILLISECONDS</a>,
+              <a href="#gga30dd26c5c2dc57a87c8b3204ca2dbf1faabbb533f3b886bed4dda65b28f89e766" class="m-doc">STD_CLOCK_SECONDS</a> }</span>
+            </dt>
+            <dd><code>StdClockResolution</code> lists the valid resolutions for <code><a href="structStdClock.html" class="m-doc">StdClock</a></code> compatible clocks</dd>
+          </dl>
+        </section>
+        <section id="typedef-members">
+          <h2><a href="#typedef-members">Typedefs</a></h2>
+          <dl class="m-doc">
+            <dt id="ga9286945aa0b19e4a22e41c8129411885">
+              using <a href="#ga9286945aa0b19e4a22e41c8129411885" class="m-doc-self">StdClockResolution</a> = enum <a href="group__std__clock.html#ga30dd26c5c2dc57a87c8b3204ca2dbf1f" class="m-doc">StdClockResolution</a>
+            </dt>
+            <dd><code>StdClockResolution</code> lists the valid resolutions for <code><a href="structStdClock.html" class="m-doc">StdClock</a></code> compatible clocks</dd>
+          </dl>
+        </section>
         <section id="func-members">
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#gaf637e145c143deb6079b7b88381baedc" class="m-doc">std_clock_now</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> corresponding to the current time on the given clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#ga11035df98f4fd473cf0d32a0b5fb36f2" class="m-doc">std_clock_min_time_point</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the minimum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the given clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#gab1ef136c850b27ad1acfc684a2879c6c" class="m-doc">std_clock_max_time_point</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the maximum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the given clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__std__clock.html#ga30dd26c5c2dc57a87c8b3204ca2dbf1f" class="m-doc">StdClockResolution</a> <a href="#gaf047f03a540ecdaf3ba22e30bfb2120c" class="m-doc">std_clock_resolution</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the resolution of the given clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdRatio.html" class="m-doc">StdRatio</a> <a href="#gaffbd7eafe5c39f130debde914667f004" class="m-doc">std_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the resolution of the given clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#gad3d53e0addc6b0f010aa33a52f1e8392" class="m-doc">std_clock_format</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>Implements the allocator un-aware portion of the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for all <code><a href="structStdClock.html" class="m-doc">StdClock</a></code>s.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#ga59f28e265e8a1df68172351b6956094b" class="m-doc">std_clock_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
+            </dt>
+            <dd>Implements the allocator aware portion of the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for all <code><a href="structStdClock.html" class="m-doc">StdClock</a></code>s.</dd>
             <dt id="ga1ae126a6aa598bee7bc84d2fcfe6073a">
               <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> <a href="#ga1ae126a6aa598bee7bc84d2fcfe6073a" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
-              StdClock,
-              std_clock_format,
-              std_clock_format_with_allocator)</span>
+              <a href="structStdClock.html" class="m-doc">StdClock</a>,
+              <a href="group__std__clock.html#gad3d53e0addc6b0f010aa33a52f1e8392" class="m-doc">std_<wbr />clock_<wbr />format</a>,
+              <a href="group__std__clock.html#ga59f28e265e8a1df68172351b6956094b" class="m-doc">std_<wbr />clock_<wbr />format_<wbr />with_<wbr />allocator</a>)</span>
             </dt>
-            <dd>Implements the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for <code>StdClock</code></dd>
+            <dd>Implements the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for <code><a href="structStdClock.html" class="m-doc">StdClock</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#ga9f7e9b73f39bb39d135e6d776906ab59" class="m-doc">std_system_clock_now</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> corresponding to the current time on the system clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#gaa9e31f43a4262e2e11c020eefc55b64d" class="m-doc">std_system_clock_min_time_point</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the minimum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the system clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#gaf587f9e737fe32aec4aac3990f989e47" class="m-doc">std_system_clock_max_time_point</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the maximum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the system clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__std__clock.html#ga30dd26c5c2dc57a87c8b3204ca2dbf1f" class="m-doc">StdClockResolution</a> <a href="#gac560bc2995b36972cc285b16478e5dd0" class="m-doc">std_system_clock_resolution</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the resolution of the system clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdRatio.html" class="m-doc">StdRatio</a> <a href="#gaa2697f890a5a52cfda66891ce549a3c0" class="m-doc">std_system_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the resolution of the system clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#gaee0f976fb238fb6fda05c40b37e41ae2" class="m-doc">std_high_resolution_clock_now</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> corresponding to the current time on the high resolution clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#ga537f61f87da0593e42c500d633bed256" class="m-doc">std_high_resolution_clock_min_time_point</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the minimum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the high resolution clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#ga50f8e02a536d7cae2c2cd69b34fb1dbd" class="m-doc">std_high_resolution_clock_max_time_point</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the maximum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the high resolution clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__std__clock.html#ga30dd26c5c2dc57a87c8b3204ca2dbf1f" class="m-doc">StdClockResolution</a> <a href="#ga885d3c981af1210afd23a19cfcbfa902" class="m-doc">std_high_resolution_clock_resolution</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the resolution of the high resolution clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdRatio.html" class="m-doc">StdRatio</a> <a href="#ga26d7bc00022c3520e19a15f50d4d1e35" class="m-doc">std_high_resolution_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the resolution of the high resolution clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#ga11339b0b2cbf29c2065a5dd7ead9a1b1" class="m-doc">std_utc_clock_now</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> corresponding to the current time on the UTC clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#ga2f32b78e21a373b980363bee5704497d" class="m-doc">std_utc_clock_min_time_point</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the minimum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the UTC clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#ga6122bb5ce2c903cc40fc770367d1785f" class="m-doc">std_utc_clock_max_time_point</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the maximum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the UTC clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__std__clock.html#ga30dd26c5c2dc57a87c8b3204ca2dbf1f" class="m-doc">StdClockResolution</a> <a href="#ga53780f99ccacf2bc493f8a7ae3130c5b" class="m-doc">std_utc_clock_resolution</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the resolution of the UTC clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdRatio.html" class="m-doc">StdRatio</a> <a href="#ga6dd858995e6f7b5009fc7777beb23e54" class="m-doc">std_utc_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the resolution of the UTC clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#gad1005e8d1e8143dfb4ef775181cb8483" class="m-doc">std_local_clock_now</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> corresponding to the current time on the local clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#ga07c57374df892e06be207665796199e0" class="m-doc">std_local_clock_min_time_point</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the minimum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the local clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#gaa5343d41275205997abfe3d3fcdc5a35" class="m-doc">std_local_clock_max_time_point</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the maximum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the local clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__std__clock.html#ga30dd26c5c2dc57a87c8b3204ca2dbf1f" class="m-doc">StdClockResolution</a> <a href="#gabdcf18cd9781ed9ea89e65571d44f017" class="m-doc">std_local_clock_resolution</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the resolution of the local clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdRatio.html" class="m-doc">StdRatio</a> <a href="#ga912a3abaa1ae6fde7779d4aa8b079245" class="m-doc">std_local_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the resolution of the local clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#ga3a873aa7996fcaab46404a5aab857f3f" class="m-doc">std_convert_utc_to_local_time</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> utc)</span>
+            </dt>
+            <dd>Converts the given <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> in UTC time to a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> in local time.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#ga6fcea39fad25367373e9d9b5bb67f363" class="m-doc">std_convert_local_time_to_utc</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> local_time)</span>
+            </dt>
+            <dd>Converts the given <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> in local time to a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> in UTC time.</dd>
           </dl>
+        </section>
+        <section id="var-members">
+          <h2><a href="#var-members">Variables</a></h2>
+          <dl class="m-doc">
+            <dt id="ga274add7dab5b6724af6d608608b74881">
+              static <a href="group__std__def.html#ga045dd54932944d8830380f4596d64446" class="m-doc">let</a> <a href="#ga274add7dab5b6724af6d608608b74881" class="m-doc-self">std_system_clock</a>
+            </dt>
+            <dd>The system clock.</dd>
+            <dt id="ga9cb3ba47dd39601803b82c40d2448f65">
+              static <a href="group__std__def.html#ga045dd54932944d8830380f4596d64446" class="m-doc">let</a> <a href="#ga9cb3ba47dd39601803b82c40d2448f65" class="m-doc-self">std_high_resolution_clock</a>
+            </dt>
+            <dd>The high resolution clock This will be equivalent to <code>std_system_clock</code> if <code>STD_NO_MONOTONIC_CLOCK</code> is true (in which case a monotonic clock is not supported on the being-compiled-for platform). Otherwise, it will be a monotonic clock equivalent to <code>std_steady_clock</code></dd>
+            <dt id="ga3d23d1b695c3760e02ba74b5ddc6d85a">
+              static <a href="group__std__def.html#ga045dd54932944d8830380f4596d64446" class="m-doc">let</a> <a href="#ga3d23d1b695c3760e02ba74b5ddc6d85a" class="m-doc-self">std_utc_clock</a>
+            </dt>
+            <dd>The UTC clock.</dd>
+            <dt id="ga2594eca98dcb85e7effbed1d2b4e8490">
+              static <a href="group__std__def.html#ga045dd54932944d8830380f4596d64446" class="m-doc">let</a> <a href="#ga2594eca98dcb85e7effbed1d2b4e8490" class="m-doc-self">std_local_clock</a>
+            </dt>
+            <dd>The local time clock.</dd>
+          </dl>
+        </section>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt id="gaf242a897f7989994e589d84345fd2d29">
+              <span class="m-doc-wrap-bumper">#define <a href="#gaf242a897f7989994e589d84345fd2d29" class="m-doc-self">STD_NO_MONOTONIC_CLOCK</a></span>
+            </dt>
+            <dd>If <code>STD_NO_MONOTONIC_CLOCK</code> is true, then either C2nxt doesn&#x27;t support a monotonic clock on the being-compiled-for-platform, the being-compiled-for platform itself doesn&#x27;t, or both, and std_steady_clock and related functions are not available.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="gaf637e145c143deb6079b7b88381baedc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaf637e145c143deb6079b7b88381baedc" class="m-doc-self">std_clock_now</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span></span>
+            </h3>
+            <p>Returns a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> corresponding to the current time on the given clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdClock.html" class="m-doc">StdClock</a></code> to retrieve the current time from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The current time on <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga11035df98f4fd473cf0d32a0b5fb36f2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga11035df98f4fd473cf0d32a0b5fb36f2" class="m-doc-self">std_clock_min_time_point</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span></span>
+            </h3>
+            <p>Returns the minimum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the given clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdClock.html" class="m-doc">StdClock</a></code> to get the minimum possible associatable <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The minimum <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> associatable with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gab1ef136c850b27ad1acfc684a2879c6c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gab1ef136c850b27ad1acfc684a2879c6c" class="m-doc-self">std_clock_max_time_point</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span></span>
+            </h3>
+            <p>Returns the maximum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the given clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdClock.html" class="m-doc">StdClock</a></code> to get the maximum possible associatable <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The minimum <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> associatable with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaf047f03a540ecdaf3ba22e30bfb2120c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="group__std__clock.html#ga30dd26c5c2dc57a87c8b3204ca2dbf1f" class="m-doc">StdClockResolution</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaf047f03a540ecdaf3ba22e30bfb2120c" class="m-doc-self">std_clock_resolution</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span></span>
+            </h3>
+            <p>Returns the resolution of the given clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdClock.html" class="m-doc">StdClock</a></code> to get the resolution of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The resolution of <code>self</code> as a <code>StdClockResolution</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaffbd7eafe5c39f130debde914667f004"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdRatio.html" class="m-doc">StdRatio</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaffbd7eafe5c39f130debde914667f004" class="m-doc-self">std_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span></span>
+            </h3>
+            <p>Returns the resolution of the given clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdClock.html" class="m-doc">StdClock</a></code> to get the resolution of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The resolution of <code>self</code> as a <code><a href="structStdRatio.html" class="m-doc">StdRatio</a></code> relative to seconds</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gad3d53e0addc6b0f010aa33a52f1e8392"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gad3d53e0addc6b0f010aa33a52f1e8392" class="m-doc-self">std_clock_format</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>Implements the allocator un-aware portion of the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for all <code><a href="structStdClock.html" class="m-doc">StdClock</a></code>s.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementor to get the text representation of</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The <code><a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a></code> specifying how to format the text</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The text representation of <code>self</code> as a <code><a href="structStdString.html" class="m-doc">StdString</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga59f28e265e8a1df68172351b6956094b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga59f28e265e8a1df68172351b6956094b" class="m-doc-self">std_clock_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
+            </h3>
+            <p>Implements the allocator aware portion of the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for all <code><a href="structStdClock.html" class="m-doc">StdClock</a></code>s.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementor to get the text representation of</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The <code><a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a></code> specifying how to format the text</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to use for any necessary memory allocation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The text representation of <code>self</code> as a <code><a href="structStdString.html" class="m-doc">StdString</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga9f7e9b73f39bb39d135e6d776906ab59"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga9f7e9b73f39bb39d135e6d776906ab59" class="m-doc-self">std_system_clock_now</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Returns a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> corresponding to the current time on the system clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The current time on the system clock</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaa9e31f43a4262e2e11c020eefc55b64d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaa9e31f43a4262e2e11c020eefc55b64d" class="m-doc-self">std_system_clock_min_time_point</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Returns the minimum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the system clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The minimum <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> associatable with the system clock</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaf587f9e737fe32aec4aac3990f989e47"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaf587f9e737fe32aec4aac3990f989e47" class="m-doc-self">std_system_clock_max_time_point</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Returns the maximum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the system clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The maximum <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> associatable with the system clock</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gac560bc2995b36972cc285b16478e5dd0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="group__std__clock.html#ga30dd26c5c2dc57a87c8b3204ca2dbf1f" class="m-doc">StdClockResolution</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gac560bc2995b36972cc285b16478e5dd0" class="m-doc-self">std_system_clock_resolution</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Returns the resolution of the system clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The resolution of the system clock as a <code>StdClockResolution</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaa2697f890a5a52cfda66891ce549a3c0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdRatio.html" class="m-doc">StdRatio</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaa2697f890a5a52cfda66891ce549a3c0" class="m-doc-self">std_system_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Returns the resolution of the system clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The resolution of the system clock as a <code><a href="structStdRatio.html" class="m-doc">StdRatio</a></code> relative to seconds</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaee0f976fb238fb6fda05c40b37e41ae2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaee0f976fb238fb6fda05c40b37e41ae2" class="m-doc-self">std_high_resolution_clock_now</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Returns a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> corresponding to the current time on the high resolution clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The current time on the high resolution clock</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga537f61f87da0593e42c500d633bed256"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga537f61f87da0593e42c500d633bed256" class="m-doc-self">std_high_resolution_clock_min_time_point</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Returns the minimum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the high resolution clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The minimum <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> associatable with the high resolution clock</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga50f8e02a536d7cae2c2cd69b34fb1dbd"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga50f8e02a536d7cae2c2cd69b34fb1dbd" class="m-doc-self">std_high_resolution_clock_max_time_point</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Returns the maximum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the high resolution clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The maximum <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> associatable with the high resolution clock</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga885d3c981af1210afd23a19cfcbfa902"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="group__std__clock.html#ga30dd26c5c2dc57a87c8b3204ca2dbf1f" class="m-doc">StdClockResolution</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga885d3c981af1210afd23a19cfcbfa902" class="m-doc-self">std_high_resolution_clock_resolution</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Returns the resolution of the high resolution clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The resolution of the high resolution clock as a <code>StdClockResolution</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga26d7bc00022c3520e19a15f50d4d1e35"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdRatio.html" class="m-doc">StdRatio</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga26d7bc00022c3520e19a15f50d4d1e35" class="m-doc-self">std_high_resolution_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Returns the resolution of the high resolution clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The resolution of the high resolution clock as a <code><a href="structStdRatio.html" class="m-doc">StdRatio</a></code> relative to seconds</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga11339b0b2cbf29c2065a5dd7ead9a1b1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga11339b0b2cbf29c2065a5dd7ead9a1b1" class="m-doc-self">std_utc_clock_now</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Returns a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> corresponding to the current time on the UTC clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The current time on the UTC clock</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga2f32b78e21a373b980363bee5704497d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga2f32b78e21a373b980363bee5704497d" class="m-doc-self">std_utc_clock_min_time_point</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Returns the minimum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the UTC clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The minimum <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> associatable with the UTC clock</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga6122bb5ce2c903cc40fc770367d1785f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga6122bb5ce2c903cc40fc770367d1785f" class="m-doc-self">std_utc_clock_max_time_point</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Returns the maximum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the UTC clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The maximum <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> associatable with the UTC clock</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga53780f99ccacf2bc493f8a7ae3130c5b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="group__std__clock.html#ga30dd26c5c2dc57a87c8b3204ca2dbf1f" class="m-doc">StdClockResolution</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga53780f99ccacf2bc493f8a7ae3130c5b" class="m-doc-self">std_utc_clock_resolution</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Returns the resolution of the UTC clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The resolution of the UTC clock as a <code>StdClockResolution</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga6dd858995e6f7b5009fc7777beb23e54"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdRatio.html" class="m-doc">StdRatio</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga6dd858995e6f7b5009fc7777beb23e54" class="m-doc-self">std_utc_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Returns the resolution of the UTC clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The resolution of the UTC clock as a <code><a href="structStdRatio.html" class="m-doc">StdRatio</a></code> relative to seconds</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gad1005e8d1e8143dfb4ef775181cb8483"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gad1005e8d1e8143dfb4ef775181cb8483" class="m-doc-self">std_local_clock_now</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Returns a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> corresponding to the current time on the local clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The current time on the local clock</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga07c57374df892e06be207665796199e0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga07c57374df892e06be207665796199e0" class="m-doc-self">std_local_clock_min_time_point</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Returns the minimum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the local clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The minimum <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> associatable with the local clock</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaa5343d41275205997abfe3d3fcdc5a35"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaa5343d41275205997abfe3d3fcdc5a35" class="m-doc-self">std_local_clock_max_time_point</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Returns the maximum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the local clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The maximum <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> associatable with the local clock</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gabdcf18cd9781ed9ea89e65571d44f017"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="group__std__clock.html#ga30dd26c5c2dc57a87c8b3204ca2dbf1f" class="m-doc">StdClockResolution</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gabdcf18cd9781ed9ea89e65571d44f017" class="m-doc-self">std_local_clock_resolution</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Returns the resolution of the local clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The resolution of the local clock as a <code>StdClockResolution</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga912a3abaa1ae6fde7779d4aa8b079245"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdRatio.html" class="m-doc">StdRatio</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga912a3abaa1ae6fde7779d4aa8b079245" class="m-doc-self">std_local_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Returns the resolution of the local clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The resolution of the local clock as a <code><a href="structStdRatio.html" class="m-doc">StdRatio</a></code> relative to seconds</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga3a873aa7996fcaab46404a5aab857f3f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3a873aa7996fcaab46404a5aab857f3f" class="m-doc-self">std_convert_utc_to_local_time</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> utc)</span></span>
+            </h3>
+            <p>Converts the given <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> in UTC time to a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> in local time.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">utc</td>
+                  <td>- The time point to convert to local time</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>utc</code> converted to local time</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga6fcea39fad25367373e9d9b5bb67f363"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga6fcea39fad25367373e9d9b5bb67f363" class="m-doc-self">std_convert_local_time_to_utc</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> local_time)</span></span>
+            </h3>
+            <p>Converts the given <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> in local time to a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> in UTC time.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">local_time</td>
+                  <td>- The time point to convert to UTC time</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>local_time</code> converted to UTC time</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
         </section>
       </div>
     </div>
