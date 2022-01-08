@@ -1,8 +1,8 @@
 /// @file StdMath.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module extends `<tgmath.h>` and provides some alternative math functions.
-/// @version 0.1
-/// @date 2022-01-02
+/// @version 0.1.1
+/// @date 2022-01-07
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
