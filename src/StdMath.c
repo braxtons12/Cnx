@@ -67,7 +67,7 @@ StdOption(i8) std_checked_add_i8(i8 left, i8 right) {
 		return (left <= std_max_value(i8) - right) ? Some(i8, left + right) : None(i8);
 	}
 	else {
-		return (std_min_value(i8) + right <= left) ? Some(i8, left + right) : None(i8);
+		return (std_min_value(i8) - right <= left) ? Some(i8, left + right) : None(i8);
 	}
 }
 
@@ -76,7 +76,7 @@ StdOption(i16) std_checked_add_i16(i16 left, i16 right) {
 		return (left <= std_max_value(i16) - right) ? Some(i16, left + right) : None(i16);
 	}
 	else {
-		return (std_min_value(i16) + right <= left) ? Some(i16, left + right) : None(i16);
+		return (std_min_value(i16) - right <= left) ? Some(i16, left + right) : None(i16);
 	}
 }
 
@@ -85,7 +85,7 @@ StdOption(i32) std_checked_add_i32(i32 left, i32 right) {
 		return (left <= std_max_value(i32) - right) ? Some(i32, left + right) : None(i32);
 	}
 	else {
-		return (std_min_value(i32) + right <= left) ? Some(i32, left + right) : None(i32);
+		return (std_min_value(i32) - right <= left) ? Some(i32, left + right) : None(i32);
 	}
 }
 
@@ -94,7 +94,7 @@ StdOption(i64) std_checked_add_i64(i64 left, i64 right) {
 		return (left <= std_max_value(i64) - right) ? Some(i64, left + right) : None(i64);
 	}
 	else {
-		return (std_min_value(i64) + right <= left) ? Some(i64, left + right) : None(i64);
+		return (std_min_value(i64) - right <= left) ? Some(i64, left + right) : None(i64);
 	}
 }
 
@@ -105,7 +105,7 @@ StdOption(f32) std_checked_add_f32(f32 left, f32 right) {
 													   None(f32);
 	}
 	else {
-		res = (std_min_value(f32) + right <= left) ? Some(f32, static_cast(f32)(left + right)) :
+		res = (std_min_value(f32) - right <= left) ? Some(f32, static_cast(f32)(left + right)) :
 													   None(f32);
 	}
 
@@ -124,7 +124,7 @@ StdOption(f64) std_checked_add_f64(f64 left, f64 right) {
 													   None(f64);
 	}
 	else {
-		res = (std_min_value(f64) + right <= left) ? Some(f64, static_cast(f64)(left + right)) :
+		res = (std_min_value(f64) - right <= left) ? Some(f64, static_cast(f64)(left + right)) :
 													   None(f64);
 	}
 
@@ -153,73 +153,27 @@ StdOption(u64) std_checked_sub_u64(u64 left, u64 right) {
 }
 
 StdOption(i8) std_checked_sub_i8(i8 left, i8 right) {
-	if(right >= 0) {
-		return (std_min_value(i8) + right <= left) ? Some(i8, left - right) : None(i8);
-	}
-	else {
-		return (left >= std_max_value(i8) + right) ? Some(i8, left - right) : None(i8);
-	}
+	return std_checked_add_i8(left, static_cast(i8)(-right));
 }
 
 StdOption(i16) std_checked_sub_i16(i16 left, i16 right) {
-	if(right >= 0) {
-		return (std_min_value(i16) + right <= left) ? Some(i16, left - right) : None(i16);
-	}
-	else {
-		return (left <= std_max_value(i16) + right) ? Some(i16, left - right) : None(i16);
-	}
+	return std_checked_add_i16(left, static_cast(i16)(-right));
 }
 
 StdOption(i32) std_checked_sub_i32(i32 left, i32 right) {
-	if(right >= 0) {
-		return (std_min_value(i32) + right <= left) ? Some(i32, left - right) : None(i32);
-	}
-	else {
-		return (left <= std_max_value(i32) + right) ? Some(i32, left - right) : None(i32);
-	}
+	return std_checked_add_i32(left, static_cast(i32)(-right));
 }
 
 StdOption(i64) std_checked_sub_i64(i64 left, i64 right) {
-	if(right >= 0) {
-		return (std_min_value(i64) + right <= left) ? Some(i64, left - right) : None(i64);
-	}
-	else {
-		return (left <= std_max_value(i64) + right) ? Some(i64, left - right) : None(i64);
-	}
+	return std_checked_add_i64(left, static_cast(i64)(-right));
 }
 
 StdOption(f32) std_checked_sub_f32(f32 left, f32 right) {
-	StdOption(f32) res;
-	if(right >= 0) {
-		res = (std_min_value(f32) + right <= left) ? Some(f32, left - right) : None(f32);
-	}
-	else {
-		res = (left <= std_max_value(f32) + right) ? Some(f32, left - right) : None(f32);
-	}
-
-	if_let(ret, res) {
-		return (isnan(ret) || isinf(ret)) ? None(f32) : Some(f32, ret);
-	}
-	else {
-		return None(f32);
-	}
+	return std_checked_add_f32(left, -right);
 }
 
 StdOption(f64) std_checked_sub_f64(f64 left, f64 right) {
-	StdOption(f64) res;
-	if(right >= 0) {
-		res = (std_min_value(f64) + right <= left) ? Some(f64, left - right) : None(f64);
-	}
-	else {
-		res = (left <= std_max_value(f64) + right) ? Some(f64, left - right) : None(f64);
-	}
-
-	if_let(ret, res) {
-		return (isnan(ret) || isinf(ret)) ? None(f64) : Some(f64, ret);
-	}
-	else {
-		return None(f64);
-	}
+	return std_checked_add_f64(left, -right);
 }
 
 StdOption(u8) std_checked_mul_u8(u8 left, u8 right) {
