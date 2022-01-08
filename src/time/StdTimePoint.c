@@ -196,7 +196,6 @@ StdString std_time_point_human_readable_format(StdTimePoint self, StdAllocator a
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
 	char memory[20] = {0};
 
-	usize written = 0;
 	if(self.locale != STD_UNKNOWN_TIME) {
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
 		char utc[6] = {0};
@@ -214,18 +213,16 @@ StdString std_time_point_human_readable_format(StdTimePoint self, StdAllocator a
 		std_string_append(utc_string, &minutes);
 
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
-		written = strftime(memory, 20, "%F|%T", parsed);
+		let maybe_unused written = strftime(memory, 20, "%F|%T", parsed);
 		std_assert(written == 19, "Failed to format time point");
-		ignore(written);
 		let_mut str = std_string_from_with_allocator(memory, allocator);
 		std_string_append(str, &utc_string);
 		return str;
 	}
 	else {
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
-		written = strftime(memory, 20, "%F|%T", parsed);
+		let maybe_unused written = strftime(memory, 20, "%F|%T", parsed);
 		std_assert(written == 19, "Failed to format time point");
-		ignore(written);
 		return std_string_from_with_allocator(memory, allocator);
 	}
 }
