@@ -194,12 +194,40 @@ StdString std_time_point_human_readable_format(StdTimePoint self, StdAllocator a
 	let parsed = std_time_point_as_tm(self);
 
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
-	char memory[31] = {0};
+	char memory[20] = {0};
 
-	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
-	let maybe_unused written = strftime(memory, 31, "%F|%T (UTC%z)", parsed);
-	std_assert(written == 30, "Failed to format time point");
-	return std_string_from_with_allocator(memory, allocator);
+	usize written = 0;
+	if(self.locale != STD_UNKNOWN_TIME) {
+		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
+		char utc[6] = {0};
+
+		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
+		maybe_unused usize utc_written = strftime(utc, 6, "%z", parsed);
+		std_assert(utc_written == 5, "Failed to format time point");
+		let_mut std_string_scoped utc_string
+			// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
+			= std_string_new_with_capacity_with_allocator(6, allocator);
+		let hours = std_stringview_from(utc, 0, 3);
+		let minutes = std_stringview_from(utc, 3, 2);
+		std_string_append(utc_string, &hours);
+		std_string_push_back(utc_string, ':');
+		std_string_append(utc_string, &minutes);
+
+		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
+		written = strftime(memory, 20, "%F|%T", parsed);
+		std_assert(written == 19, "Failed to format time point");
+		ignore(written);
+		let_mut str = std_string_from_with_allocator(memory, allocator);
+		std_string_append(str, &utc_string);
+		return str;
+	}
+	else {
+		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
+		written = strftime(memory, 20, "%F|%T", parsed);
+		std_assert(written == 19, "Failed to format time point");
+		ignore(written);
+		return std_string_from_with_allocator(memory, allocator);
+	}
 }
 
 StdString std_time_point_format(const StdFormat* restrict self, StdFormatSpecifier specifier) {
