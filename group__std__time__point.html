@@ -51,6 +51,7 @@
               Reference
               <ul>
                 <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#enum-members">Enums</a></li>
                 <li><a href="#typedef-members">Typedefs</a></li>
                 <li><a href="#func-members">Functions</a></li>
                 <li><a href="#var-members">Variables</a></li>
@@ -68,9 +69,24 @@
             <dd><code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> represents a specific point in time, since the UNIX epoch, represented in a particular level of precision</dd>
           </dl>
         </section>
+        <section id="enum-members">
+          <h2><a href="#enum-members">Enums</a></h2>
+          <dl class="m-doc">
+            <dt id="ga12c7d6947a9863bc0ad76d105b4fccab">
+              <span class="m-doc-wrap-bumper">enum <a href="#ga12c7d6947a9863bc0ad76d105b4fccab" class="m-doc-self">StdTimePointLocale</a> { </span><span class="m-doc-wrap"><a href="#gga12c7d6947a9863bc0ad76d105b4fccabacb7853e9706ab231347303cfa4d864bf" class="m-doc">STD_UTC_TIME</a> = 0,
+              <a href="#gga12c7d6947a9863bc0ad76d105b4fccaba674df50ffa3c2b1b8962cf17f2827ea8" class="m-doc">STD_LOCAL_TIME</a>,
+              <a href="#gga12c7d6947a9863bc0ad76d105b4fccabad1c212a2227565ad9b9cc5ab33b68f18" class="m-doc">STD_UNKNOWN_TIME</a> }</span>
+            </dt>
+            <dd>Indicates whether a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> is in UTC time, local time, or an unknown locale.</dd>
+          </dl>
+        </section>
         <section id="typedef-members">
           <h2><a href="#typedef-members">Typedefs</a></h2>
           <dl class="m-doc">
+            <dt id="ga2469b322ceff7db8cc823393ff7fdc48">
+              using <a href="#ga2469b322ceff7db8cc823393ff7fdc48" class="m-doc-self">StdTimePointLocale</a> = enum <a href="group__std__time__point.html#ga12c7d6947a9863bc0ad76d105b4fccab" class="m-doc">StdTimePointLocale</a>
+            </dt>
+            <dd>Indicates whether a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> is in UTC time, local time, or an unknown locale.</dd>
             <dt id="gaa0629d22b2a7544821ed71c25ec81401">
               using <a href="#gaa0629d22b2a7544821ed71c25ec81401" class="m-doc-self">StdTimePoint</a> = struct <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a>
             </dt>
@@ -86,9 +102,15 @@
             <dd>Constructs a new <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> representing the given time since the UNIX epoch, assuming the same precision as <code>std_system_clock</code></dd>
             <dt>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#gab52519bd2a6aee7b41fa5091e5d53cd6" class="m-doc">std_time_point_new_with_clock</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> time_since_epoch,
-              const StdClock*restrict clock)</span>
+              const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict clock)</span>
             </dt>
-            <dd>Constructs a new <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> representing the given time since the UNIX epoch, with the same precision of the given <code>StdClock</code></dd>
+            <dd>Constructs a new <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> representing the given time since the UNIX epoch, with the same precision of the given <code><a href="structStdClock.html" class="m-doc">StdClock</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#ga161fe3519fb48029ca9d8359a0c19626" class="m-doc">std_time_point_new_with_clock_and_locale</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> time_since_epoch,
+              const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict clock,
+              <a href="group__std__time__point.html#ga12c7d6947a9863bc0ad76d105b4fccab" class="m-doc">StdTimePointLocale</a> locale)</span>
+            </dt>
+            <dd>Constructs a new <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> representing the given time since the UNIX epoch, with the same precision of the given <code><a href="structStdClock.html" class="m-doc">StdClock</a></code></dd>
             <dt>
               <span class="m-doc-wrap-bumper"><a href="structStdDuration.html" class="m-doc">StdDuration</a> <a href="#ga0e7c3af9ef0d18c267d78066094cdb06" class="m-doc">std_time_point_time_since_epoch</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> self)</span>
             </dt>
@@ -121,6 +143,18 @@
               <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> new_precision)</span>
             </dt>
             <dd>Converts the first <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> to the same precision as the second one, rounding any fractional part in the result.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">time_t <a href="#ga6ecf55d0bd06bc387b263136791d5302" class="m-doc">std_time_point_as_time_t</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> to_cast)</span>
+            </dt>
+            <dd>Converts the given <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> to <code>time_t</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">tm* <a href="#ga70833f7e70db40411206ca5b4079beae" class="m-doc">std_time_point_as_tm</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> to_cast)</span>
+            </dt>
+            <dd>Converts the given <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> to <code>tm</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#ga693bc967c81d9b4a0f5dcf5095922f44" class="m-doc">std_time_point_from_time_t</a>(</span><span class="m-doc-wrap">time_t time)</span>
+            </dt>
+            <dd>Converts the given <code>time_t</code> to a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> in the system clock precision.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#ga07f6df1b64d0403d44a0c164d688c64a" class="m-doc">std_time_point_increment</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a>*restrict self)</span>
             </dt>
@@ -221,6 +255,10 @@
               <a href="structStdDuration.html" class="m-doc">StdDuration</a> <a href="#gaab42880d780fb4289a5ee5c2c40b3008" class="m-doc-self">time_since_epoch</a>
             </dt>
             <dd>The point in time, represented as a duration since the UNIX epoch.</dd>
+            <dt id="ga328093a61c9200591058f297bc38a488">
+              const <a href="structStdClock.html" class="m-doc">StdClock</a>* <a href="#ga328093a61c9200591058f297bc38a488" class="m-doc-self">clock</a>
+            </dt>
+            <dd>The clock associated with this time point.</dd>
           </dl>
         </section>
         <section>
@@ -252,9 +290,9 @@
           <section class="m-doc-details" id="gab52519bd2a6aee7b41fa5091e5d53cd6"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gab52519bd2a6aee7b41fa5091e5d53cd6" class="m-doc-self">std_time_point_new_with_clock</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> time_since_epoch,
-              const StdClock*restrict clock)</span></span>
+              const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict clock)</span></span>
             </h3>
-            <p>Constructs a new <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> representing the given time since the UNIX epoch, with the same precision of the given <code>StdClock</code></p>
+            <p>Constructs a new <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> representing the given time since the UNIX epoch, with the same precision of the given <code><a href="structStdClock.html" class="m-doc">StdClock</a></code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -266,7 +304,41 @@
                 </tr>
                 <tr>
                   <td>clock</td>
-                  <td></td>
+                  <td>- The clock associated with this time point</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> representing the given time since the epoch</td>
+                </tr>
+              </tfoot>
+            </table>
+<aside class="m-note m-info"><h4>Note</h4><p>if <code>time_since_epoch</code> has a different period than the precision of <code>clock</code>, it will be converted to the precision of <code>clock</code></p></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga161fe3519fb48029ca9d8359a0c19626"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga161fe3519fb48029ca9d8359a0c19626" class="m-doc-self">std_time_point_new_with_clock_and_locale</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> time_since_epoch,
+              const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict clock,
+              <a href="group__std__time__point.html#ga12c7d6947a9863bc0ad76d105b4fccab" class="m-doc">StdTimePointLocale</a> locale)</span></span>
+            </h3>
+            <p>Constructs a new <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> representing the given time since the UNIX epoch, with the same precision of the given <code><a href="structStdClock.html" class="m-doc">StdClock</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">time_since_epoch</td>
+                  <td>- The time since the UNIX epoch. The precision of the <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> will be the period of this <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code></td>
+                </tr>
+                <tr>
+                  <td>clock</td>
+                  <td>- The clock associated with this time point</td>
+                </tr>
+                <tr>
+                  <td>locale</td>
+                  <td>- Whether this time point is in UTC time, local time, or some unknown time locale</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -374,7 +446,7 @@
                 </tr>
               </tfoot>
             </table>
-<aside class="m-note m-info"><h4>Note</h4><p>The returned value is also associated with the <code>StdClock</code> from <code>new_precision</code>, not the one from <code>to_cast</code></p></aside>
+<aside class="m-note m-info"><h4>Note</h4><p>The returned value is also associated with the <code><a href="structStdClock.html" class="m-doc">StdClock</a></code> from <code>new_precision</code>, not the one from <code>to_cast</code></p></aside>
           </div></section>
           <section class="m-doc-details" id="ga82e4cbfb67e542897d17f1b159a5789f"><div>
             <h3>
@@ -403,7 +475,7 @@
                 </tr>
               </tfoot>
             </table>
-<aside class="m-note m-info"><h4>Note</h4><p>The returned value is also associated with the <code>StdClock</code> from <code>new_precision</code>, not the one from <code>to_cast</code></p></aside>
+<aside class="m-note m-info"><h4>Note</h4><p>The returned value is also associated with the <code><a href="structStdClock.html" class="m-doc">StdClock</a></code> from <code>new_precision</code>, not the one from <code>to_cast</code></p></aside>
           </div></section>
           <section class="m-doc-details" id="gafb9fbbeb9f0968ac24ef8d291ac44a24"><div>
             <h3>
@@ -432,7 +504,7 @@
                 </tr>
               </tfoot>
             </table>
-<aside class="m-note m-info"><h4>Note</h4><p>The returned value is also associated with the <code>StdClock</code> from <code>new_precision</code>, not the one from <code>to_cast</code></p></aside>
+<aside class="m-note m-info"><h4>Note</h4><p>The returned value is also associated with the <code><a href="structStdClock.html" class="m-doc">StdClock</a></code> from <code>new_precision</code>, not the one from <code>to_cast</code></p></aside>
           </div></section>
           <section class="m-doc-details" id="ga35328f274fc3206407bc994f87cb36b1"><div>
             <h3>
@@ -461,7 +533,76 @@
                 </tr>
               </tfoot>
             </table>
-<aside class="m-note m-info"><h4>Note</h4><p>The returned value is also associated with the <code>StdClock</code> from <code>new_precision</code>, not the one from <code>to_cast</code></p></aside>
+<aside class="m-note m-info"><h4>Note</h4><p>The returned value is also associated with the <code><a href="structStdClock.html" class="m-doc">StdClock</a></code> from <code>new_precision</code>, not the one from <code>to_cast</code></p></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga6ecf55d0bd06bc387b263136791d5302"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">time_t </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga6ecf55d0bd06bc387b263136791d5302" class="m-doc-self">std_time_point_as_time_t</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> to_cast)</span></span>
+            </h3>
+            <p>Converts the given <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> to <code>time_t</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">to_cast</td>
+                  <td>- The <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> to convert</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>to_cast</code> converted to <code>time_t</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga70833f7e70db40411206ca5b4079beae"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">tm* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga70833f7e70db40411206ca5b4079beae" class="m-doc-self">std_time_point_as_tm</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> to_cast)</span></span>
+            </h3>
+            <p>Converts the given <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> to <code>tm</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">to_cast</td>
+                  <td>- The <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> to convert</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>to_cast</code> converted to <code>tm</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga693bc967c81d9b4a0f5dcf5095922f44"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga693bc967c81d9b4a0f5dcf5095922f44" class="m-doc-self">std_time_point_from_time_t</a>(</span><span class="m-doc-wrap">time_t time)</span></span>
+            </h3>
+            <p>Converts the given <code>time_t</code> to a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> in the system clock precision.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">time</td>
+                  <td>- The <code>time_t</code> to convert</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>time</code> converted to a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
           </div></section>
           <section class="m-doc-details" id="ga07f6df1b64d0403d44a0c164d688c64a"><div>
             <h3>
