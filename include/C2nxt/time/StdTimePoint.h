@@ -1,8 +1,8 @@
 /// @file StdTimePoint.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief StdTimePoint provides functionality for working with specific points in time
-/// @version 0.1
-/// @date 2022-01-06
+/// @version 0.1.1
+/// @date 2022-01-07
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -36,13 +36,20 @@
 /// particular level of precision
 /// @}
 
-
 #ifndef STD_TIME_POINT
 	#define STD_TIME_POINT
 
 typedef struct StdClock StdClock;
 
 typedef struct tm tm;
+
+/// @brief Indicates whether a `StdTimePoint` is in UTC time, local time, or an unknown locale
+/// @ingroup std_time_point
+typedef enum StdTimePointLocale {
+	STD_UTC_TIME = 0,
+	STD_LOCAL_TIME,
+	STD_UNKNOWN_TIME
+} StdTimePointLocale;
 
 /// @brief `StdTimePoint` represents a specific point in time, since the UNIX epoch, represented in
 /// a particular level of precision
@@ -51,7 +58,10 @@ typedef struct StdTimePoint {
 	/// @brief The point in time, represented as a duration since the UNIX epoch
 	/// @ingroup std_time_point
 	StdDuration time_since_epoch;
+	/// @brief The clock associated with this time point
+	/// @ingroup std_time_point
 	const StdClock* clock;
+	StdTimePointLocale locale;
 } StdTimePoint;
 
 /// @brief Constructs a new `StdTimePoint` representing the given time since the UNIX epoch,
@@ -71,6 +81,7 @@ StdTimePoint std_time_point_new(StdDuration time_since_epoch);
 ///
 /// @param time_since_epoch - The time since the UNIX epoch. The precision of the `StdTimePoint`
 /// will be the period of this `StdDuration`
+/// @param clock - The clock associated with this time point
 ///
 /// @return a `StdTimePoint` representing the given time since the epoch
 /// @note if `time_since_epoch` has a different period than the precision of `clock`, it will be
@@ -78,6 +89,22 @@ StdTimePoint std_time_point_new(StdDuration time_since_epoch);
 /// @ingroup std_time_point
 StdTimePoint
 std_time_point_new_with_clock(StdDuration time_since_epoch, const StdClock* restrict clock);
+
+/// @brief Constructs a new `StdTimePoint` representing the given time since the UNIX epoch,
+/// with the same precision of the given `StdClock`
+///
+/// @param time_since_epoch - The time since the UNIX epoch. The precision of the `StdTimePoint`
+/// will be the period of this `StdDuration`
+/// @param clock - The clock associated with this time point
+/// @param locale - Whether this time point is in UTC time, local time, or some unknown time locale
+///
+/// @return a `StdTimePoint` representing the given time since the epoch
+/// @note if `time_since_epoch` has a different period than the precision of `clock`, it will be
+/// converted to the precision of `clock`
+/// @ingroup std_time_point
+StdTimePoint std_time_point_new_with_clock_and_locale(StdDuration time_since_epoch,
+													  const StdClock* restrict clock,
+													  StdTimePointLocale locale);
 
 /// @brief Returns the time since the UNIX epoch of the given `StdTimePoint`
 ///

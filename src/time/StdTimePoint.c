@@ -43,6 +43,17 @@ std_time_point_new_with_clock(StdDuration time_since_epoch, const StdClock* rest
 	return (StdTimePoint){.time_since_epoch = time, .clock = clock};
 }
 
+StdTimePoint std_time_point_new_with_clock_and_locale(StdDuration time_since_epoch,
+													  const StdClock* restrict clock,
+													  StdTimePointLocale locale) {
+	let precision = trait_call(resolution_as_ratio, *clock);
+	StdDuration time = time_since_epoch;
+	if(!std_ratio_equal(precision, time_since_epoch.period)) {
+		time = std_duration_cast(time_since_epoch, precision);
+	}
+	return (StdTimePoint){.time_since_epoch = time, .clock = clock, .locale = locale};
+}
+
 StdDuration std_time_point_time_since_epoch(StdTimePoint self) {
 	return self.time_since_epoch;
 }
@@ -93,8 +104,16 @@ time_t std_time_point_as_time_t(StdTimePoint to_cast) {
 }
 
 tm* std_time_point_as_tm(StdTimePoint to_cast) {
-	let time = std_time_point_as_time_t(to_cast);
-	return gmtime(&time);
+	if(to_cast.locale == STD_LOCAL_TIME) {
+		// localtime requires a
+		let point = std_convert_local_time_to_utc(to_cast);
+		let time = std_time_point_as_time_t(point);
+		return localtime(&time);
+	}
+	else {
+		let time = std_time_point_as_time_t(to_cast);
+		return gmtime(&time);
+	}
 }
 
 StdTimePoint std_time_point_from_time_t(time_t time) {
@@ -175,11 +194,11 @@ StdString std_time_point_human_readable_format(StdTimePoint self, StdAllocator a
 	let parsed = std_time_point_as_tm(self);
 
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
-	char memory[20] = {0};
+	char memory[31] = {0};
 
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
-	let maybe_unused written = strftime(memory, 20, "%Y-%m-%d|%H:%M:%S", parsed);
-	std_assert(written == 19, "Failed to format time point");
+	let maybe_unused written = strftime(memory, 31, "%F|%T (UTC%z)", parsed);
+	std_assert(written == 30, "Failed to format time point");
 	return std_string_from_with_allocator(memory, allocator);
 }
 
