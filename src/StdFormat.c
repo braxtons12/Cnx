@@ -3,7 +3,7 @@
 /// @brief StdFormat brings human readable string formatting, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
 /// @version 0.1.1
-/// @date 2022-01-07
+/// @date 2022-01-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -699,8 +699,11 @@ DeclStdIterators(ConstRef(StdFormatVariant));
 DeclStdOption(StdFormatVariant);
 ImplStdOption(StdFormatVariant);
 
-DeclStdVector(StdFormatVariant);
-ImplStdVector(StdFormatVariant);
+#define T StdFormatVariant
+#define STD_TEMPLATE_DECL 1
+#define STD_TEMPLATE_IMPL 1
+#define STD_TEMPLATE_UNDEF_PARAMS 1
+#include <C2nxt/StdVector.h>
 
 always_inline static inline StdFormatVariant
 std_format_pair_from_specifier(StdFormatSpecifier specifier) {
@@ -851,7 +854,7 @@ StdResult(StdVector(StdFormatVariant))
 						   std_error_new(STD_FORMAT_INVALID_CLOSING_BRACE_LOCATION,
 										 std_format_error_category));
 			}
-			else if(in_specifier && format_string[i - 1] == '\\') {
+			else if(format_string[i - 1] == '\\') {
 				return Err(StdVector(StdFormatVariant),
 						   std_error_new(STD_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER,
 										 std_format_error_category));
