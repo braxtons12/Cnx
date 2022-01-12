@@ -1,8 +1,8 @@
 /// @file StdDuration.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides methods for dealing with durations of time
-/// @version 0.1.1
-/// @date 2022-01-07
+/// @version 0.1.2
+/// @date 2022-01-11
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -213,7 +213,9 @@ StdString std_duration_format_with_allocator(const StdFormat* restrict self,
 										 as_format_t(StdRatio, _self->period));
 	}
 	else {
-		let seconds = std_duration_cast(*_self, std_seconds_period);
-		return std_format_with_allocator("{} seconds", allocator, seconds.count);
+		return std_format_with_allocator("{} * {} seconds",
+										 allocator,
+										 _self->count,
+										 as_format_t(StdRatio, _self->period));
 	}
 }
