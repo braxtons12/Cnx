@@ -1,8 +1,8 @@
 /// @file StdString.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides string and stringview types comparable to C++ for C2nxt
-/// @version 0.1
-/// @date 2022-01-02
+/// @version 0.1.1
+/// @date 2022-01-11
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -311,7 +311,8 @@ ImplIntoStdRandomAccessIterator(StdStringView,
 
 static const bool std_string_is_little_endian
 	= STD_PLATFORM_LITTLE_ENDIAN || !STD_PLATFORM_BIG_ENDIAN;
-static const usize std_string_long_mask = std_string_is_little_endian ? 0x40U : 0x01U;
+static const usize std_string_long_mask
+	= std_string_is_little_endian ? static_cast(usize)(0x40U) : static_cast(usize)(0x01U);
 static const usize std_string_capacity_mode_shift
 	= std_string_is_little_endian ? (sizeof(usize) - 1) * 8U : 0U;
 static const usize std_string_len_cap_shift = std_string_is_little_endian ? 0U : 1U;
@@ -380,18 +381,21 @@ std_string_decrease_length(StdString* restrict self, usize amount_to_decrease) {
 }
 
 StdString std_string_new(void) {
-	return std_string_new_with_allocator(std_allocator_new());
+	return std_string_new_with_allocator(DEFAULT_ALLOCATOR);
 }
 
 StdString std_string_new_with_allocator(StdAllocator allocator) {
-	let_mut str
-		= (StdString){.m_short = {0}, .m_allocator = allocator, .m_vtable = &std_string_vtable};
-	std_string_set_length(&str, 0);
+	let_mut str = (StdString){
+		.m_short = {[STD_STRING_SHORT_OPTIMIZATION_CAPACITY]
+					= STD_STRING_SHORT_OPTIMIZATION_CAPACITY << std_string_len_cap_shift},
+		.m_allocator = allocator,
+		.m_vtable = &std_string_vtable};
+	// std_string_set_length(&str, 0);
 	return str;
 }
 
 StdString std_string_new_with_capacity(usize capacity) {
-	return std_string_new_with_capacity_with_allocator(capacity, std_allocator_new());
+	return std_string_new_with_capacity_with_allocator(capacity, DEFAULT_ALLOCATOR);
 }
 
 StdString std_string_new_with_capacity_with_allocator(usize capacity, StdAllocator allocator) {
@@ -408,7 +412,7 @@ StdString std_string_new_with_capacity_with_allocator(usize capacity, StdAllocat
 }
 
 StdString std_string_from_cstring(restrict const_cstring string, usize length) {
-	return std_string_from_cstring_with_allocator(string, length, std_allocator_new());
+	return std_string_from_cstring_with_allocator(string, length, DEFAULT_ALLOCATOR);
 }
 
 StdString std_string_from_cstring_with_allocator(restrict const_cstring string,
@@ -421,7 +425,7 @@ StdString std_string_from_cstring_with_allocator(restrict const_cstring string,
 }
 
 StdString std_string_from_wcstring(restrict const_wcstring string, usize length) {
-	return std_string_from_wcstring_with_allocator(string, length, std_allocator_new());
+	return std_string_from_wcstring_with_allocator(string, length, DEFAULT_ALLOCATOR);
 }
 
 StdString std_string_from_wcstring_with_allocator(restrict const_wcstring string,
@@ -485,11 +489,10 @@ void(std_string_free)(void* restrict self) {
 	let self_ptr = static_cast(StdString*)(self);
 	if(!std_string_is_short(self_ptr)) {
 		let ptr = self_ptr->m_long;
-		let capacity = self_ptr->m_capacity;
+		let capacity = std_string_get_capacity(self_ptr);
 		std_string_set_short(self_ptr);
 		self_ptr->m_long = nullptr;
-		std_allocator_deallocate(self_ptr->m_allocator,
-								 (StdMemory){.m_memory = ptr, .m_size_bytes = capacity});
+		std_allocator_deallocate_array_t(char, self_ptr->m_allocator, ptr, capacity);
 	}
 }
 
