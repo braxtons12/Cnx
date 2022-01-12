@@ -7,11 +7,15 @@
 #ifndef STD_STRING_TEST
 	#define STD_STRING_TEST
 
-static void* test_malloc(usize bytes) {
+static void* test_malloc(maybe_unused StdAllocator* self, usize bytes) {
 	return malloc(bytes);
 }
 
-static void test_free(void* memory) {
+static void* test_realloc(maybe_unused StdAllocator* self, void* memory, usize new_size_bytes) {
+	return realloc(memory, new_size_bytes);
+}
+
+static void test_free(maybe_unused StdAllocator* self, void* memory) {
 	free(memory);
 }
 
@@ -20,8 +24,9 @@ void test_string_new(void) {
 
 	TEST_ASSERT_EQUAL_INT(std_string_length(string), 0);
 	TEST_ASSERT_EQUAL_INT(std_string_capacity(string), STD_STRING_SHORT_OPTIMIZATION_CAPACITY);
-	TEST_ASSERT_TRUE(string.m_allocator.m_allocator == malloc);
-	TEST_ASSERT_TRUE(string.m_allocator.m_deallocator == free);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->allocate == std_allocate);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->reallocate == std_reallocate);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->deallocate == std_deallocate);
 	TEST_ASSERT_TRUE(std_string_is_empty(string));
 	TEST_ASSERT_TRUE(!std_string_is_full(string));
 	std_string_free(string);
@@ -29,12 +34,13 @@ void test_string_new(void) {
 
 void test_string_new_with_allocator(void) {
 	let_mut string = std_string_new_with_allocator(
-		(StdAllocator){.m_allocator = test_malloc, .m_deallocator = test_free});
+		std_allocator_from_custom_stateless_allocator(test_malloc, test_realloc, test_free));
 
 	TEST_ASSERT_EQUAL_INT(std_string_length(string), 0);
 	TEST_ASSERT_EQUAL_INT(std_string_capacity(string), STD_STRING_SHORT_OPTIMIZATION_CAPACITY);
-	TEST_ASSERT_TRUE(string.m_allocator.m_allocator == test_malloc);
-	TEST_ASSERT_TRUE(string.m_allocator.m_deallocator == test_free);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->allocate == test_malloc);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->reallocate == test_realloc);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->deallocate == test_free);
 	std_string_free(string);
 }
 
@@ -44,8 +50,9 @@ void test_string_new_with_capacity(void) {
 
 	TEST_ASSERT_EQUAL_INT(std_string_length(string), 0);
 	TEST_ASSERT_EQUAL_INT(std_string_capacity(string), 30U);
-	TEST_ASSERT_TRUE(string.m_allocator.m_allocator == malloc);
-	TEST_ASSERT_TRUE(string.m_allocator.m_deallocator == free);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->allocate == std_allocate);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->reallocate == std_reallocate);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->deallocate == std_deallocate);
 	std_string_free(string);
 }
 
@@ -53,12 +60,13 @@ void test_string_new_with_capacity_with_allocator(void) {
 	let_mut string = std_string_new_with_capacity_with_allocator(
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
 		30U,
-		(StdAllocator){.m_allocator = test_malloc, .m_deallocator = test_free});
+		std_allocator_from_custom_stateless_allocator(test_malloc, test_realloc, test_free));
 
 	TEST_ASSERT_EQUAL_INT(std_string_length(string), 0);
 	TEST_ASSERT_EQUAL_INT(std_string_capacity(string), 30U);
-	TEST_ASSERT_TRUE(string.m_allocator.m_allocator == test_malloc);
-	TEST_ASSERT_TRUE(string.m_allocator.m_deallocator == test_free);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->allocate == test_malloc);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->reallocate == test_realloc);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->deallocate == test_free);
 	std_string_free(string);
 }
 
@@ -67,10 +75,9 @@ void test_string_new_from_cstring(void) {
 	let_mut string = std_string_from(test_string);
 	TEST_ASSERT_EQUAL_INT(std_string_length(string), strlen(test_string));
 	TEST_ASSERT_EQUAL_INT(std_string_capacity(string), strlen(test_string));
-	TEST_ASSERT_TRUE(STD_DEFAULT_ALLOCATOR_FUNCTION == malloc);
-	TEST_ASSERT_TRUE(STD_DEFAULT_DEALLOCATOR_FUNCTION == free);
-	TEST_ASSERT_TRUE(string.m_allocator.m_allocator == malloc);
-	TEST_ASSERT_TRUE(string.m_allocator.m_deallocator == free);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->allocate == std_allocate);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->reallocate == std_reallocate);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->deallocate == std_deallocate);
 	TEST_ASSERT_EQUAL_CHAR(std_string_at(string, strlen(test_string) - 1), 't');
 	TEST_ASSERT_EQUAL_CHAR(std_string_at(string, 5), 'i');
 	TEST_ASSERT_EQUAL_INT(0, strcmp(std_string_into_cstring(string), test_string));
@@ -82,11 +89,12 @@ void test_string_new_from_cstring_with_allocator(void) {
 	let test_string = "This is a test test test";
 	let_mut string = std_string_from_with_allocator(
 		test_string,
-		((StdAllocator){.m_allocator = test_malloc, .m_deallocator = test_free}));
+		std_allocator_from_custom_stateless_allocator(test_malloc, test_realloc, test_free));
 	TEST_ASSERT_EQUAL_INT(std_string_length(string), strlen(test_string));
 	TEST_ASSERT_EQUAL_INT(std_string_capacity(string), strlen(test_string));
-	TEST_ASSERT_TRUE(string.m_allocator.m_allocator == test_malloc);
-	TEST_ASSERT_TRUE(string.m_allocator.m_deallocator == test_free);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->allocate == test_malloc);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->reallocate == test_realloc);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->deallocate == test_free);
 	TEST_ASSERT_EQUAL_CHAR(std_string_at(string, strlen(test_string) - 1), 't');
 	TEST_ASSERT_EQUAL_CHAR(std_string_at(string, 5), 'i');
 	TEST_ASSERT_EQUAL_INT(0, strcmp(std_string_into_cstring(string), test_string));
@@ -99,8 +107,9 @@ void test_string_new_from_stringview(void) {
 	let_mut string = std_string_from(&view);
 	TEST_ASSERT_EQUAL_INT(std_string_length(string), strlen(test_string));
 	TEST_ASSERT_EQUAL_INT(std_string_capacity(string), strlen(test_string));
-	TEST_ASSERT_TRUE(string.m_allocator.m_allocator == malloc);
-	TEST_ASSERT_TRUE(string.m_allocator.m_deallocator == free);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->allocate == std_allocate);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->reallocate == std_reallocate);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->deallocate == std_deallocate);
 	TEST_ASSERT_EQUAL_CHAR(std_string_at(string, strlen(test_string) - 1), 't');
 	TEST_ASSERT_EQUAL_CHAR(std_string_at(string, 5), 'i');
 	TEST_ASSERT_TRUE(0 == strcmp(std_string_into_cstring(string), test_string));
@@ -112,11 +121,12 @@ void test_string_new_from_stringview_with_allocator(void) {
 	let view = (StdStringView){.m_view = test_string, .m_length = strlen(test_string)};
 	let_mut string = std_string_from_with_allocator(
 		&view,
-		((StdAllocator){.m_allocator = test_malloc, .m_deallocator = test_free}));
+		std_allocator_from_custom_stateless_allocator(test_malloc, test_realloc, test_free));
 	TEST_ASSERT_EQUAL_INT(std_string_length(string), strlen(test_string));
 	TEST_ASSERT_EQUAL_INT(std_string_capacity(string), strlen(test_string));
-	TEST_ASSERT_TRUE(string.m_allocator.m_allocator == test_malloc);
-	TEST_ASSERT_TRUE(string.m_allocator.m_deallocator == test_free);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->allocate == test_malloc);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->reallocate == test_realloc);
+	TEST_ASSERT_TRUE(string.m_allocator.m_vtable->deallocate == test_free);
 	TEST_ASSERT_EQUAL_CHAR(std_string_at(string, strlen(test_string) - 1), 't');
 	TEST_ASSERT_EQUAL_CHAR(std_string_at(string, 5), 'i');
 	TEST_ASSERT_TRUE(0 == strcmp(std_string_into_cstring(string), test_string));
