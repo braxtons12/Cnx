@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief StdCollectionData is a simple wrapper for an allocator, element default-constructor, and
 /// element destructor to be used within a C2nxt collection.
-/// @version 0.1
-/// @date 2022-01-02
+/// @version 0.2
+/// @date 2022-01-11
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -63,26 +63,19 @@
 /// @ingroup collections
 #define StdCollectionData(CollectionType) CONCAT2(StdCollectionData, CollectionType)
 
-/// @brief Instantiates the necessary declarations and definitions for a unique `StdCollectionData`
-/// type.
-///
-/// Instantiates a `StdCollectionData` type associated with a collection of type `CollectionType`
-/// which holds `T`s.
-///
-/// @param T - The type held by the associated collection
-/// @param CollectionType - The collection type associated with this `StdCollectionData`
-/// @ingroup collections
-#define DeclStdCollectionData(T, CollectionType)                                        \
-	typedef T (*std_collection_element_default_constructor(T))(StdAllocator allocator); \
-	typedef T (*std_collection_element_copy_constructor(T))(const T* restrict element,  \
-															StdAllocator allocator);    \
-	typedef void (*std_collection_element_destructor(T))(T* restrict element,           \
-														 StdAllocator allocator);       \
-                                                                                        \
-	typedef struct StdCollectionData(CollectionType) {                                  \
-		std_collection_element_default_constructor(T) m_constructor;                    \
-		std_collection_element_copy_constructor(T) m_copy_constructor;                  \
-		std_collection_element_destructor(T) m_destructor;                              \
-		StdAllocator m_allocator;                                                       \
-	}                                                                                   \
-	StdCollectionData(CollectionType)
+#if defined(T) && defined(CollectionType)
+
+typedef T (*const std_collection_element_default_constructor(T))(StdAllocator allocator);
+typedef T (*const std_collection_element_copy_constructor(T))(const T* restrict element,
+															  StdAllocator allocator);
+typedef void (*const std_collection_element_destructor(T))(T* restrict element,
+														   StdAllocator allocator);
+
+typedef struct StdCollectionData(CollectionType) {
+	std_collection_element_default_constructor(T) m_constructor;
+	std_collection_element_copy_constructor(T) m_copy_constructor;
+	std_collection_element_destructor(T) m_destructor;
+}
+StdCollectionData(CollectionType);
+
+#endif
