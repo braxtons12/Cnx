@@ -1,19 +1,21 @@
-#include "C2nxt/StdPlatform.h"
+#include <C2nxt/StdPlatform.h>
 
 #if STD_PLATFORM_COMPILER_CLANG && STD_PLATFORM_APPLE
 _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wnonportable-include-path\"")
 #endif
 
-#include "C2nxt/StdIO.h"
+#include <C2nxt/StdIO.h>
 
 #if STD_PLATFORM_COMPILER_CLANG && STD_PLATFORM_APPLE
 	_Pragma("GCC diagnostic pop")
 #endif
 
-#include "C2nxt/StdFormat.h"
-#include "C2nxt/StdRange.h"
-#include "C2nxt/StdVector.h"
-#include "unity.h"
+#include <C2nxt/StdFormat.h>
+#include <C2nxt/StdRange.h>
+#include <C2nxt/StdVector.h>
+#include <unity.h>
+
+#define SHORT_OPT_CAPACITY static_cast(usize)(STD_VECTOR_DEFAULT_SHORT_OPT_CAPACITY)
 
 #ifndef STD_VECTOR_TEST
 	#define STD_VECTOR_TEST
@@ -28,6 +30,11 @@ void vector_test_destructor(u32* elem, StdAllocator allocator) { // NOLINT
 	ignore(allocator);
 }
 
+u32 vector_test_copy_constructor(const u32* restrict elem, StdAllocator allocator) {
+	ignore(allocator);
+	return *elem;
+}
+
 void vector_test_scoped_destructor(u32* elem, StdAllocator allocator) { // NOLINT
 	//*elem = 0;
 	ignore(elem);
@@ -37,15 +44,17 @@ void vector_test_scoped_destructor(u32* elem, StdAllocator allocator) { // NOLIN
 	// fprintf(stdout, "running element destructor\n");
 }
 
+static let data
+	= (StdCollectionData(StdVector(u32))){.m_constructor = vector_test_constructor,
+										  .m_copy_constructor = vector_test_copy_constructor,
+										  .m_destructor = vector_test_destructor};
+
 void test_vector_new(void) {
-	let allocator = std_allocator_new();
-	let_mut data = (StdCollectionData(StdVector(u32))){.m_constructor = vector_test_constructor,
-													   .m_destructor = vector_test_destructor,
-													   .m_allocator = allocator};
-	let_mut vec = std_vector_new_with_collection_data(u32, data);
-	TEST_ASSERT_EQUAL_PTR(vec.m_data.m_constructor, vector_test_constructor);
-	TEST_ASSERT_EQUAL_PTR(vec.m_data.m_destructor, vector_test_destructor);
-	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec), STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32));
+	let_mut vec = std_vector_new_with_collection_data(u32, &data);
+	TEST_ASSERT_EQUAL_PTR(vec.m_data->m_constructor, vector_test_constructor);
+	TEST_ASSERT_EQUAL_PTR(vec.m_data->m_copy_constructor, vector_test_copy_constructor);
+	TEST_ASSERT_EQUAL_PTR(vec.m_data->m_destructor, vector_test_destructor);
+	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec), SHORT_OPT_CAPACITY);
 	TEST_ASSERT_EQUAL_INT(std_vector_size(vec), 0);
 	std_vector_free(vec);
 }
@@ -87,7 +96,7 @@ void test_vector_accessors(void) { // NOLINT
 	TEST_ASSERT_TRUE(std_vector_is_empty(vec));
 	TEST_ASSERT_FALSE(std_vector_is_full(vec));
 	TEST_ASSERT_EQUAL_INT(std_vector_size(vec), 0);
-	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec), STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32));
+	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec), SHORT_OPT_CAPACITY);
 
 	let cap = std_vector_capacity(vec);
 	for(let_mut i = 0U; i < cap; ++i) {
@@ -97,7 +106,7 @@ void test_vector_accessors(void) { // NOLINT
 	TEST_ASSERT_TRUE(std_vector_is_full(vec));
 	TEST_ASSERT_FALSE(std_vector_is_empty(vec));
 	TEST_ASSERT_EQUAL_INT(std_vector_size(vec), std_vector_capacity(vec));
-	TEST_ASSERT_EQUAL_INT(std_vector_size(vec), STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32));
+	TEST_ASSERT_EQUAL_INT(std_vector_size(vec), SHORT_OPT_CAPACITY);
 
 	let cap2 = std_vector_capacity(vec);
 	for(let_mut i = 0U; i < cap2; ++i) {
@@ -108,41 +117,40 @@ void test_vector_accessors(void) { // NOLINT
 
 void test_vector_reserve(void) {
 	let_mut vec = std_vector_new(u32);
-	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec), STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32));
+	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec), SHORT_OPT_CAPACITY);
 	std_vector_reserve(vec, std_vector_capacity(vec) * 2);
-	TEST_ASSERT_TRUE(std_vector_capacity(vec) >= STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32) * 2);
+	TEST_ASSERT_TRUE(std_vector_capacity(vec) >= SHORT_OPT_CAPACITY * 2);
 	TEST_ASSERT_EQUAL_INT(std_vector_size(vec), 0);
 	std_vector_free(vec);
 }
 
 void test_vector_resize(void) {
 	let_mut vec = std_vector_new(u32);
-	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec), STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32));
+	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec), SHORT_OPT_CAPACITY);
 	TEST_ASSERT_EQUAL_INT(std_vector_size(vec), 0);
-	std_vector_resize(vec, STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32) * 2);
-	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec),
-						  STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32) * 2);
-	TEST_ASSERT_EQUAL_INT(std_vector_size(vec), STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32) * 2);
+	std_vector_resize(vec, SHORT_OPT_CAPACITY * 2);
+	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec), SHORT_OPT_CAPACITY * 2);
+	TEST_ASSERT_EQUAL_INT(std_vector_size(vec), SHORT_OPT_CAPACITY * 2);
 	TEST_ASSERT_EQUAL_INT(std_vector_at(vec, std_vector_size(vec) - 1), 0);
 	std_vector_free(vec);
 }
 
 void test_vector_shrink(void) {
 	let_mut vec = std_vector_new(u32);
-	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec), STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32));
+	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec), SHORT_OPT_CAPACITY);
 	std_vector_reserve(vec, std_vector_capacity(vec) * 2);
-	TEST_ASSERT_TRUE(std_vector_capacity(vec) >= STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32) * 2);
+	TEST_ASSERT_TRUE(std_vector_capacity(vec) >= SHORT_OPT_CAPACITY * 2);
 	std_vector_shrink_to_fit(vec);
-	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec), STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32));
+	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec), SHORT_OPT_CAPACITY);
 	std_vector_free(vec);
 }
 
 void test_vector_clear(void) {
 	let_mut vec = std_vector_new(u32);
-	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec), STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32));
+	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec), SHORT_OPT_CAPACITY);
 	TEST_ASSERT_EQUAL_INT(std_vector_size(vec), 0);
-	std_vector_resize(vec, STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32) * 2);
-	TEST_ASSERT_EQUAL_INT(std_vector_size(vec), STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32) * 2);
+	std_vector_resize(vec, SHORT_OPT_CAPACITY * 2);
+	TEST_ASSERT_EQUAL_INT(std_vector_size(vec), SHORT_OPT_CAPACITY * 2);
 	std_vector_clear(vec);
 	TEST_ASSERT_EQUAL_INT(std_vector_size(vec), 0);
 	std_vector_free(vec);
@@ -207,31 +215,28 @@ void test_vector_erase_n(void) {
 
 void test_vector_free(void) {
 	let_mut vec = std_vector_new(u32);
-	std_vector_resize(vec, STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32) * 2);
-	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec),
-						  STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32) * 2);
-	TEST_ASSERT_EQUAL_INT(std_vector_size(vec), STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32) * 2);
+	std_vector_resize(vec, SHORT_OPT_CAPACITY * 2);
+	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec), SHORT_OPT_CAPACITY * 2);
+	TEST_ASSERT_EQUAL_INT(std_vector_size(vec), SHORT_OPT_CAPACITY * 2);
 	std_vector_free(vec);
-	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec), STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32));
+	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec), SHORT_OPT_CAPACITY);
 	TEST_ASSERT_EQUAL_INT(std_vector_size(vec), 0);
 }
 
+static let scoped_data
+	= (StdCollectionData(StdVector(u32))){.m_constructor = vector_test_constructor,
+										  .m_copy_constructor = vector_test_copy_constructor,
+										  .m_destructor = vector_test_scoped_destructor};
 /// should print "running element destructor" to stdout
-/// STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32) * 2 times
+/// SHORT_OPT_CAPACITY * 2 times
 void test_vector_scoped(void) {
-	let allocator = std_allocator_new();
-	let_mut data
-		= (StdCollectionData(StdVector(u32))){.m_constructor = vector_test_constructor,
-											  .m_destructor = vector_test_scoped_destructor,
-											  .m_allocator = allocator};
-	let_mut std_vector_scoped(u32) vec = std_vector_new_with_collection_data(u32, data);
-	std_vector_resize(vec, STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32) * 2);
+	let_mut std_vector_scoped(u32) vec = std_vector_new_with_collection_data(u32, &scoped_data);
+	std_vector_resize(vec, SHORT_OPT_CAPACITY * 2);
 	for(let_mut i = 0U; i < std_vector_capacity(vec); ++i) {
 		std_vector_at_mut(vec, i) = i;
 	}
-	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec),
-						  STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32) * 2);
-	TEST_ASSERT_EQUAL_INT(std_vector_size(vec), STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(u32) * 2);
+	TEST_ASSERT_EQUAL_INT(std_vector_capacity(vec), SHORT_OPT_CAPACITY * 2);
+	TEST_ASSERT_EQUAL_INT(std_vector_size(vec), SHORT_OPT_CAPACITY * 2);
 }
 
 void test_vector_iterator(void) {

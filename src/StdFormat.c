@@ -3,7 +3,7 @@
 /// @brief StdFormat brings human readable string formatting, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
 /// @version 0.1.1
-/// @date 2022-01-08
+/// @date 2022-01-11
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -640,7 +640,6 @@ StdString std_format_std_string_with_allocator(const StdFormat* restrict self,
 	return std_string_clone_with_allocator(*string, allocator);
 }
 
-
 StdString std_format_std_stringview(const StdFormat* restrict self, StdFormatSpecifier specifier) {
 	ignore(specifier);
 
@@ -649,14 +648,13 @@ StdString std_format_std_stringview(const StdFormat* restrict self, StdFormatSpe
 }
 
 StdString std_format_std_stringview_with_allocator(const StdFormat* restrict self,
-                                               StdFormatSpecifier specifier,
-                                               StdAllocator allocator) {
+												   StdFormatSpecifier specifier,
+												   StdAllocator allocator) {
 	ignore(specifier);
 
 	let view = static_cast(const StdStringView*)(self->m_self);
 	return std_string_from_with_allocator(view, allocator);
 }
-
 
 StdString std_format_cstring(const StdFormat* restrict self, StdFormatSpecifier specifier) {
 	ignore(specifier);
@@ -699,9 +697,9 @@ DeclStdIterators(ConstRef(StdFormatVariant));
 DeclStdOption(StdFormatVariant);
 ImplStdOption(StdFormatVariant);
 
-#define T StdFormatVariant
-#define STD_TEMPLATE_DECL 1
-#define STD_TEMPLATE_IMPL 1
+#define T						  StdFormatVariant
+#define STD_TEMPLATE_DECL		  1
+#define STD_TEMPLATE_IMPL		  1
 #define STD_TEMPLATE_UNDEF_PARAMS 1
 #include <C2nxt/StdVector.h>
 
@@ -715,14 +713,19 @@ std_format_pair_from_stringview(StdStringView substring) {
 	return (StdFormatVariant){.m_is_substring = true, .m_substring = substring};
 }
 
-always_inline static inline StdFormatVariant std_format_variant_new(StdAllocator allocator) {
-	ignore(allocator);
+always_inline static inline StdFormatVariant
+std_format_variant_new(StdAllocator maybe_unused allocator) {
 	return (StdFormatVariant){0};
 }
 
 always_inline static inline void
-std_format_variant_free(StdFormatVariant* pair, StdAllocator allocator) {
-	ignore(pair, allocator);
+std_format_variant_free(maybe_unused StdFormatVariant* elem, maybe_unused StdAllocator allocator) {
+}
+
+always_inline static inline StdFormatVariant
+std_format_variant_clone(const StdFormatVariant* restrict elem,
+						 maybe_unused StdAllocator allocator) {
+	return *elem;
 }
 
 // clang-format off
@@ -803,6 +806,12 @@ bool std_format_is_char_valid_in_specifier(char character) {
 		   || character == STD_FORMAT_TYPE_DEBUG || (character >= '0' && character <= '9');
 }
 
+
+static let format_variant_data = (StdCollectionData(StdVector(StdFormatVariant))) {
+.m_constructor = std_format_variant_new,
+.m_destructor = std_format_variant_free,
+.m_copy_constructor = std_format_variant_clone};
+
 StdResult(StdVector(StdFormatVariant))
 	std_format_parse_and_validate_format_string(restrict const_cstring format_string, // NOLINT
 											// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
@@ -810,12 +819,8 @@ StdResult(StdVector(StdFormatVariant))
 											maybe_unused usize num_args,
 											StdAllocator allocator)
 {
-	let_mut vec = std_vector_new_with_collection_data(StdFormatVariant,
-			((StdCollectionData(StdVector(StdFormatVariant))) {
-				.m_constructor = std_format_variant_new,
-				.m_destructor = std_format_variant_free,
-				.m_allocator = allocator}));
-	std_vector_reserve(vec, num_args * 2);
+	let_mut vec = std_vector_new_with_capacity_allocator_and_collection_data(StdFormatVariant,
+			num_args * 2, allocator, &format_variant_data);
 
 	let_mut in_specifier = false;
 	let_mut pushed_specifier = false;

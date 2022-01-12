@@ -3,7 +3,7 @@
 /// @brief This module provides the type and function declarations for a template instantiation of
 /// `StdVector(T)`
 /// @version 0.2
-/// @date 2022-01-08
+/// @date 2022-01-10
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -26,23 +26,10 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-/// @ingroup std_vector
-/// @{
-/// @defgroup std_vector StdVectorDecl
-/// Use this include to instantiate the declarations for a `StdVector(T)` containing
-/// `T`s. This provides the type and function declarations for `StdVector(T)`.
-///
-/// Requires that:
-/// 1. The template parameter `T` is defined as the type that will be held by this `StdVector(T)`
-/// template instantiation
-/// 2 (optional, but makes intent explicit). `STD_TEMPLATE_DECL` is defined as 1
-/// @}
-
-#if defined(T) && (defined(STD_TEMPLATE_DECL) && STD_TEMPLATE_DECL)
+#if defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_DECL
 
 	#include <C2nxt/StdAllocators.h>
 	#include <C2nxt/StdBasicTypes.h>
-	#include <C2nxt/StdCollectionsData.h>
 	#include <C2nxt/StdFormat.h>
 	#include <C2nxt/StdIterator.h>
 	#include <C2nxt/StdMath.h>
@@ -51,16 +38,20 @@
 	#include <C2nxt/StdResult.h>
 	#include <C2nxt/std_vector/StdVectorDef.h>
 
-DeclStdCollectionData(T, StdVector(T));
+	#define CollectionType StdVector(T)
+	#include <C2nxt/StdCollectionsData.h>
+	#undef CollectionType
+
 typedef struct StdVectorIdentifier(T, vtable) StdVectorIdentifier(T, vtable);
 typedef struct StdVector(T) {
 	union {
-		T m_short[STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(T)];
+		T m_short[SMALL_OPT_CAPACITY];
 		T* m_long;
 	};
 	usize m_size;
 	usize m_capacity;
-	StdCollectionData(StdVector(T)) m_data;
+	StdAllocator m_allocator;
+	const StdCollectionData(StdVector(T)) * m_data;
 	const StdVectorIdentifier(T, vtable) * m_vtable;
 }
 StdVector(T);
@@ -82,14 +73,24 @@ DeclStdResult(StdVector(T));
 DeclStdResultFormat(StdVector(T));
 
 StdVector(T) StdVectorIdentifier(T, new)(void);
-StdVector(T) StdVectorIdentifier(T, new_with_collection_data)(StdCollectionData(StdVector(T)) data);
+StdVector(T) StdVectorIdentifier(T, new_with_allocator)(StdAllocator allocator);
+StdVector(T) StdVectorIdentifier(T, new_with_collection_data)(
+	const StdCollectionData(StdVector(T)) * restrict data);
+StdVector(T) StdVectorIdentifier(T, new_with_allocator_and_collection_data)(
+	StdAllocator allocator,
+	const StdCollectionData(StdVector(T)) * restrict data);
 StdVector(T) StdVectorIdentifier(T, new_with_capacity)(usize capacity);
 StdVector(T)
-	StdVectorIdentifier(T, new_with_capacity_with_collection_data)(usize capacity,
-																   StdCollectionData(StdVector(T))
-																	   data);
+	StdVectorIdentifier(T, new_with_capacity_and_allocator)(usize capacity, StdAllocator allocator);
+StdVector(T) StdVectorIdentifier(T, new_with_capacity_and_collection_data)(
+	usize capacity,
+	const StdCollectionData(StdVector(T)) * restrict data);
+StdVector(T) StdVectorIdentifier(T, new_with_capacity_allocator_and_collection_data)(
+	usize capacity,
+	StdAllocator allocator,
+	const StdCollectionData(StdVector(T)) * restrict data);
 StdVector(T) StdVectorIdentifier(T, clone)(const StdVector(T) * restrict self)
-	std_disable_if(!(self->m_data.m_copy_constructor),
+	std_disable_if(!(self->m_data->m_copy_constructor),
 				   "Can't clone a StdVector(T) with elements that aren't copyable (no "
 				   "element copy constructor defined)");
 const T* StdVectorIdentifier(T, at_const)(const StdVector(T) * restrict self, usize index);
@@ -194,4 +195,4 @@ typedef struct StdVectorIdentifier(T, vtable) {
 	StdRandomAccessIterator(ConstRef(T)) (*const crend)(const StdVector(T)* restrict self);
 }
 StdVectorIdentifier(T, vtable);
-#endif // defined(T) && (defined(STD_TEMPLATE_DECL) && STD_TEMPLATE_DECL)
+#endif // defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_DECL

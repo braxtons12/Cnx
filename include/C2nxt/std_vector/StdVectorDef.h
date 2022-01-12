@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides macro definitions for implementing and working with `StdVector(T)`
 /// @version 0.1
-/// @date 2022-01-08
+/// @date 2022-01-10
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -91,24 +91,13 @@
 	/// `StdVector(T)` containing `T`s
 	#define StdVectorIdentifier(T, Identifier) CONCAT3(std_vector_, T, CONCAT2(_, Identifier))
 
-	#ifndef STD_VECTOR_SHORT_OPTIMIZATION_NUM_ELEMENTS
-		/// @brief The maximum number of elements storable using `StdVector(T)`'s small size
-		/// optimization. Define this to a different value to change or disable the small size
-		/// optimization
-		/// @ingroup std_vector
-		#define STD_VECTOR_SHORT_OPTIMIZATION_NUM_ELEMENTS 8U
-	#endif // STD_VECTOR_SHORT_OPTIMIZATION_NUM_ELEMENTS
+	/// @brief The default small-vector optimization capacity if not given as a template parameter
+	/// @ingroup std_vector
+	#define STD_VECTOR_DEFAULT_SHORT_OPT_CAPACITY 8U
 
-	/// @brief macro alias for the maximum number of elements capable of being stored using
-	/// `StdVector(T)`'s small size optimization
-	#define STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(T) STD_VECTOR_SHORT_OPTIMIZATION_NUM_ELEMENTS
-
-	#ifndef STD_VECTOR_DEFAULT_LONG_CAPACITY
-		/// @brief The default memory allocation size for `StdVector(T)` if short optimization is
-		/// disabled
-		/// @ingroup std_vector
-		#define STD_VECTOR_DEFAULT_LONG_CAPACITY 16U
-	#endif // STD_VECTOR_DEFAULT_LONG_CAPACITY
+	/// @brief The default heap-allocated capacity if not given as a template parameter
+	/// @ingroup std_vector
+	#define STD_VECTOR_DEFAULT_LONG_CAPACITY 16U
 
 	/// @brief Creates a new `StdVector(T)` with defaulted associated functions and initial
 	/// capacity.
@@ -125,6 +114,23 @@
 	/// @return a new `StdVector(T)`
 	/// @ingroup std_vector
 	#define std_vector_new(T) StdVectorIdentifier(T, new)()
+	/// @brief Creates a new `StdVector(T)` with defaulted capacity and associated functions and
+	/// provided memory allocator.
+	///
+	/// Creates a new `StdVector(T)` with:
+	/// 1. defaulted initial capacity
+	/// 2. defaulted associated element default-constructor
+	/// 3. defaulted associated element copy-constructor
+	/// 4. defaulted element destructor
+	/// 5. user-provided memory allocator
+	///
+	/// @param T - The element type of the `StdVector(T)` instantiation to create
+	/// @param allocator - The `StdAllocator` to use for memory allocations
+	///
+	/// @return a new `StdVector(T)`
+	/// @ingroup std_vector
+	#define std_vector_new_with_allocator(T, allocator) \
+		StdVectorIdentifier(T, new_with_allocator)(allocator)
 	/// @brief Creates a new `StdVector(T)` with defaulted capacity and provided associated
 	/// functions.
 	///
@@ -142,8 +148,29 @@
 	///
 	/// @return a new `StdVector(T)`
 	/// @ingroup std_vector
-	#define std_vector_new_with_collection_data(T, collection_data) \
-			StdVectorIdentifier(T, new_with_collection_data)(collection_data)
+	#define std_vector_new_with_collection_data(T, collection_data_ptr) \
+		StdVectorIdentifier(T, new_with_collection_data)(collection_data_ptr)
+	/// @brief Creates a new `StdVector(T)` with defaulted capacity and provided associated
+	/// functions and memory allocator.
+	///
+	/// Creates a new `StdVector(T)` with:
+	/// 1. defaulted initial capacity
+	/// 2. possibly user-provided element default-constructor
+	/// 3. possibly user-provided associated element copy-constructor
+	/// 4. possibly user-provided element destructor
+	/// 5. user-provided memory allocator
+	///
+	/// @param T - The element type of the `StdVector(T)` instantiation to create
+	/// @param allocator - The `StdAllocator` to use for memory allocations
+	/// @param collection_data - The `StdCollectionData(CollectionType)` containing the element
+	/// default-constructor, element copy-constructor, element destructor, and memory allocator
+	/// to use
+	///
+	/// @return a new `StdVector(T)`
+	/// @ingroup std_vector
+	#define std_vector_new_with_allocator_and_collection_data(T, allocator, collection_data_ptr) \
+		StdVectorIdentifier(T, new_with_allocator_and_collection_data)(allocator,                \
+																	   collection_data_ptr)
 	/// @brief Creates a new `StdVector(T)` with __at least__ the given capacity and defaulted
 	/// associated functions.
 	///
@@ -160,7 +187,25 @@
 	/// @return a new `StdVector(T)`
 	/// @ingroup std_vector
 	#define std_vector_new_with_capacity(T, capacity) \
-			StdVectorIdentifier(T, new_with_capacity)(capacity)
+		StdVectorIdentifier(T, new_with_capacity)(capacity)
+	/// @brief Creates a new `StdVector(T)` with __at least__ the given capacity, defaulted
+	/// associated functions, and provided memory allocator.
+	///
+	/// Creates a new `StdVector(T)` with:
+	/// 1. given initial capacity
+	/// 2. defaulted associated element default-constructor
+	/// 3. defaulted associated element copy-constructor
+	/// 4. defaulted associated element destructor
+	/// 5. defaulted memory allocator
+	///
+	/// @param T - The element type of the `StdVector(T)` instantiation to create
+	/// @param capacity - The initial capacity of the vector
+	/// @param allocator - The `StdAllocator` to use for memory allocations
+	///
+	/// @return a new `StdVector(T)`
+	/// @ingroup std_vector
+	#define std_vector_new_with_capacity_and_allocator(T, capacity, allocator) \
+		StdVectorIdentifier(T, new_with_capacity_and_allocator)(capacity, allocator)
 	/// @brief Creates a new `StdVector(T)` with __at least__ the given capacity and provided
 	/// associated functions.
 	///
@@ -179,9 +224,35 @@
 	///
 	/// @return a new `StdVector(T)`
 	/// @ingroup std_vector
-	#define std_vector_new_with_capacity_with_collection_data(T, capacity, collection_data) \
-			StdVectorIdentifier(T, new_with_capacity_with_collection_data)(capacity,            \
-																		   collection_data)
+	#define std_vector_new_with_capacity_and_collection_data(T, capacity, collection_data_ptr) \
+		StdVectorIdentifier(T, new_with_capacity_and_collection_data)(capacity, collection_data_ptr)
+	/// @brief Creates a new `StdVector(T)` with __at least__ the given capacity and provided
+	/// associated functions and memory allocator.
+	///
+	/// Creates a new `StdVector(T)` with:
+	/// 1. given initial capacity
+	/// 2. possibly user-provided associated element default-constructor
+	/// 3. possibly user-provided associated element copy-constructor
+	/// 4. possibly user-provided associated element destructor
+	/// 5. user-provided memory allocator
+	///
+	/// @param T - The element type of the `StdVector(T)` instantiation to create
+	/// @param capacity - The initial capacity of the vector
+	/// @param allocator - The `StdAllocator` to use for memory allocations
+	/// @param collection_data - The `StdCollectionData(CollectionType)` containing the element
+	/// default-constructor, element copy-constructor, element destructor, and memory allocator
+	/// to use
+	///
+	/// @return a new `StdVector(T)`
+	/// @ingroup std_vector
+	#define std_vector_new_with_capacity_allocator_and_collection_data(T,                   \
+																	   capacity,            \
+																	   allocator,           \
+																	   collection_data_ptr) \
+		StdVectorIdentifier(T,                                                              \
+							new_with_capacity_allocator_and_collection_data)(capacity,      \
+																			 allocator,     \
+																			 collection_data_ptr)
 	/// @brief Clones the given `StdVector(T)`
 	///
 	/// Creates a deep copy of the given `StdVector(T)` calling the associated copy constructor
@@ -301,8 +372,7 @@
 	/// @param self - The `StdVector(T)` to reserve memory for
 	/// @param new_capacity - The desired minimum number of storable elements
 	/// @ingroup std_vector
-	#define std_vector_reserve(self, new_capacity) \
-			(self).m_vtable->reserve(&(self), (new_capacity))
+	#define std_vector_reserve(self, new_capacity) (self).m_vtable->reserve(&(self), (new_capacity))
 	/// @brief Resizes the given `StdVector(T)` to `new_size` number of elements.
 	/// If `new_size` is greater than the current size, this will allocate memory if necessary
 	/// and default-construct new elements. If `new_size` is less than the current size, this
@@ -350,7 +420,7 @@
 	/// behavior of the collection is undefined
 	/// @ingroup std_vector
 	#define std_vector_insert(self, element, index) \
-			(self).m_vtable->insert(&(self), (element), (index))
+		(self).m_vtable->insert(&(self), (element), (index))
 	/// @brief Removes the element at the given index from the given `StdVector(T)`, moving
 	/// elements forward in the vector if necessary
 	///
@@ -370,7 +440,7 @@
 	/// size of the vector
 	/// @ingroup std_vector
 	#define std_vector_erase_n(self, index, num_elements) \
-			(self).m_vtable->erase_n(&(self), (index), (num_elements))
+		(self).m_vtable->erase_n(&(self), (index), (num_elements))
 	/// @brief Frees the given `StdVector(T)`, calling the element destructor on each element
 	/// and freeing any allocated memory
 	///
@@ -492,7 +562,7 @@
 	///
 	/// @return a random access iterator into the reversed vector
 	#define std_vector_into_reverse_const_iter(self) \
-			(self).m_vtable->into_reverse_const_iter(&(self))
+		(self).m_vtable->into_reverse_const_iter(&(self))
 
 	/// @brief declare a `StdVector(T)` variable with this attribute to have `std_vector_free`
 	/// automatically called on it at scope end

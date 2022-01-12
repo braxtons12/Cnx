@@ -3,7 +3,7 @@
 /// @brief This module provides the function definitions for a template instantiation of
 /// `StdVector(T)`
 /// @version 0.2
-/// @date 2022-01-08
+/// @date 2022-01-10
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -26,21 +26,7 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-/// @ingroup std_vector
-/// @{
-/// @defgroup std_vector StdVectorImpl
-/// Use this include to instantiate the implementations for a `StdVector(T)` containing
-/// `T`s. This provides the function definitions for `StdVector(T)`.
-///
-/// Requires that:
-/// 1. `StdVectorDecl.h` has already been included, its declarations are in scope, and that the
-/// requirements for that have already been met.
-/// 2. `STD_TEMPLATE_IMPL` is defined as 1
-/// 3. The template parameter `T` is defined as the type that will be held by this `StdVector(T)`
-/// template instantiation
-/// @}
-
-#if defined(T) && (defined(STD_TEMPLATE_IMPL) && STD_TEMPLATE_IMPL)
+#if defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_IMPL
 
 	#include <C2nxt/StdAllocators.h>
 	#include <C2nxt/StdBasicTypes.h>
@@ -190,44 +176,53 @@ static const struct StdVectorIdentifier(T, vtable) StdVectorIdentifier(T, vtable
 static const struct StdCollectionData(StdVector(T)) StdVectorIdentifier(T, default_collection_data)
 	= {.m_constructor = StdVectorIdentifier(T, default_constructor),
 	   .m_copy_constructor = StdVectorIdentifier(T, default_copy_constructor),
-	   .m_destructor = StdVectorIdentifier(T, default_destructor),
-	   .m_allocator = STD_DEFAULT_ALLOCATOR};
+	   .m_destructor = StdVectorIdentifier(T, default_destructor)};
 
 always_inline static inline bool
 StdVectorIdentifier(T, is_short)(const StdVector(T) * restrict self) {
-	return self->m_capacity <= STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(T);
+	return self->m_capacity <= SMALL_OPT_CAPACITY;
 }
 
 StdVector(T) StdVectorIdentifier(T, new)(void) {
-	return std_vector_new_with_collection_data(T, StdVectorIdentifier(T, default_collection_data));
+	return std_vector_new_with_allocator_and_collection_data(
+		T,
+		DEFAULT_ALLOCATOR,
+		&StdVectorIdentifier(T, default_collection_data));
 }
 
-StdVector(T)
-	StdVectorIdentifier(T, new_with_collection_data)(StdCollectionData(StdVector(T)) data) {
+StdVector(T) StdVectorIdentifier(T, new_with_allocator)(StdAllocator allocator) {
+	return std_vector_new_with_allocator_and_collection_data(
+		T,
+		allocator,
+		&StdVectorIdentifier(T, default_collection_data));
+}
 
+StdVector(T) StdVectorIdentifier(T, new_with_collection_data)(
+	const StdCollectionData(StdVector(T)) * restrict data) {
+
+	return std_vector_new_with_allocator_and_collection_data(T, DEFAULT_ALLOCATOR, data);
+}
+
+StdVector(T) StdVectorIdentifier(T, new_with_allocator_and_collection_data)(
+	StdAllocator allocator,
+	const StdCollectionData(StdVector(T)) * restrict data) {
 	let_mut vec = (StdVector(T)){.m_size = 0,
-								 .m_capacity = STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(T),
+								 .m_capacity = SMALL_OPT_CAPACITY,
+								 .m_allocator = allocator,
 								 .m_data = data,
 								 .m_vtable = &StdVectorIdentifier(T, vtable_impl)};
+	std_assert(vec.m_data->m_constructor != nullptr, "Element default constructor cannot be null");
+	std_assert(vec.m_data->m_destructor != nullptr, "Element destructor cannot be null");
 
-	if(vec.m_data.m_constructor == nullptr) {
-		vec.m_data.m_constructor = StdVectorIdentifier(T, default_constructor);
-	}
-
-	if(vec.m_data.m_destructor == nullptr) {
-		vec.m_data.m_destructor = StdVectorIdentifier(T, default_destructor);
-	}
-
-	#if STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(T) == 0
+	#if SMALL_OPT_CAPACITY == 0
 
 	vec.m_long = static_cast(T*)(
-		std_allocator_allocate_array_t(T, vec.m_data.m_allocator, STD_VECTOR_DEFAULT_LONG_CAPACITY)
-			.m_memory);
-	vec.m_capacity = STD_VECTOR_DEFAULT_LONG_CAPACITY;
+		std_allocator_allocate_array_t(T, vec.m_data.m_allocator, DEFAULT_LONG_CAPACITY).m_memory);
+	vec.m_capacity = DEFAULT_LONG_CAPACITY;
 
 	#else
 
-	std_memset(T, vec.m_short, 0, STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(T));
+	std_memset(T, vec.m_short, 0, SMALL_OPT_CAPACITY);
 
 	#endif
 
@@ -235,34 +230,50 @@ StdVector(T)
 }
 
 StdVector(T) StdVectorIdentifier(T, new_with_capacity)(usize capacity) {
-	let_mut vec = std_vector_new(T);
+	return std_vector_new_with_capacity_and_allocator(T, capacity, DEFAULT_ALLOCATOR);
+}
+
+StdVector(T) StdVectorIdentifier(T, new_with_capacity_and_allocator)(usize capacity,
+																	 StdAllocator allocator) {
+	let_mut vec = std_vector_new_with_allocator(T, allocator);
 	std_vector_reserve(vec, capacity);
 	return vec;
 }
 
-StdVector(T)
-	StdVectorIdentifier(T, new_with_capacity_with_collection_data)(usize capacity,
-																   StdCollectionData(StdVector(T))
-																	   data) {
+StdVector(T) StdVectorIdentifier(T, new_with_capacity_and_collection_data)(
+	usize capacity,
+	const StdCollectionData(StdVector(T)) * restrict data) {
 
 	let_mut vec = std_vector_new_with_collection_data(T, data);
 	std_vector_reserve(vec, capacity);
 	return vec;
 }
 
+StdVector(T) StdVectorIdentifier(T, new_with_capacity_allocator_and_collection_data)(
+	usize capacity,
+	StdAllocator allocator,
+	const StdCollectionData(StdVector(T)) * restrict data) {
+
+	let_mut vec = std_vector_new_with_allocator_and_collection_data(T, allocator, data);
+	std_vector_reserve(vec, capacity);
+	return vec;
+}
+
 StdVector(T) StdVectorIdentifier(T, clone)(const StdVector(T) * restrict self)
-	std_disable_if(!(self->m_data.m_copy_constructor),
+	std_disable_if(!(self->m_data->m_copy_constructor),
 				   "Can't clone a StdVector(T) with elements that aren't copyable (no "
 				   "element copy constructor defined)") {
-	std_assert(self->m_data.m_copy_constructor != nullptr,
+	std_assert(self->m_data->m_copy_constructor != nullptr,
 			   "Can't clone StdVector(T) with elements that aren't copyable (no element "
 			   "copy constructor defined)");
 
-	let_mut vec = std_vector_new_with_capacity_with_collection_data(T,
-																	std_vector_capacity(*self),
-																	self->m_data);
+	let_mut vec
+		= std_vector_new_with_capacity_allocator_and_collection_data(T,
+																	 std_vector_capacity(*self),
+																	 self->m_allocator,
+																	 self->m_data);
 	foreach_ref(elem, *self) {
-		std_vector_push_back(vec, self->m_data.m_copy_constructor(elem, self->m_data.m_allocator));
+		std_vector_push_back(vec, self->m_data->m_copy_constructor(elem, self->m_allocator));
 	}
 	return vec;
 }
@@ -340,36 +351,31 @@ void StdVectorIdentifier(T, resize_internal)(StdVector(T) * restrict self, usize
 	if(new_size < size) {
 		let num_to_destroy = size - new_size;
 		for(let_mut i = new_size; i < new_size + num_to_destroy; ++i) {
-			self->m_data.m_destructor(&std_vector_at_mut(*self, i), self->m_data.m_allocator);
+			self->m_data->m_destructor(&std_vector_at_mut(*self, i), self->m_allocator);
 		}
 	}
-	if(new_size > STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(T)) {
+	if(new_size > SMALL_OPT_CAPACITY) {
 		let_mut array = static_cast(T*)(
-			std_allocator_allocate_array_t(T, self->m_data.m_allocator, new_size).m_memory);
+			std_allocator_allocate_array_t(T, self->m_allocator, new_size).m_memory);
 		let num_to_copy = std_min(size, new_size);
 		std_memcpy(T, array, &std_vector_at_mut(*self, 0), num_to_copy);
 		if(!StdVectorIdentifier(T, is_short)(self)) {
 			let_mut ptr = self->m_long;
 			self->m_long = nullptr;
-			std_allocator_deallocate_array_t(T, self->m_data.m_allocator, ptr, self->m_capacity);
+			std_allocator_deallocate_array_t(T, self->m_allocator, ptr, self->m_capacity);
 		}
 		self->m_capacity = new_size;
 		self->m_size = num_to_copy;
 		self->m_long = array;
 	}
-	else if(self->m_capacity != STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(T)
-			&& STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(T) != 0)
-	{
-		let capacity = STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(T);
+	else if(self->m_capacity != SMALL_OPT_CAPACITY && SMALL_OPT_CAPACITY != 0) {
+		let capacity = SMALL_OPT_CAPACITY;
 		let_mut array = static_cast(T*)(
-			std_allocator_allocate_array_t(T, self->m_data.m_allocator, capacity).m_memory);
+			std_allocator_allocate_array_t(T, self->m_allocator, capacity).m_memory);
 		std_memcpy(T, array, self->m_long, capacity);
-		std_allocator_deallocate_array_t(T,
-										 self->m_data.m_allocator,
-										 self->m_long,
-										 self->m_capacity);
+		std_allocator_deallocate_array_t(T, self->m_allocator, self->m_long, self->m_capacity);
 		std_memcpy(T, self->m_short, array, capacity);
-		std_allocator_deallocate_array_t(T, self->m_data.m_allocator, array, capacity);
+		std_allocator_deallocate_array_t(T, self->m_allocator, array, capacity);
 		self->m_size = capacity;
 		self->m_capacity = capacity;
 	}
@@ -394,7 +400,7 @@ void StdVectorIdentifier(T, resize)(StdVector(T) * restrict self, usize new_size
 	StdVectorIdentifier(T, resize_internal)(self, new_size);
 	if(new_size > self->m_size) {
 		for(let_mut i = self->m_size - 1; i < new_size; ++i) {
-			std_vector_at_mut(*self, i) = self->m_data.m_constructor(self->m_data.m_allocator);
+			std_vector_at_mut(*self, i) = self->m_data->m_constructor(self->m_allocator);
 		}
 	}
 	self->m_size = new_size;
@@ -406,7 +412,7 @@ void StdVectorIdentifier(T, shrink_to_fit)(StdVector(T) * restrict self) {
 
 void StdVectorIdentifier(T, clear)(StdVector(T) * restrict self) {
 	for(let_mut i = 0U; i < std_vector_size(*self); ++i) {
-		self->m_data.m_destructor(&std_vector_at_mut(*self, i), self->m_data.m_allocator);
+		self->m_data->m_destructor(&std_vector_at_mut(*self, i), self->m_allocator);
 	}
 	self->m_size = 0U;
 }
@@ -461,7 +467,7 @@ void StdVectorIdentifier(T, erase)(StdVector(T) * restrict self, usize index) {
 	std_assert(index < self->m_size,
 			   "std_vector_erase called with index >= self->m_size (index out of bounds)");
 
-	self->m_data.m_destructor(&std_vector_at_mut(*self, index), self->m_data.m_allocator);
+	self->m_data->m_destructor(&std_vector_at_mut(*self, index), self->m_allocator);
 
 	if(index != self->m_size - 1) {
 		let num_to_move = self->m_size - (index + 1);
@@ -485,7 +491,7 @@ void StdVectorIdentifier(T,
 	let num_to_move = self->m_size - end;
 
 	for(let_mut i = index; i < end; ++i) {
-		self->m_data.m_destructor(&std_vector_at_mut(*self, i), self->m_data.m_allocator);
+		self->m_data->m_destructor(&std_vector_at_mut(*self, i), self->m_allocator);
 	}
 
 	if(end != self->m_size) {
@@ -500,14 +506,12 @@ void StdVectorIdentifier(T,
 void StdVectorIdentifier(T, free)(void* restrict self) {
 	let self_ = static_cast(StdVector(T)*)(self);
 	for(let_mut i = 0U; i < self_->m_size; ++i) {
-		self_->m_data.m_destructor(&std_vector_at_mut(*self_, i), self_->m_data.m_allocator);
+		self_->m_data->m_destructor(&std_vector_at_mut(*self_, i), self_->m_allocator);
 	}
 
 	if(!StdVectorIdentifier(T, is_short)(self_)) {
-		std_allocator_deallocate(
-			self_->m_data.m_allocator,
-			(StdMemory){.m_memory = self_->m_long, .m_size_bytes = self_->m_capacity * sizeof(T)});
-		self_->m_capacity = STD_VECTOR_SHORT_OPTIMIZATION_CAPACITY(T);
+		std_allocator_deallocate_array_t(T, self_->m_allocator, self_->m_long, self_->m_capacity);
+		self_->m_capacity = SMALL_OPT_CAPACITY;
 	}
 	self_->m_size = 0U;
 }
@@ -759,7 +763,7 @@ StdRandomAccessIterator(ConstRef(T))
 
 StdString
 StdVectorIdentifier(T, format)(const StdFormat* restrict self, StdFormatSpecifier specifier) {
-	return StdVectorIdentifier(T, format_with_allocator)(self, specifier, std_allocator_new());
+	return StdVectorIdentifier(T, format_with_allocator)(self, specifier, DEFAULT_ALLOCATOR);
 }
 
 StdString StdVectorIdentifier(T, format_with_allocator)(const StdFormat* restrict self,
@@ -784,4 +788,4 @@ StdString StdVectorIdentifier(T, format_with_allocator)(const StdFormat* restric
 		as_format_t(nullptr_t, data),
 		is_short);
 }
-#endif // defined(T) && (defined(STD_TEMPLATE_IMPL) && STD_TEMPLATE_IMPL)
+#endif // defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_IMPL

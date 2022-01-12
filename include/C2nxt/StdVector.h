@@ -3,7 +3,7 @@
 /// @brief This module provides a dynamic-array type comparable to C++'s `std::vector` and Rust's
 /// `std::vec::Vec` for C2nxt
 /// @version 0.2
-/// @date 2022-01-08
+/// @date 2022-01-10
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -38,18 +38,15 @@
 /// `StdVector(T)` has a small size optimization (SSO) that is user configurable. This allows for a
 /// compile-time configurable number of elements to be stored on the stack, before resorting to heap
 /// allocation, at the cost of `sizeof(StdVector(T))` being larger than otherwise necessary. By
-/// default, this optimization allows for up to 8 elements to be stored on the stack. This number
-/// can be changed by defining `STD_VECTOR_SHORT_OPTIMIZATION_NUM_ELEMENTS` to the desired number of
-/// elements. If the small size optimization is disabled (by defining
-/// `STD_VECTOR_SHORT_OPTIMIZATION_NUM_ELEMENTS` to 0), the default heap allocation size can be
-/// configured by defining `STD_VECTOR_DEFAULT_LONG_CAPACITY` to the desired number of elements. The
-/// default for this setting is 16.
+/// default, this optimization allows for up to 8 elements to be stored on the stack. For
+/// information on how to configure this, see "Template Parameters" below.
 ///
 /// Instantiations of `StdVector(T)` are already provided for builtin types like `i32` and some
 /// C2nxt types, like `StdString`. Instantiating it for your own types is simple and requires
 /// minimal boiler-plate.
 ///
-/// Instantiation requirements:
+/// # Instantiation requirements:
+///
 /// 1. a `typedef` of your type to provide an alphanumeric name for it. (for template and macro
 /// 	parameters)
 /// 2. a `typedef` for pointer to your type as `Ref(YourType)`, for use with the iterators.
@@ -61,6 +58,47 @@
 /// We recommend two routes for providing instantiations for user-defined types, either:
 /// 1. Provide the instantiation together with your type's public interface and implementation OR
 /// 2. Provide it as a separate "template instantiation" .h/.c file pair
+///
+/// # Parameters
+///
+/// `StdVector(T)` takes several instantiation-time macro parameters, in addition to the
+/// instantiation-mode macro parameters required of all C2nxt templates.
+///
+/// ## Instantiation-Mode Parameters
+///
+/// These signal to the implementation to instantiate the declarations, definitions, or both, for
+/// the template.
+/// 1. `STD_TEMPLATE_DECL` (Optional) - Defining this to true signals to the implementation to
+/// declare the template instantiation when you include `<C2nxt/StdVector.h>`. This will instantiate
+/// any required type declarations and definitions and any required function declarations. No
+/// functions will be defined. This is optional (but signals intent explicitly) - If required
+/// template parameters are defined and `STD_TEMPLATE_IMPL` is not, then this will be inferred as
+/// true (`1`) by default.
+/// 2. `STD_TEMPLATE_IMPL` - Defining this to true signals to the implementation to define the
+/// template instantiation when you include `<C2nxt/StdVector.h>`. This will instantiate any
+/// required function definitions. This is not required to be paired with `STD_TEMPLATE_DECL` (you
+/// can declare the template without defining it), but it is eventually required to provide the
+/// definitions for the functions. If this instantiation-mode hasn't been included in exactly one
+/// translation unit in your build, you will get linking errors due to the missing function
+/// definitions.
+///
+/// ## Template Parameters
+///
+/// These provide the type or value parameters that the template is parameterized on to the
+/// template implementation. These should be `#define`d to their appropriate values.
+/// 1. `T` - The type to be stored in the vector (e.g. `u32` or `StdString`). This is required.
+/// 2. `SMALL_OPT_CAPACITY` - This is the small-optimization capacity to be stored in the vector
+/// directly when the size is at or below this, instead of resorting to heap allocation. `0` is a
+/// valid value for this. This is optional, and if not provided will default to
+/// `STD_VECTOR_DEFAULT_SHORT_OPT_CAPACITY` (which is defined as `8`). Heap allocations occurring
+/// after size exceeds `SMALL_OPT_CAPACITY` will follow the growth strategy of the collection.
+/// 3. `DEFAULT_LONG_CAPACITY` - This is the initial capacity to be stored in the vector if
+/// `SMALL_OPT_CAPACITY` is defined as `0`. This is optional. If not provided and
+/// `SMALL_OPT_CAPACITY` is provided as `0`, this will default to
+/// `STD_VECTOR_DEFAULT_LONG_CAPACITY` (which is defined as `16`). If `SMALL_OPT_CAPACITY` is
+/// defaulted or provided as greater than 0, this will not be used. Heap allocations occurring after
+/// size exceeds whichever of the two possible initial storage strategies are used will follow
+/// the growth strategy of the collection.
 ///
 /// Example of (1).
 ///
@@ -82,7 +120,7 @@
 /// #define T YourType
 /// // tell the template to instantiate the declarations
 /// #define STD_TEMPLATE_DECL 1
-/// // `#undef`s `T` and `STD_TEMPLATE_DECL` after instantiating the template,
+/// // `#undef`s all macro parameters after instantiating the template,
 /// // so they don't propagate around
 /// #define STD_TEMPLATE_UNDEF_PARAMS 1
 /// #include <C2nxt/StdVector.h>
@@ -95,7 +133,7 @@
 /// #define T YourType
 /// // tell the template to instantiate the implementations
 /// #define STD_TEMPLATE_IMPL 1
-/// // `#undef`s `T` and `STD_TEMPLATE_DECL` after instantiating the template,
+/// // `#undef`s all macro parameters after instantiating the template,
 /// // so they don't propagate around
 /// #define STD_TEMPLATE_UNDEF_PARAMS 1
 /// #include <C2nxt/StdVector.h>
@@ -133,7 +171,7 @@
 /// #define T YourType
 /// // tell the template to instantiate the declarations
 /// #define STD_TEMPLATE_DECL 1
-/// // `#undef`s `T` and `STD_TEMPLATE_DECL` after instantiating the template,
+/// // `#undef`s all macro parameters after instantiating the template,
 /// // so they don't propagate around
 /// #define STD_TEMPLATE_UNDEF_PARAMS 1
 /// #include <C2nxt/StdVector.h>
@@ -144,7 +182,7 @@
 /// #define T YourType
 /// // tell the template to instantiate the implementations
 /// #define STD_TEMPLATE_IMPL 1
-/// // `#undef`s `T` and `STD_TEMPLATE_DECL` after instantiating the template,
+/// // `#undef`s all macro parameters after instantiating the template,
 /// // so they don't propagate around
 /// #define STD_TEMPLATE_UNDEF_PARAMS 1
 /// #include <C2nxt/StdVector.h>
@@ -267,206 +305,277 @@
 #endif // !defined(STD_TEMPLATE_DECL) && (!defined(STD_TEMPLATE_IMPL) || !STD_TEMPLATE_IMPL) &&
 	   // defined(T)
 
+#if(defined(STD_TEMPLATE_DECL) || defined(STD_TEMPLATE_IMPL)) && !defined(SMALL_OPT_CAPACITY)
+	#define SMALL_OPT_CAPACITY STD_VECTOR_DEFAULT_SHORT_OPT_CAPACITY
+#endif // (defined(STD_TEMPLATE_DECL) || defined(STD_TEMPLATE_IMPL)) && !defined(SMALL_OPT_CAPACITY)
+
+#if(defined(STD_TEMPLATE_DECL) || defined(STD_TEMPLATE_IMPL))     \
+	&& (defined(SMALL_OPT_CAPACITY) && (SMALL_OPT_CAPACITY == 0)) \
+	&& !defined(DEFAULT_LONG_CAPACITY)
+	#define DEFAULT_LONG_CAPACITY STD_VECTOR_DEFAULT_LONG_CAPACITY
+#endif // (defined(STD_TEMPLATE_DECL) || defined(STD_TEMPLATE_IMPL))     \
+	   // && (defined(SMALL_OPT_CAPACITY) && (SMALL_OPT_CAPACITY == 0)) \
+	   // && !defined(DEFAULT_LONG_CAPACITY)
+
 #if !defined(T) && STD_TEMPLATE_DECL
 	#error StdVector.h included with STD_TEMPLATE_DECL defined true but template parameter T not defined
 #endif // !defined(T) && STD_TEMPLATE_DECL
 
-#if !defined(T) && (defined(STD_TEMPLATE_IMPL) && STD_TEMPLATE_IMPL)
+#if !defined(T) && STD_TEMPLATE_IMPL
 	#error StdVector.h included with STD_TEMPLATE_IMPL defined true but template parameter T not defined
-#endif // !defined(T) && (defined(STD_TEMPLATE_IMPL) && STD_TEMPLATE_IMPL)
+#endif // !defined(T) && STD_TEMPLATE_IMPL
 
-#if defined(T) && STD_TEMPLATE_DECL
+#if defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_DECL
 	#include <C2nxt/std_vector/StdVectorDecl.h>
-#endif // defined(T) && STD_TEMPLATE_DECL
+#endif // defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_DECL
 
-#if defined(T) && STD_TEMPLATE_IMPL
+#if defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_IMPL
 	#include <C2nxt/std_vector/StdVectorImpl.h>
-#endif // defined(T) && STD_TEMPLATE_IMPL
+#endif // defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_IMPL
 
-#if defined(STD_TEMPLATE_UNDEF_PARAMS) && STD_TEMPLATE_UNDEF_PARAMS
+#if STD_TEMPLATE_UNDEF_PARAMS
 	#undef T
+	#undef SMALL_OPT_CAPACITY
 	#undef STD_TEMPLATE_DECL
 	#undef STD_TEMPLATE_IMPL
-#endif // defined(STD_TEMPLATE_UNDEF_PARAMS) && STD_TEMPLATE_UNDEF_PARAMS
+#endif // STD_TEMPLATE_UNDEF_PARAMS
 
 #if !defined(T) && !defined(STD_TEMPLATE_DECL) && !defined(STD_TEMPLATE_IMPL) \
-	&& !defined(STD_TEMPLATE_UNDEF_PARAMS)
+	&& !defined(STD_TEMPLATE_UNDEF_PARAMS) && !defined(SMALL_OPT_CAPACITY)
 	#ifndef STD_VECTOR
 		/// @brief `StdVector(T)` related declarations and definitions
 		#define STD_VECTOR
 
-		#define T				  char
-		#define STD_TEMPLATE_DECL 1
+		#define T				   char
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  u8
-		#define STD_TEMPLATE_DECL 1
+		#define T				   u8
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  u16
-		#define STD_TEMPLATE_DECL 1
+		#define T				   u16
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  u32
-		#define STD_TEMPLATE_DECL 1
+		#define T				   u32
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  u64
-		#define STD_TEMPLATE_DECL 1
+		#define T				   u64
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  usize
-		#define STD_TEMPLATE_DECL 1
+		#define T				   usize
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  i8
-		#define STD_TEMPLATE_DECL 1
+		#define T				   i8
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  i16
-		#define STD_TEMPLATE_DECL 1
+		#define T				   i16
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  i32
-		#define STD_TEMPLATE_DECL 1
+		#define T				   i32
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  i64
-		#define STD_TEMPLATE_DECL 1
+		#define T				   i64
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  isize
-		#define STD_TEMPLATE_DECL 1
+		#define T				   isize
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  f32
-		#define STD_TEMPLATE_DECL 1
+		#define T				   f32
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  f64
-		#define STD_TEMPLATE_DECL 1
+		#define T				   f64
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  u8_ptr
-		#define STD_TEMPLATE_DECL 1
+		#define T				   u8_ptr
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  u16_ptr
-		#define STD_TEMPLATE_DECL 1
+		#define T				   u16_ptr
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  u32_ptr
-		#define STD_TEMPLATE_DECL 1
+		#define T				   u32_ptr
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  u64_ptr
-		#define STD_TEMPLATE_DECL 1
+		#define T				   u64_ptr
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  usize_ptr
-		#define STD_TEMPLATE_DECL 1
+		#define T				   usize_ptr
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  i8_ptr
-		#define STD_TEMPLATE_DECL 1
+		#define T				   i8_ptr
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  i16_ptr
-		#define STD_TEMPLATE_DECL 1
+		#define T				   i16_ptr
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  i32_ptr
-		#define STD_TEMPLATE_DECL 1
+		#define T				   i32_ptr
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  i64_ptr
-		#define STD_TEMPLATE_DECL 1
+		#define T				   i64_ptr
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  isize_ptr
-		#define STD_TEMPLATE_DECL 1
+		#define T				   isize_ptr
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  f32_ptr
-		#define STD_TEMPLATE_DECL 1
+		#define T				   f32_ptr
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  f64_ptr
-		#define STD_TEMPLATE_DECL 1
+		#define T				   f64_ptr
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  cstring
-		#define STD_TEMPLATE_DECL 1
+		#define T				   cstring
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  char_ptr
-		#define STD_TEMPLATE_DECL 1
+		#define T				   char_ptr
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  StdString
-		#define STD_TEMPLATE_DECL 1
+		#define T				   StdString
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  StdStringView
-		#define STD_TEMPLATE_DECL 1
+		#define T				   StdStringView
+		#define STD_TEMPLATE_DECL  1
+		#define SMALL_OPT_CAPACITY 8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
 		#undef T
+		#undef SMALL_OPT_CAPACITY
 		#undef STD_TEMPLATE_DECL
 	#endif // STD_VECTOR
 
