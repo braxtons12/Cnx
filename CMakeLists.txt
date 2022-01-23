@@ -52,6 +52,7 @@ set(EXPORTS
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_vector/StdVectorDef.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_vector/StdVectorDecl.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_vector/StdVectorImpl.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdEnum.h"
         )
 set(IMPLEMENTATIONS
         "${CMAKE_CURRENT_SOURCE_DIR}/src/StdAllocators.c"
