@@ -53,6 +53,7 @@ set(EXPORTS
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_vector/StdVectorDecl.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_vector/StdVectorImpl.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdEnum.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdTuple.h"
         )
 set(IMPLEMENTATIONS
         "${CMAKE_CURRENT_SOURCE_DIR}/src/StdAllocators.c"
@@ -133,7 +134,8 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
             -Wno-pedantic
             -Wno-gcc-compat
             -Wno-int-to-pointer-cast
-            -Wno-c++-compat)
+            -Wno-c++-compat
+            -Wno-extra-semi-stmt)
 else ()
     target_compile_options(Test PRIVATE
             -std=gnu11
