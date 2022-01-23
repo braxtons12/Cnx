@@ -32,47 +32,46 @@
 /// @}
 
 #ifndef STD_IF_LET
-/// @brief Definitions for `if_let` and variants thereof
-#define STD_IF_LET
-/// @brief `if_let` implementation
-///
-/// @param var - The variable name for the value if `self` holds a value
-/// @param self	- The monadic type to conditionally get the value of
-#define __if_let(var, self)                                      \
-	({                                                           \
-		let UNIQUE_VAR(var) = (self).m_vtable->as_bool(&(self)); \
-		if(UNIQUE_VAR(var)) {                                    \
-			var = (self).m_vtable->unwrap(&(self));              \
-		}                                                        \
-		UNIQUE_VAR(var);                                         \
-	})
-/// @brief `if_let(var, self)` provides an abstraction to conditionally retrieve a value
-///
-/// `if_let(var, self)` provides an abstraction to conditionally retrieve a value from a conditional
-/// wrapper type, like `StdOption(T)` or `StdResult(T)`, and then perform some operations with that
-/// value.
-/// Example:
-///
-/// @code {.c}
-/// StdOption(u32) do_thing(void);
-///
-/// void example(void) {
-/// 	let_mut maybe_thing = do_thing();
-///		if_let(thing, maybe_thing) {
-///			// do something with thing...
-/// 	}
-/// 	else {
-///			// handle maybe_thing being `None(T)`
-/// 	}
-/// }
-/// @endcode
-///
-/// @param var - The name for the variable the value held by `self` will be extracted to
-/// @param self - The `StdOption(T)`, `StdResult(T)`, or other compatible type potentially holding a
-/// value
-/// @ingroup monadics
-#define if_let(var, self)                               \
-	typeof((self).m_vtable->unwrap(&(self))) var = {0}; \
-	if(__if_let(var, self))
+	/// @brief Definitions for `if_let` and variants thereof
+	#define STD_IF_LET
+	/// @brief `if_let` implementation
+	///
+	/// @param var - The variable name for the value if `self` holds a value
+	/// @param self	- The monadic type to conditionally get the value of
+	#define __if_let(var, self)                                      \
+		({                                                           \
+			let UNIQUE_VAR(var) = (self).m_vtable->as_bool(&(self)); \
+			if(UNIQUE_VAR(var)) {                                    \
+				var = (self).m_vtable->unwrap(&(self));              \
+			}                                                        \
+			UNIQUE_VAR(var);                                         \
+		})
+	/// @brief `if_let(var, self)` provides an abstraction to conditionally retrieve a value
+	///
+	/// `if_let(var, self)` provides an abstraction to conditionally retrieve a value from a
+	/// conditional wrapper type, like `StdOption(T)` or `StdResult(T)`, and then perform some
+	/// operations with that value. Example:
+	///
+	/// @code {.c}
+	/// StdOption(u32) do_thing(void);
+	///
+	/// void example(void) {
+	/// 	let_mut maybe_thing = do_thing();
+	///		if_let(thing, maybe_thing) {
+	///			// do something with thing...
+	/// 	}
+	/// 	else {
+	///			// handle maybe_thing being `None(T)`
+	/// 	}
+	/// }
+	/// @endcode
+	///
+	/// @param var - The name for the variable the value held by `self` will be extracted to
+	/// @param self - The `StdOption(T)`, `StdResult(T)`, or other compatible type potentially
+	/// holding a value
+	/// @ingroup monadics
+	#define if_let(var, self)                               \
+		typeof((self).m_vtable->unwrap(&(self))) var = {0}; \
+		if(__if_let(var, self))
 
 #endif
