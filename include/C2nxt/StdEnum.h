@@ -27,7 +27,7 @@
 /// SOFTWARE.
 
 /// @defgroup std_enum Algebraic Enums
-/// This modules provides macros for declaring algebraic datatypes called algebraic `Enum`s,
+/// This module provides macros for declaring algebraic datatypes called algebraic `Enum`s,
 /// similar to Rust's `Enum`, and pattern matching on their variants.
 ///
 /// A C2nxt `Enum` is an algebraic data type similar to tagged unions, but with additional
@@ -151,6 +151,7 @@
 
 #include <C2nxt/StdAssert.h>
 #include <C2nxt/StdDef.h>
+#include <C2nxt/StdTuple.h>
 
 #ifndef STD_ENUM
 	#define STD_ENUM
@@ -282,7 +283,6 @@
 		break;                              \
 		case FIRST(__VA_ARGS__):            \
 			ignore(__to_match);             \
-			BEGIN_SCOPED_VARIABLES()        \
 			IF(CONTAINS_COMMA(__VA_ARGS__), \
 			   BIND_VARIANT(variant_identifier(FIRST(__VA_ARGS__)), REMOVE_FIRST(__VA_ARGS__)))
 
@@ -346,7 +346,6 @@
 	/// @ingroup std_enum
 	#define match_let(self, ...)                                    \
 		if((self).tag == FIRST(__VA_ARGS__))                        \
-			BEGIN_SCOPED_VARIABLES()                                \
 		IF(CONTAINS_COMMA(__VA_ARGS__),                             \
 		   LET_BIND_VARIANT(self,                                   \
 							variant_identifier(FIRST(__VA_ARGS__)), \
@@ -448,111 +447,6 @@
 
 	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
 	#define LET_BIND_VARIANT(self, variant_name, ...) \
-		LET_BIND_VARIANT_IMPL(self, variant_name, PP_NUM_ARGS(__VA_ARGS__), __VA_ARGS__)
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define LET_BIND_VARIANT_IMPL(self, variant_name, N, ...) \
-		IGNORE_RESERVED_IDENTIFIER_WARNING_START              \
-		CONCAT2_DEFERRED(__LET_BIND_VARIANT_, N)              \
-		(self, variant_name, 1, __VA_ARGS__) IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
-
-IGNORE_RESERVED_IDENTIFIER_WARNING_START
-
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __BIND_VARIANT_1(variant_name, N, ...) \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = (__to_match->variant_name.SELECTOR_LIST(N)))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __BIND_VARIANT_2(variant_name, N, ...)                                               \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = (__to_match->variant_name.SELECTOR_LIST(N))) \
-		__BIND_VARIANT_1(variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __BIND_VARIANT_3(variant_name, N, ...)                                               \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = (__to_match->variant_name.SELECTOR_LIST(N))) \
-		__BIND_VARIANT_2(variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __BIND_VARIANT_4(variant_name, N, ...)                                               \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = (__to_match->variant_name.SELECTOR_LIST(N))) \
-		__BIND_VARIANT_3(variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __BIND_VARIANT_5(variant_name, N, ...)                                               \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = (__to_match->variant_name.SELECTOR_LIST(N))) \
-		__BIND_VARIANT_4(variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __BIND_VARIANT_6(variant_name, N, ...)                                               \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = (__to_match->variant_name.SELECTOR_LIST(N))) \
-		__BIND_VARIANT_5(variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __BIND_VARIANT_7(variant_name, N, ...)                                               \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = (__to_match->variant_name.SELECTOR_LIST(N))) \
-		__BIND_VARIANT_6(variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __BIND_VARIANT_8(variant_name, N, ...)                                               \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = (__to_match->variant_name.SELECTOR_LIST(N))) \
-		__BIND_VARIANT_7(variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __BIND_VARIANT_9(variant_name, N, ...)                                               \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = (__to_match->variant_name.SELECTOR_LIST(N))) \
-		__BIND_VARIANT_8(variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __BIND_VARIANT_10(variant_name, N, ...)                                              \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = (__to_match->variant_name.SELECTOR_LIST(N))) \
-		__BIND_VARIANT_9(variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __BIND_VARIANT_11(variant_name, N, ...)                                              \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = (__to_match->variant_name.SELECTOR_LIST(N))) \
-		__BIND_VARIANT_10(variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __BIND_VARIANT_12(variant_name, N, ...)                                              \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = (__to_match->variant_name.SELECTOR_LIST(N))) \
-		__BIND_VARIANT_11(variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __LET_BIND_VARIANT_1(self, variant_name, N, ...) \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = ((self).variant_name.SELECTOR_LIST(N)))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __LET_BIND_VARIANT_2(self, variant_name, N, ...)                                \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = ((self).variant_name.SELECTOR_LIST(N))) \
-		__LET_BIND_VARIANT_1(self, variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __LET_BIND_VARIANT_3(self, variant_name, N, ...)                                \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = ((self).variant_name.SELECTOR_LIST(N))) \
-		__LET_BIND_VARIANT_2(self, variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __LET_BIND_VARIANT_4(self, variant_name, N, ...)                                \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = ((self).variant_name.SELECTOR_LIST(N))) \
-		__LET_BIND_VARIANT_3(self, variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __LET_BIND_VARIANT_5(self, variant_name, N, ...)                                \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = ((self).variant_name.SELECTOR_LIST(N))) \
-		__LET_BIND_VARIANT_4(self, variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __LET_BIND_VARIANT_6(self, variant_name, N, ...)                                \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = ((self).variant_name.SELECTOR_LIST(N))) \
-		__LET_BIND_VARIANT_5(self, variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __LET_BIND_VARIANT_7(self, variant_name, N, ...)                                \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = ((self).variant_name.SELECTOR_LIST(N))) \
-		__LET_BIND_VARIANT_6(self, variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __LET_BIND_VARIANT_8(self, variant_name, N, ...)                                \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = ((self).variant_name.SELECTOR_LIST(N))) \
-		__LET_BIND_VARIANT_7(self, variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __LET_BIND_VARIANT_9(self, variant_name, N, ...)                                \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = ((self).variant_name.SELECTOR_LIST(N))) \
-		__LET_BIND_VARIANT_8(self, variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __LET_BIND_VARIANT_10(self, variant_name, N, ...)                               \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = ((self).variant_name.SELECTOR_LIST(N))) \
-		__LET_BIND_VARIANT_9(self, variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __LET_BIND_VARIANT_11(self, variant_name, N, ...)                               \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = ((self).variant_name.SELECTOR_LIST(N))) \
-		__LET_BIND_VARIANT_10(self, variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define __LET_BIND_VARIANT_12(self, variant_name, N, ...)                               \
-		SCOPE_VARIABLE(let_mut FIRST(__VA_ARGS__) = ((self).variant_name.SELECTOR_LIST(N))) \
-		__LET_BIND_VARIANT_11(self, variant_name, ADD1(N), REMOVE_FIRST(__VA_ARGS__))
-
-IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
+		scoped_tuple_bind((self).variant_name, __VA_ARGS__)
 
 #endif // STD_ENUM
