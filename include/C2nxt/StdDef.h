@@ -353,6 +353,24 @@
 	/// @ingroup std_def
 	#define true static_cast(bool)(1)
 
+	/// @brief Concatenates an arbitrary number of arguments
+	///
+	/// The arguments must be alphanumeric, macro-concatenation compatible sequences of characters
+	///
+	/// @param ... - The arguments to concatenate
+	/// @ingroup std_pp_strings
+	#define CONCAT(...) CONCAT2_DEFERRED(CONCAT, PP_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+	/// @brief Concatenates an arbitrary number of arguments, with one additional layer of
+	/// indirection
+	///
+	/// The arguments must be alphanumeric, macro-concatenation compatible sequences of characters.
+	/// This is useful for use in a macro chain when the result must be deferred through one-further
+	/// stage of macro replacement than the normal `CONCAT(...)` provides
+	///
+	/// @param ... - The arguments to concatenate
+	/// @ingroup std_pp_strings
+	#define CONCAT_DEFERRED(...) CONCAT(__VA_ARGS__)
+
 	/// @brief Creates a scope for wrapping an arbitrary number of variable declarations in with
 	/// subsequent uses of `SCOPE_VARIABLE()`.
 	/// The net scope will make up one single compound-statement.
