@@ -3,7 +3,7 @@
 /// @brief C2nxt is a GNU C11 library providing type-safe collections and
 /// ergonomic features typical in higher-level languages, to C.
 /// @version 0.1
-/// @date 2022-01-02
+/// @date 2022-01-23
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -66,3 +66,4 @@
 #include "StdTrait.h"
 #include "StdTypeTraits.h"
 #include "StdVector.h"
+#include "StdEnum.h"
