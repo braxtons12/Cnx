@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief StdDef provides various `#define`s for performing basic tasks and macro-related
 /// functions.
-/// @version 0.1
-/// @date 2022-01-02
+/// @version 0.2
+/// @date 2022-01-19
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -31,13 +31,39 @@
 /// and some small meta-programming functionality
 
 #include <C2nxt/mpl/StdArgLists.h>
+#include <C2nxt/mpl/StdPPBool.h>
 #include <C2nxt/mpl/StdPPMath.h>
 #include <C2nxt/mpl/StdPPStrings.h>
+#include <C2nxt/mpl/StdPPTuple.h>
 #include <stdbool.h>
 
 #ifndef STD_DEF
 	/// @brief definitions related to Standard Defines
 	#define STD_DEF
+
+	/// @brief The major portion of the version number of the C2nxt library
+	/// e.g. in "x.y.z", the "x" part.
+	/// @ingroup std_def
+	#define STD_VERSION_MAJOR 0
+	/// @brief The minor portion of the version number of the C2nxt library
+	/// e.g. in "x.y.z", the "y" part.
+	/// @ingroup std_def
+	#define STD_VERSION_MINOR 2
+	/// @brief The patch portion of the version number of the C2nxt library
+	/// e.g. in "x.y.z", the "z" part.
+	/// @ingroup std_def
+	#define STD_VERSION_PATCH 0
+
+	/// @brief The version number of the C2nxt library parsed into a single 32-bit integer
+	/// Each portion of the version number will take 8 bits in the resulting integer,
+	/// with the total parsed version number comprising of the lower 24 bits.
+	/// The layout is `00000000xxxxxxxxyyyyyyyyzzzzzzzz` where:
+	/// * `xxxxxxxx` comprises `STD_VERSION_MAJOR`
+	/// * `yyyyyyyy` comprises `STD_VERSION_MINOR`
+	/// * `zzzzzzzz` comprises `STD_VERSION_PATCH`
+	/// @ingroup std_def
+	#define STD_VERSION \
+		((STD_VERSION_MAJOR << 16) | (STD_VERSION_MINOR << 8) | (STD_VERSION_PATCH << 0))
 
 	/// @brief Provides a semi-unique variable name with `x` as a prefix
 	///
@@ -327,10 +353,35 @@
 	/// @ingroup std_def
 	#define true static_cast(bool)(1)
 
+	/// @brief Creates a scope for wrapping an arbitrary number of variable declarations in with
+	/// subsequent uses of `SCOPE_VARIABLE()`.
+	/// The net scope will make up one single compound-statement.
+	/// @ingroup std_def
+	#define BEGIN_SCOPED_VARIABLES()                                           \
+		for(let_mut UNIQUE_VAR(scope_break) = 0; UNIQUE_VAR(scope_break) != 1; \
+			UNIQUE_VAR(scope_break) = 1)
+
+	/// @brief Wraps the given variable declaration(s) in a containing scope.
+	/// The scope must have been previously initiated with `BEGIN_SCOPED_VARIABLES()`.
+	/// Variable declarations must be compatible with the initialization statement (aka the "clause"
+	/// statement) in a for loop.
+	/// The net scope will make one a single compound-statement
+	/// @ingroup std_def
+	#define SCOPE_VARIABLE(...) \
+		for(__VA_ARGS__; UNIQUE_VAR(scope_break) != 1; UNIQUE_VAR(scope_break) = 1)
+
 	#if STD_PLATFORM_COMPILER_CLANG
 		#define IGNORE_RESERVED_IDENTIFIER_WARNING_START \
 			_Pragma("GCC diagnostic push")               \
 				_Pragma("GCC diagnostic ignored \"-Wreserved-identifier\"")
 		#define IGNORE_RESERVED_IDENTIFIER_WARNING_STOP _Pragma("GCC diagnostic pop")
+
+		#define IGNORE_SHADOW_WARNING_START \
+			_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wshadow\"")
+		#define IGNORE_SHADOW_WARNING_STOP _Pragma("GCC diagnostic pop")
+
+		#define IGNORE_SWITCH_ENUM_WARNING_START \
+			_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wswitch-enum\"")
+		#define IGNORE_SWITCH_ENUM_WARNING_STOP _Pragma("GCC diagnostic pop")
 	#endif // STD_PLATFORM_COMPILER_CLANG
 #endif	   // STD_DEF
