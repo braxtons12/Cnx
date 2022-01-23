@@ -1,8 +1,8 @@
 /// @file StdArgLists.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief StdArgLists provides metaprogramming macros for working with __VA_ARGS__ lists
-/// @version 0.1
-/// @date 2022-01-02
+/// @version 0.2
+/// @date 2022-01-23
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -70,7 +70,7 @@
 ///
 /// @return The Nth argument
 /// @ingroup std_arg_lists
-#define PP_NTH_ARG(N, ...)	 __PP_NTH_ARG(N, __VA_ARGS__)
+#define PP_NTH_ARG(N, ...) __PP_NTH_ARG(N, __VA_ARGS__)
 
 /// @brief Appends a space followed by `what` to each element of the `__VA_ARGS__` parameter pack
 ///
@@ -114,8 +114,7 @@
 ///
 /// @return The parameter pack, with `what` applied
 /// @ingroup std_arg_lists
-#define APPLY_TO_LIST(what, ...) \
-		___APPLY_TO_LIST(PP_NUM_ARGS(__VA_ARGS__), what, __VA_ARGS__)
+#define APPLY_TO_LIST(what, ...) ___APPLY_TO_LIST(PP_NUM_ARGS(__VA_ARGS__), what, __VA_ARGS__)
 
 /// @brief Appends the Nth element in `what` to the Nth element in the `__VA_ARGS__` parameter pack
 ///
@@ -126,7 +125,7 @@
 /// @return The modified `__VA_ARGS__` parameter pack
 /// @ingroup std_arg_lists
 #define APPEND_EACH_TO_LIST(what, ...) \
-		___APPEND_EACH_TO_LIST(PP_NUM_ARGS(__VA_ARGS__), what, __VA_ARGS__)
+	___APPEND_EACH_TO_LIST(PP_NUM_ARGS(__VA_ARGS__), what, __VA_ARGS__)
 
 /// @brief Returns a numeric token (number prefixed by underscore, eg `_1`) representing the given
 /// number
@@ -136,5 +135,41 @@
 /// @return N as a numeric token
 /// @ingroup std_arg_lists
 #define SELECTOR_LIST(N) CONCAT2_DEFERRED(__SELECTOR_LIST_, N)
+
+/// @brief Converts any list of arguments into an empty list
+/// @ingroup std_arg_lists
+#define EMPTY(...)
+/// @brief Defers the preprocessing of the list of arguments one step
+/// @ingroup std_arg_lists
+#define DEFER(...) __VA_ARGS__ EMPTY()
+/// @brief Expands the list of arguments
+/// @ingroup std_arg_lists
+#define EXPAND(...) __VA_ARGS__
+/// @brief Converts the list of arguments into a single comma
+/// @ingroup std_arg_lists
+#define COMMA(...) ,
+/// @brief Determines if the list of arguments contains a comma (contains more than one element)
+/// @ingroup std_arg_lists
+#define CONTAINS_COMMA(...) X_AS_COMMA(__VA_ARGS__, COMMA(), ~)
+/// @brief Determines if the list of arguments contains a comma (contains more than one element)
+#define X_AS_COMMA(_head, x, ...) CONTAINS_COMMA_RESULT(x, FALSE, TRUE, ~)
+/// @brief Determines if the list of arguments contains a comma (contains more than one element)
+#define CONTAINS_COMMA_RESULT(x, _, result, ...) result
+/// @brief Returns the first element from the list
+/// @ingroup std_arg_lists
+#define FIRST(...) FIRST_IMPL(__VA_ARGS__, ~)
+/// @brief Returns the first element from the list
+#define FIRST_IMPL(first, ...) first
+/// @brief Returns the second element from the list
+/// @ingroup std_arg_lists
+#define SECOND(...) SECOND_IMPL(__VA_ARGS__, ~)
+/// @brief Returns the second element from the list
+/// @ingroup std_arg_lists
+#define SECOND_IMPL(first, second, ...) second
+/// @brief Removes the first element from the list, and returns the remaining elements
+/// @ingroup std_arg_lists
+#define REMOVE_FIRST(...) REMOVE_FIRST_IMPL(__VA_ARGS__)
+/// @brief Removes the first element from the list, and returns the remaining elements
+#define REMOVE_FIRST_IMPL(first, ...) __VA_ARGS__
 
 #endif

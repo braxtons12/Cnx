@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Implementation for StdArgLists. Provides metaprogramming macros for working with
 /// __VA_ARGS__ lists
-/// @version 0.1
-/// @date 2022-01-02
+/// @version 0.2
+/// @date 2022-01-19
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -32,7 +32,7 @@
 #ifndef ARG_LISTS_DETAIL
 	#define ARG_LISTS_DETAIL
 
-	// clang-format off
+// clang-format off
 
 /// @brief Gets the 128th argument from the `__VA_ARGS__` pack
 #define ___PP_ARG_128( \
@@ -1347,30 +1347,43 @@
 /// @brief Replaces the comma delimiters in the `__VA_ARGS__` pack with `what`
 	#define __DELIMIT_LIST(N, what, ...) CONCAT2_DEFERRED(__DELIMIT_LIST_, N)(what, __VA_ARGS__)
 
+	#define REMOVE_REDUNDANT_COMMA(x, ...) x __VA_OPT__(, ) __VA_ARGS__
+
 	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
 	#define ___APPLY_TO_LIST_1(what, x, ...) what(x)
 	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
-	#define ___APPLY_TO_LIST_2(what, x, ...) what(x), ___APPLY_TO_LIST_1(what, __VA_ARGS__)
+	#define ___APPLY_TO_LIST_2(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_1(what, __VA_ARGS__))
 	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
-	#define ___APPLY_TO_LIST_3(what, x, ...) what(x), ___APPLY_TO_LIST_2(what, __VA_ARGS__)
+	#define ___APPLY_TO_LIST_3(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_2(what, __VA_ARGS__))
 	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
-	#define ___APPLY_TO_LIST_4(what, x, ...) what(x), ___APPLY_TO_LIST_3(what, __VA_ARGS__)
+	#define ___APPLY_TO_LIST_4(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_3(what, __VA_ARGS__))
 	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
-	#define ___APPLY_TO_LIST_5(what, x, ...) what(x), ___APPLY_TO_LIST_4(what, __VA_ARGS__)
+	#define ___APPLY_TO_LIST_5(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_4(what, __VA_ARGS__))
 	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
-	#define ___APPLY_TO_LIST_6(what, x, ...) what(x), ___APPLY_TO_LIST_5(what, __VA_ARGS__)
+	#define ___APPLY_TO_LIST_6(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_5(what, __VA_ARGS__))
 	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
-	#define ___APPLY_TO_LIST_7(what, x, ...) what(x), ___APPLY_TO_LIST_6(what, __VA_ARGS__)
+	#define ___APPLY_TO_LIST_7(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_6(what, __VA_ARGS__))
 	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
-	#define ___APPLY_TO_LIST_8(what, x, ...) what(x), ___APPLY_TO_LIST_7(what, __VA_ARGS__)
+	#define ___APPLY_TO_LIST_8(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_7(what, __VA_ARGS__))
 	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
-	#define ___APPLY_TO_LIST_9(what, x, ...) what(x), ___APPLY_TO_LIST_8(what, __VA_ARGS__)
+	#define ___APPLY_TO_LIST_9(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_8(what, __VA_ARGS__))
 	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
-	#define ___APPLY_TO_LIST_10(what, x, ...) what(x), ___APPLY_TO_LIST_9(what, __VA_ARGS__)
+	#define ___APPLY_TO_LIST_10(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_9(what, __VA_ARGS__))
 	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
-	#define ___APPLY_TO_LIST_11(what, x, ...) what(x), ___APPLY_TO_LIST_10(what, __VA_ARGS__)
+	#define ___APPLY_TO_LIST_11(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_10(what, __VA_ARGS__))
 	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
-	#define ___APPLY_TO_LIST_12(what, x, ...) what(x), ___APPLY_TO_LIST_11(what, __VA_ARGS__)
+	#define ___APPLY_TO_LIST_12(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_11(what, __VA_ARGS__))
 
 	/// @brief Applies `what` to the arguments in the `__VA_ARGS__` parameter pack
 	#define ___APPLY_TO_LIST(N, what, ...) CONCAT2_DEFERRED(___APPLY_TO_LIST_, N)(what, __VA_ARGS__)
