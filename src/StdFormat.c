@@ -94,7 +94,7 @@ always_inline static inline u8 std_get_digit_i64(i64 num, usize digit) {
 }
 
 #if STD_PLATFORM_APPLE
-	// clang-format off
+// clang-format off
 #define std_get_digit(num, digit) _Generic((num), 		\
 		char  	: 	std_get_digit_u64, 					\
 		u8  	: 	std_get_digit_u64, 					\
@@ -109,7 +109,7 @@ always_inline static inline u8 std_get_digit_i64(i64 num, usize digit) {
 		isize 	: 	std_get_digit_i64)(num, digit)
 // clang-format on
 #else
-	// clang-format off
+// clang-format off
 #define std_get_digit(num, digit) _Generic((num), 		\
 		char  	: 	std_get_digit_u64, 					\
 		u8  	: 	std_get_digit_u64, 					\
@@ -682,13 +682,7 @@ typedef enum StdFormatErrorTypes {
 	STD_FORMAT_FEWER_SPECIFIERS_THAN_ARGS
 } StdFormatErrorTypes;
 
-typedef struct StdFormatVariant {
-	bool m_is_substring;
-	union {
-		StdStringView m_substring;
-		StdFormatSpecifier m_specifier;
-	};
-} StdFormatVariant;
+Enum(StdFormatVariant, (Substring, StdStringView), (Specifier, StdFormatSpecifier));
 
 typedef StdFormatVariant* Ref(StdFormatVariant);
 typedef const StdFormatVariant* ConstRef(StdFormatVariant);
@@ -708,15 +702,15 @@ DeclStdIterators(ConstRef(StdFormatVariant));
 
 DeclAndImplStdResult(StdVector(StdFormatVariant));
 
-always_inline static inline StdFormatVariant
-std_format_pair_from_specifier(StdFormatSpecifier specifier) {
-	return (StdFormatVariant){.m_is_substring = false, .m_specifier = specifier};
-}
-
-always_inline static inline StdFormatVariant
-std_format_pair_from_stringview(StdStringView substring) {
-	return (StdFormatVariant){.m_is_substring = true, .m_substring = substring};
-}
+#define Substring(string_view)                                             \
+	(StdFormatVariant) {                                                   \
+		.tag = Substring, .variant_identifier(Substring) = { string_view } \
+	}
+#define Specifier(specifier)                                             \
+	(StdFormatVariant) {                                                 \
+		.tag = Specifier, .variant_identifier(Specifier) = { specifier } \
+	}
+#define std_format_pair_from_specifier(specifier) (StdFormatVariant)
 
 always_inline static inline StdFormatVariant
 std_format_variant_new(StdAllocator maybe_unused allocator) {
@@ -849,7 +843,7 @@ StdResult(StdVector(StdFormatVariant))
 					num_open++;
 					let view = std_stringview_from(format_string, start_index, i - start_index);
 					std_vector_push_back(vec,
-									 std_format_pair_from(view));
+									 Substring(view));
 				}
 			}
 			else {
@@ -872,7 +866,7 @@ StdResult(StdVector(StdFormatVariant))
 			else {
 				if(!pushed_specifier) {
 					std_vector_push_back(vec,
-										 std_format_pair_from(((StdFormatSpecifier){
+										 Specifier(((StdFormatSpecifier){
 											 .m_type = STD_FORMAT_TYPE_DEFAULT,
 											 .m_num_sig_figs = STD_FORMAT_DEFAULT_NUM_SIG_FIGS})));
 				}
@@ -883,7 +877,7 @@ StdResult(StdVector(StdFormatVariant))
 #else  // STD_PLATFORM_DEBUG
 			if(!pushed_specifier) {
 				std_vector_push_back(vec,
-									 std_format_pair_from(((StdFormatSpecifier){
+									 Specifier(((StdFormatSpecifier){
 										 .m_type = STD_FORMAT_TYPE_DEFAULT,
 										 .m_num_sig_figs = STD_FORMAT_DEFAULT_NUM_SIG_FIGS})));
 			}
@@ -904,7 +898,7 @@ StdResult(StdVector(StdFormatVariant))
 			if(format_string[i] == STD_FORMAT_TYPE_DECIMAL) {
 				std_vector_push_back(
 					vec,
-					std_format_pair_from(((StdFormatSpecifier){
+					Specifier(((StdFormatSpecifier){
 						.m_type = STD_FORMAT_TYPE_DECIMAL,
 						.m_num_sig_figs = std_format_get_num_sig_figs_from_substring(format_string,
 																					 length,
@@ -914,21 +908,21 @@ StdResult(StdVector(StdFormatVariant))
 			else if(format_string[i] == STD_FORMAT_TYPE_HEX_LOWER) {
 				std_vector_push_back(
 					vec,
-					std_format_pair_from(((StdFormatSpecifier){.m_type = STD_FORMAT_TYPE_HEX_LOWER,
+					Specifier(((StdFormatSpecifier){.m_type = STD_FORMAT_TYPE_HEX_LOWER,
 															   .m_num_sig_figs = 0})));
 				pushed_specifier = true;
 			}
 			else if(format_string[i] == STD_FORMAT_TYPE_HEX_UPPER) {
 				std_vector_push_back(
 					vec,
-					std_format_pair_from(((StdFormatSpecifier){.m_type = STD_FORMAT_TYPE_HEX_UPPER,
+					Specifier(((StdFormatSpecifier){.m_type = STD_FORMAT_TYPE_HEX_UPPER,
 															   .m_num_sig_figs = 0})));
 				pushed_specifier = true;
 			}
 			else if(format_string[i] == STD_FORMAT_TYPE_SCIENTIFIC) {
 				std_vector_push_back(
 					vec,
-					std_format_pair_from(((StdFormatSpecifier){
+					Specifier(((StdFormatSpecifier){
 						.m_type = STD_FORMAT_TYPE_SCIENTIFIC,
 						.m_num_sig_figs = std_format_get_num_sig_figs_from_substring(format_string,
 																					 length,
@@ -938,7 +932,7 @@ StdResult(StdVector(StdFormatVariant))
 			else if(format_string[i] == STD_FORMAT_TYPE_DEBUG) {
 				std_vector_push_back(
 					vec,
-					std_format_pair_from(((StdFormatSpecifier){
+					Specifier(((StdFormatSpecifier){
 						.m_type = STD_FORMAT_TYPE_DEBUG,
 						.m_num_sig_figs = std_format_get_num_sig_figs_from_substring(format_string,
 																					 length,
@@ -950,7 +944,7 @@ StdResult(StdVector(StdFormatVariant))
 
 	if(start_index < length) {
 		let view = std_stringview_from(format_string, start_index, length - start_index);
-		std_vector_push_back(vec, std_format_pair_from(view));
+		std_vector_push_back(vec, Substring(view));
 	}
 
 #if STD_PLATFORM_DEBUG
@@ -971,7 +965,7 @@ StdResult(StdVector(StdFormatVariant))
 
 	return (std_vector_size(vec) == 0) ? ({
 		let view = std_stringview_from(format_string, 0, length);
-		std_vector_push_back(vec, std_format_pair_from(view));
+		std_vector_push_back(vec, Substring(view));
 		Ok(StdVector(StdFormatVariant), vec);
 	}) :
 										   Ok(StdVector(StdFormatVariant), vec);
@@ -988,6 +982,7 @@ StdString(std_format_with_allocator)(restrict const_cstring format_string,
 	return string;
 }
 
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
 StdString(std_vformat_with_allocator)(restrict const_cstring format_string,
 									  StdAllocator allocator,
 									  usize num_args,
@@ -1009,21 +1004,30 @@ StdString(std_vformat_with_allocator)(restrict const_cstring format_string,
 		= std_result_expect(maybe_format_variants, "Invalid format string");
 	let_mut initial_size = static_cast(usize)(0);
 	foreach_ref(elem, format_variants) {
-		initial_size
-			+= elem->m_is_substring ? std_stringview_length(elem->m_substring) : 10U; // NOLINT
+		match(*elem) {
+			variant(Substring, view) {
+				initial_size += std_stringview_length(view);
+			}
+			wildcard() {
+				// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
+				initial_size += 10U;
+			}
+		}
 	}
 
 	let_mut string = std_string_new_with_capacity_with_allocator(initial_size, allocator);
 
 	foreach(elem, format_variants) {
-		if(elem.m_is_substring) {
-			std_string_append(string, &elem.m_substring);
-		}
-		else {
-			let format = va_arg(list, StdFormat); // NOLINT(clang-analyzer-valist.Uninitialized)
-			let_mut std_string_scoped formatted
-				= trait_call(format_with_allocator, format, elem.m_specifier, allocator);
-			std_string_append(string, &formatted);
+		match(elem) {
+			variant(Substring, view) {
+				std_string_append(string, &view);
+			}
+			variant(Specifier, specifier) {
+				let format = va_arg(list, StdFormat); // NOLINT(clang-analyzer-valist.Uninitialized)
+				let_mut std_string_scoped formatted
+						   = trait_call(format_with_allocator, format, specifier, allocator);
+				std_string_append(string, &formatted);
+			}
 		}
 	}
 
