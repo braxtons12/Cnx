@@ -168,17 +168,14 @@
 	/// @param ... - The list of variant tuples and additional members
 	/// @ingroup std_enum
 	#define Enum(Type, ...)                                                      \
-		IGNORE_RESERVED_IDENTIFIER_WARNING_START                                 \
-		typedef struct Type Type;                                                \
 		typedef enum { ___ENUM_GET_TYPE_NAMES(__VA_ARGS__) } CONCAT2(Type, Tag); \
 		typedef struct Type {                                                    \
 			CONCAT2(Type, Tag) tag;                                              \
 			union {                                                              \
-				___ENUM____ENUM_DEFINE_STRUCTS(__VA_ARGS__)                      \
+				___ENUM_DEFINE_STRUCTS(__VA_ARGS__)                              \
 			};                                                                   \
-			___ENUM____ENUM_DEFINE_MEMBERS(__VA_ARGS__)                          \
-		} Type;                                                                  \
-		IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
+			___ENUM_DEFINE_MEMBERS(__VA_ARGS__)                                  \
+		} Type;
 
 	/// @brief Declares and defines an `Enum`, `Type`, using an existing C-style `enum`, `TagType`,
 	/// to tag/identify its variants
@@ -196,18 +193,15 @@
 	/// members' identifiers must exactly match the names of the `Enum`'s variants.
 	/// @param ... - The list of variant tuples and additional members
 	/// @ingroup std_enum
-	#define EnumWithTag(Type, TagType, ...)                 \
-		IGNORE_RESERVED_IDENTIFIER_WARNING_START            \
-		typedef struct Type Type;                           \
-		typedef TagType CONCAT2(Type, Tag);                 \
-		typedef struct Type {                               \
-			CONCAT2(Type, Tag) tag;                         \
-			union {                                         \
-				___ENUM____ENUM_DEFINE_STRUCTS(__VA_ARGS__) \
-			};                                              \
-			___ENUM____ENUM_DEFINE_MEMBERS(__VA_ARGS__)     \
-		} Type;                                             \
-		IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
+	#define EnumWithTag(Type, TagType, ...)         \
+		typedef TagType CONCAT2(Type, Tag);         \
+		typedef struct Type {                       \
+			CONCAT2(Type, Tag) tag;                 \
+			union {                                 \
+				___ENUM_DEFINE_STRUCTS(__VA_ARGS__) \
+			};                                      \
+			___ENUM_DEFINE_MEMBERS(__VA_ARGS__)     \
+		} Type;
 
 	/// @brief Pattern matches on the given `Enum`, `x`
 	/// Pattern matching works similarly to `switch` statements, but with slightly different
@@ -419,7 +413,7 @@
 	#define ___ENUM_CHECK_IS_TUPLE_AND_EXTRACT_TYPE(x) IF(IS_TUPLE(x), FIRST(EXPAND_TUPLE(x)))
 
 	/// @brief Defines the structs used to represent `Enum` variants in an `Enum` declaration
-	#define ___ENUM____ENUM_DEFINE_STRUCTS(...) \
+	#define ___ENUM_DEFINE_STRUCTS(...) \
 		DELIMIT_LIST(;, APPLY_TO_LIST(___ENUM_DEFINE_STRUCT, __VA_ARGS__))
 	/// @brief Defines a struct used to represent an `Enum` variant in an `Enum` declaration
 	#define ___ENUM_DEFINE_STRUCT(x)                                      \
@@ -441,7 +435,7 @@
 		}
 
 	/// @brief Defines any additional members of an `Enum` in an `Enum` declaration
-	#define ___ENUM____ENUM_DEFINE_MEMBERS(...) \
+	#define ___ENUM_DEFINE_MEMBERS(...) \
 		DELIMIT_LIST(, APPLY_TO_LIST(___ENUM_DEFINE_MEMBER, __VA_ARGS__))
 	/// @brief Defines an additional members of an `Enum` in an `Enum` declaration
 	#define ___ENUM_DEFINE_MEMBER(x) IF(IS_NOT_TUPLE(x), x;)
