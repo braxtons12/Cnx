@@ -151,14 +151,8 @@
 				___DEFINE_NAMED_TUPLE_IMPL(__VA_ARGS__), \
 				___DEFINE_EMPTY_NAMED_TUPLE(FIRST(__VA_ARGS__)))
 	/// @brief Declares a named tuple type
-	#define ___DEFINE_NAMED_TUPLE_IMPL(...)                                          \
-		typedef struct ___DEFINE_NAMED_TUPLE_MEMBERS_IMPL(REMOVE_FIRST(__VA_ARGS__)) \
-			FIRST(__VA_ARGS__)
-	/// @brief Declares the members of a named tuple type
-	#define ___DEFINE_NAMED_TUPLE_MEMBERS_IMPL(...)                          \
-		{                                                                    \
-			DELIMIT_LIST(;, APPEND_EACH_TO_LIST(SELECTOR_LIST, __VA_ARGS__)) \
-		}
+	#define ___DEFINE_NAMED_TUPLE_IMPL(...) \
+		typedef struct ___DEFINE_TUPLE_MEMBERS_IMPL(REMOVE_FIRST(__VA_ARGS__)) FIRST(__VA_ARGS__)
 	/// @brief Declares an empty named tuple type
 	#define ___DEFINE_EMPTY_NAMED_TUPLE(Name) \
 		typedef struct {                      \
