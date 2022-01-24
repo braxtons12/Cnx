@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief StdFormat brings human readable string formatting, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
-/// @version 0.1.1
-/// @date 2022-01-11
+/// @version 0.2
+/// @date 2022-01-23
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -27,6 +27,7 @@
 /// SOFTWARE.
 
 #include <C2nxt/StdFormat.h>
+#include <C2nxt/StdMath.h>
 #include <C2nxt/StdPlatform.h>
 #include <C2nxt/StdRange.h>
 #include <C2nxt/StdResult.h>
@@ -694,14 +695,18 @@ typedef const StdFormatVariant* ConstRef(StdFormatVariant);
 DeclStdIterators(Ref(StdFormatVariant));
 DeclStdIterators(ConstRef(StdFormatVariant));
 
-DeclStdOption(StdFormatVariant);
-ImplStdOption(StdFormatVariant);
+#define T				  StdFormatVariant
+#define STD_TEMPLATE_DECL TRUE
+#define STD_TEMPLATE_IMPL TRUE
 
-#define T						  StdFormatVariant
-#define STD_TEMPLATE_DECL		  1
-#define STD_TEMPLATE_IMPL		  1
-#define STD_TEMPLATE_UNDEF_PARAMS 1
+#include <C2nxt/StdOption.h>
 #include <C2nxt/StdVector.h>
+
+#undef T
+#undef STD_TEMPLATE_DECL
+#undef STD_TEMPLATE_IMPL
+
+DeclAndImplStdResult(StdVector(StdFormatVariant));
 
 always_inline static inline StdFormatVariant
 std_format_pair_from_specifier(StdFormatSpecifier specifier) {

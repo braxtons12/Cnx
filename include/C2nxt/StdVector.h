@@ -3,7 +3,7 @@
 /// @brief This module provides a dynamic-array type comparable to C++'s `std::vector` and Rust's
 /// `std::vec::Vec` for C2nxt
 /// @version 0.2
-/// @date 2022-01-10
+/// @date 2022-01-23
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -289,15 +289,6 @@
 /// `std_vector_push_back(vec, element)` would be `std_vector_i32_push_back(&vec, element)`
 /// @}
 
-#include <C2nxt/StdAllocators.h>
-#include <C2nxt/StdBasicTypes.h>
-#include <C2nxt/StdCollectionsData.h>
-#include <C2nxt/StdFormat.h>
-#include <C2nxt/StdIterator.h>
-#include <C2nxt/StdMath.h>
-#include <C2nxt/StdOption.h>
-#include <C2nxt/StdPlatform.h>
-#include <C2nxt/StdResult.h>
 #include <C2nxt/std_vector/StdVectorDef.h>
 
 #if !defined(STD_TEMPLATE_DECL) && (!defined(STD_TEMPLATE_IMPL) || !STD_TEMPLATE_IMPL) && defined(T)
@@ -325,13 +316,17 @@
 	#error StdVector.h included with STD_TEMPLATE_IMPL defined true but template parameter T not defined
 #endif // !defined(T) && STD_TEMPLATE_IMPL
 
-#if defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_DECL
+#if defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_DECL \
+	&& !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 	#include <C2nxt/std_vector/StdVectorDecl.h>
-#endif // defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_DECL
+#endif // defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_DECL &&
+	   // !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
-#if defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_IMPL
+#if defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_IMPL \
+	&& !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 	#include <C2nxt/std_vector/StdVectorImpl.h>
-#endif // defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_IMPL
+#endif // defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_IMPL &&
+	   // !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
 #if STD_TEMPLATE_UNDEF_PARAMS
 	#undef T
@@ -345,6 +340,9 @@
 	#ifndef STD_VECTOR
 		/// @brief `StdVector(T)` related declarations and definitions
 		#define STD_VECTOR
+
+		#include <C2nxt/StdOption.h>
+		#include <C2nxt/StdString.h>
 
 		#define T				   char
 		#define STD_TEMPLATE_DECL  1

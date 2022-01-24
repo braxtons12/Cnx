@@ -3,7 +3,7 @@
 /// @brief This module provides the function definitions for a template instantiation of
 /// `StdVector(T)`
 /// @version 0.2
-/// @date 2022-01-10
+/// @date 2022-01-23
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -28,20 +28,16 @@
 
 #if defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_IMPL
 
+	#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS TRUE
+
+	#define min_value(x, y) ((x) < (y) ? (x) : (y))
+
 	#include <C2nxt/StdAllocators.h>
 	#include <C2nxt/StdBasicTypes.h>
 	#include <C2nxt/StdCollectionsData.h>
-	#include <C2nxt/StdFormat.h>
 	#include <C2nxt/StdIterator.h>
-	#include <C2nxt/StdMath.h>
-	#include <C2nxt/StdOption.h>
 	#include <C2nxt/StdPlatform.h>
-	#include <C2nxt/StdResult.h>
 	#include <C2nxt/std_vector/StdVectorDef.h>
-
-ImplStdOption(StdVector(T));
-ImplStdResult(StdVector(T));
-ImplStdResultFormat(StdVector(T), StdVector(T));
 
 StdVectorIterator(T) StdVectorIdentifier(T, iterator_new)(const StdVector(T) * restrict self);
 StdVectorConstIterator(T)
@@ -357,7 +353,7 @@ void StdVectorIdentifier(T, resize_internal)(StdVector(T) * restrict self, usize
 	if(new_size > SMALL_OPT_CAPACITY) {
 		let_mut array = static_cast(T*)(
 			std_allocator_allocate_array_t(T, self->m_allocator, new_size).m_memory);
-		let num_to_copy = std_min(size, new_size);
+		let num_to_copy = min_value(size, new_size);
 		std_memcpy(T, array, &std_vector_at_mut(*self, 0), num_to_copy);
 		if(!StdVectorIdentifier(T, is_short)(self)) {
 			let_mut ptr = self->m_long;
@@ -761,31 +757,5 @@ StdRandomAccessIterator(ConstRef(T))
 	return iter;
 }
 
-StdString
-StdVectorIdentifier(T, format)(const StdFormat* restrict self, StdFormatSpecifier specifier) {
-	return StdVectorIdentifier(T, format_with_allocator)(self, specifier, DEFAULT_ALLOCATOR);
-}
-
-StdString StdVectorIdentifier(T, format_with_allocator)(const StdFormat* restrict self,
-														StdFormatSpecifier maybe_unused specifier,
-														StdAllocator allocator) {
-
-	std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT
-				   || specifier.m_type == STD_FORMAT_TYPE_DEBUG,
-			   "Can only format StdVector with default or debug specifier");
-
-	let _self = static_cast(const StdVector(T)*)(self->m_self);
-	let size = std_vector_size(*_self);
-	let capacity = std_vector_capacity(*_self);
-	let data = std_vector_data(*_self);
-	let is_short = StdVectorIdentifier(T, is_short)(_self);
-	return std_format_with_allocator(
-		AS_STRING(StdVector(T)) ": [size: {d}, capacity: {d}, data pointer: {x}, "
-								"short optimized: {}]",
-		allocator,
-		size,
-		capacity,
-		as_format_t(nullptr_t, data),
-		is_short);
-}
+	#undef STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 #endif // defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_IMPL

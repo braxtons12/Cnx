@@ -3,7 +3,7 @@
 /// @brief StdCollectionData is a simple wrapper for an allocator, element default-constructor, and
 /// element destructor to be used within a C2nxt collection.
 /// @version 0.2
-/// @date 2022-01-11
+/// @date 2022-01-23
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -63,7 +63,7 @@
 /// @ingroup collections
 #define StdCollectionData(CollectionType) CONCAT2(StdCollectionData, CollectionType)
 
-#if defined(T) && defined(CollectionType)
+#if defined(T) && defined(CollectionType) && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
 typedef T (*const std_collection_element_default_constructor(T))(StdAllocator allocator);
 typedef T (*const std_collection_element_copy_constructor(T))(const T* restrict element,

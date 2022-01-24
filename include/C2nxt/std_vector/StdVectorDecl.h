@@ -3,7 +3,7 @@
 /// @brief This module provides the type and function declarations for a template instantiation of
 /// `StdVector(T)`
 /// @version 0.2
-/// @date 2022-01-10
+/// @date 2022-01-23
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -28,19 +28,18 @@
 
 #if defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_DECL
 
-	#include <C2nxt/StdAllocators.h>
-	#include <C2nxt/StdBasicTypes.h>
-	#include <C2nxt/StdFormat.h>
-	#include <C2nxt/StdIterator.h>
-	#include <C2nxt/StdMath.h>
-	#include <C2nxt/StdOption.h>
-	#include <C2nxt/StdPlatform.h>
-	#include <C2nxt/StdResult.h>
-	#include <C2nxt/std_vector/StdVectorDef.h>
-
 	#define CollectionType StdVector(T)
 	#include <C2nxt/StdCollectionsData.h>
 	#undef CollectionType
+
+	#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS TRUE
+
+	#include <C2nxt/StdAllocators.h>
+	#include <C2nxt/StdBasicTypes.h>
+	#include <C2nxt/StdIterator.h>
+	#include <C2nxt/StdPlatform.h>
+	#include <C2nxt/std_vector/StdVectorDef.h>
+	#include <C2nxt/std_option/StdOptionDef.h>
 
 typedef struct StdVectorIdentifier(T, vtable) StdVectorIdentifier(T, vtable);
 typedef struct StdVector(T) {
@@ -67,10 +66,6 @@ typedef struct StdVectorConstIterator(T) {
 	const StdVector(T) * m_vector;
 }
 StdVectorConstIterator(T);
-
-DeclStdOption(StdVector(T));
-DeclStdResult(StdVector(T));
-DeclStdResultFormat(StdVector(T));
 
 StdVector(T) StdVectorIdentifier(T, new)(void);
 StdVector(T) StdVectorIdentifier(T, new_with_allocator)(StdAllocator allocator);
@@ -116,16 +111,6 @@ void StdVectorIdentifier(T, insert)(StdVector(T) * restrict self, T element, usi
 void StdVectorIdentifier(T, erase)(StdVector(T) * restrict self, usize index);
 void StdVectorIdentifier(T, erase_n)(StdVector(T) * restrict self, usize index, usize num_elements);
 void StdVectorIdentifier(T, free)(void* restrict self);
-StdString
-	StdVectorIdentifier(T, format)(const StdFormat* restrict self, StdFormatSpecifier specifier);
-StdString StdVectorIdentifier(T, format_with_allocator)(const StdFormat* restrict self,
-														StdFormatSpecifier specifier,
-														StdAllocator allocator);
-
-static maybe_unused ImplTraitFor(StdFormat,
-								 StdVector(T),
-								 StdVectorIdentifier(T, format),
-								 StdVectorIdentifier(T, format_with_allocator));
 
 DeclIntoStdRandomAccessIterator(StdVector(T), Ref(T), StdVectorIdentifier(T, into_iter), into);
 DeclIntoStdRandomAccessIterator(StdVector(T),
@@ -195,4 +180,6 @@ typedef struct StdVectorIdentifier(T, vtable) {
 	StdRandomAccessIterator(ConstRef(T)) (*const crend)(const StdVector(T)* restrict self);
 }
 StdVectorIdentifier(T, vtable);
+
+	#undef STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 #endif // defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_DECL

@@ -3,7 +3,7 @@
 /// @brief This module provides a dynamic-array type comparable to C++'s `std::vector` and Rust's
 /// `std::vec::Vec` for C2nxt
 /// @version 0.2
-/// @date 2022-01-10
+/// @date 2022-01-23
 ///
 /// MIT License
 /// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -28,232 +28,232 @@
 
 #include <C2nxt/StdVector.h>
 
-#define T				  char
-#define STD_TEMPLATE_IMPL 1
+#define T				   char
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  u8
-#define STD_TEMPLATE_IMPL 1
+#define T				   u8
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  u16
-#define STD_TEMPLATE_IMPL 1
+#define T				   u16
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  u32
-#define STD_TEMPLATE_IMPL 1
+#define T				   u32
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  u64
-#define STD_TEMPLATE_IMPL 1
+#define T				   u64
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  usize
-#define STD_TEMPLATE_IMPL 1
+#define T				   usize
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  i8
-#define STD_TEMPLATE_IMPL 1
+#define T				   i8
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  i16
-#define STD_TEMPLATE_IMPL 1
+#define T				   i16
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  i32
-#define STD_TEMPLATE_IMPL 1
+#define T				   i32
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  i64
-#define STD_TEMPLATE_IMPL 1
+#define T				   i64
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  isize
-#define STD_TEMPLATE_IMPL 1
+#define T				   isize
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  f32
-#define STD_TEMPLATE_IMPL 1
+#define T				   f32
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  f64
-#define STD_TEMPLATE_IMPL 1
+#define T				   f64
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  u8_ptr
-#define STD_TEMPLATE_IMPL 1
+#define T				   u8_ptr
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  u16_ptr
-#define STD_TEMPLATE_IMPL 1
+#define T				   u16_ptr
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  u32_ptr
-#define STD_TEMPLATE_IMPL 1
+#define T				   u32_ptr
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  u64_ptr
-#define STD_TEMPLATE_IMPL 1
+#define T				   u64_ptr
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  usize_ptr
-#define STD_TEMPLATE_IMPL 1
+#define T				   usize_ptr
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  i8_ptr
-#define STD_TEMPLATE_IMPL 1
+#define T				   i8_ptr
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  i16_ptr
-#define STD_TEMPLATE_IMPL 1
+#define T				   i16_ptr
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  i32_ptr
-#define STD_TEMPLATE_IMPL 1
+#define T				   i32_ptr
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  i64_ptr
-#define STD_TEMPLATE_IMPL 1
+#define T				   i64_ptr
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  isize_ptr
-#define STD_TEMPLATE_IMPL 1
+#define T				   isize_ptr
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  f32_ptr
-#define STD_TEMPLATE_IMPL 1
+#define T				   f32_ptr
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  f64_ptr
-#define STD_TEMPLATE_IMPL 1
+#define T				   f64_ptr
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  cstring
-#define STD_TEMPLATE_IMPL 1
+#define T				   cstring
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  char_ptr
-#define STD_TEMPLATE_IMPL 1
+#define T				   char_ptr
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  StdString
-#define STD_TEMPLATE_IMPL 1
+#define T				   StdString
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
 #undef SMALL_OPT_CAPACITY
 #undef STD_TEMPLATE_IMPL
 
-#define T				  StdStringView
-#define STD_TEMPLATE_IMPL 1
+#define T				   StdStringView
+#define STD_TEMPLATE_IMPL  1
 #define SMALL_OPT_CAPACITY 8
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef T
