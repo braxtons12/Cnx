@@ -167,17 +167,17 @@
 	/// @param Type - The name for the `Enum`
 	/// @param ... - The list of variant tuples and additional members
 	/// @ingroup std_enum
-	#define Enum(Type, ...)                                              \
-		IGNORE_RESERVED_IDENTIFIER_WARNING_START                         \
-		typedef struct Type Type;                                        \
-		typedef enum { GET_TYPE_NAMES(__VA_ARGS__) } CONCAT2(Type, Tag); \
-		typedef struct Type {                                            \
-			CONCAT2(Type, Tag) tag;                                      \
-			union {                                                      \
-				DEFINE_STRUCTS(__VA_ARGS__)                              \
-			};                                                           \
-			DEFINE_MEMBERS(__VA_ARGS__)                                  \
-		} Type;                                                          \
+	#define Enum(Type, ...)                                                      \
+		IGNORE_RESERVED_IDENTIFIER_WARNING_START                                 \
+		typedef struct Type Type;                                                \
+		typedef enum { ___ENUM_GET_TYPE_NAMES(__VA_ARGS__) } CONCAT2(Type, Tag); \
+		typedef struct Type {                                                    \
+			CONCAT2(Type, Tag) tag;                                              \
+			union {                                                              \
+				___ENUM____ENUM_DEFINE_STRUCTS(__VA_ARGS__)                      \
+			};                                                                   \
+			___ENUM____ENUM_DEFINE_MEMBERS(__VA_ARGS__)                          \
+		} Type;                                                                  \
 		IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 
 	/// @brief Declares and defines an `Enum`, `Type`, using an existing C-style `enum`, `TagType`,
@@ -196,17 +196,17 @@
 	/// members' identifiers must exactly match the names of the `Enum`'s variants.
 	/// @param ... - The list of variant tuples and additional members
 	/// @ingroup std_enum
-	#define EnumWithTag(Type, TagType, ...)      \
-		IGNORE_RESERVED_IDENTIFIER_WARNING_START \
-		typedef struct Type Type;                \
-		typedef TagType CONCAT2(Type, Tag);      \
-		typedef struct Type {                    \
-			CONCAT2(Type, Tag) tag;              \
-			union {                              \
-				DEFINE_STRUCTS(__VA_ARGS__)      \
-			};                                   \
-			DEFINE_MEMBERS(__VA_ARGS__)          \
-		} Type;                                  \
+	#define EnumWithTag(Type, TagType, ...)                 \
+		IGNORE_RESERVED_IDENTIFIER_WARNING_START            \
+		typedef struct Type Type;                           \
+		typedef TagType CONCAT2(Type, Tag);                 \
+		typedef struct Type {                               \
+			CONCAT2(Type, Tag) tag;                         \
+			union {                                         \
+				___ENUM____ENUM_DEFINE_STRUCTS(__VA_ARGS__) \
+			};                                              \
+			___ENUM____ENUM_DEFINE_MEMBERS(__VA_ARGS__)     \
+		} Type;                                             \
 		IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 
 	/// @brief Pattern matches on the given `Enum`, `x`
@@ -279,12 +279,13 @@
 	/// variant's members to
 	///
 	/// @ingroup std_enum
-	#define variant(...)                    \
-		break;                              \
-		case FIRST(__VA_ARGS__):            \
-			ignore(__to_match);             \
-			IF(CONTAINS_COMMA(__VA_ARGS__), \
-			   BIND_VARIANT(variant_identifier(FIRST(__VA_ARGS__)), REMOVE_FIRST(__VA_ARGS__)))
+	#define variant(...)                                                    \
+		break;                                                              \
+		case FIRST(__VA_ARGS__):                                            \
+			ignore(__to_match);                                             \
+			IF(CONTAINS_COMMA(__VA_ARGS__),                                 \
+			   ___ENUM_BIND_VARIANT(variant_identifier(FIRST(__VA_ARGS__)), \
+									REMOVE_FIRST(__VA_ARGS__)))
 
 	/// @brief Declares a catch-all pattern-matching case in a `match` statement
 	/// This will match all variants that have not been explicitly matched against prior. Unlike
@@ -344,12 +345,12 @@
 	///
 	/// @param x - The `Enum` to pattern match on
 	/// @ingroup std_enum
-	#define match_let(self, ...)                                    \
-		if((self).tag == FIRST(__VA_ARGS__))                        \
-		IF(CONTAINS_COMMA(__VA_ARGS__),                             \
-		   LET_BIND_VARIANT(self,                                   \
-							variant_identifier(FIRST(__VA_ARGS__)), \
-							REMOVE_FIRST(__VA_ARGS__)))
+	#define match_let(self, ...)                                            \
+		if((self).tag == FIRST(__VA_ARGS__))                                \
+		IF(CONTAINS_COMMA(__VA_ARGS__),                                     \
+		   ___ENUM_LET_BIND_VARIANT(self,                                   \
+									variant_identifier(FIRST(__VA_ARGS__)), \
+									REMOVE_FIRST(__VA_ARGS__)))
 
 	/// @brief Determines if `self` is the `Enum` variant `Variant`
 	///
@@ -412,41 +413,44 @@
 	#define variant_identifier(Variant) CONCAT2(Variant, _variant)
 
 	/// @brief extracts the `Enum` variant names from a list of `Enum` parameters
-	#define GET_TYPE_NAMES(...) APPLY_TO_LIST(CHECK_IS_TUPLE_AND_EXTRACT_TYPE, __VA_ARGS__)
+	#define ___ENUM_GET_TYPE_NAMES(...) \
+		APPLY_TO_LIST(___ENUM_CHECK_IS_TUPLE_AND_EXTRACT_TYPE, __VA_ARGS__)
 	/// @brief extract the `Enum` variant name from an `Enum` parameter
-	#define CHECK_IS_TUPLE_AND_EXTRACT_TYPE(x) IF(IS_TUPLE(x), FIRST(EXPAND_TUPLE(x)))
+	#define ___ENUM_CHECK_IS_TUPLE_AND_EXTRACT_TYPE(x) IF(IS_TUPLE(x), FIRST(EXPAND_TUPLE(x)))
 
 	/// @brief Defines the structs used to represent `Enum` variants in an `Enum` declaration
-	#define DEFINE_STRUCTS(...) DELIMIT_LIST(;, APPLY_TO_LIST(DEFINE_STRUCT, __VA_ARGS__))
+	#define ___ENUM____ENUM_DEFINE_STRUCTS(...) \
+		DELIMIT_LIST(;, APPLY_TO_LIST(___ENUM_DEFINE_STRUCT, __VA_ARGS__))
 	/// @brief Defines a struct used to represent an `Enum` variant in an `Enum` declaration
-	#define DEFINE_STRUCT(x)                                      \
-		IF(IS_TUPLE(x),                                           \
-		   IF_ELSE(CONTAINS_COMMA(EXPAND_TUPLE(x)),               \
-				   DEFINE_STRUCT_IMPL(FIRST(EXPAND_TUPLE(x)), x), \
-				   DEFINE_EMPTY_STRUCT(FIRST(EXPAND_TUPLE(x)))))
+	#define ___ENUM_DEFINE_STRUCT(x)                                      \
+		IF(IS_TUPLE(x),                                                   \
+		   IF_ELSE(CONTAINS_COMMA(EXPAND_TUPLE(x)),                       \
+				   ___ENUM_DEFINE_STRUCT_IMPL(FIRST(EXPAND_TUPLE(x)), x), \
+				   ___ENUM_DEFINE_EMPTY_STRUCT(FIRST(EXPAND_TUPLE(x)))))
 	/// @brief Defines a struct used to represent an `Enum` variant in an `Enum` declaration
-	#define DEFINE_EMPTY_STRUCT(Name) \
-		struct {                      \
+	#define ___ENUM_DEFINE_EMPTY_STRUCT(Name) \
+		struct {                              \
 		} variant_identifier(Name)
 	/// @brief Defines a struct used to represent an `Enum` variant in an `Enum` declaration
-	#define DEFINE_STRUCT_IMPL(Name, x) \
-		struct EXPAND_STRUCT_IMPL(REMOVE_FIRST(EXPAND_TUPLE(x))) variant_identifier(Name)
+	#define ___ENUM_DEFINE_STRUCT_IMPL(Name, x) \
+		struct ___ENUM_EXPAND_STRUCT_IMPL(REMOVE_FIRST(EXPAND_TUPLE(x))) variant_identifier(Name)
 	/// @brief Defines a struct used to represent an `Enum` variant in an `Enum` declaration
-	#define EXPAND_STRUCT_IMPL(...)                                          \
+	#define ___ENUM_EXPAND_STRUCT_IMPL(...)                                  \
 		{                                                                    \
 			DELIMIT_LIST(;, APPEND_EACH_TO_LIST(SELECTOR_LIST, __VA_ARGS__)) \
 		}
 
 	/// @brief Defines any additional members of an `Enum` in an `Enum` declaration
-	#define DEFINE_MEMBERS(...) DELIMIT_LIST(, APPLY_TO_LIST(DEFINE_MEMBER, __VA_ARGS__))
+	#define ___ENUM____ENUM_DEFINE_MEMBERS(...) \
+		DELIMIT_LIST(, APPLY_TO_LIST(___ENUM_DEFINE_MEMBER, __VA_ARGS__))
 	/// @brief Defines an additional members of an `Enum` in an `Enum` declaration
-	#define DEFINE_MEMBER(x) IF(IS_NOT_TUPLE(x), x;)
+	#define ___ENUM_DEFINE_MEMBER(x) IF(IS_NOT_TUPLE(x), x;)
 
 	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define BIND_VARIANT(variant_name, ...) LET_BIND_VARIANT(*__to_match, variant_name, __VA_ARGS__)
+	#define ___ENUM_BIND_VARIANT(variant_name, ...) \
+		___ENUM_LET_BIND_VARIANT(*__to_match, variant_name, __VA_ARGS__)
 
 	/// @brief Binds an `Enum` to a decomposition of the variant `variant_name`
-	#define LET_BIND_VARIANT(self, variant_name, ...) \
+	#define ___ENUM_LET_BIND_VARIANT(self, variant_name, ...) \
 		scoped_tuple_bind((self).variant_name, __VA_ARGS__)
-
 #endif // STD_ENUM
