@@ -1,8 +1,8 @@
 /// @file StdOption.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a struct template for representing an optional value
-/// @version 0.1
-/// @date 2021-07-20
+/// @version 0.2
+/// @date 2022-01-23
 ///
 /// MIT License
 /// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -25,28 +25,42 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#include "StdAllocators.h"
-#include "StdAssert.h"
-#include "StdBasicTypes.h"
-#include "StdTrait.h"
+#include <C2nxt/std_option/StdOptionDef.h>
 
 /// @ingroup error_handling
 /// @{
 ///	@defgroup std_option StdOption
-/// `StdOption(T)` is a "struct template" for representing an optional value. It enables a simple,
-/// type-safe way of working with values that may or may not exist or be value, without resorting
-/// to heap-allocation and pointers or out-parameters.
+/// `StdOption(T)` is a "struct template" for an `Enum` representing an optional value.
+/// It enables a simple, type-safe way of working with values that may or may not exist or be valid,
+/// without resorting to heap-allocation and pointers or out-parameters.
 ///
-/// `StdOption(T)` shares some functionality, such as `if_let(var, self)`, with
-/// `StdResult(T)` (see @ref monadics).
+///
+/// Instantiating `StdOption(T)` for a given `T` is simple, and follows the same methodology as
+/// other C2nxt templates:
 ///
 /// Example:
+/// @code {.c}
+///	// have the template automatically undef macro template parameters
+/// #define STD_TEMPLATE_UNDEF_PARAMS
 ///
+///	// instantiate the declarations of the `StdOption(T)` template
+///	#define T MyType
+/// #define STD_TEMPLATE_DECL TRUE
+/// #include <C2nxt/StdOption.h>
+///
+///	// instantiate the definitions of the `StdOption(T)` template
+///	#define T MyType
+/// #define STD_TEMPLATE_DECL TRUE
+/// #include <C2nxt/StdOption.h>
+/// @endcode
+///
+/// Once instantiated, `StdOption(T)` can be easily used:
+/// Example:
 /// @code {.c}
 /// StdOption(u32) checked_add(u32 left, u32 right) {
-/// 	return (left < std_max(u32) / 2 && right < std_max(u32) / 2) ?
-/// 				Some(u32, left + right) :
-/// 				None(u32);
+/// 	return left <= std_max_value(u32) - right ?
+/// 			Some(u32, left + right) :
+/// 			None(u32);
 /// }
 ///
 /// void do_thing(void) {
@@ -54,377 +68,215 @@
 ///		let right = 10;
 ///		// do something with left and/or right ...
 ///		let_mut maybe_added = checked_add(left, right);
-///		if_let(added, maybe_added) {
-///			// do something with added...
-/// 	}
-/// 	else {
-///			// maybe_added was `None(u32)`, do something to recover...
-/// 	}
+///
+///		match(maybe_added) {
+///			variant(Some, added) {
+///				// do something with added
+///			}
+///			variant(None) {
+///				maybe_added was the `None` variant, do something to recover
+///			}
+///		}
 /// }
 /// @endcode
 /// @}
 
-#ifndef STD_OPTION
-	/// @brief Declarations and definitions related to `StdOption(T)`
-	#define STD_OPTION
+#if !defined(STD_TEMPLATE_DECL) && (!defined(STD_TEMPLATE_IMPL) || !STD_TEMPLATE_IMPL) && defined(T)
+	#define STD_TEMPLATE_DECL 1
+#endif // !defined(STD_TEMPLATE_DECL) && (!defined(STD_TEMPLATE_IMPL) || !STD_TEMPLATE_IMPL) &&
+	   // defined(T)
 
-	/// @brief Macro alias for `StdOption` holding the type `T`
-	///
-	/// Used to generate and refer to a typedef name for `StdOption(T)` instantiations of type
-	/// `T`
-	///
-	/// @param T - The type to store in the `StdOption(T)`
-	/// @ingroup std_option
-	#define StdOption(T) CONCAT2(StdOption, T)
-	/// @brief Creates an identifier for a function, variable, or struct associated with
-	/// `StdOption(T)`
-	#define StdOptionIdentifier(T, Identifier) CONCAT2(std_option_, CONCAT3(T, _, Identifier))
+#if !defined(T) && STD_TEMPLATE_DECL
+	#error StdOption.h included with STD_TEMPLATE_DECL defined true but template parameter T not defined
+#endif // !defined(T) && STD_TEMPLATE_DECL
 
-	/// @brief Instantiates `StdOption(T)` holding the type `T`
-	///
-	/// Instantiates the function and struct declarations for `StdOption(T)`
-	///
-	/// @param T - The type stored in the `StdOption(T)`
-	/// @ingroup std_option
-	#define DeclStdOption(T)                                                                    \
-		typedef struct StdOption(T) StdOption(T);                                               \
-                                                                                                \
-		typedef struct StdOptionIdentifier(T, vtable) {                                         \
-			bool (*const is_some)(const StdOption(T)* restrict self);                           \
-			bool (*const is_none)(const StdOption(T)* restrict self);                           \
-			const T* (*const as_const)(const StdOption(T)* restrict self);                      \
-			T* (*const as_mut)(StdOption(T)* restrict self);                                    \
-			T (*const unwrap)(StdOption(T)* restrict self);                                     \
-			T (*const unwrap_or)(StdOption(T)* restrict self, T default_value);                 \
-			T(*const unwrap_or_else)                                                            \
-			(StdOption(T)* restrict self, T(*default_generator)(void));                         \
-			T(*const expect)                                                                    \
-			(StdOption(T)* restrict self, restrict const_cstring panic_message);                \
-			bool (*const as_bool)(const StdOption(T)* restrict self);                           \
-		}                                                                                       \
-		StdOptionIdentifier(T, vtable);                                                         \
-                                                                                                \
-		/** @brief `StdOption` holding the type `T` **/                                         \
-		typedef struct StdOption(T) {                                                           \
-			T m_value;                                                                          \
-			bool m_is_some;                                                                     \
-			const StdOptionIdentifier(T, vtable) * m_vtable;                                    \
-		}                                                                                       \
-		StdOption(T);                                                                           \
-                                                                                                \
-		/** @brief Creates a `StdOption(T)` holding the given value **/                         \
-		/** @param value - The value to store in the `StdOption` **/                            \
-		/** @return a `StdOption` containing the given value **/                                \
-		StdOption(T) StdOptionIdentifier(T, some)(T value);                                     \
-		/** @brief Creates a `StdOption(T)` holding no value **/                                \
-		/** @return a `StdOption` containing no value **/                                       \
-		StdOption(T) StdOptionIdentifier(T, none)(void);                                        \
-		/** @brief Returns whether this `StdOption(T)` is holding a value **/                   \
-		/** @param self - The `StdOption` to check **/                                          \
-		/** @return `true` if this `StdOption(T)` is holding a value, `false` otherwise **/     \
-		bool StdOptionIdentifier(T, is_some)(const StdOption(T)* restrict self);                \
-		/** @brief Returns whether this `StdOption(T)` __isn't__ holding a value **/            \
-		/** @param self - The `StdOption` to check **/                                          \
-		/** @return `true` if this `StdOption(T)` __isn't__ holding a value, `false` otherwise  \
-		 * **/                                                                                  \
-		bool StdOptionIdentifier(T, is_none)(const StdOption(T)* restrict self);                \
-		/** @brief Returns a pointer to the const value stored in this `StdOption` **/          \
-		/** @param self - The `StdOption` to get the stored value from **/                      \
-		/** @return a pointer to the contained const value **/                                  \
-		/** @note Panics if `self` does not contain a value **/                                 \
-		const T* StdOptionIdentifier(T, as_const)(const StdOption(T)* restrict self);           \
-		/** @brief Returns a pointer to the value stored in this `StdOption` **/                \
-		/** @param self - The `StdOption` to get the stored value from **/                      \
-		/** @return a pointer to the contained value **/                                        \
-		/** @note Panics if `self` does not contain a value **/                                 \
-		T* StdOptionIdentifier(T, as_mut)(StdOption(T)* restrict self);                         \
-		/** @brief Returns the value stored in this `StdOption` **/                             \
-		/** @param self - The `StdOption` to get the stored value from **/                      \
-		/** @return the contained value **/                                                     \
-		/** @note Panics if `self` does not contain a value **/                                 \
-		T StdOptionIdentifier(T, unwrap)(StdOption(T)* restrict self);                          \
-		/** @brief Returns the value stored in this `StdOption` , or `default_value` **/        \
-		/** if this is `None` **/                                                               \
-		/** @param self - The `StdOption` to get the stored value from **/                      \
-		/** @param default_value - The value to return if this is `None` **/                    \
-		/** @return the contained value, or `default_value` **/                                 \
-		T StdOptionIdentifier(T, unwrap_or)(StdOption(T)* restrict self, T default_value);      \
-		/** @brief Returns the value stored in this `StdOption` , or the value returned by **/  \
-		/** `default_generator` if this is `None` **/                                           \
-		/** @param self - The `StdOption` to get the stored value from **/                      \
-		/** @param default_generator - The function to generate the value **/                   \
-		/**  to return if this is `None` **/                                                    \
-		/** @return the contained value, or the one generated by `default_generator` **/        \
-		T StdOptionIdentifier(T, unwrap_or_else)(StdOption(T)* restrict self,                   \
-												 T(*default_generator)(void));                  \
-		/** @brief Returns the value stored in this `StdOption` **/                             \
-		/** @param self - The `StdOption` to get the stored value from **/                      \
-		/** @return the contained value **/                                                     \
-		/** @note Panics if `self` does not contain a value, **/                                \
-		/** with the custom panic message `panic_message` **/                                   \
-		T StdOptionIdentifier(T, expect)(StdOption(T)* restrict self,                           \
-										 restrict const_cstring panic_mesage);                  \
-                                                                                                \
-		bool StdOptionIdentifier(T, as_bool)(const StdOption(T)* restrict self);
+#if !defined(T) && STD_TEMPLATE_IMPL
+	#error StdOption.h included with STD_TEMPLATE_IMPL defined true but template parameter T not defined
+#endif // !defined(T) && STD_TEMPLATE_IMPL
 
-	/// @brief Creates a `StdOption(T)` holding the given value
-	///
-	/// @param T - The held type of the `StdOption(T)`
-	/// @param value - The value to store in the `StdOption(T)`
-	///
-	/// @return a `StdOption(T)` containing the given value
-	/// @ingroup std_option
-	#define Some(T, value) StdOptionIdentifier(T, some)(value)
-	/// @brief Creates a `StdOption(T)` holding no value
-	///
-	/// @param T - The held type of the `StdOption(T)`
-	///
-	/// @return a `StdOption(T)` containing no value
-	/// @ingroup std_option
-	#define None(T) StdOptionIdentifier(T, none)()
-	/// @brief Returns whether this `StdOption(T)` is holding a value
-	///
-	/// @param self - The `StdOption(T)` to check
-	///
-	/// @return `true` if this `StdOption(T)` is holding a value, `false` otherwise
-	/// @ingroup std_option
-	#define std_option_is_some(self) (self).m_vtable->is_some(&(self))
-	/// @brief Returns whether this `StdOption(T)` __isn't__ holding a value
-	///
-	/// @param self - The `StdOption(T)` to check
-	///
-	/// @return `true` if this `StdOption(T)` __isn't__ holding a value, `false` otherwise
-	/// @ingroup std_option
-	#define std_option_is_none(self) (self).m_vtable->is_none(&(self))
-	/// @brief Returns a const reference to the value stored in this `StdOption(T)`
-	///
-	/// @param self - The `StdOption(T)` to get the stored value from
-	///
-	/// @return a const reference to the contained value
-	/// @note Panics if `self` does not contain a value
-	/// @ingroup std_option
-	#define std_option_as_const(self) *((self).m_vtable->as_const(&(self)))
-	/// @brief Returns a reference to the value stored in this `StdOption(T)`
-	///
-	/// @param self - The `StdOption(T)` to get the stored value from
-	///
-	/// @return a reference to the contained value
-	/// @note Panics if `self` does not contain a value
-	/// @ingroup std_option
-	#define std_option_as_mut(self) *((self).m_vtable->as_mut(&(self)))
-	/// @brief Returns the value stored in this `StdOption(T)`
-	///
-	/// @param self - The `StdOption(T)` to get the stored value from
-	///
-	/// @return the contained value
-	/// @note Panics if `self` does not contain a value
-	/// @ingroup std_option
-	#define std_option_unwrap(self) (self).m_vtable->unwrap(&(self))
-	/// @brief Returns the value stored in this `StdOption(T)` , or `default_value`
-	/// if this is `None(T)`
-	///
-	/// @param self - The `StdOption(T)` to get the stored value from
-	///
-	/// @param default_value - The value to return if this is `None(T)`
-	/// @return the contained value, or `default_value`
-	/// @ingroup std_option
-	#define std_option_unwrap_or(self, default_value) \
-		(self).m_vtable->unwrap_or(&(self), (default_value))
-	/// @brief Returns the value stored in this `StdOption(T)` , or the value returned by
-	/// `default_generator` if this is `None(T)`
-	///
-	/// @param self - The `StdOption(T)` to get the stored value from
-	/// @param default_generator - The function to generate the value
-	///  to return if this is `None(T)`
-	///
-	/// @return the contained value, or the one generated by `default_generator`
-	/// @ingroup std_option
-	#define std_option_unwrap_or_else(self, default_generator) \
-		(self).m_vtable->unwrap_or_else(&(self), (default_generator))
-	/// @brief Returns the value stored in this `StdOption(T)`
-	///
-	/// @param self - The `StdOption(T)` to get the stored value from
-	/// @param panic_message - The custom panic message to use if `self` is not the `Some(T, value)`
-	/// variant
-	///
-	/// @return the contained value
-	/// @note Panics if `self` does not contain a value, with the custom panic message
-	/// `panic_message`
-	/// @ingroup std_option
-	#define std_option_expect(self, panic_message) (self).m_vtable->expect(&(self), (panic_message))
+#if defined(T) && STD_TEMPLATE_DECL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+	#include <C2nxt/std_option/StdOptionDecl.h>
+#endif // defined(T) && STD_TEMPLATE_DECL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
-	/// @brief Converts the given `StdOption(T)` to a `bool`
-	///
-	/// This is equivalent to calling `std_option_is_some(self)`
-	/// @param self - The `StdOption(T)` to convert to a `bool`
-	///
-	/// @return `self` as a `bool`
-	/// @ingroup std_option
-	#define std_option_as_bool(self) (self).m_vtable->as_bool(&(self))
+#if defined(T) && STD_TEMPLATE_IMPL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+	#include <C2nxt/std_option/StdOptionImpl.h>
+#endif // defined(T) && STD_TEMPLATE_IMPL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
-	#include "monadic/StdIfLet.h"
+#if !defined(T) && !defined(STD_TEMPLATE_DECL) && !defined(STD_TEMPLATE_IMPL) \
+	&& !defined(STD_TEMPLATE_UNDEF_PARAMS)
 
-	/// @brief Instantiates the definitions for `StdOption(T)` holding the type `T`
-	///
-	/// Instantiates the variable and function definitions necessary for `StdOption(T)` holding
-	/// type `T`
-	///
-	/// @param T - The type stored in the `StdOption`
-	/// @ingroup std_option
-	#define ImplStdOption(T)                                                                \
-                                                                                            \
-		static const StdOptionIdentifier(T, vtable) StdOptionIdentifier(T, vtable_impl)     \
-			= {.is_some = StdOptionIdentifier(T, is_some),                                  \
-			   .is_none = StdOptionIdentifier(T, is_none),                                  \
-			   .as_const = StdOptionIdentifier(T, as_const),                                \
-			   .as_mut = StdOptionIdentifier(T, as_mut),                                    \
-			   .unwrap = StdOptionIdentifier(T, unwrap),                                    \
-			   .unwrap_or = StdOptionIdentifier(T, unwrap_or),                              \
-			   .unwrap_or_else = StdOptionIdentifier(T, unwrap_or_else),                    \
-			   .expect = StdOptionIdentifier(T, expect),                                    \
-			   .as_bool = StdOptionIdentifier(T, as_bool)};                                 \
-                                                                                            \
-		StdOption(T) StdOptionIdentifier(T, some)(T value) {                                \
-			return (StdOption(T)){.m_is_some = true,                                        \
-								  .m_value = value,                                         \
-								  .m_vtable = &StdOptionIdentifier(T, vtable_impl)};        \
-		}                                                                                   \
-                                                                                            \
-		StdOption(T) StdOptionIdentifier(T, none)(void) {                                   \
-			return (StdOption(T)){.m_is_some = false,                                       \
-								  .m_vtable = &StdOptionIdentifier(T, vtable_impl)};        \
-		}                                                                                   \
-                                                                                            \
-		bool StdOptionIdentifier(T, is_some)(const StdOption(T)* restrict self) {           \
-			return self->m_is_some;                                                         \
-		}                                                                                   \
-                                                                                            \
-		bool StdOptionIdentifier(T, is_none)(const StdOption(T)* restrict self) {           \
-			return !(self->m_is_some);                                                      \
-		}                                                                                   \
-                                                                                            \
-		const T* StdOptionIdentifier(T, as_const)(const StdOption(T)* restrict self) {      \
-			if(!std_option_is_some(*self)) {                                                \
-				std_panic("as_const called on a None value, terminating");                  \
-			}                                                                               \
-                                                                                            \
-			return &(self->m_value);                                                        \
-		}                                                                                   \
-                                                                                            \
-		T* StdOptionIdentifier(T, as_mut)(StdOption(T)* restrict self) {                    \
-			if(!std_option_is_some(*self)) {                                                \
-				std_panic("as_mut called on a None value, terminating");                    \
-			}                                                                               \
-                                                                                            \
-			return &(self->m_value);                                                        \
-		}                                                                                   \
-                                                                                            \
-		T StdOptionIdentifier(T, unwrap)(StdOption(T)* restrict self) {                     \
-			if(!std_option_is_some(*self)) {                                                \
-				std_panic("unwrap called on a None value, terminating");                    \
-			}                                                                               \
-                                                                                            \
-			return self->m_value;                                                           \
-		}                                                                                   \
-                                                                                            \
-		T StdOptionIdentifier(T, unwrap_or)(StdOption(T)* restrict self, T default_value) { \
-			if(!std_option_is_some(*self)) {                                                \
-				return default_value;                                                       \
-			}                                                                               \
-                                                                                            \
-			return self->m_value;                                                           \
-		}                                                                                   \
-                                                                                            \
-		T StdOptionIdentifier(T, unwrap_or_else)(StdOption(T)* restrict self,               \
-												 T(*default_generator)(void)) {             \
-			if(!std_option_is_some(*self)) {                                                \
-				return default_generator();                                                 \
-			}                                                                               \
-                                                                                            \
-			return self->m_value;                                                           \
-		}                                                                                   \
-                                                                                            \
-		T StdOptionIdentifier(T, expect)(StdOption(T)* restrict self,                       \
-										 restrict const_cstring panic_message) {            \
-			if(!std_option_is_some(*self)) {                                                \
-				std_panic(panic_message);                                                   \
-			}                                                                               \
-                                                                                            \
-			return self->m_value;                                                           \
-		}                                                                                   \
-                                                                                            \
-		bool StdOptionIdentifier(T, as_bool)(const StdOption(T)* restrict self) {           \
-			return std_option_is_some(*self);                                               \
-		}
+	#ifndef STD_OPTION
+		/// @brief `StdVector(T)` related declarations and definitions
+		#define STD_OPTION
 
-	/// @brief Fully instantiates `StdOption(T)` holding the type `T`
-	///
-	/// Provides all function, variable, and struct declarations __and__ definitions necessary
-	/// for `StdOption(T)` holding type `T`
-	///
-	/// @param T - The type stored in the `StdOption`
-	/// @ingroup std_option
-	#define DeclAndImplStdOption(T) DeclStdOption(T) ImplStdOption(T)
+		#define T				  char
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
 
-// `StdOption` implementations for built-in datatypes
+		#define T				  u8
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
 
-/// @brief Instantiate `StdOption(T)` for the builtin `char`
-DeclStdOption(char);
-/// @brief Instantiate `StdOption(T)` for the builtin `u8`
-DeclStdOption(u8);
-/// @brief Instantiate `StdOption(T)` for the builtin `u16`
-DeclStdOption(u16);
-/// @brief Instantiate `StdOption(T)` for the builtin `u32`
-DeclStdOption(u32);
-/// @brief Instantiate `StdOption(T)` for the builtin `u64`
-DeclStdOption(u64);
-/// @brief Instantiate `StdOption(T)` for the builtin `usize`
-DeclStdOption(usize);
-/// @brief Instantiate `StdOption(T)` for the builtin `i8`
-DeclStdOption(i8);
-/// @brief Instantiate `StdOption(T)` for the builtin `i16`
-DeclStdOption(i16);
-/// @brief Instantiate `StdOption(T)` for the builtin `i32`
-DeclStdOption(i32);
-/// @brief Instantiate `StdOption(T)` for the builtin `i64`
-DeclStdOption(i64);
-/// @brief Instantiate `StdOption(T)` for the builtin `isize`
-DeclStdOption(isize);
-/// @brief Instantiate `StdOption(T)` for the builtin `f32`
-DeclStdOption(f32);
-/// @brief Instantiate `StdOption(T)` for the builtin `f64`
-DeclStdOption(f64);
-/// @brief Instantiate `StdOption(T)` for the builtin `u8_ptr`
-DeclStdOption(u8_ptr);
-/// @brief Instantiate `StdOption(T)` for the builtin `u16_ptr`
-DeclStdOption(u16_ptr);
-/// @brief Instantiate `StdOption(T)` for the builtin `u32_ptr`
-DeclStdOption(u32_ptr);
-/// @brief Instantiate `StdOption(T)` for the builtin `u64_ptr`
-DeclStdOption(u64_ptr);
-/// @brief Instantiate `StdOption(T)` for the builtin `usize_ptr`
-DeclStdOption(usize_ptr);
-/// @brief Instantiate `StdOption(T)` for the builtin `i8_ptr`
-DeclStdOption(i8_ptr);
-/// @brief Instantiate `StdOption(T)` for the builtin `i16_ptr`
-DeclStdOption(i16_ptr);
-/// @brief Instantiate `StdOption(T)` for the builtin `i32_ptr`
-DeclStdOption(i32_ptr);
-/// @brief Instantiate `StdOption(T)` for the builtin `i64_ptr`
-DeclStdOption(i64_ptr);
-/// @brief Instantiate `StdOption(T)` for the builtin `isize_ptr`
-DeclStdOption(isize_ptr);
-/// @brief Instantiate `StdOption(T)` for the builtin `f32_ptr`
-DeclStdOption(f32_ptr);
-/// @brief Instantiate `StdOption(T)` for the builtin `f64_ptr`
-DeclStdOption(f64_ptr);
-/// @brief Instantiate `StdOption(T)` for the builtin `cstring`
-DeclStdOption(cstring);
-/// @brief Instantiate `StdOption(T)` for the builtin `const_cstring`
-DeclStdOption(const_cstring);
-/// @brief Instantiate `StdOption(T)` for the builtin `char_ptr`
-DeclStdOption(char_ptr);
-/// @brief Instantiate `StdOption(T)` for the builtin `const_char_ptr`
-DeclStdOption(const_char_ptr);
+		#define T				  u16
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
 
-#endif // STD_OPTION
+		#define T				  u32
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  u64
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  usize
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  i8
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  i16
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  i32
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  i64
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  isize
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  f32
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  f64
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  u8_ptr
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  u16_ptr
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  u32_ptr
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  u64_ptr
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  usize_ptr
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  i8_ptr
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  i16_ptr
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  i32_ptr
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  i64_ptr
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  isize_ptr
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  f32_ptr
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  f64_ptr
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  cstring
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+
+		#define T				  char_ptr
+		#define STD_TEMPLATE_DECL 1
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+		#undef STD_TEMPLATE_DECL
+	#endif // STD_OPTION
+
+#endif // !defined(T) && !defined(STD_TEMPLATE_DECL) && !defined(STD_TEMPLATE_IMPL) \
+	   // && !defined(STD_TEMPLATE_UNDEF_PARAMS)
+
+#if STD_TEMPLATE_UNDEF_PARAMS
+	#undef T
+	#undef STD_TEMPLATE_DECL
+	#undef STD_TEMPLATE_IMPL
+#endif // STD_TEMPLATE_UNDEF_PARAMS

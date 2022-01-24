@@ -1,8 +1,8 @@
 /// @file StdOption.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a struct template for representing an optional value
-/// @version 0.1
-/// @date 2021-08-15
+/// @version 0.2
+/// @date 2022-01-23
 ///
 /// MIT License
 /// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -25,34 +25,166 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#include "../include/C2nxt/StdOption.h"
+#include <C2nxt/StdOption.h>
 
-ImplStdOption(char);
-ImplStdOption(u8);
-ImplStdOption(u16);
-ImplStdOption(u32);
-ImplStdOption(u64);
-ImplStdOption(usize);
-ImplStdOption(i8);
-ImplStdOption(i16);
-ImplStdOption(i32);
-ImplStdOption(i64);
-ImplStdOption(isize);
-ImplStdOption(f32);
-ImplStdOption(f64);
-ImplStdOption(u8_ptr);
-ImplStdOption(u16_ptr);
-ImplStdOption(u32_ptr);
-ImplStdOption(u64_ptr);
-ImplStdOption(usize_ptr);
-ImplStdOption(i8_ptr);
-ImplStdOption(i16_ptr);
-ImplStdOption(i32_ptr);
-ImplStdOption(i64_ptr);
-ImplStdOption(isize_ptr);
-ImplStdOption(f32_ptr);
-ImplStdOption(f64_ptr);
-ImplStdOption(cstring);
-ImplStdOption(const_cstring);
-ImplStdOption(char_ptr);
-ImplStdOption(const_char_ptr);
+#define T				  char
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  u8
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  u16
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  u32
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  u64
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  usize
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  i8
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  i16
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  i32
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  i64
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  isize
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  f32
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  f64
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  u8_ptr
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  u16_ptr
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  u32_ptr
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  u64_ptr
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  usize_ptr
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  i8_ptr
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  i16_ptr
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  i32_ptr
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  i64_ptr
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  isize_ptr
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  f32_ptr
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  f64_ptr
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  cstring
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+#define T				  char_ptr
+#define STD_TEMPLATE_IMPL 1
+#include <C2nxt/std_option/StdOptionImpl.h>
+#undef T
+#undef STD_TEMPLATE_IMPL

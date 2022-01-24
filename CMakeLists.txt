@@ -52,6 +52,9 @@ set(EXPORTS
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_vector/StdVectorDef.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_vector/StdVectorDecl.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_vector/StdVectorImpl.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_option/StdOptionDef.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_option/StdOptionDecl.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_option/StdOptionImpl.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdEnum.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdTuple.h"
         )
