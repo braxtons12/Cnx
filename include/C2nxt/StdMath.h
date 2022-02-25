@@ -27,7 +27,10 @@
 
 #include <C2nxt/StdAssert.h>
 #include <C2nxt/StdBasicTypes.h>
+#define STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
 #include <C2nxt/StdOption.h>
+#undef STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS
+
 #include <C2nxt/StdPlatform.h>
 #include <C2nxt/math/__StdStaticBase.h>
 #include <C2nxt/math/__StdStaticCheckedAdd.h>

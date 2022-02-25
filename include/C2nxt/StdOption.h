@@ -1,8 +1,8 @@
 /// @file StdOption.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a struct template for representing an optional value
-/// @version 0.2
-/// @date 2022-01-23
+/// @version 0.2.1
+/// @date 2022-02-24
 ///
 /// MIT License
 /// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -102,174 +102,73 @@
 	#include <C2nxt/std_option/StdOptionImpl.h>
 #endif // defined(T) && STD_TEMPLATE_IMPL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
-#if !defined(T) && !defined(STD_TEMPLATE_DECL) && !defined(STD_TEMPLATE_IMPL) \
-	&& !defined(STD_TEMPLATE_UNDEF_PARAMS)
+#if STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS && !defined(T) && !defined(STD_TEMPLATE_DECL) \
+	&& !defined(STD_TEMPLATE_IMPL) && !defined(STD_TEMPLATE_UNDEF_PARAMS)
 
 	#ifndef STD_OPTION
 		/// @brief `StdVector(T)` related declarations and definitions
 		#define STD_OPTION
 
-		#define T				  char
-		#define STD_TEMPLATE_DECL 1
+		#define STD_TEMPLATE_DECL TRUE
+
+		#define T char
 		#include <C2nxt/std_option/StdOptionDecl.h>
 		#undef T
+
+		#define T u8
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+
+		#define T u16
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+
+		#define T u32
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+
+		#define T u64
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+
+		#define T usize
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+
+		#define T i8
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+
+		#define T i16
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+
+		#define T i32
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+
+		#define T i64
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+
+		#define T isize
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+
+		#define T f32
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+
+		#define T f64
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+
+		#define T cstring
+		#include <C2nxt/std_option/StdOptionDecl.h>
+		#undef T
+
 		#undef STD_TEMPLATE_DECL
 
-		#define T				  u8
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  u16
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  u32
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  u64
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  usize
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  i8
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  i16
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  i32
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  i64
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  isize
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  f32
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  f64
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  u8_ptr
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  u16_ptr
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  u32_ptr
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  u64_ptr
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  usize_ptr
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  i8_ptr
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  i16_ptr
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  i32_ptr
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  i64_ptr
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  isize_ptr
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  f32_ptr
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  f64_ptr
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  cstring
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
-
-		#define T				  char_ptr
-		#define STD_TEMPLATE_DECL 1
-		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
-		#undef STD_TEMPLATE_DECL
 	#endif // STD_OPTION
 
 #endif // !defined(T) && !defined(STD_TEMPLATE_DECL) && !defined(STD_TEMPLATE_IMPL) \

@@ -88,7 +88,9 @@
 #include <C2nxt/StdAllocators.h>
 #include <C2nxt/StdBasicTypes.h>
 #include <C2nxt/StdIterator.h>
+#define STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
 #include <C2nxt/StdOption.h>
+#undef STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS
 #include <wchar.h>
 
 #ifndef STD_STRING
