@@ -83,14 +83,14 @@ static const f64 powers_of_10[NUM_POWERS_OF_10] = {
 
 always_inline static inline u8 std_get_digit_u64(u64 num, usize digit) {
 	return (digit != 0 ? (num / static_cast(u64)(powers_of_10[digit])) % 10 : // NOLINT
-						   num % 10);													  // NOLINT
+						 num % 10);											  // NOLINT
 }
 
 always_inline static inline u8 std_get_digit_i64(i64 num, usize digit) {
 	num = abs(num);
 	return static_cast(u8)(digit != 0 ?
 							   (num / static_cast(i64)(powers_of_10[digit])) % 10 : // NOLINT
-								 num % 10);											// NOLINT
+							   num % 10);											// NOLINT
 }
 
 #if STD_PLATFORM_APPLE
@@ -163,7 +163,7 @@ std_get_digit_after_decimal(f64 num, usize digit, usize num_sig_figs) {
 always_inline static inline usize std_get_num_digits_before_decimal(f64 num, i64 exponent) {
 	return narrow_cast(usize)(abs(num) < 10.0 ? // NOLINT
 								  1 :
-									exponent);
+								  exponent);
 }
 
 typedef enum StdTypesNumDecimalTextDigits {
@@ -334,7 +334,7 @@ StdString std_format_u8_with_allocator(const StdFormat* restrict self,
 			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL
 			|| specifier.m_type == STD_FORMAT_TYPE_DEBUG) ?
 			   std_format_decimal(num, NUM_DIGITS_U8, allocator) :
-				 std_format_hex(num, NUM_HEX_DIGITS_U8, specifier.m_type, allocator);
+			   std_format_hex(num, NUM_HEX_DIGITS_U8, specifier.m_type, allocator);
 }
 
 StdString std_format_u16(const StdFormat* restrict self, StdFormatSpecifier specifier) {
@@ -352,7 +352,7 @@ StdString std_format_u16_with_allocator(const StdFormat* restrict self,
 			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL
 			|| specifier.m_type == STD_FORMAT_TYPE_DEBUG) ?
 			   std_format_decimal(num, NUM_DIGITS_U16, allocator) :
-				 std_format_hex(num, NUM_HEX_DIGITS_U16, specifier.m_type, allocator);
+			   std_format_hex(num, NUM_HEX_DIGITS_U16, specifier.m_type, allocator);
 }
 
 StdString std_format_u32(const StdFormat* restrict self, StdFormatSpecifier specifier) {
@@ -370,7 +370,7 @@ StdString std_format_u32_with_allocator(const StdFormat* restrict self,
 			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL
 			|| specifier.m_type == STD_FORMAT_TYPE_DEBUG) ?
 			   std_format_decimal(num, NUM_DIGITS_U32, allocator) :
-				 std_format_hex(num, NUM_HEX_DIGITS_U32, specifier.m_type, allocator);
+			   std_format_hex(num, NUM_HEX_DIGITS_U32, specifier.m_type, allocator);
 }
 
 StdString std_format_u64(const StdFormat* restrict self, StdFormatSpecifier specifier) {
@@ -388,7 +388,7 @@ StdString std_format_u64_with_allocator(const StdFormat* restrict self,
 			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL
 			|| specifier.m_type == STD_FORMAT_TYPE_DEBUG) ?
 			   std_format_decimal(num, NUM_DIGITS_U64, allocator) :
-				 std_format_hex(num, NUM_HEX_DIGITS_U64, specifier.m_type, allocator);
+			   std_format_hex(num, NUM_HEX_DIGITS_U64, specifier.m_type, allocator);
 }
 
 StdString std_format_i8(const StdFormat* restrict self, StdFormatSpecifier specifier) {
@@ -406,7 +406,7 @@ StdString std_format_i8_with_allocator(const StdFormat* restrict self,
 			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL
 			|| specifier.m_type == STD_FORMAT_TYPE_DEBUG) ?
 			   std_format_decimal(num, NUM_DIGITS_I8, allocator) :
-				 std_format_hex(static_cast(u64)(num),
+			   std_format_hex(static_cast(u64)(num),
 							  NUM_HEX_DIGITS_I8,
 							  specifier.m_type,
 							  allocator);
@@ -427,7 +427,7 @@ StdString std_format_i16_with_allocator(const StdFormat* restrict self,
 			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL
 			|| specifier.m_type == STD_FORMAT_TYPE_DEBUG) ?
 			   std_format_decimal(num, NUM_DIGITS_I16, allocator) :
-				 std_format_hex(static_cast(u64)(num),
+			   std_format_hex(static_cast(u64)(num),
 							  NUM_HEX_DIGITS_I16,
 							  specifier.m_type,
 							  allocator);
@@ -448,7 +448,7 @@ StdString std_format_i32_with_allocator(const StdFormat* restrict self,
 			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL
 			|| specifier.m_type == STD_FORMAT_TYPE_DEBUG) ?
 			   std_format_decimal(num, NUM_DIGITS_I32, allocator) :
-				 std_format_hex(static_cast(u64)(num),
+			   std_format_hex(static_cast(u64)(num),
 							  NUM_HEX_DIGITS_I32,
 							  specifier.m_type,
 							  allocator);
@@ -469,7 +469,7 @@ StdString std_format_i64_with_allocator(const StdFormat* restrict self,
 			|| specifier.m_type == STD_FORMAT_TYPE_DECIMAL
 			|| specifier.m_type == STD_FORMAT_TYPE_DEBUG) ?
 			   std_format_decimal(num, NUM_DIGITS_I64, allocator) :
-				 std_format_hex(static_cast(u64)(num),
+			   std_format_hex(static_cast(u64)(num),
 							  NUM_HEX_DIGITS_I64,
 							  specifier.m_type,
 							  allocator);
@@ -557,7 +557,7 @@ std_format_f64_with_allocator__(f64 num, StdFormatSpecifier specifier, StdAlloca
 										 exponent,
 										 specifier.m_num_sig_figs,
 										 allocator) :
-				 std_format_f64_decimal(num, exponent, specifier.m_num_sig_figs, allocator);
+			   std_format_f64_decimal(num, exponent, specifier.m_num_sig_figs, allocator);
 }
 
 StdString std_format_f32(const StdFormat* restrict self, StdFormatSpecifier specifier) {
