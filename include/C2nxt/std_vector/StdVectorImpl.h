@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides the function definitions for a template instantiation of
 /// `StdVector(T)`
-/// @version 0.2
-/// @date 2022-01-23
+/// @version 0.2.1
+/// @date 2022-02-24
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -34,7 +34,7 @@
 
 	#include <C2nxt/StdAllocators.h>
 	#include <C2nxt/StdBasicTypes.h>
-	#include <C2nxt/StdCollectionsData.h>
+	#include <C2nxt/StdCollectionData.h>
 	#include <C2nxt/StdIterator.h>
 	#include <C2nxt/StdPlatform.h>
 	#include <C2nxt/std_vector/StdVectorDef.h>
@@ -281,7 +281,7 @@ const T* StdVectorIdentifier(T, at_const)(const StdVector(T) * restrict self, us
 			   "std_vector_at called with index >= capacity (index out of bounds");
 
 	return StdVectorIdentifier(T, is_short)(self) ? &(self->m_short[index]) :
-													  &(self->m_long[index]);
+													&(self->m_long[index]);
 }
 
 T* StdVectorIdentifier(T, at_mut)(StdVector(T) * restrict self, usize index) {
@@ -291,7 +291,7 @@ T* StdVectorIdentifier(T, at_mut)(StdVector(T) * restrict self, usize index) {
 			   "std_vector_at called with index >= capacity (index out of bounds");
 
 	return StdVectorIdentifier(T, is_short)(self) ? &(self->m_short[index]) :
-													  &(self->m_long[index]);
+													&(self->m_long[index]);
 }
 
 const T* StdVectorIdentifier(T, front_const)(const StdVector(T) * restrict self) {
