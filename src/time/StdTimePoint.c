@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief StdTimePoint provides functionality for working with specific points in time
 /// @version 0.1.1
-/// @date 2022-01-07
+/// @date 2022-02-24
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -40,7 +40,7 @@ std_time_point_new_with_clock(StdDuration time_since_epoch, const StdClock* rest
 	if(!std_ratio_equal(precision, time_since_epoch.period)) {
 		time = std_duration_cast(time_since_epoch, precision);
 	}
-	return (StdTimePoint){.time_since_epoch = time, .clock = clock};
+	return (StdTimePoint){.time_since_epoch = time, .clock = clock, trait_call(locale, *clock)};
 }
 
 StdTimePoint std_time_point_new_with_clock_and_locale(StdDuration time_since_epoch,

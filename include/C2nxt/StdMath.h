@@ -1,8 +1,8 @@
 /// @file StdMath.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module extends `<tgmath.h>` and provides some alternative math functions.
-/// @version 0.1
-/// @date 2022-01-02
+/// @version 0.1.1
+/// @date 2022-02-24
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -35,7 +35,7 @@
 #include <C2nxt/math/__StdStaticCheckedMul.h>
 #include <C2nxt/math/__StdStaticCheckedSub.h>
 #include <C2nxt/math/__StdStaticGCD.h>
-#include <tgmath.h>
+#include <math.h>
 
 /// @defgroup math Math
 /// C2nxt provides some extensions to the C99 type-generic math library and will in the future also
@@ -60,6 +60,10 @@
 			let UNIQUE_VAR(_y) = y;                                            \
 			UNIQUE_VAR(_x) < UNIQUE_VAR(_y) ? UNIQUE_VAR(_x) : UNIQUE_VAR(_y); \
 		})
+
+	#if STD_PLATFORM_WINDOWS
+_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefined\"")
+	#endif
 
 	/// @brief Returns the minimum of the two arguments
 	///
@@ -99,47 +103,17 @@
 	/// @ingroup math
 	#define max(x, y) std_max((x), (y))
 
-/// @def std_abs(x)
-/// @brief Returns the absolute value of the given one
-///
-/// @param x - The value to get the absolute value of
-///
-/// @return the absolute value of `x`
-/// @ingroup math
+	#if STD_PLATFORM_WINDOWS
+	_Pragma("GCC diagnostic pop")
+	#endif
 
-	#if STD_PLATFORM_APPLE
-	// clang-format off
-
-	#define std_abs(x) _Generic((x), 										\
-			u8		:	(x),												\
-			u16		:	(x),												\
-			u32		:	(x),												\
-			u64		:	(x),												\
-			usize	:	(x),												\
-			i8		: 	static_cast(i8)((abs)(static_cast(i32)(x))),			\
-			i16		:	static_cast(i16)((abs)(static_cast(i32)(x))),			\
-			i32		:	static_cast(i32)((abs)(static_cast(i32)(x))),			\
-			i64		: 	static_cast(i64)(llabs(static_cast(i64)(x))),		\
-			isize	: 	static_cast(isize)(llabs(static_cast(isize)(x))),	\
-			f32		:	fabsf(static_cast(f32)(x)),							\
-			f64		:	fabs(static_cast(f64)(x)))
-	// clang-format on
-	#else
-	// clang-format off
-
-		#define std_abs(x) _Generic((x), 										\
-				u8		:	(x),												\
-				u16		:	(x),												\
-				u32		:	(x),												\
-				u64		:	(x),												\
-				i8		: 	static_cast(i8)((abs)(static_cast(i32)(x))),			\
-				i16		:	static_cast(i16)((abs)(static_cast(i32)(x))),			\
-				i32		:	static_cast(i32)((abs)(static_cast(i32)(x))),			\
-				i64		: 	static_cast(i64)(llabs(static_cast(i64)(x))),		\
-				f32		:	fabsf(static_cast(f32)(x)),							\
-				f64		:	fabs(static_cast(f64)(x)))
-	// clang-format on
-	#endif // STD_PLATFORM_APPLE
+	/// @brief Returns the absolute value of the given one
+	///
+	/// @param x - The value to get the absolute value of
+	///
+	/// @return the absolute value of `x`
+	/// @ingroup math
+	#define std_abs(x) __std_static_abs(x)
 
 	/// @brief Returns the absolute value of the given one
 	///
@@ -173,13 +147,13 @@
 	/// @ingroup math
 	#define std_sign(x) std_static_sign(x)
 
-/// @brief Calculate the gcd of the two inputs
-///
-/// @param left - One of the pair of numbers to get the gcd of
-/// @param right - One of the pair of numbers to get the gcd of
-///
-/// @return The gcd of the pair of numbers
-i64 std_gcd_i64(i64 left, i64 right);
+	/// @brief Calculate the gcd of the two inputs
+	///
+	/// @param left - One of the pair of numbers to get the gcd of
+	/// @param right - One of the pair of numbers to get the gcd of
+	///
+	/// @return The gcd of the pair of numbers
+	i64 std_gcd_i64(i64 left, i64 right);
 /// @brief Calculate the gcd of the two inputs
 ///
 /// @param left - One of the pair of numbers to get the gcd of

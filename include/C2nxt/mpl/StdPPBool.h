@@ -59,6 +59,7 @@
 	#define IF_ELSE_0(true_case, false_case) false_case
 	/// @brief Implements true case evaluation for `IF_ELSE`
 	#define IF_ELSE_1(true_case, false_case) true_case
+
 	/// @brief Macro for performing and if conditional branch in the preprocessor
 	/// Evaluates condition, and if it is `TRUE`, preprocessing resolves to the token string
 	/// `true_case`. Otherwise, processing resolves to no tokens
@@ -68,7 +69,7 @@
 	/// @ingroup std_pp_bool
 	#define IF(condition, true_case) IF_IMPL(condition)(true_case)
 	/// @brief Implements conditional evaluation for `IF`
-	#define IF_IMPL(condition) CONCAT2(IF_, condition)
+	#define IF_IMPL(condition) CONCAT2_DEFERRED(IF_, condition)
 	/// @brief Implements false case evaluation for `IF`
 	#define IF_0(true_case)
 	/// @brief Implements true case evaluation for `IF`
@@ -82,9 +83,49 @@
 	/// @ingroup std_pp_bool
 	#define NOT(x) NOT_IMPL(x)
 	/// @brief Implements conditional evaluation for `NOT`
-	#define NOT_IMPL(x) CONCAT2(NOT_, x)
+	#define NOT_IMPL(x) CONCAT2_DEFERRED(NOT_, x)
 	/// @brief Implements false case evaluation for `NOT`
 	#define NOT_0 TRUE
 	/// @brief Implements true case evaluation for `NOT`
 	#define NOT_1 FALSE
+
+	/// @brief Macro for performing logical or (e.g. `||`) in the preprocessor
+	/// Evaluates `x` and `y`, and if either are `TRUE`, preprocessing resolves to `TRUE`.
+	/// Otherwise, preprocessing resolves to `FALSE`
+	/// @param x - The first boolean to evalulate. Must evaluate to `0` (`FALSE`) or `1` (`TRUE`)
+	/// in the preprocessor
+	/// @param y - The second boolean to evalulate. Must evaluate to `0` (`FALSE`) or `1` (`TRUE`)
+	/// in the preprocessor
+	/// @ingroup std_pp_bool
+	#define OR(x, y) OR_IMPL(x, y)
+	/// @brief Implements conditional evaluation for `OR`
+	#define OR_IMPL(x, y) CONCAT4(OR_IMPL_, x, _, y)
+	/// @brief Implements conditional evaluation for `OR`
+	#define OR_IMPL_0_0 FALSE
+	/// @brief Implements conditional evaluation for `OR`
+	#define OR_IMPL_0_1 TRUE
+	/// @brief Implements conditional evaluation for `OR`
+	#define OR_IMPL_1_0 TRUE
+	/// @brief Implements conditional evaluation for `OR`
+	#define OR_IMPL_1_1 TRUE
+
+	/// @brief Macro for performing logical and (e.g. `&&`) in the preprocessor
+	/// Evaluates `x` and `y`, and if both are `TRUE`, preprocessing resolves to `TRUE`.
+	/// Otherwise, preprocessing resolves to `FALSE`
+	/// @param x - The first boolean to evalulate. Must evaluate to `0` (`FALSE`) or `1` (`TRUE`)
+	/// in the preprocessor
+	/// @param y - The second boolean to evalulate. Must evaluate to `0` (`FALSE`) or `1` (`TRUE`)
+	/// in the preprocessor
+	/// @ingroup std_pp_bool
+	#define AND(x, y) AND_IMPL(x, y)
+	/// @brief Implements conditional evaluation for `AND`
+	#define AND_IMPL(x, y) CONCAT4(AND_IMPL_, x, _, y)
+	/// @brief Implements conditional evaluation for `AND`
+	#define AND_IMPL_0_0 FALSE
+	/// @brief Implements conditional evaluation for `AND`
+	#define AND_IMPL_0_1 FALSE
+	/// @brief Implements conditional evaluation for `AND`
+	#define AND_IMPL_1_0 FALSE
+	/// @brief Implements conditional evaluation for `AND`
+	#define AND_IMPL_1_1 TRUE
 #endif // STD_PP_BOOL

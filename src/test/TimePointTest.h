@@ -1,3 +1,4 @@
+#include <C2nxt/StdIO.h>
 #include <C2nxt/time/StdClock.h>
 #include <C2nxt/time/StdTimePoint.h>
 #include <unity.h>
@@ -29,6 +30,10 @@ StdRatio mock_clock_resolution_as_ratio(const maybe_unused StdClock* restrict se
 	return std_seconds_period;
 }
 
+StdTimePointLocale mock_clock_locale(const maybe_unused StdClock* restrict self) {
+	return STD_LOCAL_TIME;
+}
+
 StdString mock_clock_format_with_allocator(const maybe_unused StdClock* restrict self,
 										   StdAllocator allocator) {
 	return std_string_from_with_allocator("MockClock", allocator);
@@ -45,6 +50,7 @@ static maybe_unused ImplTraitFor(StdClock,
 								 mock_clock_max_time_point,
 								 mock_clock_resolution,
 								 mock_clock_resolution_as_ratio,
+								 mock_clock_locale,
 								 mock_clock_format,
 								 mock_clock_format_with_allocator);
 
@@ -152,5 +158,7 @@ static bool run_time_point_tests(void) {
 	RUN_TEST(test_time_point_add);
 	RUN_TEST(test_time_point_subtract);
 
+	let time = std_clock_now(&std_local_clock);
+	println("time: {}", as_format_t(StdTimePoint, time));
 	return true;
 }

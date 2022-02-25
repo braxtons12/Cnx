@@ -1,8 +1,8 @@
 /// @file StdClock.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides methods for operating with system clocks
-/// @version 0.1
-/// @date 2022-01-07
+/// @version 0.1.1
+/// @date 2022-02-24
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -173,6 +173,13 @@ Trait(StdClock,
 	  /// @return The resolution of `self` as a `StdRatio` relative to seconds
 	  /// @ingroup std_clock
 	  StdRatio(*const resolution_as_ratio)(const StdClock* restrict self);
+	  /// @brief Returns the locale associated with the given clock
+	  ///
+	  /// @param self - The `StdClock` to get the locale of
+	  ///
+	  /// @return The locale of `self`
+	  /// @ingroup std_clock
+	  StdTimePointLocale(*const locale)(const StdClock* restrict self);
 	  /// @brief Returns the text representation of the given clock
 	  ///
 	  /// @param self - The `StdClock` to get the text representation of
@@ -228,6 +235,13 @@ StdClockResolution std_clock_resolution(const StdClock* restrict self);
 /// @return The resolution of `self` as a `StdRatio` relative to seconds
 /// @ingroup std_clock
 StdRatio std_clock_resolution_as_ratio(const StdClock* restrict self);
+/// @brief Returns the locale associated with the given clock
+///
+/// @param self - The `StdClock` to get the locale of
+///
+/// @return The locale of `self`
+/// @ingroup std_clock
+StdTimePointLocale std_clock_locale(const StdClock* restrict self);
 
 /// @brief Implements the allocator un-aware portion of the `StdFormat` trait for all `StdClock`s
 ///
@@ -281,6 +295,11 @@ StdClockResolution std_system_clock_resolution(void);
 /// @return The resolution of the system clock as a `StdRatio` relative to seconds
 /// @ingroup std_clock
 StdRatio std_system_clock_resolution_as_ratio(void);
+/// @brief Returns the locale of the system clock
+///
+/// @return The locale of the system clock
+/// @ingroup std_clock
+StdTimePointLocale std_system_clock_locale(void);
 
 	#if !STD_NO_MONOTONIC_CLOCK
 /// @brief Returns a `StdTimePoint` corresponding to the current time on the steady clock
@@ -310,6 +329,11 @@ StdClockResolution std_steady_clock_resolution(void);
 /// @return The resolution of the steady clock as a `StdRatio` relative to seconds
 /// @ingroup std_clock
 StdRatio std_steady_clock_resolution_as_ratio(void);
+/// @brief Returns the locale of the steady clock
+///
+/// @return The locale of the steady clock
+/// @ingroup std_clock
+StdTimePointLocale std_steady_clock_locale(void);
 	#endif // !STD_NO_MONOTONIC_CLOCK
 
 /// @brief Returns a `StdTimePoint` corresponding to the current time on the high resolution clock
@@ -339,6 +363,11 @@ StdClockResolution std_high_resolution_clock_resolution(void);
 /// @return The resolution of the high resolution clock as a `StdRatio` relative to seconds
 /// @ingroup std_clock
 StdRatio std_high_resolution_clock_resolution_as_ratio(void);
+/// @brief Returns the locale of the high resolution clock
+///
+/// @return The locale of the high resolution clock
+/// @ingroup std_clock
+StdTimePointLocale std_high_resolution_clock_locale(void);
 
 /// @brief Returns a `StdTimePoint` corresponding to the current time on the UTC clock
 ///
@@ -367,6 +396,11 @@ StdClockResolution std_utc_clock_resolution(void);
 /// @return The resolution of the UTC clock as a `StdRatio` relative to seconds
 /// @ingroup std_clock
 StdRatio std_utc_clock_resolution_as_ratio(void);
+/// @brief Returns the locale of the UTC clock
+///
+/// @return The locale of the UTC clock
+/// @ingroup std_clock
+StdTimePointLocale std_utc_clock_locale(void);
 
 /// @brief Returns a `StdTimePoint` corresponding to the current time on the local clock
 ///
@@ -395,6 +429,11 @@ StdClockResolution std_local_clock_resolution(void);
 /// @return The resolution of the local clock as a `StdRatio` relative to seconds
 /// @ingroup std_clock
 StdRatio std_local_clock_resolution_as_ratio(void);
+/// @brief Returns the locale of the local clock
+///
+/// @return The locale of the local clock
+/// @ingroup std_clock
+StdTimePointLocale std_local_clock_locale(void);
 
 /// @brief Converts the given `StdTimePoint` in UTC time to a `StdTimePoint` in local time
 ///
@@ -418,6 +457,7 @@ StdTimePoint __std_system_clock_min_time_point(const StdClock* restrict self);
 StdTimePoint __std_system_clock_max_time_point(const StdClock* restrict self);
 StdClockResolution __std_system_clock_resolution(const StdClock* restrict self);
 StdRatio __std_system_clock_resolution_as_ratio(const StdClock* restrict self);
+StdTimePointLocale __std_system_clock_locale(const StdClock* restrict self);
 StdString __std_system_clock_format(const StdClock* restrict self);
 StdString
 __std_system_clock_format_with_allocator(const StdClock* restrict self, StdAllocator allocator);
@@ -428,6 +468,7 @@ StdTimePoint __std_steady_clock_min_time_point(const StdClock* restrict self);
 StdTimePoint __std_steady_clock_max_time_point(const StdClock* restrict self);
 StdClockResolution __std_steady_clock_resolution(const StdClock* restrict self);
 StdRatio __std_steady_clock_resolution_as_ratio(const StdClock* restrict self);
+StdTimePointLocale __std_steady_clock_locale(const StdClock* restrict self);
 StdString __std_steady_clock_format(const StdClock* restrict self);
 StdString
 __std_steady_clock_format_with_allocator(const StdClock* restrict self, StdAllocator allocator);
@@ -438,6 +479,7 @@ StdTimePoint __std_utc_clock_min_time_point(const StdClock* restrict self);
 StdTimePoint __std_utc_clock_max_time_point(const StdClock* restrict self);
 StdClockResolution __std_utc_clock_resolution(const StdClock* restrict self);
 StdRatio __std_utc_clock_resolution_as_ratio(const StdClock* restrict self);
+StdTimePointLocale __std_utc_clock_locale(const StdClock* restrict self);
 StdString __std_utc_clock_format(const StdClock* restrict self);
 StdString
 __std_utc_clock_format_with_allocator(const StdClock* restrict self, StdAllocator allocator);
@@ -447,6 +489,7 @@ StdTimePoint __std_local_clock_min_time_point(const StdClock* restrict self);
 StdTimePoint __std_local_clock_max_time_point(const StdClock* restrict self);
 StdClockResolution __std_local_clock_resolution(const StdClock* restrict self);
 StdRatio __std_local_clock_resolution_as_ratio(const StdClock* restrict self);
+StdTimePointLocale __std_local_clock_locale(const StdClock* restrict self);
 StdString __std_local_clock_format(const StdClock* restrict self);
 StdString
 __std_local_clock_format_with_allocator(const StdClock* restrict self, StdAllocator allocator);
@@ -458,6 +501,7 @@ static maybe_unused ImplTraitFor(StdClock,
 								 __std_system_clock_max_time_point,
 								 __std_system_clock_resolution,
 								 __std_system_clock_resolution_as_ratio,
+								 __std_system_clock_locale,
 								 __std_system_clock_format,
 								 __std_system_clock_format_with_allocator);
 
@@ -469,6 +513,7 @@ static maybe_unused ImplTraitFor(StdClock,
 								 __std_steady_clock_max_time_point,
 								 __std_steady_clock_resolution,
 								 __std_steady_clock_resolution_as_ratio,
+								 __std_steady_clock_locale,
 								 __std_steady_clock_format,
 								 __std_steady_clock_format_with_allocator);
 	#endif // !STD_NO_MONOTONIC_CLOCK
@@ -481,6 +526,7 @@ static maybe_unused ImplTraitFor(StdClock,
 								 __std_steady_clock_max_time_point,
 								 __std_steady_clock_resolution,
 								 __std_steady_clock_resolution_as_ratio,
+								 __std_steady_clock_locale,
 								 __std_steady_clock_format,
 								 __std_steady_clock_format_with_allocator);
 	#else
@@ -491,6 +537,7 @@ static maybe_unused ImplTraitFor(StdClock,
 								 __std_system_clock_max_time_point,
 								 __std_system_clock_resolution,
 								 __std_system_clock_resolution_as_ratio,
+								 __std_system_clock_locale,
 								 __std_system_clock_format,
 								 __std_system_clock_format_with_allocator);
 	#endif // !STD_NO_MONOTONIC_CLOCK
@@ -502,6 +549,7 @@ static maybe_unused ImplTraitFor(StdClock,
 								 __std_utc_clock_max_time_point,
 								 __std_utc_clock_resolution,
 								 __std_utc_clock_resolution_as_ratio,
+								 __std_utc_clock_locale,
 								 __std_utc_clock_format,
 								 __std_utc_clock_format_with_allocator);
 
@@ -512,10 +560,11 @@ static maybe_unused ImplTraitFor(StdClock,
 								 __std_local_clock_max_time_point,
 								 __std_local_clock_resolution,
 								 __std_local_clock_resolution_as_ratio,
+								 __std_local_clock_locale,
 								 __std_local_clock_format,
 								 __std_local_clock_format_with_allocator);
 
-typedef struct __StdSysteSteady {
+typedef struct __StdSystemClock {
 } __StdSystemClock;
 
 	#if !STD_NO_MONOTONIC_CLOCK

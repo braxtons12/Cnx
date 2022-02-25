@@ -1,8 +1,8 @@
 /// @file StdClock.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides methods for operating with system clocks
-/// @version 0.1
-/// @date 2022-01-07
+/// @version 0.1.1
+/// @date 2022-02-24
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -57,7 +57,7 @@ IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 #endif
 
 #if STD_PLATFORM_WINDOWS
-	#include <windows.h>
+	#include <Windows.h>
 
 	#if _WIN32_WINNT >= _WIN32_WINNT_WIN8
 		#include <winapifamily.h>
@@ -77,6 +77,7 @@ static inline always_inline GetSystemTimeAsFileTimePtr get_win_system_time_funct
 
 	#endif // _WIN32_WINNT < _WIN32_WINNT_WIN8
 
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
 StdTimePoint __std_system_clock_now(const StdClock* restrict self) {
 	let filetime_period = std_ratio_multiply(std_ratio(100, 1), std_nanoseconds_period);
 	// UNIX epoch starts at Jan 1 1970,
@@ -93,11 +94,11 @@ StdTimePoint __std_system_clock_now(const StdClock* restrict self) {
 	get_win_system_time_function()(&ft);
 	#endif
 
-	let duration = (StdDuration) {
-		.count = static_cast(i64)(static_cast(i64)(ft.dwHighDateTime) << 32)
-				 | static_cast(i64)(ft.dwLowDateTime),
-		.period = filetime_period;
-	}
+	let duration = (StdDuration){
+		.count = static_cast(i64)((static_cast(u64)(ft.dwHighDateTime) << static_cast(u64)(32))
+								  | static_cast(u64)(ft.dwLowDateTime)),
+		.period = filetime_period,
+	};
 	return std_time_point_new_with_clock_and_locale(
 		std_duration_subtract(std_duration_cast(duration, std_microseconds_period),
 							  nt_to_unix_epoch),
@@ -149,6 +150,10 @@ StdRatio __std_system_clock_resolution_as_ratio(const maybe_unused StdClock* res
 	return std_microseconds_period;
 }
 
+StdTimePointLocale __std_system_clock_locale(const maybe_unused StdClock* restrict self) {
+	return STD_LOCAL_TIME;
+}
+
 StdString __std_system_clock_format_with_allocator(const maybe_unused StdClock* restrict self,
 												   StdAllocator allocator) {
 	return std_string_from_with_allocator("StdClock: std_system_clock", allocator);
@@ -178,6 +183,10 @@ StdRatio std_system_clock_resolution_as_ratio(void) {
 	return __std_system_clock_resolution_as_ratio(&std_system_clock);
 }
 
+StdTimePointLocale std_system_clock_locale(void) {
+	return __std_system_clock_locale(&std_system_clock);
+}
+
 #if !STD_NO_MONOTONIC_CLOCK
 	#if STD_PLATFORM_APPLE
 StdTimePoint __std_steady_clock_now(const StdClock* restrict self) {
@@ -204,7 +213,7 @@ StdTimePoint __std_steady_clock_now(const StdClock* restrict self) {
 	ignore(QueryPerformanceCounter(&counter));
 	let seconds = counter.QuadPart / frequency.QuadPart;
 	let remainder = counter.QuadPart % frequency.QuadPart;
-	let nanoseconds = seconds * std_nanosecond_period.den
+	let nanoseconds = seconds * std_nanoseconds_period.den
 					  + remainder * std_nanoseconds_period.den / frequency.QuadPart;
 	return std_time_point_new_with_clock_and_locale(std_nanoseconds(nanoseconds),
 													self,
@@ -257,6 +266,10 @@ StdRatio __std_steady_clock_resolution_as_ratio(const maybe_unused StdClock* res
 	return std_nanoseconds_period;
 }
 
+StdTimePointLocale __std_steady_clock_locale(const maybe_unused StdClock* restrict self) {
+	return STD_UNKNOWN_TIME;
+}
+
 StdString __std_steady_clock_format_with_allocator(const maybe_unused StdClock* restrict self,
 												   StdAllocator allocator) {
 	return std_string_from_with_allocator("StdClock: std_steady_clock", allocator);
@@ -286,6 +299,10 @@ StdRatio std_steady_clock_resolution_as_ratio(void) {
 	return __std_steady_clock_resolution_as_ratio(&std_steady_clock);
 }
 
+StdTimePointLocale std_steady_clock_locale(void) {
+	return __std_steady_clock_locale(&std_steady_clock);
+}
+
 #endif // !STD_NO_MONOTONIC_CLOCK
 
 StdTimePoint std_high_resolution_clock_now(void) {
@@ -308,6 +325,10 @@ StdRatio std_high_resolution_clock_resolution_as_ratio(void) {
 	return trait_call(resolution_as_ratio, std_high_resolution_clock);
 }
 
+StdTimePointLocale std_high_resolution_clock_locale(void) {
+	return trait_call(locale, std_high_resolution_clock);
+}
+
 StdDuration local_time_gmt_offset(void) {
 	let local = std_time_point_as_time_t(trait_call(now, std_system_clock));
 	let_mut parsed = gmtime(&local);
@@ -322,9 +343,9 @@ StdDuration local_time_gmt_offset(void) {
 	return std_microseconds(seconds * std_microseconds_period.den + microseconds);
 }
 
-StdTimePoint __std_utc_clock_now(const StdClock* restrict self) {
+StdTimePoint __std_utc_clock_now(const maybe_unused StdClock* restrict self) {
 #if STD_PLATFORM_WINDOWS
-	return std_local_time_to_utc(trait_call(now, std_system_clock));
+	return std_convert_local_time_to_utc(trait_call(now, std_system_clock));
 #else
 	let_mut time = trait_call(now, std_system_clock);
 	time.clock = self;
@@ -332,9 +353,9 @@ StdTimePoint __std_utc_clock_now(const StdClock* restrict self) {
 #endif
 }
 
-StdTimePoint __std_utc_clock_min_time_point(const StdClock* restrict self) {
+StdTimePoint __std_utc_clock_min_time_point(const maybe_unused StdClock* restrict self) {
 #if STD_PLATFORM_WINDOWS
-	return std_local_time_to_utc(trait_call(min_time_point, std_system_clock));
+	return std_convert_local_time_to_utc(trait_call(min_time_point, std_system_clock));
 #else
 	let_mut time = trait_call(min_time_point, std_system_clock);
 	time.clock = self;
@@ -342,9 +363,9 @@ StdTimePoint __std_utc_clock_min_time_point(const StdClock* restrict self) {
 #endif
 }
 
-StdTimePoint __std_utc_clock_max_time_point(const StdClock* restrict self) {
+StdTimePoint __std_utc_clock_max_time_point(const maybe_unused StdClock* restrict self) {
 #if STD_PLATFORM_WINDOWS
-	return std_local_time_to_utc(trait_call(max_time_point, std_system_clock));
+	return std_convert_local_time_to_utc(trait_call(max_time_point, std_system_clock));
 #else
 	let_mut time = trait_call(max_time_point, std_system_clock);
 	time.clock = self;
@@ -358,6 +379,10 @@ StdClockResolution __std_utc_clock_resolution(const maybe_unused StdClock* restr
 
 StdRatio __std_utc_clock_resolution_as_ratio(const maybe_unused StdClock* restrict self) {
 	return trait_call(resolution_as_ratio, std_system_clock);
+}
+
+StdTimePointLocale __std_utc_clock_locale(const maybe_unused StdClock* restrict self) {
+	return STD_UTC_TIME;
 }
 
 StdString __std_utc_clock_format(const StdClock* restrict self) {
@@ -389,6 +414,10 @@ StdRatio std_utc_clock_resolution_as_ratio(void) {
 	return trait_call(resolution_as_ratio, std_utc_clock);
 }
 
+StdTimePointLocale std_utc_clock_locale(void) {
+	return trait_call(locale, std_utc_clock);
+}
+
 StdTimePoint std_convert_utc_to_local_time(StdTimePoint utc) {
 	std_assert(utc.locale == STD_UTC_TIME,
 			   "Can't convert a non-UTC time StdTimePoint to local time");
@@ -403,7 +432,7 @@ StdTimePoint std_convert_utc_to_local_time(StdTimePoint utc) {
 	else {
 		let_mut point = utc.time_since_epoch.count > 0 ?
 							trait_call(max_time_point, std_system_clock) :
-							  trait_call(min_time_point, std_system_clock);
+							trait_call(min_time_point, std_system_clock);
 		point.clock = &std_local_clock;
 		point.locale = STD_LOCAL_TIME;
 		return point;
@@ -424,7 +453,7 @@ StdTimePoint std_convert_local_time_to_utc(StdTimePoint local_time) {
 	else {
 		let_mut point = local_time.time_since_epoch.count > 0 ?
 							trait_call(max_time_point, std_system_clock) :
-							  trait_call(min_time_point, std_system_clock);
+							trait_call(min_time_point, std_system_clock);
 		point.clock = &std_local_clock;
 		point.locale = STD_UTC_TIME;
 		return point;
@@ -469,6 +498,10 @@ StdRatio __std_local_clock_resolution_as_ratio(const maybe_unused StdClock* rest
 	return trait_call(resolution_as_ratio, std_system_clock);
 }
 
+StdTimePointLocale __std_local_clock_locale(const maybe_unused StdClock* restrict self) {
+	return STD_LOCAL_TIME;
+}
+
 StdString __std_local_clock_format(const StdClock* restrict self) {
 	return __std_local_clock_format_with_allocator(self, DEFAULT_ALLOCATOR);
 }
@@ -498,6 +531,10 @@ StdRatio std_local_clock_resolution_as_ratio(void) {
 	return trait_call(resolution_as_ratio, std_local_clock);
 }
 
+StdTimePointLocale std_local_clock_locale(void) {
+	return trait_call(locale, std_local_clock);
+}
+
 StdTimePoint std_clock_now(const StdClock* restrict self) {
 	return trait_call(now, *self);
 }
@@ -516,6 +553,10 @@ StdClockResolution std_clock_resolution(const StdClock* restrict self) {
 
 StdRatio std_clock_resolution_as_ratio(const StdClock* restrict self) {
 	return trait_call(resolution_as_ratio, *self);
+}
+
+StdTimePointLocale std_clock_locale(const StdClock* restrict self) {
+	return trait_call(locale, *self);
 }
 
 StdString std_clock_format(const StdFormat* restrict self, StdFormatSpecifier specifier) {

@@ -54,7 +54,7 @@
 	///
 	/// @return `TRUE` if `x` is **NOT** a tuple, otherwise `FALSE`
 	/// @ingroup std_pp_tuple
-	#define IS_NOT_TUPLE(x) IF_ELSE(IS_TWO_TUPLES(x), TRUE, IS_NOT_TUPLE_FAST)(x)
+	#define IS_NOT_TUPLE(x) IF_ELSE(OR(IS_TWO_TUPLES(x), IS_NOT_TUPLE_FAST(x)), TRUE, FALSE)
 
 	/// @brief Expands the given tuple into a comma separated list of elements
 	/// A tuple is a token string of the form `(x, y, z, ...)` where `x`, `y`, `z`, etc. are valid

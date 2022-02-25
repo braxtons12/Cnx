@@ -93,7 +93,7 @@ typedef int32_t i32;
 /// @ingroup types
 typedef int64_t i64;
 	#if STD_PLATFORM_WINDOWS
-		#include <BaseTsd.h>
+		#include <basetsd.h>
 /// @brief `isize` is the platform-dependent type to represent a signed size. It is the signed
 /// alternative to `usize`
 /// @ingroup types

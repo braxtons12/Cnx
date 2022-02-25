@@ -101,9 +101,18 @@ void test_utc_clock(void) {
 	TEST_ASSERT_TRUE(std_clock_resolution(&std_utc_clock) == STD_CLOCK_MICROSECONDS);
 	TEST_ASSERT_TRUE(
 		std_ratio_equal(std_clock_resolution_as_ratio(&std_utc_clock), std_microseconds_period));
+#if STD_PLATFORM_WINDOWS
+	// Windows uses local time, so the minimum time point is actually
+	// the minimum system time point converted to UTC locale
+	let_mut point = std_time_point_new_with_clock(std_microseconds(min_val), &std_system_clock);
+	point.clock = &std_utc_clock;
+	TEST_ASSERT_TRUE(std_time_point_equal(std_clock_min_time_point(&std_utc_clock),
+										  std_convert_local_time_to_utc(point)));
+#else
 	TEST_ASSERT_TRUE(std_time_point_equal(
 		std_clock_min_time_point(&std_utc_clock),
 		std_time_point_new_with_clock(std_microseconds(min_val), &std_utc_clock)));
+#endif
 	TEST_ASSERT_TRUE(std_time_point_equal(
 		std_clock_max_time_point(&std_utc_clock),
 		std_time_point_new_with_clock(std_microseconds(max_val), &std_utc_clock)));

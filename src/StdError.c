@@ -26,7 +26,7 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#if defined(_MSC_VER) || defined(_WIN32) || defined(_WIN64)
+#if(defined(_MSC_VER) || defined(_WIN32) || defined(_WIN64)) && !defined(_CRT_SECURE_NO_WARNINGS)
 	// NOLINTNEXTLINE
 	#define _CRT_SECURE_NO_WARNINGS
 #endif
@@ -89,10 +89,6 @@ StdString std_error_format_with_allocator(const StdFormat* restrict self,
 			message);
 	}
 	else {
-		return std_format_with_allocator(
-			"Error {x}: {}",
-			allocator,
-			_self->m_error_code,
-			message);
+		return std_format_with_allocator("Error {x}: {}", allocator, _self->m_error_code, message);
 	}
 }

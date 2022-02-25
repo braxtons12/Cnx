@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module extends `<tgmath.h>` and provides some alternative math functions.
 /// @version 0.1.1
-/// @date 2022-01-07
+/// @date 2022-02-24
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -98,6 +98,7 @@ StdOption(i64) std_checked_add_i64(i64 left, i64 right) {
 	}
 }
 
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
 StdOption(f32) std_checked_add_f32(f32 left, f32 right) {
 	StdOption(f32) res;
 	if(right >= 0) {
@@ -117,6 +118,7 @@ StdOption(f32) std_checked_add_f32(f32 left, f32 right) {
 	}
 }
 
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
 StdOption(f64) std_checked_add_f64(f64 left, f64 right) {
 	StdOption(f64) res;
 	if(right >= 0) {
@@ -276,6 +278,7 @@ StdOption(i64) std_checked_mul_i64(i64 left, i64 right) {
 	}
 }
 
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
 StdOption(f32) std_checked_mul_f32(f32 left, f32 right) {
 	StdOption(f32) res;
 	if(std_max_value(f32) / left > right && std_min_value(f32) / left < right) {
@@ -294,6 +297,7 @@ StdOption(f32) std_checked_mul_f32(f32 left, f32 right) {
 	}
 }
 
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
 StdOption(f64) std_checked_mul_f64(f64 left, f64 right) {
 	StdOption(f64) res;
 	if(std_max_value(f64) / left > right && std_min_value(f64) / left < right) {

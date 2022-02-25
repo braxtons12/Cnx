@@ -150,7 +150,7 @@
 #define COMMA(...) ,
 /// @brief Determines if the list of arguments contains a comma (contains more than one element)
 /// @ingroup std_arg_lists
-#define CONTAINS_COMMA(...) X_AS_COMMA(__VA_ARGS__, COMMA(), ~)
+#define CONTAINS_COMMA(...) X_AS_COMMA(__VA_ARGS__, COMMA() ~)
 /// @brief Determines if the list of arguments contains a comma (contains more than one element)
 #define X_AS_COMMA(_head, x, ...) CONTAINS_COMMA_RESULT(x, FALSE, TRUE, ~)
 /// @brief Determines if the list of arguments contains a comma (contains more than one element)
