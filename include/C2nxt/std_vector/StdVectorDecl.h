@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides the type and function declarations for a template instantiation of
 /// `StdVector(T)`
-/// @version 0.2
-/// @date 2022-01-23
+/// @version 0.2.1
+/// @date 2022-02-24
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -29,7 +29,7 @@
 #if defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_DECL
 
 	#define CollectionType StdVector(T)
-	#include <C2nxt/StdCollectionsData.h>
+	#include <C2nxt/StdCollectionData.h>
 	#undef CollectionType
 
 	#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS TRUE

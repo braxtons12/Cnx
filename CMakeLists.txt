@@ -24,7 +24,7 @@ set(EXPORTS
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdArray.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdAssert.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdBasicTypes.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdCollectionsData.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdCollectionData.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdDef.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdError.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdFormat.h"
@@ -112,6 +112,7 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
             -Werror
             )
     target_compile_options(C2nxt PUBLIC
+            -fdebug-macro
             -Wno-unused-value
             -Wno-unused-function
             -Wno-extra-semi
@@ -138,7 +139,16 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
             -Wno-gcc-compat
             -Wno-int-to-pointer-cast
             -Wno-c++-compat
-            -Wno-extra-semi-stmt)
+            -Wno-extra-semi-stmt
+            -Wno-declaration-after-statement)
+    if (WIN32)
+        target_compile_options(C2nxt PUBLIC
+                -D_CRT_SECURE_NO_WARNINGS
+                )
+        target_compile_options(unity PRIVATE
+                -Wno-missing-noreturn
+                )
+    endif ()
 else ()
     target_compile_options(Test PRIVATE
             -std=gnu11
@@ -179,7 +189,7 @@ endif ()
 
 if (APPLE)
     target_link_libraries(C2nxt PUBLIC m c)
-else ()
+elseif(NOT WIN32)
     target_link_libraries(C2nxt PUBLIC m)
 endif ()
 

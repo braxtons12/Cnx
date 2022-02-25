@@ -199,7 +199,7 @@
 
 #include <C2nxt/StdAllocators.h>
 #include <C2nxt/StdBasicTypes.h>
-#include <C2nxt/StdCollectionsData.h>
+#include <C2nxt/StdCollectionData.h>
 #include <C2nxt/StdFormat.h>
 #include <C2nxt/StdIterator.h>
 #include <C2nxt/StdMath.h>
