@@ -1,8 +1,8 @@
 /// @file StdString.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides string and stringview types comparable to C++ for C2nxt
-/// @version 0.2
-/// @date 2022-01-23
+/// @version 0.2.01
+/// @date 2022-02-24
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
