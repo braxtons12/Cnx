@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides the function declarations and type definitions for a template
 /// instantiation of `StdOption(T)`
-/// @version 0.2
-/// @date 2022-01-23
+/// @version 0.2.1
+/// @date 2022-03-05
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -96,6 +96,26 @@ T StdOptionIdentifier(T, unwrap_or_else)(StdOption(T) * restrict self,
 /// with the custom panic message `panic_message`
 T StdOptionIdentifier(T, expect)(StdOption(T) * restrict self, restrict const_cstring panic_mesage);
 
+/// @brief Returns `self` if it is `Some`, otherwise returns `option_b`
+///
+/// @param self - The `StdOption(T)` to "or" with `option_b`.
+/// @param option_b - another `StdOption` to "or" with `self`.
+///
+/// @return `self` if is is `Some` Otherwise, `option_b`.
+/// @ingroup std_option
+StdOption(T) StdOptionIdentifier(T, or)(const StdOption(T) * restrict self, StdOption(T) option_b);
+
+/// @brief Returns `self` if it is `Some`, otherwise returns the result of
+/// calling `func`
+///
+/// @param self - The `StdOption(T)`.
+/// @param func - The function to call if `self` is `None`.
+///
+/// @return `self` if is is `Some` Otherwise, `option_b`.
+/// @ingroup std_option
+StdOption(T) StdOptionIdentifier(T, or_else)(const StdOption(T) * restrict self,
+											 StdOption(T) (*const func)(void));
+
 /// @brief Converts this `StdOption` to a `bool`
 /// Returns `true` if `self` is `Some`, `false` if it is `None`
 /// @param self - The `StdOption` to get the stored value from
@@ -113,6 +133,9 @@ typedef struct StdOptionIdentifier(T, vtable) {
 	(StdOption(T)* restrict self, T(*default_generator)(void));
 	T(*const expect)
 	(StdOption(T)* restrict self, restrict const_cstring panic_message);
+	StdOption(T) (*const _or)(const StdOption(T)* restrict self, StdOption(T) option_b);
+	StdOption(T) (*const or_else)(const StdOption(T)* restrict self,
+								  StdOption(T) (*const func)(void));
 	bool (*const as_bool)(const StdOption(T)* restrict self);
 }
 StdOptionIdentifier(T, vtable);
@@ -127,7 +150,9 @@ static const StdOptionIdentifier(T, vtable) StdOptionIdentifier(T, vtable_impl)
 	   .unwrap_or = StdOptionIdentifier(T, unwrap_or),
 	   .unwrap_or_else = StdOptionIdentifier(T, unwrap_or_else),
 	   .expect = StdOptionIdentifier(T, expect),
+	   ._or = StdOptionIdentifier(T, or),
+	   .or_else = StdOptionIdentifier(T, or_else),
 	   .as_bool = StdOptionIdentifier(T, as_bool)};
 
-#undef STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+	#undef STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 #endif // defined(T) && STD_TEMPLATE_DECL

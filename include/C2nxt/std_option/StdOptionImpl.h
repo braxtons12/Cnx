@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides the function definitions for a template instantiation of
 /// `StdOption(T)`
-/// @version 0.2
-/// @date 2022-01-23
+/// @version 0.2.1
+/// @date 2022-03-05
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -92,6 +92,25 @@ T StdOptionIdentifier(T, expect)(StdOption(T) * restrict self,
 	}
 
 	return extract_variant(*self, Some)._1;
+}
+
+StdOption(T) StdOptionIdentifier(T, or)(const StdOption(T) * restrict self, StdOption(T) option_b) {
+	if(std_option_is_some(*self)) {
+		return *self;
+	}
+	else {
+		return option_b;
+	}
+}
+
+StdOption(T) StdOptionIdentifier(T, or_else)(const StdOption(T) * restrict self,
+											 StdOption(T) (*const func)(void)) {
+	if(std_option_is_some(*self)) {
+		return *self;
+	}
+	else {
+		return func();
+	}
 }
 
 bool StdOptionIdentifier(T, as_bool)(const StdOption(T) * restrict self) {
