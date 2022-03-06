@@ -56,7 +56,7 @@ void eprint_(const_cstring restrict format_string, StdAllocator allocator, usize
 	va_start(list, num_args);
 	let_mut std_string_scoped string
 		= std_vformat_with_allocator(format_string, allocator, num_args, list);
-	fputs(std_string_into_cstring(string), stderr);
+	ignore(fputs(std_string_into_cstring(string), stderr));
 	va_end(list);
 }
 
@@ -69,7 +69,7 @@ void fprint_(FILE* file,
 	va_start(list, num_args);
 	let_mut std_string_scoped string
 		= std_vformat_with_allocator(format_string, allocator, num_args, list);
-	fputs(std_string_into_cstring(string), file);
+	ignore(fputs(std_string_into_cstring(string), file));
 	va_end(list);
 }
 
@@ -87,8 +87,8 @@ void eprintln_(const_cstring restrict format_string, StdAllocator allocator, usi
 	va_start(list, num_args);
 	let_mut std_string_scoped string
 		= std_vformat_with_allocator(format_string, allocator, num_args, list);
-	fputs(std_string_into_cstring(string), stderr);
-	putc('\n', stderr);
+	ignore(fputs(std_string_into_cstring(string), stderr));
+	ignore(putc('\n', stderr));
 	va_end(list);
 }
 
@@ -101,8 +101,8 @@ void fprintln_(FILE* file,
 	va_start(list, num_args);
 	let_mut std_string_scoped string
 		= std_vformat_with_allocator(format_string, allocator, num_args, list);
-	fputs(std_string_into_cstring(string), file);
-	putc('\n', file);
+	ignore(fputs(std_string_into_cstring(string), file));
+	ignore(putc('\n', file));
 #ifdef STD_FPRINTLN_FLUSHES
 	fflush(file);
 #endif // STD_FPRINTLN_FLUSHES

@@ -63,7 +63,7 @@ StdMemory std_allocator_allocate(StdAllocator allocator, usize size_bytes) {
 	}
 	else {
 #if STD_ALLOCATOR_ABORT_ON_ALLOCATION_FAILURE == 1
-		fprintf(stderr, "Failed to allocate %zu bytes of memory, aborting\n", size_bytes);
+		ignore(fprintf(stderr, "Failed to allocate %zu bytes of memory, aborting\n", size_bytes));
 		abort();
 #else
 		return (StdMemory){.m_memory = nullptr, .m_size_bytes = 0};
@@ -93,9 +93,9 @@ StdMemory std_allocator_reallocate(StdAllocator allocator, StdMemory memory, usi
 		}
 
 #if STD_ALLOCATOR_ABORT_ON_ALLOCATION_FAILURE
-		fprintf(stderr,
+		ignore(fprintf(stderr,
 				"Failed to allocate " STD_OFORMAT_USIZE " bytes of memory, aborting\n",
-				new_size_bytes);
+				new_size_bytes));
 		abort();
 #else
 		return memory;

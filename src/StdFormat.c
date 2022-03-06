@@ -83,7 +83,7 @@ static const f64 powers_of_10[NUM_POWERS_OF_10] = {
 
 always_inline static inline u8 std_get_digit_u64(u64 num, usize digit) {
 	return (digit != 0 ? (num / static_cast(u64)(powers_of_10[digit])) % 10 : // NOLINT
-						 num % 10);											  // NOLINT
+						 num % 10);													  // NOLINT
 }
 
 always_inline static inline u8 std_get_digit_i64(i64 num, usize digit) {
