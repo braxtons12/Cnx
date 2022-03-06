@@ -12,7 +12,11 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wnonportable-i
 
 #include <C2nxt/StdFormat.h>
 #include <C2nxt/StdRange.h>
+
+#define STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
 #include <C2nxt/StdVector.h>
+#undef STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS
+
 #include <unity.h>
 
 #define SHORT_OPT_CAPACITY static_cast(usize)(STD_VECTOR_DEFAULT_SHORT_OPT_CAPACITY)
