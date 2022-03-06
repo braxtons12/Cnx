@@ -3,7 +3,7 @@
 /// @brief StdEnum provides macros for declaring algebraic datatypes called algebraic `Enum`s,
 /// similar to Rust's `Enum`, and pattern matching on their variants.
 /// @version 0.2
-/// @date 2022-01-23
+/// @date 2022-03-05
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -167,14 +167,16 @@
 	/// @param Type - The name for the `Enum`
 	/// @param ... - The list of variant tuples and additional members
 	/// @ingroup std_enum
-	#define Enum(Type, ...)                                                      \
-		typedef enum { ___ENUM_GET_TYPE_NAMES(__VA_ARGS__) } CONCAT2(Type, Tag); \
-		typedef struct Type {                                                    \
-			CONCAT2(Type, Tag) tag;                                              \
-			union {                                                              \
-				___ENUM_DEFINE_STRUCTS(__VA_ARGS__)                              \
-			};                                                                   \
-			___ENUM_DEFINE_MEMBERS(__VA_ARGS__)                                  \
+	#define Enum(Type, ...)                         \
+		typedef enum {                              \
+			___ENUM_GET_TYPE_NAMES(__VA_ARGS__)     \
+		} CONCAT2(Type, Tag);                       \
+		typedef struct Type {                       \
+			CONCAT2(Type, Tag) tag;                 \
+			union {                                 \
+				___ENUM_DEFINE_STRUCTS(__VA_ARGS__) \
+			};                                      \
+			___ENUM_DEFINE_MEMBERS(__VA_ARGS__)     \
 		} Type;
 
 	/// @brief Declares and defines an `Enum`, `Type`, using an existing C-style `enum`, `TagType`,
