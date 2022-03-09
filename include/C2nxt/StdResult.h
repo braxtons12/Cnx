@@ -58,7 +58,7 @@
 /// 	}
 /// }
 ///
-/// static const maybe_unused StdErrorCategory example_error_category
+/// [[maybe_unused]] static const StdErrorCategory example_error_category
 /// 	= {.m_message_function = example_error_message_function};
 ///
 /// StdResult(u32) operation_that_can_fail(u32 important, u32 right) {
@@ -224,10 +224,10 @@
 																StdFormatSpecifier specifier,   \
 																StdAllocator allocator);        \
                                                                                                 \
-		static maybe_unused ImplTraitFor(StdFormat,                                             \
-										 StdResult(T),                                          \
-										 StdResultIdentifier(T, format),                        \
-										 StdResultIdentifier(T, format_with_allocator));
+		[[maybe_unused]] static ImplTraitFor(StdFormat,                                         \
+											 StdResult(T),                                      \
+											 StdResultIdentifier(T, format),                    \
+											 StdResultIdentifier(T, format_with_allocator));
 
 	/// @brief Creates a `StdResult(T)` holding the given value
 	///
@@ -491,7 +491,7 @@
                                                                                                 \
 		StdString StdResultIdentifier(T, format_with_allocator)(                                \
 			const StdFormat* restrict self,                                                     \
-			StdFormatSpecifier maybe_unused specifier,                                          \
+			[[maybe_unused]] StdFormatSpecifier specifier,                                      \
 			StdAllocator allocator) {                                                           \
                                                                                                 \
 			std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT                              \

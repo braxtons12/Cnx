@@ -13,7 +13,7 @@ LambdaFunction(StdCompare, lambda_function, const StdString* restrict string) {
 }
 
 StdCompare lambda_receiver(LambdaCmpStr lambda) {
-	let_mut std_string_scoped string = std_string_from("Test2");
+	std_string_scoped string = std_string_from("Test2");
 
 	let ret = lambda_call(lambda, &string);
 	lambda_free(lambda);
@@ -21,13 +21,13 @@ StdCompare lambda_receiver(LambdaCmpStr lambda) {
 }
 
 StdCompare lambda_caller1(void) {
-	let_mut std_string_scoped string = std_string_from("Test1");
+	std_string_scoped string = std_string_from("Test1");
 	let lambda = lambda(lambda_function, &string);
 	return lambda_receiver(lambda_cast(lambda, LambdaCmpStr));
 }
 
 StdCompare lambda_caller2(void) {
-	let_mut std_string_scoped string = std_string_from("Test2");
+	std_string_scoped string = std_string_from("Test2");
 	let lambda = lambda(lambda_function, &string);
 	return lambda_receiver(lambda_cast(lambda, LambdaCmpStr));
 }

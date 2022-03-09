@@ -3,7 +3,7 @@
 /// @brief This module provides the function definitions for a template instantiation of
 /// `StdVector(T)`
 /// @version 0.2.1
-/// @date 2022-02-24
+/// @date 2022-03-06
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -114,18 +114,19 @@ ImplIntoStdRandomAccessIterator(StdVector(T),
 								StdVectorIdentifier(T, iterator_ccurrent),
 								StdVectorIdentifier(T, iterator_cequals));
 
-always_inline static inline T StdVectorIdentifier(T, default_constructor)(StdAllocator allocator) {
+[[always_inline]] static inline T
+StdVectorIdentifier(T, default_constructor)(StdAllocator allocator) {
 	ignore(allocator);
 	return (T){0};
 }
 
-always_inline static inline T
+[[always_inline]] static inline T
 StdVectorIdentifier(T, default_copy_constructor)(const T* restrict elem, StdAllocator allocator) {
 	ignore(allocator);
 	return *elem;
 }
 
-always_inline static inline void StdVectorIdentifier(T, default_destructor)(
+[[always_inline]] static inline void StdVectorIdentifier(T, default_destructor)(
 	T* restrict element, /** NOLINT(readability-non-const-parameter)**/
 	StdAllocator allocator) {
 	ignore(allocator, element);
@@ -174,7 +175,7 @@ static const struct StdCollectionData(StdVector(T)) StdVectorIdentifier(T, defau
 	   .m_copy_constructor = StdVectorIdentifier(T, default_copy_constructor),
 	   .m_destructor = StdVectorIdentifier(T, default_destructor)};
 
-always_inline static inline bool
+[[always_inline]] static inline bool
 StdVectorIdentifier(T, is_short)(const StdVector(T) * restrict self) {
 	return self->m_capacity <= SMALL_OPT_CAPACITY;
 }
@@ -377,9 +378,8 @@ void StdVectorIdentifier(T, resize_internal)(StdVector(T) * restrict self, usize
 	}
 }
 
-static inline always_inline usize StdVectorIdentifier(T,
-													  get_expanded_capacity)(usize old_capacity,
-																			 usize num_increments) {
+[[always_inline]] static inline usize
+StdVectorIdentifier(T, get_expanded_capacity)(usize old_capacity, usize num_increments) {
 	return num_increments * ((old_capacity * 3) / 2);
 }
 

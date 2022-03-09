@@ -265,8 +265,10 @@ StdString std_clock_format_with_allocator(const StdFormat* restrict self,
 
 /// @brief Implements the `StdFormat` trait for `StdClock`
 /// @ingroup std_clock
-static maybe_unused
-	ImplTraitFor(StdFormat, StdClock, std_clock_format, std_clock_format_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdFormat,
+									 StdClock,
+									 std_clock_format,
+									 std_clock_format_with_allocator);
 
 /// @brief Returns a `StdTimePoint` corresponding to the current time on the system clock
 ///
@@ -494,75 +496,75 @@ StdString __std_local_clock_format(const StdClock* restrict self);
 StdString
 __std_local_clock_format_with_allocator(const StdClock* restrict self, StdAllocator allocator);
 
-static maybe_unused ImplTraitFor(StdClock,
-								 __StdSystemClock,
-								 __std_system_clock_now,
-								 __std_system_clock_min_time_point,
-								 __std_system_clock_max_time_point,
-								 __std_system_clock_resolution,
-								 __std_system_clock_resolution_as_ratio,
-								 __std_system_clock_locale,
-								 __std_system_clock_format,
-								 __std_system_clock_format_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdClock,
+									 __StdSystemClock,
+									 __std_system_clock_now,
+									 __std_system_clock_min_time_point,
+									 __std_system_clock_max_time_point,
+									 __std_system_clock_resolution,
+									 __std_system_clock_resolution_as_ratio,
+									 __std_system_clock_locale,
+									 __std_system_clock_format,
+									 __std_system_clock_format_with_allocator);
 
 	#if !STD_NO_MONOTONIC_CLOCK
-static maybe_unused ImplTraitFor(StdClock,
-								 __StdSteadyClock,
-								 __std_steady_clock_now,
-								 __std_steady_clock_min_time_point,
-								 __std_steady_clock_max_time_point,
-								 __std_steady_clock_resolution,
-								 __std_steady_clock_resolution_as_ratio,
-								 __std_steady_clock_locale,
-								 __std_steady_clock_format,
-								 __std_steady_clock_format_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdClock,
+									 __StdSteadyClock,
+									 __std_steady_clock_now,
+									 __std_steady_clock_min_time_point,
+									 __std_steady_clock_max_time_point,
+									 __std_steady_clock_resolution,
+									 __std_steady_clock_resolution_as_ratio,
+									 __std_steady_clock_locale,
+									 __std_steady_clock_format,
+									 __std_steady_clock_format_with_allocator);
 	#endif // !STD_NO_MONOTONIC_CLOCK
 
 	#if !STD_NO_MONOTONIC_CLOCK
-static maybe_unused ImplTraitFor(StdClock,
-								 __StdHighResolutionClock,
-								 __std_steady_clock_now,
-								 __std_steady_clock_min_time_point,
-								 __std_steady_clock_max_time_point,
-								 __std_steady_clock_resolution,
-								 __std_steady_clock_resolution_as_ratio,
-								 __std_steady_clock_locale,
-								 __std_steady_clock_format,
-								 __std_steady_clock_format_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdClock,
+									 __StdHighResolutionClock,
+									 __std_steady_clock_now,
+									 __std_steady_clock_min_time_point,
+									 __std_steady_clock_max_time_point,
+									 __std_steady_clock_resolution,
+									 __std_steady_clock_resolution_as_ratio,
+									 __std_steady_clock_locale,
+									 __std_steady_clock_format,
+									 __std_steady_clock_format_with_allocator);
 	#else
-static maybe_unused ImplTraitFor(StdClock,
-								 __StdHighResolutionClock,
-								 __std_system_clock_now,
-								 __std_system_clock_min_time_point,
-								 __std_system_clock_max_time_point,
-								 __std_system_clock_resolution,
-								 __std_system_clock_resolution_as_ratio,
-								 __std_system_clock_locale,
-								 __std_system_clock_format,
-								 __std_system_clock_format_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdClock,
+									 __StdHighResolutionClock,
+									 __std_system_clock_now,
+									 __std_system_clock_min_time_point,
+									 __std_system_clock_max_time_point,
+									 __std_system_clock_resolution,
+									 __std_system_clock_resolution_as_ratio,
+									 __std_system_clock_locale,
+									 __std_system_clock_format,
+									 __std_system_clock_format_with_allocator);
 	#endif // !STD_NO_MONOTONIC_CLOCK
 
-static maybe_unused ImplTraitFor(StdClock,
-								 __StdUTCClock,
-								 __std_utc_clock_now,
-								 __std_utc_clock_min_time_point,
-								 __std_utc_clock_max_time_point,
-								 __std_utc_clock_resolution,
-								 __std_utc_clock_resolution_as_ratio,
-								 __std_utc_clock_locale,
-								 __std_utc_clock_format,
-								 __std_utc_clock_format_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdClock,
+									 __StdUTCClock,
+									 __std_utc_clock_now,
+									 __std_utc_clock_min_time_point,
+									 __std_utc_clock_max_time_point,
+									 __std_utc_clock_resolution,
+									 __std_utc_clock_resolution_as_ratio,
+									 __std_utc_clock_locale,
+									 __std_utc_clock_format,
+									 __std_utc_clock_format_with_allocator);
 
-static maybe_unused ImplTraitFor(StdClock,
-								 __StdLocalClock,
-								 __std_local_clock_now,
-								 __std_local_clock_min_time_point,
-								 __std_local_clock_max_time_point,
-								 __std_local_clock_resolution,
-								 __std_local_clock_resolution_as_ratio,
-								 __std_local_clock_locale,
-								 __std_local_clock_format,
-								 __std_local_clock_format_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdClock,
+									 __StdLocalClock,
+									 __std_local_clock_now,
+									 __std_local_clock_min_time_point,
+									 __std_local_clock_max_time_point,
+									 __std_local_clock_resolution,
+									 __std_local_clock_resolution_as_ratio,
+									 __std_local_clock_locale,
+									 __std_local_clock_format,
+									 __std_local_clock_format_with_allocator);
 
 typedef struct __StdSystemClock {
 } __StdSystemClock;
@@ -584,24 +586,19 @@ typedef struct __StdLocalClock {
 } __StdLocalClock;
 
 	#define __std_system_clock \
-		(__StdSystemClock) {   \
-		}
+		(__StdSystemClock) { }
 
 	#if !STD_NO_MONOTONIC_CLOCK
 		#define __std_steady_clock \
-			(__StdSteadyClock) {   \
-			}
+			(__StdSteadyClock) { }
 	#endif // !STD_NO_MONOTONIC_CLOCK
 
 	#define __std_high_resolution_clock \
-		(__StdHighResolutionClock) {    \
-		}
+		(__StdHighResolutionClock) { }
 	#define __std_utc_clock \
-		(__StdUTCClock) {   \
-		}
+		(__StdUTCClock) { }
 	#define __std_local_clock \
-		(__StdLocalClock) {   \
-		}
+		(__StdLocalClock) { }
 
 /// @brief The system clock
 /// @ingroup std_clock

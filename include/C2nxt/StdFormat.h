@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief StdFormat brings human readable string formatting, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
-/// @version 0.1.1
-/// @date 2022-01-07
+/// @version 0.2.0
+/// @date 2022-03-09
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -79,10 +79,11 @@
 /// @endcode
 ///
 /// In practice, you will probably be providing this Trait implementation in a header file, so
-/// you'll also probably want to mark it as `static` and `maybe_unused`:
+/// you'll also probably want to mark it as `static` and `[[maybe_unused]]`:
 ///
 /// @code {.c}
-/// static maybe_unused ImplTraitFor(StdFormat, your_type, your_format, your_format_with_allocator);
+/// [[maybe_unused]] static ImplTraitFor(StdFormat, your_type, your_format,
+/// your_format_with_allocator);
 /// @endcode
 ///
 /// By default, the conversion to `StdFormat` is only automatic for builtin types and some extra
@@ -136,7 +137,7 @@
 ///		return point2d_format_with_allocator(self, specifier, std_allocator_new());
 /// }
 ///
-/// static maybe_unused
+/// [[maybe_unused]] static
 /// ImplTraitFor(StdFormat, Point2D, point2d_format, point2d_format_with_allocator);
 ///
 /// void point2d_print_legacy(const Point2D* restrict self) {
@@ -210,10 +211,12 @@ typedef struct StdFormatSpecifier {
 /// @param ... - The parameter pack of arguments to be formatted
 ///
 /// @return The formatted output string
-StdString std_format_with_allocator(restrict const_cstring format_string,
-									StdAllocator allocator,
-									usize num_args,
-									...);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_with_allocator(restrict const_cstring format_string,
+						  StdAllocator allocator,
+						  usize num_args,
+						  ...)
+	std_disable_if(!format_string, "Can't format arguments with a null format_string");
 
 /// @brief Formats the various parameter pack arguments into their associated place in the given
 /// format string, using the provided allocator
@@ -225,10 +228,12 @@ StdString std_format_with_allocator(restrict const_cstring format_string,
 /// @param list - The parameter pack of arguments to be formatted
 ///
 /// @return The formatted output string
-StdString std_vformat_with_allocator(restrict const_cstring format_string,
-									 StdAllocator allocator,
-									 usize num_args,
-									 va_list list);
+[[nodiscard]] [[not_null(1)]] StdString
+std_vformat_with_allocator(restrict const_cstring format_string,
+						   StdAllocator allocator,
+						   usize num_args,
+						   va_list list)
+	std_disable_if(!format_string, "Can't format arguments with a null format_string");
 
 	/// @brief Converts the given variable into its associated `StdFormat` Trait implementation
 	///
@@ -284,7 +289,7 @@ StdString std_vformat_with_allocator(restrict const_cstring format_string,
 
 	#if STD_PLATFORM_APPLE
 		#if STD_AS_FORMAT_USES_USER_SUPPLIED_TYPES
-			// clang-format off
+		// clang-format off
 		/// @brief Converts the given variable into its associated `StdFormat` Trait implementation
 		///
 		/// There must be an implementation of `StdFormat` for the type of `x` and `x` must be an
@@ -383,7 +388,7 @@ StdString std_vformat_with_allocator(restrict const_cstring format_string,
 		#endif // STD_AS_FORMAT_USES_USER_SUPPLIED_TYPES
 	#else
 		#if STD_AS_FORMAT_USES_USER_SUPPLIED_TYPES
-			// clang-format off
+		// clang-format off
 		/// @brief Converts the given variable into its associated `StdFormat` Trait implementation
 		///
 		/// There must be an implementation of `StdFormat` for the type of `x` and `x` must be an
@@ -553,10 +558,10 @@ StdString std_vformat_with_allocator(restrict const_cstring format_string,
 /// @endcode
 ///
 /// In practice, you will probably be providing this Trait implementation in a header file,
-/// so you'll also probably want to mark it as `static` and `maybe_unused`:
+/// so you'll also probably want to mark it as `static` and `[[maybe_unused]]`:
 ///
 /// @code {.c}
-/// static maybe_unused ImplTraitFor(StdFormat, your_type, your_format, your_format_with_allocator);
+/// [[maybe_unused]] static ImplTraitFor(StdFormat, your_type, your_format, your_format_with_allocator);
 /// @endcode
 ///
 /// @ingroup format
@@ -586,10 +591,10 @@ Trait(
 /// @endcode
 ///
 /// In practice, you will probably be providing this Trait implementation in a header file,
-/// so you'll also probably want to mark it as `static` and `maybe_unused`:
+/// so you'll also probably want to mark it as `static` and `[[maybe_unused]]`:
 ///
 /// @code {.c}
-/// static maybe_unused ImplTraitFor(StdFormat, your_type, your_format, your_format_with_allocator);
+/// [[maybe_unused]] static ImplTraitFor(StdFormat, your_type, your_format, your_format_with_allocator);
 /// @endcode
 ///
 /// @ingroup format
@@ -613,118 +618,152 @@ Trait(
 										   StdAllocator allocator););
 // clang-format on
 
+	#define ___DISABLE_IF_NULL(self) \
+		std_disable_if(!(self), "The data being formatted can't be a nullptr")
 /// @brief implementation of `StdFormat.format` for the builtin `cstring`
 ///
 /// @param self - The `StdFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_cstring(const StdFormat* restrict self, StdFormatSpecifier specifier);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_cstring(const StdFormat* restrict self, StdFormatSpecifier specifier)
+	___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format` for the builtin `bool`
 ///
 /// @param self - The `StdFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_bool(const StdFormat* restrict self, StdFormatSpecifier specifier);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_bool(const StdFormat* restrict self, StdFormatSpecifier specifier)
+	___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format` for the builtin `char`
 ///
 /// @param self - The `StdFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_char(const StdFormat* restrict self, StdFormatSpecifier specifier);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_char(const StdFormat* restrict self, StdFormatSpecifier specifier)
+	___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format` for the builtin `u8`
 ///
 /// @param self - The `StdFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_u8(const StdFormat* restrict self, StdFormatSpecifier specifier);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_u8(const StdFormat* restrict self, StdFormatSpecifier specifier)
+	___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format` for the builtin `u16`
 ///
 /// @param self - The `StdFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_u16(const StdFormat* restrict self, StdFormatSpecifier specifier);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_u16(const StdFormat* restrict self, StdFormatSpecifier specifier)
+	___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format` for the builtin `u32`
 ///
 /// @param self - The `StdFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_u32(const StdFormat* restrict self, StdFormatSpecifier specifier);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_u32(const StdFormat* restrict self, StdFormatSpecifier specifier)
+	___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format` for the builtin `u64`
 ///
 /// @param self - The `StdFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_u64(const StdFormat* restrict self, StdFormatSpecifier specifier);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_u64(const StdFormat* restrict self, StdFormatSpecifier specifier)
+	___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format` for the builtin `i8`
 ///
 /// @param self - The `StdFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_i8(const StdFormat* restrict self, StdFormatSpecifier specifier);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_i8(const StdFormat* restrict self, StdFormatSpecifier specifier)
+	___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format` for the builtin `i16`
 ///
 /// @param self - The `StdFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_i16(const StdFormat* restrict self, StdFormatSpecifier specifier);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_i16(const StdFormat* restrict self, StdFormatSpecifier specifier)
+	___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format` for the builtin `i32`
 ///
 /// @param self - The `StdFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_i32(const StdFormat* restrict self, StdFormatSpecifier specifier);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_i32(const StdFormat* restrict self, StdFormatSpecifier specifier)
+	___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format` for the builtin `i64`
 ///
 /// @param self - The `StdFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_i64(const StdFormat* restrict self, StdFormatSpecifier specifier);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_i64(const StdFormat* restrict self, StdFormatSpecifier specifier)
+	___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format` for the builtin `f32`
 ///
 /// @param self - The `StdFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_f32(const StdFormat* restrict self, StdFormatSpecifier specifier);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_f32(const StdFormat* restrict self, StdFormatSpecifier specifier)
+	___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format` for the builtin `f64`
 ///
 /// @param self - The `StdFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_f64(const StdFormat* restrict self, StdFormatSpecifier specifier);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_f64(const StdFormat* restrict self, StdFormatSpecifier specifier)
+	___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format` for pointers
 ///
 /// @param self - The `StdFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_ptr(const StdFormat* restrict self, StdFormatSpecifier specifier);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_ptr(const StdFormat* restrict self, StdFormatSpecifier specifier)
+	___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format` for `StdString`
 ///
 /// @param self - The `StdFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_std_string(const StdFormat* restrict self, StdFormatSpecifier specifier);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_std_string(const StdFormat* restrict self, StdFormatSpecifier specifier)
+	___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format` for `StdStringView`
 ///
 /// @param self - The `StdFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_std_stringview(const StdFormat* restrict self, StdFormatSpecifier specifier);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_std_stringview(const StdFormat* restrict self, StdFormatSpecifier specifier)
+	___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format_with_allocator` for the builtin `cstring`
 ///
 /// @param self - The `StdFormat` object to format
@@ -732,9 +771,10 @@ StdString std_format_std_stringview(const StdFormat* restrict self, StdFormatSpe
 /// @param allocator - The `StdAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_cstring_with_allocator(const StdFormat* restrict self,
-											StdFormatSpecifier specifier,
-											StdAllocator allocator);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_cstring_with_allocator(const StdFormat* restrict self,
+								  StdFormatSpecifier specifier,
+								  StdAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format_with_allocator` for the builtin `bool`
 ///
 /// @param self - The `StdFormat` object to format
@@ -742,9 +782,10 @@ StdString std_format_cstring_with_allocator(const StdFormat* restrict self,
 /// @param allocator - The `StdAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_bool_with_allocator(const StdFormat* restrict self,
-										 StdFormatSpecifier specifier,
-										 StdAllocator allocator);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_bool_with_allocator(const StdFormat* restrict self,
+							   StdFormatSpecifier specifier,
+							   StdAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format_with_allocator` for the builtin `char`
 ///
 /// @param self - The `StdFormat` object to format
@@ -752,9 +793,10 @@ StdString std_format_bool_with_allocator(const StdFormat* restrict self,
 /// @param allocator - The `StdAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_char_with_allocator(const StdFormat* restrict self,
-										 StdFormatSpecifier specifier,
-										 StdAllocator allocator);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_char_with_allocator(const StdFormat* restrict self,
+							   StdFormatSpecifier specifier,
+							   StdAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format_with_allocator` for the builtin `u8`
 ///
 /// @param self - The `StdFormat` object to format
@@ -762,9 +804,10 @@ StdString std_format_char_with_allocator(const StdFormat* restrict self,
 /// @param allocator - The `StdAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_u8_with_allocator(const StdFormat* restrict self,
-									   StdFormatSpecifier specifier,
-									   StdAllocator allocator);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_u8_with_allocator(const StdFormat* restrict self,
+							 StdFormatSpecifier specifier,
+							 StdAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format_with_allocator` for the builtin `u16`
 ///
 /// @param self - The `StdFormat` object to format
@@ -772,9 +815,10 @@ StdString std_format_u8_with_allocator(const StdFormat* restrict self,
 /// @param allocator - The `StdAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_u16_with_allocator(const StdFormat* restrict self,
-										StdFormatSpecifier specifier,
-										StdAllocator allocator);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_u16_with_allocator(const StdFormat* restrict self,
+							  StdFormatSpecifier specifier,
+							  StdAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format_with_allocator` for the builtin `u32`
 ///
 /// @param self - The `StdFormat` object to format
@@ -782,9 +826,10 @@ StdString std_format_u16_with_allocator(const StdFormat* restrict self,
 /// @param allocator - The `StdAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_u32_with_allocator(const StdFormat* restrict self,
-										StdFormatSpecifier specifier,
-										StdAllocator allocator);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_u32_with_allocator(const StdFormat* restrict self,
+							  StdFormatSpecifier specifier,
+							  StdAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format_with_allocator` for the builtin `u64`
 ///
 /// @param self - The `StdFormat` object to format
@@ -792,9 +837,10 @@ StdString std_format_u32_with_allocator(const StdFormat* restrict self,
 /// @param allocator - The `StdAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_u64_with_allocator(const StdFormat* restrict self,
-										StdFormatSpecifier specifier,
-										StdAllocator allocator);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_u64_with_allocator(const StdFormat* restrict self,
+							  StdFormatSpecifier specifier,
+							  StdAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format_with_allocator` for the builtin `i8`
 ///
 /// @param self - The `StdFormat` object to format
@@ -802,9 +848,10 @@ StdString std_format_u64_with_allocator(const StdFormat* restrict self,
 /// @param allocator - The `StdAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_i8_with_allocator(const StdFormat* restrict self,
-									   StdFormatSpecifier specifier,
-									   StdAllocator allocator);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_i8_with_allocator(const StdFormat* restrict self,
+							 StdFormatSpecifier specifier,
+							 StdAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format_with_allocator` for the builtin `i16`
 ///
 /// @param self - The `StdFormat` object to format
@@ -812,9 +859,10 @@ StdString std_format_i8_with_allocator(const StdFormat* restrict self,
 /// @param allocator - The `StdAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_i16_with_allocator(const StdFormat* restrict self,
-										StdFormatSpecifier specifier,
-										StdAllocator allocator);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_i16_with_allocator(const StdFormat* restrict self,
+							  StdFormatSpecifier specifier,
+							  StdAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format_with_allocator` for the builtin `i32`
 ///
 /// @param self - The `StdFormat` object to format
@@ -822,9 +870,10 @@ StdString std_format_i16_with_allocator(const StdFormat* restrict self,
 /// @param allocator - The `StdAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_i32_with_allocator(const StdFormat* restrict self,
-										StdFormatSpecifier specifier,
-										StdAllocator allocator);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_i32_with_allocator(const StdFormat* restrict self,
+							  StdFormatSpecifier specifier,
+							  StdAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format_with_allocator` for the builtin `i64`
 ///
 /// @param self - The `StdFormat` object to format
@@ -832,9 +881,10 @@ StdString std_format_i32_with_allocator(const StdFormat* restrict self,
 /// @param allocator - The `StdAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_i64_with_allocator(const StdFormat* restrict self,
-										StdFormatSpecifier specifier,
-										StdAllocator allocator);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_i64_with_allocator(const StdFormat* restrict self,
+							  StdFormatSpecifier specifier,
+							  StdAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format_with_allocator` for the builtin `f32`
 ///
 /// @param self - The `StdFormat` object to format
@@ -842,9 +892,10 @@ StdString std_format_i64_with_allocator(const StdFormat* restrict self,
 /// @param allocator - The `StdAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_f32_with_allocator(const StdFormat* restrict self,
-										StdFormatSpecifier specifier,
-										StdAllocator allocator);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_f32_with_allocator(const StdFormat* restrict self,
+							  StdFormatSpecifier specifier,
+							  StdAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format_with_allocator` for the builtin `f64`
 ///
 /// @param self - The `StdFormat` object to format
@@ -852,9 +903,10 @@ StdString std_format_f32_with_allocator(const StdFormat* restrict self,
 /// @param allocator - The `StdAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_f64_with_allocator(const StdFormat* restrict self,
-										StdFormatSpecifier specifier,
-										StdAllocator allocator);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_f64_with_allocator(const StdFormat* restrict self,
+							  StdFormatSpecifier specifier,
+							  StdAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format_with_allocator` for pointers
 ///
 /// @param self - The `StdFormat` object to format
@@ -862,9 +914,10 @@ StdString std_format_f64_with_allocator(const StdFormat* restrict self,
 /// @param allocator - The `StdAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_ptr_with_allocator(const StdFormat* restrict self,
-										StdFormatSpecifier specifier,
-										StdAllocator allocator);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_ptr_with_allocator(const StdFormat* restrict self,
+							  StdFormatSpecifier specifier,
+							  StdAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format_with_allocator` for `StdString`
 ///
 /// @param self - The `StdFormat` object to format
@@ -872,9 +925,10 @@ StdString std_format_ptr_with_allocator(const StdFormat* restrict self,
 /// @param allocator - The `StdAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_std_string_with_allocator(const StdFormat* restrict self,
-											   StdFormatSpecifier specifier,
-											   StdAllocator allocator);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_std_string_with_allocator(const StdFormat* restrict self,
+									 StdFormatSpecifier specifier,
+									 StdAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `StdFormat.format_with_allocator` for `StdStringView`
 ///
 /// @param self - The `StdFormat` object to format
@@ -882,62 +936,76 @@ StdString std_format_std_string_with_allocator(const StdFormat* restrict self,
 /// @param allocator - The `StdAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-StdString std_format_std_stringview_with_allocator(const StdFormat* restrict self,
-												   StdFormatSpecifier specifier,
-												   StdAllocator allocator);
+[[nodiscard]] [[not_null(1)]] StdString
+std_format_std_stringview_with_allocator(const StdFormat* restrict self,
+										 StdFormatSpecifier specifier,
+										 StdAllocator allocator) ___DISABLE_IF_NULL(self);
 
 /// @brief implementation of `StdFormat` for the builtin `cstring`
 /// @return The `StdFormat` implementation
-static maybe_unused
-	ImplTraitFor(StdFormat, cstring, std_format_cstring, std_format_cstring_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdFormat,
+									 cstring,
+									 std_format_cstring,
+									 std_format_cstring_with_allocator);
 /// @brief implementation of `StdFormat` for the builtin `bool`
 /// @return The `StdFormat` implementation
-static maybe_unused ImplTraitFor(StdFormat, bool, std_format_bool, std_format_bool_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdFormat,
+									 bool,
+									 std_format_bool,
+									 std_format_bool_with_allocator);
 /// @brief implementation of `StdFormat` for the builtin `char`
 /// @return The `StdFormat` implementation
-static maybe_unused ImplTraitFor(StdFormat, char, std_format_char, std_format_char_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdFormat,
+									 char,
+									 std_format_char,
+									 std_format_char_with_allocator);
 /// @brief implementation of `StdFormat` for the builtin `u8`
 /// @return The `StdFormat` implementation
-static maybe_unused ImplTraitFor(StdFormat, u8, std_format_u8, std_format_u8_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdFormat, u8, std_format_u8, std_format_u8_with_allocator);
 /// @brief implementation of `StdFormat` for the builtin `u16`
 /// @return The `StdFormat` implementation
-static maybe_unused ImplTraitFor(StdFormat, u16, std_format_u16, std_format_u16_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdFormat, u16, std_format_u16, std_format_u16_with_allocator);
 /// @brief implementation of `StdFormat` for the builtin `u32`
 /// @return The `StdFormat` implementation
-static maybe_unused ImplTraitFor(StdFormat, u32, std_format_u32, std_format_u32_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdFormat, u32, std_format_u32, std_format_u32_with_allocator);
 /// @brief implementation of `StdFormat` for the builtin `u64`
 /// @return The `StdFormat` implementation
-static maybe_unused ImplTraitFor(StdFormat, u64, std_format_u64, std_format_u64_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdFormat, u64, std_format_u64, std_format_u64_with_allocator);
 /// @brief implementation of `StdFormat` for the builtin `i8`
 /// @return The `StdFormat` implementation
-static maybe_unused ImplTraitFor(StdFormat, i8, std_format_i8, std_format_i8_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdFormat, i8, std_format_i8, std_format_i8_with_allocator);
 /// @brief implementation of `StdFormat` for the builtin `i16`
 /// @return The `StdFormat` implementation
-static maybe_unused ImplTraitFor(StdFormat, i16, std_format_i16, std_format_i16_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdFormat, i16, std_format_i16, std_format_i16_with_allocator);
 /// @brief implementation of `StdFormat` for the builtin `i32`
 /// @return The `StdFormat` implementation
-static maybe_unused ImplTraitFor(StdFormat, i32, std_format_i32, std_format_i32_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdFormat, i32, std_format_i32, std_format_i32_with_allocator);
 /// @brief implementation of `StdFormat` for the builtin `i64`
 /// @return The `StdFormat` implementation
-static maybe_unused ImplTraitFor(StdFormat, i64, std_format_i64, std_format_i64_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdFormat, i64, std_format_i64, std_format_i64_with_allocator);
 /// @brief implementation of `StdFormat` for the builtin `f32`
 /// @return The `StdFormat` implementation
-static maybe_unused ImplTraitFor(StdFormat, f32, std_format_f32, std_format_f32_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdFormat, f32, std_format_f32, std_format_f32_with_allocator);
 /// @brief implementation of `StdFormat` for the builtin `f64`
 /// @return The `StdFormat` implementation
-static maybe_unused ImplTraitFor(StdFormat, f64, std_format_f64, std_format_f64_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdFormat, f64, std_format_f64, std_format_f64_with_allocator);
 /// @brief implementation of `StdFormat` for pointers
 /// @return The `StdFormat` implementation
-static maybe_unused
-	ImplTraitFor(StdFormat, nullptr_t, std_format_ptr, std_format_ptr_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdFormat,
+									 nullptr_t,
+									 std_format_ptr,
+									 std_format_ptr_with_allocator);
 /// @brief implementation of `StdFormat` for `StdString`
 /// @return The `StdFormat` implementation
-static maybe_unused
-	ImplTraitFor(StdFormat, StdString, std_format_std_string, std_format_std_string_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdFormat,
+									 StdString,
+									 std_format_std_string,
+									 std_format_std_string_with_allocator);
 /// @brief implementation of `StdFormat` for `StdStringView`
 /// @return The `StdFormat` implementation
-static maybe_unused ImplTraitFor(StdFormat,
-								 StdStringView,
-								 std_format_std_stringview,
-								 std_format_std_stringview_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdFormat,
+									 StdStringView,
+									 std_format_std_stringview,
+									 std_format_std_stringview_with_allocator);
+	#undef ___DISABLE_IF_NULL
 #endif

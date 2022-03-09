@@ -142,19 +142,19 @@ StdTimePoint __std_system_clock_max_time_point(const StdClock* restrict self) {
 		self);
 }
 
-StdClockResolution __std_system_clock_resolution(const maybe_unused StdClock* restrict self) {
+StdClockResolution __std_system_clock_resolution([[maybe_unused]] const StdClock* restrict self) {
 	return STD_CLOCK_MICROSECONDS;
 }
 
-StdRatio __std_system_clock_resolution_as_ratio(const maybe_unused StdClock* restrict self) {
+StdRatio __std_system_clock_resolution_as_ratio([[maybe_unused]] const StdClock* restrict self) {
 	return std_microseconds_period;
 }
 
-StdTimePointLocale __std_system_clock_locale(const maybe_unused StdClock* restrict self) {
+StdTimePointLocale __std_system_clock_locale([[maybe_unused]] const StdClock* restrict self) {
 	return STD_LOCAL_TIME;
 }
 
-StdString __std_system_clock_format_with_allocator(const maybe_unused StdClock* restrict self,
+StdString __std_system_clock_format_with_allocator([[maybe_unused]] const StdClock* restrict self,
 												   StdAllocator allocator) {
 	return std_string_from_with_allocator("StdClock: std_system_clock", allocator);
 }
@@ -258,19 +258,19 @@ StdTimePoint __std_steady_clock_max_time_point(const StdClock* restrict self) {
 		STD_UNKNOWN_TIME);
 }
 
-StdClockResolution __std_steady_clock_resolution(const maybe_unused StdClock* restrict self) {
+StdClockResolution __std_steady_clock_resolution([[maybe_unused]] const StdClock* restrict self) {
 	return STD_CLOCK_NANOSECONDS;
 }
 
-StdRatio __std_steady_clock_resolution_as_ratio(const maybe_unused StdClock* restrict self) {
+StdRatio __std_steady_clock_resolution_as_ratio([[maybe_unused]] const StdClock* restrict self) {
 	return std_nanoseconds_period;
 }
 
-StdTimePointLocale __std_steady_clock_locale(const maybe_unused StdClock* restrict self) {
+StdTimePointLocale __std_steady_clock_locale([[maybe_unused]] const StdClock* restrict self) {
 	return STD_UNKNOWN_TIME;
 }
 
-StdString __std_steady_clock_format_with_allocator(const maybe_unused StdClock* restrict self,
+StdString __std_steady_clock_format_with_allocator([[maybe_unused]] const StdClock* restrict self,
 												   StdAllocator allocator) {
 	return std_string_from_with_allocator("StdClock: std_steady_clock", allocator);
 }
@@ -343,7 +343,7 @@ StdDuration local_time_gmt_offset(void) {
 	return std_microseconds(seconds * std_microseconds_period.den + microseconds);
 }
 
-StdTimePoint __std_utc_clock_now(const maybe_unused StdClock* restrict self) {
+StdTimePoint __std_utc_clock_now([[maybe_unused]] const StdClock* restrict self) {
 #if STD_PLATFORM_WINDOWS
 	return std_convert_local_time_to_utc(trait_call(now, std_system_clock));
 #else
@@ -353,7 +353,7 @@ StdTimePoint __std_utc_clock_now(const maybe_unused StdClock* restrict self) {
 #endif
 }
 
-StdTimePoint __std_utc_clock_min_time_point(const maybe_unused StdClock* restrict self) {
+StdTimePoint __std_utc_clock_min_time_point([[maybe_unused]] const StdClock* restrict self) {
 #if STD_PLATFORM_WINDOWS
 	return std_convert_local_time_to_utc(trait_call(min_time_point, std_system_clock));
 #else
@@ -363,7 +363,7 @@ StdTimePoint __std_utc_clock_min_time_point(const maybe_unused StdClock* restric
 #endif
 }
 
-StdTimePoint __std_utc_clock_max_time_point(const maybe_unused StdClock* restrict self) {
+StdTimePoint __std_utc_clock_max_time_point([[maybe_unused]] const StdClock* restrict self) {
 #if STD_PLATFORM_WINDOWS
 	return std_convert_local_time_to_utc(trait_call(max_time_point, std_system_clock));
 #else
@@ -373,15 +373,15 @@ StdTimePoint __std_utc_clock_max_time_point(const maybe_unused StdClock* restric
 #endif
 }
 
-StdClockResolution __std_utc_clock_resolution(const maybe_unused StdClock* restrict self) {
+StdClockResolution __std_utc_clock_resolution([[maybe_unused]] const StdClock* restrict self) {
 	return trait_call(resolution, std_system_clock);
 }
 
-StdRatio __std_utc_clock_resolution_as_ratio(const maybe_unused StdClock* restrict self) {
+StdRatio __std_utc_clock_resolution_as_ratio([[maybe_unused]] const StdClock* restrict self) {
 	return trait_call(resolution_as_ratio, std_system_clock);
 }
 
-StdTimePointLocale __std_utc_clock_locale(const maybe_unused StdClock* restrict self) {
+StdTimePointLocale __std_utc_clock_locale([[maybe_unused]] const StdClock* restrict self) {
 	return STD_UTC_TIME;
 }
 
@@ -389,7 +389,7 @@ StdString __std_utc_clock_format(const StdClock* restrict self) {
 	return __std_utc_clock_format_with_allocator(self, DEFAULT_ALLOCATOR);
 }
 
-StdString __std_utc_clock_format_with_allocator(const maybe_unused StdClock* restrict self,
+StdString __std_utc_clock_format_with_allocator([[maybe_unused]] const StdClock* restrict self,
 												StdAllocator allocator) {
 	return std_string_from_with_allocator("StdClock: std_utc_clock", allocator);
 }
@@ -460,7 +460,7 @@ StdTimePoint std_convert_local_time_to_utc(StdTimePoint local_time) {
 	}
 }
 
-StdTimePoint __std_local_clock_now(const maybe_unused StdClock* restrict self) {
+StdTimePoint __std_local_clock_now([[maybe_unused]] const StdClock* restrict self) {
 #if STD_PLATFORM_WINDOWS
 	let_mut time = trait_call(now, std_system_clock);
 	time.clock = self;
@@ -470,7 +470,7 @@ StdTimePoint __std_local_clock_now(const maybe_unused StdClock* restrict self) {
 #endif
 }
 
-StdTimePoint __std_local_clock_min_time_point(const maybe_unused StdClock* restrict self) {
+StdTimePoint __std_local_clock_min_time_point([[maybe_unused]] const StdClock* restrict self) {
 #if STD_PLATFORM_WINDOWS
 	let_mut time = trait_call(min_time_point, std_system_clock);
 	time.clock = self;
@@ -480,7 +480,7 @@ StdTimePoint __std_local_clock_min_time_point(const maybe_unused StdClock* restr
 #endif
 }
 
-StdTimePoint __std_local_clock_max_time_point(const maybe_unused StdClock* restrict self) {
+StdTimePoint __std_local_clock_max_time_point([[maybe_unused]] const StdClock* restrict self) {
 #if STD_PLATFORM_WINDOWS
 	let_mut time = trait_call(max_time_point, std_system_clock);
 	time.clock = self;
@@ -490,15 +490,15 @@ StdTimePoint __std_local_clock_max_time_point(const maybe_unused StdClock* restr
 #endif
 }
 
-StdClockResolution __std_local_clock_resolution(const maybe_unused StdClock* restrict self) {
+StdClockResolution __std_local_clock_resolution([[maybe_unused]] const StdClock* restrict self) {
 	return trait_call(resolution, std_system_clock);
 }
 
-StdRatio __std_local_clock_resolution_as_ratio(const maybe_unused StdClock* restrict self) {
+StdRatio __std_local_clock_resolution_as_ratio([[maybe_unused]] const StdClock* restrict self) {
 	return trait_call(resolution_as_ratio, std_system_clock);
 }
 
-StdTimePointLocale __std_local_clock_locale(const maybe_unused StdClock* restrict self) {
+StdTimePointLocale __std_local_clock_locale([[maybe_unused]] const StdClock* restrict self) {
 	return STD_LOCAL_TIME;
 }
 
@@ -506,7 +506,7 @@ StdString __std_local_clock_format(const StdClock* restrict self) {
 	return __std_local_clock_format_with_allocator(self, DEFAULT_ALLOCATOR);
 }
 
-StdString __std_local_clock_format_with_allocator(const maybe_unused StdClock* restrict self,
+StdString __std_local_clock_format_with_allocator([[maybe_unused]] const StdClock* restrict self,
 												  StdAllocator allocator) {
 	return std_string_from_with_allocator("StdClock: std_local_clock", allocator);
 }
@@ -564,7 +564,7 @@ StdString std_clock_format(const StdFormat* restrict self, StdFormatSpecifier sp
 }
 
 StdString std_clock_format_with_allocator(const StdFormat* restrict self,
-										  maybe_unused StdFormatSpecifier specifier,
+										  [[maybe_unused]] StdFormatSpecifier specifier,
 										  StdAllocator allocator) {
 	std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT
 				   || specifier.m_type == STD_FORMAT_TYPE_DEBUG,

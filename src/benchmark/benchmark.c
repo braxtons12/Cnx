@@ -9,11 +9,11 @@ i32 main(i32 argc, char** argv) {
 	ignore(argc, argv);
 
 	println("beginning println vs printf benchmark");
-	let num_runs = 1000000;
+	let num_runs = 1'000'000;
 	let unum = 1024U;
 	let snum = -1024;
 	let fnum = -1024.1024;
-	let_mut std_string_scoped string = std_string_from("This is a string");
+	std_string_scoped string = std_string_from("This is a string");
 
 	let_mut average_println = 0.0;
 	let_mut average_printf = 0.0;

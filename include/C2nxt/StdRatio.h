@@ -1,8 +1,8 @@
 /// @file StdRatio.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides lossless methods for dealing with exact fractions
-/// @version 0.1
-/// @date 2022-01-02
+/// @version 0.1.1
+/// @date 2022-03-09
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -76,100 +76,68 @@ typedef struct StdRatio {
 
 	/// @brief SI "atto" as a `StdRatio`
 	/// @ingroup std_ratio
-	#define std_atto                                 \
-		(StdRatio) {                                 \
-			.num = 1LL, .den = 1000000000000000000LL \
-		}
+	#define std_atto \
+		(StdRatio) { .num = 1LL, .den = 1000000000000000000LL }
 	/// @brief SI "femto" as a `StdRatio`
 	/// @ingroup std_ratio
-	#define std_femto                             \
-		(StdRatio) {                              \
-			.num = 1LL, .den = 1000000000000000LL \
-		}
+	#define std_femto \
+		(StdRatio) { .num = 1LL, .den = 1000000000000000LL }
 	/// @brief SI "pico" as a `StdRatio`
 	/// @ingroup std_ratio
-	#define std_pico                           \
-		(StdRatio) {                           \
-			.num = 1LL, .den = 1000000000000LL \
-		}
+	#define std_pico \
+		(StdRatio) { .num = 1LL, .den = 1000000000000LL }
 	/// @brief SI "nano" as a `StdRatio`
 	/// @ingroup std_ratio
-	#define std_nano                        \
-		(StdRatio) {                        \
-			.num = 1LL, .den = 1000000000LL \
-		}
+	#define std_nano \
+		(StdRatio) { .num = 1LL, .den = 1000000000LL }
 	/// @brief SI "micro" as a `StdRatio`
 	/// @ingroup std_ratio
-	#define std_micro                    \
-		(StdRatio) {                     \
-			.num = 1LL, .den = 1000000LL \
-		}
+	#define std_micro \
+		(StdRatio) { .num = 1LL, .den = 1000000LL }
 	/// @brief SI "milli" as a `StdRatio`
 	/// @ingroup std_ratio
-	#define std_milli                 \
-		(StdRatio) {                  \
-			.num = 1LL, .den = 1000LL \
-		}
+	#define std_milli \
+		(StdRatio) { .num = 1LL, .den = 1000LL }
 	/// @brief SI "centi" as a `StdRatio`
 	/// @ingroup std_ratio
-	#define std_centi                \
-		(StdRatio) {                 \
-			.num = 1LL, .den = 100LL \
-		}
+	#define std_centi \
+		(StdRatio) { .num = 1LL, .den = 100LL }
 	/// @brief SI "deci" as a `StdRatio`
 	/// @ingroup std_ratio
-	#define std_deci                \
-		(StdRatio) {                \
-			.num = 1LL, .den = 10LL \
-		}
+	#define std_deci \
+		(StdRatio) { .num = 1LL, .den = 10LL }
 	/// @brief SI "deca" as a `StdRatio`
 	/// @ingroup std_ratio
-	#define std_deca                \
-		(StdRatio) {                \
-			.num = 10LL, .den = 1LL \
-		}
+	#define std_deca \
+		(StdRatio) { .num = 10LL, .den = 1LL }
 	/// @brief SI "hecto" as a `StdRatio`
 	/// @ingroup std_ratio
-	#define std_hecto                \
-		(StdRatio) {                 \
-			.num = 100LL, .den = 1LL \
-		}
+	#define std_hecto \
+		(StdRatio) { .num = 100LL, .den = 1LL }
 	/// @brief SI "kilo" as a `StdRatio`
 	/// @ingroup std_ratio
-	#define std_kilo                  \
-		(StdRatio) {                  \
-			.num = 1000LL, .den = 1LL \
-		}
+	#define std_kilo \
+		(StdRatio) { .num = 1000LL, .den = 1LL }
 	/// @brief SI "mega" as a `StdRatio`
 	/// @ingroup std_ratio
-	#define std_mega                     \
-		(StdRatio) {                     \
-			.num = 1000000LL, .den = 1LL \
-		}
+	#define std_mega \
+		(StdRatio) { .num = 1000000LL, .den = 1LL }
 	/// @brief SI "giga" as a `StdRatio`
 	/// @ingroup std_ratio
-	#define std_giga                        \
-		(StdRatio) {                        \
-			.num = 1000000000LL, .den = 1LL \
-		}
+	#define std_giga \
+		(StdRatio) { .num = 1000000000LL, .den = 1LL }
 	/// @brief SI "tera" as a `StdRatio`
 	/// @ingroup std_ratio
-	#define std_tera                           \
-		(StdRatio) {                           \
-			.num = 1000000000000LL, .den = 1LL \
-		}
+	#define std_tera \
+		(StdRatio) { .num = 1000000000000LL, .den = 1LL }
 	/// @brief SI "peta" as a `StdRatio`
 	/// @ingroup std_ratio
-	#define std_peta                              \
-		(StdRatio) {                              \
-			.num = 1000000000000000LL, .den = 1LL \
-		}
+	#define std_peta \
+		(StdRatio) { .num = 1000000000000000LL, .den = 1LL }
 	/// @brief SI "exa" as a `StdRatio`
 	/// @ingroup std_ratio
-	#define std_exa                                  \
-		(StdRatio) {                                 \
-			.num = 1000000000000000000LL, .den = 1LL \
-		}
+	#define std_exa \
+		(StdRatio) { .num = 1000000000000000000LL, .den = 1LL }
 
 /// @brief Constructs a `StdRatio`
 ///
@@ -180,7 +148,7 @@ typedef struct StdRatio {
 ///
 /// @return A `StdRatio` as the simplified fraction of `numerator / denominator`
 /// @ingroup std_ratio
-StdRatio std_ratio_new(i64 num, i64 den);
+[[nodiscard]] StdRatio std_ratio_new(i64 num, i64 den);
 
 /// @brief Adds the given `StdRatio`s
 ///
@@ -191,7 +159,7 @@ StdRatio std_ratio_new(i64 num, i64 den);
 ///
 /// @return The sum of `lhs` and `rhs` as a `StdRatio` in simplest form
 /// @ingroup std_ratio
-StdRatio std_ratio_add(StdRatio lhs, StdRatio rhs);
+[[nodiscard]] StdRatio std_ratio_add(StdRatio lhs, StdRatio rhs);
 /// @brief Subtracts the given `StdRatio`s
 ///
 /// Subtracts `rhs` from `lhs`, returning the result as a new `StdRatio` in simplest form
@@ -201,7 +169,7 @@ StdRatio std_ratio_add(StdRatio lhs, StdRatio rhs);
 ///
 /// @return The difference of `lhs` and `rhs` as a `StdRatio` in simplest form
 /// @ingroup std_ratio
-StdRatio std_ratio_subtract(StdRatio lhs, StdRatio rhs);
+[[nodiscard]] StdRatio std_ratio_subtract(StdRatio lhs, StdRatio rhs);
 /// @brief Multiplies the given `StdRatio`s
 ///
 /// Multiplies the given `StdRatio`s, returning the result as a new `StdRatio` in simplest form
@@ -211,7 +179,7 @@ StdRatio std_ratio_subtract(StdRatio lhs, StdRatio rhs);
 ///
 /// @return The product of `lhs` and `rhs` as a `StdRatio` in simplest form
 /// @ingroup std_ratio
-StdRatio std_ratio_multiply(StdRatio lhs, StdRatio rhs);
+[[nodiscard]] StdRatio std_ratio_multiply(StdRatio lhs, StdRatio rhs);
 /// @brief Divides the given `StdRatio`s
 ///
 /// Divides `lhs` by `rhs`, returning the result as a new `StdRatio` in simplest form
@@ -221,7 +189,7 @@ StdRatio std_ratio_multiply(StdRatio lhs, StdRatio rhs);
 ///
 /// @return The quotient of `lhs` and `rhs` as a `StdRatio` in simplest form
 /// @ingroup std_ratio
-StdRatio std_ratio_divide(StdRatio lhs, StdRatio rhs);
+[[nodiscard]] StdRatio std_ratio_divide(StdRatio lhs, StdRatio rhs);
 /// @brief Returns whether the two `StdRatio`s are equal
 ///
 /// @param lhs - The left-hand ratio to check for equality
@@ -231,7 +199,7 @@ StdRatio std_ratio_divide(StdRatio lhs, StdRatio rhs);
 /// @note This assumes that the given ratios are in simplest form. It does not check if either
 /// ratio has not been reduced.
 /// @ingroup std_ratio
-bool std_ratio_equal(StdRatio lhs, StdRatio rhs);
+[[nodiscard]] bool std_ratio_equal(StdRatio lhs, StdRatio rhs);
 /// @brief Returns whether the two `StdRatio`s are __not__ equal
 ///
 /// @param lhs - The left-hand ratio to check for inequality
@@ -241,7 +209,7 @@ bool std_ratio_equal(StdRatio lhs, StdRatio rhs);
 /// @note This assumes that the given ratios are in simplest form. It does not check if either
 /// ratio has not been reduced.
 /// @ingroup std_ratio
-bool std_ratio_not_equal(StdRatio lhs, StdRatio rhs);
+[[nodiscard]] bool std_ratio_not_equal(StdRatio lhs, StdRatio rhs);
 /// @brief Returns whether the left-hand `StdRatio` is less than the other
 ///
 /// @param lhs - The ratio to compare
@@ -249,7 +217,7 @@ bool std_ratio_not_equal(StdRatio lhs, StdRatio rhs);
 ///
 /// @return Whether `lhs` is less than `rhs`
 /// @ingroup std_ratio
-bool std_ratio_less_than(StdRatio lhs, StdRatio rhs);
+[[nodiscard]] bool std_ratio_less_than(StdRatio lhs, StdRatio rhs);
 /// @brief Returns whether the left-hand `StdRatio` is less than or equal to the other
 ///
 /// @param lhs - The ratio to compare
@@ -257,7 +225,7 @@ bool std_ratio_less_than(StdRatio lhs, StdRatio rhs);
 ///
 /// @return Whether `lhs` is less than or equal to `rhs`
 /// @ingroup std_ratio
-bool std_ratio_less_than_or_equal(StdRatio lhs, StdRatio rhs);
+[[nodiscard]] bool std_ratio_less_than_or_equal(StdRatio lhs, StdRatio rhs);
 /// @brief Returns whether the left-hand `StdRatio` is greater than the other
 ///
 /// @param lhs - The ratio to compare
@@ -265,7 +233,7 @@ bool std_ratio_less_than_or_equal(StdRatio lhs, StdRatio rhs);
 ///
 /// @return Whether `lhs` is greater than `rhs`
 /// @ingroup std_ratio
-bool std_ratio_greater_than(StdRatio lhs, StdRatio rhs);
+[[nodiscard]] bool std_ratio_greater_than(StdRatio lhs, StdRatio rhs);
 /// @brief Returns whether the left-hand `StdRatio` is greater than or equal to the other
 ///
 /// @param lhs - The ratio to compare
@@ -273,7 +241,7 @@ bool std_ratio_greater_than(StdRatio lhs, StdRatio rhs);
 ///
 /// @return Whether `lhs` is greater than or equal to `rhs`
 /// @ingroup std_ratio
-bool std_ratio_greater_than_or_equal(StdRatio lhs, StdRatio rhs);
+[[nodiscard]] bool std_ratio_greater_than_or_equal(StdRatio lhs, StdRatio rhs);
 /// @brief Returns the comparison of the left-hand `StdRatio` to the other
 ///
 /// @param lhs - The ratio to compare
@@ -281,7 +249,7 @@ bool std_ratio_greater_than_or_equal(StdRatio lhs, StdRatio rhs);
 ///
 /// @return the comparison of `lhs` to `rhs`
 /// @ingroup std_ratio
-StdCompare std_ratio_compare(StdRatio lhs, StdRatio rhs);
+[[nodiscard]] StdCompare std_ratio_compare(StdRatio lhs, StdRatio rhs);
 /// @brief Returns the given `StdRatio` as a scalar value
 ///
 /// Returns the given `StdRatio` as a scalar value (`Some(i64, value)`), if it can be exactly
@@ -291,7 +259,7 @@ StdCompare std_ratio_compare(StdRatio lhs, StdRatio rhs);
 ///
 /// @return `Some(i64, value)` if `ratio` can be represented as a scalar, `None(i64)` otherwise
 /// @ingroup std_ratio
-StdOption(i64) std_ratio_as_scalar_exact(StdRatio ratio);
+[[nodiscard]] StdOption(i64) std_ratio_as_scalar_exact(StdRatio ratio);
 /// @brief Returns the given `StdRatio` as a scalar value
 ///
 /// @param ratio - The `StdRatio` to convert to a scalar
@@ -300,7 +268,7 @@ StdOption(i64) std_ratio_as_scalar_exact(StdRatio ratio);
 /// @note The resulting scalar may not be an exact match to the ratio represented by `ratio` due to
 /// loss due to floating-point precision
 /// @ingroup std_ratio
-f64 std_ratio_as_scalar(StdRatio ratio);
+[[nodiscard]] f64 std_ratio_as_scalar(StdRatio ratio);
 /// @brief Adds the given ratio and scalar value
 ///
 /// Adds the given `StdRatio` and scalar value and returns the result as a `StdRatio`
@@ -310,7 +278,7 @@ f64 std_ratio_as_scalar(StdRatio ratio);
 ///
 /// @return the `StdRatio` resulting from the addition
 /// @ingroup std_ratio
-StdRatio std_ratio_add_scalar(StdRatio ratio, i64 scalar);
+[[nodiscard]] StdRatio std_ratio_add_scalar(StdRatio ratio, i64 scalar);
 /// @brief Subtracts the given scalar value from the given ratio
 ///
 /// Subtracts the scalar value from the given `StdRatio` and returns the result as a `StdRatio`
@@ -320,7 +288,7 @@ StdRatio std_ratio_add_scalar(StdRatio ratio, i64 scalar);
 ///
 /// @return the `StdRatio` resulting from the subtraction
 /// @ingroup std_ratio
-StdRatio std_ratio_subtract_scalar(StdRatio ratio, i64 scalar);
+[[nodiscard]] StdRatio std_ratio_subtract_scalar(StdRatio ratio, i64 scalar);
 /// @brief Multiplies the given ratio and scalar value
 ///
 /// Multiplies the given `StdRatio` and scalar value and returns the result as a `StdRatio`
@@ -330,7 +298,7 @@ StdRatio std_ratio_subtract_scalar(StdRatio ratio, i64 scalar);
 ///
 /// @return the `StdRatio` resulting from the multiplication
 /// @ingroup std_ratio
-StdRatio std_ratio_multiply_scalar(StdRatio ratio, i64 scalar);
+[[nodiscard]] StdRatio std_ratio_multiply_scalar(StdRatio ratio, i64 scalar);
 /// @brief Divides the given ratio by the given scalar value
 ///
 /// Divides the given `StdRatio` by the given scalar value and returns the result as a `StdRatio`
@@ -340,7 +308,7 @@ StdRatio std_ratio_multiply_scalar(StdRatio ratio, i64 scalar);
 ///
 /// @return the `StdRatio` resulting from the division
 /// @ingroup std_ratio
-StdRatio std_ratio_divide_scalar(StdRatio ratio, i64 scalar);
+[[nodiscard]] StdRatio std_ratio_divide_scalar(StdRatio ratio, i64 scalar);
 
 /// @brief Implement `StdFormat.format` for `StdRatio`
 ///
@@ -348,7 +316,10 @@ StdRatio std_ratio_divide_scalar(StdRatio ratio, i64 scalar);
 /// @param specifier - The format specifier
 ///
 /// @return `self` formatted as a `StdString`
-StdString std_ratio_format(const StdFormat* restrict self, StdFormatSpecifier specifier);
+[[nodiscard]] [[not_null(1)]] StdString
+std_ratio_format(const StdFormat* restrict self, StdFormatSpecifier specifier)
+	std_disable_if(!self,
+				   "Can't format a nullptr (self must be a valid StdRatio cast to StdFormat)");
 
 /// @brief Implement `StdFormat.format_with_allocator` for `StdRatio`
 ///
@@ -357,13 +328,18 @@ StdString std_ratio_format(const StdFormat* restrict self, StdFormatSpecifier sp
 /// @param allocator - The allocator to allocate memory for the formatted string with
 ///
 /// @return `self` formatted as a `StdString`
-StdString std_ratio_format_with_allocator(const StdFormat* restrict self,
-										  StdFormatSpecifier specifier,
-										  StdAllocator allocator);
+[[nodiscard]] [[not_null(1)]] StdString
+std_ratio_format_with_allocator(const StdFormat* restrict self,
+								StdFormatSpecifier specifier,
+								StdAllocator allocator)
+	std_disable_if(!self,
+				   "Can't format a nullptr (self must be a valid StdRatio cast to StdFormat)");
 
 /// @brief Implement `StdFormat` for `StdRatio`
 /// @ingroup std_ratio
-static maybe_unused
-	ImplTraitFor(StdFormat, StdRatio, std_ratio_format, std_ratio_format_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdFormat,
+									 StdRatio,
+									 std_ratio_format,
+									 std_ratio_format_with_allocator);
 
 #endif // STD_RATIO

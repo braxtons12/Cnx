@@ -347,8 +347,8 @@ StdString std_time_point_format_with_allocator(const StdFormat* restrict self,
 
 /// @brief Implements the `StdFormat` trait for `StdTimePoint`
 /// @ingroup std_time_point
-static maybe_unused ImplTraitFor(StdFormat,
-								 StdTimePoint,
-								 std_time_point_format,
-								 std_time_point_format_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdFormat,
+									 StdTimePoint,
+									 std_time_point_format,
+									 std_time_point_format_with_allocator);
 #endif // STD_TIME_POINT

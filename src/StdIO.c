@@ -43,7 +43,7 @@
 void print_(const_cstring restrict format_string, StdAllocator allocator, usize num_args, ...) {
 	va_list list = {0};
 	va_start(list, num_args);
-	let_mut std_string_scoped string
+	std_string_scoped string
 		= std_vformat_with_allocator(format_string, allocator, num_args, list);
 	puts(std_string_into_cstring(string));
 	va_end(list);
@@ -54,7 +54,7 @@ void print_(const_cstring restrict format_string, StdAllocator allocator, usize 
 void eprint_(const_cstring restrict format_string, StdAllocator allocator, usize num_args, ...) {
 	va_list list = {0};
 	va_start(list, num_args);
-	let_mut std_string_scoped string
+	std_string_scoped string
 		= std_vformat_with_allocator(format_string, allocator, num_args, list);
 	ignore(fputs(std_string_into_cstring(string), stderr));
 	va_end(list);
@@ -67,7 +67,7 @@ void fprint_(FILE* file,
 			 ...) {
 	va_list list = {0};
 	va_start(list, num_args);
-	let_mut std_string_scoped string
+	std_string_scoped string
 		= std_vformat_with_allocator(format_string, allocator, num_args, list);
 	ignore(fputs(std_string_into_cstring(string), file));
 	va_end(list);
@@ -76,7 +76,7 @@ void fprint_(FILE* file,
 void println_(const_cstring restrict format_string, StdAllocator allocator, usize num_args, ...) {
 	va_list list = {0};
 	va_start(list, num_args);
-	let_mut std_string_scoped string
+	std_string_scoped string
 		= std_vformat_with_allocator(format_string, allocator, num_args, list);
 	puts(std_string_into_cstring(string));
 	va_end(list);
@@ -85,7 +85,7 @@ void println_(const_cstring restrict format_string, StdAllocator allocator, usiz
 void eprintln_(const_cstring restrict format_string, StdAllocator allocator, usize num_args, ...) {
 	va_list list = {0};
 	va_start(list, num_args);
-	let_mut std_string_scoped string
+	std_string_scoped string
 		= std_vformat_with_allocator(format_string, allocator, num_args, list);
 	ignore(fputs(std_string_into_cstring(string), stderr));
 	ignore(putc('\n', stderr));
@@ -99,7 +99,7 @@ void fprintln_(FILE* file,
 			   ...) {
 	va_list list = {0};
 	va_start(list, num_args);
-	let_mut std_string_scoped string
+	std_string_scoped string
 		= std_vformat_with_allocator(format_string, allocator, num_args, list);
 	ignore(fputs(std_string_into_cstring(string), file));
 	ignore(putc('\n', file));

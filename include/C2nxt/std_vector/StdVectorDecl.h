@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides the type and function declarations for a template instantiation of
 /// `StdVector(T)`
-/// @version 0.2.1
-/// @date 2022-02-24
+/// @version 0.2.2
+/// @date 2022-03-09
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -67,50 +67,100 @@ typedef struct StdVectorConstIterator(T) {
 }
 StdVectorConstIterator(T);
 
-StdVector(T) StdVectorIdentifier(T, new)(void);
-StdVector(T) StdVectorIdentifier(T, new_with_allocator)(StdAllocator allocator);
-StdVector(T) StdVectorIdentifier(T, new_with_collection_data)(
-	const StdCollectionData(StdVector(T)) * restrict data);
-StdVector(T) StdVectorIdentifier(T, new_with_allocator_and_collection_data)(
-	StdAllocator allocator,
-	const StdCollectionData(StdVector(T)) * restrict data);
-StdVector(T) StdVectorIdentifier(T, new_with_capacity)(usize capacity);
-StdVector(T)
+[[nodiscard]] StdVector(T) StdVectorIdentifier(T, new)(void);
+[[nodiscard]] StdVector(T) StdVectorIdentifier(T, new_with_allocator)(StdAllocator allocator);
+[[nodiscard]] [[not_null(1)]] StdVector(T) StdVectorIdentifier(T, new_with_collection_data)(
+	const StdCollectionData(StdVector(T)) * restrict data)
+	std_disable_if(!data,
+				   "Can't create a StdVector(T) with null StdCollectionData. To create a "
+				   "StdVector(T) with defaulted StdCollectionData, use std_vector_new()");
+[[nodiscard]] [[not_null(2)]] StdVector(T)
+	StdVectorIdentifier(T, new_with_allocator_and_collection_data)(
+		StdAllocator allocator,
+		const StdCollectionData(StdVector(T)) * restrict data)
+		std_disable_if(!data,
+					   "Can't create a StdVector(T) with null StdCollectionData. To create a "
+					   "StdVector(T) with a custom allocator and defaulted StdCollectionData, use "
+					   "std_vector_new_with_allocator()");
+[[nodiscard]] StdVector(T) StdVectorIdentifier(T, new_with_capacity)(usize capacity);
+[[nodiscard]] StdVector(T)
 	StdVectorIdentifier(T, new_with_capacity_and_allocator)(usize capacity, StdAllocator allocator);
-StdVector(T) StdVectorIdentifier(T, new_with_capacity_and_collection_data)(
-	usize capacity,
-	const StdCollectionData(StdVector(T)) * restrict data);
-StdVector(T) StdVectorIdentifier(T, new_with_capacity_allocator_and_collection_data)(
-	usize capacity,
-	StdAllocator allocator,
-	const StdCollectionData(StdVector(T)) * restrict data);
-StdVector(T) StdVectorIdentifier(T, clone)(const StdVector(T) * restrict self)
-	std_disable_if(!(self->m_data->m_copy_constructor),
-				   "Can't clone a StdVector(T) with elements that aren't copyable (no "
-				   "element copy constructor defined)");
-const T* StdVectorIdentifier(T, at_const)(const StdVector(T) * restrict self, usize index);
-T* StdVectorIdentifier(T, at_mut)(StdVector(T) * restrict self, usize index);
-const T* StdVectorIdentifier(T, front_const)(const StdVector(T) * restrict self);
-T* StdVectorIdentifier(T, front_mut)(StdVector(T) * restrict self);
-const T* StdVectorIdentifier(T, back_const)(const StdVector(T) * restrict self);
-T* StdVectorIdentifier(T, back_mut)(StdVector(T) * restrict self);
-const T* StdVectorIdentifier(T, data_const)(const StdVector(T) * restrict self);
-T* StdVectorIdentifier(T, data_mut)(StdVector(T) * restrict self);
-bool StdVectorIdentifier(T, is_empty)(const StdVector(T) * restrict self);
-bool StdVectorIdentifier(T, is_full)(const StdVector(T) * restrict self);
-usize StdVectorIdentifier(T, size)(const StdVector(T) * restrict self);
-usize StdVectorIdentifier(T, max_size)(void);
-usize StdVectorIdentifier(T, capacity)(const StdVector(T) * restrict self);
-void StdVectorIdentifier(T, reserve)(StdVector(T) * restrict self, usize new_capacity);
-void StdVectorIdentifier(T, resize)(StdVector(T) * restrict self, usize new_size);
-void StdVectorIdentifier(T, shrink_to_fit)(StdVector(T) * restrict self);
-void StdVectorIdentifier(T, clear)(StdVector(T) * restrict self);
-void StdVectorIdentifier(T, push_back)(StdVector(T) * restrict self, T element);
-StdOption(T) StdVectorIdentifier(T, pop_back)(StdVector(T) * restrict self);
-void StdVectorIdentifier(T, insert)(StdVector(T) * restrict self, T element, usize index);
-void StdVectorIdentifier(T, erase)(StdVector(T) * restrict self, usize index);
-void StdVectorIdentifier(T, erase_n)(StdVector(T) * restrict self, usize index, usize num_elements);
-void StdVectorIdentifier(T, free)(void* restrict self);
+[[nodiscard]] [[not_null(2)]] StdVector(T)
+	StdVectorIdentifier(T, new_with_capacity_and_collection_data)(
+		usize capacity,
+		const StdCollectionData(StdVector(T)) * restrict data)
+		std_disable_if(!data,
+					   "Can't create a StdVector(T) with null StdCollectionData. To create a "
+					   "StdVector(T) with an initial capacity and defaulted StdCollectionData, use "
+					   "std_vector_new_with_capacity()");
+[[nodiscard]] [[not_null(3)]] StdVector(T)
+	StdVectorIdentifier(T, new_with_capacity_allocator_and_collection_data)(
+		usize capacity,
+		StdAllocator allocator,
+		const StdCollectionData(StdVector(T)) * restrict data)
+		std_disable_if(!data,
+					   "Can't create a StdVector(T) with null StdCollectionData. To create a "
+					   "StdVector(T) with an initial capacity, custom allocator and defaulted "
+					   "StdCollectionData, use "
+					   "std_vector_new_with_capacity_and_allocator()");
+[[nodiscard]] [[not_null(1)]] StdVector(T)
+	StdVectorIdentifier(T, clone)(const StdVector(T) * restrict self)
+		std_disable_if(!(self->m_data->m_copy_constructor),
+					   "Can't clone a StdVector(T) with elements that aren't copyable (no "
+					   "element copy constructor defined)");
+
+	#define ___DISABLE_IF_NULL(self) \
+		std_disable_if(!self, "Can't perform an operator on a null vector")
+
+[[nodiscard]] [[not_null(1)]] [[returns_not_null]] const T*
+	StdVectorIdentifier(T, at_const)(const StdVector(T) * restrict self, usize index)
+		___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] [[returns_not_null]] T*
+	StdVectorIdentifier(T, at_mut)(StdVector(T) * restrict self, usize index)
+		___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] [[returns_not_null]] const T*
+	StdVectorIdentifier(T, front_const)(const StdVector(T) * restrict self)
+		___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] [[returns_not_null]] T*
+	StdVectorIdentifier(T, front_mut)(StdVector(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] [[returns_not_null]] const T*
+	StdVectorIdentifier(T, back_const)(const StdVector(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] [[returns_not_null]] T*
+	StdVectorIdentifier(T, back_mut)(StdVector(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] [[returns_not_null]] const T*
+	StdVectorIdentifier(T, data_const)(const StdVector(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] [[returns_not_null]] T*
+	StdVectorIdentifier(T, data_mut)(StdVector(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] bool
+	StdVectorIdentifier(T, is_empty)(const StdVector(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] bool
+	StdVectorIdentifier(T, is_full)(const StdVector(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] usize
+	StdVectorIdentifier(T, size)(const StdVector(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[nodiscard]] usize StdVectorIdentifier(T, max_size)(void);
+[[nodiscard]] [[not_null(1)]] usize
+	StdVectorIdentifier(T, capacity)(const StdVector(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[not_null(1)]] void StdVectorIdentifier(T, reserve)(StdVector(T) * restrict self,
+													 usize new_capacity) ___DISABLE_IF_NULL(self);
+[[not_null(1)]] void StdVectorIdentifier(T, resize)(StdVector(T) * restrict self, usize new_size)
+	___DISABLE_IF_NULL(self);
+[[not_null(1)]] void
+	StdVectorIdentifier(T, shrink_to_fit)(StdVector(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[not_null(1)]] void
+	StdVectorIdentifier(T, clear)(StdVector(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[not_null(1)]] void StdVectorIdentifier(T, push_back)(StdVector(T) * restrict self, T element)
+	___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] StdOption(T)
+	StdVectorIdentifier(T, pop_back)(StdVector(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[not_null(1)]] void
+	StdVectorIdentifier(T, insert)(StdVector(T) * restrict self, T element, usize index)
+		___DISABLE_IF_NULL(self);
+[[not_null(1)]] void StdVectorIdentifier(T, erase)(StdVector(T) * restrict self, usize index)
+	___DISABLE_IF_NULL(self);
+[[not_null(1)]] void
+	StdVectorIdentifier(T, erase_n)(StdVector(T) * restrict self, usize index, usize num_elements)
+		___DISABLE_IF_NULL(self);
+[[not_null(1)]] void StdVectorIdentifier(T, free)(void* restrict self) ___DISABLE_IF_NULL(self);
 
 DeclIntoStdRandomAccessIterator(StdVector(T), Ref(T), StdVectorIdentifier(T, into_iter), into);
 DeclIntoStdRandomAccessIterator(StdVector(T),
@@ -126,19 +176,23 @@ DeclIntoStdRandomAccessIterator(StdVector(T),
 								StdVectorIdentifier(T, into_reverse_const_iter),
 								into_reverse);
 
-StdRandomAccessIterator(Ref(T)) CONCAT3(std_vector_, T, _begin)(StdVector(T) * restrict self);
-StdRandomAccessIterator(Ref(T)) CONCAT3(std_vector_, T, _end)(StdVector(T) * restrict self);
-StdRandomAccessIterator(Ref(T)) CONCAT3(std_vector_, T, _rbegin)(StdVector(T) * restrict self);
-StdRandomAccessIterator(Ref(T)) CONCAT3(std_vector_, T, _rend)(StdVector(T) * restrict self);
+[[nodiscard]] [[not_null(1)]] StdRandomAccessIterator(Ref(T))
+	CONCAT3(std_vector_, T, _begin)(StdVector(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] StdRandomAccessIterator(Ref(T))
+	CONCAT3(std_vector_, T, _end)(StdVector(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] StdRandomAccessIterator(Ref(T))
+	CONCAT3(std_vector_, T, _rbegin)(StdVector(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] StdRandomAccessIterator(Ref(T))
+	CONCAT3(std_vector_, T, _rend)(StdVector(T) * restrict self) ___DISABLE_IF_NULL(self);
 
-StdRandomAccessIterator(ConstRef(T))
-	StdVectorIdentifier(T, cbegin)(const StdVector(T) * restrict self);
-StdRandomAccessIterator(ConstRef(T))
-	StdVectorIdentifier(T, cend)(const StdVector(T) * restrict self);
-StdRandomAccessIterator(ConstRef(T))
-	StdVectorIdentifier(T, crbegin)(const StdVector(T) * restrict self);
-StdRandomAccessIterator(ConstRef(T))
-	StdVectorIdentifier(T, crend)(const StdVector(T) * restrict self);
+[[nodiscard]] [[not_null(1)]] StdRandomAccessIterator(ConstRef(T))
+	StdVectorIdentifier(T, cbegin)(const StdVector(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] StdRandomAccessIterator(ConstRef(T))
+	StdVectorIdentifier(T, cend)(const StdVector(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] StdRandomAccessIterator(ConstRef(T))
+	StdVectorIdentifier(T, crbegin)(const StdVector(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] StdRandomAccessIterator(ConstRef(T))
+	StdVectorIdentifier(T, crend)(const StdVector(T) * restrict self) ___DISABLE_IF_NULL(self);
 
 typedef struct StdVectorIdentifier(T, vtable) {
 	StdVector(T) (*const clone)(const StdVector(T)* restrict self);
@@ -181,5 +235,6 @@ typedef struct StdVectorIdentifier(T, vtable) {
 }
 StdVectorIdentifier(T, vtable);
 
+	#undef ___DISABLE_IF_NULL
 	#undef STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 #endif // defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_DECL

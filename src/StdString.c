@@ -344,46 +344,52 @@ static const usize std_string_capacity_mode_shift
 	= std_string_is_little_endian ? (sizeof(usize) - 1) * 8U : 0U;
 static const usize std_string_len_cap_shift = std_string_is_little_endian ? 0U : 1U;
 
-always_inline static inline u8* std_string_length_remaining(const StdString* restrict self) {
+[[always_inline]] [[nodiscard]] [[not_null(1)]] [[returns_not_null]] static inline u8*
+std_string_length_remaining(const StdString* restrict self) {
 	return static_cast(u8*)(&(self->m_short[STD_STRING_SHORT_OPTIMIZATION_CAPACITY]));
 }
 
-always_inline static inline bool std_string_is_short(const StdString* restrict self) {
+[[always_inline]] [[nodiscard]] [[not_null(1)]] static inline bool
+std_string_is_short(const StdString* restrict self) {
 	return !((self->m_capacity >> std_string_capacity_mode_shift) // NOLINT
 			 & std_string_long_mask);
 }
 
-always_inline static inline void std_string_set_long(StdString* restrict self) {
+[[always_inline]] [[not_null(1)]] static inline void std_string_set_long(StdString* restrict self) {
 	self->m_capacity |= (std_string_long_mask << std_string_capacity_mode_shift);
 }
 
-always_inline static inline void std_string_set_short(StdString* restrict self) {
+[[always_inline]] [[not_null(1)]] static inline void
+std_string_set_short(StdString* restrict self) {
 	self->m_capacity
 		&= ~(static_cast(usize)(std_string_long_mask << std_string_capacity_mode_shift));
 }
 
-always_inline static inline usize std_string_get_capacity(const StdString* restrict self) {
+[[always_inline]] [[nodiscard]] [[not_null(1)]] static inline usize
+std_string_get_capacity(const StdString* restrict self) {
 	return std_string_is_short(self) ?
 			   STD_STRING_SHORT_OPTIMIZATION_CAPACITY :
-				 (self->m_capacity
+			   (self->m_capacity
 				& (~(std_string_long_mask << std_string_capacity_mode_shift))
 					  >> std_string_len_cap_shift);
 }
 
-always_inline static inline void
+[[always_inline]] [[not_null(1)]] static inline void
 std_string_set_capacity(StdString* restrict self, usize new_capacity) {
 	std_assert(!std_string_is_short(self), "Can't set capacity on a short optimized string");
 	self->m_capacity = (new_capacity << std_string_len_cap_shift)
 					   | (std_string_long_mask << std_string_capacity_mode_shift);
 }
 
-always_inline static inline usize std_string_get_short_length(const StdString* restrict self) {
+[[always_inline]] [[nodiscard]] [[not_null(1)]] static inline usize
+std_string_get_short_length(const StdString* restrict self) {
 	std_assert(std_string_is_short(self), "Can't get short length of a long string");
 	return STD_STRING_SHORT_OPTIMIZATION_CAPACITY
 		   - (static_cast(usize)(*(std_string_length_remaining(self))) >> std_string_len_cap_shift);
 }
 
-always_inline static inline void std_string_set_length(StdString* restrict self, usize new_length) {
+[[always_inline]] [[not_null(1)]] static inline void
+std_string_set_length(StdString* restrict self, usize new_length) {
 	std_assert(new_length <= std_string_capacity(*self),
 			   "Can't set string length longer than capacity");
 	if(std_string_is_short(self)) {
@@ -395,12 +401,12 @@ always_inline static inline void std_string_set_length(StdString* restrict self,
 	}
 }
 
-always_inline static inline void
+[[always_inline]] [[not_null(1)]] static inline void
 std_string_increase_length(StdString* restrict self, usize amount_to_increase) {
 	std_string_set_length(self, std_string_length(*self) + amount_to_increase);
 }
 
-always_inline static inline void
+[[always_inline]] [[not_null(1)]] static inline void
 std_string_decrease_length(StdString* restrict self, usize amount_to_decrease) {
 	std_assert(amount_to_decrease <= std_string_length(*self),
 			   "Can't decrease string length by more than length");
@@ -666,10 +672,10 @@ bool std_string_equal_stringview(const StdString* restrict self,
 
 /// @brief Determines if the substring of `self` beginning at `index` is the same as the given
 /// `substring`
-static inline always_inline
-StdOption(usize) std_string_contains_from_left(const StdString* restrict self,
-											   const StdString* restrict substring,
-											   usize index) {
+[[always_inline]] [[nodiscard]] [[not_null(1, 2)]] static inline StdOption(usize)
+	std_string_contains_from_left(const StdString* restrict self,
+								  const StdString* restrict substring,
+								  usize index) {
 	let sublength = std_string_length(*substring);
 	std_assert(index + sublength < std_string_length(*self),
 			   "std_string_contains_from_left called with index + substring->m_length >= "
@@ -685,10 +691,10 @@ StdOption(usize) std_string_contains_from_left(const StdString* restrict self,
 
 /// @brief Determines if the substring of `self` ending with `index` (inclusive)is the same as
 /// the given `substring`
-static inline always_inline
-StdOption(usize) std_string_contains_from_right(const StdString* restrict self,
-												const StdString* restrict substring,
-												usize index) {
+[[always_inline]] [[nodiscard]] [[not_null(1, 2)]] static inline StdOption(usize)
+	std_string_contains_from_right(const StdString* restrict self,
+								   const StdString* restrict substring,
+								   usize index) {
 
 	let sublength = std_string_length(*substring);
 	std_assert(index >= sublength,
@@ -732,11 +738,11 @@ bool(std_string_contains)(const StdString* restrict self, const StdString* restr
 
 /// @brief Determines if the substring of `self` beginning at `index` is the same as the given
 /// `substring`
-static inline always_inline
-StdOption(usize) std_string_contains_cstring_from_left(const StdString* restrict self,
-													   restrict const_cstring substring,
-													   usize substring_length,
-													   usize index) {
+[[always_inline]] [[nodiscard]] [[not_null(1, 2)]] static inline StdOption(usize)
+	std_string_contains_cstring_from_left(const StdString* restrict self,
+										  restrict const_cstring substring,
+										  usize substring_length,
+										  usize index) {
 	std_assert(index + substring_length < std_string_length(*self),
 			   "std_string_contains_cstring_from_left called with index + substring->m_length >= "
 			   "self->m_length (indices are out of bounds)");
@@ -751,11 +757,11 @@ StdOption(usize) std_string_contains_cstring_from_left(const StdString* restrict
 
 /// @brief Determines if the substring of `self` ending with `index` (inclusive)is the same as
 /// the given `substring`
-static inline always_inline
-StdOption(usize) std_string_contains_cstring_from_right(const StdString* restrict self,
-														restrict const_cstring substring,
-														usize substring_length,
-														usize index) {
+[[always_inline]] [[nodiscard]] [[not_null(1, 2)]] static inline StdOption(usize)
+	std_string_contains_cstring_from_right(const StdString* restrict self,
+										   restrict const_cstring substring,
+										   usize substring_length,
+										   usize index) {
 	std_assert(
 		index >= substring_length,
 		"std_string_contains_cstring_from_right called with index < substring->m_length (index out "
@@ -934,7 +940,7 @@ StdString(std_string_substring_with_allocator)(const StdString* restrict self,
 											   usize index,
 											   usize length,
 											   StdAllocator allocator) {
-	let maybe_unused self_length = std_string_length(*self);
+	[[maybe_unused]] let self_length = std_string_length(*self);
 	std_assert(index < self_length,
 			   "std_string_substring called with index >= self->m_length (index out of bounds)");
 	std_assert(index + length < self_length,
@@ -950,7 +956,7 @@ StdString(std_string_substring_with_allocator)(const StdString* restrict self,
 }
 
 StdStringView(std_string_stringview_of)(const StdString* restrict self, usize index, usize length) {
-	let maybe_unused self_length = std_string_length(*self);
+	[[maybe_unused]] let self_length = std_string_length(*self);
 	std_assert(index < self_length,
 			   "std_stringview_of called with index >= self->m_length (index out of bounds)");
 	std_assert(
@@ -1099,12 +1105,12 @@ void(std_string_insert)(StdString* restrict self,
 			   "std_string_insert called with index > self->m_length (index out of bounds)");
 
 	if(index != 0) {
-		let_mut std_string_scoped first = std_string_first(*self, index);
+		std_string_scoped first = std_string_first(*self, index);
 
 		let_mut left = std_string_concatenate(&first, to_insert);
 		let_mut old = *self;
 		if(index < length) {
-			let_mut std_string_scoped second = std_string_last(*self, length - index);
+			std_string_scoped second = std_string_last(*self, length - index);
 			*self = std_string_concatenate(&left, &second);
 			std_string_free(left);
 		}
@@ -1131,12 +1137,12 @@ void std_string_insert_cstring(StdString* restrict self,
 			   "std_string_insert called with index > self->m_length (index out of bounds)");
 
 	if(index != 0) {
-		let_mut std_string_scoped first = std_string_first(*self, index);
+		std_string_scoped first = std_string_first(*self, index);
 
 		let_mut left = std_string_concatenate_cstring(&first, to_insert, to_insert_length);
 		let_mut old = *self;
 		if(index < length) {
-			let_mut std_string_scoped second = std_string_last(*self, length - index);
+			std_string_scoped second = std_string_last(*self, length - index);
 			*self = std_string_concatenate(&left, &second);
 			std_string_free(left);
 		}
@@ -1146,9 +1152,9 @@ void std_string_insert_cstring(StdString* restrict self,
 		std_string_free(old);
 	}
 	else {
-		let_mut std_string_scoped left = std_string_from_cstring_with_allocator(to_insert,
-																				to_insert_length,
-																				self->m_allocator);
+		std_string_scoped left = std_string_from_cstring_with_allocator(to_insert,
+																		to_insert_length,
+																		self->m_allocator);
 		let new = std_string_concatenate(&left, self);
 		let_mut old = *self;
 		*self = new;
@@ -1239,8 +1245,8 @@ void std_string_resize_internal(StdString* restrict self, usize new_size) {
 	}
 }
 
-static inline always_inline usize std_string_get_expanded_capacity(usize old_capacity,
-																   usize num_increments) {
+[[always_inline]] [[nodiscard]] static inline usize
+std_string_get_expanded_capacity(usize old_capacity, usize num_increments) {
 	return num_increments * ((old_capacity * 3) / 2);
 }
 

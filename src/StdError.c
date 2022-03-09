@@ -71,7 +71,7 @@ StdString std_error_format(const StdFormat* restrict self, StdFormatSpecifier sp
 }
 
 StdString std_error_format_with_allocator(const StdFormat* restrict self,
-										  StdFormatSpecifier maybe_unused specifier,
+										  [[maybe_unused]] StdFormatSpecifier specifier,
 										  StdAllocator allocator) {
 	std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT
 				   || specifier.m_type == STD_FORMAT_TYPE_DEBUG,

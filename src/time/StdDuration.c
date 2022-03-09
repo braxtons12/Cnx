@@ -199,7 +199,7 @@ StdString std_duration_format(const StdFormat* restrict self, StdFormatSpecifier
 }
 
 StdString std_duration_format_with_allocator(const StdFormat* restrict self,
-											 maybe_unused StdFormatSpecifier specifier,
+											 [[maybe_unused]] StdFormatSpecifier specifier,
 											 StdAllocator allocator) {
 	std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT
 				   || specifier.m_type == STD_FORMAT_TYPE_DEBUG,

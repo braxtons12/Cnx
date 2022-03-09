@@ -7,15 +7,15 @@
 #ifndef STD_STRING_TEST
 	#define STD_STRING_TEST
 
-static void* test_malloc(maybe_unused StdAllocator* self, usize bytes) {
+static void* test_malloc([[maybe_unused]] StdAllocator* self, usize bytes) {
 	return malloc(bytes);
 }
 
-static void* test_realloc(maybe_unused StdAllocator* self, void* memory, usize new_size_bytes) {
+static void* test_realloc([[maybe_unused]] StdAllocator* self, void* memory, usize new_size_bytes) {
 	return realloc(memory, new_size_bytes);
 }
 
-static void test_free(maybe_unused StdAllocator* self, void* memory) {
+static void test_free([[maybe_unused]] StdAllocator* self, void* memory) {
 	free(memory);
 }
 

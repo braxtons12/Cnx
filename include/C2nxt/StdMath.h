@@ -1,8 +1,8 @@
 /// @file StdMath.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module extends `<tgmath.h>` and provides some alternative math functions.
-/// @version 0.1.1
-/// @date 2022-02-24
+/// @version 0.2.0
+/// @date 2022-03-09
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -156,14 +156,15 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 	/// @param right - One of the pair of numbers to get the gcd of
 	///
 	/// @return The gcd of the pair of numbers
-	i64 std_gcd_i64(i64 left, i64 right);
+	[[nodiscard]] i64 std_gcd_i64(i64 left, i64 right);
+
 /// @brief Calculate the gcd of the two inputs
 ///
 /// @param left - One of the pair of numbers to get the gcd of
 /// @param right - One of the pair of numbers to get the gcd of
 ///
 /// @return The gcd of the pair of numbers
-u64 std_gcd_u64(u64 left, u64 right);
+[[nodiscard]] u64 std_gcd_u64(u64 left, u64 right);
 
 /// @def std_gcd(left, right)
 /// @brief Calculate the gcd of the two inputs
@@ -223,14 +224,14 @@ u64 std_gcd_u64(u64 left, u64 right);
 /// @param right - One of the pair of numbers to get the lcm of
 ///
 /// @return The lcm of the pair of numbers
-i64 std_lcm_i64(i64 left, i64 right);
+[[nodiscard]] i64 std_lcm_i64(i64 left, i64 right);
 /// @brief Calculate the lcm of the two inputs
 ///
 /// @param left - One of the pair of numbers to get the lcm of
 /// @param right - One of the pair of numbers to get the lcm of
 ///
 /// @return The lcm of the pair of numbers
-u64 std_lcm_u64(u64 left, u64 right);
+[[nodiscard]] u64 std_lcm_u64(u64 left, u64 right);
 
 /// @def std_lcm(left, right)
 /// @brief Calculate the lcm of the two inputs
@@ -294,7 +295,7 @@ u64 std_lcm_u64(u64 left, u64 right);
 ///
 /// @return `Some(u8, result)` if the addition was successful (no overflow occurred), `None(u8)`
 /// otherwise
-StdOption(u8) std_checked_add_u8(u8 left, u8 right);
+[[nodiscard]] StdOption(u8) std_checked_add_u8(u8 left, u8 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(u16, result)`
@@ -305,7 +306,7 @@ StdOption(u8) std_checked_add_u8(u8 left, u8 right);
 ///
 /// @return `Some(u16, result)` if the addition was successful (no overflow occurred), `None(u16)`
 /// otherwise
-StdOption(u16) std_checked_add_u16(u16 left, u16 right);
+[[nodiscard]] StdOption(u16) std_checked_add_u16(u16 left, u16 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(u32, result)`
@@ -316,7 +317,7 @@ StdOption(u16) std_checked_add_u16(u16 left, u16 right);
 ///
 /// @return `Some(u32, result)` if the addition was successful (no overflow occurred), `None(u32)`
 /// otherwise
-StdOption(u32) std_checked_add_u32(u32 left, u32 right);
+[[nodiscard]] StdOption(u32) std_checked_add_u32(u32 left, u32 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(u64, result)`
@@ -327,7 +328,7 @@ StdOption(u32) std_checked_add_u32(u32 left, u32 right);
 ///
 /// @return `Some(u64, result)` if the addition was successful (no overflow occurred), `None(u64)`
 /// otherwise
-StdOption(u64) std_checked_add_u64(u64 left, u64 right);
+[[nodiscard]] StdOption(u64) std_checked_add_u64(u64 left, u64 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(i8, result)`
@@ -338,7 +339,7 @@ StdOption(u64) std_checked_add_u64(u64 left, u64 right);
 ///
 /// @return `Some(i8, result)` if the addition was successful (no overflow occurred), `None(i8)`
 /// otherwise
-StdOption(i8) std_checked_add_i8(i8 left, i8 right);
+[[nodiscard]] StdOption(i8) std_checked_add_i8(i8 left, i8 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(i16, result)`
@@ -349,7 +350,7 @@ StdOption(i8) std_checked_add_i8(i8 left, i8 right);
 ///
 /// @return `Some(i16, result)` if the addition was successful (no overflow occurred), `None(i16)`
 /// otherwise
-StdOption(i16) std_checked_add_i16(i16 left, i16 right);
+[[nodiscard]] StdOption(i16) std_checked_add_i16(i16 left, i16 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(i32, result)`
@@ -360,7 +361,7 @@ StdOption(i16) std_checked_add_i16(i16 left, i16 right);
 ///
 /// @return `Some(i32, result)` if the addition was successful (no overflow occurred), `None(i32)`
 /// otherwise
-StdOption(i32) std_checked_add_i32(i32 left, i32 right);
+[[nodiscard]] StdOption(i32) std_checked_add_i32(i32 left, i32 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(i64, result)`
@@ -371,7 +372,7 @@ StdOption(i32) std_checked_add_i32(i32 left, i32 right);
 ///
 /// @return `Some(i64, result)` if the addition was successful (no overflow occurred), `None(i64)`
 /// otherwise
-StdOption(i64) std_checked_add_i64(i64 left, i64 right);
+[[nodiscard]] StdOption(i64) std_checked_add_i64(i64 left, i64 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(f32, result)`
@@ -382,7 +383,7 @@ StdOption(i64) std_checked_add_i64(i64 left, i64 right);
 ///
 /// @return `Some(f32, result)` if the addition was successful (no overflow occurred), `None(f32)`
 /// otherwise
-StdOption(f32) std_checked_add_f32(f32 left, f32 right);
+[[nodiscard]] StdOption(f32) std_checked_add_f32(f32 left, f32 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(f64, result)`
@@ -393,7 +394,7 @@ StdOption(f32) std_checked_add_f32(f32 left, f32 right);
 ///
 /// @return `Some(f64, result)` if the addition was successful (no overflow occurred), `None(f64)`
 /// otherwise
-StdOption(f64) std_checked_add_f64(f64 left, f64 right);
+[[nodiscard]] StdOption(f64) std_checked_add_f64(f64 left, f64 right);
 
 /// @def std_checked_add(left, right)
 /// @brief Performs the checked addition of `left` and `right`
@@ -463,7 +464,7 @@ StdOption(f64) std_checked_add_f64(f64 left, f64 right);
 ///
 /// @return `Some(u8, result)` if the subtraction was successful (no overflow occurred), `None(u8)`
 /// otherwise
-StdOption(u8) std_checked_sub_u8(u8 left, u8 right);
+[[nodiscard]] StdOption(u8) std_checked_sub_u8(u8 left, u8 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(u16, result)`
@@ -474,7 +475,7 @@ StdOption(u8) std_checked_sub_u8(u8 left, u8 right);
 ///
 /// @return `Some(u16, result)` if the subtraction was successful (no overflow occurred),
 /// `None(u16)` otherwise
-StdOption(u16) std_checked_sub_u16(u16 left, u16 right);
+[[nodiscard]] StdOption(u16) std_checked_sub_u16(u16 left, u16 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(u32, result)`
@@ -485,7 +486,7 @@ StdOption(u16) std_checked_sub_u16(u16 left, u16 right);
 ///
 /// @return `Some(u32, result)` if the subtraction was successful (no overflow occurred),
 /// `None(u32)` otherwise
-StdOption(u32) std_checked_sub_u32(u32 left, u32 right);
+[[nodiscard]] StdOption(u32) std_checked_sub_u32(u32 left, u32 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(u64, result)`
@@ -496,7 +497,7 @@ StdOption(u32) std_checked_sub_u32(u32 left, u32 right);
 ///
 /// @return `Some(u64, result)` if the subtraction was successful (no overflow occurred),
 /// `None(u64)` otherwise
-StdOption(u64) std_checked_sub_u64(u64 left, u64 right);
+[[nodiscard]] StdOption(u64) std_checked_sub_u64(u64 left, u64 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(i8, result)`
@@ -507,7 +508,7 @@ StdOption(u64) std_checked_sub_u64(u64 left, u64 right);
 ///
 /// @return `Some(i8, result)` if the subtraction was successful (no overflow occurred), `None(i8)`
 /// otherwise
-StdOption(i8) std_checked_sub_i8(i8 left, i8 right);
+[[nodiscard]] StdOption(i8) std_checked_sub_i8(i8 left, i8 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(i16, result)`
@@ -518,7 +519,7 @@ StdOption(i8) std_checked_sub_i8(i8 left, i8 right);
 ///
 /// @return `Some(i16, result)` if the subtraction was successful (no overflow occurred),
 /// `None(i16)` otherwise
-StdOption(i16) std_checked_sub_i16(i16 left, i16 right);
+[[nodiscard]] StdOption(i16) std_checked_sub_i16(i16 left, i16 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(i32, result)`
@@ -529,7 +530,7 @@ StdOption(i16) std_checked_sub_i16(i16 left, i16 right);
 ///
 /// @return `Some(i32, result)` if the subtraction was successful (no overflow occurred),
 /// `None(i32)` otherwise
-StdOption(i32) std_checked_sub_i32(i32 left, i32 right);
+[[nodiscard]] StdOption(i32) std_checked_sub_i32(i32 left, i32 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(i64, result)`
@@ -540,7 +541,7 @@ StdOption(i32) std_checked_sub_i32(i32 left, i32 right);
 ///
 /// @return `Some(i64, result)` if the subtraction was successful (no overflow occurred),
 /// `None(i64)` otherwise
-StdOption(i64) std_checked_sub_i64(i64 left, i64 right);
+[[nodiscard]] StdOption(i64) std_checked_sub_i64(i64 left, i64 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(f32, result)`
@@ -551,7 +552,7 @@ StdOption(i64) std_checked_sub_i64(i64 left, i64 right);
 ///
 /// @return `Some(f32, result)` if the subtraction was successful (no overflow occurred),
 /// `None(f32)` otherwise
-StdOption(f32) std_checked_sub_f32(f32 left, f32 right);
+[[nodiscard]] StdOption(f32) std_checked_sub_f32(f32 left, f32 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(f64, result)`
@@ -562,7 +563,7 @@ StdOption(f32) std_checked_sub_f32(f32 left, f32 right);
 ///
 /// @return `Some(f64, result)` if the subtraction was successful (no overflow occurred),
 /// `None(f64)` otherwise
-StdOption(f64) std_checked_sub_f64(f64 left, f64 right);
+[[nodiscard]] StdOption(f64) std_checked_sub_f64(f64 left, f64 right);
 
 /// @def std_checked_sub(left, right)
 /// @brief Performs the checked subtraction of `right` from `left`
@@ -633,7 +634,7 @@ StdOption(f64) std_checked_sub_f64(f64 left, f64 right);
 ///
 /// @return `Some(u8, result)` if the multiplication was successful (no overflow occurred),
 /// `None(u8)` otherwise
-StdOption(u8) std_checked_mul_u8(u8 left, u8 right);
+[[nodiscard]] StdOption(u8) std_checked_mul_u8(u8 left, u8 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(u16, result)`
@@ -644,7 +645,7 @@ StdOption(u8) std_checked_mul_u8(u8 left, u8 right);
 ///
 /// @return `Some(u16, result)` if the multiplication was successful (no overflow occurred),
 /// `None(u16)` otherwise
-StdOption(u16) std_checked_mul_u16(u16 left, u16 right);
+[[nodiscard]] StdOption(u16) std_checked_mul_u16(u16 left, u16 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(u32, result)`
@@ -655,7 +656,7 @@ StdOption(u16) std_checked_mul_u16(u16 left, u16 right);
 ///
 /// @return `Some(u32, result)` if the multiplication was successful (no overflow occurred),
 /// `None(u32)` otherwise
-StdOption(u32) std_checked_mul_u32(u32 left, u32 right);
+[[nodiscard]] StdOption(u32) std_checked_mul_u32(u32 left, u32 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(u64, result)`
@@ -666,7 +667,7 @@ StdOption(u32) std_checked_mul_u32(u32 left, u32 right);
 ///
 /// @return `Some(u64, result)` if the multiplication was successful (no overflow occurred),
 /// `None(u64)` otherwise
-StdOption(u64) std_checked_mul_u64(u64 left, u64 right);
+[[nodiscard]] StdOption(u64) std_checked_mul_u64(u64 left, u64 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(i8, result)`
@@ -677,7 +678,7 @@ StdOption(u64) std_checked_mul_u64(u64 left, u64 right);
 ///
 /// @return `Some(i8, result)` if the multiplication was successful (no overflow occurred),
 /// `None(i8)` otherwise
-StdOption(i8) std_checked_mul_i8(i8 left, i8 right);
+[[nodiscard]] StdOption(i8) std_checked_mul_i8(i8 left, i8 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(i16, result)`
@@ -688,7 +689,7 @@ StdOption(i8) std_checked_mul_i8(i8 left, i8 right);
 ///
 /// @return `Some(i16, result)` if the multiplication was successful (no overflow occurred),
 /// `None(i16)` otherwise
-StdOption(i16) std_checked_mul_i16(i16 left, i16 right);
+[[nodiscard]] StdOption(i16) std_checked_mul_i16(i16 left, i16 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(i32, result)`
@@ -699,7 +700,7 @@ StdOption(i16) std_checked_mul_i16(i16 left, i16 right);
 ///
 /// @return `Some(i32, result)` if the multiplication was successful (no overflow occurred),
 /// `None(i32)` otherwise
-StdOption(i32) std_checked_mul_i32(i32 left, i32 right);
+[[nodiscard]] StdOption(i32) std_checked_mul_i32(i32 left, i32 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(i64, result)`
@@ -710,7 +711,7 @@ StdOption(i32) std_checked_mul_i32(i32 left, i32 right);
 ///
 /// @return `Some(i64, result)` if the multiplication was successful (no overflow occurred),
 /// `None(i64)` otherwise
-StdOption(i64) std_checked_mul_i64(i64 left, i64 right);
+[[nodiscard]] StdOption(i64) std_checked_mul_i64(i64 left, i64 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(f32, result)`
@@ -721,7 +722,7 @@ StdOption(i64) std_checked_mul_i64(i64 left, i64 right);
 ///
 /// @return `Some(f32, result)` if the multiplication was successful (no overflow occurred),
 /// `None(f32)` otherwise
-StdOption(f32) std_checked_mul_f32(f32 left, f32 right);
+[[nodiscard]] StdOption(f32) std_checked_mul_f32(f32 left, f32 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(f64, result)`
@@ -732,7 +733,7 @@ StdOption(f32) std_checked_mul_f32(f32 left, f32 right);
 ///
 /// @return `Some(f64, result)` if the multiplication was successful (no overflow occurred),
 /// `None(f64)` otherwise
-StdOption(f64) std_checked_mul_f64(f64 left, f64 right);
+[[nodiscard]] StdOption(f64) std_checked_mul_f64(f64 left, f64 right);
 
 /// @def std_checked_mul(left, right)
 /// @brief Performs the checked multiplication of `left` and `right`
@@ -800,7 +801,7 @@ StdOption(f64) std_checked_mul_f64(f64 left, f64 right);
 ///
 /// @return `Some(u8, result)` if the division was successful (no overflow occurred),
 /// `None(u8)` otherwise
-StdOption(u8) std_checked_div_u8(u8 left, u8 right);
+[[nodiscard]] StdOption(u8) std_checked_div_u8(u8 left, u8 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(u16, result)`
@@ -811,7 +812,7 @@ StdOption(u8) std_checked_div_u8(u8 left, u8 right);
 ///
 /// @return `Some(u16, result)` if the division was successful (no overflow occurred),
 /// `None(u16)` otherwise
-StdOption(u16) std_checked_div_u16(u16 left, u16 right);
+[[nodiscard]] StdOption(u16) std_checked_div_u16(u16 left, u16 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(u32, result)`
@@ -822,7 +823,7 @@ StdOption(u16) std_checked_div_u16(u16 left, u16 right);
 ///
 /// @return `Some(u32, result)` if the division was successful (no overflow occurred),
 /// `None(u32)` otherwise
-StdOption(u32) std_checked_div_u32(u32 left, u32 right);
+[[nodiscard]] StdOption(u32) std_checked_div_u32(u32 left, u32 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(u64, result)`
@@ -833,7 +834,7 @@ StdOption(u32) std_checked_div_u32(u32 left, u32 right);
 ///
 /// @return `Some(u64, result)` if the division was successful (no overflow occurred),
 /// `None(u64)` otherwise
-StdOption(u64) std_checked_div_u64(u64 left, u64 right);
+[[nodiscard]] StdOption(u64) std_checked_div_u64(u64 left, u64 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(i8, result)`
@@ -844,7 +845,7 @@ StdOption(u64) std_checked_div_u64(u64 left, u64 right);
 ///
 /// @return `Some(i8, result)` if the division was successful (no overflow occurred),
 /// `None(i8)` otherwise
-StdOption(i8) std_checked_div_i8(i8 left, i8 right);
+[[nodiscard]] StdOption(i8) std_checked_div_i8(i8 left, i8 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(i16, result)`
@@ -855,7 +856,7 @@ StdOption(i8) std_checked_div_i8(i8 left, i8 right);
 ///
 /// @return `Some(i16, result)` if the division was successful (no overflow occurred),
 /// `None(i16)` otherwise
-StdOption(i16) std_checked_div_i16(i16 left, i16 right);
+[[nodiscard]] StdOption(i16) std_checked_div_i16(i16 left, i16 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(i32, result)`
@@ -866,7 +867,7 @@ StdOption(i16) std_checked_div_i16(i16 left, i16 right);
 ///
 /// @return `Some(i32, result)` if the division was successful (no overflow occurred),
 /// `None(i32)` otherwise
-StdOption(i32) std_checked_div_i32(i32 left, i32 right);
+[[nodiscard]] StdOption(i32) std_checked_div_i32(i32 left, i32 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(i64, result)`
@@ -877,7 +878,7 @@ StdOption(i32) std_checked_div_i32(i32 left, i32 right);
 ///
 /// @return `Some(i64, result)` if the division was successful (no overflow occurred),
 /// `None(i64)` otherwise
-StdOption(i64) std_checked_div_i64(i64 left, i64 right);
+[[nodiscard]] StdOption(i64) std_checked_div_i64(i64 left, i64 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(f32, result)`
@@ -888,7 +889,7 @@ StdOption(i64) std_checked_div_i64(i64 left, i64 right);
 ///
 /// @return `Some(f32, result)` if the division was successful (no overflow occurred),
 /// `None(f32)` otherwise
-StdOption(f32) std_checked_div_f32(f32 left, f32 right);
+[[nodiscard]] StdOption(f32) std_checked_div_f32(f32 left, f32 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(f64, result)`
@@ -899,7 +900,7 @@ StdOption(f32) std_checked_div_f32(f32 left, f32 right);
 ///
 /// @return `Some(f64, result)` if the division was successful (no overflow occurred),
 /// `None(f64)` otherwise
-StdOption(f64) std_checked_div_f64(f64 left, f64 right);
+[[nodiscard]] StdOption(f64) std_checked_div_f64(f64 left, f64 right);
 
 /// @def std_checked_div(left, right)
 /// @brief Performs the checked division of `left` and `right`

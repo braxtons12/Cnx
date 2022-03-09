@@ -201,9 +201,9 @@ StdString std_time_point_human_readable_format(StdTimePoint self, StdAllocator a
 		char utc[6] = {0};
 
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
-		maybe_unused usize utc_written = strftime(utc, 6, "%z", parsed);
+		[[maybe_unused]] usize utc_written = strftime(utc, 6, "%z", parsed);
 		std_assert(utc_written == 5, "Failed to format time point");
-		let_mut std_string_scoped utc_string
+		std_string_scoped utc_string
 			// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
 			= std_string_new_with_capacity_with_allocator(6, allocator);
 		let hours = std_stringview_from(utc, 0, 3);
@@ -213,7 +213,7 @@ StdString std_time_point_human_readable_format(StdTimePoint self, StdAllocator a
 		std_string_append(utc_string, &minutes);
 
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
-		let maybe_unused written = strftime(memory, 20, "%F|%T", parsed);
+		[[maybe_unused]] let written = strftime(memory, 20, "%F|%T", parsed);
 		std_assert(written == 19, "Failed to format time point");
 		let_mut str = std_string_from_with_allocator(memory, allocator);
 		std_string_append(str, &utc_string);
@@ -221,7 +221,7 @@ StdString std_time_point_human_readable_format(StdTimePoint self, StdAllocator a
 	}
 	else {
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
-		let maybe_unused written = strftime(memory, 20, "%F|%T", parsed);
+		[[maybe_unused]] let written = strftime(memory, 20, "%F|%T", parsed);
 		std_assert(written == 19, "Failed to format time point");
 		return std_string_from_with_allocator(memory, allocator);
 	}
@@ -232,7 +232,7 @@ StdString std_time_point_format(const StdFormat* restrict self, StdFormatSpecifi
 }
 
 StdString std_time_point_format_with_allocator(const StdFormat* restrict self,
-											   maybe_unused StdFormatSpecifier specifier,
+											   [[maybe_unused]] StdFormatSpecifier specifier,
 											   StdAllocator allocator) {
 	std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT
 				   || specifier.m_type == STD_FORMAT_TYPE_DEBUG,

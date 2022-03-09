@@ -26,9 +26,8 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#include <stdio.h>
-
 #include <C2nxt/StdIterator.h>
+#include <stdio.h>
 
 /// @defgroup ranges Ranges
 /// C2nxt Ranges provides a "struct template" enabling a lazy, collection-agnostic way to view,
@@ -266,7 +265,7 @@
                                                                                              \
 		bool StdRangeIdentifier(T, default_filter)(const T* elem);
 
-// clang-format off
+	// clang-format off
 
 /// @brief Creates a filtered `StdRange(T)`
 ///
@@ -281,54 +280,102 @@
 /// @return a `StdRange(T)` over the given iteration, filtered with `filter`
 /// @ingroup ranges
 #define std_range_from_iterators_filtered(T, begin, end, filter) _Generic((&(begin)),			   \
-	StdForwardIterator(Ref(T)) *		: 	StdRangeIdentifier(T, from)( 						   \
-												*static_cast(StdForwardIterator(Ref(T))*)(&begin), \
-												*static_cast(StdForwardIterator(Ref(T))*)(&end),   \
-												filter), 										   \
-	StdReverseIterator(Ref(T)) *		: 	StdRangeIdentifier(T, from)(						   \
-												*static_cast(StdForwardIterator(Ref(T))*)(&begin), \
-												*static_cast(StdForwardIterator(Ref(T))*)(&end),   \
-												filter), 										   \
-	StdBidirectionalIterator(Ref(T))* 	:	StdRangeIdentifier(T, from)(						   \
-												std_iterator_into_std_forward_iterator(			   \
-												*static_cast(									   \
-												StdBidirectionalIterator(Ref(T))*)(&begin)),	   \
-												std_iterator_into_std_forward_iterator(			   \
-												*static_cast(									   \
-												StdBidirectionalIterator(Ref(T))*)(&end)),	   	   \
-												filter),										   \
-	StdRandomAccessIterator(Ref(T))* 	: 	StdRangeIdentifier(T, from)(						   \
-												std_iterator_into_std_forward_iterator(			   \
-												*static_cast(									   \
-												StdRandomAccessIterator(Ref(T))*)(&begin)),	   	   \
-												std_iterator_into_std_forward_iterator(			   \
-												*static_cast(									   \
-												StdRandomAccessIterator(Ref(T))*)(&end)),	   	   \
-												filter),										   \
-	const StdForwardIterator(Ref(T)) *		: 	StdRangeIdentifier(T, from)(					   \
-												*static_cast(StdForwardIterator(Ref(T))*)(&begin), \
-												*static_cast(StdForwardIterator(Ref(T))*)(&end),   \
-												filter), 										   \
-	const StdReverseIterator(Ref(T)) *		: 	StdRangeIdentifier(T, from)(					   \
-												*static_cast(StdForwardIterator(Ref(T))*)(&begin), \
-												*static_cast(StdForwardIterator(Ref(T))*)(&end),   \
-												filter), 										   \
-	const StdBidirectionalIterator(Ref(T))* 	:	StdRangeIdentifier(T, from)(				   \
-												std_iterator_into_std_forward_iterator(			   \
-												*static_cast(									   \
-												StdBidirectionalIterator(Ref(T))*)(&begin)),	   \
-												std_iterator_into_std_forward_iterator(			   \
-												*static_cast(									   \
-												StdBidirectionalIterator(Ref(T))*)(&end)),	   	   \
-												filter),										   \
+	StdForwardIterator(Ref(T)) *		    : 	StdRangeIdentifier(T, from)( 					   \
+													*static_cast(StdForwardIterator(Ref(T))*)      \
+													(&(begin)),                                    \
+													*static_cast(StdForwardIterator(Ref(T))*)      \
+													(&(end)),                                      \
+													filter                                         \
+												), 										           \
+	StdReverseIterator(Ref(T)) *		    : 	StdRangeIdentifier(T, from)(					   \
+													*static_cast(StdForwardIterator(Ref(T))*)      \
+													(&(begin)),                                    \
+													*static_cast(StdForwardIterator(Ref(T))*)      \
+													(&(end)),                                      \
+													filter                                         \
+												), 										           \
+	StdBidirectionalIterator(Ref(T))* 	    :	StdRangeIdentifier(T, from)(					   \
+													std_iterator_into_std_forward_iterator(		   \
+														*static_cast(							   \
+															StdBidirectionalIterator(Ref(T))*      \
+														)                                          \
+														(&(begin))                                 \
+													),	                                           \
+													std_iterator_into_std_forward_iterator(		   \
+														*static_cast(							   \
+															StdBidirectionalIterator(Ref(T))*      \
+														)                                          \
+														(&(end))                                   \
+													),	   	                                       \
+													filter                                         \
+												),										           \
+	StdRandomAccessIterator(Ref(T))* 	    : 	StdRangeIdentifier(T, from)(					   \
+													std_iterator_into_std_forward_iterator(		   \
+														*static_cast(							   \
+															StdRandomAccessIterator(Ref(T))*       \
+														)                                          \
+														(&(begin))                                 \
+													),	   	                                       \
+													std_iterator_into_std_forward_iterator(		   \
+														*static_cast(							   \
+															StdRandomAccessIterator(Ref(T))*       \
+														)                                          \
+														(&(end))                                   \
+													),	   	                                       \
+													filter                                         \
+												),										           \
+	const StdForwardIterator(Ref(T)) *	    : 	StdRangeIdentifier(T, from)(					   \
+													*static_cast(                                  \
+														StdForwardIterator(Ref(T))*                \
+													)                                              \
+													(&(begin)),                                    \
+													*static_cast(                                  \
+														StdForwardIterator(Ref(T))*                \
+													)                                              \
+													(&(end)),                                      \
+													filter                                         \
+												), 										           \
+	const StdReverseIterator(Ref(T)) *	    : 	StdRangeIdentifier(T, from)(					   \
+													*static_cast(                                  \
+														StdForwardIterator(Ref(T))*                \
+													)                                              \
+													(&(begin)),                                    \
+													*static_cast(                                  \
+														StdForwardIterator(Ref(T))*                \
+													)                                              \
+													(&(end)),                                      \
+													filter                                         \
+												), 										           \
+	const StdBidirectionalIterator(Ref(T))* :	StdRangeIdentifier(T, from)(				       \
+													std_iterator_into_std_forward_iterator(		   \
+														*static_cast(                              \
+															StdBidirectionalIterator(Ref(T))*      \
+														)                                          \
+														(&(begin))                                 \
+													),	                                           \
+													std_iterator_into_std_forward_iterator(		   \
+														*static_cast(							   \
+															StdBidirectionalIterator(Ref(T))*      \
+														)                                          \
+														(&(end))                                   \
+													),	                                           \
+													filter                                         \
+												),										           \
 	const StdRandomAccessIterator(Ref(T))* 	: 	StdRangeIdentifier(T, from)(					   \
-												std_iterator_into_std_forward_iterator(			   \
-												*static_cast(									   \
-												StdRandomAccessIterator(Ref(T))*)(&begin)),	   	   \
-												std_iterator_into_std_forward_iterator(			   \
-												*static_cast(									   \
-												StdRandomAccessIterator(Ref(T))*)(&end)),	   	   \
-												filter))
+													std_iterator_into_std_forward_iterator(		   \
+														*static_cast(							   \
+															StdRandomAccessIterator(Ref(T))*       \
+														)                                          \
+														(&(begin))                                 \
+													),	                                           \
+													std_iterator_into_std_forward_iterator(		   \
+														*static_cast(							   \
+															StdRandomAccessIterator(Ref(T))*       \
+														)                                          \
+														(&(end))                                   \
+													),	   	                                       \
+													filter                                         \
+												))
 // clang-format on
 
 	/// @brief Creates a `StdRange(T)`
@@ -437,7 +484,7 @@
 		({                                                             \
 			let_mut UNIQUE_VAR(range) = std_range_from(T, begin, end); \
 			let_mut UNIQUE_VAR(current) = begin;                       \
-			for(let_mut i = 0; i < n; ++i) {                           \
+			for(let_mut i = 0; i < (n); ++i) {                         \
 				ignore(std_iterator_next(UNIQUE_VAR(current)));        \
 			}                                                          \
 			UNIQUE_VAR(range).m_end = UNIQUE_VAR(current);             \
@@ -486,13 +533,11 @@
 	///
 	/// @return The given range, after applying the transformation
 	/// @ingroup ranges
-	#define std_range_transform(range, transform_function) \
-		({                                                 \
-			foreach_ref_mut(elem, range) {                 \
-				(transform_function)(elem);                \
-			}                                              \
-                                                           \
-			range;                                         \
+	#define std_range_transform(range, transform_function)               \
+		({                                                               \
+			foreach_ref_mut(elem, range) { (transform_function)(elem); } \
+                                                                         \
+			(range);                                                     \
 		})
 	/// @brief Transforms the elements in the collection
 	///
@@ -593,7 +638,8 @@
 	/// @param T - The type held by the collection `StdRange(T)` will abstract over
 	/// @ingroup ranges
 	#define ImplStdRange(T)                                                                        \
-		static const maybe_unused StdRangeIdentifier(T, vtable) StdRangeIdentifier(T, vtable_impl) \
+		[[maybe_unused]] static const StdRangeIdentifier(T, vtable)                                \
+			StdRangeIdentifier(T, vtable_impl)                                                     \
 			= {                                                                                    \
 				.begin = StdRangeIdentifier(T, begin),                                             \
 				.end = StdRangeIdentifier(T, end),                                                 \

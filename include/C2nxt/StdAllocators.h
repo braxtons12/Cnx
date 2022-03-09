@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief StdAllocators provides an abstraction to modularize custom memory allocators to make
 /// custom allocator use simple and configurable
-/// @version 0.2
-/// @date 2022-01-11
+/// @version 0.2.1
+/// @date 2022-03-09
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -79,7 +79,9 @@ typedef void (*deallocate_function)(StdAllocator* restrict self, void* memory);
 ///
 /// @return the allocated memory
 /// @ingroup memory
-void* std_allocate(maybe_unused StdAllocator* restrict self, usize size_bytes);
+[[nodiscard]] [[not_null(1)]] void*
+std_allocate([[maybe_unused]] StdAllocator* restrict self, usize size_bytes)
+	std_disable_if(!self, "Can't allocate memory with a null allocator");
 
 /// @brief Wrapper for `realloc` so it can be used in `StdAllocator`s
 /// Behavior matches that of `realloc`
@@ -90,9 +92,11 @@ void* std_allocate(maybe_unused StdAllocator* restrict self, usize size_bytes);
 ///
 /// @return the allocated memory
 /// @ingroup memory
-void*
+[[nodiscard]] [[not_null(1)]] void*
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-std_reallocate(maybe_unused StdAllocator* restrict self, void* memory, usize new_size_bytes);
+std_reallocate([[maybe_unused]] StdAllocator* restrict self, void* memory, usize new_size_bytes)
+	std_disable_if(!self, "Can't reallocate with a null allocator")
+		std_disable_if(!memory, "Can't reallocate a nullptr");
 
 /// @brief Wrapper for `free` so it can be used in `StdAllocator`s
 /// Behavior matches that of `free`
@@ -100,9 +104,11 @@ std_reallocate(maybe_unused StdAllocator* restrict self, void* memory, usize new
 /// @param self - The state of the allocator (unused)
 /// @param memory - The memory allocation to deallocate
 /// @ingroup memory
-void
+[[not_null(1, 2)]] void
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-std_deallocate(maybe_unused StdAllocator* restrict self, void* memory);
+std_deallocate([[maybe_unused]] StdAllocator* restrict self, void* memory)
+	std_disable_if(!self, "Can't deallocate with a null allocator")
+		std_disable_if(!memory, "Can't free a nullptr");
 
 	#ifndef STD_DEFAULT_ALLOCATOR_FUNCTION
 		/// @brief The default `StdAllocator` allocation function
@@ -148,7 +154,7 @@ typedef struct StdMemory {
 ///
 /// @return  a default `StdAllocator`
 /// @ingroup memory
-StdAllocator std_allocator_new(void);
+[[nodiscard]] StdAllocator std_allocator_new(void);
 
 	/// @brief Implements `StdAllocator` for the given custom allocator type
 	///
@@ -216,7 +222,7 @@ extern const StdAllocator DEFAULT_ALLOCATOR;
 ///
 /// @return  newly allocated memory
 /// @ingroup memory
-StdMemory std_allocator_allocate(StdAllocator allocator, usize size_bytes);
+[[nodiscard]] StdMemory std_allocator_allocate(StdAllocator allocator, usize size_bytes);
 /// @brief Allocates new memory for an array of the
 /// given size with the given `StdAllocator`
 ///
@@ -229,7 +235,7 @@ StdMemory std_allocator_allocate(StdAllocator allocator, usize size_bytes);
 ///
 /// @return newly allocated memory
 /// @ingroup memory
-StdMemory
+[[nodiscard]] StdMemory
 std_allocator_allocate_array(StdAllocator allocator, usize num_elements, usize element_size_bytes);
 /// @brief Allocates new memory large enough to
 /// store `new_size_bytes` bytes of data, and
@@ -245,7 +251,8 @@ std_allocator_allocate_array(StdAllocator allocator, usize num_elements, usize e
 /// @note If reallocation fails, the original
 /// memory will be returned unchanged
 /// @ingroup memory
-StdMemory std_allocator_reallocate(StdAllocator allocator, StdMemory memory, usize new_size_bytes);
+[[nodiscard]] StdMemory
+std_allocator_reallocate(StdAllocator allocator, StdMemory memory, usize new_size_bytes);
 /// @brief Allocates new memory large enough to
 /// store `new_num_elements` elements of size
 /// `element_size_bytes`, and copies the old
@@ -263,10 +270,10 @@ StdMemory std_allocator_reallocate(StdAllocator allocator, StdMemory memory, usi
 /// @note If reallocation fails, the original
 /// memory will be returned unchanged
 /// @ingroup memory
-StdMemory std_allocator_reallocate_array(StdAllocator allocator,
-										 StdMemory memory,
-										 usize new_num_elements,
-										 usize element_size_bytes);
+[[nodiscard]] StdMemory std_allocator_reallocate_array(StdAllocator allocator,
+													   StdMemory memory,
+													   usize new_num_elements,
+													   usize element_size_bytes);
 /// @brief Deallocates (aka frees) the given memory
 /// with the given `StdAllocator`
 ///

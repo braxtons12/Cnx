@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Basic lambda/closure implementation for C.
 /// @version 0.1
-/// @date 2021-12-29
+/// @date 2022-03-09
 ///
 /// MIT License
 /// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -143,26 +143,26 @@ typedef struct StdLambdaCaptures {
 ///
 /// @return a bound lambda
 /// @ingroup std_lambda
-#define lambda_with_allocator(allocator, function_name, ...)                                       \
-	({                                                                                             \
-		let UNIQUE_VAR(size) = static_cast(usize)(sizeof(LambdaBinding(__VA_ARGS__)));             \
-		let UNIQUE_VAR(allocation) = std_allocator_allocate((allocator), UNIQUE_VAR(size));        \
-		LambdaBinding(__VA_ARGS__) UNIQUE_VAR(temp_binding) = {__VA_ARGS__};                       \
-		LambdaBinding(__VA_ARGS__) * UNIQUE_VAR(binding) = UNIQUE_VAR(allocation).m_memory;        \
-		std_memcpy(LambdaBinding(__VA_ARGS__), UNIQUE_VAR(binding), &UNIQUE_VAR(temp_binding), 1); \
-                                                                                                   \
-		struct {                                                                                   \
-			typeof(function_name)* const call;                                                     \
-			StdLambdaCaptures captures;                                                            \
-			const StdAllocator* allocator;                                                         \
-		} UNIQUE_VAR(function) = {                                                          \
-		.call = function_name,                                                          \
-		.captures = {                                                                   \
-						.captures = UNIQUE_VAR(binding),                                \
-						.captures_size = UNIQUE_VAR(allocation).m_size_bytes,},\
-        .allocator = &(allocator),\
-	};      \
-		UNIQUE_VAR(function);                                                                      \
+#define lambda_with_allocator(allocator, function_name, ...)                                         \
+	({                                                                                               \
+		let UNIQUE_VAR(size) = static_cast(usize)(sizeof(LambdaBinding(__VA_ARGS__)));               \
+		let UNIQUE_VAR(allocation) = std_allocator_allocate((allocator), UNIQUE_VAR(size));          \
+		LambdaBinding(__VA_ARGS__) UNIQUE_VAR(temp_binding) = {__VA_ARGS__};                         \
+		LambdaBinding(__VA_ARGS__) * UNIQUE_VAR(binding) = UNIQUE_VAR(allocation).m_memory;          \
+		std_memcpy(LambdaBinding(__VA_ARGS__), UNIQUE_VAR(binding), &UNIQUE_VAR(temp_binding), 1);   \
+                                                                                                     \
+		struct {                                                                                     \
+			typeof(function_name)* const call;                                                       \
+			StdLambdaCaptures captures;                                                              \
+			const StdAllocator* allocator;                                                           \
+		} UNIQUE_VAR(function) = {                                                                 \
+		.call = function_name,                                                                     \
+		.captures = {                                                                              \
+						.captures = UNIQUE_VAR(binding),                                           \
+						.captures_size = UNIQUE_VAR(allocation).m_size_bytes,},                    \
+        .allocator = &(allocator),                                                                 \
+	}; \
+		UNIQUE_VAR(function);                                                                        \
 	}) /** NOLINT(performance-no-int-to-ptr)**/
 
 /// @brief Binds the given function and captures as a lambda type, that can be called later

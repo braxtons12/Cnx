@@ -3,7 +3,7 @@
 /// @brief StdDef provides various `#define`s for performing basic tasks and macro-related
 /// functions.
 /// @version 0.2
-/// @date 2022-01-19
+/// @date 2022-03-06
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -86,7 +86,6 @@
 	/// @return the type of the expression
 	/// @ingroup std_def
 	#define typeof(value) __typeof__(value)
-
 	#if defined(__clang__)
 		/// @brief Disables the preceding/following function at compile-time
 		///
@@ -226,12 +225,28 @@
 	/// @brief Specify that the given scope is unreachable
 	/// @ingroup std_def
 	#define unreachable() __builtin_unreachable()
-	/// @brief Specify that the given variable of function may be unused
-	/// @ingroup std_def
-	#define maybe_unused __attribute__((unused))
 	/// @brief Specify that the following function should always be inlined
 	/// @ingroup std_def
-	#define always_inline __attribute__((always_inline))
+	#define always_inline gnu::always_inline
+
+	/// @brief Attribute to specifiy that the function arguments in the indicated positions
+	/// (1-based indices) should not be nullptr
+	///
+	/// Example:
+	/// @code {.c}
+	/// [[not_null(1, 2)]] int func(void* data, void* res, int value);
+	/// @endcode
+	/// @ingroup std_def
+	#define not_null(...) gnu::nonnull(__VA_ARGS__)
+
+	/// @brief Attribute to specify that the pointer the function returns will never be nullptr
+	///
+	/// Example
+	/// @code {.c}
+	///	[[returns_not_null]] void* func(void* data, int value);
+	/// @endcode
+	/// @ingroup std_def
+	#define returns_not_null gnu::returns_nonnull
 
 	/// @brief Use this macro to declare a variable that will have a cleanup function called on it
 	/// at scope end.
@@ -242,7 +257,7 @@
 	/// @param scope_end_func - The function to call on the declared variable when it goes out of
 	/// scope
 	/// @ingroup std_def
-	#define scoped(scope_end_func) __attribute__((cleanup(scope_end_func)))
+	#define scoped(scope_end_func) [[gnu::cleanup(scope_end_func)]] let_mut
 
 	/// @brief Declare a variable with `let` to create a `const` variable with inferred type.
 	///

@@ -22,19 +22,19 @@ StdTimePoint mock_clock_max_time_point(const StdClock* restrict self) {
 										 self);
 }
 
-StdClockResolution mock_clock_resolution(const maybe_unused StdClock* restrict self) {
+StdClockResolution mock_clock_resolution([[maybe_unused]] const StdClock* restrict self) {
 	return STD_CLOCK_SECONDS;
 }
 
-StdRatio mock_clock_resolution_as_ratio(const maybe_unused StdClock* restrict self) {
+StdRatio mock_clock_resolution_as_ratio([[maybe_unused]] const StdClock* restrict self) {
 	return std_seconds_period;
 }
 
-StdTimePointLocale mock_clock_locale(const maybe_unused StdClock* restrict self) {
+StdTimePointLocale mock_clock_locale([[maybe_unused]] const StdClock* restrict self) {
 	return STD_LOCAL_TIME;
 }
 
-StdString mock_clock_format_with_allocator(const maybe_unused StdClock* restrict self,
+StdString mock_clock_format_with_allocator([[maybe_unused]] const StdClock* restrict self,
 										   StdAllocator allocator) {
 	return std_string_from_with_allocator("MockClock", allocator);
 }
@@ -43,21 +43,20 @@ StdString mock_clock_format(const StdClock* restrict self) {
 	return mock_clock_format_with_allocator(self, DEFAULT_ALLOCATOR);
 }
 
-static maybe_unused ImplTraitFor(StdClock,
-								 MockClock,
-								 mock_clock_now,
-								 mock_clock_min_time_point,
-								 mock_clock_max_time_point,
-								 mock_clock_resolution,
-								 mock_clock_resolution_as_ratio,
-								 mock_clock_locale,
-								 mock_clock_format,
-								 mock_clock_format_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdClock,
+									 MockClock,
+									 mock_clock_now,
+									 mock_clock_min_time_point,
+									 mock_clock_max_time_point,
+									 mock_clock_resolution,
+									 mock_clock_resolution_as_ratio,
+									 mock_clock_locale,
+									 mock_clock_format,
+									 mock_clock_format_with_allocator);
 
 IGNORE_RESERVED_IDENTIFIER_WARNING_START
 #define __mock_clock \
-	(MockClock) {    \
-	}
+	(MockClock) { }
 IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 
 static let mock_clock = as_trait(StdClock, MockClock, __mock_clock);

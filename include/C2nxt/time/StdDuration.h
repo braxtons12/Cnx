@@ -56,64 +56,44 @@ typedef struct StdDuration {
 
 	/// @brief Period representing nanoseconds for `StdDuration` and other time-related facilities
 	/// @ingroup std_duration
-	#define std_nanoseconds_period          \
-		(StdRatio) {                        \
-			.num = 1LL, .den = 1000000000LL \
-		}
+	#define std_nanoseconds_period \
+		(StdRatio) { .num = 1LL, .den = 1000000000LL }
 	/// @brief Period representing microseconds for `StdDuration` and other time-related facilities
 	/// @ingroup std_duration
-	#define std_microseconds_period      \
-		(StdRatio) {                     \
-			.num = 1LL, .den = 1000000LL \
-		}
+	#define std_microseconds_period \
+		(StdRatio) { .num = 1LL, .den = 1000000LL }
 	/// @brief Period representing milliseconds for `StdDuration` and other time-related facilities
 	/// @ingroup std_duration
-	#define std_milliseconds_period   \
-		(StdRatio) {                  \
-			.num = 1LL, .den = 1000LL \
-		}
+	#define std_milliseconds_period \
+		(StdRatio) { .num = 1LL, .den = 1000LL }
 	/// @brief Period representing seconds for `StdDuration` and other time-related facilities
 	/// @ingroup std_duration
-	#define std_seconds_period     \
-		(StdRatio) {               \
-			.num = 1LL, .den = 1LL \
-		}
+	#define std_seconds_period \
+		(StdRatio) { .num = 1LL, .den = 1LL }
 	/// @brief Period representing minutes for `StdDuration` and other time-related facilities
 	/// @ingroup std_duration
-	#define std_minutes_period      \
-		(StdRatio) {                \
-			.num = 60LL, .den = 1LL \
-		}
+	#define std_minutes_period \
+		(StdRatio) { .num = 60LL, .den = 1LL }
 	/// @brief Period representing hours for `StdDuration` and other time-related facilities
 	/// @ingroup std_duration
-	#define std_hours_period          \
-		(StdRatio) {                  \
-			.num = 3600LL, .den = 1LL \
-		}
+	#define std_hours_period \
+		(StdRatio) { .num = 3600LL, .den = 1LL }
 	/// @brief Period representing days for `StdDuration` and other time-related facilities
 	/// @ingroup std_duration
-	#define std_days_period            \
-		(StdRatio) {                   \
-			.num = 86400LL, .den = 1LL \
-		}
+	#define std_days_period \
+		(StdRatio) { .num = 86400LL, .den = 1LL }
 	/// @brief Period representing weeks for `StdDuration` and other time-related facilities
 	/// @ingroup std_duration
-	#define std_weeks_period            \
-		(StdRatio) {                    \
-			.num = 604800LL, .den = 1LL \
-		}
+	#define std_weeks_period \
+		(StdRatio) { .num = 604800LL, .den = 1LL }
 	/// @brief Period representing months for `StdDuration` and other time-related facilities
 	/// @ingroup std_duration
-	#define std_months_period            \
-		(StdRatio) {                     \
-			.num = 2629746LL, .den = 1LL \
-		}
+	#define std_months_period \
+		(StdRatio) { .num = 2629746LL, .den = 1LL }
 	/// @brief Period representing years for `StdDuration` and other time-related facilities
 	/// @ingroup std_duration
-	#define std_years_period              \
-		(StdRatio) {                      \
-			.num = 31556952LL, .den = 1LL \
-		}
+	#define std_years_period \
+		(StdRatio) { .num = 31556952LL, .den = 1LL }
 
 /// @brief Valid periods for `StdDuration` and other time-related facilities
 /// @ingroup std_duration
@@ -405,6 +385,8 @@ StdString std_duration_format_with_allocator(const StdFormat* restrict self,
 
 /// @brief Implements the `StdFormat` trait for `StdDuration`
 /// @ingroup std_duration
-static maybe_unused
-	ImplTraitFor(StdFormat, StdDuration, std_duration_format, std_duration_format_with_allocator);
+[[maybe_unused]] static ImplTraitFor(StdFormat,
+									 StdDuration,
+									 std_duration_format,
+									 std_duration_format_with_allocator);
 #endif // STD_DURATION

@@ -91,21 +91,21 @@ endif ()
 
 if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang")
     target_compile_options(FormatBenchmark PRIVATE
-            -std=gnu11
+            -std=gnu2x
             -Wall
             -Wextra
             -Weverything
             -Werror
             )
     target_compile_options(Test PRIVATE
-            -std=gnu11
+            -std=gnu2x
             -Wall
             -Wextra
             -Weverything
             -Werror
             )
     target_compile_options(C2nxt PRIVATE
-            -std=gnu11
+            -std=gnu2x
             -Wall
             -Wextra
             -Weverything
@@ -113,6 +113,7 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
             )
     target_compile_options(C2nxt PUBLIC
             -fdebug-macro
+            -Wnonnull
             -Wno-unused-value
             -Wno-unused-function
             -Wno-extra-semi
@@ -140,7 +141,9 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
             -Wno-int-to-pointer-cast
             -Wno-c++-compat
             -Wno-extra-semi-stmt
-            -Wno-declaration-after-statement)
+            -Wno-declaration-after-statement
+            -Wno-pre-c2x-compat
+            )
     if (WIN32)
         target_compile_options(C2nxt PUBLIC
                 -D_CRT_SECURE_NO_WARNINGS
@@ -151,21 +154,22 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
     endif ()
 else ()
     target_compile_options(Test PRIVATE
-            -std=gnu11
+            -std=gnu2x
             -Wall
             -Wextra
             -Werror)
     target_compile_options(FormatBenchmark PRIVATE
-            -std=gnu11
+            -std=gnu2x
             -Wall
             -Wextra
             -Werror)
     target_compile_options(C2nxt PRIVATE
-            -std=gnu11
+            -std=gnu2x
             -Wall
             -Wextra
             -Werror)
     target_compile_options(C2nxt PUBLIC
+            -Wnonnull
             -Wno-unused-value
             -Wno-unused-function
             -Wno-missing-braces
@@ -189,7 +193,7 @@ endif ()
 
 if (APPLE)
     target_link_libraries(C2nxt PUBLIC m c)
-elseif(NOT WIN32)
+elseif (NOT WIN32)
     target_link_libraries(C2nxt PUBLIC m)
 endif ()
 

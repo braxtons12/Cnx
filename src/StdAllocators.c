@@ -3,7 +3,7 @@
 /// @brief StdAllocators provides an abstraction to modularize custom memory allocators to make
 /// custom allocator use simple and configurable
 /// @version 0.2
-/// @date 2022-01-11
+/// @date 2022-03-06
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -32,19 +32,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void* std_allocate(maybe_unused StdAllocator* restrict self, usize size_bytes) {
+void* std_allocate([[maybe_unused]] StdAllocator* restrict self, usize size_bytes) {
 	return malloc(size_bytes);
 }
 
 void*
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-std_reallocate(maybe_unused StdAllocator* restrict self, void* memory, usize new_size_bytes) {
-return realloc(memory, new_size_bytes);
+std_reallocate([[maybe_unused]] StdAllocator* restrict self, void* memory, usize new_size_bytes) {
+	return realloc(memory, new_size_bytes);
 }
 
 void
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-std_deallocate(maybe_unused StdAllocator* restrict self, void* memory) {
+std_deallocate([[maybe_unused]] StdAllocator* restrict self, void* memory) {
 	free(memory);
 }
 
@@ -94,8 +94,8 @@ StdMemory std_allocator_reallocate(StdAllocator allocator, StdMemory memory, usi
 
 #if STD_ALLOCATOR_ABORT_ON_ALLOCATION_FAILURE
 		ignore(fprintf(stderr,
-				"Failed to allocate " STD_OFORMAT_USIZE " bytes of memory, aborting\n",
-				new_size_bytes));
+					   "Failed to allocate " STD_OFORMAT_USIZE " bytes of memory, aborting\n",
+					   new_size_bytes));
 		abort();
 #else
 		return memory;

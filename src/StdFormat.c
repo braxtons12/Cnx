@@ -3,7 +3,7 @@
 /// @brief StdFormat brings human readable string formatting, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
 /// @version 0.2
-/// @date 2022-01-23
+/// @date 2022-03-06
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -81,12 +81,12 @@ static const f64 powers_of_10[NUM_POWERS_OF_10] = {
 	1000000000000000000000000000000000000000.0,
 };
 
-always_inline static inline u8 std_get_digit_u64(u64 num, usize digit) {
+[[nodiscard]] [[always_inline]] static inline u8 std_get_digit_u64(u64 num, usize digit) {
 	return (digit != 0 ? (num / static_cast(u64)(powers_of_10[digit])) % 10 : // NOLINT
 						 num % 10);													  // NOLINT
 }
 
-always_inline static inline u8 std_get_digit_i64(i64 num, usize digit) {
+[[nodiscard]] [[always_inline]] static inline u8 std_get_digit_i64(i64 num, usize digit) {
 	num = abs(num);
 	return static_cast(u8)(digit != 0 ?
 							   (num / static_cast(i64)(powers_of_10[digit])) % 10 : // NOLINT
@@ -123,15 +123,15 @@ always_inline static inline u8 std_get_digit_i64(i64 num, usize digit) {
 // clang-format on
 #endif
 
-always_inline static inline char std_num_to_char(u8 num) {
+[[nodiscard]] [[always_inline]] static inline char std_num_to_char(u8 num) {
 	return static_cast(char)(num) + '0';
 }
 
-always_inline static inline u8 std_get_hex(usize num, usize digit) {
+[[nodiscard]] [[always_inline]] static inline u8 std_get_hex(usize num, usize digit) {
 	return (num >> (digit * 4U)) & 0xFU; // NOLINT
 }
 
-always_inline static inline char std_num_to_hex_lower(u8 num) {
+[[nodiscard]] [[always_inline]] static inline char std_num_to_hex_lower(u8 num) {
 	switch(num) {
 		case 0 ... 9: return static_cast(char)(num) + '0';		  // NOLINT
 		case 10 ... 15: return 'a' + static_cast(char)(num) - 10; // NOLINT
@@ -139,7 +139,7 @@ always_inline static inline char std_num_to_hex_lower(u8 num) {
 	}
 }
 
-always_inline static inline char std_num_to_hex_upper(u8 num) {
+[[nodiscard]] [[always_inline]] static inline char std_num_to_hex_upper(u8 num) {
 	switch(num) {
 		case 0 ... 9: return static_cast(char)(num) + '0';			// NOLINT
 		case 10 ... 15: return 'A' + (static_cast(char)(num) - 10); // NOLINT
@@ -147,20 +147,22 @@ always_inline static inline char std_num_to_hex_upper(u8 num) {
 	}
 }
 
+[[nodiscard]] [[always_inline]] static inline u8
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-always_inline static inline u8 std_get_digit_before_decimal(f64 num, usize digit) {
+std_get_digit_before_decimal(f64 num, usize digit) {
 	let num_ = static_cast(i64)(num);
 	return std_get_digit(num_, digit);
 }
 
-always_inline static inline u8
+[[nodiscard]] [[always_inline]] static inline u8
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 std_get_digit_after_decimal(f64 num, usize digit, usize num_sig_figs) {
 	let num_ = static_cast(isize)(num * powers_of_10[num_sig_figs]);
 	return std_get_digit(num_, (num_sig_figs - 1) - digit);
 }
 
-always_inline static inline usize std_get_num_digits_before_decimal(f64 num, i64 exponent) {
+[[nodiscard]] [[always_inline]] static inline usize
+std_get_num_digits_before_decimal(f64 num, i64 exponent) {
 	return narrow_cast(usize)(abs(num) < 10.0 ? // NOLINT
 								  1 :
 								  exponent);
@@ -192,7 +194,7 @@ typedef enum StdTypesNumHexTextDigits {
 	NUM_HEX_DIGITS_PTR = sizeof(nullptr_t) == sizeof(u32) ? NUM_HEX_DIGITS_U32 : NUM_HEX_DIGITS_U64
 } StdTypesNumHexTextDigits;
 
-always_inline static inline StdString
+[[nodiscard]] [[always_inline]] static inline StdString
 std_format_decimal_u64(u64 num, usize num_digits, StdAllocator allocator) {
 	let_mut string = std_string_new_with_capacity_with_allocator(num_digits, allocator);
 	let_mut gotten_non_zero = false;
@@ -209,7 +211,7 @@ std_format_decimal_u64(u64 num, usize num_digits, StdAllocator allocator) {
 	});
 }
 
-always_inline static inline StdString
+[[nodiscard]] [[always_inline]] static inline StdString
 std_format_decimal_i64(i64 num, usize num_digits, StdAllocator allocator) {
 	let_mut string = std_string_new_with_capacity_with_allocator(num_digits + 1, allocator);
 	let_mut gotten_non_zero = false;
@@ -243,8 +245,9 @@ std_format_decimal_i64(i64 num, usize num_digits, StdAllocator allocator) {
 		i64 		: 	std_format_decimal_i64)(num, num_digits, allocator)
 // clang-format on
 
+[[nodiscard]] StdString
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-StdString std_format_hex(u64 num, usize num_digits, StdFormatTypes type, StdAllocator allocator) {
+std_format_hex(u64 num, usize num_digits, StdFormatTypes type, StdAllocator allocator) {
 	let_mut string = std_string_new_with_capacity_with_allocator(num_digits + 2, allocator);
 	let_mut gotten_non_zero = false;
 
@@ -280,7 +283,7 @@ StdString std_format_bool(const StdFormat* restrict self, StdFormatSpecifier spe
 }
 
 StdString std_format_bool_with_allocator(const StdFormat* restrict self,
-										 StdFormatSpecifier maybe_unused specifier,
+										 [[maybe_unused]] StdFormatSpecifier specifier,
 										 StdAllocator allocator) {
 	std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT,
 			   "Can't format bool with custom specifier");
@@ -476,10 +479,10 @@ StdString std_format_i64_with_allocator(const StdFormat* restrict self,
 }
 
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-StdString std_format_f64_scientific(f64 shifted_to_scientific,
-									i64 exponent,
-									usize num_sig_figs,
-									StdAllocator allocator) {
+[[nodiscard]] StdString std_format_f64_scientific(f64 shifted_to_scientific,
+												  i64 exponent,
+												  usize num_sig_figs,
+												  StdAllocator allocator) {
 	// possible -, first digit, point, Exxx, num sig figs
 	let num_chars_in_float = 1 + 1 + 1 + 4 + num_sig_figs;
 	let_mut string = std_string_new_with_capacity_with_allocator(num_chars_in_float, allocator);
@@ -511,7 +514,7 @@ StdString std_format_f64_scientific(f64 shifted_to_scientific,
 	});
 }
 
-StdString
+[[nodiscard]] StdString
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 std_format_f64_decimal(f64 num, i64 exponent, usize num_sig_figs, StdAllocator allocator) {
 	let num_chars_before_decimal = std_get_num_digits_before_decimal(num, exponent);
@@ -545,7 +548,7 @@ std_format_f64_decimal(f64 num, i64 exponent, usize num_sig_figs, StdAllocator a
 	return string;
 }
 
-always_inline static inline StdString
+[[nodiscard]] [[always_inline]] static inline StdString
 std_format_f64_with_allocator__(f64 num, StdFormatSpecifier specifier, StdAllocator allocator) {
 	let_mut exponent_base_2 = 0;
 	ignore(frexp(num, &exponent_base_2));
@@ -711,18 +714,19 @@ DeclAndImplStdResult(StdVector(StdFormatVariant));
 		.tag = Specifier, .variant_identifier(Specifier) = { specifier } \
 	}
 
-always_inline static inline StdFormatVariant
-std_format_variant_new(StdAllocator maybe_unused allocator) {
+[[nodiscard]] [[always_inline]] static inline StdFormatVariant
+std_format_variant_new([[maybe_unused]] StdAllocator allocator) {
 	return (StdFormatVariant){0};
 }
 
-always_inline static inline void
-std_format_variant_free(maybe_unused StdFormatVariant* elem, maybe_unused StdAllocator allocator) {
+[[not_null(1)]] [[always_inline]] static inline void
+std_format_variant_free([[maybe_unused]] StdFormatVariant* elem,
+						[[maybe_unused]] StdAllocator allocator) {
 }
 
-always_inline static inline StdFormatVariant
+[[nodiscard]] [[not_null(1)]] [[always_inline]] static inline StdFormatVariant
 std_format_variant_clone(const StdFormatVariant* restrict elem,
-						 maybe_unused StdAllocator allocator) {
+						 [[maybe_unused]] StdAllocator allocator) {
 	return *elem;
 }
 
@@ -734,7 +738,7 @@ std_format_variant_clone(const StdFormatVariant* restrict elem,
 		const StdStringView* 			: std_format_pair_from_stringview)(x)
 //clang-format on
 
-const_cstring std_format_error_message_function(i64 error_code) {
+[[nodiscard]] [[returns_not_null]] const_cstring std_format_error_message_function(i64 error_code) {
 	if(error_code == STD_FORMAT_SUCCESS) {
 		return "No error: Formatting successful";
 	}
@@ -756,10 +760,11 @@ const_cstring std_format_error_message_function(i64 error_code) {
 	unreachable();
 }
 
-static const maybe_unused StdErrorCategory std_format_error_category
+[[maybe_unused]] static const StdErrorCategory std_format_error_category
 	= {.m_message_function = std_format_error_message_function};
 
-always_inline static inline usize std_format_get_num_sig_figs_from_substring(
+[[nodiscard]] [[not_null(1)]] [[always_inline]]
+static inline usize std_format_get_num_sig_figs_from_substring(
 									restrict const_cstring format_string,
 									// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 									usize length,
@@ -798,7 +803,7 @@ always_inline static inline usize std_format_get_num_sig_figs_from_substring(
 	return num_figs;
 }
 
-bool std_format_is_char_valid_in_specifier(char character) {
+[[nodiscard]] bool std_format_is_char_valid_in_specifier(char character) {
 	return character == STD_FORMAT_TYPE_DECIMAL || character == STD_FORMAT_TYPE_HEX_LOWER
 		   || character == STD_FORMAT_TYPE_HEX_UPPER || character == STD_FORMAT_TYPE_SCIENTIFIC
 		   || character == STD_FORMAT_TYPE_DEBUG || (character >= '0' && character <= '9');
@@ -810,11 +815,11 @@ static let format_variant_data = (StdCollectionData(StdVector(StdFormatVariant))
 .m_destructor = std_format_variant_free,
 .m_copy_constructor = std_format_variant_clone};
 
-StdResult(StdVector(StdFormatVariant))
+[[nodiscard]] [[not_null(1)]] StdResult(StdVector(StdFormatVariant))
 	std_format_parse_and_validate_format_string(restrict const_cstring format_string, // NOLINT
 											// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 											usize length,
-											maybe_unused usize num_args,
+											[[maybe_unused]] usize num_args,
 											StdAllocator allocator)
 {
 	let_mut vec = std_vector_new_with_capacity_allocator_and_collection_data(StdFormatVariant,
@@ -999,7 +1004,7 @@ StdString(std_vformat_with_allocator)(restrict const_cstring format_string,
 	}
 #endif // STD_PLATFORM_DEBUG
 
-	let_mut std_vector_scoped(StdFormatVariant) format_variants
+	std_vector_scoped(StdFormatVariant) format_variants
 		= std_result_expect(maybe_format_variants, "Invalid format string");
 	let_mut initial_size = static_cast(usize)(0);
 	foreach_ref(elem, format_variants) {
@@ -1023,7 +1028,7 @@ StdString(std_vformat_with_allocator)(restrict const_cstring format_string,
 			}
 			variant(Specifier, specifier) {
 				let format = va_arg(list, StdFormat); // NOLINT(clang-analyzer-valist.Uninitialized)
-				let_mut std_string_scoped formatted
+				std_string_scoped formatted
 						   = trait_call(format_with_allocator, format, specifier, allocator);
 				std_string_append(string, &formatted);
 			}

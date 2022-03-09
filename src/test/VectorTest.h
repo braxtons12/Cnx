@@ -234,7 +234,7 @@ static let scoped_data
 /// should print "running element destructor" to stdout
 /// SHORT_OPT_CAPACITY * 2 times
 void test_vector_scoped(void) {
-	let_mut std_vector_scoped(u32) vec = std_vector_new_with_collection_data(u32, &scoped_data);
+	std_vector_scoped(u32) vec = std_vector_new_with_collection_data(u32, &scoped_data);
 	std_vector_resize(vec, SHORT_OPT_CAPACITY * 2);
 	for(let_mut i = 0U; i < std_vector_capacity(vec); ++i) {
 		std_vector_at_mut(vec, i) = i;

@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief StdIO brings human readable formatted I/O, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
-/// @version 0.1
-/// @date 2022-01-02
+/// @version 0.1.2
+/// @date 2022-03-09
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -66,20 +66,26 @@
 	/// @brief Declarations and definitions for Standard I/O
 	#define STD_IO
 
+	#define ___DISABLE_IF_NULL(format_string) \
+		std_disable_if(!(format_string), "Can't print with a null format string")
 /// @brief Formats the given arguments into the specified format string then prints it to `stdout`
 ///
 /// @param format_string - The format string specifying how text and arguments should be formatted
 /// @param allocator - The allocator to allocate the formatted string with
 /// @param num_args - The number of args in the parameter pack
 /// @param ... - The parameter pack of arguments to format
-void print_(const_cstring restrict format_string, StdAllocator allocator, usize num_args, ...);
+[[not_null(1)]] void
+print_(restrict const_cstring format_string, StdAllocator allocator, usize num_args, ...)
+	___DISABLE_IF_NULL(format_string);
 /// @brief Formats the given arguments into the specified format string then prints it to `stderr`
 ///
 /// @param format_string - The format string specifying how text and arguments should be formatted
 /// @param allocator - The allocator to allocate the formatted string with
 /// @param num_args - The number of args in the parameter pack
 /// @param ... - The parameter pack of arguments to format
-void eprint_(const_cstring restrict format_string, StdAllocator allocator, usize num_args, ...);
+[[not_null(1)]] void
+eprint_(restrict const_cstring format_string, StdAllocator allocator, usize num_args, ...)
+	___DISABLE_IF_NULL(format_string);
 /// @brief Formats the given arguments into the specified format string then prints it to the given
 /// file
 ///
@@ -88,11 +94,12 @@ void eprint_(const_cstring restrict format_string, StdAllocator allocator, usize
 /// @param allocator - The allocator to allocate the formatted string with
 /// @param num_args - The number of args in the parameter pack
 /// @param ... - The parameter pack of arguments to format
-void fprint_(FILE* file,
-			 const_cstring restrict format_string,
-			 StdAllocator allocator,
-			 usize num_args,
-			 ...);
+[[not_null(1, 2)]] void fprint_(FILE* file,
+								restrict const_cstring format_string,
+								StdAllocator allocator,
+								usize num_args,
+								...) ___DISABLE_IF_NULL(format_string)
+	std_disable_if(!file, "Can't print to a file that is nullptr");
 /// @brief Formats the given arguments into the specified format string then prints it to `stdout`,
 /// followed by a newline
 ///
@@ -100,7 +107,9 @@ void fprint_(FILE* file,
 /// @param allocator - The allocator to allocate the formatted string with
 /// @param num_args - The number of args in the parameter pack
 /// @param ... - The parameter pack of arguments to format
-void println_(const_cstring restrict format_string, StdAllocator allocator, usize num_args, ...);
+[[not_null(1)]] void
+println_(restrict const_cstring format_string, StdAllocator allocator, usize num_args, ...)
+	___DISABLE_IF_NULL(format_string);
 /// @brief Formats the given arguments into the specified format string then prints it to `stderr`,
 /// followed by a newline
 ///
@@ -108,7 +117,9 @@ void println_(const_cstring restrict format_string, StdAllocator allocator, usiz
 /// @param allocator - The allocator to allocate the formatted string with
 /// @param num_args - The number of args in the parameter pack
 /// @param ... - The parameter pack of arguments to format
-void eprintln_(const_cstring restrict format_string, StdAllocator allocator, usize num_args, ...);
+[[not_null(1)]] void
+eprintln_(restrict const_cstring format_string, StdAllocator allocator, usize num_args, ...)
+	___DISABLE_IF_NULL(format_string);
 /// @brief Formats the given arguments into the specified format string then prints it to the given
 /// file, followed by a newline
 ///
@@ -117,11 +128,12 @@ void eprintln_(const_cstring restrict format_string, StdAllocator allocator, usi
 /// @param allocator - The allocator to allocate the formatted string with
 /// @param num_args - The number of args in the parameter pack
 /// @param ... - The parameter pack of arguments to format
-void fprintln_(FILE* file,
-			   const_cstring restrict format_string,
-			   StdAllocator allocator,
-			   usize num_args,
-			   ...);
+[[not_null(1, 2)]] void fprintln_(FILE* file,
+								  restrict const_cstring format_string,
+								  StdAllocator allocator,
+								  usize num_args,
+								  ...) ___DISABLE_IF_NULL(format_string)
+	std_disable_if(!file, "Can't print to a file that is nullptr");
 
 	/// @brief Formats the given arguments into the specified format string then prints it to the
 	/// given file

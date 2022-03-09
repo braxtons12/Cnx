@@ -3,7 +3,7 @@
 /// @brief This module provides wrappers for standard C compile-time and runtime asserts and other
 /// custom asserts and assert-like facilities
 /// @version 0.1.1
-/// @date 2022-01-07
+/// @date 2022-03-06
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -66,11 +66,10 @@
 /// std_type_assert_v(usize, THING);
 /// @endcode
 /// @}
-#include <stdio.h>
-#include <stdlib.h>
-
 #include <C2nxt/StdBasicTypes.h>
 #include <C2nxt/StdTypeTraits.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #ifndef STD_ASSERT
 	/// @brief Declarations and definitions for C2nxt asserts and assert-like facilities
@@ -85,24 +84,24 @@
 	/// @param error_message - The error message to print to `stderr` before aborting.
 	/// @ingroup asserts
 	#define std_panic(error_message)                                                     \
-		({                                                                                \
+		({                                                                               \
 			fprintf(stderr, "Panic at %s:%d : %s\n", __FILE__, __LINE__, error_message); \
 			abort();                                                                     \
 		})
 
 	#if STD_PLATFORM_DEBUG && !defined(STD_DISABLE_ASSERTIONS)
 
-// clang-format off
+/// @brief Asserts that the given condition is `true`. If `false`, prints the given file, line,
+/// and error message and aborts
+///
+/// @param condition - The condition that must be `true`
+/// @param error_message - The associated error message if `condition` is `false`
+/// @param file - The file the error occurred in
+/// @param line - The line number the error occurred at
+[[not_null(2, 3)]] void
+std_assert_cstring(bool condition, const_cstring error_message, const_cstring file, i64 line);
 
-	/// @brief Asserts that the given condition is `true`. If `false`, prints the given file, line,
-	/// and error message and aborts
-	///
-	/// @param condition - The condition that must be `true`
-	/// @param error_message - The associated error message if `condition` is `false`
-	/// @param file - The file the error occurred in
-	/// @param line - The line number the error occurred at
-	void std_assert_cstring(bool condition, const_cstring error_message, const_cstring file, i64 line);
-
+		// clang-format off
 		
 	/// @brief Asserts that the given condition is `true`.
 	///
