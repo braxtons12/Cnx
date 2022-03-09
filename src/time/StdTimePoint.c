@@ -208,8 +208,8 @@ StdString std_time_point_human_readable_format(StdTimePoint self, StdAllocator a
 			= std_string_new_with_capacity_with_allocator(6, allocator);
 		let hours = std_stringview_from(utc, 0, 3);
 		let minutes = std_stringview_from(utc, 3, 2);
+		std_string_push_back(utc_string, ' ');
 		std_string_append(utc_string, &hours);
-		std_string_push_back(utc_string, ':');
 		std_string_append(utc_string, &minutes);
 
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
