@@ -355,4 +355,6 @@ eprintln_(restrict const_cstring format_string, StdAllocator allocator, usize nu
 	/// @ingroup io
 	#define eprintln(format_string, ...) \
 		eprintln_with_allocator(format_string, std_allocator_new() __VA_OPT__(, ) __VA_ARGS__)
+
+	#undef ___DISABLE_IF_NULL
 #endif // STD_IO
