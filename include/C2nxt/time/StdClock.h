@@ -669,4 +669,6 @@ static let std_utc_clock = as_trait(StdClock, __StdUTCClock, __std_utc_clock);
 static let std_local_clock = as_trait(StdClock, __StdLocalClock, __std_local_clock);
 
 IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
+
+	#undef ___DISABLE_IF_NULL
 #endif // STD_CLOCK
