@@ -30,7 +30,6 @@
 #include <C2nxt/StdMath.h>
 #include <C2nxt/StdPlatform.h>
 #include <C2nxt/StdRange.h>
-#include <C2nxt/StdResult.h>
 #include <C2nxt/StdVector.h>
 #include <math.h>
 
@@ -94,7 +93,7 @@ static const f64 powers_of_10[NUM_POWERS_OF_10] = {
 }
 
 #if STD_PLATFORM_APPLE
-// clang-format off
+	// clang-format off
 #define std_get_digit(num, digit) _Generic((num), 		\
 		char  	: 	std_get_digit_u64, 					\
 		u8  	: 	std_get_digit_u64, 					\
@@ -109,7 +108,7 @@ static const f64 powers_of_10[NUM_POWERS_OF_10] = {
 		isize 	: 	std_get_digit_i64)(num, digit)
 // clang-format on
 #else
-// clang-format off
+	// clang-format off
 #define std_get_digit(num, digit) _Generic((num), 		\
 		char  	: 	std_get_digit_u64, 					\
 		u8  	: 	std_get_digit_u64, 					\
@@ -703,7 +702,15 @@ DeclStdIterators(ConstRef(StdFormatVariant));
 #undef STD_TEMPLATE_DECL
 #undef STD_TEMPLATE_IMPL
 
-DeclAndImplStdResult(StdVector(StdFormatVariant));
+#define T				  StdVector(StdFormatVariant)
+#define STD_TEMPLATE_DECL TRUE
+#define STD_TEMPLATE_IMPL TRUE
+
+#include <C2nxt/StdResult.h>
+
+#undef T
+#undef STD_TEMPLATE_DECL
+#undef STD_TEMPLATE_IMPL
 
 #define Substring(string_view)                                             \
 	(StdFormatVariant) {                                                   \

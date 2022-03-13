@@ -29,6 +29,7 @@
 #include <C2nxt/time/StdDuration.h>
 #include <time.h>
 
+
 /// @ingroup std_time
 /// @{
 /// @defgroup std_time_point StdTimePoint
@@ -74,7 +75,7 @@ typedef struct StdTimePoint {
 /// @note if `time_since_epoch` has a different period than the precision of `std_system_clock`, it
 /// will be converted to the precision of `std_system_clock`
 /// @ingroup std_time_point
-StdTimePoint std_time_point_new(StdDuration time_since_epoch);
+[[nodiscard]] StdTimePoint std_time_point_new(StdDuration time_since_epoch);
 
 /// @brief Constructs a new `StdTimePoint` representing the given time since the UNIX epoch,
 /// with the same precision of the given `StdClock`
@@ -87,8 +88,9 @@ StdTimePoint std_time_point_new(StdDuration time_since_epoch);
 /// @note if `time_since_epoch` has a different period than the precision of `clock`, it will be
 /// converted to the precision of `clock`
 /// @ingroup std_time_point
-StdTimePoint
-std_time_point_new_with_clock(StdDuration time_since_epoch, const StdClock* restrict clock);
+[[nodiscard]] [[not_null(2)]] StdTimePoint
+std_time_point_new_with_clock(StdDuration time_since_epoch, const StdClock* restrict clock)
+	std_disable_if(!clock, "Can't create a StdTimePoint with a nullptr for clock");
 
 /// @brief Constructs a new `StdTimePoint` representing the given time since the UNIX epoch,
 /// with the same precision of the given `StdClock`
@@ -102,9 +104,11 @@ std_time_point_new_with_clock(StdDuration time_since_epoch, const StdClock* rest
 /// @note if `time_since_epoch` has a different period than the precision of `clock`, it will be
 /// converted to the precision of `clock`
 /// @ingroup std_time_point
-StdTimePoint std_time_point_new_with_clock_and_locale(StdDuration time_since_epoch,
-													  const StdClock* restrict clock,
-													  StdTimePointLocale locale);
+[[nodiscard]] [[not_null(2)]] StdTimePoint
+std_time_point_new_with_clock_and_locale(StdDuration time_since_epoch,
+										 const StdClock* restrict clock,
+										 StdTimePointLocale locale)
+	std_disable_if(!clock, "Can't create a StdTimePoint with a nullptr for clock");
 
 /// @brief Returns the time since the UNIX epoch of the given `StdTimePoint`
 ///
@@ -112,7 +116,7 @@ StdTimePoint std_time_point_new_with_clock_and_locale(StdDuration time_since_epo
 ///
 /// @return The time since the epoch represented by `self`, as a `StdDuration`
 /// @ingroup std_time_point
-StdDuration std_time_point_time_since_epoch(StdTimePoint self);
+[[nodiscard]] StdDuration std_time_point_time_since_epoch(StdTimePoint self);
 
 /// @brief Returns the minimum possible `StdTimePoint` with the same precision as the given one
 ///
@@ -120,7 +124,7 @@ StdDuration std_time_point_time_since_epoch(StdTimePoint self);
 ///
 /// @return The minimum possible `StdTimePoint` with the same precision as the given one
 /// @ingroup std_time_point
-StdTimePoint std_time_point_min(StdTimePoint self);
+[[nodiscard]] StdTimePoint std_time_point_min(StdTimePoint self);
 
 /// @brief Returns the maximum possible `StdTimePoint` with the same precision as the given one
 ///
@@ -128,7 +132,7 @@ StdTimePoint std_time_point_min(StdTimePoint self);
 ///
 /// @return The maximum possible `StdTimePoint` with the same precision as the given one
 /// @ingroup std_time_point
-StdTimePoint std_time_point_max(StdTimePoint self);
+[[nodiscard]] StdTimePoint std_time_point_max(StdTimePoint self);
 
 /// @brief Converts the first `StdTimePoint` to the same precision as the second one
 ///
@@ -139,7 +143,7 @@ StdTimePoint std_time_point_max(StdTimePoint self);
 /// @note The returned value is also associated with the `StdClock` from `new_precision`, not the
 /// one from `to_cast`
 /// @ingroup std_time_point
-StdTimePoint std_time_point_cast(StdTimePoint to_cast, StdTimePoint new_precision);
+[[nodiscard]] StdTimePoint std_time_point_cast(StdTimePoint to_cast, StdTimePoint new_precision);
 
 /// @brief Converts the first `StdTimePoint` to the same precision as the second one, taking the
 /// ceiling of any fractional part in the result
@@ -151,7 +155,7 @@ StdTimePoint std_time_point_cast(StdTimePoint to_cast, StdTimePoint new_precisio
 /// @note The returned value is also associated with the `StdClock` from `new_precision`, not the
 /// one from `to_cast`
 /// @ingroup std_time_point
-StdTimePoint std_time_point_ceil(StdTimePoint to_cast, StdTimePoint new_precision);
+[[nodiscard]] StdTimePoint std_time_point_ceil(StdTimePoint to_cast, StdTimePoint new_precision);
 
 /// @brief Converts the first `StdTimePoint` to the same precision as the second one, taking the
 /// floor of any fractional part in the result
@@ -163,7 +167,7 @@ StdTimePoint std_time_point_ceil(StdTimePoint to_cast, StdTimePoint new_precisio
 /// @note The returned value is also associated with the `StdClock` from `new_precision`, not the
 /// one from `to_cast`
 /// @ingroup std_time_point
-StdTimePoint std_time_point_floor(StdTimePoint to_cast, StdTimePoint new_precision);
+[[nodiscard]] StdTimePoint std_time_point_floor(StdTimePoint to_cast, StdTimePoint new_precision);
 
 /// @brief Converts the first `StdTimePoint` to the same precision as the second one, rounding any
 /// fractional part in the result
@@ -175,7 +179,7 @@ StdTimePoint std_time_point_floor(StdTimePoint to_cast, StdTimePoint new_precisi
 /// @note The returned value is also associated with the `StdClock` from `new_precision`, not the
 /// one from `to_cast`
 /// @ingroup std_time_point
-StdTimePoint std_time_point_round(StdTimePoint to_cast, StdTimePoint new_precision);
+[[nodiscard]] StdTimePoint std_time_point_round(StdTimePoint to_cast, StdTimePoint new_precision);
 
 /// @brief Converts the given `StdTimePoint` to `time_t`
 ///
@@ -183,7 +187,13 @@ StdTimePoint std_time_point_round(StdTimePoint to_cast, StdTimePoint new_precisi
 ///
 /// @return `to_cast` converted to `time_t`
 /// @ingroup std_time_point
-time_t std_time_point_as_time_t(StdTimePoint to_cast);
+[[nodiscard]] time_t std_time_point_as_time_t(StdTimePoint to_cast);
+
+#define T tm
+#define STD_TEMPLATE_DECL TRUE
+#include <C2nxt/StdResult.h>
+#undef T
+#undef STD_TEMPLATE_DECL
 
 /// @brief Converts the given `StdTimePoint` to `tm`
 ///
@@ -191,7 +201,7 @@ time_t std_time_point_as_time_t(StdTimePoint to_cast);
 ///
 /// @return `to_cast` converted to `tm`
 /// @ingroup std_time_point
-tm* std_time_point_as_tm(StdTimePoint to_cast);
+StdResult(tm) std_time_point_as_tm(StdTimePoint to_cast);
 
 /// @brief Converts the given `time_t` to a `StdTimePoint` in the system clock precision
 ///

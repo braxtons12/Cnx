@@ -234,13 +234,12 @@ typedef enum Option {
 			UNIQUE_VAR(res);                                           \
 		})
 
-	/// @brief Performs logical and on whether `self` and `option_b` are both `Some`,
-	/// returning `option_b` if both are `Some`. Otherwise returns `None`
+	/// @brief Returns `option_b` if `self` is `Some`. Otherwise, returns `None`
 	///
 	/// @param self - The `StdOption(T)` to "and" with `option_b`.
 	/// @param option_b - another `StdOption` to "and" with `self`.
 	///
-	/// @return `option_b` if both `self` and `option_b` are `Some`. Otherwise, `None`.
+	/// @return `option_b` if both `self` is `Some`. Otherwise, `None`.
 	/// @ingroup std_option
 	#define std_option_and(self, option_b)                     \
 		({                                                     \
@@ -292,7 +291,7 @@ typedef enum Option {
 	/// @param self - The `StdOption(T)`.
 	/// @param func - The function to call if `self` is `None`.
 	///
-	/// @return `self` if is is `Some` Otherwise, `option_b`.
+	/// @return `self` if is is `Some` Otherwise, `func()`
 	/// @ingroup std_option
 	#define std_option_or_else(self, func) (self).m_vtable->or_else(&(self), (func))
 
@@ -305,4 +304,4 @@ typedef enum Option {
 	/// @ingroup std_option
 	#define std_option_as_bool(self) (self).m_vtable->as_bool(&(self))
 
-#endif
+#endif // STD_OPTION_DEF

@@ -103,16 +103,48 @@ time_t std_time_point_as_time_t(StdTimePoint to_cast) {
 		std_duration_cast(to_cast.time_since_epoch, std_seconds_period).count);
 }
 
-tm* std_time_point_as_tm(StdTimePoint to_cast) {
+#define T				  tm
+#define STD_TEMPLATE_IMPL TRUE
+#include <C2nxt/StdResult.h>
+#undef T
+#undef STD_TEMPLATE_IMPL
+
+StdResult(tm) std_time_point_as_tm(StdTimePoint to_cast) {
 	if(to_cast.locale == STD_LOCAL_TIME) {
 		// localtime requires a
 		let point = std_convert_local_time_to_utc(to_cast);
 		let time = std_time_point_as_time_t(point);
-		return localtime(&time);
+#if _POSIX_C_SOURCE >= 1 || _XOPEN_SOURCE || _BSD_SOURCE || _SVID_SOURCE || _POSIX_SOURCE
+		tm as_tm;
+		let res = localtime_r(&time, &as_tm);
+		if(res == nullptr) {
+			return Err(tm, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
+		}
+		return Ok(tm, as_tm);
+#else
+		let res = localtime(&time);
+		if(res == nullptr) {
+			return Err(tm, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
+		}
+		return Ok(tm, *res);
+#endif
 	}
 	else {
 		let time = std_time_point_as_time_t(to_cast);
-		return gmtime(&time);
+#if _POSIX_C_SOURCE >= 1 || _XOPEN_SOURCE || _BSD_SOURCE || _SVID_SOURCE || _POSIX_SOURCE
+		tm as_tm;
+		let res = gmtime_r(&time, &as_tm);
+		if(res == nullptr) {
+			return Err(tm, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
+		}
+		return Ok(tm, as_tm);
+#else
+		let res = gmtime(&time);
+		if(res == nullptr) {
+			return Err(tm, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
+		}
+		return Ok(tm, *res);
+#endif
 	}
 }
 
@@ -191,7 +223,10 @@ StdCompare std_time_point_compare(StdTimePoint lhs, StdTimePoint rhs) {
 }
 
 StdString std_time_point_human_readable_format(StdTimePoint self, StdAllocator allocator) {
-	let parsed = std_time_point_as_tm(self);
+	let_mut maybe_parsed = std_time_point_as_tm(self);
+	let parsed_lvalue
+		= std_result_expect(maybe_parsed, "Failed to convert StdTimePoint to struct tm");
+	let parsed = &parsed_lvalue;
 
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
 	char memory[20] = {0};

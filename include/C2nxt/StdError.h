@@ -57,10 +57,9 @@
 /// In most cases, `StdError` would be used in tandem with `StdResult(T)` to enable concise error
 /// handling without having to use "out" parameters.
 /// @}
-#include <C2nxt/StdAllocators.h>
+
 #include <C2nxt/StdBasicTypes.h>
-#include <C2nxt/StdFormat.h>
-#include <C2nxt/StdString.h>
+#include <errno.h>
 
 #ifndef STD_ERROR
 	/// @brief Declarations and definitions related to `StdError`
@@ -137,25 +136,6 @@ typedef struct StdError {
 /// @ingroup std_error
 [[nodiscard]] [[not_null(1)]] i64
 std_error_code(const StdError* restrict self) ___DISABLE_IF_NULL(self);
-/// @brief Returns the error message associated with the given error
-///
-/// @param self - The error
-///
-/// @return the associated error message
-/// @ingroup std_error
-[[nodiscard]] [[not_null(1)]] StdString
-std_error_message(const StdError* restrict self) ___DISABLE_IF_NULL(self);
-/// @brief Returns the error message associated with the given error, allocated with the given
-/// allocator
-///
-/// @param self - The error
-/// @param allocator - The `StdAllocator` to allocate memory for the contents of the string with
-///
-/// @return the associated error message
-/// @ingroup std_error
-[[nodiscard]] [[not_null(1)]] StdString
-std_error_message_with_allocator(const StdError* restrict self, StdAllocator allocator)
-	___DISABLE_IF_NULL(self);
 /// @brief Returns the error message associated with the given error, as a `cstring`
 ///
 /// @param self - The error
@@ -163,7 +143,7 @@ std_error_message_with_allocator(const StdError* restrict self, StdAllocator all
 /// @return the associated error message
 /// @ingroup std_error
 [[nodiscard]] [[not_null(1)]] [[returns_not_null]] const_cstring
-std_error_message_as_cstring(const StdError* restrict self) ___DISABLE_IF_NULL(self);
+std_error_message(const StdError* restrict self) ___DISABLE_IF_NULL(self);
 
 /// @brief Returns the error message associated with the given error code, as a `cstring`
 ///
@@ -182,35 +162,6 @@ std_error_category_get_message(StdErrorCategory self, i64 error_code);
 /// @ingroup std_error
 [[nodiscard]] [[returns_not_null]] const_cstring
 std_error_category_get_posix_message(i64 error_code);
-
-/// @brief Implementation of `StdFormat.format` for `StdError`
-///
-/// @param self - The `StdError` to format as a `StdFormat` trait object
-/// @param specifier - The `StdFormatSpecifier` in the format string. Unused
-///
-/// @return `self` formatted as a `StdString`
-[[nodiscard]] [[not_null(1)]] StdString
-std_error_format(const StdFormat* restrict self, StdFormatSpecifier specifier)
-	___DISABLE_IF_NULL(self);
-/// @brief Implementation of `StdFormat.format_with_allocator` for `StdError`
-///
-/// @param self - The `StdError` to format as a `StdFormat` trait object
-/// @param specifier - The `StdFormatSpecifier` in the format string. Unused
-/// @param allocator - The `StdAllocator` to allocate the formatted string with
-///
-/// @return `self` formatted as a `StdString`
-[[nodiscard]] [[not_null(1)]] StdString
-std_error_format_with_allocator(const StdFormat* restrict self,
-								StdFormatSpecifier specifier,
-								StdAllocator allocator) ___DISABLE_IF_NULL(self);
-
-/// @brief Implement `StdFormat` for `StdError`
-/// @return The `StdFormat` trait implementation for `StdError`
-/// @ingroup std_error
-[[maybe_unused]] static ImplTraitFor(StdFormat,
-									 StdError,
-									 std_error_format,
-									 std_error_format_with_allocator);
 
 	/// @brief The `StdErrorCategory` to map POSIX error codes
 	///

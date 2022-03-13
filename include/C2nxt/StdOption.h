@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a struct template for representing an optional value
 /// @version 0.2.1
-/// @date 2022-02-24
+/// @date 2022-03-12
 ///
 /// MIT License
 /// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -26,6 +26,8 @@
 /// SOFTWARE.
 
 #include <C2nxt/std_option/StdOptionDef.h>
+#include <C2nxt/StdDef.h>
+#include <C2nxt/StdEnum.h>
 
 /// @ingroup error_handling
 /// @{
@@ -103,10 +105,11 @@
 #endif // defined(T) && STD_TEMPLATE_IMPL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
 #if STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS && !defined(T) && !defined(STD_TEMPLATE_DECL) \
-	&& !defined(STD_TEMPLATE_IMPL) && !defined(STD_TEMPLATE_UNDEF_PARAMS)
+	&& !defined(STD_TEMPLATE_IMPL) && !defined(STD_TEMPLATE_UNDEF_PARAMS)                     \
+	&& !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
 	#ifndef STD_OPTION
-		/// @brief `StdVector(T)` related declarations and definitions
+		/// @brief `StdOption(T)` related declarations and definitions
 		#define STD_OPTION
 
 		#define STD_TEMPLATE_DECL TRUE

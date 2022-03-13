@@ -214,39 +214,39 @@ typedef const StdString* ConstRef(StdString);
 /// @brief type alias for a const reference to `StdStringView`
 typedef const StdStringView* ConstRef(StdStringView);
 
-	#define STD_TEMPLATE_UNDEF_PARAMS TRUE
+	#define STD_TEMPLATE_DECL TRUE
 
 	/// @brief Declares `StdOption(T)` for `StdString`
-	#define T				  StdString
-	#define STD_TEMPLATE_DECL TRUE
+	#define T StdString
 	#include <C2nxt/StdOption.h>
+	#undef T
 
 	/// @brief Declares `StdOption(T)` for `Ref(StdString)`
-	#define T				  Ref(StdString)
-	#define STD_TEMPLATE_DECL TRUE
+	#define T Ref(StdString)
 	#include <C2nxt/StdOption.h>
+	#undef T
 
 	/// @brief Declares `StdOption(T)` for `ConstRef(StdString)`
-	#define T				  ConstRef(StdString)
-	#define STD_TEMPLATE_DECL TRUE
+	#define T ConstRef(StdString)
 	#include <C2nxt/StdOption.h>
+	#undef T
 
 	/// @brief Declares `StdOption(T)` for `StdStringView`
-	#define T				  StdStringView
-	#define STD_TEMPLATE_DECL TRUE
+	#define T StdStringView
 	#include <C2nxt/StdOption.h>
+	#undef T
 
 	/// @brief Declares `StdOption(T)` for `Ref(StdStringView)`
-	#define T				  Ref(StdStringView)
-	#define STD_TEMPLATE_DECL TRUE
+	#define T Ref(StdStringView)
 	#include <C2nxt/StdOption.h>
+	#undef T
 
 	/// @brief Declares `StdOption(T)` for `ConstRef(StdStringView)`
-	#define T				  ConstRef(StdStringView)
-	#define STD_TEMPLATE_DECL TRUE
+	#define T ConstRef(StdStringView)
 	#include <C2nxt/StdOption.h>
+	#undef T
 
-	#undef STD_TEMPLATE_UNDEF_PARAMS
+	#undef STD_TEMPLATE_DECL
 
 /// @brief Declares iterator types for `Ref(StdString)`
 DeclStdIterators(Ref(StdString));
@@ -352,7 +352,7 @@ std_string_from_stringview(const StdStringView* restrict view)
 std_string_from_stringview_with_allocator(const StdStringView* restrict view,
 										  StdAllocator allocator)
 	std_disable_if(!view, "Can't create a StdString from a nullptr");
-// clang-format off
+	// clang-format off
 /// @brief Creates a new `StdString` from the given string-like type
 ///
 /// @param string - The string-like thing to create the `StdString` from. Either a
@@ -1033,7 +1033,7 @@ std_string_concatenate_stringviews(const StdStringView* restrict left,
 /// @ingroup std_string
 void invalid_types_passed_to_std_string_concatenate(void);
 
-	// clang-format off
+// clang-format off
 /// @brief Concatenates the two `cstring`s, `left` and `right` and returns the result as a
 /// `StdString`
 ///
@@ -1221,7 +1221,7 @@ std_string_concatenate_stringviews_with_allocator(const StdStringView* restrict 
 	std_disable_if(!left, "Can't concatenate a nullptr into a StdString")
 		std_disable_if(!right, "Can't concatenate a nullptr into a StdString");
 
-	// clang-format off
+// clang-format off
 /// @brief Concatenates the two `cstring`s, `left` and `right` and returns the result as a
 /// `StdString`
 ///
@@ -1806,7 +1806,7 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 /// @param self - The `StdString` to cleanup
 /// @ingroup std_string
 	#define std_string_free(self) std_string_free(&(self))
-// clang-format off
+	// clang-format off
 /// @brief Returns a reference to the character at the given index.
 ///
 /// @param self - The `StdString` to retrieve the character from
@@ -1817,8 +1817,8 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 #define std_string_at(self, index) *(_Generic((&(self)), 				\
 	StdString* 			: std_string_at_mut,  					\
 	const StdString* 	: std_string_at_const)(&(self), (index)))
-	// clang-format on
-	// clang-format off
+// clang-format on
+// clang-format off
 /// @brief Returns a reference to the character at the beginning of the string
 ///
 /// @param self - The `StdString` to retrieve the first character from
@@ -1828,8 +1828,8 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 #define std_string_front(self) *(_Generic((&(self)), 			\
 	StdString*  		: std_string_front_mut, 			\
 	const StdString* 	: std_string_front_const)(&(self)))
-	// clang-format on
-	// clang-format off
+// clang-format on
+// clang-format off
 /// @brief Returns a reference to the character at the end of the string
 ///
 /// @param self - The `StdString` to retrieve the last character from
@@ -1930,7 +1930,7 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 	/// @ingroup std_string
 	#define std_string_last_stringview(self, num_chars) \
 		std_string_last_stringview(&(self), (num_chars))
-	// clang-format off
+// clang-format off
 /// @brief Determines if this string and the given one are equal
 ///
 /// @param self - The `StdString` to be compared with
@@ -1959,8 +1959,8 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 										static_cast(StdString*)(to_compare)),   				   \
 	const StdString* 			: 	std_string_equal(&(self), 							   \
 										static_cast(const StdString*)(to_compare)))
-	// clang-format on
-	// clang-format off
+// clang-format on
+// clang-format off
 /// @brief Determines whether the string contains the given substring
 ///
 /// @param self - The `StdString` to search for `substring` in
@@ -1989,8 +1989,8 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 										static_cast(StdString*)(substring)), 					   \
 	const StdString* 				: std_string_contains(&(self), 						   \
 										static_cast(const StdString*)(substring)))
-// clang-format on
-// clang-format off
+	// clang-format on
+	// clang-format off
 /// @brief Determines whether the string starts with the given substring
 ///
 /// @param self - The `StdString` to search for `substring` in
@@ -2019,8 +2019,8 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 										static_cast(StdString*)(substring)), 					   \
 	const StdString* 				: std_string_starts_with(&(self), 					   \
 										static_cast(const StdString*)(substring)))
-// clang-format on
-// clang-format off
+	// clang-format on
+	// clang-format off
 /// @brief Determines whether the string ends with the given substring
 ///
 /// @param self - The `StdString` to search for `substring` in
@@ -2049,8 +2049,8 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 										static_cast(StdString*)(substring)), 					   \
 	const StdString* 				: std_string_ends_with(&(self), 						   \
 										static_cast(const StdString*)(substring)))
-	// clang-format on
-	// clang-format off
+// clang-format on
+// clang-format off
 /// @brief Finds the first occurrence of the given substring in `self`, if any
 ///
 /// @param self - The `StdString` to search for `substring` in
@@ -2080,8 +2080,8 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 										static_cast(StdString*)(substring)), 					   \
 	const StdString* 				: std_string_find_first(&(self), 						   \
 										static_cast(const StdString*)(substring)))
-	// clang-format on
-	// clang-format off
+// clang-format on
+// clang-format off
 /// @brief Finds the last occurrence of the given substring in `self`, if any
 ///
 /// @param self - The `StdString` to search for `substring` in
@@ -2161,7 +2161,7 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 	/// @param self - The `StdString` to shrink
 	/// @ingroup std_string
 	#define std_string_shrink_to_fit(self) std_string_shrink_to_fit(&(self))
-	// clang-format off
+// clang-format off
 /// @brief Inserts `to_insert` into `self` at the given index
 ///
 /// @param self - The `StdString` to insert into
@@ -2244,7 +2244,7 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 	/// @return `Some(char)` if `std_string_size(self) > 0`, else `None(char)`
 	/// @ingroup std_string
 	#define std_string_pop_front(self) std_string_pop_front(&(self))
-	// clang-format off
+// clang-format off
 /// @brief Appends `to_append` to the end of `self`
 ///
 /// @param self - The `StdString` to append to
@@ -2271,8 +2271,8 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 										static_cast(StdString*)(to_append)), 			   		   \
 	const StdString* 				: std_string_append(&(self), 							   \
 										static_cast(const StdString*)(to_append)))
-// clang-format on
-// clang-format off
+	// clang-format on
+	// clang-format off
 /// @brief Prepends `to_prepend` to the beginning of `self`
 ///
 /// @param self - The `StdString` to prepend to
@@ -2299,8 +2299,8 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 										static_cast(StdString*)(to_prepend)), 			   		   \
 	const StdString* 				: std_string_prepend(&(self), 						   \
 										static_cast(const StdString*)(to_prepend)))
-	// clang-format on
-	// clang-format off
+// clang-format on
+// clang-format off
 /// @brief Replaces the contents of `self` with `to_replace_with`, beginning at the given index
 ///
 /// @param self - The `StdString` to replace a portion of
