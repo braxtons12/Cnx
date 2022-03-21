@@ -1,7 +1,7 @@
 /// @file StdResultDecl.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides the function declarations and type definitions for a template
-/// instantiation of `StdResult(T)`
+/// instantiation of `StdResult(RESULT_T)`
 /// @version 0.2.3
 /// @date 2022-03-20
 ///
@@ -28,20 +28,20 @@
 
 #include <C2nxt/std_result/StdResultDef.h>
 
-#if defined(T) && STD_TEMPLATE_DECL
+#if defined(RESULT_T) && RESULT_DECL
 
-#if STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
-	#undef STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
-	#include <C2nxt/StdError.h>
-	#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS TRUE
-#else
-	#include <C2nxt/StdError.h>
-#endif // STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+	#if STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+		#undef STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+		#include <C2nxt/StdError.h>
+		#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS TRUE
+	#else
+		#include <C2nxt/StdError.h>
+	#endif // STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
-#if !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
-	#define SHOULD_UNDEF_SUPPRESS_INSTANTIATIONS TRUE
-	#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS TRUE
-#endif // STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+	#if !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+		#define SHOULD_UNDEF_SUPPRESS_INSTANTIATIONS TRUE
+		#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS TRUE
+	#endif // STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
 	#include <C2nxt/StdAllocators.h>
 	#include <C2nxt/StdAssert.h>
@@ -49,140 +49,150 @@
 	#include <C2nxt/monadic/StdIfLet.h>
 	#include <C2nxt/StdEnum.h>
 
-typedef struct StdResultIdentifier(T, vtable) StdResultIdentifier(T, vtable);
+typedef struct StdResultIdentifier(RESULT_T, vtable) StdResultIdentifier(RESULT_T, vtable);
 
-EnumWithTag(StdResult(T),
+EnumWithTag(StdResult(RESULT_T),
 			Result,
-			(Ok, T),
+			(Ok, RESULT_T),
 			(Err, StdError),
-			const StdResultIdentifier(T, vtable) * m_vtable);
+			const StdResultIdentifier(RESULT_T, vtable) * m_vtable);
 
 	#define ___DISABLE_IF_NULL(self) \
 		std_disable_if(!(self), "Can't perform an operator on a null result")
 
-/// @brief Returns whether this `StdResult(T)` is holding a value
+/// @brief Returns whether this `StdResult(RESULT_T)` is holding a value
 /// @param self - The `StdResult` to check
-/// @return `true` if this `StdResult(T)` is holding a value, `false` otherwise
+/// @return `true` if this `StdResult(RESULT_T)` is holding a value, `false` otherwise
 [[nodiscard]] [[not_null(1)]] bool
-	StdResultIdentifier(T, is_ok)(const StdResult(T) * restrict self) ___DISABLE_IF_NULL(self);
-/// @brief Returns whether this `StdResult(T)` __isn't__ holding a value (aka is holding an error)
+	StdResultIdentifier(RESULT_T, is_ok)(const StdResult(RESULT_T) * restrict self)
+		___DISABLE_IF_NULL(self);
+/// @brief Returns whether this `StdResult(RESULT_T)` __isn't__ holding a value (aka is holding an
+/// error)
 /// @param self - The `StdResult` to check
-/// @return `true` if this `StdResult(T)` __isn't__ holding a value,
+/// @return `true` if this `StdResult(RESULT_T)` __isn't__ holding a value,
 /// `false` if it is  holding an error
 [[nodiscard]] [[not_null(1)]] bool
-	StdResultIdentifier(T, is_err)(const StdResult(T) * restrict self) ___DISABLE_IF_NULL(self);
+	StdResultIdentifier(RESULT_T, is_err)(const StdResult(RESULT_T) * restrict self)
+		___DISABLE_IF_NULL(self);
 /// @brief Returns a pointer to the const value stored in this `StdResult`
 /// @param self - The `StdResult` to get the stored value from
 /// @return a pointer to the contained const value
 /// @note Panics if `self` does not contain a value
-[[nodiscard]] [[not_null(1)]] [[returns_not_null]] const T*
-	StdResultIdentifier(T, as_const)(const StdResult(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] [[returns_not_null]] const RESULT_T*
+	StdResultIdentifier(RESULT_T, as_const)(const StdResult(RESULT_T) * restrict self)
+		___DISABLE_IF_NULL(self);
 /// @brief Returns a pointer to the value stored in this `StdResult`
 /// @param self - The `StdResult` to get the stored value from
 /// @return a pointer to the contained value
 /// @note Panics if `self` does not contain a value
-[[nodiscard]] [[not_null(1)]] [[returns_not_null]] T*
-	StdResultIdentifier(T, as_mut)(StdResult(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] [[returns_not_null]] RESULT_T*
+	StdResultIdentifier(RESULT_T, as_mut)(StdResult(RESULT_T) * restrict self)
+		___DISABLE_IF_NULL(self);
 /// @brief Returns the value stored in this `StdResult`
 /// @param self - The `StdResult` to get the stored value from
 /// @return the contained value
 /// @note Panics if `self` does not contain a value
-[[nodiscard]] [[not_null(1)]] T
-	StdResultIdentifier(T, unwrap)(StdResult(T) * restrict self) ___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] RESULT_T
+	StdResultIdentifier(RESULT_T, unwrap)(StdResult(RESULT_T) * restrict self)
+		___DISABLE_IF_NULL(self);
 /// @brief Returns the value stored in this `StdResult` , or `default_value`
 /// if this is `None`
 /// @param self - The `StdResult` to get the stored value from
 /// @param default_value - The value to return if this is `None`
 /// @return the contained value, or `default_value`
-[[nodiscard]] [[not_null(1)]] T
-	StdResultIdentifier(T, unwrap_or)(StdResult(T) * restrict self, T default_value)
-		___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] RESULT_T
+	StdResultIdentifier(RESULT_T, unwrap_or)(StdResult(RESULT_T) * restrict self,
+											 RESULT_T default_value) ___DISABLE_IF_NULL(self);
 /// @brief Returns the value stored in this `StdResult` , or the value returned by
 /// `default_generator` if this is `None`
 /// @param self - The `StdResult` to get the stored value from
 /// @param default_generator - The function to generate the value to return if this is `None`
 /// @return the contained value, or the one generated by `default_generator`
-[[nodiscard]] [[not_null(1, 2)]] T
-	StdResultIdentifier(T, unwrap_or_else)(StdResult(T) * restrict self,
-										   T (*const default_generator)(void))
+[[nodiscard]] [[not_null(1, 2)]] RESULT_T
+	StdResultIdentifier(RESULT_T, unwrap_or_else)(StdResult(RESULT_T) * restrict self,
+												  RESULT_T (*const default_generator)(void))
 		___DISABLE_IF_NULL(self)
 			std_disable_if(!default_generator, "default_generator cannot be null");
 /// @brief Returns the value stored in this `StdResult`
 /// @param self - The `StdResult` to get the stored value from
 /// @return the contained value
 /// @note Panics if `self` does not contain a value, with the custom panic message `panic_message`
-[[nodiscard]] [[not_null(1, 2)]] T
-	StdResultIdentifier(T, expect)(StdResult(T) * restrict self,
-								   restrict const_cstring panic_message) ___DISABLE_IF_NULL(self)
-		std_disable_if(!panic_message, "panic_message cannot be null");
+[[nodiscard]] [[not_null(1, 2)]] RESULT_T
+	StdResultIdentifier(RESULT_T, expect)(StdResult(RESULT_T) * restrict self,
+										  restrict const_cstring panic_message)
+		___DISABLE_IF_NULL(self) std_disable_if(!panic_message, "panic_message cannot be null");
 /// @brief Returns the error stored in this `StdResult`
 /// @param self - The `StdResult` to get the stored value from
 /// @return the contained value
 /// @note Panics if `self` does not contain an error
-StdError StdResultIdentifier(T, unwrap_err)(StdResult(T) * restrict self);
+StdError StdResultIdentifier(RESULT_T, unwrap_err)(StdResult(RESULT_T) * restrict self);
 
 /// @brief Returns `self` if it is `Ok`, otherwise returns `result_b`
 ///
-/// @param self - The `StdResult(T)` to "or" with `result_b`
-/// @param result_b - Another `StdResult(T)` to "or" with `self`.
+/// @param self - The `StdResult(RESULT_T)` to "or" with `result_b`
+/// @param result_b - Another `StdResult(RESULT_T)` to "or" with `self`.
 ///
 /// @return `self` if it is `Ok`. Otherwise, `result_b`
 /// @ingroup std_result
-StdResult(T) StdResultIdentifier(T, or)(const StdResult(T) * restrict self, StdResult(T) option_b);
+StdResult(RESULT_T) StdResultIdentifier(RESULT_T, or)(const StdResult(RESULT_T) * restrict self,
+													  StdResult(RESULT_T) option_b);
 
 /// @brief Returns `self` if it is `Ok`, otherwise returns the result of calling `func`
 ///
-/// @param self - The `StdResult(T)` to "or" with `result_b`
+/// @param self - The `StdResult(RESULT_T)` to "or" with `result_b`
 /// @param func - The function to call if `self` is `Err`
 ///
 /// @return `self` if it is `Ok`. Otherwise, `func()`
 /// @ingroup std_result
-StdResult(T) StdResultIdentifier(T, or_else)(const StdResult(T) * restrict self,
-											 StdResult(T) (*const func)(void));
+StdResult(RESULT_T)
+	StdResultIdentifier(RESULT_T, or_else)(const StdResult(RESULT_T) * restrict self,
+										   StdResult(RESULT_T) (*const func)(void));
 
-/// @brief Converts this `StdResult(T)` to a `bool`
+/// @brief Converts this `StdResult(RESULT_T)` to a `bool`
 ///
 /// This is effectively the same as calling `std_result_is_ok(self)`, as it converts to a bool
 /// on the condition that this is the `Ok(T, value)` variant.
 ///
-/// @param self - The `StdResult(T)` to convert to a `bool`
+/// @param self - The `StdResult(RESULT_T)` to convert to a `bool`
 ///
-/// @return this `StdResult(T)` as a `bool`
+/// @return this `StdResult(RESULT_T)` as a `bool`
 /// @ingroup std_result
-bool StdResultIdentifier(T, as_bool)(const StdResult(T) * restrict self);
+bool StdResultIdentifier(RESULT_T, as_bool)(const StdResult(RESULT_T) * restrict self);
 
-typedef struct StdResultIdentifier(T, vtable) {
-	bool (*const is_ok)(const StdResult(T)* restrict self);
-	bool (*const is_err)(const StdResult(T)* restrict self);
-	const T* (*const as_const)(const StdResult(T)* restrict self);
-	T* (*const as_mut)(StdResult(T)* restrict self);
-	T (*const unwrap)(StdResult(T)* restrict self);
-	T (*const unwrap_or)(StdResult(T)* restrict self, T default_value);
-	T(*const unwrap_or_else)
-	(StdResult(T)* restrict self, T(*default_generator)(void));
-	T(*const expect)
-	(StdResult(T)* restrict self, restrict const_cstring panic_message);
-	StdError (*const unwrap_err)(StdResult(T)* restrict self);
-	StdResult(T) (*const _or)(const StdResult(T)* restrict self, StdResult(T) option_b);
-	StdResult(T) (*const or_else)(const StdResult(T)* restrict self,
-								  StdResult(T) (*const func)(void));
-	bool (*const as_bool)(const StdResult(T)* restrict self);
+typedef struct StdResultIdentifier(RESULT_T, vtable) {
+	bool (*const is_ok)(const StdResult(RESULT_T)* restrict self);
+	bool (*const is_err)(const StdResult(RESULT_T)* restrict self);
+	const RESULT_T* (*const as_const)(const StdResult(RESULT_T)* restrict self);
+	RESULT_T* (*const as_mut)(StdResult(RESULT_T)* restrict self);
+	RESULT_T (*const unwrap)(StdResult(RESULT_T)* restrict self);
+	RESULT_T (*const unwrap_or)(StdResult(RESULT_T)* restrict self, RESULT_T default_value);
+	RESULT_T(*const unwrap_or_else)
+	(StdResult(RESULT_T)* restrict self, RESULT_T(*default_generator)(void));
+	RESULT_T(*const expect)
+	(StdResult(RESULT_T)* restrict self, restrict const_cstring panic_message);
+	StdError (*const unwrap_err)(StdResult(RESULT_T)* restrict self);
+	StdResult(RESULT_T) (*const _or)(const StdResult(RESULT_T)* restrict self,
+									 StdResult(RESULT_T) option_b);
+	StdResult(RESULT_T) (*const or_else)(const StdResult(RESULT_T)* restrict self,
+										 StdResult(RESULT_T) (*const func)(void));
+	bool (*const as_bool)(const StdResult(RESULT_T)* restrict self);
 }
-StdResultIdentifier(T, vtable);
+StdResultIdentifier(RESULT_T, vtable);
 
-[[maybe_unused]] static const StdResultIdentifier(T, vtable) StdResultIdentifier(T, vtable_impl)
-	= {.is_ok = StdResultIdentifier(T, is_ok),
-	   .is_err = StdResultIdentifier(T, is_err),
-	   .as_const = StdResultIdentifier(T, as_const),
-	   .as_mut = StdResultIdentifier(T, as_mut),
-	   .unwrap = StdResultIdentifier(T, unwrap),
-	   .unwrap_or = StdResultIdentifier(T, unwrap_or),
-	   .unwrap_or_else = StdResultIdentifier(T, unwrap_or_else),
-	   .expect = StdResultIdentifier(T, expect),
-	   .unwrap_err = StdResultIdentifier(T, unwrap_err),
-	   ._or = StdResultIdentifier(T, or),
-	   .or_else = StdResultIdentifier(T, or_else),
-	   .as_bool = StdResultIdentifier(T, as_bool)};
+[[maybe_unused]] static const StdResultIdentifier(RESULT_T, vtable)
+	StdResultIdentifier(RESULT_T, vtable_impl)
+	= {.is_ok = StdResultIdentifier(RESULT_T, is_ok),
+	   .is_err = StdResultIdentifier(RESULT_T, is_err),
+	   .as_const = StdResultIdentifier(RESULT_T, as_const),
+	   .as_mut = StdResultIdentifier(RESULT_T, as_mut),
+	   .unwrap = StdResultIdentifier(RESULT_T, unwrap),
+	   .unwrap_or = StdResultIdentifier(RESULT_T, unwrap_or),
+	   .unwrap_or_else = StdResultIdentifier(RESULT_T, unwrap_or_else),
+	   .expect = StdResultIdentifier(RESULT_T, expect),
+	   .unwrap_err = StdResultIdentifier(RESULT_T, unwrap_err),
+	   ._or = StdResultIdentifier(RESULT_T, or),
+	   .or_else = StdResultIdentifier(RESULT_T, or_else),
+	   .as_bool = StdResultIdentifier(RESULT_T, as_bool)};
 
 	#undef ___DISABLE_IF_NULL
 
@@ -190,4 +200,4 @@ StdResultIdentifier(T, vtable);
 		#undef STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 	#endif // SHOULD_UNDEF_SUPPRESS_INSTANTIATIONS
 
-#endif // defined(T) && STD_TEMPLATE_DECL
+#endif // defined(RESULT_T) && RESULT_DECL

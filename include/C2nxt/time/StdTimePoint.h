@@ -1,8 +1,8 @@
 /// @file StdTimePoint.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief StdTimePoint provides functionality for working with specific points in time
-/// @version 0.1.1
-/// @date 2022-01-07
+/// @version 0.1.2
+/// @date 2022-03-20
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -28,7 +28,6 @@
 #include <C2nxt/StdRatio.h>
 #include <C2nxt/time/StdDuration.h>
 #include <time.h>
-
 
 /// @ingroup std_time
 /// @{
@@ -189,11 +188,11 @@ std_time_point_new_with_clock_and_locale(StdDuration time_since_epoch,
 /// @ingroup std_time_point
 [[nodiscard]] time_t std_time_point_as_time_t(StdTimePoint to_cast);
 
-#define T tm
-#define STD_TEMPLATE_DECL TRUE
-#include <C2nxt/StdResult.h>
-#undef T
-#undef STD_TEMPLATE_DECL
+	#define RESULT_DECL TRUE
+	#define RESULT_T	tm
+	#include <C2nxt/StdResult.h>
+	#undef RESULT_T
+	#undef RESULT_DECL
 
 /// @brief Converts the given `StdTimePoint` to `tm`
 ///

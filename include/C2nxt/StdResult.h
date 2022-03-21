@@ -1,8 +1,8 @@
 /// @file StdResult.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a struct template for representing the value of a fallible operation
-/// @version 0.2.0
-/// @date 2022-03-12
+/// @version 0.2.1
+/// @date 2022-03-20
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -90,102 +90,101 @@
 /// @endcode
 /// @}
 
-#if !defined(STD_TEMPLATE_DECL) && (!defined(STD_TEMPLATE_IMPL) || !STD_TEMPLATE_IMPL) && defined(T)
-	#define STD_TEMPLATE_DECL 1
-#endif // !defined(STD_TEMPLATE_DECL) && (!defined(STD_TEMPLATE_IMPL) || !STD_TEMPLATE_IMPL) &&
-// defined(T)
+#if !defined(RESULT_DECL) && (!defined(RESULT_IMPL) || !RESULT_IMPL) && defined(RESULT_T)
+	#define RESULT_DECL 1
+#endif // !defined(RESULT_DECL) && (!defined(RESULT_IMPL) || !RESULT_IMPL) &&
+// defined(RESULT_T)
 
-#if !defined(T) && STD_TEMPLATE_DECL
-	#error StdResult.h included with STD_TEMPLATE_DECL defined true but template parameter T not defined
-#endif // !defined(T) && STD_TEMPLATE_DECL
+#if !defined(RESULT_T) && RESULT_DECL && !RESULT_INCLUDE_DEFAULT_INSTANTIATIONS
+	#error StdResult.h included with RESULT_DECL defined true but template parameter RESULT_T not defined
+#endif // !defined(RESULT_T) && RESULT_DECL && !RESULT_INCLUDE_DEFAULT_INSTANTIATIONS
 
-#if !defined(T) && STD_TEMPLATE_IMPL
-	#error StdResult.h included with STD_TEMPLATE_IMPL defined true but template parameter T not defined
-#endif // !defined(T) && STD_TEMPLATE_IMPL
+#if !defined(RESULT_T) && RESULT_IMPL && !RESULT_INCLUDE_DEFAULT_INSTANTIATIONS
+	#error StdResult.h included with RESULT_IMPL defined true but template parameter RESULT_T not defined
+#endif // !defined(RESULT_T) && RESULT_IMPL && !RESULT_INCLUDE_DEFAULT_INSTANTIATIONS
 
-#if defined(T) && STD_TEMPLATE_DECL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+#if defined(RESULT_T) && RESULT_DECL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 	#include <C2nxt/std_result/StdResultDecl.h>
-#endif // defined(T) && STD_TEMPLATE_DECL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+#endif // defined(RESULT_T) && RESULT_DECL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
-#if defined(T) && STD_TEMPLATE_IMPL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+#if defined(RESULT_T) && RESULT_IMPL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 	#include <C2nxt/std_result/StdResultImpl.h>
-#endif // defined(T) && STD_TEMPLATE_IMPL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+#endif // defined(RESULT_T) && RESULT_IMPL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
-#if STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS && !defined(T) && !defined(STD_TEMPLATE_DECL) \
-	&& !defined(STD_TEMPLATE_IMPL) && !defined(STD_TEMPLATE_UNDEF_PARAMS)                     \
+#if RESULT_INCLUDE_DEFAULT_INSTANTIATIONS && !defined(RESULT_T) \
 	&& !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
 	#ifndef STD_RESULT
 		/// @brief `StdResult(T)` related declarations and definitions
 		#define STD_RESULT
 
-		#define STD_TEMPLATE_DECL TRUE
+		#define RESULT_DECL TRUE
 
-		#define T char
+		#define RESULT_T char
 		#include <C2nxt/std_result/StdResultDecl.h>
-		#undef T
+		#undef RESULT_T
 
-		#define T u8
+		#define RESULT_T u8
 		#include <C2nxt/std_result/StdResultDecl.h>
-		#undef T
+		#undef RESULT_T
 
-		#define T u16
+		#define RESULT_T u16
 		#include <C2nxt/std_result/StdResultDecl.h>
-		#undef T
+		#undef RESULT_T
 
-		#define T u32
+		#define RESULT_T u32
 		#include <C2nxt/std_result/StdResultDecl.h>
-		#undef T
+		#undef RESULT_T
 
-		#define T u64
+		#define RESULT_T u64
 		#include <C2nxt/std_result/StdResultDecl.h>
-		#undef T
+		#undef RESULT_T
 
-		#define T usize
+		#define RESULT_T usize
 		#include <C2nxt/std_result/StdResultDecl.h>
-		#undef T
+		#undef RESULT_T
 
-		#define T i8
+		#define RESULT_T i8
 		#include <C2nxt/std_result/StdResultDecl.h>
-		#undef T
+		#undef RESULT_T
 
-		#define T i16
+		#define RESULT_T i16
 		#include <C2nxt/std_result/StdResultDecl.h>
-		#undef T
+		#undef RESULT_T
 
-		#define T i32
+		#define RESULT_T i32
 		#include <C2nxt/std_result/StdResultDecl.h>
-		#undef T
+		#undef RESULT_T
 
-		#define T i64
+		#define RESULT_T i64
 		#include <C2nxt/std_result/StdResultDecl.h>
-		#undef T
+		#undef RESULT_T
 
-		#define T isize
+		#define RESULT_T isize
 		#include <C2nxt/std_result/StdResultDecl.h>
-		#undef T
+		#undef RESULT_T
 
-		#define T f32
+		#define RESULT_T f32
 		#include <C2nxt/std_result/StdResultDecl.h>
-		#undef T
+		#undef RESULT_T
 
-		#define T f64
+		#define RESULT_T f64
 		#include <C2nxt/std_result/StdResultDecl.h>
-		#undef T
+		#undef RESULT_T
 
-		#define T cstring
+		#define RESULT_T cstring
 		#include <C2nxt/std_result/StdResultDecl.h>
-		#undef T
+		#undef RESULT_T
 
-		#undef STD_TEMPLATE_DECL
+		#undef RESULT_DECL
 
 	#endif // STD_RESULT
 
-#endif // !defined(T) && !defined(STD_TEMPLATE_DECL) && !defined(STD_TEMPLATE_IMPL) \
-	   // && !defined(STD_TEMPLATE_UNDEF_PARAMS)
+#endif // !defined(T) && !defined(RESULT_DECL) && !defined(RESULT_IMPL) \
+	   // && !defined(RESULT_UNDEF_PARAMS)
 
-#if STD_TEMPLATE_UNDEF_PARAMS
+#if RESULT_UNDEF_PARAMS
 	#undef T
-	#undef STD_TEMPLATE_DECL
-	#undef STD_TEMPLATE_IMPL
-#endif // STD_TEMPLATE_UNDEF_PARAMS
+	#undef RESULT_DECL
+	#undef RESULT_IMPL
+#endif // RESULT_UNDEF_PARAMS

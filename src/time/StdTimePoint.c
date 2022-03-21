@@ -1,8 +1,8 @@
 /// @file StdTimePoint.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief StdTimePoint provides functionality for working with specific points in time
-/// @version 0.1.1
-/// @date 2022-02-24
+/// @version 0.1.2
+/// @date 2022-03-20
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -103,11 +103,11 @@ time_t std_time_point_as_time_t(StdTimePoint to_cast) {
 		std_duration_cast(to_cast.time_since_epoch, std_seconds_period).count);
 }
 
-#define T				  tm
-#define STD_TEMPLATE_IMPL TRUE
+#define RESULT_IMPL TRUE
+#define RESULT_T				  tm
 #include <C2nxt/StdResult.h>
-#undef T
-#undef STD_TEMPLATE_IMPL
+#undef RESULT_T
+#undef RESULT_IMPL
 
 StdResult(tm) std_time_point_as_tm(StdTimePoint to_cast) {
 	if(to_cast.locale == STD_LOCAL_TIME) {

@@ -1,7 +1,7 @@
 /// @file StdResultImpl.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides the function definitions for a template instantiation of
-/// `StdResult(T)`
+/// `StdResult(RESULT_T)`
 /// @version 0.2.2
 /// @date 2022-03-20
 ///
@@ -28,9 +28,9 @@
 
 #include <C2nxt/std_result/StdResultDef.h>
 
-#if defined(T) && STD_TEMPLATE_IMPL
+#if defined(RESULT_T) && RESULT_IMPL
 
-#if STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+	#if STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 		#undef STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
 		#undef STD_TEMPLATE_IMPL
@@ -38,16 +38,16 @@
 		#define STD_TEMPLATE_IMPL TRUE
 
 		#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS TRUE
-#else
-	#undef STD_TEMPLATE_IMPL
-	#include <C2nxt/StdError.h>
-	#define STD_TEMPLATE_IMPL TRUE
-#endif // STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+	#else
+		#undef STD_TEMPLATE_IMPL
+		#include <C2nxt/StdError.h>
+		#define STD_TEMPLATE_IMPL TRUE
+	#endif // STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
-#if !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
-	#define SHOULD_UNDEF_SUPPRESS_INSTANTIATIONS TRUE
-	#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS TRUE
-#endif // STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+	#if !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+		#define SHOULD_UNDEF_SUPPRESS_INSTANTIATIONS TRUE
+		#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS TRUE
+	#endif // STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
 	#include <C2nxt/StdAllocators.h>
 	#include <C2nxt/StdAssert.h>
@@ -55,15 +55,15 @@
 	#include <C2nxt/StdEnum.h>
 	#include <C2nxt/monadic/StdIfLet.h>
 
-bool StdResultIdentifier(T, is_ok)(const StdResult(T) * restrict self) {
+bool StdResultIdentifier(RESULT_T, is_ok)(const StdResult(RESULT_T) * restrict self) {
 	return is_variant(*self, Ok);
 }
 
-bool StdResultIdentifier(T, is_err)(const StdResult(T) * restrict self) {
+bool StdResultIdentifier(RESULT_T, is_err)(const StdResult(RESULT_T) * restrict self) {
 	return is_variant(*self, Err);
 }
 
-const T* StdResultIdentifier(T, as_const)(const StdResult(T) * restrict self) {
+const RESULT_T* StdResultIdentifier(RESULT_T, as_const)(const StdResult(RESULT_T) * restrict self) {
 	match_let(*self, Err) {
 		std_panic("as_const called on an Err, terminating");
 	}
@@ -71,7 +71,7 @@ const T* StdResultIdentifier(T, as_const)(const StdResult(T) * restrict self) {
 	return &(self->variant_identifier(Ok)._1);
 }
 
-T* StdResultIdentifier(T, as_mut)(StdResult(T) * restrict self) {
+RESULT_T* StdResultIdentifier(RESULT_T, as_mut)(StdResult(RESULT_T) * restrict self) {
 	match_let(*self, Err) {
 		std_panic("as_mut called on an Err, terminating");
 	}
@@ -79,7 +79,7 @@ T* StdResultIdentifier(T, as_mut)(StdResult(T) * restrict self) {
 	return &(self->variant_identifier(Ok)._1);
 }
 
-T StdResultIdentifier(T, unwrap)(StdResult(T) * restrict self) {
+RESULT_T StdResultIdentifier(RESULT_T, unwrap)(StdResult(RESULT_T) * restrict self) {
 	match_let(*self, Err) {
 		std_panic("unwrap called on an Err, terminating");
 	}
@@ -87,7 +87,8 @@ T StdResultIdentifier(T, unwrap)(StdResult(T) * restrict self) {
 	return self->variant_identifier(Ok)._1;
 }
 
-T StdResultIdentifier(T, unwrap_or)(StdResult(T) * restrict self, T default_value) {
+RESULT_T StdResultIdentifier(RESULT_T, unwrap_or)(StdResult(RESULT_T) * restrict self,
+												  RESULT_T default_value) {
 	match_let(*self, Ok, ok) {
 		return ok;
 	}
@@ -95,8 +96,8 @@ T StdResultIdentifier(T, unwrap_or)(StdResult(T) * restrict self, T default_valu
 	return default_value;
 }
 
-T StdResultIdentifier(T, unwrap_or_else)(StdResult(T) * restrict self,
-										 T (*const default_generator)(void)) {
+RESULT_T StdResultIdentifier(RESULT_T, unwrap_or_else)(StdResult(RESULT_T) * restrict self,
+													   RESULT_T (*const default_generator)(void)) {
 	match_let(*self, Ok, ok) {
 		return ok;
 	}
@@ -104,8 +105,8 @@ T StdResultIdentifier(T, unwrap_or_else)(StdResult(T) * restrict self,
 	return default_generator();
 }
 
-T StdResultIdentifier(T, expect)(StdResult(T) * restrict self,
-								 restrict const_cstring panic_message) {
+RESULT_T StdResultIdentifier(RESULT_T, expect)(StdResult(RESULT_T) * restrict self,
+											   restrict const_cstring panic_message) {
 	match_let(*self, Err) {
 		std_panic(panic_message);
 	}
@@ -113,7 +114,7 @@ T StdResultIdentifier(T, expect)(StdResult(T) * restrict self,
 	return self->variant_identifier(Ok)._1;
 }
 
-StdError StdResultIdentifier(T, unwrap_err)(StdResult(T) * restrict self) {
+StdError StdResultIdentifier(RESULT_T, unwrap_err)(StdResult(RESULT_T) * restrict self) {
 	match_let(*self, Ok) {
 		std_panic("unwrap_err called on an Ok, terminating");
 	}
@@ -121,7 +122,8 @@ StdError StdResultIdentifier(T, unwrap_err)(StdResult(T) * restrict self) {
 	return self->variant_identifier(Err)._1;
 }
 
-StdResult(T) StdResultIdentifier(T, or)(const StdResult(T) * restrict self, StdResult(T) result_b) {
+StdResult(RESULT_T) StdResultIdentifier(RESULT_T, or)(const StdResult(RESULT_T) * restrict self,
+													  StdResult(RESULT_T) result_b) {
 	match_let(*self, Ok) {
 		return *self;
 	}
@@ -130,8 +132,9 @@ StdResult(T) StdResultIdentifier(T, or)(const StdResult(T) * restrict self, StdR
 	}
 }
 
-StdResult(T) StdResultIdentifier(T, or_else)(const StdResult(T) * restrict self,
-											 StdResult(T) (*const func)(void)) {
+StdResult(RESULT_T)
+	StdResultIdentifier(RESULT_T, or_else)(const StdResult(RESULT_T) * restrict self,
+										   StdResult(RESULT_T) (*const func)(void)) {
 	match_let(*self, Ok) {
 		return *self;
 	}
@@ -140,7 +143,7 @@ StdResult(T) StdResultIdentifier(T, or_else)(const StdResult(T) * restrict self,
 	}
 }
 
-bool StdResultIdentifier(T, as_bool)(const StdResult(T) * restrict self) {
+bool StdResultIdentifier(RESULT_T, as_bool)(const StdResult(RESULT_T) * restrict self) {
 	return std_result_is_ok(*self);
 }
 
@@ -148,4 +151,4 @@ bool StdResultIdentifier(T, as_bool)(const StdResult(T) * restrict self) {
 		#undef STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 	#endif // SHOULD_UNDEF_SUPPRESS_INSTANTIATIONS
 
-#endif // defined(T) && STD_TEMPLATE_IMPL
+#endif // defined(RESULT_T) && RESULT_IMPL
