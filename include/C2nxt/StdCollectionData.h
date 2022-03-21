@@ -33,7 +33,8 @@
 
 #endif // STD_COLLECTION_DATA
 
-#if defined(T) && defined(CollectionType) && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+#if defined(COLLECTION_DATA_ELEMENT) && defined(COLLECTION_DATA_COLLECTION) \
+	&& !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
 #include <C2nxt/std_collections_data/StdCollectionDataDecl.h>
 

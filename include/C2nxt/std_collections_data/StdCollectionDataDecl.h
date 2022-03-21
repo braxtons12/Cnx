@@ -25,25 +25,28 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#if defined(T) && defined(CollectionType) && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+#if defined(COLLECTION_DATA_ELEMENT) && defined(COLLECTION_DATA_COLLECTION) \
+	&& !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
 	#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS TRUE
 
 	#include <C2nxt/StdAllocators.h>
 	#include <C2nxt/StdBasicTypes.h>
 
-typedef T (*const std_collection_element_default_constructor(T))(StdAllocator allocator);
-typedef T (*const std_collection_element_copy_constructor(T))(const T* restrict element,
-															  StdAllocator allocator);
-typedef void (*const std_collection_element_destructor(T))(T* restrict element,
-														   StdAllocator allocator);
+typedef COLLECTION_DATA_ELEMENT (*const std_collection_element_default_constructor(
+	COLLECTION_DATA_ELEMENT))(StdAllocator allocator);
+typedef COLLECTION_DATA_ELEMENT (*const std_collection_element_copy_constructor(
+	COLLECTION_DATA_ELEMENT))(const COLLECTION_DATA_ELEMENT* restrict element,
+							  StdAllocator allocator);
+typedef void (*const std_collection_element_destructor(
+	T))(COLLECTION_DATA_ELEMENT* restrict element, StdAllocator allocator);
 
-typedef struct StdCollectionData(CollectionType) {
-	std_collection_element_default_constructor(T) m_constructor;
-	std_collection_element_copy_constructor(T) m_copy_constructor;
-	std_collection_element_destructor(T) m_destructor;
+typedef struct StdCollectionData(COLLECTION_DATA_COLLECTION) {
+	std_collection_element_default_constructor(COLLECTION_DATA_ELEMENT) m_constructor;
+	std_collection_element_copy_constructor(COLLECTION_DATA_ELEMENT) m_copy_constructor;
+	std_collection_element_destructor(COLLECTION_DATA_ELEMENT) m_destructor;
 }
-StdCollectionData(CollectionType);
+StdCollectionData(COLLECTION_DATA_COLLECTION);
 
 	#undef STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 

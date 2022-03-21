@@ -28,9 +28,11 @@
 
 #if defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_DECL
 
-	#define CollectionType StdVector(T)
+	#define COLLECTION_DATA_ELEMENT T
+	#define COLLECTION_DATA_COLLECTION StdVector(T)
 	#include <C2nxt/StdCollectionData.h>
-	#undef CollectionType
+	#undef COLLECTION_DATA_COLLECTION
+	#undef COLLECTION_DATA_ELEMENT
 
 	#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS TRUE
 
