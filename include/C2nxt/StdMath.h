@@ -1,8 +1,8 @@
 /// @file StdMath.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module extends `<tgmath.h>` and provides some alternative math functions.
-/// @version 0.2.0
-/// @date 2022-03-09
+/// @version 0.2.1
+/// @date 2022-03-20
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -27,9 +27,9 @@
 
 #include <C2nxt/StdAssert.h>
 #include <C2nxt/StdBasicTypes.h>
-#define STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
+#define OPTION_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
 #include <C2nxt/StdOption.h>
-#undef STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS
+#undef OPTION_INCLUDE_DEFAULT_INSTANTIATIONS
 
 #include <C2nxt/StdPlatform.h>
 #include <C2nxt/math/__StdStaticBase.h>

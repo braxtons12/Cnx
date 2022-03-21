@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides an extensible type for communicating errors via both error codes and
 /// message strings.
-/// @version 0.1.2
+/// @version 0.1.3
 /// @date 2022-03-20
 ///
 /// MIT License
@@ -52,4 +52,31 @@ const_cstring std_error_category_get_message(StdErrorCategory self, i64 error_co
 
 const_cstring std_error_category_get_posix_message(i64 error_code) {
 	return strerror(narrow_cast(int)(error_code));
+}
+
+StdString std_error_format(const StdFormat* restrict self, StdFormatSpecifier specifier) {
+	return std_error_format_with_allocator(self, specifier, std_allocator_new());
+}
+
+StdString std_error_format_with_allocator(const StdFormat* restrict self,
+										  [[maybe_unused]] StdFormatSpecifier specifier,
+										  StdAllocator allocator) {
+	std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT
+				   || specifier.m_type == STD_FORMAT_TYPE_DEBUG,
+			   "Can only format StdError with default or debug format specifier");
+
+	let _self = static_cast(const StdError*)(self->m_self);
+	std_string_scoped message = std_string_from_with_allocator(
+		_self->m_error_category.m_message_function(_self->m_error_code),
+		allocator);
+	if(specifier.m_type == STD_FORMAT_TYPE_DEBUG) {
+		return std_format_with_allocator(
+			AS_STRING(StdError) ": [error_code: {x}, error_message: {}]",
+			allocator,
+			_self->m_error_code,
+			message);
+	}
+	else {
+		return std_format_with_allocator("Error {x}: {}", allocator, _self->m_error_code, message);
+	}
 }

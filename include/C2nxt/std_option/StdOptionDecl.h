@@ -26,15 +26,16 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#if defined(OPTION_T) && STD_TEMPLATE_DECL
+#include <C2nxt/std_option/StdOptionDef.h>
 
-	#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS 1
+#if defined(OPTION_T) && OPTION_DECL
+
+	#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS TRUE
 
 	#include <C2nxt/StdAllocators.h>
 	#include <C2nxt/StdAssert.h>
 	#include <C2nxt/StdBasicTypes.h>
 	#include <C2nxt/monadic/StdIfLet.h>
-	#include <C2nxt/std_option/StdOptionDef.h>
 	#include <C2nxt/StdEnum.h>
 
 typedef struct StdOptionIdentifier(OPTION_T, vtable) StdOptionIdentifier(OPTION_T, vtable);
@@ -179,4 +180,4 @@ StdOptionIdentifier(OPTION_T, vtable);
 
 	#undef ___DISABLE_IF_NULL
 	#undef STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
-#endif // defined(T) && STD_TEMPLATE_DECL
+#endif // defined(T) && OPTION_DECL

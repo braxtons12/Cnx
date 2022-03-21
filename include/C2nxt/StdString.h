@@ -88,9 +88,9 @@
 #include <C2nxt/StdAllocators.h>
 #include <C2nxt/StdBasicTypes.h>
 #include <C2nxt/StdIterator.h>
-#define STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
+#define OPTION_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
 #include <C2nxt/StdOption.h>
-#undef STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS
+#undef OPTION_INCLUDE_DEFAULT_INSTANTIATIONS
 #include <wchar.h>
 
 #ifndef STD_STRING
@@ -214,7 +214,7 @@ typedef const StdString* ConstRef(StdString);
 /// @brief type alias for a const reference to `StdStringView`
 typedef const StdStringView* ConstRef(StdStringView);
 
-	#define STD_TEMPLATE_DECL TRUE
+	#define OPTION_DECL TRUE
 
 	/// @brief Declares `StdOption(T)` for `StdString`
 	#define OPTION_T StdString
@@ -246,7 +246,7 @@ typedef const StdStringView* ConstRef(StdStringView);
 	#include <C2nxt/StdOption.h>
 	#undef OPTION_T
 
-	#undef STD_TEMPLATE_DECL
+	#undef OPTION_DECL
 
 /// @brief Declares iterator types for `Ref(StdString)`
 DeclStdIterators(Ref(StdString));

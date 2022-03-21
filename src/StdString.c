@@ -34,39 +34,39 @@
 #include <C2nxt/StdRange.h>
 #include <wchar.h>
 
-#define STD_TEMPLATE_UNDEF_PARAMS TRUE
+#define OPTION_UNDEF_PARAMS TRUE
 
 /// @brief Declares `StdOption(T)` for `StdString`
 #define OPTION_T		  StdString
-#define STD_TEMPLATE_IMPL TRUE
+#define OPTION_IMPL TRUE
 #include <C2nxt/StdOption.h>
 
 /// @brief Declares `StdOption(T)` for `Ref(StdString)`
 #define OPTION_T		  Ref(StdString)
-#define STD_TEMPLATE_IMPL TRUE
+#define OPTION_IMPL TRUE
 #include <C2nxt/StdOption.h>
 
 /// @brief Declares `StdOption(T)` for `ConstRef(StdString)`
 #define OPTION_T		  ConstRef(StdString)
-#define STD_TEMPLATE_IMPL TRUE
+#define OPTION_IMPL TRUE
 #include <C2nxt/StdOption.h>
 
 /// @brief Declares `StdOption(T)` for `StdStringView`
 #define OPTION_T		  StdStringView
-#define STD_TEMPLATE_IMPL TRUE
+#define OPTION_IMPL TRUE
 #include <C2nxt/StdOption.h>
 
 /// @brief Declares `StdOption(T)` for `Ref(StdStringView)`
 #define OPTION_T		  Ref(StdStringView)
-#define STD_TEMPLATE_IMPL TRUE
+#define OPTION_IMPL TRUE
 #include <C2nxt/StdOption.h>
 
 /// @brief Declares `StdOption(T)` for `ConstRef(StdStringView)`
 #define OPTION_T		  ConstRef(StdStringView)
-#define STD_TEMPLATE_IMPL TRUE
+#define OPTION_IMPL TRUE
 #include <C2nxt/StdOption.h>
 
-#undef STD_TEMPLATE_UNDEF_PARAMS
+#undef OPTION_UNDEF_PARAMS
 
 static const std_stringview_vtable_t std_stringview_vtable = {
 	.begin = std_stringview_begin,

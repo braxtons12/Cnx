@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides an extensible type for communicating errors via both error codes and
 /// message strings.
-/// @version 0.2
-/// @date 2022-03-09
+/// @version 0.2.1
+/// @date 2022-03-20
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -59,6 +59,7 @@
 /// @}
 
 #include <C2nxt/StdBasicTypes.h>
+#include <C2nxt/StdFormat.h>
 #include <errno.h>
 
 #ifndef STD_ERROR
@@ -162,6 +163,35 @@ std_error_category_get_message(StdErrorCategory self, i64 error_code);
 /// @ingroup std_error
 [[nodiscard]] [[returns_not_null]] const_cstring
 std_error_category_get_posix_message(i64 error_code);
+
+/// @brief Implementation of `StdFormat.format` for `StdError`
+///
+/// @param self - The `StdError` to format as a `StdFormat` trait object
+/// @param specifier - The `StdFormatSpecifier` in the format string. Unused
+///
+/// @return `self` formatted as a `StdString`
+[[nodiscard]] [[not_null(1)]] StdString
+std_error_format(const StdFormat* restrict self, StdFormatSpecifier specifier)
+	___DISABLE_IF_NULL(self);
+/// @brief Implementation of `StdFormat.format_with_allocator` for `StdError`
+///
+/// @param self - The `StdError` to format as a `StdFormat` trait object
+/// @param specifier - The `StdFormatSpecifier` in the format string. Unused
+/// @param allocator - The `StdAllocator` to allocate the formatted string with
+///
+/// @return `self` formatted as a `StdString`
+[[nodiscard]] [[not_null(1)]] StdString
+std_error_format_with_allocator(const StdFormat* restrict self,
+								StdFormatSpecifier specifier,
+								StdAllocator allocator) ___DISABLE_IF_NULL(self);
+
+/// @brief Implement `StdFormat` for `StdError`
+/// @return The `StdFormat` trait implementation for `StdError`
+/// @ingroup std_error
+[[maybe_unused]] static ImplTraitFor(StdFormat,
+									 StdError,
+									 std_error_format,
+									 std_error_format_with_allocator);
 
 	/// @brief The `StdErrorCategory` to map POSIX error codes
 	///

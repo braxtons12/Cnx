@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides the function declarations and type definitions for a template
 /// instantiation of `StdResult(T)`
-/// @version 0.2.2
-/// @date 2022-03-12
+/// @version 0.2.3
+/// @date 2022-03-20
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -26,17 +26,28 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
+#include <C2nxt/std_result/StdResultDef.h>
+
 #if defined(T) && STD_TEMPLATE_DECL
 
-	#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS 1
+#if STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+	#undef STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+	#include <C2nxt/StdError.h>
+	#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS TRUE
+#else
+	#include <C2nxt/StdError.h>
+#endif // STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+
+#if !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+	#define SHOULD_UNDEF_SUPPRESS_INSTANTIATIONS TRUE
+	#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS TRUE
+#endif // STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
 	#include <C2nxt/StdAllocators.h>
 	#include <C2nxt/StdAssert.h>
 	#include <C2nxt/StdBasicTypes.h>
 	#include <C2nxt/monadic/StdIfLet.h>
-	#include <C2nxt/std_result/StdResultDef.h>
 	#include <C2nxt/StdEnum.h>
-	#include <C2nxt/StdError.h>
 
 typedef struct StdResultIdentifier(T, vtable) StdResultIdentifier(T, vtable);
 
@@ -174,5 +185,9 @@ StdResultIdentifier(T, vtable);
 	   .as_bool = StdResultIdentifier(T, as_bool)};
 
 	#undef ___DISABLE_IF_NULL
-	#undef STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+
+	#if SHOULD_UNDEF_SUPPRESS_INSTANTIATIONS
+		#undef STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+	#endif // SHOULD_UNDEF_SUPPRESS_INSTANTIATIONS
+
 #endif // defined(T) && STD_TEMPLATE_DECL

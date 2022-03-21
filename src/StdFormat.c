@@ -691,12 +691,18 @@ typedef const StdFormatVariant* ConstRef(StdFormatVariant);
 DeclStdIterators(Ref(StdFormatVariant));
 DeclStdIterators(ConstRef(StdFormatVariant));
 
-#define STD_TEMPLATE_DECL TRUE
-#define STD_TEMPLATE_IMPL TRUE
+#define OPTION_DECL TRUE
+#define OPTION_IMPL TRUE
 
 #define OPTION_T StdFormatVariant
 #include <C2nxt/StdOption.h>
 #undef OPTION_T
+
+#undef OPTION_DECL
+#undef OPTION_IMPL
+
+#define STD_TEMPLATE_DECL TRUE
+#define STD_TEMPLATE_IMPL TRUE
 
 #define T				  StdFormatVariant
 #include <C2nxt/StdVector.h>

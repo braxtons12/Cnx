@@ -26,15 +26,16 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#if defined(OPTION_T) && STD_TEMPLATE_IMPL
+#include <C2nxt/std_option/StdOptionDef.h>
 
-	#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS 1
+#if defined(OPTION_T) && OPTION_IMPL
+
+	#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS TRUE
 
 	#include <C2nxt/StdAllocators.h>
 	#include <C2nxt/StdAssert.h>
 	#include <C2nxt/StdBasicTypes.h>
 	#include <C2nxt/monadic/StdIfLet.h>
-	#include <C2nxt/std_option/StdOptionDef.h>
 
 bool StdOptionIdentifier(OPTION_T, is_some)(const StdOption(OPTION_T) * restrict self) {
 	return is_variant(*self, Some);
@@ -121,4 +122,4 @@ bool StdOptionIdentifier(OPTION_T, as_bool)(const StdOption(OPTION_T) * restrict
 }
 
 	#undef STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
-#endif // defined(OPTION_T) && STD_TEMPLATE_IMPL
+#endif // defined(OPTION_T) && OPTION_IMPL

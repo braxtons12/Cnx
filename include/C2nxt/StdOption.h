@@ -43,16 +43,16 @@
 /// Example:
 /// @code {.c}
 ///	// have the template automatically undef macro template parameters
-/// #define STD_TEMPLATE_UNDEF_PARAMS
+/// #define OPTION_UNDEF_PARAMS
 ///
 ///	// instantiate the declarations of the `StdOption(T)` template
 ///	#define T MyType
-/// #define STD_TEMPLATE_DECL TRUE
+/// #define OPTION_DECL TRUE
 /// #include <C2nxt/StdOption.h>
 ///
 ///	// instantiate the definitions of the `StdOption(T)` template
 ///	#define T MyType
-/// #define STD_TEMPLATE_DECL TRUE
+/// #define OPTION_DECL TRUE
 /// #include <C2nxt/StdOption.h>
 /// @endcode
 ///
@@ -83,37 +83,36 @@
 /// @endcode
 /// @}
 
-#if !defined(STD_TEMPLATE_DECL) && (!defined(STD_TEMPLATE_IMPL) || !STD_TEMPLATE_IMPL) \
+#if !defined(OPTION_DECL) && (!defined(OPTION_IMPL) || !OPTION_IMPL) \
 	&& defined(OPTION_T)
-	#define STD_TEMPLATE_DECL 1
-#endif // !defined(STD_TEMPLATE_DECL) && (!defined(STD_TEMPLATE_IMPL) || !STD_TEMPLATE_IMPL) &&
+	#define OPTION_DECL 1
+#endif // !defined(OPTION_DECL) && (!defined(OPTION_IMPL) || !OPTION_IMPL) &&
 	   // defined(OPTION_T)
 
-#if !defined(OPTION_T) && STD_TEMPLATE_DECL
-	#error StdOption.h included with STD_TEMPLATE_DECL defined true but template parameter OPTION_T not defined
-#endif // !defined(OPTION_T) && STD_TEMPLATE_DECL
+#if !defined(OPTION_T) && OPTION_DECL && !OPTION_INCLUDE_DEFAULT_INSTANTIATIONS
+	#error StdOption.h included with OPTION_DECL defined true but template parameter OPTION_T not defined
+#endif // !defined(OPTION_T) && OPTION_DECL && !OPTION_INCLUDE_DEFAULT_INSTANTIATIONS
 
-#if !defined(OPTION_T) && STD_TEMPLATE_IMPL
-	#error StdOption.h included with STD_TEMPLATE_IMPL defined true but template parameter OPTION_T not defined
-#endif // !defined(OPTION_T) && STD_TEMPLATE_IMPL
+#if !defined(OPTION_T) && OPTION_IMPL && !OPTION_INCLUDE_DEFAULT_INSTANTIATIONS
+	#error StdOption.h included with OPTION_IMPL defined true but template parameter OPTION_T not defined
+#endif // !defined(OPTION_T) && OPTION_IMPL && !OPTION_INCLUDE_DEFAULT_INSTANTIATIONS
 
-#if defined(OPTION_T) && STD_TEMPLATE_DECL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+#if defined(OPTION_T) && OPTION_DECL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 	#include <C2nxt/std_option/StdOptionDecl.h>
-#endif // defined(OPTION_T) && STD_TEMPLATE_DECL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+#endif // defined(OPTION_T) && OPTION_DECL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
-#if defined(OPTION_T) && STD_TEMPLATE_IMPL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+#if defined(OPTION_T) && OPTION_IMPL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 	#include <C2nxt/std_option/StdOptionImpl.h>
-#endif // defined(OPTION_T) && STD_TEMPLATE_IMPL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+#endif // defined(OPTION_T) && OPTION_IMPL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
-#if STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS && !defined(OPTION_T) \
-	&& !defined(STD_TEMPLATE_DECL) && !defined(STD_TEMPLATE_IMPL)     \
-	&& !defined(STD_TEMPLATE_UNDEF_PARAMS) && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+#if OPTION_INCLUDE_DEFAULT_INSTANTIATIONS && !defined(OPTION_T) \
+	&& !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
 	#ifndef STD_OPTION
 		/// @brief `StdOption(T)` related declarations and definitions
 		#define STD_OPTION
 
-		#define STD_TEMPLATE_DECL TRUE
+		#define OPTION_DECL TRUE
 
 		#define OPTION_T char
 		#include <C2nxt/std_option/StdOptionDecl.h>
@@ -171,15 +170,15 @@
 		#include <C2nxt/std_option/StdOptionDecl.h>
 		#undef OPTION_T
 
-		#undef STD_TEMPLATE_DECL
+		#undef OPTION_DECL
 
 	#endif // STD_OPTION
 
-#endif // !defined(OPTION_T) && !defined(STD_TEMPLATE_DECL) && !defined(STD_TEMPLATE_IMPL) \
-	   // && !defined(STD_TEMPLATE_UNDEF_PARAMS)
+#endif // OPTION_INCLUDE_DEFAULT_INSTANTIATIONS && !defined(OPTION_T) \
+	   // && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
-#if STD_TEMPLATE_UNDEF_PARAMS
+#if OPTION_UNDEF_PARAMS
 	#undef OPTION_T
-	#undef STD_TEMPLATE_DECL
-	#undef STD_TEMPLATE_IMPL
-#endif // STD_TEMPLATE_UNDEF_PARAMS
+	#undef OPTION_DECL
+	#undef OPTION_IMPL
+#endif // OPTION_UNDEF_PARAMS
