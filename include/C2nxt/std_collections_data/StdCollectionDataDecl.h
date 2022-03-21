@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Macro definitions for `StdCollectionData`
 /// @version 0.2.1
-/// @date 2022-02-24
+/// @date 2022-03-21
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -39,7 +39,7 @@ typedef COLLECTION_DATA_ELEMENT (*const std_collection_element_copy_constructor(
 	COLLECTION_DATA_ELEMENT))(const COLLECTION_DATA_ELEMENT* restrict element,
 							  StdAllocator allocator);
 typedef void (*const std_collection_element_destructor(
-	T))(COLLECTION_DATA_ELEMENT* restrict element, StdAllocator allocator);
+	COLLECTION_DATA_ELEMENT))(COLLECTION_DATA_ELEMENT* restrict element, StdAllocator allocator);
 
 typedef struct StdCollectionData(COLLECTION_DATA_COLLECTION) {
 	std_collection_element_default_constructor(COLLECTION_DATA_ELEMENT) m_constructor;
