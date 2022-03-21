@@ -1007,7 +1007,7 @@ StdString(std_vformat_with_allocator)(restrict const_cstring format_string,
 	if(std_result_is_err(maybe_format_variants)) {
 		let err = std_result_unwrap_err(maybe_format_variants);
 		ignore(err);
-		std_assert(false, std_error_message_as_cstring(&err));
+		std_assert(false, std_error_message(&err));
 	}
 #endif // STD_PLATFORM_DEBUG
 

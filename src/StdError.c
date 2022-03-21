@@ -42,7 +42,7 @@ i64 std_error_code(const StdError* restrict self) {
 	return self->m_error_code;
 }
 
-const_cstring std_error_message_as_cstring(const StdError* restrict self) {
+const_cstring std_error_message(const StdError* restrict self) {
 	return std_error_category_get_message(self->m_error_category, self->m_error_code);
 }
 
