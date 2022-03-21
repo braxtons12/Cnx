@@ -217,34 +217,34 @@ typedef const StdStringView* ConstRef(StdStringView);
 	#define STD_TEMPLATE_DECL TRUE
 
 	/// @brief Declares `StdOption(T)` for `StdString`
-	#define T StdString
+	#define OPTION_T StdString
 	#include <C2nxt/StdOption.h>
-	#undef T
+	#undef OPTION_T
 
 	/// @brief Declares `StdOption(T)` for `Ref(StdString)`
-	#define T Ref(StdString)
+	#define OPTION_T Ref(StdString)
 	#include <C2nxt/StdOption.h>
-	#undef T
+	#undef OPTION_T
 
 	/// @brief Declares `StdOption(T)` for `ConstRef(StdString)`
-	#define T ConstRef(StdString)
+	#define OPTION_T ConstRef(StdString)
 	#include <C2nxt/StdOption.h>
-	#undef T
+	#undef OPTION_T
 
 	/// @brief Declares `StdOption(T)` for `StdStringView`
-	#define T StdStringView
+	#define OPTION_T StdStringView
 	#include <C2nxt/StdOption.h>
-	#undef T
+	#undef OPTION_T
 
 	/// @brief Declares `StdOption(T)` for `Ref(StdStringView)`
-	#define T Ref(StdStringView)
+	#define OPTION_T Ref(StdStringView)
 	#include <C2nxt/StdOption.h>
-	#undef T
+	#undef OPTION_T
 
 	/// @brief Declares `StdOption(T)` for `ConstRef(StdStringView)`
-	#define T ConstRef(StdStringView)
+	#define OPTION_T ConstRef(StdStringView)
 	#include <C2nxt/StdOption.h>
-	#undef T
+	#undef OPTION_T
 
 	#undef STD_TEMPLATE_DECL
 

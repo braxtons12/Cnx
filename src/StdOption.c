@@ -33,60 +33,60 @@
 
 #define STD_TEMPLATE_IMPL TRUE
 
-#define T char
+#define OPTION_T char
 #include <C2nxt/std_option/StdOptionImpl.h>
-#undef T
+#undef OPTION_T
 
-#define T u8
+#define OPTION_T u8
 #include <C2nxt/std_option/StdOptionImpl.h>
-#undef T
+#undef OPTION_T
 
-#define T u16
+#define OPTION_T u16
 #include <C2nxt/std_option/StdOptionImpl.h>
-#undef T
+#undef OPTION_T
 
-#define T u32
+#define OPTION_T u32
 #include <C2nxt/std_option/StdOptionImpl.h>
-#undef T
+#undef OPTION_T
 
-#define T u64
+#define OPTION_T u64
 #include <C2nxt/std_option/StdOptionImpl.h>
-#undef T
+#undef OPTION_T
 
-#define T usize
+#define OPTION_T usize
 #include <C2nxt/std_option/StdOptionImpl.h>
-#undef T
+#undef OPTION_T
 
-#define T i8
+#define OPTION_T i8
 #include <C2nxt/std_option/StdOptionImpl.h>
-#undef T
+#undef OPTION_T
 
-#define T i16
+#define OPTION_T i16
 #include <C2nxt/std_option/StdOptionImpl.h>
-#undef T
+#undef OPTION_T
 
-#define T i32
+#define OPTION_T i32
 #include <C2nxt/std_option/StdOptionImpl.h>
-#undef T
+#undef OPTION_T
 
-#define T i64
+#define OPTION_T i64
 #include <C2nxt/std_option/StdOptionImpl.h>
-#undef T
+#undef OPTION_T
 
-#define T isize
+#define OPTION_T isize
 #include <C2nxt/std_option/StdOptionImpl.h>
-#undef T
+#undef OPTION_T
 
-#define T f32
+#define OPTION_T f32
 #include <C2nxt/std_option/StdOptionImpl.h>
-#undef T
+#undef OPTION_T
 
-#define T f64
+#define OPTION_T f64
 #include <C2nxt/std_option/StdOptionImpl.h>
-#undef T
+#undef OPTION_T
 
-#define T cstring
+#define OPTION_T cstring
 #include <C2nxt/std_option/StdOptionImpl.h>
-#undef T
+#undef OPTION_T
 
 #undef STD_TEMPLATE_IMPL

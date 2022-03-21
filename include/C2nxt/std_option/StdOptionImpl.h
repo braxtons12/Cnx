@@ -26,7 +26,7 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#if defined(T) && STD_TEMPLATE_IMPL
+#if defined(OPTION_T) && STD_TEMPLATE_IMPL
 
 	#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS 1
 
@@ -36,15 +36,15 @@
 	#include <C2nxt/monadic/StdIfLet.h>
 	#include <C2nxt/std_option/StdOptionDef.h>
 
-bool StdOptionIdentifier(T, is_some)(const StdOption(T) * restrict self) {
+bool StdOptionIdentifier(OPTION_T, is_some)(const StdOption(OPTION_T) * restrict self) {
 	return is_variant(*self, Some);
 }
 
-bool StdOptionIdentifier(T, is_none)(const StdOption(T) * restrict self) {
+bool StdOptionIdentifier(OPTION_T, is_none)(const StdOption(OPTION_T) * restrict self) {
 	return is_variant(*self, None);
 }
 
-const T* StdOptionIdentifier(T, as_const)(const StdOption(T) * restrict self) {
+const OPTION_T* StdOptionIdentifier(OPTION_T, as_const)(const StdOption(OPTION_T) * restrict self) {
 	match_let(*self, None) {
 		std_panic("as_const called on a None value, terminating");
 	}
@@ -52,7 +52,7 @@ const T* StdOptionIdentifier(T, as_const)(const StdOption(T) * restrict self) {
 	return &(self->variant_identifier(Some)._1);
 }
 
-T* StdOptionIdentifier(T, as_mut)(StdOption(T) * restrict self) {
+OPTION_T* StdOptionIdentifier(OPTION_T, as_mut)(StdOption(OPTION_T) * restrict self) {
 	match_let(*self, None) {
 		std_panic("as_mut called on a None value, terminating");
 	}
@@ -60,7 +60,7 @@ T* StdOptionIdentifier(T, as_mut)(StdOption(T) * restrict self) {
 	return &(self->variant_identifier(Some)._1);
 }
 
-T StdOptionIdentifier(T, unwrap)(StdOption(T) * restrict self) {
+OPTION_T StdOptionIdentifier(OPTION_T, unwrap)(StdOption(OPTION_T) * restrict self) {
 	match_let(*self, None) {
 		std_panic("unwrap called on a None value, terminating");
 	}
@@ -68,7 +68,8 @@ T StdOptionIdentifier(T, unwrap)(StdOption(T) * restrict self) {
 	return extract_variant(*self, Some)._1;
 }
 
-T StdOptionIdentifier(T, unwrap_or)(StdOption(T) * restrict self, T default_value) {
+OPTION_T StdOptionIdentifier(OPTION_T, unwrap_or)(StdOption(OPTION_T) * restrict self,
+												  OPTION_T default_value) {
 	match_let(*self, Some, some) {
 		return some;
 	}
@@ -76,8 +77,8 @@ T StdOptionIdentifier(T, unwrap_or)(StdOption(T) * restrict self, T default_valu
 	return default_value;
 }
 
-T StdOptionIdentifier(T, unwrap_or_else)(StdOption(T) * restrict self,
-										 T (*const default_generator)(void)) {
+OPTION_T StdOptionIdentifier(OPTION_T, unwrap_or_else)(StdOption(OPTION_T) * restrict self,
+													   OPTION_T (*const default_generator)(void)) {
 	match_let(*self, Some, some) {
 		return some;
 	}
@@ -85,8 +86,8 @@ T StdOptionIdentifier(T, unwrap_or_else)(StdOption(T) * restrict self,
 	return default_generator();
 }
 
-T StdOptionIdentifier(T, expect)(StdOption(T) * restrict self,
-								 restrict const_cstring panic_message) {
+OPTION_T StdOptionIdentifier(OPTION_T, expect)(StdOption(OPTION_T) * restrict self,
+											   restrict const_cstring panic_message) {
 	match_let(*self, None) {
 		std_panic(panic_message);
 	}
@@ -94,7 +95,8 @@ T StdOptionIdentifier(T, expect)(StdOption(T) * restrict self,
 	return extract_variant(*self, Some)._1;
 }
 
-StdOption(T) StdOptionIdentifier(T, or)(const StdOption(T) * restrict self, StdOption(T) option_b) {
+StdOption(OPTION_T) StdOptionIdentifier(OPTION_T, or)(const StdOption(OPTION_T) * restrict self,
+													  StdOption(OPTION_T) option_b) {
 	if(std_option_is_some(*self)) {
 		return *self;
 	}
@@ -103,8 +105,9 @@ StdOption(T) StdOptionIdentifier(T, or)(const StdOption(T) * restrict self, StdO
 	}
 }
 
-StdOption(T) StdOptionIdentifier(T, or_else)(const StdOption(T) * restrict self,
-											 StdOption(T) (*const func)(void)) {
+StdOption(OPTION_T)
+	StdOptionIdentifier(OPTION_T, or_else)(const StdOption(OPTION_T) * restrict self,
+										   StdOption(OPTION_T) (*const func)(void)) {
 	if(std_option_is_some(*self)) {
 		return *self;
 	}
@@ -113,9 +116,9 @@ StdOption(T) StdOptionIdentifier(T, or_else)(const StdOption(T) * restrict self,
 	}
 }
 
-bool StdOptionIdentifier(T, as_bool)(const StdOption(T) * restrict self) {
+bool StdOptionIdentifier(OPTION_T, as_bool)(const StdOption(OPTION_T) * restrict self) {
 	return std_option_is_some(*self);
 }
 
 	#undef STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
-#endif // defined(T) && STD_TEMPLATE_IMPL
+#endif // defined(OPTION_T) && STD_TEMPLATE_IMPL

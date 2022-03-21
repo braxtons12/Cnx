@@ -37,32 +37,32 @@
 #define STD_TEMPLATE_UNDEF_PARAMS TRUE
 
 /// @brief Declares `StdOption(T)` for `StdString`
-#define T				  StdString
+#define OPTION_T		  StdString
 #define STD_TEMPLATE_IMPL TRUE
 #include <C2nxt/StdOption.h>
 
 /// @brief Declares `StdOption(T)` for `Ref(StdString)`
-#define T				  Ref(StdString)
+#define OPTION_T		  Ref(StdString)
 #define STD_TEMPLATE_IMPL TRUE
 #include <C2nxt/StdOption.h>
 
 /// @brief Declares `StdOption(T)` for `ConstRef(StdString)`
-#define T				  ConstRef(StdString)
+#define OPTION_T		  ConstRef(StdString)
 #define STD_TEMPLATE_IMPL TRUE
 #include <C2nxt/StdOption.h>
 
 /// @brief Declares `StdOption(T)` for `StdStringView`
-#define T				  StdStringView
+#define OPTION_T		  StdStringView
 #define STD_TEMPLATE_IMPL TRUE
 #include <C2nxt/StdOption.h>
 
 /// @brief Declares `StdOption(T)` for `Ref(StdStringView)`
-#define T				  Ref(StdStringView)
+#define OPTION_T		  Ref(StdStringView)
 #define STD_TEMPLATE_IMPL TRUE
 #include <C2nxt/StdOption.h>
 
 /// @brief Declares `StdOption(T)` for `ConstRef(StdStringView)`
-#define T				  ConstRef(StdStringView)
+#define OPTION_T		  ConstRef(StdStringView)
 #define STD_TEMPLATE_IMPL TRUE
 #include <C2nxt/StdOption.h>
 

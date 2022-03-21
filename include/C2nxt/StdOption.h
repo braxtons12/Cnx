@@ -25,9 +25,9 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#include <C2nxt/std_option/StdOptionDef.h>
 #include <C2nxt/StdDef.h>
 #include <C2nxt/StdEnum.h>
+#include <C2nxt/std_option/StdOptionDef.h>
 
 /// @ingroup error_handling
 /// @{
@@ -83,30 +83,31 @@
 /// @endcode
 /// @}
 
-#if !defined(STD_TEMPLATE_DECL) && (!defined(STD_TEMPLATE_IMPL) || !STD_TEMPLATE_IMPL) && defined(T)
+#if !defined(STD_TEMPLATE_DECL) && (!defined(STD_TEMPLATE_IMPL) || !STD_TEMPLATE_IMPL) \
+	&& defined(OPTION_T)
 	#define STD_TEMPLATE_DECL 1
 #endif // !defined(STD_TEMPLATE_DECL) && (!defined(STD_TEMPLATE_IMPL) || !STD_TEMPLATE_IMPL) &&
-	   // defined(T)
+	   // defined(OPTION_T)
 
-#if !defined(T) && STD_TEMPLATE_DECL
-	#error StdOption.h included with STD_TEMPLATE_DECL defined true but template parameter T not defined
-#endif // !defined(T) && STD_TEMPLATE_DECL
+#if !defined(OPTION_T) && STD_TEMPLATE_DECL
+	#error StdOption.h included with STD_TEMPLATE_DECL defined true but template parameter OPTION_T not defined
+#endif // !defined(OPTION_T) && STD_TEMPLATE_DECL
 
-#if !defined(T) && STD_TEMPLATE_IMPL
-	#error StdOption.h included with STD_TEMPLATE_IMPL defined true but template parameter T not defined
-#endif // !defined(T) && STD_TEMPLATE_IMPL
+#if !defined(OPTION_T) && STD_TEMPLATE_IMPL
+	#error StdOption.h included with STD_TEMPLATE_IMPL defined true but template parameter OPTION_T not defined
+#endif // !defined(OPTION_T) && STD_TEMPLATE_IMPL
 
-#if defined(T) && STD_TEMPLATE_DECL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+#if defined(OPTION_T) && STD_TEMPLATE_DECL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 	#include <C2nxt/std_option/StdOptionDecl.h>
-#endif // defined(T) && STD_TEMPLATE_DECL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+#endif // defined(OPTION_T) && STD_TEMPLATE_DECL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
-#if defined(T) && STD_TEMPLATE_IMPL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+#if defined(OPTION_T) && STD_TEMPLATE_IMPL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 	#include <C2nxt/std_option/StdOptionImpl.h>
-#endif // defined(T) && STD_TEMPLATE_IMPL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+#endif // defined(OPTION_T) && STD_TEMPLATE_IMPL && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
-#if STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS && !defined(T) && !defined(STD_TEMPLATE_DECL) \
-	&& !defined(STD_TEMPLATE_IMPL) && !defined(STD_TEMPLATE_UNDEF_PARAMS)                     \
-	&& !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+#if STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS && !defined(OPTION_T) \
+	&& !defined(STD_TEMPLATE_DECL) && !defined(STD_TEMPLATE_IMPL)     \
+	&& !defined(STD_TEMPLATE_UNDEF_PARAMS) && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
 	#ifndef STD_OPTION
 		/// @brief `StdOption(T)` related declarations and definitions
@@ -114,71 +115,71 @@
 
 		#define STD_TEMPLATE_DECL TRUE
 
-		#define T char
+		#define OPTION_T char
 		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
+		#undef OPTION_T
 
-		#define T u8
+		#define OPTION_T u8
 		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
+		#undef OPTION_T
 
-		#define T u16
+		#define OPTION_T u16
 		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
+		#undef OPTION_T
 
-		#define T u32
+		#define OPTION_T u32
 		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
+		#undef OPTION_T
 
-		#define T u64
+		#define OPTION_T u64
 		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
+		#undef OPTION_T
 
-		#define T usize
+		#define OPTION_T usize
 		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
+		#undef OPTION_T
 
-		#define T i8
+		#define OPTION_T i8
 		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
+		#undef OPTION_T
 
-		#define T i16
+		#define OPTION_T i16
 		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
+		#undef OPTION_T
 
-		#define T i32
+		#define OPTION_T i32
 		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
+		#undef OPTION_T
 
-		#define T i64
+		#define OPTION_T i64
 		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
+		#undef OPTION_T
 
-		#define T isize
+		#define OPTION_T isize
 		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
+		#undef OPTION_T
 
-		#define T f32
+		#define OPTION_T f32
 		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
+		#undef OPTION_T
 
-		#define T f64
+		#define OPTION_T f64
 		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
+		#undef OPTION_T
 
-		#define T cstring
+		#define OPTION_T cstring
 		#include <C2nxt/std_option/StdOptionDecl.h>
-		#undef T
+		#undef OPTION_T
 
 		#undef STD_TEMPLATE_DECL
 
 	#endif // STD_OPTION
 
-#endif // !defined(T) && !defined(STD_TEMPLATE_DECL) && !defined(STD_TEMPLATE_IMPL) \
+#endif // !defined(OPTION_T) && !defined(STD_TEMPLATE_DECL) && !defined(STD_TEMPLATE_IMPL) \
 	   // && !defined(STD_TEMPLATE_UNDEF_PARAMS)
 
 #if STD_TEMPLATE_UNDEF_PARAMS
-	#undef T
+	#undef OPTION_T
 	#undef STD_TEMPLATE_DECL
 	#undef STD_TEMPLATE_IMPL
 #endif // STD_TEMPLATE_UNDEF_PARAMS
