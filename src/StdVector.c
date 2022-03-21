@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a dynamic-array type comparable to C++'s `std::vector` and Rust's
 /// `std::vec::Vec` for C2nxt
-/// @version 0.2.1
-/// @date 2022-02-24
+/// @version 0.2.2
+/// @date 2022-03-21
 ///
 /// MIT License
 /// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -26,78 +26,78 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#define STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
+#define VECTOR_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
 
 #include <C2nxt/StdVector.h>
 
-#undef STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS
+#undef VECTOR_INCLUDE_DEFAULT_INSTANTIATIONS
 
-#define STD_TEMPLATE_IMPL  TRUE
-#define SMALL_OPT_CAPACITY 8
+#define VECTOR_IMPL			  TRUE
+#define VECTOR_SMALL_OPT_CAPACITY 8
 
-#define T char
+#define VECTOR_T char
 #include <C2nxt/std_vector/StdVectorImpl.h>
-#undef T
+#undef VECTOR_T
 
-#define T u8
+#define VECTOR_T u8
 #include <C2nxt/std_vector/StdVectorImpl.h>
-#undef T
+#undef VECTOR_T
 
-#define T u16
+#define VECTOR_T u16
 #include <C2nxt/std_vector/StdVectorImpl.h>
-#undef T
+#undef VECTOR_T
 
-#define T u32
+#define VECTOR_T u32
 #include <C2nxt/std_vector/StdVectorImpl.h>
-#undef T
+#undef VECTOR_T
 
-#define T u64
+#define VECTOR_T u64
 #include <C2nxt/std_vector/StdVectorImpl.h>
-#undef T
+#undef VECTOR_T
 
-#define T usize
+#define VECTOR_T usize
 #include <C2nxt/std_vector/StdVectorImpl.h>
-#undef T
+#undef VECTOR_T
 
-#define T i8
+#define VECTOR_T i8
 #include <C2nxt/std_vector/StdVectorImpl.h>
-#undef T
+#undef VECTOR_T
 
-#define T i16
+#define VECTOR_T i16
 #include <C2nxt/std_vector/StdVectorImpl.h>
-#undef T
+#undef VECTOR_T
 
-#define T i32
+#define VECTOR_T i32
 #include <C2nxt/std_vector/StdVectorImpl.h>
-#undef T
+#undef VECTOR_T
 
-#define T i64
+#define VECTOR_T i64
 #include <C2nxt/std_vector/StdVectorImpl.h>
-#undef T
+#undef VECTOR_T
 
-#define T isize
+#define VECTOR_T isize
 #include <C2nxt/std_vector/StdVectorImpl.h>
-#undef T
+#undef VECTOR_T
 
-#define T f32
+#define VECTOR_T f32
 #include <C2nxt/std_vector/StdVectorImpl.h>
-#undef T
+#undef VECTOR_T
 
-#define T f64
+#define VECTOR_T f64
 #include <C2nxt/std_vector/StdVectorImpl.h>
-#undef T
+#undef VECTOR_T
 
-#define T cstring
+#define VECTOR_T cstring
 #include <C2nxt/std_vector/StdVectorImpl.h>
-#undef T
+#undef VECTOR_T
 
-#define T StdString
+#define VECTOR_T StdString
 #include <C2nxt/std_vector/StdVectorImpl.h>
-#undef T
+#undef VECTOR_T
 
-#define T StdStringView
+#define VECTOR_T StdStringView
 #include <C2nxt/std_vector/StdVectorImpl.h>
-#undef T
+#undef VECTOR_T
 
-#undef SMALL_OPT_CAPACITY
-#undef STD_TEMPLATE_IMPL
+#undef VECTOR_SMALL_OPT_CAPACITY
+#undef VECTOR_IMPL

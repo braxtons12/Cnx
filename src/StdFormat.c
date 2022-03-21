@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief StdFormat brings human readable string formatting, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
-/// @version 0.2.1
-/// @date 2022-03-20
+/// @version 0.2.2
+/// @date 2022-03-21
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -93,7 +93,7 @@ static const f64 powers_of_10[NUM_POWERS_OF_10] = {
 }
 
 #if STD_PLATFORM_APPLE
-// clang-format off
+	// clang-format off
 #define std_get_digit(num, digit) _Generic((num), 		\
 		char  	: 	std_get_digit_u64, 					\
 		u8  	: 	std_get_digit_u64, 					\
@@ -108,7 +108,7 @@ static const f64 powers_of_10[NUM_POWERS_OF_10] = {
 		isize 	: 	std_get_digit_i64)(num, digit)
 // clang-format on
 #else
-// clang-format off
+	// clang-format off
 #define std_get_digit(num, digit) _Generic((num), 		\
 		char  	: 	std_get_digit_u64, 					\
 		u8  	: 	std_get_digit_u64, 					\
@@ -701,15 +701,15 @@ DeclStdIterators(ConstRef(StdFormatVariant));
 #undef OPTION_IMPL
 #undef OPTION_DECL
 
-#define STD_TEMPLATE_DECL TRUE
-#define STD_TEMPLATE_IMPL TRUE
+#define VECTOR_DECL TRUE
+#define VECTOR_IMPL TRUE
 
-#define T StdFormatVariant
+#define VECTOR_T StdFormatVariant
 #include <C2nxt/StdVector.h>
-#undef T
+#undef VECTOR_T
 
-#undef STD_TEMPLATE_IMPL
-#undef STD_TEMPLATE_DECL
+#undef VECTOR_IMPL
+#undef VECTOR_DECL
 
 #define RESULT_DECL TRUE
 #define RESULT_IMPL TRUE

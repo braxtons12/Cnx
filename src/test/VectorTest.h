@@ -13,9 +13,9 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wnonportable-i
 #include <C2nxt/StdFormat.h>
 #include <C2nxt/StdRange.h>
 
-#define STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
+#define VECTOR_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
 #include <C2nxt/StdVector.h>
-#undef STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS
+#undef VECTOR_INCLUDE_DEFAULT_INSTANTIATIONS
 
 #include <unity.h>
 

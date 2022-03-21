@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a dynamic-array type comparable to C++'s `std::vector` and Rust's
 /// `std::vec::Vec` for C2nxt
-/// @version 0.2.1
-/// @date 2022-02-24
+/// @version 0.2.2
+/// @date 2022-03-21
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -68,15 +68,15 @@
 ///
 /// These signal to the implementation to instantiate the declarations, definitions, or both, for
 /// the template.
-/// 1. `STD_TEMPLATE_DECL` (Optional) - Defining this to true signals to the implementation to
+/// 1. `VECTOR_DECL` (Optional) - Defining this to true signals to the implementation to
 /// declare the template instantiation when you include `<C2nxt/StdVector.h>`. This will instantiate
 /// any required type declarations and definitions and any required function declarations. No
 /// functions will be defined. This is optional (but signals intent explicitly) - If required
-/// template parameters are defined and `STD_TEMPLATE_IMPL` is not, then this will be inferred as
+/// template parameters are defined and `VECTOR_IMPL` is not, then this will be inferred as
 /// true (`1`) by default.
-/// 2. `STD_TEMPLATE_IMPL` - Defining this to true signals to the implementation to define the
+/// 2. `VECTOR_IMPL` - Defining this to true signals to the implementation to define the
 /// template instantiation when you include `<C2nxt/StdVector.h>`. This will instantiate any
-/// required function definitions. This is not required to be paired with `STD_TEMPLATE_DECL` (you
+/// required function definitions. This is not required to be paired with `VECTOR_DECL` (you
 /// can declare the template without defining it), but it is eventually required to provide the
 /// definitions for the functions. If this instantiation-mode hasn't been included in exactly one
 /// translation unit in your build, you will get linking errors due to the missing function
@@ -86,19 +86,21 @@
 ///
 /// These provide the type or value parameters that the template is parameterized on to the
 /// template implementation. These should be `#define`d to their appropriate values.
-/// 1. `T` - The type to be stored in the vector (e.g. `u32` or `StdString`). This is required.
-/// 2. `SMALL_OPT_CAPACITY` - This is the small-optimization capacity to be stored in the vector
-/// directly when the size is at or below this, instead of resorting to heap allocation. `0` is a
-/// valid value for this. This is optional, and if not provided will default to
+/// 1. `VECTOR_T` - The type to be stored in the vector (e.g. `u32` or `StdString`). This is
+/// required.
+/// 2. `VECTOR_SMALL_OPT_CAPACITY` - This is the small-optimization capacity to be stored in the
+/// vector directly when the size is at or below this, instead of resorting to heap allocation. `0`
+/// is a valid value for this. This is optional, and if not provided will default to
 /// `STD_VECTOR_DEFAULT_SHORT_OPT_CAPACITY` (which is defined as `8`). Heap allocations occurring
-/// after size exceeds `SMALL_OPT_CAPACITY` will follow the growth strategy of the collection.
-/// 3. `DEFAULT_LONG_CAPACITY` - This is the initial capacity to be stored in the vector if
-/// `SMALL_OPT_CAPACITY` is defined as `0`. This is optional. If not provided and
-/// `SMALL_OPT_CAPACITY` is provided as `0`, this will default to
-/// `STD_VECTOR_DEFAULT_LONG_CAPACITY` (which is defined as `16`). If `SMALL_OPT_CAPACITY` is
-/// defaulted or provided as greater than 0, this will not be used. Heap allocations occurring after
-/// size exceeds whichever of the two possible initial storage strategies are used will follow
-/// the growth strategy of the collection.
+/// after size exceeds `VECTOR_SMALL_OPT_CAPACITY` will follow the growth strategy of the
+/// collection.
+/// 3. `VECTOR_DEFAULT_LONG_CAPACITY` - This is the initial capacity to be stored in the vector if
+/// `VECTOR_SMALL_OPT_CAPACITY` is defined as `0`. This is optional. If not provided and
+/// `VECTOR_SMALL_OPT_CAPACITY` is provided as `0`, this will default to
+/// `STD_VECTOR_VECTOR_DEFAULT_LONG_CAPACITY` (which is defined as `16`). If
+/// `VECTOR_SMALL_OPT_CAPACITY` is defaulted or provided as greater than 0, this will not be used.
+/// Heap allocations occurring after size exceeds whichever of the two possible initial storage
+/// strategies are used will follow the growth strategy of the collection.
 ///
 /// Example of (1).
 ///
@@ -116,26 +118,26 @@
 ///
 /// DeclStdOption(YourType);
 ///
-/// // define the template parameter, `T`
-/// #define T YourType
+/// // define the template parameter, `VECTOR_T`
+/// #define VECTOR_T YourType
 /// // tell the template to instantiate the declarations
-/// #define STD_TEMPLATE_DECL 1
+/// #define VECTOR_DECL 1
 /// // `#undef`s all macro parameters after instantiating the template,
 /// // so they don't propagate around
-/// #define STD_TEMPLATE_UNDEF_PARAMS 1
+/// #define VECTOR_UNDEF_PARAMS 1
 /// #include <C2nxt/StdVector.h>
 ///
 /// // the rest of your public interface...
 ///
 /// // in `YourType.c`
 /// ImplStdOption(YourType);
-/// // define the template parameter, `T`
-/// #define T YourType
+/// // define the template parameter, `VECTOR_T`
+/// #define VECTOR_T YourType
 /// // tell the template to instantiate the implementations
-/// #define STD_TEMPLATE_IMPL 1
+/// #define VECTOR_IMPL 1
 /// // `#undef`s all macro parameters after instantiating the template,
 /// // so they don't propagate around
-/// #define STD_TEMPLATE_UNDEF_PARAMS 1
+/// #define VECTOR_UNDEF_PARAMS 1
 /// #include <C2nxt/StdVector.h>
 ///
 /// // the rest of your implementation
@@ -167,24 +169,24 @@
 /// // in `StdVectorYourType.h`
 /// #include "YourType.h"
 /// #include "StdOptionYourType.h"
-/// // define the template parameter, `T`
-/// #define T YourType
+/// // define the template parameter, `VECTOR_T`
+/// #define VECTOR_T YourType
 /// // tell the template to instantiate the declarations
-/// #define STD_TEMPLATE_DECL 1
+/// #define VECTOR_DECL 1
 /// // `#undef`s all macro parameters after instantiating the template,
 /// // so they don't propagate around
-/// #define STD_TEMPLATE_UNDEF_PARAMS 1
+/// #define VECTOR_UNDEF_PARAMS 1
 /// #include <C2nxt/StdVector.h>
 ///
 /// // in `StdVectorYourType.c`
 /// #include "StdVectorYourType.c"
-/// // define the template parameter, `T`
-/// #define T YourType
+/// // define the template parameter, `VECTOR_T`
+/// #define VECTOR_T YourType
 /// // tell the template to instantiate the implementations
-/// #define STD_TEMPLATE_IMPL 1
+/// #define VECTOR_IMPL 1
 /// // `#undef`s all macro parameters after instantiating the template,
 /// // so they don't propagate around
-/// #define STD_TEMPLATE_UNDEF_PARAMS 1
+/// #define VECTOR_UNDEF_PARAMS 1
 /// #include <C2nxt/StdVector.h>
 /// @endcode
 ///
@@ -291,53 +293,46 @@
 
 #include <C2nxt/std_vector/StdVectorDef.h>
 
-#if !defined(STD_TEMPLATE_DECL) && (!defined(STD_TEMPLATE_IMPL) || !STD_TEMPLATE_IMPL) && defined(T)
-	#define STD_TEMPLATE_DECL 1
-#endif // !defined(STD_TEMPLATE_DECL) && (!defined(STD_TEMPLATE_IMPL) || !STD_TEMPLATE_IMPL) &&
+#if !defined(VECTOR_DECL) && (!defined(VECTOR_IMPL) || !VECTOR_IMPL) && defined(VECTOR_T)
+	#define VECTOR_DECL 1
+#endif // !defined(VECTOR_DECL) && (!defined(VECTOR_IMPL) || !VECTOR_IMPL) &&
 	   // defined(T)
 
-#if(defined(STD_TEMPLATE_DECL) || defined(STD_TEMPLATE_IMPL)) && !defined(SMALL_OPT_CAPACITY)
-	#define SMALL_OPT_CAPACITY STD_VECTOR_DEFAULT_SHORT_OPT_CAPACITY
-#endif // (defined(STD_TEMPLATE_DECL) || defined(STD_TEMPLATE_IMPL)) && !defined(SMALL_OPT_CAPACITY)
+#if(defined(VECTOR_DECL) || defined(VECTOR_IMPL)) && !defined(VECTOR_SMALL_OPT_CAPACITY)
+	#define VECTOR_SMALL_OPT_CAPACITY STD_VECTOR_DEFAULT_SHORT_OPT_CAPACITY
+#endif // (defined(VECTOR_DECL) || defined(VECTOR_IMPL)) && !defined(VECTOR_SMALL_OPT_CAPACITY)
 
-#if(defined(STD_TEMPLATE_DECL) || defined(STD_TEMPLATE_IMPL))     \
-	&& (defined(SMALL_OPT_CAPACITY) && (SMALL_OPT_CAPACITY == 0)) \
-	&& !defined(DEFAULT_LONG_CAPACITY)
-	#define DEFAULT_LONG_CAPACITY STD_VECTOR_DEFAULT_LONG_CAPACITY
-#endif // (defined(STD_TEMPLATE_DECL) || defined(STD_TEMPLATE_IMPL))     \
-	   // && (defined(SMALL_OPT_CAPACITY) && (SMALL_OPT_CAPACITY == 0)) \
-	   // && !defined(DEFAULT_LONG_CAPACITY)
+#if(defined(VECTOR_DECL) || defined(VECTOR_IMPL))                               \
+	&& (defined(VECTOR_SMALL_OPT_CAPACITY) && (VECTOR_SMALL_OPT_CAPACITY == 0)) \
+	&& !defined(VECTOR_DEFAULT_LONG_CAPACITY)
+	#define VECTOR_DEFAULT_LONG_CAPACITY STD_VECTOR_VECTOR_DEFAULT_LONG_CAPACITY
+#endif // (defined(VECTOR_DECL) || defined(VECTOR_IMPL))     \
+	   // && (defined(VECTOR_SMALL_OPT_CAPACITY) && (VECTOR_SMALL_OPT_CAPACITY == 0)) \
+	   // && !defined(VECTOR_DEFAULT_LONG_CAPACITY)
 
-#if !defined(T) && STD_TEMPLATE_DECL
-	#error StdVector.h included with STD_TEMPLATE_DECL defined true but template parameter T not defined
-#endif // !defined(T) && STD_TEMPLATE_DECL
+#if !defined(VECTOR_T) && VECTOR_DECL && !VECTOR_INCLUDE_DEFAULT_INSTANTIATIONS
+	#error StdVector.h included with VECTOR_DECL defined true but template parameter VECTOR_T not defined
+#endif // !defined(T) && VECTOR_DECL && !VECTOR_INCLUDE_DEFAULT_INSTANTIATIONS
 
-#if !defined(T) && STD_TEMPLATE_IMPL
-	#error StdVector.h included with STD_TEMPLATE_IMPL defined true but template parameter T not defined
-#endif // !defined(T) && STD_TEMPLATE_IMPL
+#if !defined(VECTOR_T) && VECTOR_IMPL && !VECTOR_INCLUDE_DEFAULT_INSTANTIATIONS
+	#error StdVector.h included with VECTOR_IMPL defined true but template parameter VECTOR_T not defined
+#endif // !defined(T) && VECTOR_IMPL &&!VECTOR_INCLUDE_DEFAULT_INSTANTIATIONS
 
-#if defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_DECL \
+#if defined(VECTOR_T) && defined(VECTOR_SMALL_OPT_CAPACITY) && VECTOR_DECL \
 	&& !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 	#include <C2nxt/std_vector/StdVectorDecl.h>
-#endif // defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_DECL &&
+#endif // defined(T) && defined(VECTOR_SMALL_OPT_CAPACITY) && VECTOR_DECL &&
 	   // !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
-#if defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_IMPL \
+#if defined(VECTOR_T) && defined(VECTOR_SMALL_OPT_CAPACITY) && VECTOR_IMPL \
 	&& !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 	#include <C2nxt/std_vector/StdVectorImpl.h>
-#endif // defined(T) && defined(SMALL_OPT_CAPACITY) && STD_TEMPLATE_IMPL &&
+#endif // defined(T) && defined(VECTOR_SMALL_OPT_CAPACITY) && VECTOR_IMPL &&
 	   // !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
-#if STD_TEMPLATE_UNDEF_PARAMS
-	#undef T
-	#undef SMALL_OPT_CAPACITY
-	#undef STD_TEMPLATE_DECL
-	#undef STD_TEMPLATE_IMPL
-#endif // STD_TEMPLATE_UNDEF_PARAMS
+#if VECTOR_INCLUDE_DEFAULT_INSTANTIATIONS && !defined(VECTOR_T) \
+	&& !defined(VECTOR_SMALL_OPT_CAPACITY) && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
 
-#if STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS && !defined(T) && !defined(STD_TEMPLATE_DECL) \
-	&& !defined(STD_TEMPLATE_IMPL) && !defined(STD_TEMPLATE_UNDEF_PARAMS)                     \
-	&& !defined(SMALL_OPT_CAPACITY)
 	#ifndef STD_VECTOR
 		/// @brief `StdVector(T)` related declarations and definitions
 		#define STD_VECTOR
@@ -345,77 +340,84 @@
 		#include <C2nxt/StdOption.h>
 		#include <C2nxt/StdString.h>
 
-		#define SMALL_OPT_CAPACITY 8
-		#define STD_TEMPLATE_DECL  TRUE
+		#define VECTOR_SMALL_OPT_CAPACITY 8
+		#define VECTOR_DECL				  TRUE
 
-		#define T char
+		#define VECTOR_T char
 		#include <C2nxt/std_vector/StdVectorDecl.h>
-		#undef T
+		#undef VECTOR_T
 
-		#define T u8
+		#define VECTOR_T u8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
-		#undef T
+		#undef VECTOR_T
 
-		#define T u16
+		#define VECTOR_T u16
 		#include <C2nxt/std_vector/StdVectorDecl.h>
-		#undef T
+		#undef VECTOR_T
 
-		#define T u32
+		#define VECTOR_T u32
 		#include <C2nxt/std_vector/StdVectorDecl.h>
-		#undef T
+		#undef VECTOR_T
 
-		#define T u64
+		#define VECTOR_T u64
 		#include <C2nxt/std_vector/StdVectorDecl.h>
-		#undef T
+		#undef VECTOR_T
 
-		#define T usize
+		#define VECTOR_T usize
 		#include <C2nxt/std_vector/StdVectorDecl.h>
-		#undef T
+		#undef VECTOR_T
 
-		#define T i8
+		#define VECTOR_T i8
 		#include <C2nxt/std_vector/StdVectorDecl.h>
-		#undef T
+		#undef VECTOR_T
 
-		#define T i16
+		#define VECTOR_T i16
 		#include <C2nxt/std_vector/StdVectorDecl.h>
-		#undef T
+		#undef VECTOR_T
 
-		#define T i32
+		#define VECTOR_T i32
 		#include <C2nxt/std_vector/StdVectorDecl.h>
-		#undef T
+		#undef VECTOR_T
 
-		#define T i64
+		#define VECTOR_T i64
 		#include <C2nxt/std_vector/StdVectorDecl.h>
-		#undef T
+		#undef VECTOR_T
 
-		#define T isize
+		#define VECTOR_T isize
 		#include <C2nxt/std_vector/StdVectorDecl.h>
-		#undef T
+		#undef VECTOR_T
 
-		#define T f32
+		#define VECTOR_T f32
 		#include <C2nxt/std_vector/StdVectorDecl.h>
-		#undef T
+		#undef VECTOR_T
 
-		#define T f64
+		#define VECTOR_T f64
 		#include <C2nxt/std_vector/StdVectorDecl.h>
-		#undef T
+		#undef VECTOR_T
 
-		#define T cstring
+		#define VECTOR_T cstring
 		#include <C2nxt/std_vector/StdVectorDecl.h>
-		#undef T
+		#undef VECTOR_T
 
-		#define T StdString
+		#define VECTOR_T StdString
 		#include <C2nxt/std_vector/StdVectorDecl.h>
-		#undef T
+		#undef VECTOR_T
 
-		#define T StdStringView
+		#define VECTOR_T StdStringView
 		#include <C2nxt/std_vector/StdVectorDecl.h>
-		#undef T
+		#undef VECTOR_T
 
-		#undef SMALL_OPT_CAPACITY
-		#undef STD_TEMPLATE_DECL
+		#undef VECTOR_SMALL_OPT_CAPACITY
+		#undef VECTOR_DECL
 
 	#endif // STD_VECTOR
 
-#endif // !defined(T) && !defined(STD_TEMPLATE_DECL) && !defined(STD_TEMPLATE_IMPL) \
-	   // && !defined(STD_TEMPLATE_UNDEF_PARAMS)
+#endif // VECTOR_INCLUDE_DEFAULT_INSTANTIATIONS && !defined(VECTOR_T)                      \
+	   // && !defined(VECTOR_SMALL_OPT_CAPACITY) && !STD_TEMPLATE_SUPPRESS_INSTANTIATIONS
+
+#if VECTOR_UNDEF_PARAMS
+	#undef VECTOR_T
+	#undef VECTOR_SMALL_OPT_CAPACITY
+	#undef VECTOR_DECL
+	#undef VECTOR_IMPL
+#endif // VECTOR_UNDEF_PARAMS
