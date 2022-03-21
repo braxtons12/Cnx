@@ -1,8 +1,8 @@
 /// @file StdOption.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a struct template for representing an optional value
-/// @version 0.2.1
-/// @date 2022-02-24
+/// @version 0.2.2
+/// @date 2022-03-20
 ///
 /// MIT License
 /// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
