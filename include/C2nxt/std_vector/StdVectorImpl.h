@@ -30,8 +30,6 @@
 
 	#define STD_TEMPLATE_SUPPRESS_INSTANTIATIONS TRUE
 
-	#define min_value(x, y) ((x) < (y) ? (x) : (y))
-
 	#include <C2nxt/StdAllocators.h>
 	#include <C2nxt/StdBasicTypes.h>
 	#include <C2nxt/StdCollectionData.h>
@@ -123,22 +121,19 @@ ImplIntoStdRandomAccessIterator(StdVector(VECTOR_T),
 								StdVectorIdentifier(VECTOR_T, iterator_cequals));
 
 [[always_inline]] static inline VECTOR_T
-StdVectorIdentifier(VECTOR_T, default_constructor)(StdAllocator allocator) {
-	ignore(allocator);
+StdVectorIdentifier(VECTOR_T, default_constructor)([[maybe_unused]] StdAllocator allocator) {
 	return (VECTOR_T){0};
 }
 
 [[always_inline]] static inline VECTOR_T
 StdVectorIdentifier(VECTOR_T, default_copy_constructor)(const VECTOR_T* restrict elem,
-														StdAllocator allocator) {
-	ignore(allocator);
+														[[maybe_unused]] StdAllocator allocator) {
 	return *elem;
 }
 
 [[always_inline]] static inline void StdVectorIdentifier(VECTOR_T, default_destructor)(
-	VECTOR_T* restrict element, /** NOLINT(readability-non-const-parameter)**/
-	StdAllocator allocator) {
-	ignore(allocator, element);
+	[[maybe_unused]] VECTOR_T* restrict element, /** NOLINT(readability-non-const-parameter)**/
+	[[maybe_unused]] StdAllocator allocator) {
 }
 
 static const struct StdVectorIdentifier(VECTOR_T, vtable) StdVectorIdentifier(VECTOR_T, vtable_impl)
@@ -373,7 +368,7 @@ void StdVectorIdentifier(VECTOR_T, resize_internal)(StdVector(VECTOR_T) * restri
 	if(new_size > VECTOR_SMALL_OPT_CAPACITY) {
 		let_mut array = static_cast(VECTOR_T*)(
 			std_allocator_allocate_array_t(VECTOR_T, self->m_allocator, new_size).m_memory);
-		let num_to_copy = min_value(size, new_size);
+		let num_to_copy = size < new_size ? size : new_size;
 		std_memcpy(VECTOR_T, array, &std_vector_at_mut(*self, 0), num_to_copy);
 		if(!StdVectorIdentifier(VECTOR_T, is_short)(self)) {
 			let_mut ptr = self->m_long;
@@ -389,7 +384,10 @@ void StdVectorIdentifier(VECTOR_T, resize_internal)(StdVector(VECTOR_T) * restri
 		let_mut array = static_cast(VECTOR_T*)(
 			std_allocator_allocate_array_t(VECTOR_T, self->m_allocator, capacity).m_memory);
 		std_memcpy(VECTOR_T, array, self->m_long, capacity);
-		std_allocator_deallocate_array_t(VECTOR_T, self->m_allocator, self->m_long, self->m_capacity);
+		std_allocator_deallocate_array_t(VECTOR_T,
+										 self->m_allocator,
+										 self->m_long,
+										 self->m_capacity);
 		std_memcpy(VECTOR_T, self->m_short, array, capacity);
 		std_allocator_deallocate_array_t(VECTOR_T, self->m_allocator, array, capacity);
 		self->m_size = capacity;
@@ -532,7 +530,10 @@ void StdVectorIdentifier(VECTOR_T, free)(void* restrict self) {
 	}
 
 	if(!StdVectorIdentifier(VECTOR_T, is_short)(self_)) {
-		std_allocator_deallocate_array_t(VECTOR_T, self_->m_allocator, self_->m_long, self_->m_capacity);
+		std_allocator_deallocate_array_t(VECTOR_T,
+										 self_->m_allocator,
+										 self_->m_long,
+										 self_->m_capacity);
 		self_->m_capacity = VECTOR_SMALL_OPT_CAPACITY;
 	}
 	self_->m_size = 0U;

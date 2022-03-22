@@ -105,16 +105,15 @@ StdVectorConstIterator(VECTOR_T);
 		usize capacity,
 		StdAllocator allocator,
 		const StdCollectionData(StdVector(VECTOR_T)) * restrict data)
-		std_disable_if(
-			!data,
-			"Can't create a StdVector(VECTOR_T) with null StdCollectionData. To create a "
-			"StdVector(VECTOR_T) with an initial capacity, custom allocator and defaulted "
-			"StdCollectionData, use "
-			"std_vector_new_with_capacity_and_allocator()");
+		std_disable_if(!data,
+					   "Can't create a StdVector(T) with null StdCollectionData. To create a "
+					   "StdVector(T) with an initial capacity, custom allocator and defaulted "
+					   "StdCollectionData, use "
+					   "std_vector_new_with_capacity_and_allocator()");
 [[nodiscard]] [[not_null(1)]] StdVector(VECTOR_T)
 	StdVectorIdentifier(VECTOR_T, clone)(const StdVector(VECTOR_T) * restrict self)
 		std_disable_if(!(self->m_data->m_copy_constructor),
-					   "Can't clone a StdVector(VECTOR_T) with elements that aren't copyable (no "
+					   "Can't clone a StdVector(T) with elements that aren't copyable (no "
 					   "element copy constructor defined)");
 
 	#define ___DISABLE_IF_NULL(self) \
@@ -170,7 +169,7 @@ StdVectorConstIterator(VECTOR_T);
 [[not_null(1)]] void
 	StdVectorIdentifier(VECTOR_T, push_back)(StdVector(VECTOR_T) * restrict self, VECTOR_T element)
 		___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] StdOption(VECTOR_T)
+[[not_null(1)]] StdOption(VECTOR_T)
 	StdVectorIdentifier(VECTOR_T, pop_back)(StdVector(VECTOR_T) * restrict self)
 		___DISABLE_IF_NULL(self);
 [[not_null(1)]] void StdVectorIdentifier(VECTOR_T, insert)(StdVector(VECTOR_T) * restrict self,
@@ -203,16 +202,16 @@ DeclIntoStdRandomAccessIterator(StdVector(VECTOR_T),
 								into_reverse);
 
 [[nodiscard]] [[not_null(1)]] StdRandomAccessIterator(Ref(VECTOR_T))
-	CONCAT3(std_vector_, VECTOR_T, _begin)(StdVector(VECTOR_T) * restrict self)
+	StdVectorIdentifier(VECTOR_T, begin)(StdVector(VECTOR_T) * restrict self)
 		___DISABLE_IF_NULL(self);
 [[nodiscard]] [[not_null(1)]] StdRandomAccessIterator(Ref(VECTOR_T))
-	CONCAT3(std_vector_, VECTOR_T, _end)(StdVector(VECTOR_T) * restrict self)
+	StdVectorIdentifier(VECTOR_T, end)(StdVector(VECTOR_T) * restrict self)
 		___DISABLE_IF_NULL(self);
 [[nodiscard]] [[not_null(1)]] StdRandomAccessIterator(Ref(VECTOR_T))
-	CONCAT3(std_vector_, VECTOR_T, _rbegin)(StdVector(VECTOR_T) * restrict self)
+	StdVectorIdentifier(VECTOR_T, rbegin)(StdVector(VECTOR_T) * restrict self)
 		___DISABLE_IF_NULL(self);
 [[nodiscard]] [[not_null(1)]] StdRandomAccessIterator(Ref(VECTOR_T))
-	CONCAT3(std_vector_, VECTOR_T, _rend)(StdVector(VECTOR_T) * restrict self)
+	StdVectorIdentifier(VECTOR_T, rend)(StdVector(VECTOR_T) * restrict self)
 		___DISABLE_IF_NULL(self);
 
 [[nodiscard]] [[not_null(1)]] StdRandomAccessIterator(ConstRef(VECTOR_T))
