@@ -1090,57 +1090,5 @@ DeclStdIterators(const_isize_ref);
 DeclStdIterators(const_f32_ref);
 /// @brief Declares all C2nxt iterators for the builtin `const_f64_ref`
 DeclStdIterators(const_f64_ref);
-/// @brief Declares all C2nxt iterators for the builtin `char_ptr_ref`
-DeclStdIterators(char_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `u8_ptr_ref`
-DeclStdIterators(u8_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `u16_ptr_ref`
-DeclStdIterators(u16_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `u32_ptr_ref`
-DeclStdIterators(u32_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `u64_ptr_ref`
-DeclStdIterators(u64_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `usize_ptr_ref`
-DeclStdIterators(usize_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `i8_ptr_ref`
-DeclStdIterators(i8_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `i16_ptr_ref`
-DeclStdIterators(i16_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `i32_ptr_ref`
-DeclStdIterators(i32_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `i64_ptr_ref`
-DeclStdIterators(i64_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `isize_ptr_ref`
-DeclStdIterators(isize_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `f32_ptr_ref`
-DeclStdIterators(f32_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `f64_ptr_ref`
-DeclStdIterators(f64_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `const_char_ptr_ref`
-DeclStdIterators(const_char_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `const_u8_ptr_ref`
-DeclStdIterators(const_u8_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `const_u16_ptr_ref`
-DeclStdIterators(const_u16_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `const_u32_ptr_ref`
-DeclStdIterators(const_u32_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `const_u64_ptr_ref`
-DeclStdIterators(const_u64_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `const_usize_ptr_ref`
-DeclStdIterators(const_usize_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `const_i8_ptr_ref`
-DeclStdIterators(const_i8_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `const_i16_ptr_ref`
-DeclStdIterators(const_i16_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `const_i32_ptr_ref`
-DeclStdIterators(const_i32_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `const_i64_ptr_ref`
-DeclStdIterators(const_i64_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `const_isize_ptr_ref`
-DeclStdIterators(const_isize_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `const_f32_ptr_ref`
-DeclStdIterators(const_f32_ptr_ref);
-/// @brief Declares all C2nxt iterators for the builtin `const_f64_ptr_ref`
-DeclStdIterators(const_f64_ptr_ref);
 
 #endif // STD_ITERATOR

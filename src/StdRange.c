@@ -54,21 +54,5 @@ ImplStdRange(i64);
 ImplStdRange(isize);
 ImplStdRange(f32);
 ImplStdRange(f64);
-ImplStdRange(u8_ptr);
-ImplStdRange(u16_ptr);
-ImplStdRange(u32_ptr);
-ImplStdRange(u64_ptr);
-ImplStdRange(usize_ptr);
-ImplStdRange(i8_ptr);
-ImplStdRange(i16_ptr);
-ImplStdRange(i32_ptr);
-ImplStdRange(i64_ptr);
-ImplStdRange(isize_ptr);
-ImplStdRange(f32_ptr);
-ImplStdRange(f64_ptr);
-ImplStdRange(cstring);
-ImplStdRange(const_cstring);
-ImplStdRange(char_ptr);
-ImplStdRange(const_char_ptr);
 
 // clang-format on

@@ -772,37 +772,5 @@ DeclStdRange(isize);
 DeclStdRange(f32);
 /// @brief Instantiates `StdRange(T)` for the builtin `f64`
 DeclStdRange(f64);
-/// @brief Instantiates `StdRange(T)` for the builtin `u8_ptr`
-DeclStdRange(u8_ptr);
-/// @brief Instantiates `StdRange(T)` for the builtin `u16_ptr`
-DeclStdRange(u16_ptr);
-/// @brief Instantiates `StdRange(T)` for the builtin `u32_ptr`
-DeclStdRange(u32_ptr);
-/// @brief Instantiates `StdRange(T)` for the builtin `u64_ptr`
-DeclStdRange(u64_ptr);
-/// @brief Instantiates `StdRange(T)` for the builtin `usize_ptr`
-DeclStdRange(usize_ptr);
-/// @brief Instantiates `StdRange(T)` for the builtin `i8_ptr`
-DeclStdRange(i8_ptr);
-/// @brief Instantiates `StdRange(T)` for the builtin `i16_ptr`
-DeclStdRange(i16_ptr);
-/// @brief Instantiates `StdRange(T)` for the builtin `i32_ptr`
-DeclStdRange(i32_ptr);
-/// @brief Instantiates `StdRange(T)` for the builtin `i64_ptr`
-DeclStdRange(i64_ptr);
-/// @brief Instantiates `StdRange(T)` for the builtin `isize_ptr`
-DeclStdRange(isize_ptr);
-/// @brief Instantiates `StdRange(T)` for the builtin `f32_ptr`
-DeclStdRange(f32_ptr);
-/// @brief Instantiates `StdRange(T)` for the builtin `f64_ptr`
-DeclStdRange(f64_ptr);
-/// @brief Instantiates `StdRange(T)` for the builtin `cstring`
-DeclStdRange(cstring);
-/// @brief Instantiates `StdRange(T)` for the builtin `const_cstring`
-DeclStdRange(const_cstring);
-/// @brief Instantiates `StdRange(T)` for the builtin `char_ptr`
-DeclStdRange(char_ptr);
-/// @brief Instantiates `StdRange(T)` for the builtin `const_char_ptr`
-DeclStdRange(const_char_ptr);
 
 #endif // STD_RANGE
