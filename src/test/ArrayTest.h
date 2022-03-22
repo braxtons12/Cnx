@@ -1,17 +1,18 @@
-#include "C2nxt/StdPlatform.h"
+#include <C2nxt/StdPlatform.h>
 
 #if STD_PLATFORM_COMPILER_CLANG && STD_PLATFORM_APPLE
 _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wnonportable-include-path\"")
 #endif
 
-#include "C2nxt/StdIO.h"
+#include <C2nxt/StdIO.h>
 
 #if STD_PLATFORM_COMPILER_CLANG && STD_PLATFORM_APPLE
 	_Pragma("GCC diagnostic pop")
 #endif
 
+#include <unity.h>
+
 #include "StdArrayi32_10.h"
-#include "unity.h"
 
 #ifndef STD_ARRAY_TEST
 	#define STD_ARRAY_TEST
@@ -33,22 +34,24 @@ void array_test_scoped_destructor(i32* elem, StdAllocator allocator) { // NOLINT
 
 void test_array_new(void) {
 	let data = (StdCollectionData(StdArray(i32, 10))){.m_constructor = array_test_constructor,
-													  .m_destructor = array_test_destructor,
-													  .m_allocator = std_allocator_new()};
+													  .m_destructor = array_test_destructor};
 
-	let array = std_array_new_with_collection_data(i32, 10, data);
-	TEST_ASSERT_EQUAL_PTR(array.m_data.m_constructor, array_test_constructor);
-	TEST_ASSERT_EQUAL_PTR(array.m_data.m_destructor, array_test_destructor);
+	let array = std_array_new_with_collection_data(i32, 10, &data);
+	TEST_ASSERT_EQUAL_PTR(array.m_data->m_constructor, array_test_constructor);
+	TEST_ASSERT_EQUAL_PTR(array.m_data->m_destructor, array_test_destructor);
 	TEST_ASSERT_EQUAL_INT(std_array_capacity(array), 10);
 	TEST_ASSERT_EQUAL_INT(array.m_size, 0);
 }
 
 void test_array_at_and_push_back(void) {
 	let_mut array = std_array_new(i32, 10);
-	TEST_ASSERT_EQUAL_INT(std_array_at(array, 0), 0);
+	TEST_ASSERT_EQUAL_INT(std_array_size(array), 0);
 	std_array_push_back(array, 32);
 	TEST_ASSERT_EQUAL_INT(std_array_at(array, 0), 32);
 	TEST_ASSERT_EQUAL_INT(std_array_size(array), 1);
+	std_array_push_back(array, 24);
+	TEST_ASSERT_EQUAL_INT(std_array_at(array, 1), 24);
+	TEST_ASSERT_EQUAL_INT(std_array_size(array), 2);
 }
 
 void test_array_push_back_and_front_and_back(void) {
@@ -161,12 +164,10 @@ void test_array_free(void) {
 
 /// should print "running element destructor" to stdout 10 times
 void test_array_scoped(void) {
-	let allocator = std_allocator_new();
-	let data = (StdCollectionData(StdArray(i32, 10))){.m_allocator = allocator,
-													  .m_constructor = array_test_constructor,
+	let data = (StdCollectionData(StdArray(i32, 10))){.m_constructor = array_test_constructor,
 													  .m_destructor = array_test_scoped_destructor};
 
-	let_mut std_array_scoped(i32, 10) array = std_array_new_with_collection_data(i32, 10, data);
+	std_array_scoped(i32, 10) array = std_array_new_with_collection_data(i32, 10, &data);
 	std_array_resize(array, std_array_capacity(array));
 	TEST_ASSERT_EQUAL_INT(std_array_size(array), std_array_capacity(array));
 }
