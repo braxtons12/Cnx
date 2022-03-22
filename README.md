@@ -1,8 +1,8 @@
 # C2nxt
 
-C2nxt is a GNU C11 library providing type-safe collections and ergonomic features typical in
+C2nxt is a GNU C23 library providing type-safe collections and ergonomic features typical in
 higher-level languages, to C. It aims to be a proof-of-concept view of what a more modern standard
-(or at least widely used base) library could look like in the future if it only had to support C2x,
+(or at least widely used base) library could look like in the future if it only had to support C23,
 with much more modern abstractions and ergonomics over the standard C library. It is currently under
 active development and has not yet hit a __stable__ release point.
 
@@ -23,8 +23,8 @@ Some of the features of C2nxt include:
 
 C2nxt makes heavy use of `__auto_type` and some of its features are only possible with it. It also
 uses statement-expressions for several features and `__attribute__(cleanup)` for scoped destruction.
-It could be refactored to be Standard C in C2x, if C2x gets `auto`, `typeof`, `__VA_OPT__`, lamdas,
-and defer.
+It could be refactored to be Standard C in C23 or a subsequent standard, if C gets `auto`, `typeof`,
+`__VA_OPT__`, lamdas, and defer.
 
 ##### Can I use this in production?
 
