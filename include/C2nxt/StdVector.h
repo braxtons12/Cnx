@@ -32,7 +32,7 @@
 /// `StdVector(T)` is a struct template for a type-safe dynamic-capacity array. It's
 /// allocator aware, provides C2nxt compatible random access iterators, and supports
 /// user-defined default constructors, copy-constructors, and destructors for its elements.
-/// It's design is based around both C++'s `std::vector` and Rust's `std::vec::Vec`, but with
+/// It's design is similar to both C++'s `std::vector` and Rust's `std::vec::Vec`, but with
 /// slightly expanded functionality and semantics.
 ///
 /// `StdVector(T)` has a small size optimization (SSO) that is user configurable. This allows for a
@@ -116,28 +116,37 @@
 /// DeclStdIterators(Ref(YourType));
 /// DeclStdIterators(ConstRef(YourType));
 ///
-/// DeclStdOption(YourType);
+/// #define OPTION_T YourType
+/// #define OPTION_DECL TRUE
+/// #include <C2nxt/StdOption.h>
+/// #undef OPTION_T
+/// #undef OPTION_DECL
 ///
 /// // define the template parameter, `VECTOR_T`
 /// #define VECTOR_T YourType
 /// // tell the template to instantiate the declarations
-/// #define VECTOR_DECL 1
+/// #define VECTOR_DECL TRUE
 /// // `#undef`s all macro parameters after instantiating the template,
 /// // so they don't propagate around
-/// #define VECTOR_UNDEF_PARAMS 1
+/// #define VECTOR_UNDEF_PARAMS TRUE
 /// #include <C2nxt/StdVector.h>
 ///
 /// // the rest of your public interface...
 ///
 /// // in `YourType.c`
-/// ImplStdOption(YourType);
+/// #define OPTION_T YourType
+/// #define OPTION_IMPL TRUE
+/// #include <C2nxt/StdOption.h>
+/// #undef OPTION_T
+/// #undef OPTION_IMPL
+///
 /// // define the template parameter, `VECTOR_T`
 /// #define VECTOR_T YourType
 /// // tell the template to instantiate the implementations
-/// #define VECTOR_IMPL 1
+/// #define VECTOR_IMPL TRUE
 /// // `#undef`s all macro parameters after instantiating the template,
 /// // so they don't propagate around
-/// #define VECTOR_UNDEF_PARAMS 1
+/// #define VECTOR_UNDEF_PARAMS TRUE
 /// #include <C2nxt/StdVector.h>
 ///
 /// // the rest of your implementation
@@ -160,33 +169,44 @@
 ///
 /// // in `StdOptionYourType.h`
 /// #include "YourType.h"
-/// DeclStdOption(YourType);
+/// #define OPTION_T YourType
+/// #define OPTION_DECL TRUE
+/// #include <C2nxt/StdOption.h>
+/// #undef OPTION_T
+/// #undef OPTION_DECL
 ///
 /// // in `StdOptionYourType.c`
 /// #include "StdOptionYourType.h"
-/// ImplStdOption(YourType);
+///
+/// #define OPTION_T YourType
+/// #define OPTION_IMPL TRUE
+/// #include <C2nxt/StdOption.h>
+/// #undef OPTION_T
+/// #undef OPTION_IMPL
 ///
 /// // in `StdVectorYourType.h`
 /// #include "YourType.h"
 /// #include "StdOptionYourType.h"
+///
 /// // define the template parameter, `VECTOR_T`
 /// #define VECTOR_T YourType
 /// // tell the template to instantiate the declarations
-/// #define VECTOR_DECL 1
+/// #define VECTOR_DECL TRUE
 /// // `#undef`s all macro parameters after instantiating the template,
 /// // so they don't propagate around
-/// #define VECTOR_UNDEF_PARAMS 1
+/// #define VECTOR_UNDEF_PARAMS TRUE
 /// #include <C2nxt/StdVector.h>
 ///
 /// // in `StdVectorYourType.c`
-/// #include "StdVectorYourType.c"
+/// #include "StdVectorYourType.h"
+///
 /// // define the template parameter, `VECTOR_T`
 /// #define VECTOR_T YourType
 /// // tell the template to instantiate the implementations
-/// #define VECTOR_IMPL 1
+/// #define VECTOR_IMPL TRUE
 /// // `#undef`s all macro parameters after instantiating the template,
 /// // so they don't propagate around
-/// #define VECTOR_UNDEF_PARAMS 1
+/// #define VECTOR_UNDEF_PARAMS TRUE
 /// #include <C2nxt/StdVector.h>
 /// @endcode
 ///
@@ -216,7 +236,10 @@
 /// }
 /// @endcode
 ///
-/// You can provide user-defined default-constructor, copy-constructor, and/or destructor for
+/// @note `StdVector(T)`'s `StdFormat` implementation will always be a debug representation,
+/// eg: "[size: X, capacity: Y, data_ptr: Q]", and never a printout of contained elements
+
+/// You can provide user-defined default-constructor, copy-constructor, and destructor for
 /// elements of your type, and custom allocator for all memory allocation:
 ///
 /// @code {.c}
@@ -238,8 +261,13 @@
 ///
 /// StdVector(YourType) create_and_fill_your_type_vec(usize num_elements) {
 ///		// init a vec with num_elements capacity (zero size) and our custom collection data
-///		let_mut vec = std_vector_new_with_capacity_with_collection_data(YourType,
+///		let_mut vec = std_vector_new_with_capacity_allocator_and_collection_data(YourType,
 /// 						capacity,
+///							// This `StdAllocator` will only be associated with this specific array,
+///							// not all `StdArray(YourType, YourN)`s
+///							std_allocator_from_custom_stateless_allocator(your_malloc,
+/// 																	  your_realloc,
+/// 																	  your_free),
 ///							// This `StdCollectionData(CollectionType)` will only be
 /// 						// associated with this specific vector, not all `StdVector(YourType)`s
 ///							((StdCollectionData(StdVector(YourType))) {
@@ -250,11 +278,6 @@
 /// 							.m_copy_constructor = your_type_copy_constructor,
 ///								// can be left NULL, will be defaulted
 /// 							.m_destructor = your_type_destructor
-///								// must explicitly provide an allocator, even just the default one,
-/// 							// if providing user-defined collection data
-///								.m_allocator = std_allocator_from_custom_allocator(
-/// 												your_malloc_func,
-/// 												your_free_func)
 /// 						})
 ///						);
 ///

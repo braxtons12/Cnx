@@ -31,16 +31,16 @@
 /// @defgroup std_array StdArray
 /// `StdArray(T, N)` is a struct template for a type-safe fixed-capacity, dynamic-size, stack
 /// allocated array type. `StdArray(T, N)` is bounds safe, allocator aware, and provides C2nxt
-/// compatible random access iterators. It supports used-defined default-constructors,
-/// copy-constructors, and destructors for its elements. It's design is based around C++'s
-/// `std::array`, but with slightly different semantics and functionality.
+/// compatible random access iterators. It supports user-defined default-constructors,
+/// copy-constructors, and destructors for its elements. It's design is similar to C++'s
+/// `std::array`, but with expanded semantics and functionality.
 ///
 /// Because of its size, `N`, template parameter, instantiations of `StdArray(T, N)` for builtins or
 /// any C2nxt types are __not__ provided, and will have to be instantiated by the user.
 /// The requirements are similar to `StdVector(T)`, and requires minimal boiler-plate:
 /// 1. a `typedef` of your type to provide an alphanumeric name for it. (for template and macro
 /// 	parameters)
-///	2. a `typedef` for pointer to your type as `Ref(YourTuple), for use with the iterators
+///	2. a `typedef` for pointer to your type as `Ref(YourType), for use with the iterators
 /// 3. a `typedef` for pointer to const your type as `ConstRef(YourType)`, for use with the
 /// 	iterators
 /// 4. Instantiations for C2nxt iterators for the typedefs provided in (2) and (3) (already
@@ -48,7 +48,7 @@
 /// 5. Instantiation of `StdOption(T)` for your type (already instantiated for builtins and
 /// 	`StdString`)
 ///
-/// For `StdArray(T, N)` we recommend you provide the instantiation for user-define types in a
+/// For `StdArray(T, N)` we recommend you provide the instantiation for user-defined types in a
 /// separate "template instantiation" .h/.c file pair, but you can also provide them inline with
 /// your type like discussed in `StdVector(T)`'s documentation. \see StdVector
 ///
@@ -68,21 +68,44 @@
 /// // the rest of your public interface
 ///
 /// // in `StdOptionYourType.h`
+/// #include <C2nxt/StdDef.h>
 /// #include "YourType.h"
-/// DeclStdOption(YourType);
+/// #define OPTION_T YourType
+/// #define OPTION_DECL TRUE
+/// #include <C2nxt/StdOption.h>
+/// #undef OPTION_T
+/// #undef OPTION_DECL
 ///
 /// // in `StdOptionYourType.c`
 /// #include "StdOptionYourType.h"
-/// ImplStdOption(YourType);
+/// #define OPTION_T YourType
+/// #define OPTION_IMPL TRUE
+/// #include <C2nxt/StdOption.h>
+/// #undef OPTION_T
+/// #undef OPTION_IMPL
 ///
 /// // in `StdArrayYourTypeYourN.h"
 /// #include "YourType.h"
 /// #include "StdOptionYourType.h"
-/// DeclStdArray(YourType, YourN);
+///
+/// #define ARRAY_T YourType
+/// #define ARRAY_N YourN
+/// #define ARRAY_DECL TRUE
+/// #include <C2nxt/StdArray.h>
+/// #undef ARRAY_T
+/// #undef ARRAY_N
+/// #undef ARRAY_DECL
 ///
 /// // in `StdArrayYourTypeYourN.c`
 /// #include "StdArrayYourTypeYourN.h"
-/// ImplStdArray(YourType, YourN);
+///
+/// #define ARRAY_T YourType
+/// #define ARRAY_N YourN
+/// #define ARRAY_IMPL TRUE
+/// #include <C2nxt/StdArray.h>
+/// #undef ARRAY_T
+/// #undef ARRAY_N
+/// #undef ARRAY_IMPL
 /// @endcode
 ///
 /// The, somewhere else in your codebase, you can easily use the instantiation:
@@ -110,8 +133,11 @@
 /// }
 /// @endcode
 ///
-/// You can provide user-defined default-constructor, copy-constructor, and/or destructor for
-/// elements of your type, and custom allocator for memory allocations they might need to perform
+/// @note `StdArray(T, N)`'s `StdFormat` implementation will always be a debug representation,
+/// eg: "[size: X, capacity: Y, data_ptr: Q]", and never a printout of contained elements
+///
+/// You can provide user-defined default-constructor, copy-constructor, and destructor for
+/// elements of your type, and custom allocator for memory allocations they might need to perform.
 /// (`StdArray(T, N)` is always stack allocated, so the memory allocator is __only__ for constructor
 /// and destructor functions for your type)
 ///
@@ -133,8 +159,13 @@
 /// }
 ///
 /// StdArray(YourType, YourN) create_and_fill_your_type_array(void) {
-///		let_mut array = std_array_new_with_collection_data(YourType,
+///		let_mut array = std_array_new_with_allocator_and_collection_data(YourType,
 /// 						YourN,
+///							// This `StdAllocator` will only be associated with this specific array,
+///							// not all `StdArray(YourType, YourN)`s
+///							std_allocator_from_custom_stateless_allocator(your_malloc,
+/// 																	  your_realloc,
+/// 																	  your_free),
 ///							// This `StdCollectionData(CollectionType)` will only be
 /// 						// associated with this specific array, not all
 /// 						// `StdArray(YourType, YourN)`s
@@ -146,11 +177,6 @@
 /// 							.m_copy_constructor = your_type_copy_constructor,
 ///								// can be left NULL, will be defaulted
 /// 							.m_destructor = your_type_destructor
-///								// must explicitly provide an allocator, even just the default one,
-/// 							// if providing user-defined collection data
-///								.m_allocator = std_allocator_from_custom_allocator(
-/// 												your_malloc_func,
-/// 												your_free_func)
 /// 						})
 ///						);
 ///
@@ -165,7 +191,7 @@
 ///
 /// @code {.c}
 /// void example(void) {
-///		let_mut std_array_scoped(u32, 10) array = std_array_new(u32, 10);
+///		std_array_scoped(u32, 10) array = std_array_new(u32, 10);
 /// 	ranged_for(i, 0, 9) {
 ///			std_array_push_back(array, i);
 /// 	}

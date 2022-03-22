@@ -35,6 +35,7 @@
 	#include <C2nxt/StdCollectionData.h>
 	#include <C2nxt/StdIterator.h>
 	#include <C2nxt/StdPlatform.h>
+	#include <C2nxt/StdFormat.h>
 	#include <C2nxt/std_vector/StdVectorDef.h>
 
 StdVectorIterator(VECTOR_T)
@@ -795,6 +796,31 @@ StdRandomAccessIterator(ConstRef(VECTOR_T))
 	let_mut inner = static_cast(StdVectorConstIterator(VECTOR_T)*)(iter.m_self);
 	inner->m_index = -1;
 	return iter;
+}
+
+StdString StdVectorIdentifier(VECTOR_T, format)(const StdFormat* restrict self,
+												StdFormatSpecifier specifier) {
+	return StdVectorIdentifier(VECTOR_T, format_with_allocator)(self, specifier, DEFAULT_ALLOCATOR);
+}
+
+StdString
+StdVectorIdentifier(VECTOR_T, format_with_allocator)(const StdFormat* restrict self,
+													 [[maybe_unused]] StdFormatSpecifier specifier,
+													 StdAllocator allocator) {
+	std_assert(specifier.m_type == STD_FORMAT_TYPE_DEFAULT
+				   || specifier.m_type == STD_FORMAT_TYPE_DEBUG,
+			   "Can only format StdVector with default or debug format specifier");
+
+	let _self = *static_cast(const StdVector(VECTOR_T)*)(self->m_self);
+	let size = std_vector_size(_self);
+	let capacity = std_vector_capacity(_self);
+	let data = std_vector_data(_self);
+	return std_format_with_allocator(
+		AS_STRING(StdVector(VECTOR_T)) ": [size: {d}, capacity: {d}, data pointer: {x}]",
+		allocator,
+		size,
+		capacity,
+		as_format_t(nullptr_t, data));
 }
 
 	#undef STD_TEMPLATE_SUPPRESS_INSTANTIATIONS

@@ -167,6 +167,7 @@ StdArrayConstIterator(ARRAY_T, ARRAY_N);
 												  usize length) ___DISABLE_IF_NULL(self);
 [[not_null(1)]] void
 	StdArrayIdentifier(ARRAY_T, ARRAY_N, free)(void* restrict self) ___DISABLE_IF_NULL(self);
+
 [[nodiscard]] [[not_null(1)]] StdString
 	StdArrayIdentifier(ARRAY_T, ARRAY_N, format)(const StdFormat* restrict self,
 												 StdFormatSpecifier specifier)

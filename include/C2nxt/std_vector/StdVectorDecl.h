@@ -40,6 +40,7 @@
 	#include <C2nxt/StdBasicTypes.h>
 	#include <C2nxt/StdIterator.h>
 	#include <C2nxt/StdPlatform.h>
+	#include <C2nxt/StdFormat.h>
 	#include <C2nxt/std_vector/StdVectorDef.h>
 	#include <C2nxt/std_option/StdOptionDef.h>
 
@@ -183,6 +184,20 @@ StdVectorConstIterator(VECTOR_T);
 										   usize num_elements) ___DISABLE_IF_NULL(self);
 [[not_null(1)]] void
 	StdVectorIdentifier(VECTOR_T, free)(void* restrict self) ___DISABLE_IF_NULL(self);
+
+[[nodiscard]] [[not_null(1)]] StdString
+	StdVectorIdentifier(VECTOR_T, format)(const StdFormat* restrict self,
+										  StdFormatSpecifier specifier) ___DISABLE_IF_NULL(self);
+[[nodiscard]] [[not_null(1)]] StdString
+	StdVectorIdentifier(VECTOR_T, format_with_allocator)(const StdFormat* restrict self,
+														 StdFormatSpecifier specifier,
+														 StdAllocator allocator)
+		___DISABLE_IF_NULL(self);
+
+[[maybe_unused]] static ImplTraitFor(StdFormat,
+									 StdVector(VECTOR_T),
+									 StdVectorIdentifier(VECTOR_T, format),
+									 StdVectorIdentifier(VECTOR_T, format_with_allocator));
 
 DeclIntoStdRandomAccessIterator(StdVector(VECTOR_T),
 								Ref(VECTOR_T),
