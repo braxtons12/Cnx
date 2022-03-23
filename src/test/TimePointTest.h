@@ -1,7 +1,11 @@
+#ifndef TIME_POINT_TEST
+#define TIME_POINT_TEST
+
 #include <C2nxt/StdIO.h>
 #include <C2nxt/time/StdClock.h>
 #include <C2nxt/time/StdTimePoint.h>
-#include <unity.h>
+
+#include "Criterion.h"
 
 // Implement a "mock" `StdClock` so we can use it to test `StdTimePoint`
 
@@ -61,8 +65,7 @@ IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 
 static let mock_clock = as_trait(StdClock, MockClock, __mock_clock);
 
-// NOLINTNEXTLINE(readability-function-cognitive-complexity)
-void test_time_point_new_and_comparisons(void) {
+TEST(StdTimePoint, new_and_comparisons) {
 	let period = trait_call(resolution_as_ratio, mock_clock);
 	let min = trait_call(min_time_point, mock_clock);
 	let max = trait_call(max_time_point, mock_clock);
@@ -77,24 +80,24 @@ void test_time_point_new_and_comparisons(void) {
 	let tp_min = std_time_point_min(point0);
 	let tp_max = std_time_point_max(point0);
 
-	TEST_ASSERT_TRUE(std_time_point_equal(tp_min, min));
-	TEST_ASSERT_TRUE(std_time_point_equal(tp_max, max));
+	TEST_ASSERT(std_time_point_equal(tp_min, min));
+	TEST_ASSERT(std_time_point_equal(tp_max, max));
 
-	TEST_ASSERT_TRUE(std_time_point_less_than(point0, point5));
-	TEST_ASSERT_TRUE(std_time_point_less_than(point0, point10));
-	TEST_ASSERT_TRUE(std_time_point_less_than_or_equal(point0, point5));
-	TEST_ASSERT_TRUE(std_time_point_less_than_or_equal(point0, point10));
+	TEST_ASSERT(std_time_point_less_than(point0, point5));
+	TEST_ASSERT(std_time_point_less_than(point0, point10));
+	TEST_ASSERT(std_time_point_less_than_or_equal(point0, point5));
+	TEST_ASSERT(std_time_point_less_than_or_equal(point0, point10));
 
-	TEST_ASSERT_TRUE(std_time_point_greater_than(point10, point0));
-	TEST_ASSERT_TRUE(std_time_point_greater_than(point10, point5));
-	TEST_ASSERT_TRUE(std_time_point_greater_than_or_equal(point10, point0));
-	TEST_ASSERT_TRUE(std_time_point_greater_than_or_equal(point10, point5));
+	TEST_ASSERT(std_time_point_greater_than(point10, point0));
+	TEST_ASSERT(std_time_point_greater_than(point10, point5));
+	TEST_ASSERT(std_time_point_greater_than_or_equal(point10, point0));
+	TEST_ASSERT(std_time_point_greater_than_or_equal(point10, point5));
 
-	TEST_ASSERT_EQUAL_INT(std_time_point_compare(tp_min, min), STD_EQUAL);
-	TEST_ASSERT_EQUAL_INT(std_time_point_compare(point5, point0), STD_GREATER_THAN);
-	TEST_ASSERT_EQUAL_INT(std_time_point_compare(point5, point10), STD_LESS_THAN);
+	TEST_ASSERT_EQUAL(std_time_point_compare(tp_min, min), STD_EQUAL);
+	TEST_ASSERT_EQUAL(std_time_point_compare(point5, point0), STD_GREATER_THAN);
+	TEST_ASSERT_EQUAL(std_time_point_compare(point5, point10), STD_LESS_THAN);
 
-	TEST_ASSERT_TRUE(std_time_point_less_than(alternate, point5));
+	TEST_ASSERT(std_time_point_less_than(alternate, point5));
 
 	let casted = std_time_point_cast(alternate, point0);
 	let ceiled = std_time_point_ceil(alternate, point0);
@@ -102,24 +105,24 @@ void test_time_point_new_and_comparisons(void) {
 	let rounded = std_time_point_round(alternate, point0);
 
 	let point1 = std_time_point_new_with_clock(std_duration_new(1, period), &mock_clock);
-	TEST_ASSERT_TRUE(std_time_point_equal(casted, point0));
-	TEST_ASSERT_TRUE(std_time_point_equal(ceiled, point1));
-	TEST_ASSERT_TRUE(std_time_point_equal(floored, point0));
-	TEST_ASSERT_TRUE(std_time_point_equal(rounded, point0));
+	TEST_ASSERT(std_time_point_equal(casted, point0));
+	TEST_ASSERT(std_time_point_equal(ceiled, point1));
+	TEST_ASSERT(std_time_point_equal(floored, point0));
+	TEST_ASSERT(std_time_point_equal(rounded, point0));
 
 	let alternate2
 		= (StdTimePoint){.time_since_epoch = std_duration_new(5000, std_milliseconds_period),
 						 .clock = &mock_clock};
 
 	let casted2 = std_time_point_cast(alternate2, point0);
-	TEST_ASSERT_TRUE(std_time_point_equal(casted2, point5));
+	TEST_ASSERT(std_time_point_equal(casted2, point5));
 
 	let dur = std_duration_new(10, period);
 	let time_since_epoch = std_time_point_time_since_epoch(point10);
-	TEST_ASSERT_TRUE(std_duration_equal(dur, time_since_epoch));
+	TEST_ASSERT(std_duration_equal(dur, time_since_epoch));
 }
 
-void test_time_point_add(void) {
+TEST(StdTimePoint, add) {
 	let period = trait_call(resolution_as_ratio, mock_clock);
 	let point0 = std_time_point_new_with_clock(std_duration_new(0, period), &mock_clock);
 	let point5 = std_time_point_new_with_clock(std_duration_new(5, period), &mock_clock);
@@ -128,14 +131,14 @@ void test_time_point_add(void) {
 	let dur = std_duration_new(5, period);
 
 	let added = std_time_point_add(point0, dur);
-	TEST_ASSERT_TRUE(std_time_point_equal(added, point5));
+	TEST_ASSERT(std_time_point_equal(added, point5));
 	let_mut added2 = std_time_point_add_time_point(added, point5);
-	TEST_ASSERT_TRUE(std_time_point_equal(added2, point10));
+	TEST_ASSERT(std_time_point_equal(added2, point10));
 	std_time_point_increment(&added2);
-	TEST_ASSERT_TRUE(std_time_point_equal(added2, point11));
+	TEST_ASSERT(std_time_point_equal(added2, point11));
 }
 
-void test_time_point_subtract(void) {
+TEST(StdTimePoint, subtract) {
 	let period = trait_call(resolution_as_ratio, mock_clock);
 	let point0 = std_time_point_new_with_clock(std_duration_new(0, period), &mock_clock);
 	let point5 = std_time_point_new_with_clock(std_duration_new(5, period), &mock_clock);
@@ -145,19 +148,11 @@ void test_time_point_subtract(void) {
 	let dur = std_duration_new(5, period);
 
 	std_time_point_decrement(&point11);
-	TEST_ASSERT_TRUE(std_time_point_equal(point11, point10));
+	TEST_ASSERT(std_time_point_equal(point11, point10));
 	let subtracted = std_time_point_subtract_time_point(point11, point5);
-	TEST_ASSERT_TRUE(std_time_point_equal(subtracted, point5));
+	TEST_ASSERT(std_time_point_equal(subtracted, point5));
 	let_mut subtracted2 = std_time_point_subtract(subtracted, dur);
-	TEST_ASSERT_TRUE(std_time_point_equal(subtracted2, point0));
+	TEST_ASSERT(std_time_point_equal(subtracted2, point0));
 }
 
-static bool run_time_point_tests(void) {
-	RUN_TEST(test_time_point_new_and_comparisons);
-	RUN_TEST(test_time_point_add);
-	RUN_TEST(test_time_point_subtract);
-
-	let time = std_clock_now(&std_local_clock);
-	println("time: {}", as_format_t(StdTimePoint, time));
-	return true;
-}
+#endif // TIME_POINT_TEST

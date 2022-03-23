@@ -1,9 +1,11 @@
-#include <C2nxt/StdLambda.h>
-#include <C2nxt/StdString.h>
-#include <unity.h>
 
 #ifndef STD_LAMBDA_TEST
-	#define STD_LAMBDA_TEST
+#define STD_LAMBDA_TEST
+
+#include <C2nxt/StdLambda.h>
+#include <C2nxt/StdString.h>
+
+#include "Criterion.h"
 
 typedef Lambda(StdCompare, const StdString*) LambdaCmpStr;
 
@@ -32,19 +34,12 @@ StdCompare lambda_caller2(void) {
 	return lambda_receiver(lambda_cast(lambda, LambdaCmpStr));
 }
 
-void test_lambda_caller1(void) {
-	TEST_ASSERT_EQUAL_INT(STD_LESS_THAN, lambda_caller1());
+TEST(StdLambda, case1) {
+	TEST_ASSERT_EQUAL(STD_LESS_THAN, lambda_caller1());
 }
 
-void test_lambda_caller2(void) {
-	TEST_ASSERT_EQUAL_INT(STD_EQUAL, lambda_caller2());
-}
-
-static bool run_lambda_tests(void) {
-	RUN_TEST(test_lambda_caller1);
-	RUN_TEST(test_lambda_caller2);
-
-	return true;
+TEST(StdLambda, case2) {
+	TEST_ASSERT_EQUAL(STD_EQUAL, lambda_caller2());
 }
 
 #endif // STD_LAMBDA_TEST

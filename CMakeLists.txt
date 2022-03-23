@@ -5,17 +5,16 @@ project(C2nxt VERSION 0.1.0 LANGUAGES C)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS YES)
 
-#############################################################################
-# Import Unity Test
-#############################################################################
-FetchContent_Declare(unity
-        GIT_REPOSITORY "https://github.com/ThrowTheSwitch/Unity"
-        GIT_TAG "v2.5.2"
-        )
+####################################################################################################
+############ Import Criterion ######################################################################
+####################################################################################################
 
-FetchContent_MakeAvailable(unity)
-#############################################################################
-#############################################################################
+list (APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
+find_package(Criterion REQUIRED)
+
+####################################################################################################
+####################################################################################################
 
 ###### We add headers to sources sets because it helps with `#include` lookup for some tooling #####
 set(EXPORTS
@@ -103,6 +102,7 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
             -Wextra
             -Weverything
             -Werror
+            -Wno-missing-variable-declarations
             )
     target_compile_options(C2nxt PRIVATE
             -std=gnu2x
@@ -147,9 +147,6 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
     if (WIN32)
         target_compile_options(C2nxt PUBLIC
                 -D_CRT_SECURE_NO_WARNINGS
-                )
-        target_compile_options(unity PRIVATE
-                -Wno-missing-noreturn
                 )
     endif ()
 else ()
@@ -198,7 +195,7 @@ elseif (NOT WIN32)
 endif ()
 
 target_link_libraries(FormatBenchmark PRIVATE C2nxt)
-target_link_libraries(Test PRIVATE C2nxt unity)
+target_link_libraries(Test PRIVATE C2nxt ${CRITERION_LIBRARIES})
 
 find_package(Doxygen REQUIRED)
 set(MCSS_DOXYFILE_IN "${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile-mcss.in")
