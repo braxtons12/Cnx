@@ -6,6 +6,7 @@
 #include "DurationTest.h"
 #include "GcdAndLcmTest.h"
 #include "LambdaTest.h"
+#include "RangeTest.h"
 #include "RatioTest.h"
 #include "StringTest.h"
 #include "TimePointTest.h"
@@ -31,6 +32,7 @@ i32 main([[maybe_unused]] i32 argc, [[maybe_unused]] const_cstring* argv) {
 	TEST_ASSERT_TRUE_MESSAGE(run_duration_tests(), "StdDuration tests failed to pass");
 	TEST_ASSERT_TRUE_MESSAGE(run_time_point_tests(), "StdTimePoint tests failed to pass");
 	TEST_ASSERT_TRUE_MESSAGE(run_clock_tests(), "StdClock tests failed to pass");
+	TEST_ASSERT_TRUE_MESSAGE(run_range_tests(), "StdRange tests failed to pass");
 
 	return UNITY_END();
 }

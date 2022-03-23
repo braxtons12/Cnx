@@ -295,15 +295,15 @@
 ///
 /// @return a `StdRange(T)` over the first n elements of the iteration
 /// @ingroup ranges
-#define std_range_take_first_from_iterators(T, n, begin, end)      \
-	({                                                             \
-		let_mut UNIQUE_VAR(range) = std_range_from(T, begin, end); \
-		let_mut UNIQUE_VAR(current) = begin;                       \
-		for(let_mut i = 0; i < (n); ++i) {                         \
-			ignore(std_iterator_next(UNIQUE_VAR(current)));        \
-		}                                                          \
-		UNIQUE_VAR(range).m_end = UNIQUE_VAR(current);             \
-		UNIQUE_VAR(range);                                         \
+#define std_range_take_first_from_iterators(T, n, begin, end)                \
+	({                                                                       \
+		let_mut UNIQUE_VAR(range) = std_range_from_iterators(T, begin, end); \
+		let_mut UNIQUE_VAR(current) = begin;                                 \
+		for(let_mut i = 0; i < (n); ++i) {                                 \
+			ignore(std_iterator_next(UNIQUE_VAR(current)));                  \
+		}                                                                    \
+		UNIQUE_VAR(range).m_end = UNIQUE_VAR(current);                       \
+		UNIQUE_VAR(range);                                                   \
 	})
 /// @brief Creates a `StdRange(T)` over the first `n` elements in the collection
 ///
@@ -315,11 +315,18 @@
 ///
 /// @return a `StdRange(T)` over the first n elements of the iteration
 /// @ingroup ranges
-#define std_range_take_first(T, n, collection)                                         \
-	({                                                                                 \
-		let_mut UNIQUE_VAR(begin) = (collection).m_vtable->begin(&(collection));       \
-		let_mut UNIQUE_VAR(end) = (collection).m_vtable->end(&(collection));           \
-		std_range_take_first_from_iterators(T, n, UNIQUE_VAR(begin), UNIQUE_VAR(end)); \
+#define std_range_take_first(T, n, collection)                                   \
+	({                                                                           \
+		let_mut UNIQUE_VAR(begin) = (collection).m_vtable->begin(&(collection)); \
+		let_mut UNIQUE_VAR(end) = (collection).m_vtable->end(&(collection));     \
+		let_mut UNIQUE_VAR(begin_converted)                                      \
+			= std_iterator_into_std_forward_iterator(UNIQUE_VAR(begin));         \
+		let_mut UNIQUE_VAR(end_converted)                                        \
+			= std_iterator_into_std_forward_iterator(UNIQUE_VAR(end));           \
+		std_range_take_first_from_iterators(T,                                   \
+											n,                                   \
+											UNIQUE_VAR(begin_converted),         \
+											UNIQUE_VAR(end_converted));          \
 	})
 /// @brief Collects the elements viewed by the range into a new `StdVector(T)`
 ///
@@ -352,13 +359,11 @@
 ///
 /// @return The given range, after applying the transformation
 /// @ingroup ranges
-#define std_range_transform(range, transform_function) \
-	({                                                 \
-		foreach_ref_mut(elem, range) {                 \
-			(transform_function)(elem);                \
-		}                                              \
-                                                       \
-		(range);                                       \
+#define std_range_transform(range, transform_function)               \
+	({                                                               \
+		foreach_ref_mut(elem, range) { (transform_function)(elem); } \
+                                                                     \
+		(range);                                                     \
 	})
 /// @brief Transforms the elements in the collection
 ///
