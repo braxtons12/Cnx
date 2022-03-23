@@ -6,7 +6,7 @@ higher-level languages, to C. It aims to be a proof-of-concept view of what a mo
 with much more modern abstractions and ergonomics over the standard C library. It is currently under
 active development and has not yet hit a __stable__ release point.
 
-Some of the features of C2nxt include:
+Some features of C2nxt include:
 
 - Type-Safe collections implemented (mostly) as manually instantiated templates. Currently
   implemented collections include `StdString`, `StdVector(T)`, and `StdArray(T, N)`
@@ -40,7 +40,7 @@ You can view the documentation [here](https://braxtons12.github.io/C2nxt/)
 
 C2nxt uses CMake, and incorporating it into your project is easy!
 
-First, setup your CMake project. In `CMakeLists.txt`:
+First, set up your CMake project. In `CMakeLists.txt`:
 
 ```cmake
 
@@ -64,7 +64,10 @@ individual ones for granular imports.
 
 ```c
 
-#include "C2nxt/C2nxt.h"
+#include <C2nxt/StdDef.h>
+#define VECTOR_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
+#define RANGE_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
+#include <C2nxt/C2nxt.h>
 
 void transform(i32* restrict elem) {
 	*elem *= 3;
@@ -76,7 +79,7 @@ i32 main(i32 argc, const_cstring* argv) {
 	// so, we can just use it directly here
 	let_mut vec = std_vector_new_with_capacity(i32, 10);
 
-	// insert 10 elements, 0 thru 9, into the vector
+	// insert 10 elements, 0 through 9, into the vector
 	ranged_for(i, 0, 10) {
 		std_vector_push_back(vec, i);
 	}
@@ -86,18 +89,17 @@ i32 main(i32 argc, const_cstring* argv) {
 	println("{}", as_format_t(StdVector(i32), vec));
 
 	// print each element, followed by a newline, to stdout
-	// prints 0 thru 9
+	// prints 0 through 9
 	foreach(elem, vec) {
 		println("{}", elem);	
 	}
 
-	// transform the elements in the array with the above-defined `transform` function
-	// and returns a view of the vector as a `StdRange(i32)` that we ignore
-	// (to prevent ignored-value compiler warnings)
-	ignore(std_transform(i32, vec, transform));
+	// transform the elements in the vector with the above-defined `transform` function
+	// and returns a view of the vector as a `StdRange(i32)` (that we ignore)
+	std_transform(i32, vec, transform);
 
 	// print each element, followed by a newline, to stdout
-	// prints multiples of 3 from 0 thru 27
+	// prints multiples of 3 from 0 through 27
 	foreach(elem, vec) {
 		println("{}", elem);	
 	}
@@ -144,7 +146,7 @@ gained from using the library's features.
 
 The implementation of `println` makes heavy use of most of the functionality presented in the
 example
-(except for `StdRange(T)`), as well as the `Result(T)` type, which means it's using almost all of
+(except for `StdRange(T)`), as well as the `Result(T)` type, which means it's using most of
 the facilities currently provided by the library. So, lets look at a benchmark comparing the
 relative speed of `println` to `printf`.
 

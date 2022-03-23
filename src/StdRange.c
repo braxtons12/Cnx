@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides collection agnostic ways for passing, modifying, and working with
 /// collections of elements as "Ranges"
-/// @version 0.1
-/// @date 2021-08-15
+/// @version 0.2.0
+/// @date 2022-03-22
 ///
 /// MIT License
 /// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -26,33 +26,76 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#include "../include/C2nxt/StdRange.h"
+#include <C2nxt/StdDef.h>
 
-#include "../include/C2nxt/StdPlatform.h"
+#define RANGE_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
+#include <C2nxt/StdRange.h>
+#undef RANGE_INCLUDE_DEFAULT_INSTANTIATIONS
 
-// clang-format off
-#if STD_PLATFORM_COMPILER_CLANG && STD_PLATFORM_APPLE
-	_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wnonportable-include-path\"")
-#endif
+#define RANGE_IMPL TRUE
 
-#include "../include/C2nxt/StdIO.h"
+#define RANGE_T char
+#include <C2nxt/std_range/StdRangeImpl.h>
+#undef RANGE_T
 
-#if STD_PLATFORM_COMPILER_CLANG && STD_PLATFORM_APPLE
-	_Pragma("GCC diagnostic pop")
-#endif
+#define RANGE_T u8
+// NOLINTNEXTLINE(readability-duplicate-include)
+#include <C2nxt/std_range/StdRangeImpl.h>
+#undef RANGE_T
 
-ImplStdRange(char);
-ImplStdRange(u8);
-ImplStdRange(u16);
-ImplStdRange(u32);
-ImplStdRange(u64);
-ImplStdRange(usize);
-ImplStdRange(i8);
-ImplStdRange(i16);
-ImplStdRange(i32);
-ImplStdRange(i64);
-ImplStdRange(isize);
-ImplStdRange(f32);
-ImplStdRange(f64);
+#define RANGE_T u16
+// NOLINTNEXTLINE(readability-duplicate-include)
+#include <C2nxt/std_range/StdRangeImpl.h>
+#undef RANGE_T
 
-// clang-format on
+#define RANGE_T u32
+// NOLINTNEXTLINE(readability-duplicate-include)
+#include <C2nxt/std_range/StdRangeImpl.h>
+#undef RANGE_T
+
+#define RANGE_T u64
+// NOLINTNEXTLINE(readability-duplicate-include)
+#include <C2nxt/std_range/StdRangeImpl.h>
+#undef RANGE_T
+
+#define RANGE_T usize
+// NOLINTNEXTLINE(readability-duplicate-include)
+#include <C2nxt/std_range/StdRangeImpl.h>
+#undef RANGE_T
+
+#define RANGE_T i8
+// NOLINTNEXTLINE(readability-duplicate-include)
+#include <C2nxt/std_range/StdRangeImpl.h>
+#undef RANGE_T
+
+#define RANGE_T i16
+// NOLINTNEXTLINE(readability-duplicate-include)
+#include <C2nxt/std_range/StdRangeImpl.h>
+#undef RANGE_T
+
+#define RANGE_T i32
+// NOLINTNEXTLINE(readability-duplicate-include)
+#include <C2nxt/std_range/StdRangeImpl.h>
+#undef RANGE_T
+
+#define RANGE_T i64
+// NOLINTNEXTLINE(readability-duplicate-include)
+#include <C2nxt/std_range/StdRangeImpl.h>
+#undef RANGE_T
+
+#define RANGE_T isize
+// NOLINTNEXTLINE(readability-duplicate-include)
+#include <C2nxt/std_range/StdRangeImpl.h>
+#undef RANGE_T
+
+#define RANGE_T f32
+// NOLINTNEXTLINE(readability-duplicate-include)
+#include <C2nxt/std_range/StdRangeImpl.h>
+#undef RANGE_T
+
+#define RANGE_T f64
+// NOLINTNEXTLINE(readability-duplicate-include)
+#include <C2nxt/std_range/StdRangeImpl.h>
+#undef RANGE_T
+
+#undef RANGE_IMPL
