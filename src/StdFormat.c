@@ -29,7 +29,6 @@
 #include <C2nxt/StdFormat.h>
 #include <C2nxt/StdMath.h>
 #include <C2nxt/StdPlatform.h>
-#include <C2nxt/StdRange.h>
 #include <C2nxt/StdVector.h>
 #include <math.h>
 

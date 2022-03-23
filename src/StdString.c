@@ -31,38 +31,37 @@
 #include <C2nxt/StdAssert.h>
 #include <C2nxt/StdMath.h>
 #include <C2nxt/StdPlatform.h>
-#include <C2nxt/StdRange.h>
 #include <wchar.h>
 
 #define OPTION_UNDEF_PARAMS TRUE
 
 /// @brief Declares `StdOption(T)` for `StdString`
-#define OPTION_T		  StdString
+#define OPTION_T	StdString
 #define OPTION_IMPL TRUE
 #include <C2nxt/StdOption.h>
 
 /// @brief Declares `StdOption(T)` for `Ref(StdString)`
-#define OPTION_T		  Ref(StdString)
+#define OPTION_T	Ref(StdString)
 #define OPTION_IMPL TRUE
 #include <C2nxt/StdOption.h>
 
 /// @brief Declares `StdOption(T)` for `ConstRef(StdString)`
-#define OPTION_T		  ConstRef(StdString)
+#define OPTION_T	ConstRef(StdString)
 #define OPTION_IMPL TRUE
 #include <C2nxt/StdOption.h>
 
 /// @brief Declares `StdOption(T)` for `StdStringView`
-#define OPTION_T		  StdStringView
+#define OPTION_T	StdStringView
 #define OPTION_IMPL TRUE
 #include <C2nxt/StdOption.h>
 
 /// @brief Declares `StdOption(T)` for `Ref(StdStringView)`
-#define OPTION_T		  Ref(StdStringView)
+#define OPTION_T	Ref(StdStringView)
 #define OPTION_IMPL TRUE
 #include <C2nxt/StdOption.h>
 
 /// @brief Declares `StdOption(T)` for `ConstRef(StdStringView)`
-#define OPTION_T		  ConstRef(StdStringView)
+#define OPTION_T	ConstRef(StdStringView)
 #define OPTION_IMPL TRUE
 #include <C2nxt/StdOption.h>
 
