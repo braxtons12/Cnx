@@ -18,3 +18,5 @@ __pycache__/
 /Doxyfile-mcss
 /docs/latex/
 /docs/xml/
+/cmake-build-debug-mingw/
+/cmake-build-release-mingw/

@@ -66,9 +66,11 @@ IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 	#if _WIN32_WINNT < _WIN32_WINNT_WIN8
 typedef void(WINAPI* GetSystemTimeAsFileTimePtr)(LPFILETIME);
 
-static inline always_inline GetSystemTimeAsFileTimePtr get_win_system_time_function(void) {
+[[always_inline]] static inline GetSystemTimeAsFileTimePtr get_win_system_time_function(void) {
+	IGNORE_CAST_FUNCTION_TYPE_WARNING_START
 	let_mut fp = static_cast(GetSystemTimeAsFileTimePtr)(
 		GetProcAddress(GetModuleHandleW(L"kernel32.dll"), "GetSystemTimePreciseAsFileTime"));
+	IGNORE_CAST_FUNCTION_TYPE_WARNING_STOP
 	if(fp == nullptr) {
 		fp = GetSystemTimeAsFileTime;
 	}
@@ -200,7 +202,7 @@ StdTimePoint __std_steady_clock_now(const StdClock* restrict self) {
 		STD_UNKNOWN_TIME);
 }
 	#elif STD_PLATFORM_WINDOWS
-static inline always_inline LARGE_INTEGER query_performance_frequency(void) {
+[[always_inline]] static inline LARGE_INTEGER query_performance_frequency(void) {
 	LARGE_INTEGER val;
 	ignore(QueryPerformanceFrequency(&val));
 	return val;

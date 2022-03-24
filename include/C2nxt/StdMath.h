@@ -64,7 +64,7 @@
 			UNIQUE_VAR(_x) < UNIQUE_VAR(_y) ? UNIQUE_VAR(_x) : UNIQUE_VAR(_y); \
 		})
 
-	#if STD_PLATFORM_WINDOWS
+	#if STD_PLATFORM_WINDOWS && STD_PLATFORM_COMPILER_CLANG
 _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefined\"")
 	#endif
 
@@ -106,7 +106,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 	/// @ingroup math
 	#define max(x, y) std_max((x), (y))
 
-	#if STD_PLATFORM_WINDOWS
+	#if STD_PLATFORM_WINDOWS && STD_PLATFORM_COMPILER_CLANG
 	_Pragma("GCC diagnostic pop")
 	#endif
 

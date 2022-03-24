@@ -247,16 +247,26 @@ StdString std_time_point_human_readable_format(StdTimePoint self, StdAllocator a
 		std_string_append(utc_string, &hours);
 		std_string_append(utc_string, &minutes);
 
+#if STD_PLATFORM_COMPILER_CLANG
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
 		[[maybe_unused]] let written = strftime(memory, 20, "%F|%T", parsed);
+#else
+		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
+		[[maybe_unused]] let written = strftime(memory, 20, "%Y-%m-%d|%H:%M:%S", parsed);
+#endif // STD_PLATFORM_COMPILER_CLANG
 		std_assert(written == 19, "Failed to format time point");
 		let_mut str = std_string_from_with_allocator(memory, allocator);
 		std_string_append(str, &utc_string);
 		return str;
 	}
 	else {
+#if STD_PLATFORM_COMPILER_CLANG
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
 		[[maybe_unused]] let written = strftime(memory, 20, "%F|%T", parsed);
+#else
+		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
+		[[maybe_unused]] let written = strftime(memory, 20, "%Y-%m-%d|%H:%M:%S", parsed);
+#endif // STD_PLATFORM_COMPILER_CLANG
 		std_assert(written == 19, "Failed to format time point");
 		return std_string_from_with_allocator(memory, allocator);
 	}

@@ -403,6 +403,10 @@
 	#define SCOPE_VARIABLE(...) \
 		for(__VA_ARGS__; UNIQUE_VAR(scope_break) != 1; UNIQUE_VAR(scope_break) = 1)
 
+	#define IGNORE_CAST_FUNCTION_TYPE_WARNING_START \
+		_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wcast-function-type\"")
+	#define IGNORE_CAST_FUNCTION_TYPE_WARNING_STOP _Pragma("GCC diagnostic pop")
+
 	#if STD_PLATFORM_COMPILER_CLANG
 		#define IGNORE_RESERVED_IDENTIFIER_WARNING_START \
 			_Pragma("GCC diagnostic push")               \
@@ -416,5 +420,12 @@
 		#define IGNORE_SWITCH_ENUM_WARNING_START \
 			_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wswitch-enum\"")
 		#define IGNORE_SWITCH_ENUM_WARNING_STOP _Pragma("GCC diagnostic pop")
+	#else
+		#define IGNORE_RESERVED_IDENTIFIER_WARNING_START
+		#define IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
+		#define IGNORE_SHADOW_WARNING_START
+		#define IGNORE_SHADOW_WARNING_STOP
+		#define IGNORE_SWITCH_ENUM_WARNING_START
+		#define IGNORE_SWITCH_ENUM_WARNING_STOP
 	#endif // STD_PLATFORM_COMPILER_CLANG
 #endif	   // STD_DEF

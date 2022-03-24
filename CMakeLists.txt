@@ -172,6 +172,7 @@ else ()
             -Wno-missing-braces
             -Wno-stringop-overflow
             -Wno-comment
+            -Wno-strict-aliasing
             )
 endif ()
 
@@ -196,6 +197,7 @@ endif ()
 
 target_link_libraries(FormatBenchmark PRIVATE C2nxt)
 target_link_libraries(Test PRIVATE C2nxt ${CRITERION_LIBRARIES})
+target_include_directories(Test PRIVATE ${CRITERION_INCLUDE_DIRS})
 
 find_package(Doxygen REQUIRED)
 set(MCSS_DOXYFILE_IN "${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile-mcss.in")

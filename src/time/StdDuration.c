@@ -40,6 +40,9 @@ static inline i64 cast(f64 value, DurationCastType cast_type) {
 		case FLOOR: return static_cast(i64)(value);
 		case CEIL: return static_cast(i64)(ceil(value));
 		case ROUND: return static_cast(i64)(llround(value));
+#if STD_PLATFORM_COMPILER_GCC
+		default: unreachable();
+#endif
 	}
 }
 

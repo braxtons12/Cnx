@@ -179,7 +179,7 @@ StdOption(f64) std_checked_sub_f64(f64 left, f64 right) {
 }
 
 StdOption(u8) std_checked_mul_u8(u8 left, u8 right) {
-	if(std_sign(left) == 0 || std_sign(right) == 0) {
+	if(left == 0 || right == 0) {
 		return Some(u8, 0);
 	}
 	else {
@@ -189,7 +189,7 @@ StdOption(u8) std_checked_mul_u8(u8 left, u8 right) {
 }
 
 StdOption(u16) std_checked_mul_u16(u16 left, u16 right) {
-	if(std_sign(left) == 0 || std_sign(right) == 0) {
+	if(left == 0 || right == 0) {
 		return Some(u16, 0);
 	}
 	else {
@@ -199,7 +199,7 @@ StdOption(u16) std_checked_mul_u16(u16 left, u16 right) {
 }
 
 StdOption(u32) std_checked_mul_u32(u32 left, u32 right) {
-	if(std_sign(left) == 0 || std_sign(right) == 0) {
+	if(left == 0 || right == 0) {
 		return Some(u32, 0);
 	}
 	else {
@@ -209,7 +209,7 @@ StdOption(u32) std_checked_mul_u32(u32 left, u32 right) {
 }
 
 StdOption(u64) std_checked_mul_u64(u64 left, u64 right) {
-	if(std_sign(left) == 0 || std_sign(right) == 0) {
+	if(left == 0 || right == 0) {
 		return Some(u64, 0);
 	}
 	else {
