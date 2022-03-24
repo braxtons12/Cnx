@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides string and stringview types comparable to C++ for C2nxt
 /// @version 0.2.1
-/// @date 2022-03-20
+/// @date 2022-03-24
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -83,7 +83,9 @@
 /// of its associated string.
 /// @}
 
-#pragma once
+#ifndef STD_STRING
+/// @brief STD_STRING
+#define STD_STRING
 
 #include <C2nxt/StdAllocators.h>
 #include <C2nxt/StdBasicTypes.h>
@@ -93,17 +95,13 @@
 #undef OPTION_INCLUDE_DEFAULT_INSTANTIATIONS
 #include <wchar.h>
 
-#ifndef STD_STRING
-	/// @brief STD_STRING
-	#define STD_STRING
-
-	/// @brief The size of the long string representation of `StdString`
-	#define STD_STRING_SIZEOF_LONG_REP (static_cast(usize)(sizeof(usize) * 2U + sizeof(cstring)))
-	/// @brief The number of `char`s in a SSOd `StdString`
-	#define STD_STRING_SHORT_OPTIMIZATION_ARRAY_SIZE \
-		(static_cast(usize)((STD_STRING_SIZEOF_LONG_REP - 1U) / sizeof(char)))
-	/// @brief The number of `char`s in a SSOd `StdString`
-	#define STD_STRING_SHORT_OPTIMIZATION_CAPACITY STD_STRING_SHORT_OPTIMIZATION_ARRAY_SIZE
+/// @brief The size of the long string representation of `StdString`
+#define STD_STRING_SIZEOF_LONG_REP (static_cast(usize)(sizeof(usize) * 2U + sizeof(cstring)))
+/// @brief The number of `char`s in a SSOd `StdString`
+#define STD_STRING_SHORT_OPTIMIZATION_ARRAY_SIZE \
+	(static_cast(usize)((STD_STRING_SIZEOF_LONG_REP - 1U) / sizeof(char)))
+/// @brief The number of `char`s in a SSOd `StdString`
+#define STD_STRING_SHORT_OPTIMIZATION_CAPACITY STD_STRING_SHORT_OPTIMIZATION_ARRAY_SIZE
 
 /// @brief The function vector table of methods associated with `StdStringView`
 /// @ingroup std_stringview
@@ -214,39 +212,39 @@ typedef const StdString* ConstRef(StdString);
 /// @brief type alias for a const reference to `StdStringView`
 typedef const StdStringView* ConstRef(StdStringView);
 
-	#define OPTION_DECL TRUE
+#define OPTION_DECL TRUE
 
-	/// @brief Declares `StdOption(T)` for `StdString`
-	#define OPTION_T StdString
-	#include <C2nxt/StdOption.h>
-	#undef OPTION_T
+/// @brief Declares `StdOption(T)` for `StdString`
+#define OPTION_T StdString
+#include <C2nxt/StdOption.h>
+#undef OPTION_T
 
-	/// @brief Declares `StdOption(T)` for `Ref(StdString)`
-	#define OPTION_T Ref(StdString)
-	#include <C2nxt/StdOption.h>
-	#undef OPTION_T
+/// @brief Declares `StdOption(T)` for `Ref(StdString)`
+#define OPTION_T Ref(StdString)
+#include <C2nxt/StdOption.h>
+#undef OPTION_T
 
-	/// @brief Declares `StdOption(T)` for `ConstRef(StdString)`
-	#define OPTION_T ConstRef(StdString)
-	#include <C2nxt/StdOption.h>
-	#undef OPTION_T
+/// @brief Declares `StdOption(T)` for `ConstRef(StdString)`
+#define OPTION_T ConstRef(StdString)
+#include <C2nxt/StdOption.h>
+#undef OPTION_T
 
-	/// @brief Declares `StdOption(T)` for `StdStringView`
-	#define OPTION_T StdStringView
-	#include <C2nxt/StdOption.h>
-	#undef OPTION_T
+/// @brief Declares `StdOption(T)` for `StdStringView`
+#define OPTION_T StdStringView
+#include <C2nxt/StdOption.h>
+#undef OPTION_T
 
-	/// @brief Declares `StdOption(T)` for `Ref(StdStringView)`
-	#define OPTION_T Ref(StdStringView)
-	#include <C2nxt/StdOption.h>
-	#undef OPTION_T
+/// @brief Declares `StdOption(T)` for `Ref(StdStringView)`
+#define OPTION_T Ref(StdStringView)
+#include <C2nxt/StdOption.h>
+#undef OPTION_T
 
-	/// @brief Declares `StdOption(T)` for `ConstRef(StdStringView)`
-	#define OPTION_T ConstRef(StdStringView)
-	#include <C2nxt/StdOption.h>
-	#undef OPTION_T
+/// @brief Declares `StdOption(T)` for `ConstRef(StdStringView)`
+#define OPTION_T ConstRef(StdStringView)
+#include <C2nxt/StdOption.h>
+#undef OPTION_T
 
-	#undef OPTION_DECL
+#undef OPTION_DECL
 
 /// @brief Declares iterator types for `Ref(StdString)`
 DeclStdIterators(Ref(StdString));
@@ -352,7 +350,7 @@ std_string_from_stringview(const StdStringView* restrict view)
 std_string_from_stringview_with_allocator(const StdStringView* restrict view,
 										  StdAllocator allocator)
 	std_disable_if(!view, "Can't create a StdString from a nullptr");
-	// clang-format off
+// clang-format off
 /// @brief Creates a new `StdString` from the given string-like type
 ///
 /// @param string - The string-like thing to create the `StdString` from. Either a
@@ -433,8 +431,8 @@ std_string_from_stringview_with_allocator(const StdStringView* restrict view,
 										static_cast(const StdStringView*)(string), allocator))
 // clang-format on
 
-	#define ___DISABLE_IF_NULL(self) \
-		std_disable_if(!(self), "Can't perform a StdString operation on a nullptr")
+#define ___DISABLE_IF_NULL(self) \
+	std_disable_if(!(self), "Can't perform a StdString operation on a nullptr")
 /// @brief Returns the `cstring` representation of this `StdString`
 ///
 /// @param self - the string to get the `cstring` representation of
@@ -494,9 +492,9 @@ std_string_clone_with_allocator(const StdString* restrict self, StdAllocator all
 /// @param self - The `StdString` to free
 /// @ingroup std_string
 [[not_null(1)]] void std_string_free(void* restrict self) ___DISABLE_IF_NULL(self);
-	/// @brief declare a `StdString` variable with this attribute to have `std_string_free`
-	/// automatically called on it at scope end
-	#define std_string_scoped scoped(std_string_free)
+/// @brief declare a `StdString` variable with this attribute to have `std_string_free`
+/// automatically called on it at scope end
+#define std_string_scoped scoped(std_string_free)
 
 /// @brief Returns a pointer to the character at the given index.
 ///
@@ -1661,9 +1659,9 @@ std_string_crend(const StdString* restrict self) ___DISABLE_IF_NULL(self);
 [[nodiscard]] [[not_null(1)]] StdStringView
 std_stringview_new(const StdString* restrict string) ___DISABLE_IF_NULL(string);
 
-	#undef ___DISABLE_IF_NULL
-	#define ___DISABLE_IF_NULL(self) \
-		std_disable_if(!(self), "Can't perform a stringview operation on a nullptr")
+#undef ___DISABLE_IF_NULL
+#define ___DISABLE_IF_NULL(self) \
+	std_disable_if(!(self), "Can't perform a stringview operation on a nullptr")
 /// @brief Returns a new `StdStringView` into the given cstring
 ///
 /// @param string - The cstring to get the view of
@@ -1760,14 +1758,14 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 ///
 /// @return The `cstring` representation of `self`
 /// @ingroup std_string
-	#define std_string_into_cstring(self) std_string_into_cstring(&(self))
+#define std_string_into_cstring(self) std_string_into_cstring(&(self))
 /// @brief Returns the `wcstring` representation of the given `StdString`
 ///
 /// @param self - The `StdString` to get the `wcstring` representation of
 ///
 /// @return The `wcstring` representation of `self`
 /// @ingroup std_string
-	#define std_string_into_wcstring(self) std_string_into_wcstring(&(self))
+#define std_string_into_wcstring(self) std_string_into_wcstring(&(self))
 /// @brief Returns the `wcstring` representation of the given `StdString`
 ///
 /// @param self - The `StdString` to get the `wcstring` representation of
@@ -1775,15 +1773,15 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 ///
 /// @return The `wcstring` representation of `self`
 /// @ingroup std_string
-	#define std_string_into_wcstring_with_allocator(self, allocator) \
-		std_string_into_wcstring_with_allocator(&(self), (allocator))
+#define std_string_into_wcstring_with_allocator(self, allocator) \
+	std_string_into_wcstring_with_allocator(&(self), (allocator))
 /// @brief Returns a `StdStringView` into self
 ///
 /// @param self - The `StdString` to get the `StdStringView` of
 ///
 /// @return a `StdStringView` into `self`
 /// @ingroup std_string
-	#define std_string_into_stringview(self) std_string_into_stringview(&(self))
+#define std_string_into_stringview(self) std_string_into_stringview(&(self))
 /// @brief Creates a copy of the given `StdString`, `self`, using the `StdAllocator` associated
 /// with `self`
 ///
@@ -1791,7 +1789,7 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 ///
 /// @return a copy of `self`
 /// @ingroup std_string
-	#define std_string_clone(self) std_string_clone(&(self))
+#define std_string_clone(self) std_string_clone(&(self))
 /// @brief Creates a copy of the given `StdString`, `self`, using the given `StdAllocator`
 ///
 /// @param self - The `StdString` to copy
@@ -1799,14 +1797,14 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 ///
 /// @return a copy of `self`
 /// @ingroup std_string
-	#define std_string_clone_with_allocator(self, allocator) \
-		std_string_clone_with_allocator(&(self), (allocator))
+#define std_string_clone_with_allocator(self, allocator) \
+	std_string_clone_with_allocator(&(self), (allocator))
 /// @brief Cleans up the given `StdString`, freeing any allocated memory
 ///
 /// @param self - The `StdString` to cleanup
 /// @ingroup std_string
-	#define std_string_free(self) std_string_free(&(self))
-	// clang-format off
+#define std_string_free(self) std_string_free(&(self))
+// clang-format off
 /// @brief Returns a reference to the character at the given index.
 ///
 /// @param self - The `StdString` to retrieve the character from
@@ -1839,97 +1837,96 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 #define std_string_back(self) *(_Generic((&(self)), 				\
 	StdString* 			: std_string_back_mut, 				\
 	const StdString* 	: std_string_back_const)(&(self)))
-	// clang-format on
+// clang-format on
 
-	/// @brief Returns whether the given `StdString` is empty or not
-	///
-	/// @param self - The `StdString` to check if empty
-	///
-	/// @return `true` if `self` is empty, false otherwise
-	/// @ingroup std_string
-	#define std_string_is_empty(self) std_string_is_empty(&(self))
-	/// @brief Returns whether the given `StdString` is full
-	///
-	/// @param self - The `StdString` to check if full
-	///
-	/// @return `true` if `self` is full, false otherwise
-	/// @ingroup std_string
-	#define std_string_is_full(self) std_string_is_full(&(self))
-	/// @brief Returns the current size of the given `StdString`
-	///
-	/// @param self - The `StdString` to get the size of
-	///
-	/// @return the size of `self`
-	/// @ingroup std_string
-	#define std_string_size(self) std_string_size(&(self))
-	/// @brief Returns the current length of the given `StdString`
-	///
-	/// @param self - The `StdString` to get the length of
-	///
-	/// @return the length of `self`
-	/// @ingroup std_string
-	#define std_string_length(self) std_string_length(&(self))
-	/// @brief Returns the current capacity of the given `StdString`
-	///
-	/// @param self - The `StdString` to get the capacity of
-	///
-	/// @return the capacity of `self`
-	/// @ingroup std_string
-	#define std_string_capacity(self) std_string_capacity(&(self))
-	/// @brief Returns the first `num_chars` characters of `self` as a new `StdString`, using
-	/// the `StdAllocator` associated with `self`
-	///
-	/// @param self - The `StdString` to get the first `num_chars` characters from
-	/// @param num_chars - The number of chars to get from the beginning of `self`
-	///
-	/// @return the first `num_chars` characters of `self` as a `StdString`
-	/// @ingroup std_string
-	#define std_string_first(self, num_chars) std_string_first(&(self), (num_chars))
-	/// @brief Returns the first `num_chars` characters of `self` as a new `cstring`, using
-	/// the `StdAllocator` associated with `self`
-	///
-	/// @param self - The `StdString` to get the first `num_chars` characters from
-	/// @param num_chars - The number of chars to get from the beginning of `self`
-	///
-	/// @return the first `num_chars` characters of `self` as a `cstring`
-	/// @ingroup std_string
-	#define std_string_first_cstring(self, num_chars) std_string_first_cstring(&(self), (num_chars))
-	/// @brief Returns the first `num_chars` characters of `self` as a `StdStringView`
-	///
-	/// @param self - The `StdString` to get the first `num_chars` characters from
-	/// @param num_chars - The number of chars to get from the beginning of `self`
-	///
-	/// @return the first `num_chars` characters of `self` as a `StdStringView`
-	/// @ingroup std_string
-	#define std_string_first_stringview(self, num_chars) \
-		std_string_first_stringview(&(self), (num_chars))
-	/// @brief Returns the last `num_chars` characters of `self` as a new `StdString`, using
-	/// the `StdAllocator` associated with `self`
-	///
-	/// @param self - The `StdString` to get the last `num_chars` characters from
-	/// @param num_chars - The number of chars to get from the end of `self`
-	///
-	/// @return the last `num_chars` characters of `self` as a `StdString`
-	/// @ingroup std_string
-	#define std_string_last(self, num_chars) std_string_last(&(self), (num_chars))
-	/// @brief Returns the last `num_chars` characters of `self` as a new `cstring`, using
-	/// the `StdAllocator` associated with `self`
-	///
-	/// @param self - The `StdString` to get the last `num_chars` characters from
-	/// @param num_chars - The number of chars to get from the end of `self`
-	///
-	/// @return the last `num_chars` characters of `self` as a `cstring`
-	/// @ingroup std_string
-	#define std_string_last_cstring(self, num_chars) std_string_last_cstring(&(self), (num_chars))
-	/// @brief Returns the last `num_chars` characters of `self` as a `StdStringView`
-	///
-	/// @param self - The `StdString` to get the last `num_chars` characters from
-	/// @param num_chars - The number of chars to get from the end of `self`
-	///
-	/// @return the last `num_chars` characters of `self` as a `StdStringView`
-	/// @ingroup std_string
-	#define std_string_last_stringview(self, num_chars) \
-		std_string_last_stringview(&(self), (num_chars))
+/// @brief Returns whether the given `StdString` is empty or not
+///
+/// @param self - The `StdString` to check if empty
+///
+/// @return `true` if `self` is empty, false otherwise
+/// @ingroup std_string
+#define std_string_is_empty(self) std_string_is_empty(&(self))
+/// @brief Returns whether the given `StdString` is full
+///
+/// @param self - The `StdString` to check if full
+///
+/// @return `true` if `self` is full, false otherwise
+/// @ingroup std_string
+#define std_string_is_full(self) std_string_is_full(&(self))
+/// @brief Returns the current size of the given `StdString`
+///
+/// @param self - The `StdString` to get the size of
+///
+/// @return the size of `self`
+/// @ingroup std_string
+#define std_string_size(self) std_string_size(&(self))
+/// @brief Returns the current length of the given `StdString`
+///
+/// @param self - The `StdString` to get the length of
+///
+/// @return the length of `self`
+/// @ingroup std_string
+#define std_string_length(self) std_string_length(&(self))
+/// @brief Returns the current capacity of the given `StdString`
+///
+/// @param self - The `StdString` to get the capacity of
+///
+/// @return the capacity of `self`
+/// @ingroup std_string
+#define std_string_capacity(self) std_string_capacity(&(self))
+/// @brief Returns the first `num_chars` characters of `self` as a new `StdString`, using
+/// the `StdAllocator` associated with `self`
+///
+/// @param self - The `StdString` to get the first `num_chars` characters from
+/// @param num_chars - The number of chars to get from the beginning of `self`
+///
+/// @return the first `num_chars` characters of `self` as a `StdString`
+/// @ingroup std_string
+#define std_string_first(self, num_chars) std_string_first(&(self), (num_chars))
+/// @brief Returns the first `num_chars` characters of `self` as a new `cstring`, using
+/// the `StdAllocator` associated with `self`
+///
+/// @param self - The `StdString` to get the first `num_chars` characters from
+/// @param num_chars - The number of chars to get from the beginning of `self`
+///
+/// @return the first `num_chars` characters of `self` as a `cstring`
+/// @ingroup std_string
+#define std_string_first_cstring(self, num_chars) std_string_first_cstring(&(self), (num_chars))
+/// @brief Returns the first `num_chars` characters of `self` as a `StdStringView`
+///
+/// @param self - The `StdString` to get the first `num_chars` characters from
+/// @param num_chars - The number of chars to get from the beginning of `self`
+///
+/// @return the first `num_chars` characters of `self` as a `StdStringView`
+/// @ingroup std_string
+#define std_string_first_stringview(self, num_chars) \
+	std_string_first_stringview(&(self), (num_chars))
+/// @brief Returns the last `num_chars` characters of `self` as a new `StdString`, using
+/// the `StdAllocator` associated with `self`
+///
+/// @param self - The `StdString` to get the last `num_chars` characters from
+/// @param num_chars - The number of chars to get from the end of `self`
+///
+/// @return the last `num_chars` characters of `self` as a `StdString`
+/// @ingroup std_string
+#define std_string_last(self, num_chars) std_string_last(&(self), (num_chars))
+/// @brief Returns the last `num_chars` characters of `self` as a new `cstring`, using
+/// the `StdAllocator` associated with `self`
+///
+/// @param self - The `StdString` to get the last `num_chars` characters from
+/// @param num_chars - The number of chars to get from the end of `self`
+///
+/// @return the last `num_chars` characters of `self` as a `cstring`
+/// @ingroup std_string
+#define std_string_last_cstring(self, num_chars) std_string_last_cstring(&(self), (num_chars))
+/// @brief Returns the last `num_chars` characters of `self` as a `StdStringView`
+///
+/// @param self - The `StdString` to get the last `num_chars` characters from
+/// @param num_chars - The number of chars to get from the end of `self`
+///
+/// @return the last `num_chars` characters of `self` as a `StdStringView`
+/// @ingroup std_string
+#define std_string_last_stringview(self, num_chars) std_string_last_stringview(&(self), (num_chars))
 // clang-format off
 /// @brief Determines if this string and the given one are equal
 ///
@@ -1989,8 +1986,8 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 										static_cast(StdString*)(substring)), 					   \
 	const StdString* 				: std_string_contains(&(self), 						   \
 										static_cast(const StdString*)(substring)))
-	// clang-format on
-	// clang-format off
+// clang-format on
+// clang-format off
 /// @brief Determines whether the string starts with the given substring
 ///
 /// @param self - The `StdString` to search for `substring` in
@@ -2019,8 +2016,8 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 										static_cast(StdString*)(substring)), 					   \
 	const StdString* 				: std_string_starts_with(&(self), 					   \
 										static_cast(const StdString*)(substring)))
-	// clang-format on
-	// clang-format off
+// clang-format on
+// clang-format off
 /// @brief Determines whether the string ends with the given substring
 ///
 /// @param self - The `StdString` to search for `substring` in
@@ -2113,54 +2110,54 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 										static_cast(const StdString*)(substring)))
 // clang-format on
 
-	/// @brief Returns the substring of `self` starting at `index` with length `length` as a
-	/// `StdString`, using the `StdAllocator` associated with `self`
-	///
-	/// @param self - The `StdString` to get a substring from
-	/// @param index - The index to start the substring at
-	/// @param length - The length of the substring
-	///
-	/// @return a substring of `self`
-	/// @ingroup std_string
-	#define std_string_substring(self, index, length) std_string_substring(&(self), index, length)
-	/// @brief Returns the substring of `self` starting at `index` with length `length` as a
-	/// `StdString`, associating the given `StdAllocator` with the substring
-	///
-	/// @param self - The `StdString` to get a substring from
-	/// @param index - The index to start the substring at
-	/// @param length - The length of the substring
-	/// @param allocator - The `StdAllocator` to associate with the substring
-	///
-	/// @return a substring of `self`
-	/// @ingroup std_string
-	#define std_string_substring_with_allocator(self, index, length, allocator) \
-		std_string_substring_with_allocator(&(self), index, length, allocator)
-	/// @brief Returns a `StdStringView` into `self` beginning at `index` with length `length`
-	///
-	/// @param self - The `StdString` to get a `StdStringView` into
-	/// @param index - The index to begin the view at
-	/// @param length - The length of the view
-	///
-	/// @return a `StdStringView` into self
-	/// @ingroup std_string
-	#define std_string_stringview_of(self, index, length) \
-		std_string_stringview_of(&(self), index, length)
-	/// @brief Fills the given `StdString` with the given character
-	///
-	/// @param self - The `StdString` to fill
-	/// @param character - The character to fill `self` with
-	/// @ingroup std_string
-	#define std_string_fill(self, character) std_string_fill(&(self), character)
-	/// @brief Clears the given `StdString`
-	///
-	/// @param self - The `StdString` to clear
-	/// @ingroup std_string
-	#define std_string_clear(self) std_string_clear(&(self))
-	/// @brief Shrinks the capacity of the given `StdString` to its size
-	///
-	/// @param self - The `StdString` to shrink
-	/// @ingroup std_string
-	#define std_string_shrink_to_fit(self) std_string_shrink_to_fit(&(self))
+/// @brief Returns the substring of `self` starting at `index` with length `length` as a
+/// `StdString`, using the `StdAllocator` associated with `self`
+///
+/// @param self - The `StdString` to get a substring from
+/// @param index - The index to start the substring at
+/// @param length - The length of the substring
+///
+/// @return a substring of `self`
+/// @ingroup std_string
+#define std_string_substring(self, index, length) std_string_substring(&(self), index, length)
+/// @brief Returns the substring of `self` starting at `index` with length `length` as a
+/// `StdString`, associating the given `StdAllocator` with the substring
+///
+/// @param self - The `StdString` to get a substring from
+/// @param index - The index to start the substring at
+/// @param length - The length of the substring
+/// @param allocator - The `StdAllocator` to associate with the substring
+///
+/// @return a substring of `self`
+/// @ingroup std_string
+#define std_string_substring_with_allocator(self, index, length, allocator) \
+	std_string_substring_with_allocator(&(self), index, length, allocator)
+/// @brief Returns a `StdStringView` into `self` beginning at `index` with length `length`
+///
+/// @param self - The `StdString` to get a `StdStringView` into
+/// @param index - The index to begin the view at
+/// @param length - The length of the view
+///
+/// @return a `StdStringView` into self
+/// @ingroup std_string
+#define std_string_stringview_of(self, index, length) \
+	std_string_stringview_of(&(self), index, length)
+/// @brief Fills the given `StdString` with the given character
+///
+/// @param self - The `StdString` to fill
+/// @param character - The character to fill `self` with
+/// @ingroup std_string
+#define std_string_fill(self, character) std_string_fill(&(self), character)
+/// @brief Clears the given `StdString`
+///
+/// @param self - The `StdString` to clear
+/// @ingroup std_string
+#define std_string_clear(self) std_string_clear(&(self))
+/// @brief Shrinks the capacity of the given `StdString` to its size
+///
+/// @param self - The `StdString` to shrink
+/// @ingroup std_string
+#define std_string_shrink_to_fit(self) std_string_shrink_to_fit(&(self))
 // clang-format off
 /// @brief Inserts `to_insert` into `self` at the given index
 ///
@@ -2195,55 +2192,55 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 /// @param self - The `StdString` to remove a character from
 /// @param index - The index of the character to remove
 /// @ingroup std_string
-	#define std_string_erase(self, index) std_string_erase(&(self), index)
-	/// @brief Erases `num_characters` characters from `self`, beginning at `index`
-	///
-	/// @param self - The `StdString` to remove characters from
-	/// @param index - The index where removal should begin
-	/// @param num_characters - The number of characters to remove
-	/// @ingroup std_string
-	#define std_string_erase_n(self, index, num_characters) \
-		std_string_erase_n(&(self), index, num_characters)
-	/// @brief Resizes the given `StdString` to the given `new_size`, filling the characters in the
-	/// expanded size with null
-	///
-	/// @param self - The `StdString` to resize
-	/// @param new_size - The new size of the string
-	/// @ingroup std_string
-	#define std_string_resize(self, new_size) std_string_resize(&(self), new_size)
-	/// @brief Allocates memory such that at least `new_capacity` number of characters can be stored
-	/// in the given `StdString`
-	///
-	/// @param self - The `StdString` to reserve memory in
-	/// @param new_capacity - The number of characters to be able to store
-	/// @ingroup std_string
-	#define std_string_reserve(self, new_capacity) std_string_reserve(&(self), new_capacity)
-	/// @brief Pushes the given character onto the end of the given `StdString`
-	///
-	/// @param self - The `StdString` to append a character to
-	/// @param character - The character to append to `self`
-	/// @ingroup std_string
-	#define std_string_push_back(self, character) std_string_push_back(&(self), character)
-	/// @brief Pushes the given character onto the beginning of the given `StdString`
-	///
-	/// @param self - The `StdString` to prepend a character to
-	/// @param character - The character to prepend to `self`
-	/// @ingroup std_string
-	#define std_string_push_front(self, character) std_string_push_front(&(self), character)
-	/// @brief Removes the last character in `self` if `std_string_size(self) > 0`, and returns it
-	///
-	/// @param self - The `StdString` to pop the last character from
-	///
-	/// @return `Some(char)` if `std_string_size(self) > 0`, else `None(char)`
-	/// @ingroup std_string
-	#define std_string_pop_back(self) std_string_pop_back(&(self))
-	/// @brief Removes the first character in `self` if `std_string_size(self) > 0`, and returns it
-	///
-	/// @param self - The `StdString` to pop the first character from
-	///
-	/// @return `Some(char)` if `std_string_size(self) > 0`, else `None(char)`
-	/// @ingroup std_string
-	#define std_string_pop_front(self) std_string_pop_front(&(self))
+#define std_string_erase(self, index) std_string_erase(&(self), index)
+/// @brief Erases `num_characters` characters from `self`, beginning at `index`
+///
+/// @param self - The `StdString` to remove characters from
+/// @param index - The index where removal should begin
+/// @param num_characters - The number of characters to remove
+/// @ingroup std_string
+#define std_string_erase_n(self, index, num_characters) \
+	std_string_erase_n(&(self), index, num_characters)
+/// @brief Resizes the given `StdString` to the given `new_size`, filling the characters in the
+/// expanded size with null
+///
+/// @param self - The `StdString` to resize
+/// @param new_size - The new size of the string
+/// @ingroup std_string
+#define std_string_resize(self, new_size) std_string_resize(&(self), new_size)
+/// @brief Allocates memory such that at least `new_capacity` number of characters can be stored
+/// in the given `StdString`
+///
+/// @param self - The `StdString` to reserve memory in
+/// @param new_capacity - The number of characters to be able to store
+/// @ingroup std_string
+#define std_string_reserve(self, new_capacity) std_string_reserve(&(self), new_capacity)
+/// @brief Pushes the given character onto the end of the given `StdString`
+///
+/// @param self - The `StdString` to append a character to
+/// @param character - The character to append to `self`
+/// @ingroup std_string
+#define std_string_push_back(self, character) std_string_push_back(&(self), character)
+/// @brief Pushes the given character onto the beginning of the given `StdString`
+///
+/// @param self - The `StdString` to prepend a character to
+/// @param character - The character to prepend to `self`
+/// @ingroup std_string
+#define std_string_push_front(self, character) std_string_push_front(&(self), character)
+/// @brief Removes the last character in `self` if `std_string_size(self) > 0`, and returns it
+///
+/// @param self - The `StdString` to pop the last character from
+///
+/// @return `Some(char)` if `std_string_size(self) > 0`, else `None(char)`
+/// @ingroup std_string
+#define std_string_pop_back(self) std_string_pop_back(&(self))
+/// @brief Removes the first character in `self` if `std_string_size(self) > 0`, and returns it
+///
+/// @param self - The `StdString` to pop the first character from
+///
+/// @return `Some(char)` if `std_string_size(self) > 0`, else `None(char)`
+/// @ingroup std_string
+#define std_string_pop_front(self) std_string_pop_front(&(self))
 // clang-format off
 /// @brief Appends `to_append` to the end of `self`
 ///
@@ -2271,8 +2268,8 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 										static_cast(StdString*)(to_append)), 			   		   \
 	const StdString* 				: std_string_append(&(self), 							   \
 										static_cast(const StdString*)(to_append)))
-	// clang-format on
-	// clang-format off
+// clang-format on
+// clang-format off
 /// @brief Prepends `to_prepend` to the beginning of `self`
 ///
 /// @param self - The `StdString` to prepend to
@@ -2337,182 +2334,182 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 											static_cast(const StdString*)(to_replace_with), index))
 // clang-format on
 
-	/// @brief Returns a `StdRandomAccessIterator(char_ref)` into the given
-	/// `StdString`, at the beginning of the iteration (pointing at the beginning of the string)
-	///
-	/// @param self - The `StdString` to get an iterator into
-	///
-	/// @return an iterator at the beginning of the iteration (pointing at the beginning of the
-	/// string)
-	/// @ingroup std_string
-	#define std_string_begin(self) std_string_begin(&(self))
-	/// @brief Returns a `StdRandomAccessIterator(char_ref)` into the given
-	/// `StdString`, at the end of the iteration (pointing at the end of the string)
-	///
-	/// @param self - The `StdString` to get an iterator into
-	///
-	/// @return an iterator at the end of the iteration (pointing at the end of the
-	/// string)
-	/// @ingroup std_string
-	#define std_string_end(self) std_string_end(&(self))
-	/// @brief Returns a `StdRandomAccessIterator(char_ref)` into the given
-	/// `StdString`, at the beginning of the reversed iteration (pointing at the end of the string)
-	///
-	/// @param self - The `StdString` to get an iterator into
-	///
-	/// @return an iterator at the beginning of the reversed iteration (pointing at the end of the
-	/// string)
-	/// @ingroup std_string
-	#define std_string_rbegin(self) std_string_rbegin(&(self))
-	/// @brief Returns a `StdRandomAccessIterator(char_ref)` into the given
-	/// `StdString`, at the end of the reversed iteration (pointing at the beginning of the string)
-	///
-	/// @param self - The `StdString` to get an iterator into
-	///
-	/// @return an iterator at the end of the reversed iteration (pointing at the beginning of the
-	/// string)
-	/// @ingroup std_string
-	#define std_string_rend(self) std_string_rend(&(self))
-	/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
-	/// `StdString`, at the beginning of the iteration (pointing at the beginning of the string)
-	///
-	/// @param self - The `StdString` to get an iterator into
-	///
-	/// @return an iterator at the beginning of the iteration (pointing at the beginning of the
-	/// string)
-	/// @ingroup std_string
-	#define std_string_cbegin(self) std_string_cbegin(&(self))
-	/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
-	/// `StdString`, at the end of the iteration (pointing at the end of the string)
-	///
-	/// @param self - The `StdString` to get an iterator into
-	///
-	/// @return an iterator at the end of the iteration (pointing at the end of the
-	/// string)
-	/// @ingroup std_string
-	#define std_string_cend(self) std_string_cend(&(self))
-	/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
-	/// `StdString`, at the beginning of the reversed iteration (pointing at the end of the string)
-	///
-	/// @param self - The `StdString` to get an iterator into
-	///
-	/// @return an iterator at the beginning of the reversed iteration (pointing at the end of the
-	/// string)
-	/// @ingroup std_string
-	#define std_string_crbegin(self) std_string_crbegin(&(self))
-	/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
-	/// `StdString`, at the end of the reversed iteration (pointing at the beginning of the string)
-	///
-	/// @param self - The `StdString` to get an iterator into
-	///
-	/// @return an iterator at the end of the reversed iteration (pointing at the beginning of the
-	/// string)
-	/// @ingroup std_string
-	#define std_string_crend(self) std_string_crend(&(self))
+/// @brief Returns a `StdRandomAccessIterator(char_ref)` into the given
+/// `StdString`, at the beginning of the iteration (pointing at the beginning of the string)
+///
+/// @param self - The `StdString` to get an iterator into
+///
+/// @return an iterator at the beginning of the iteration (pointing at the beginning of the
+/// string)
+/// @ingroup std_string
+#define std_string_begin(self) std_string_begin(&(self))
+/// @brief Returns a `StdRandomAccessIterator(char_ref)` into the given
+/// `StdString`, at the end of the iteration (pointing at the end of the string)
+///
+/// @param self - The `StdString` to get an iterator into
+///
+/// @return an iterator at the end of the iteration (pointing at the end of the
+/// string)
+/// @ingroup std_string
+#define std_string_end(self) std_string_end(&(self))
+/// @brief Returns a `StdRandomAccessIterator(char_ref)` into the given
+/// `StdString`, at the beginning of the reversed iteration (pointing at the end of the string)
+///
+/// @param self - The `StdString` to get an iterator into
+///
+/// @return an iterator at the beginning of the reversed iteration (pointing at the end of the
+/// string)
+/// @ingroup std_string
+#define std_string_rbegin(self) std_string_rbegin(&(self))
+/// @brief Returns a `StdRandomAccessIterator(char_ref)` into the given
+/// `StdString`, at the end of the reversed iteration (pointing at the beginning of the string)
+///
+/// @param self - The `StdString` to get an iterator into
+///
+/// @return an iterator at the end of the reversed iteration (pointing at the beginning of the
+/// string)
+/// @ingroup std_string
+#define std_string_rend(self) std_string_rend(&(self))
+/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
+/// `StdString`, at the beginning of the iteration (pointing at the beginning of the string)
+///
+/// @param self - The `StdString` to get an iterator into
+///
+/// @return an iterator at the beginning of the iteration (pointing at the beginning of the
+/// string)
+/// @ingroup std_string
+#define std_string_cbegin(self) std_string_cbegin(&(self))
+/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
+/// `StdString`, at the end of the iteration (pointing at the end of the string)
+///
+/// @param self - The `StdString` to get an iterator into
+///
+/// @return an iterator at the end of the iteration (pointing at the end of the
+/// string)
+/// @ingroup std_string
+#define std_string_cend(self) std_string_cend(&(self))
+/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
+/// `StdString`, at the beginning of the reversed iteration (pointing at the end of the string)
+///
+/// @param self - The `StdString` to get an iterator into
+///
+/// @return an iterator at the beginning of the reversed iteration (pointing at the end of the
+/// string)
+/// @ingroup std_string
+#define std_string_crbegin(self) std_string_crbegin(&(self))
+/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
+/// `StdString`, at the end of the reversed iteration (pointing at the beginning of the string)
+///
+/// @param self - The `StdString` to get an iterator into
+///
+/// @return an iterator at the end of the reversed iteration (pointing at the beginning of the
+/// string)
+/// @ingroup std_string
+#define std_string_crend(self) std_string_crend(&(self))
 
-	/// @brief Returns a const reference to the character at `index` in the given `StdStringView`
-	///
-	/// @param self - The `StdStringView` to get a character from
-	/// @param index - The index of the desired character in `self`
-	///
-	/// @return a const reference to the character at `index` in `self
-	/// @ingroup std_stringview
-	#define std_stringview_at(self, index) std_stringview_at(&(self), index)
-	/// @brief Returns the current length of the given `StdStringView`
-	///
-	/// @param self - The `StdStringView` to get the length of
-	///
-	/// @return the length of `self`
-	/// @ingroup std_stringview
-	#define std_stringview_length(self) std_stringview_length(&(self))
-	/// @brief Returns the current size of the given `StdStringView`
-	///
-	/// @param self - The `StdStringView` to get the size of
-	///
-	/// @return the size of `self`
-	/// @ingroup std_stringview
-	#define std_stringview_size(self) std_stringview_size(&(self))
-	/// @brief Returns the `cstring` view of the given `StdStringView`
-	///
-	/// @param self - The `StdStringView` to get the `cstring` view of
-	///
-	/// @return `self` as a `cstring`
-	/// @ingroup std_stringview
-	#define std_stringview_into_cstring(self) std_stringview_into_cstring(&(self))
-	/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
-	/// `StdStringView`, at the beginning of the iteration (pointing at the beginning of the view)
-	///
-	/// @param self - The `StdStringView` to get an iterator into
-	///
-	/// @return an iterator at the beginning of the iteration (pointing at the beginning of the
-	/// view)
-	/// @ingroup std_stringview
-	#define std_stringview_begin(self) std_stringview_begin(&(self))
-	/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
-	/// `StdStringView`, at the end of the iteration (pointing at the end of the view)
-	///
-	/// @param self - The `StdStringView` to get an iterator into
-	///
-	/// @return an iterator at the end of the iteration (pointing at the end of the view)
-	/// @ingroup std_stringview
-	#define std_stringview_end(self) std_stringview_end(&(self))
-	/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
-	/// `StdStringView`, at the beginning of the reversed iteration (pointing at the end of the
-	/// view)
-	///
-	/// @param self - The `StdStringView` to get an iterator into
-	///
-	/// @return an iterator at the beginning of the reversed iteration (pointing at the end of the
-	/// view)
-	/// @ingroup std_stringview
-	#define std_stringview_rbegin(self) std_stringview_rbegin(&(self))
-	/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
-	/// `StdStringView`, at the end of the reversed iteration (pointing at the beginning of the
-	/// view)
-	///
-	/// @param self - The `StdStringView` to get an iterator into
-	///
-	/// @return an iterator at the end of the reversed iteration (pointing at the beginning of the
-	/// view)
-	/// @ingroup std_stringview
-	#define std_stringview_rend(self) std_stringview_rend(&(self))
-	/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
-	/// `StdStringView`, at the beginning of the iteration (pointing at the beginning of the view)
-	///
-	/// @param self - The `StdStringView` to get an iterator into
-	///
-	/// @return an iterator at the beginning of the iteration (pointing at the beginning of the
-	/// view)
-	/// @ingroup std_stringview
-	#define std_stringview_cbegin(self) std_stringview_cbegin(&(self))
-	/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
-	/// `StdStringView`, at the end of the iteration (pointing at the end of the view)
-	///
-	/// @param self - The `StdStringView` to get an iterator into
-	///
-	/// @return an iterator at the end of the iteration (pointing at the end of the view)
-	/// @ingroup std_stringview
-	#define std_stringview_cend(self) std_stringview_cend(&(self))
-	/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
-	/// `StdStringView`, at the beginning of the reversed iteration (pointing at the end of the
-	/// view)
-	///
-	/// @param self - The `StdStringView` to get an iterator into
-	///
-	/// @return an iterator at the beginning of the reversed iteration (pointing at the end of the
-	/// view)
-	/// @ingroup std_stringview
-	#define std_stringview_crbegin(self) std_stringview_crbegin(&(self))
-	/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
-	/// `StdStringView`, at the end of the reversed iteration (pointing at the beginning of the
-	/// view)
-	///
-	/// @param self - The `StdStringView` to get an iterator into
-	///
-	/// @return an iterator at the end of the reversed iteration (pointing at the beginning of the
-	/// view)
-	/// @ingroup std_stringview
-	#define std_stringview_crend(self) std_stringview_crend(&(self))
+/// @brief Returns a const reference to the character at `index` in the given `StdStringView`
+///
+/// @param self - The `StdStringView` to get a character from
+/// @param index - The index of the desired character in `self`
+///
+/// @return a const reference to the character at `index` in `self
+/// @ingroup std_stringview
+#define std_stringview_at(self, index) std_stringview_at(&(self), index)
+/// @brief Returns the current length of the given `StdStringView`
+///
+/// @param self - The `StdStringView` to get the length of
+///
+/// @return the length of `self`
+/// @ingroup std_stringview
+#define std_stringview_length(self) std_stringview_length(&(self))
+/// @brief Returns the current size of the given `StdStringView`
+///
+/// @param self - The `StdStringView` to get the size of
+///
+/// @return the size of `self`
+/// @ingroup std_stringview
+#define std_stringview_size(self) std_stringview_size(&(self))
+/// @brief Returns the `cstring` view of the given `StdStringView`
+///
+/// @param self - The `StdStringView` to get the `cstring` view of
+///
+/// @return `self` as a `cstring`
+/// @ingroup std_stringview
+#define std_stringview_into_cstring(self) std_stringview_into_cstring(&(self))
+/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
+/// `StdStringView`, at the beginning of the iteration (pointing at the beginning of the view)
+///
+/// @param self - The `StdStringView` to get an iterator into
+///
+/// @return an iterator at the beginning of the iteration (pointing at the beginning of the
+/// view)
+/// @ingroup std_stringview
+#define std_stringview_begin(self) std_stringview_begin(&(self))
+/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
+/// `StdStringView`, at the end of the iteration (pointing at the end of the view)
+///
+/// @param self - The `StdStringView` to get an iterator into
+///
+/// @return an iterator at the end of the iteration (pointing at the end of the view)
+/// @ingroup std_stringview
+#define std_stringview_end(self) std_stringview_end(&(self))
+/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
+/// `StdStringView`, at the beginning of the reversed iteration (pointing at the end of the
+/// view)
+///
+/// @param self - The `StdStringView` to get an iterator into
+///
+/// @return an iterator at the beginning of the reversed iteration (pointing at the end of the
+/// view)
+/// @ingroup std_stringview
+#define std_stringview_rbegin(self) std_stringview_rbegin(&(self))
+/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
+/// `StdStringView`, at the end of the reversed iteration (pointing at the beginning of the
+/// view)
+///
+/// @param self - The `StdStringView` to get an iterator into
+///
+/// @return an iterator at the end of the reversed iteration (pointing at the beginning of the
+/// view)
+/// @ingroup std_stringview
+#define std_stringview_rend(self) std_stringview_rend(&(self))
+/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
+/// `StdStringView`, at the beginning of the iteration (pointing at the beginning of the view)
+///
+/// @param self - The `StdStringView` to get an iterator into
+///
+/// @return an iterator at the beginning of the iteration (pointing at the beginning of the
+/// view)
+/// @ingroup std_stringview
+#define std_stringview_cbegin(self) std_stringview_cbegin(&(self))
+/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
+/// `StdStringView`, at the end of the iteration (pointing at the end of the view)
+///
+/// @param self - The `StdStringView` to get an iterator into
+///
+/// @return an iterator at the end of the iteration (pointing at the end of the view)
+/// @ingroup std_stringview
+#define std_stringview_cend(self) std_stringview_cend(&(self))
+/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
+/// `StdStringView`, at the beginning of the reversed iteration (pointing at the end of the
+/// view)
+///
+/// @param self - The `StdStringView` to get an iterator into
+///
+/// @return an iterator at the beginning of the reversed iteration (pointing at the end of the
+/// view)
+/// @ingroup std_stringview
+#define std_stringview_crbegin(self) std_stringview_crbegin(&(self))
+/// @brief Returns a `StdRandomAccessIterator(const_char_ref)` into the given
+/// `StdStringView`, at the end of the reversed iteration (pointing at the beginning of the
+/// view)
+///
+/// @param self - The `StdStringView` to get an iterator into
+///
+/// @return an iterator at the end of the reversed iteration (pointing at the beginning of the
+/// view)
+/// @ingroup std_stringview
+#define std_stringview_crend(self) std_stringview_crend(&(self))
 
 /// @brief The function vector table of methods associated with `StdStringView`
 typedef struct std_stringview_vtable_t {
@@ -2579,5 +2576,5 @@ typedef struct std_string_vtable_t {
 	StdRandomAccessIterator(const_char_ref) (*const crend)(const StdString* restrict self);
 } std_string_vtable_t;
 
-	#undef ___DISABLE_IF_NULL
+#undef ___DISABLE_IF_NULL
 #endif // STD_STRING
