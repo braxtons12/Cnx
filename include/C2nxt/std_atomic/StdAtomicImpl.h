@@ -35,7 +35,7 @@
 
 #include <C2nxt/StdPlatform.h>
 
-#if STD_PLATFORM_WINDOWS
+#if STD_PLATFORM_WINDOWS && !STD_PLATFORM_COMPILER_GCC
 
 	#include <C2nxt/StdBasicTypes.h>
 	#include <C2nxt/StdDef.h>
