@@ -22,6 +22,7 @@ set(EXPORTS
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdAllocators.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdArray.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdAssert.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdAtomic.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdBasicTypes.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdCollectionData.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdDef.h"
@@ -60,6 +61,7 @@ set(EXPORTS
 set(IMPLEMENTATIONS
         "${CMAKE_CURRENT_SOURCE_DIR}/src/StdAllocators.c"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/StdAssert.c"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/StdAtomicImpl.c"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/StdError.c"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/StdFormat.c"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/StdIO.c"
