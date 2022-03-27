@@ -1,8 +1,8 @@
 /// @file StdClock.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides methods for operating with system clocks
-/// @version 0.1.1
-/// @date 2022-02-24
+/// @version 0.1.2
+/// @date 2022-03-26
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -68,13 +68,13 @@ typedef void(WINAPI* GetSystemTimeAsFileTimePtr)(LPFILETIME);
 
 [[always_inline]] static inline GetSystemTimeAsFileTimePtr get_win_system_time_function(void) {
 	IGNORE_CAST_FUNCTION_TYPE_WARNING_START
-	let_mut fp = static_cast(GetSystemTimeAsFileTimePtr)(
+	let_mut func_ptr = static_cast(GetSystemTimeAsFileTimePtr)(
 		GetProcAddress(GetModuleHandleW(L"kernel32.dll"), "GetSystemTimePreciseAsFileTime"));
 	IGNORE_CAST_FUNCTION_TYPE_WARNING_STOP
-	if(fp == nullptr) {
-		fp = GetSystemTimeAsFileTime;
+	if(func_ptr == nullptr) {
+		func_ptr = GetSystemTimeAsFileTime;
 	}
-	return fp;
+	return func_ptr;
 }
 
 	#endif // _WIN32_WINNT < _WIN32_WINNT_WIN8
@@ -86,19 +86,20 @@ StdTimePoint __std_system_clock_now(const StdClock* restrict self) {
 	// but Windows has to be weird, thus its epoch starts at Jan 1 1601
 	let nt_to_unix_epoch = std_seconds(11644473600);
 
-	FILETIME ft;
+	FILETIME file_time;
 	#if(_WIN32_WINNT >= _WIN32_WINNT_WIN7 && WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)) \
 		|| (_WIN32_WINNT >= _WIN32_WINNT_WIN10)
-	GetSystemTimePreciseAsFileTime(&ft);
+	GetSystemTimePreciseAsFileTime(&file_time);
 	#elif !WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-	GetSystemTimeAsFileTime(&ft);
+	GetSystemTimeAsFileTime(&file_time);
 	#else
-	get_win_system_time_function()(&ft);
+	get_win_system_time_function()(&file_time);
 	#endif
 
 	let duration = (StdDuration){
-		.count = static_cast(i64)((static_cast(u64)(ft.dwHighDateTime) << static_cast(u64)(32))
-								  | static_cast(u64)(ft.dwLowDateTime)),
+		.count
+		= static_cast(i64)((static_cast(u64)(file_time.dwHighDateTime) << static_cast(u64)(32))
+						   | static_cast(u64)(file_time.dwLowDateTime)),
 		.period = filetime_period,
 	};
 	return std_time_point_new_with_clock_and_locale(
