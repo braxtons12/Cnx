@@ -9,7 +9,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS YES)
 ############ Import Criterion ######################################################################
 ####################################################################################################
 
-list (APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 find_package(Criterion REQUIRED)
 
@@ -145,6 +145,7 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
             -Wno-extra-semi-stmt
             -Wno-declaration-after-statement
             -Wno-pre-c2x-compat
+            -Wno-documentation-unknown-command
             )
     if (WIN32)
         target_compile_options(C2nxt PUBLIC
