@@ -3,10 +3,10 @@
 /// @brief This module provides the type definitions and function declarations for a struct template
 /// for representing a uniquely owned pointer
 /// @version 0.2.0
-/// @date 2022-03-26
+/// @date 2022-03-28
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@
 
 #include <C2nxt/StdDef.h>
 
-#if defined(UNIQUE_T) && UNIQUE_DECL
+#if defined(UNIQUE_T) && defined(UNIQUE_DELETER) && UNIQUE_DECL
 
 	#define STD_TEMPlATE_SUPPRESS_INSTANTIATIONS TRUE
 
@@ -39,10 +39,9 @@
 	#include <C2nxt/std_unique_ptr/StdUniquePtrDef.h>
 
 typedef struct StdUniquePtr(UNIQUE_T) StdUniquePtr(UNIQUE_T);
-typedef void (*StdUniquePtrIdentifier(UNIQUE_T, Deleter))(__UNIQUE_PTR_ELEMENT_PTR restrict self,
-														  StdAllocator allocator);
 
 typedef struct StdUniquePtrIdentifier(UNIQUE_T, vtable) StdUniquePtrIdentifier(UNIQUE_T, vtable);
+typedef StdDeleter(UNIQUE_T, StdUniquePtrIdentifier(UNIQUE_T, Deleter));
 
 typedef struct StdUniquePtr(UNIQUE_T) {
 	union {
@@ -50,7 +49,6 @@ typedef struct StdUniquePtr(UNIQUE_T) {
 		UNIQUE_T* m_type;
 	};
 	StdAllocator m_allocator;
-	StdUniquePtrIdentifier(UNIQUE_T, Deleter) m_deleter;
 	const StdUniquePtrIdentifier(UNIQUE_T, vtable) * m_vtable;
 }
 StdUniquePtr(UNIQUE_T);
@@ -74,24 +72,6 @@ StdUniquePtr(UNIQUE_T);
 					   "std_unique_ptr_new_with_allocator is only available if "
 					   "UNIQUE_T is NOT an array type");
 
-[[nodiscard]] [[not_null(1)]] StdUniquePtr(UNIQUE_T)
-	StdUniquePtrIdentifier(UNIQUE_T,
-						   new_with_deleter)(const StdUniquePtrIdentifier(UNIQUE_T, Deleter)
-												 deleter)
-		std_disable_if(!deleter, "deleter can't be a nullptr")
-			std_disable_if(__UNIQUE_PTR_IS_ARRAY,
-						   "std_unique_ptr_new_with_deleter is only available if "
-						   "UNIQUE_T is NOT an array type");
-
-[[nodiscard]] [[not_null(2)]] StdUniquePtr(UNIQUE_T)
-	StdUniquePtrIdentifier(UNIQUE_T, new_with_allocator_and_deleter)(
-		StdAllocator allocator,
-		const StdUniquePtrIdentifier(UNIQUE_T, Deleter) deleter)
-		std_disable_if(!deleter, "deleter can't be a nullptr")
-			std_disable_if(__UNIQUE_PTR_IS_ARRAY,
-						   "std_unique_ptr_new_with_allocator_and_deleter is only available if "
-						   "UNIQUE_T is NOT an array type");
-
 [[nodiscard]] StdUniquePtr(UNIQUE_T)
 	StdUniquePtrIdentifier(UNIQUE_T, new_with_capacity)(usize capacity)
 		std_disable_if(!__UNIQUE_PTR_IS_ARRAY,
@@ -105,45 +85,12 @@ StdUniquePtr(UNIQUE_T);
 					   "std_unique_ptr_new_with_capacity_and_allocator is only available if "
 					   "UNIQUE_T is an array type");
 
-[[nodiscard]] [[not_null(2)]] StdUniquePtr(UNIQUE_T)
-	StdUniquePtrIdentifier(UNIQUE_T, new_with_capacity_and_deleter)(
-		usize capacity,
-		const StdUniquePtrIdentifier(UNIQUE_T, Deleter) deleter)
-		std_disable_if(!deleter, "deleter can't be a nullptr")
-			std_disable_if(!__UNIQUE_PTR_IS_ARRAY,
-						   "std_unique_ptr_new_with_capacity_and_deleter is only available if "
-						   "UNIQUE_T is an array type");
-
-[[nodiscard]] [[not_null(3)]] StdUniquePtr(UNIQUE_T)
-	StdUniquePtrIdentifier(UNIQUE_T, new_with_capacity_allocator_and_deleter)(
-		usize capacity,
-		StdAllocator allocator,
-		const StdUniquePtrIdentifier(UNIQUE_T, Deleter) deleter)
-		std_disable_if(!deleter, "deleter can't be a nullptr") std_disable_if(
-			!__UNIQUE_PTR_IS_ARRAY,
-			"std_unique_ptr_new_with_capacity_allocator_and_deleter is only available if "
-			"UNIQUE_T is an array type");
-
 [[nodiscard]] StdUniquePtr(UNIQUE_T)
 	StdUniquePtrIdentifier(UNIQUE_T, from)(__UNIQUE_PTR_ELEMENT_PTR restrict ptr);
 
 [[nodiscard]] StdUniquePtr(UNIQUE_T)
 	StdUniquePtrIdentifier(UNIQUE_T, from_with_allocator)(__UNIQUE_PTR_ELEMENT_PTR restrict ptr,
 														  StdAllocator allocator);
-
-[[nodiscard]] [[not_null(2)]] StdUniquePtr(UNIQUE_T)
-	StdUniquePtrIdentifier(UNIQUE_T,
-						   from_with_deleter)(__UNIQUE_PTR_ELEMENT_PTR restrict ptr,
-											  const StdUniquePtrIdentifier(UNIQUE_T, Deleter)
-												  deleter)
-		std_disable_if(!deleter, "deleter can't be a nullptr");
-
-[[nodiscard]] [[not_null(3)]] StdUniquePtr(UNIQUE_T)
-	StdUniquePtrIdentifier(UNIQUE_T, from_with_allocator_and_deleter)(
-		__UNIQUE_PTR_ELEMENT_PTR restrict ptr,
-		StdAllocator allocator,
-		const StdUniquePtrIdentifier(UNIQUE_T, Deleter) deleter)
-		std_disable_if(!deleter, "deleter can't be a nullptr");
 
 [[nodiscard]] [[not_null(1)]] __UNIQUE_PTR_ELEMENT_PTR
 	StdUniquePtrIdentifier(UNIQUE_T, release)(StdUniquePtr(UNIQUE_T) * restrict self)

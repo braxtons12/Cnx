@@ -3,10 +3,10 @@
 /// @brief This module provides the function definitions for a struct template
 /// for representing a uniquely owned pointer
 /// @version 0.2.0
-/// @date 2022-03-26
+/// @date 2022-03-28
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -50,7 +50,7 @@
 [[always_inline]] static inline void
 StdUniquePtrIdentifier(UNIQUE_T, default_deleter)(__UNIQUE_PTR_ELEMENT_PTR restrict ptr,
 												  StdAllocator allocator) {
-	std_allocator_deallocate_t(__UNIQUE_PTR_ELEMENT, allocator, ptr);
+	std_allocator_deallocate(allocator, ptr);
 }
 
 StdUniquePtr(UNIQUE_T) StdUniquePtrIdentifier(UNIQUE_T, default)(void) {
@@ -61,7 +61,6 @@ StdUniquePtr(UNIQUE_T)
 	StdUniquePtrIdentifier(UNIQUE_T, default_with_allocator)(StdAllocator allocator) {
 	return (StdUniquePtr(UNIQUE_T)){.m_ptr = nullptr,
 									.m_allocator = allocator,
-									.m_deleter = StdUniquePtrIdentifier(UNIQUE_T, default_deleter),
 									.m_vtable = &StdUniquePtrIdentifier(UNIQUE_T, vtable_impl)};
 }
 
@@ -77,11 +76,9 @@ StdUniquePtr(UNIQUE_T) StdUniquePtrIdentifier(UNIQUE_T, new)(void) {
 	std_assert(!__UNIQUE_PTR_IS_ARRAY,
 			   "std_unique_ptr_new is not available when UNIQUE_T is an array type");
 	#endif
-	let_mut ptr = static_cast(__UNIQUE_PTR_ELEMENT_PTR)(
-		std_allocator_allocate_t(__UNIQUE_PTR_ELEMENT, DEFAULT_ALLOCATOR).m_memory);
+	let_mut ptr = std_allocator_allocate_t(__UNIQUE_PTR_ELEMENT, DEFAULT_ALLOCATOR);
 	return (StdUniquePtr(UNIQUE_T)){.m_ptr = ptr,
 									.m_allocator = DEFAULT_ALLOCATOR,
-									.m_deleter = StdUniquePtrIdentifier(UNIQUE_T, default_deleter),
 									.m_vtable = &StdUniquePtrIdentifier(UNIQUE_T, vtable_impl)};
 }
 
@@ -98,64 +95,9 @@ StdUniquePtr(UNIQUE_T)
 	std_assert(!__UNIQUE_PTR_IS_ARRAY,
 			   "std_unique_ptr_new_with_allocator is not available when UNIQUE_T is an array type");
 	#endif
-	let_mut ptr = static_cast(__UNIQUE_PTR_ELEMENT_PTR)(
-		std_allocator_allocate_t(__UNIQUE_PTR_ELEMENT, allocator).m_memory);
+	let_mut ptr = std_allocator_allocate_t(__UNIQUE_PTR_ELEMENT, allocator);
 	return (StdUniquePtr(UNIQUE_T)){.m_ptr = ptr,
 									.m_allocator = allocator,
-									.m_deleter = StdUniquePtrIdentifier(UNIQUE_T, default_deleter),
-									.m_vtable = &StdUniquePtrIdentifier(UNIQUE_T, vtable_impl)};
-}
-
-StdUniquePtr(UNIQUE_T)
-	StdUniquePtrIdentifier(UNIQUE_T,
-						   new_with_deleter)(const StdUniquePtrIdentifier(UNIQUE_T, Deleter)
-												 deleter) {
-	// if compiling with clang, we'll trigger a std_disable_if clause at compile time if this is
-	// ever used on an array type, and for GCC/others we'll trigger a static_assert when called
-	// through the macro, but this could still be called if directly called instead of going through
-	// the macro, so at least make it really annoying in debug builds
-	// ‾‾\  (* *)  /‾‾
-	//	  \ \ - / /
-	//     \_| |_/
-	#if !STD_PLATFORM_COMPILER_CLANG
-	std_assert(!__UNIQUE_PTR_IS_ARRAY,
-			   "std_unique_ptr_new_with_deleter is not available when UNIQUE_T is an array type");
-	#endif
-	IGNORE_NONNULL_COMPARE_WARNING_START
-	std_assert(deleter, "std_unique_ptr_new_with_deleter called with a null deleter");
-	IGNORE_NONNULL_COMPARE_WARNING_STOP
-
-	let_mut ptr = static_cast(__UNIQUE_PTR_ELEMENT_PTR)(
-		std_allocator_allocate_t(__UNIQUE_PTR_ELEMENT, DEFAULT_ALLOCATOR).m_memory);
-	return (StdUniquePtr(UNIQUE_T)){.m_ptr = ptr,
-									.m_allocator = DEFAULT_ALLOCATOR,
-									.m_deleter = deleter,
-									.m_vtable = &StdUniquePtrIdentifier(UNIQUE_T, vtable_impl)};
-}
-
-StdUniquePtr(UNIQUE_T) StdUniquePtrIdentifier(UNIQUE_T, new_with_allocator_and_deleter)(
-	StdAllocator allocator,
-	const StdUniquePtrIdentifier(UNIQUE_T, Deleter) deleter) {
-	// if compiling with clang, we'll trigger a std_disable_if clause at compile time if this is
-	// ever used on an array type, and for GCC/others we'll trigger a static_assert when called
-	// through the macro, but this could still be called if directly called instead of going through
-	// the macro, so at least make it really annoying in debug builds
-	// ‾‾\  (* *)  /‾‾
-	//	  \ \ - / /
-	//     \_| |_/
-	#if !STD_PLATFORM_COMPILER_CLANG
-	std_assert(!__UNIQUE_PTR_IS_ARRAY,
-			   "std_unique_ptr_new_with_allocator_and_deleter is not available when UNIQUE_T is an "
-			   "array type");
-	#endif
-	IGNORE_NONNULL_COMPARE_WARNING_START
-	std_assert(deleter, "std_unique_ptr_new_with_allocator_and_deleter called with a null deleter");
-	IGNORE_NONNULL_COMPARE_WARNING_STOP
-	let_mut ptr = static_cast(__UNIQUE_PTR_ELEMENT_PTR)(
-		std_allocator_allocate_t(__UNIQUE_PTR_ELEMENT, allocator).m_memory);
-	return (StdUniquePtr(UNIQUE_T)){.m_ptr = ptr,
-									.m_allocator = allocator,
-									.m_deleter = deleter,
 									.m_vtable = &StdUniquePtrIdentifier(UNIQUE_T, vtable_impl)};
 }
 
@@ -172,11 +114,9 @@ StdUniquePtr(UNIQUE_T) StdUniquePtrIdentifier(UNIQUE_T, new_with_capacity)(usize
 		__UNIQUE_PTR_IS_ARRAY,
 		"std_unique_ptr_new_with_capacity is not available when UNIQUE_T is NOT an array type");
 	#endif
-	let_mut ptr = static_cast(__UNIQUE_PTR_ELEMENT_PTR)(
-		std_allocator_allocate_array_t(__UNIQUE_PTR_ELEMENT, DEFAULT_ALLOCATOR, capacity).m_memory);
+	let_mut ptr = std_allocator_allocate_array_t(__UNIQUE_PTR_ELEMENT, DEFAULT_ALLOCATOR, capacity);
 	return (StdUniquePtr(UNIQUE_T)){.m_ptr = ptr,
 									.m_allocator = DEFAULT_ALLOCATOR,
-									.m_deleter = StdUniquePtrIdentifier(UNIQUE_T, default_deleter),
 									.m_vtable = &StdUniquePtrIdentifier(UNIQUE_T, vtable_impl)};
 }
 
@@ -195,66 +135,9 @@ StdUniquePtr(UNIQUE_T)
 			   "std_unique_ptr_new_with_capacity_and_allocator is not available when UNIQUE_T is "
 			   "NOT an array type");
 	#endif
-	let_mut ptr = static_cast(__UNIQUE_PTR_ELEMENT_PTR)(
-		std_allocator_allocate_array_t(__UNIQUE_PTR_ELEMENT, allocator, capacity).m_memory);
+	let_mut ptr = std_allocator_allocate_array_t(__UNIQUE_PTR_ELEMENT, allocator, capacity);
 	return (StdUniquePtr(UNIQUE_T)){.m_ptr = ptr,
 									.m_allocator = allocator,
-									.m_deleter = StdUniquePtrIdentifier(UNIQUE_T, default_deleter),
-									.m_vtable = &StdUniquePtrIdentifier(UNIQUE_T, vtable_impl)};
-}
-
-StdUniquePtr(UNIQUE_T) StdUniquePtrIdentifier(UNIQUE_T, new_with_capacity_and_deleter)(
-	usize capacity,
-	const StdUniquePtrIdentifier(UNIQUE_T, Deleter) deleter) {
-	// if compiling with clang, we'll trigger a std_disable_if clause at compile time if this is
-	// ever used on a non-array type, and for GCC/others we'll trigger a static_assert when called
-	// through the macro, but this could still be called if directly called instead of going through
-	// the macro, so at least make it really annoying in debug builds
-	// ‾‾\  (* *)  /‾‾
-	//	  \ \ - / /
-	//     \_| |_/
-	#if !STD_PLATFORM_COMPILER_CLANG
-	std_assert(__UNIQUE_PTR_IS_ARRAY,
-			   "std_unique_ptr_new_with_capacity_and_deleter is not available when UNIQUE_T is NOT "
-			   "an array type");
-	#endif
-	IGNORE_NONNULL_COMPARE_WARNING_START
-	std_assert(deleter, "std_unique_ptr_new_with_capacity_and_deleter called with a null deleter");
-	IGNORE_NONNULL_COMPARE_WARNING_STOP
-	let_mut ptr = static_cast(__UNIQUE_PTR_ELEMENT_PTR)(
-		std_allocator_allocate_array_t(__UNIQUE_PTR_ELEMENT, DEFAULT_ALLOCATOR, capacity).m_memory);
-	return (StdUniquePtr(UNIQUE_T)){.m_ptr = ptr,
-									.m_allocator = DEFAULT_ALLOCATOR,
-									.m_deleter = deleter,
-									.m_vtable = &StdUniquePtrIdentifier(UNIQUE_T, vtable_impl)};
-}
-
-StdUniquePtr(UNIQUE_T) StdUniquePtrIdentifier(UNIQUE_T, new_with_capacity_allocator_and_deleter)(
-	usize capacity,
-	StdAllocator allocator,
-	const StdUniquePtrIdentifier(UNIQUE_T, Deleter) deleter) {
-	// if compiling with clang, we'll trigger a std_disable_if clause at compile time if this is
-	// ever used on a non-array type, and for GCC/others we'll trigger a static_assert when called
-	// through the macro, but this could still be called if directly called instead of going through
-	// the macro, so at least make it really annoying in debug builds
-	// ‾‾\  (* *)  /‾‾
-	//	  \ \ - / /
-	//     \_| |_/
-	#if !STD_PLATFORM_COMPILER_CLANG
-	std_assert(
-		__UNIQUE_PTR_IS_ARRAY,
-		"std_unique_ptr_new_with_capacity_allocator_and_deleter is not available when UNIQUE_T is "
-		"NOT an array type");
-	#endif
-	IGNORE_NONNULL_COMPARE_WARNING_START
-	std_assert(deleter,
-			   "std_unique_ptr_new_with_capacity_allocator_and_deleter called with a null deleter");
-	IGNORE_NONNULL_COMPARE_WARNING_STOP
-	let_mut ptr = static_cast(__UNIQUE_PTR_ELEMENT_PTR)(
-		std_allocator_allocate_array_t(__UNIQUE_PTR_ELEMENT, allocator, capacity).m_memory);
-	return (StdUniquePtr(UNIQUE_T)){.m_ptr = ptr,
-									.m_allocator = allocator,
-									.m_deleter = deleter,
 									.m_vtable = &StdUniquePtrIdentifier(UNIQUE_T, vtable_impl)};
 }
 
@@ -268,33 +151,6 @@ StdUniquePtr(UNIQUE_T)
 														  StdAllocator allocator) {
 	return (StdUniquePtr(UNIQUE_T)){.m_ptr = ptr,
 									.m_allocator = allocator,
-									.m_deleter = StdUniquePtrIdentifier(UNIQUE_T, default_deleter),
-									.m_vtable = &StdUniquePtrIdentifier(UNIQUE_T, vtable_impl)};
-}
-
-StdUniquePtr(UNIQUE_T)
-	StdUniquePtrIdentifier(UNIQUE_T,
-						   from_with_deleter)(__UNIQUE_PTR_ELEMENT_PTR restrict ptr,
-											  const StdUniquePtrIdentifier(UNIQUE_T, Deleter)
-												  deleter) {
-	IGNORE_NONNULL_COMPARE_WARNING_START
-	std_assert(deleter, "std_unique_ptr_from_with_deleter called with a null deleter");
-	IGNORE_NONNULL_COMPARE_WARNING_STOP
-	return StdUniquePtrIdentifier(UNIQUE_T,
-								  from_with_allocator_and_deleter)(ptr, DEFAULT_ALLOCATOR, deleter);
-}
-
-StdUniquePtr(UNIQUE_T) StdUniquePtrIdentifier(UNIQUE_T, from_with_allocator_and_deleter)(
-	__UNIQUE_PTR_ELEMENT_PTR restrict ptr,
-	StdAllocator allocator,
-	const StdUniquePtrIdentifier(UNIQUE_T, Deleter) deleter) {
-	IGNORE_NONNULL_COMPARE_WARNING_START
-	std_assert(deleter,
-			   "std_unique_ptr_from_with_allocator_and_deleter called with a null deleter");
-	IGNORE_NONNULL_COMPARE_WARNING_STOP
-	return (StdUniquePtr(UNIQUE_T)){.m_ptr = ptr,
-									.m_allocator = allocator,
-									.m_deleter = deleter,
 									.m_vtable = &StdUniquePtrIdentifier(UNIQUE_T, vtable_impl)};
 }
 
@@ -307,8 +163,11 @@ StdUniquePtrIdentifier(UNIQUE_T, release)(StdUniquePtr(UNIQUE_T) * restrict self
 
 void StdUniquePtrIdentifier(UNIQUE_T, reset)(StdUniquePtr(UNIQUE_T) * restrict self,
 											 __UNIQUE_PTR_ELEMENT_PTR restrict new_ptr) {
-	self->m_deleter(self->m_ptr, self->m_allocator);
+	let_mut ptr = self->m_ptr;
 	self->m_ptr = new_ptr;
+	if(ptr != nullptr) {
+		UNIQUE_DELETER(ptr, self->m_allocator);
+	}
 }
 
 void StdUniquePtrIdentifier(UNIQUE_T, swap)(StdUniquePtr(UNIQUE_T) * restrict self,
@@ -328,9 +187,9 @@ StdUniquePtrIdentifier(UNIQUE_T, get)(StdUniquePtr(UNIQUE_T) * restrict self) {
 	return self->m_ptr;
 }
 
-StdUniquePtrIdentifier(UNIQUE_T, Deleter)
-	StdUniquePtrIdentifier(UNIQUE_T, get_deleter)(const StdUniquePtr(UNIQUE_T) * restrict self) {
-	return self->m_deleter;
+StdUniquePtrIdentifier(UNIQUE_T, Deleter) StdUniquePtrIdentifier(UNIQUE_T, get_deleter)(
+	[[maybe_unused]] const StdUniquePtr(UNIQUE_T) * restrict self) {
+	return UNIQUE_DELETER;
 }
 
 bool StdUniquePtrIdentifier(UNIQUE_T, as_bool)(const StdUniquePtr(UNIQUE_T) * restrict self) {
@@ -373,7 +232,11 @@ StdUniquePtrIdentifier(UNIQUE_T, at)(StdUniquePtr(UNIQUE_T) * restrict self, usi
 void StdUniquePtrIdentifier(UNIQUE_T, free)(void* self) {
 	let_mut _self = static_cast(StdUniquePtr(UNIQUE_T)*)(self);
 	if(_self->m_ptr != nullptr) {
-		_self->m_deleter(_self->m_ptr, _self->m_allocator);
+		let_mut ptr = _self->m_ptr;
+		_self->m_ptr = nullptr;
+		if(ptr != nullptr) {
+			UNIQUE_DELETER(ptr, _self->m_allocator);
+		}
 	}
 }
 

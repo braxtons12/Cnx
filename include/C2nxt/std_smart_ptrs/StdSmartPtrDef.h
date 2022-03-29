@@ -29,6 +29,15 @@
 
 #define ptr(self) ((self).m_ptr)
 
+#define ptr_move(self)                                                        \
+	({                                                                        \
+		let_mut UNIQUE_VAR(ptr) = self;                                       \
+		self = (typeof(self)){0}; /** NOLINT **/                              \
+								  /** In case NULL isn't 0, assign nullptr **/ \
+		ptr(self) = nullptr;                                                  \
+		UNIQUE_VAR(ptr);                                                      \
+	})
+
 #define __SMART_PTR_CHECK_INSTANCE_IS_ARRAY(self) \
 	(!(std_types_equal_v(typeof(*((self).m_ptr)), (typeof(*((self).m_type))){0})))
 #define __SMART_PTR_IS_ARRAY(T)				  (!(std_types_equal_v(typeof((T){0}), *(&(T){0}))))

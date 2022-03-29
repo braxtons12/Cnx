@@ -2,10 +2,10 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a struct template for representing a uniquely owned pointer
 /// @version 0.2.0
-/// @date 2022-03-26
+/// @date 2022-03-28
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -32,6 +32,11 @@
 	#define UNIQUE_DECL TRUE
 #endif // !defined(UNIQUE_DECL) && (!defined(UNIQUE_IMPL) || !UNIQUE_IMPL) && defined(UNIQUE_T)
 
+#if !defined(UNIQUE_DELETER) && (UNIQUE_DECL || UNIQUE_IMPL)
+	#define UNIQUE_DELETER			   StdUniquePtrIdentifier(UNIQUE_T, default_deleter)
+	#define __UNIQUE_DEFAULTED_DELETER TRUE
+#endif // !defined(UNIQUE_DELETER) && UNIQUE_DECL || UNIQUE_IMPL
+
 #if !defined(UNIQUE_T) && UNIQUE_DECL
 	#error \
 		"StdUniquePtr.h included with UNIQUE_DECL defined true but template parameter UNIQUE_T \
@@ -54,6 +59,12 @@
 
 #if UNIQUE_UNDEF_PARAMS
 	#undef UNIQUE_T
+	#undef UNIQUE_DELETER
 	#undef UNIQUE_DECL
 	#undef UNIQUE_IMPL
 #endif // UNIQUE_UNDEF_PARAMS
+
+#if __UNIQUE_DEFAULTED_DELETER
+	#undef UNIQUE_DELETER
+	#undef __UNIQUE_DEFAULTED_DELETER
+#endif // __UNIQUE_DEFAULTED_DELETER

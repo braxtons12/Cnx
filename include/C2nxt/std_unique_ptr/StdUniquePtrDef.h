@@ -3,10 +3,10 @@
 /// @brief This module provides the macro definitions for a struct template for representing a
 /// uniquely owned pointer
 /// @version 0.2.0
-/// @date 2022-03-26
+/// @date 2022-03-28
 ///
 /// MIT License
-/// @copyright Copyright (c) 2021 Braxton Salyer <braxtonsalyer@gmail.com>
+/// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -43,14 +43,6 @@
 		StdUniquePtrIdentifier(T, new)();                                             \
 	})
 
-#define std_unique_ptr_new_with_deleter(T, deleter)                                                \
-	({                                                                                             \
-		std_static_assert(                                                                         \
-			!__UNIQUE_PTR_IS_ARRAY_GENERIC(T),                                                     \
-			"std_unique_ptr_new_with_deleter is only available if UNIQUE_T is NOT an array type"); \
-		StdUniquePtrIdentifier(T, new_with_deleter)(deleter);                                      \
-	})
-
 #define std_unique_ptr_new_with_allocator(T, allocator)                                         \
 	({                                                                                          \
 		std_static_assert(!__UNIQUE_PTR_IS_ARRAY_GENERIC(T),                                    \
@@ -58,27 +50,12 @@
 						  "NOT an array type");                                                 \
 		StdUniquePtrIdentifier(T, new_with_allocator)(allocator);                               \
 	})
-#define std_unique_ptr_new_with_allocator_and_deleter(T, allocator, deleter)                    \
-	({                                                                                          \
-		std_static_assert(!__UNIQUE_PTR_IS_ARRAY_GENERIC(T),                                    \
-						  "std_unique_ptr_new_with_allocator_and_deleter is only available if " \
-						  "UNIQUE_T is NOT an array type");                                     \
-		StdUniquePtrIdentifier(T, new_with_allocator_and_deleter)(allocator, deleter);          \
-	})
 #define std_unique_ptr_new_with_capacity(T, capacity)                                       \
 	({                                                                                      \
 		std_static_assert(__UNIQUE_PTR_IS_ARRAY_GENERIC(T),                                 \
 						  "std_unique_ptr_new_with_capacity is only available if UNIQUE_T " \
 						  "is an array type");                                              \
 		StdUniquePtrIdentifier(T, new_with_capacity)(capacity);                             \
-	})
-#define std_unique_ptr_new_with_capacity_and_deleter(T, capacity, deleter)                \
-	({                                                                                    \
-		std_static_assert(                                                                \
-			__UNIQUE_PTR_IS_ARRAY_GENERIC(T),                                             \
-			"std_unique_ptr_new_with_capacity_and_deleter is only available if UNIQUE_T " \
-			"is an array type");                                                          \
-		StdUniquePtrIdentifier(T, new_with_capacity_and_deleter)(capacity, deleter);      \
 	})
 #define std_unique_ptr_new_with_capacity_and_allocator(T, capacity, allocator)              \
 	({                                                                                      \
@@ -88,23 +65,9 @@
 			"is an array type");                                                            \
 		StdUniquePtrIdentifier(T, new_with_capacity_and_allocator)(capacity, allocator);    \
 	})
-#define std_unique_ptr_new_with_capacity_allocator_and_deleter(T, capacity, allocator, deleter) \
-	({                                                                                          \
-		std_static_assert(__UNIQUE_PTR_IS_ARRAY_GENERIC(T),                                     \
-						  "std_unique_ptr_new_with_capacity_allocator_and_deleter is only "     \
-						  "available if UNIQUE_T "                                              \
-						  "is an array type");                                                  \
-		StdUniquePtrIdentifier(T, new_with_capacity_allocator_and_deleter)(capacity,            \
-																		   allocator,           \
-																		   deleter);            \
-	})
 #define std_unique_ptr_from(T, ptr) StdUniquePtrIdentifier(T, from)(ptr)
-#define std_unique_ptr_from_with_deleter(T, ptr, deleter) \
-	StdUniquePtrIdentifier(T, from_with_deleter)(ptr, deleter)
 #define std_unique_ptr_from_with_allocator(T, ptr, allocator) \
 	StdUniquePtrIdentifier(T, from_with_allocator)(ptr, allocator)
-#define std_unique_ptr_from_with_allocator_and_deleter(T, ptr, allocator, deleter) \
-	StdUniquePtrIdentifier(T, from_with_allocator_and_deleter)(ptr, allocator, deleter)
 
 #define std_unique_ptr_free(T, self) StdUniquePtrIdentifier(T, free)(static_cast(void*)(&(self)))
 
@@ -143,7 +106,7 @@
 
 #define __std_unique_ptr_at_const(self, index)                                     \
 	({                                                                             \
-		std_static_assert(__UNIQUE_PTR_CHECK_IS_ARRAY(self),                       \
+		std_static_assert(__UNIQUE_PTR_CHECK_INSTANCE_IS_ARRAY(self),              \
 						  "std_unique_ptr_at_const is only available if UNIQUE_T " \
 						  "is an array type");                                     \
 		&(((self).m_ptr)[index]);                                                  \
@@ -153,73 +116,41 @@
 
 #define __std_unique_ptr_at_mut(self, index)                                 \
 	({                                                                       \
-		std_static_assert(__UNIQUE_PTR_CHECK_IS_ARRAY(self),                 \
+		std_static_assert(__UNIQUE_PTR_CHECK_INSTANCE_IS_ARRAY(self),        \
 						  "std_unique_ptr_at is only available if UNIQUE_T " \
 						  "is an array type");                               \
 		&(((self).m_ptr)[index]);                                            \
 	})
 
-#define ptr(self) ((self).m_ptr)
-
 #define std_make_unique(T, ...)                                                                 \
 	({                                                                                          \
-		std_static_assert(!__UNIQUE_PTR_CHECK_IS_ARRAY((StdUniquePtr(T)){0}),                   \
+		std_static_assert(!__UNIQUE_PTR_CHECK_INSTANCE_IS_ARRAY((StdUniquePtr(T)){0}),          \
 						  "std_make_unique is only available for Ts that are not array types"); \
-		let_mut UNIQUE_VAR(ptr)                                                                 \
-			= static_cast(T*)(std_allocator_allocate_t(T, DEFAULT_ALLOCATOR).m_memory);         \
+		let_mut UNIQUE_VAR(ptr) = std_allocator_allocate_t(T, DEFAULT_ALLOCATOR);               \
 		*UNIQUE_VAR(ptr) = (T){__VA_ARGS__};                                                    \
 		std_unique_ptr_from(T, UNIQUE_VAR(ptr));                                                \
-	})
-#define std_make_unique_with_deleter(T, deleter, ...)                                          \
-	({                                                                                         \
-		std_static_assert(                                                                     \
-			!__UNIQUE_PTR_CHECK_IS_ARRAY((StdUniquePtr(T)){0}),                                \
-			"std_make_unique_with_deleter is only available for Ts that are not array types"); \
-		let_mut UNIQUE_VAR(ptr)                                                                \
-			= static_cast(T*)(std_allocator_allocate_t(T, DEFAULT_ALLOCATOR).m_memory);        \
-		*UNIQUE_VAR(ptr) = (T){__VA_ARGS__};                                                   \
-		std_unique_ptr_from_with_deleter(T, UNIQUE_VAR(ptr), deleter);                         \
 	})
 #define std_make_unique_with_allocator(T, allocator, ...)                                        \
 	({                                                                                           \
 		std_static_assert(                                                                       \
-			!__UNIQUE_PTR_CHECK_IS_ARRAY((StdUniquePtr(T)){0}),                                  \
+			!__UNIQUE_PTR_CHECK_INSTANCE_IS_ARRAY((StdUniquePtr(T)){0}),                         \
 			"std_make_unique_with_allocator is only available for Ts that are not array types"); \
-		let_mut UNIQUE_VAR(ptr)                                                                  \
-			= static_cast(T*)(std_allocator_allocate_t(T, allocator).m_memory);                  \
+		let_mut UNIQUE_VAR(ptr) = std_allocator_allocate_t(T, allocator);                        \
 		*UNIQUE_VAR(ptr) = (T){__VA_ARGS__};                                                     \
 		std_unique_ptr_from_with_allocator(T, UNIQUE_VAR(ptr), allocator);                       \
-	})
-#define std_make_unique_with_allocator_and_deleter(T, allocator, deleter, ...)                   \
-	({                                                                                           \
-		std_static_assert(                                                                       \
-			!__UNIQUE_PTR_CHECK_IS_ARRAY((StdUniquePtr(T)){0}),                                  \
-			"std_make_unique_with_allocator is only available for Ts that are not array types"); \
-		let_mut UNIQUE_VAR(ptr)                                                                  \
-			= static_cast(T*)(std_allocator_allocate_t(T, allocator).m_memory);                  \
-		*UNIQUE_VAR(ptr) = (T){__VA_ARGS__};                                                     \
-		std_unique_ptr_from_with_allocator_and_deleter(T, UNIQUE_VAR(ptr), allocator, deleter);  \
 	})
 
 #define unique_scoped(T) scoped(StdUniquePtrIdentifier(T, free))
 
-#define __UNIQUE_PTR_CHECK_IS_ARRAY(self) \
-	(!(std_types_equal_v(typeof(*((self).m_ptr)), (typeof(*((self).m_type))){0})))
-#define __UNIQUE_PTR_IS_ARRAY				(!(std_types_equal_v(typeof((UNIQUE_T){0}), *(&(UNIQUE_T){0}))))
-#define __UNIQUE_PTR_IS_ARRAY_GENERIC(T)	(!(std_types_equal_v(typeof((T){0}), *(&(T){0}))))
-#define __UNIQUE_PTR_ELEMENT_PTR_BASE		((UNIQUE_T){0}, (UNIQUE_T){1})
-#define __UNIQUE_PTR_CONST_ELEMENT_PTR_BASE ((const UNIQUE_T){0}, (const UNIQUE_T){1})
+#include <C2nxt/std_smart_ptrs/StdSmartPtrDef.h>
 
-// clang-format off
-#define __UNIQUE_PTR_ELEMENT_PTR 												\
-		typeof(_Generic(((UNIQUE_T){0}),								\
-			typeof(*(&(UNIQUE_T){0})) 	: &(UNIQUE_T){0},    			\
-			default					  	: __UNIQUE_PTR_ELEMENT_PTR_BASE))
-#define __UNIQUE_PTR_CONST_ELEMENT_PTR 												\
-	typeof(_Generic(((UNIQUE_T){0}),								\
-		typeof(*(&(UNIQUE_T){0})) 	: &(const UNIQUE_T){0},    			\
-		default					  	: __UNIQUE_PTR_CONST_ELEMENT_PTR_BASE))
-// clang-format on
+#define __UNIQUE_PTR_CHECK_INSTANCE_IS_ARRAY(self) __SMART_PTR_CHECK_INSTANCE_IS_ARRAY(self)
+#define __UNIQUE_PTR_IS_ARRAY					   __SMART_PTR_IS_ARRAY(UNIQUE_T)
+#define __UNIQUE_PTR_IS_ARRAY_GENERIC(T)		   __SMART_PTR_IS_ARRAY(T)
+#define __UNIQUE_PTR_ELEMENT_PTR_BASE			   __SMART_PTR_ELEMENT_PTR_BASE(UNIQUE_T)
+#define __UNIQUE_PTR_CONST_ELEMENT_PTR_BASE		   __SMART_PTR_CONST_ELEMENT_PTR_BASE(UNIQUE_T)
+#define __UNIQUE_PTR_ELEMENT_PTR				   __SMART_PTR_ELEMENT_PTR(UNIQUE_T)
+#define __UNIQUE_PTR_CONST_ELEMENT_PTR			   __SMART_PTR_ELEMENT_PTR(UNIQUE_T)
+#define __UNIQUE_PTR_ELEMENT					   __SMART_PTR_ELEMENT(UNIQUE_T)
 
-#define __UNIQUE_PTR_ELEMENT typeof(*((__UNIQUE_PTR_ELEMENT_PTR){0}))
 #endif // STD_UNIQUE_PTR_DEF
