@@ -1,0 +1,14 @@
+Index:
+  Background: Build
+Style:
+  FullyQualifiedNamespaces: ['std']
+Diagnostics:
+  UnusedIncludes: Strict
+Completion:
+  AllScopes: Yes
+InlayHints:
+  Enabled: Yes
+  ParameterNames: Yes
+  DeducedTypes: Yes
+Hover:
+  ShowAKA: Yes
