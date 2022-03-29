@@ -38,15 +38,6 @@
 	#include <C2nxt/StdTypeTraits.h>
 	#include <C2nxt/std_unique_ptr/StdUniquePtrDef.h>
 
-	#if STD_PLATFORM_COMPILER_GCC
-		#define IGNORE_NONNULL_COMPARE_WARNING_START \
-			_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wnonnull-compare\"")
-		#define IGNORE_NONNULL_COMPARE_WARNING_STOP _Pragma("GCC diagnostic pop")
-	#else
-		#define IGNORE_NONNULL_COMPARE_WARNING_START
-		#define IGNORE_NONNULL_COMPARE_WARNING_STOP
-	#endif
-
 [[always_inline]] static inline void
 StdUniquePtrIdentifier(UNIQUE_T, default_deleter)(__UNIQUE_PTR_ELEMENT_PTR restrict ptr,
 												  StdAllocator allocator) {
