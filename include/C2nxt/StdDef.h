@@ -87,8 +87,8 @@
 /// @return the type of the expression
 /// @ingroup std_def
 #define typeof(value) __typeof__(value)
-#if defined(__has_attribute)
-	#if __has_attribute(diagnose_if) || STD_PLATFORM_COMPILER_CLANG
+#if defined(__has_c_attribute)
+	#if __has_c_attribute(diagnose_if) || STD_PLATFORM_COMPILER_CLANG
 		/// @brief Disables the preceding/following function at compile-time
 		///
 		/// Forces a compiler error with the given message if the associated function is called.
@@ -385,6 +385,27 @@
 /// @ingroup std_def
 #define returns_not_null gnu::returns_nonnull
 
+/// @def nodiscard
+/// @brief Attribute to specify that the return value of the tagged function should not be discarded
+///
+/// Example
+/// @code {.c}
+/// [[nodiscard]] my_important_return_type my_important_function(void);
+/// @endcode
+/// @ingroup std_def
+
+#if defined(__has_c_attribute)
+	#if __has_c_attribute(nodiscard)
+		#define nodiscard nodiscard
+	#elif __has_c_attribute(gnu::nodiscard)
+		#define nodiscard gnu::nodiscard
+	#else
+		#define nodiscard
+	#endif // __has_c_attribute(nodiscard)
+#else
+	#define nodiscard
+#endif // defined(__has_c_attribute)
+
 /// @brief Use this macro to declare a variable that will have a cleanup function called on it
 /// at scope end.
 ///
@@ -568,9 +589,11 @@
 	#define IGNORE_SWITCH_ENUM_WARNING_START
 	#define IGNORE_SWITCH_ENUM_WARNING_STOP
 
+	// clang-format off
 	#define IGNORE_DISCARDED_QUALIFIERS_START                            \
-		_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored " \
-											   "\"-Wdiscarded-qualifiers\"")
+		_Pragma("GCC diagnostic push")                                   \
+			_Pragma("GCC diagnostic ignored \"-Wdiscarded-qualifiers\"")
 	#define IGNORE_DISCARDED_QUALIFIERS_STOP _Pragma("GCC diagnostic pop")
+	// clang-format on
 #endif // STD_PLATFORM_COMPILER_CLANG
 #endif // STD_DEF

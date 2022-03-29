@@ -127,7 +127,8 @@ TEST(StdArray, erase) {
 	for(let_mut i = 0U; i < erase_index; ++i) {
 		TEST_ASSERT_EQUAL(std_array_at(array, i), static_cast(i32)(i));
 	}
-	for(let_mut i = erase_index; i < capacity - 1; ++i) {
+	// cast away const for GCC compat
+	for(let_mut i = const_cast(usize)(erase_index); i < capacity - 1; ++i) {
 		TEST_ASSERT_EQUAL(std_array_at(array, i), static_cast(i32)(i + 1));
 	}
 }
@@ -146,7 +147,8 @@ TEST(StdArray, erase_n) {
 	for(let_mut i = 0U; i < erase_index; ++i) {
 		TEST_ASSERT_EQUAL(std_array_at(array, i), static_cast(i32)(i));
 	}
-	for(let_mut i = erase_index; i < capacity - erase_length; ++i) {
+	// cast away const for GCC compat
+	for(let_mut i = const_cast(usize)(erase_index); i < capacity - erase_length; ++i) {
 		TEST_ASSERT_EQUAL(std_array_at(array, i), static_cast(i32)(i + erase_length));
 	}
 }

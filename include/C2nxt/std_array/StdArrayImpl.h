@@ -331,7 +331,8 @@ void StdArrayIdentifier(ARRAY_T, ARRAY_N, resize_internal)(StdArray(ARRAY_T,
 	else {
 		let old_size = self->m_size;
 		self->m_size = new_size;
-		for(let_mut i = old_size; i < new_size; ++i) {
+		// cast away const for GCC compat
+		for(let_mut i = const_cast(usize)(old_size); i < new_size; ++i) {
 			std_array_at_mut(*self, i) = self->m_data->m_constructor(self->m_allocator);
 		}
 	}

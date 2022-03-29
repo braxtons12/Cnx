@@ -462,8 +462,17 @@ StdString std_string_from_wcstring(restrict const_wcstring string, usize length)
 StdString std_string_from_wcstring_with_allocator(restrict const_wcstring string,
 												  usize length,
 												  StdAllocator allocator) {
-	let cstring_length = static_cast(usize)(snprintf(nullptr, length, "%ls", string));
-	let_mut std_string = std_string_new_with_capacity_with_allocator(cstring_length, allocator);
+#if STD_PLATFORM_COMPILER_GCC
+	_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wformat-truncation\"")
+#endif // STD_PLATFORM_COMPILER_GCC
+		let cstring_length
+		= static_cast(usize)(snprintf(nullptr, length, "%ls", string));
+#if STD_PLATFORM_COMPILER_GCC
+	_Pragma("GCC diagnostic pop")
+#endif // STD_PLATFORM_COMPILER_GCC
+
+		let_mut std_string
+		= std_string_new_with_capacity_with_allocator(cstring_length, allocator);
 	std_string_set_length(&std_string, cstring_length);
 	let_mut str = &(std_string_at(std_string, 0));
 	ignore(snprintf(str, length, "%ls", string));

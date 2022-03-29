@@ -20,3 +20,5 @@ __pycache__/
 /docs/xml/
 /cmake-build-debug-mingw/
 /cmake-build-release-mingw/
+/cmake-build-debug-gcc/
+/cmake-build-release-gcc/
