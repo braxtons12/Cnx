@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides the function definitions for a template instantiation of
 /// `StdVector(VECTOR_T)`
-/// @version 0.2.2
-/// @date 2022-03-21
+/// @version 0.2.3
+/// @date 2022-03-28
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -220,10 +220,9 @@ StdVector(VECTOR_T) StdVectorIdentifier(VECTOR_T, new_with_allocator_and_collect
 
 	#if VECTOR_SMALL_OPT_CAPACITY == 0
 
-	vec.m_long = static_cast(VECTOR_T*)(std_allocator_allocate_array_t(VECTOR_T,
-																	   vec.m_data.m_allocator,
-																	   VECTOR_DEFAULT_LONG_CAPACITY)
-											.m_memory);
+	vec.m_long = std_allocator_allocate_array_t(VECTOR_T,
+												vec.m_data.m_allocator,
+												VECTOR_DEFAULT_LONG_CAPACITY);
 	vec.m_capacity = VECTOR_DEFAULT_LONG_CAPACITY;
 
 	#else
@@ -367,14 +366,13 @@ void StdVectorIdentifier(VECTOR_T, resize_internal)(StdVector(VECTOR_T) * restri
 		}
 	}
 	if(new_size > VECTOR_SMALL_OPT_CAPACITY) {
-		let_mut array = static_cast(VECTOR_T*)(
-			std_allocator_allocate_array_t(VECTOR_T, self->m_allocator, new_size).m_memory);
+		let_mut array = std_allocator_allocate_array_t(VECTOR_T, self->m_allocator, new_size);
 		let num_to_copy = size < new_size ? size : new_size;
 		std_memcpy(VECTOR_T, array, &std_vector_at_mut(*self, 0), num_to_copy);
 		if(!StdVectorIdentifier(VECTOR_T, is_short)(self)) {
 			let_mut ptr = self->m_long;
 			self->m_long = nullptr;
-			std_allocator_deallocate_array_t(VECTOR_T, self->m_allocator, ptr, self->m_capacity);
+			std_allocator_deallocate(self->m_allocator, ptr);
 		}
 		self->m_capacity = new_size;
 		self->m_size = num_to_copy;
@@ -382,15 +380,11 @@ void StdVectorIdentifier(VECTOR_T, resize_internal)(StdVector(VECTOR_T) * restri
 	}
 	else if(self->m_capacity != VECTOR_SMALL_OPT_CAPACITY && VECTOR_SMALL_OPT_CAPACITY != 0) {
 		let capacity = VECTOR_SMALL_OPT_CAPACITY;
-		let_mut array = static_cast(VECTOR_T*)(
-			std_allocator_allocate_array_t(VECTOR_T, self->m_allocator, capacity).m_memory);
+		let_mut array = std_allocator_allocate_array_t(VECTOR_T, self->m_allocator, capacity);
 		std_memcpy(VECTOR_T, array, self->m_long, capacity);
-		std_allocator_deallocate_array_t(VECTOR_T,
-										 self->m_allocator,
-										 self->m_long,
-										 self->m_capacity);
+		std_allocator_deallocate(self->m_allocator, self->m_long);
 		std_memcpy(VECTOR_T, self->m_short, array, capacity);
-		std_allocator_deallocate_array_t(VECTOR_T, self->m_allocator, array, capacity);
+		std_allocator_deallocate(self->m_allocator, array);
 		self->m_size = capacity;
 		self->m_capacity = capacity;
 	}
@@ -531,10 +525,7 @@ void StdVectorIdentifier(VECTOR_T, free)(void* restrict self) {
 	}
 
 	if(!StdVectorIdentifier(VECTOR_T, is_short)(self_)) {
-		std_allocator_deallocate_array_t(VECTOR_T,
-										 self_->m_allocator,
-										 self_->m_long,
-										 self_->m_capacity);
+		std_allocator_deallocate(self_->m_allocator, self_->m_long);
 		self_->m_capacity = VECTOR_SMALL_OPT_CAPACITY;
 	}
 	self_->m_size = 0U;

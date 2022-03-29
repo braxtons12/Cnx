@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief StdAllocators provides an abstraction to modularize custom memory allocators to make
 /// custom allocator use simple and configurable
-/// @version 0.2
-/// @date 2022-03-06
+/// @version 0.2.1
+/// @date 2022-03-28
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -54,42 +54,47 @@ StdAllocator std_allocator_new(void) {
 	return DEFAULT_ALLOCATOR;
 }
 
-StdMemory std_allocator_allocate(StdAllocator allocator, usize size_bytes) {
+void* std_allocator_allocate(StdAllocator allocator, usize size_bytes) {
 	let_mut mem = trait_call(allocate, allocator, size_bytes);
 
 	if(mem != nullptr) {
 		memset(mem, 0, size_bytes);
-		return (StdMemory){.m_memory = mem, .m_size_bytes = size_bytes};
+		return mem;
 	}
 	else {
 #if STD_ALLOCATOR_ABORT_ON_ALLOCATION_FAILURE == 1
 		ignore(fprintf(stderr, "Failed to allocate %zu bytes of memory, aborting\n", size_bytes));
 		abort();
 #else
-		return (StdMemory){.m_memory = nullptr, .m_size_bytes = 0};
+		return nullptr;
 #endif // STD_ALLOCATOR_ABORT_ON_ALLOCATION_FAILURE
 	}
 }
 
-StdMemory
-std_allocator_allocate_array(StdAllocator allocator, usize num_elements, usize element_size_bytes) {
+void* std_allocator_allocate_array(StdAllocator allocator,
+								   usize num_elements,
+								   usize element_size_bytes) {
 	return std_allocator_allocate(allocator, num_elements * element_size_bytes);
 }
 
-StdMemory std_allocator_reallocate(StdAllocator allocator, StdMemory memory, usize new_size_bytes) {
-	let_mut mem = trait_call(reallocate, allocator, memory.m_memory, new_size_bytes);
+void* std_allocator_reallocate(StdAllocator allocator,
+							   void* memory,
+							   // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
+							   usize old_size_bytes,
+							   usize new_size_bytes) {
+	let_mut mem = trait_call(reallocate, allocator, memory, new_size_bytes);
 
 	if(mem != nullptr) {
-		if(mem != memory.m_memory) {
-			memcpy(mem, memory.m_memory, std_min(new_size_bytes, memory.m_size_bytes));
+		if(mem != memory) {
+			memcpy(mem, memory, std_min(new_size_bytes, old_size_bytes));
 		}
-		return (StdMemory){.m_memory = mem, .m_size_bytes = new_size_bytes};
+		return mem;
 	}
 	else {
 		let_mut retry = trait_call(allocate, allocator, new_size_bytes);
 		if(retry != nullptr) {
-			memcpy(retry, memory.m_memory, std_min(new_size_bytes, memory.m_size_bytes));
-			return (StdMemory){.m_memory = retry, .m_size_bytes = new_size_bytes};
+			memcpy(retry, memory, std_min(new_size_bytes, old_size_bytes));
+			return mem;
 		}
 
 #if STD_ALLOCATOR_ABORT_ON_ALLOCATION_FAILURE
@@ -103,13 +108,17 @@ StdMemory std_allocator_reallocate(StdAllocator allocator, StdMemory memory, usi
 	}
 }
 
-StdMemory std_allocator_reallocate_array(StdAllocator allocator,
-										 StdMemory memory,
-										 usize new_num_elements,
-										 usize element_size_bytes) {
-	return std_allocator_reallocate(allocator, memory, new_num_elements * element_size_bytes);
+void* std_allocator_reallocate_array(StdAllocator allocator,
+									 void* memory,
+									 usize old_num_elements,
+									 usize new_num_elements,
+									 usize element_size_bytes) {
+	return std_allocator_reallocate(allocator,
+									memory,
+									old_num_elements * element_size_bytes,
+									new_num_elements * element_size_bytes);
 }
 
-void std_allocator_deallocate(StdAllocator allocator, StdMemory memory) {
-	trait_call(deallocate, allocator, memory.m_memory);
+void std_allocator_deallocate(StdAllocator allocator, void* memory) {
+	trait_call(deallocate, allocator, memory);
 }

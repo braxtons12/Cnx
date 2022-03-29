@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief StdAllocators provides an abstraction to modularize custom memory allocators to make
 /// custom allocator use simple and configurable
-/// @version 0.2.1
-/// @date 2022-03-09
+/// @version 0.2.2
+/// @date 2022-03-28
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -140,15 +140,6 @@ std_deallocate([[maybe_unused]] StdAllocator* restrict self, void* memory)
 typedef struct StdStatelessAllocator {
 } StdStatelessAllocator;
 
-/// @brief `StdMemory` is a basic wrapper for passing chunks of allocated memory
-/// @ingroup memory
-typedef struct StdMemory {
-	/// @brief `StdAllocator` allocated memory
-	void* m_memory;
-	/// @brief the size of the memory, in bytes
-	usize m_size_bytes;
-} StdMemory;
-
 /// @brief Creates a new `StdAllocator` with the default allocation and default deallocation
 /// functions
 ///
@@ -222,7 +213,7 @@ extern const StdAllocator DEFAULT_ALLOCATOR;
 ///
 /// @return  newly allocated memory
 /// @ingroup memory
-[[nodiscard]] StdMemory std_allocator_allocate(StdAllocator allocator, usize size_bytes);
+[[nodiscard]] void* std_allocator_allocate(StdAllocator allocator, usize size_bytes);
 /// @brief Allocates new memory for an array of the
 /// given size with the given `StdAllocator`
 ///
@@ -235,7 +226,7 @@ extern const StdAllocator DEFAULT_ALLOCATOR;
 ///
 /// @return newly allocated memory
 /// @ingroup memory
-[[nodiscard]] StdMemory
+[[nodiscard]] void*
 std_allocator_allocate_array(StdAllocator allocator, usize num_elements, usize element_size_bytes);
 /// @brief Allocates new memory large enough to
 /// store `new_size_bytes` bytes of data, and
@@ -251,8 +242,10 @@ std_allocator_allocate_array(StdAllocator allocator, usize num_elements, usize e
 /// @note If reallocation fails, the original
 /// memory will be returned unchanged
 /// @ingroup memory
-[[nodiscard]] StdMemory
-std_allocator_reallocate(StdAllocator allocator, StdMemory memory, usize new_size_bytes);
+[[nodiscard]] void* std_allocator_reallocate(StdAllocator allocator,
+											 void* memory,
+											 usize old_size_bytes,
+											 usize new_size_bytes);
 /// @brief Allocates new memory large enough to
 /// store `new_num_elements` elements of size
 /// `element_size_bytes`, and copies the old
@@ -270,10 +263,11 @@ std_allocator_reallocate(StdAllocator allocator, StdMemory memory, usize new_siz
 /// @note If reallocation fails, the original
 /// memory will be returned unchanged
 /// @ingroup memory
-[[nodiscard]] StdMemory std_allocator_reallocate_array(StdAllocator allocator,
-													   StdMemory memory,
-													   usize new_num_elements,
-													   usize element_size_bytes);
+[[nodiscard]] void* std_allocator_reallocate_array(StdAllocator allocator,
+												   void* memory,
+												   usize old_num_elements,
+												   usize new_num_elements,
+												   usize element_size_bytes);
 /// @brief Deallocates (aka frees) the given memory
 /// with the given `StdAllocator`
 ///
@@ -285,7 +279,7 @@ std_allocator_reallocate(StdAllocator allocator, StdMemory memory, usize new_siz
 /// with an allocator that did not allocate the
 /// given memory
 /// @ingroup memory
-void std_allocator_deallocate(StdAllocator allocator, StdMemory memory);
+void std_allocator_deallocate(StdAllocator allocator, void* memory);
 
 /// @brief Allocates enough new memory to store
 /// a type `T` with the given `StdAllocator`
@@ -296,7 +290,8 @@ void std_allocator_deallocate(StdAllocator allocator, StdMemory memory);
 ///
 /// @return  newly allocated memory
 /// @ingroup memory
-	#define std_allocator_allocate_t(T, allocator) std_allocator_allocate(allocator, sizeof(T))
+	#define std_allocator_allocate_t(T, allocator) \
+		static_cast(T*)(std_allocator_allocate(allocator, sizeof(T)))
 
 /// @brief Allocates enough new memory to store
 /// an array of `num_elements` of type `T` with
@@ -311,7 +306,7 @@ void std_allocator_deallocate(StdAllocator allocator, StdMemory memory);
 /// @return  newly allocated memory
 /// @ingroup memory
 	#define std_allocator_allocate_array_t(T, allocator, num_elements) \
-		std_allocator_allocate_array(allocator, num_elements, sizeof(T))
+		static_cast(T*)(std_allocator_allocate_array(allocator, num_elements, sizeof(T)))
 
 /// @brief Allocates new memory large enough to
 /// store a `T`, and copies the old contents
@@ -320,15 +315,15 @@ void std_allocator_deallocate(StdAllocator allocator, StdMemory memory);
 /// @param T - The type to allocate memory for
 /// @param allocator - The `StdAllocator` to
 /// allocate memory with
-/// @param memory - The memory to be
+/// @param memory_ptr - The memory to be
 /// reallocated
 ///
 /// @return reallocated memory
 /// @note If reallocation fails, the original
 /// memory will be returned unchanged
 /// @ingroup memory
-	#define std_allocator_reallocate_t(T, allocator, memory) \
-		std_allocator_reallocate(allocator, memory, sizeof(T))
+	#define std_allocator_reallocate_t(T, allocator, memory_ptr) \
+		static_cast(T*)(std_allocator_reallocate(allocator, memory_ptr, sizeof(T), sizeof(T)))
 
 /// @brief Allocates new memory large enough to
 /// store `new_num_elements` elements of type
@@ -337,7 +332,7 @@ void std_allocator_deallocate(StdAllocator allocator, StdMemory memory);
 /// @param T - The type to allocate memory for
 /// @param allocator - The `StdAllocator` to
 /// allocate memory with
-/// @param memory - The memory to be
+/// @param memory_ptr - The memory to be
 /// reallocated
 /// @param new_num_elements - The desired new
 /// number of elements in the memory
@@ -346,41 +341,16 @@ void std_allocator_deallocate(StdAllocator allocator, StdMemory memory);
 /// @note If reallocation fails, the original
 /// memory will be returned unchanged
 /// @ingroup memory
-	#define std_allocator_reallocate_array_t(T, allocator, memory, new_num_elements) \
-		std_allocator_reallocate_array(allocator, memory, new_num_elements, sizeof(T))
-
-/// @brief Deallocates the memory at
-/// `data_ptr`, of type `T`, with the given
-/// `StdAllocator`
-///
-/// @param T - The type to deallocate memory
-/// for
-/// @param allocator - The `StdAllocator` to
-/// deallocate with
-/// @param data_ptr - The pointer to memory to
-/// deallocate
-/// @ingroup memory
-	#define std_allocator_deallocate_t(T, allocator, data_ptr) \
-		std_allocator_deallocate((allocator),                  \
-								 ((StdMemory){.m_memory = (data_ptr), .m_size_bytes = sizeof(T)}))
-
-/// @brief Deallocates the memory for an array
-/// of type `T`s at `data_ptr` of
-/// `num_elements` size
-///
-/// @param T - The type of elements stored in
-/// the array to deallocate
-/// @param allocator - The `StdAllocator` to
-/// deallocate with
-/// @param data_ptr - The pointer to memory to
-/// deallocate
-/// @param num_elements - The number of
-/// elements in the array to deallocate
-/// @ingroup memory
-	#define std_allocator_deallocate_array_t(T, allocator, data_ptr, num_elements) \
-		std_allocator_deallocate(                                                  \
-			(allocator),                                                           \
-			((StdMemory){.m_memory = (data_ptr), .m_size_bytes = sizeof(T) * (num_elements)}))
+	#define std_allocator_reallocate_array_t(T,                          \
+											 allocator,                  \
+											 memory_ptr,                 \
+											 old_num_elements,           \
+											 new_num_elements)           \
+		static_cast(T*)(std_allocator_reallocate_array(allocator,        \
+													   memory_ptr,       \
+													   old_num_elements, \
+													   new_num_elements, \
+													   sizeof(T)))
 
 /// @brief Copies memory containing an array of
 /// type `T` from `src_ptr` to `dst_ptr`

@@ -1,8 +1,8 @@
 /// @file StdString.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides string and stringview types comparable to C++ for C2nxt
-/// @version 0.1.2
-/// @date 2022-03-20
+/// @version 0.1.3
+/// @date 2022-03-28
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -436,8 +436,7 @@ StdString std_string_new_with_capacity_with_allocator(usize capacity, StdAllocat
 		std_string_set_long(&string);
 		std_string_set_capacity(&string, capacity);
 		std_string_set_length(&string, 0);
-		string.m_long = static_cast(cstring)(
-			std_allocator_allocate_array_t(char, string.m_allocator, capacity + 1).m_memory);
+		string.m_long = std_allocator_allocate_array_t(char, string.m_allocator, capacity + 1);
 	}
 
 	return string;
@@ -492,8 +491,7 @@ const_wcstring(std_string_into_wcstring_with_allocator)(const StdString* restric
 														StdAllocator allocator) {
 	let_mut string = std_string_into_cstring(*self);
 	let length = static_cast(usize)(swprintf(nullptr, std_string_length(*self), L"%s", string));
-	let_mut wstring = static_cast(wcstring)(
-		std_allocator_allocate_array_t(wchar_t, allocator, length).m_memory);
+	let_mut wstring = std_allocator_allocate_array_t(wchar_t, allocator, length);
 	ignore(swprintf(wstring, std_string_length(*self), L"%s", string));
 	return wstring;
 }
@@ -521,10 +519,9 @@ void(std_string_free)(void* restrict self) {
 	let self_ptr = static_cast(StdString*)(self);
 	if(!std_string_is_short(self_ptr)) {
 		let ptr = self_ptr->m_long;
-		let capacity = std_string_get_capacity(self_ptr);
 		std_string_set_short(self_ptr);
 		self_ptr->m_long = nullptr;
-		std_allocator_deallocate_array_t(char, self_ptr->m_allocator, ptr, capacity);
+		std_allocator_deallocate(self_ptr->m_allocator, ptr);
 	}
 }
 
@@ -599,8 +596,7 @@ StdString(std_string_first)(const StdString* restrict self, usize num_chars) {
 
 cstring(std_string_first_cstring)(const StdString* restrict self, usize num_chars) {
 	let num_to_copy = std_min(num_chars, std_string_length(*self));
-	let_mut string = static_cast(cstring)(
-		std_allocator_allocate_array_t(char, self->m_allocator, num_chars + 1).m_memory);
+	let_mut string = std_allocator_allocate_array_t(char, self->m_allocator, num_chars + 1);
 
 	std_memcpy(char, string, &std_string_at(*self, 0), num_to_copy);
 
@@ -628,8 +624,7 @@ cstring(std_string_last_cstring)(const StdString* restrict self, usize num_chars
 	let length = std_string_length(*self);
 	let num_to_copy = std_min(num_chars, length);
 	let start_index = num_chars >= length ? 0 : (length - num_chars);
-	let_mut string = static_cast(cstring)(
-		std_allocator_allocate_array_t(char, self->m_allocator, num_chars + 1).m_memory);
+	let_mut string = std_allocator_allocate_array_t(char, self->m_allocator, num_chars + 1);
 
 	std_memcpy(char, string, &std_string_at(*self, start_index), num_to_copy);
 
@@ -1210,17 +1205,13 @@ void std_string_resize_internal(StdString* restrict self, usize new_size) {
 		std_memset(char, &std_string_at(*self, new_size), 0, num_to_erase);
 	}
 	if(new_size > STD_STRING_SHORT_OPTIMIZATION_CAPACITY) {
-		let_mut string = static_cast(cstring)(
-			std_allocator_allocate_array_t(char, self->m_allocator, new_size).m_memory);
+		let_mut string = std_allocator_allocate_array_t(char, self->m_allocator, new_size);
 		let num_to_copy = std_min(length, new_size);
 		std_memcpy(char, string, &std_string_at(*self, 0), num_to_copy);
 		if(!std_string_is_short(self)) {
 			let_mut ptr = self->m_long;
 			self->m_long = nullptr;
-			std_allocator_deallocate_array_t(char,
-											 self->m_allocator,
-											 ptr,
-											 std_string_capacity(*self));
+			std_allocator_deallocate(self->m_allocator, ptr);
 		}
 		std_string_set_long(self);
 		std_string_set_capacity(self, new_size - 1);
@@ -1229,15 +1220,11 @@ void std_string_resize_internal(StdString* restrict self, usize new_size) {
 	}
 	else if(std_string_capacity(*self) != STD_STRING_SHORT_OPTIMIZATION_CAPACITY) {
 		let capacity = STD_STRING_SHORT_OPTIMIZATION_CAPACITY + 1;
-		let_mut string = static_cast(cstring)(
-			std_allocator_allocate_array_t(char, self->m_allocator, capacity).m_memory);
+		let_mut string = std_allocator_allocate_array_t(char, self->m_allocator, capacity);
 		std_memcpy(char, string, self->m_long, capacity);
-		std_allocator_deallocate(
-			self->m_allocator,
-			(StdMemory){.m_memory = self->m_long, .m_size_bytes = self->m_capacity});
+		std_allocator_deallocate(self->m_allocator, self->m_long);
 		std_memcpy(char, self->m_short, string, capacity);
-		std_allocator_deallocate(self->m_allocator,
-								 (StdMemory){.m_memory = string, .m_size_bytes = capacity});
+		std_allocator_deallocate(self->m_allocator, string);
 		std_string_set_short(self);
 		std_string_set_length(self, capacity - 1);
 		// std_string_set_capacity(self, capacity - 1);
