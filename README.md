@@ -19,7 +19,7 @@ Some features of C2nxt include:
 - Human-readable (no more having to remember which character combination corresonds to which type
   in `printf`), type-safe string formatting and formatted I/O via the `StdFormat` Trait
 
-##### Why not standard C?<br>
+##### Why not standard C?
 
 C2nxt makes heavy use of `__auto_type` and some of its features are only possible with it. It also
 uses statement-expressions for several features and `__attribute__(cleanup)` for scoped destruction.
