@@ -50,7 +50,7 @@
 /// e.g.: ```typedef int int_arr[];```, and the typedef provided as the `UNIQUE_T` template
 /// parameter.
 ///
-/// #Instantiation Requirements:
+/// # Instantiation Requirements:
 ///
 /// 1. a `typedef` of your type to to provide an alphanumeric name for it (so it can be used in
 /// template and macro parameters)
@@ -64,7 +64,7 @@
 /// We recommend option two for all other circumstances, so that users don't pay the price
 /// (compile time, and potentially code size) of template instantiations if they don't use them.
 ///
-/// ##Instantiation Mode Parameters
+/// ## Instantiation Mode Parameters
 ///
 /// These signal to the implementation to instantiation the declarations, definitions, or both, for
 /// the template.
@@ -81,7 +81,7 @@
 /// functions. Failing to complete this instantiation-mode exactly once in exactly one translation
 /// unit in your build will cause linking errors due to missing or multiply defined functions.
 ///
-/// ##Template Parameters
+/// ## Template Parameters
 ///
 /// These provide the type or value parameters that the template is parameterized on to the template
 /// implementation. These should be `#define`d to their appropriate types/values.
