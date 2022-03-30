@@ -55,7 +55,7 @@
             </li>
           </ul>
         </nav>
-<p><code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> is a struct template for a type-safe fixed-capacity, dynamic-size, stack allocated array type. <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> is bounds safe, allocator aware, and provides C2nxt compatible random access iterators. It supports used-defined default-constructors, copy-constructors, and destructors for its elements. It&#x27;s design is based around C++&#x27;s <code>std::array</code>, but with slightly different semantics and functionality.</p><p>Because of its size, <code>N</code>, template parameter, instantiations of <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> for builtins or any C2nxt types are <strong>not</strong> provided, and will have to be instantiated by the user. The requirements are similar to <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, and requires minimal boiler-plate:</p><ol><li>a <code>typedef</code> of your type to provide an alphanumeric name for it. (for template and macro parameters)</li><li>a <code>typedef</code> for pointer to your type as <code><a href="group__std__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(YourTuple)</a>, for use with the iterators</code></li><li><code>a</code>typedef<code>for pointer to const your type as</code><a href="group__std__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(YourType)</a>`, for use with the iterators</li><li>Instantiations for C2nxt iterators for the typedefs provided in (2) and (3) (already instantiated for builtins and <code><a href="structStdString.html" class="m-doc">StdString</a></code>)</li><li>Instantiation of <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> for your type (already instantiated for builtins and <code><a href="structStdString.html" class="m-doc">StdString</a></code>)</li></ol><p>For <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> we recommend you provide the instantiation for user-define types in a separate &quot;template instantiation&quot; .h/.c file pair, but you can also provide them inline with your type like discussed in <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>&#x27;s documentation.</p><aside class="m-note m-default"><h4>See also</h4><p><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector</a></p></aside><p>Example:</p><pre class="m-code"><span class="c1">// in `YourType.h`</span>
+<p><code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> is a struct template for a type-safe fixed-capacity, dynamic-size, stack allocated array type. <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> is bounds safe, allocator aware, and provides C2nxt compatible random access iterators. It supports user-defined default-constructors, copy-constructors, and destructors for its elements. It&#x27;s design is similar to C++&#x27;s <code>std::array</code>, but with expanded semantics and functionality.</p><p>Because of its size, <code>N</code>, template parameter, instantiations of <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> for builtins or any C2nxt types are <strong>not</strong> provided, and will have to be instantiated by the user. The requirements are similar to <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, and requires minimal boiler-plate:</p><ol><li>a <code>typedef</code> of your type to provide an alphanumeric name for it. (for template and macro parameters)</li><li>a <code>typedef</code> for pointer to your type as <code><a href="group__std__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(YourType)</a>, for use with the iterators</code></li><li><code>a</code>typedef<code>for pointer to const your type as</code><a href="group__std__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(YourType)</a>`, for use with the iterators</li><li>Instantiations for C2nxt iterators for the typedefs provided in (2) and (3) (already instantiated for builtins and <code><a href="structStdString.html" class="m-doc">StdString</a></code>)</li><li>Instantiation of <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> for your type (already instantiated for builtins and <code><a href="structStdString.html" class="m-doc">StdString</a></code>)</li></ol><p>For <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> we recommend you provide the instantiation for user-defined types in a separate &quot;template instantiation&quot; .h/.c file pair, but you can also provide them inline with your type like discussed in <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>&#x27;s documentation.</p><aside class="m-note m-default"><h4>See also</h4><p><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector</a></p></aside><p>Example:</p><pre class="m-code"><span class="c1">// in `YourType.h`</span>
 <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">YourType</span> <span class="p">{</span>
     <span class="c1">// members</span>
 <span class="p">}</span> <span class="n">YourType</span><span class="p">;</span>
@@ -68,21 +68,44 @@
 <span class="c1">// the rest of your public interface</span>
 
 <span class="c1">// in `StdOptionYourType.h`</span>
+<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdDef.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;YourType.h&quot;</span><span class="cp"></span>
-<span class="n">DeclStdOption</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+<span class="cp">#define OPTION_T YourType</span>
+<span class="cp">#define OPTION_DECL TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdOption.h&gt;</span><span class="cp"></span>
+<span class="cp">#undef OPTION_T</span>
+<span class="cp">#undef OPTION_DECL</span>
 
 <span class="c1">// in `StdOptionYourType.c`</span>
 <span class="cp">#include</span> <span class="cpf">&quot;StdOptionYourType.h&quot;</span><span class="cp"></span>
-<span class="n">ImplStdOption</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+<span class="cp">#define OPTION_T YourType</span>
+<span class="cp">#define OPTION_IMPL TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdOption.h&gt;</span><span class="cp"></span>
+<span class="cp">#undef OPTION_T</span>
+<span class="cp">#undef OPTION_IMPL</span>
 
 <span class="c1">// in `StdArrayYourTypeYourN.h&quot;</span>
 <span class="cp">#include</span> <span class="cpf">&quot;YourType.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;StdOptionYourType.h&quot;</span><span class="cp"></span>
-<span class="n">DeclStdArray</span><span class="p">(</span><span class="n">YourType</span><span class="p">,</span> <span class="n">YourN</span><span class="p">);</span>
+
+<span class="cp">#define ARRAY_T YourType</span>
+<span class="cp">#define ARRAY_N YourN</span>
+<span class="cp">#define ARRAY_DECL TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdArray.h&gt;</span><span class="cp"></span>
+<span class="cp">#undef ARRAY_T</span>
+<span class="cp">#undef ARRAY_N</span>
+<span class="cp">#undef ARRAY_DECL</span>
 
 <span class="c1">// in `StdArrayYourTypeYourN.c`</span>
 <span class="cp">#include</span> <span class="cpf">&quot;StdArrayYourTypeYourN.h&quot;</span><span class="cp"></span>
-<span class="n">ImplStdArray</span><span class="p">(</span><span class="n">YourType</span><span class="p">,</span> <span class="n">YourN</span><span class="p">);</span></pre><p>The, somewhere else in your codebase, you can easily use the instantiation:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&quot;YourType.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#define ARRAY_T YourType</span>
+<span class="cp">#define ARRAY_N YourN</span>
+<span class="cp">#define ARRAY_IMPL TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdArray.h&gt;</span><span class="cp"></span>
+<span class="cp">#undef ARRAY_T</span>
+<span class="cp">#undef ARRAY_N</span>
+<span class="cp">#undef ARRAY_IMPL</span></pre><p>The, somewhere else in your codebase, you can easily use the instantiation:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&quot;YourType.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;StdArrayYourT/ypeYourN.h&quot;</span><span class="cp"></span>
 
 <span class="n">StdArray</span><span class="p">(</span><span class="n">YourType</span><span class="p">,</span> <span class="n">YourN</span><span class="p">)</span> <span class="n">create_and_fill_your_type_array</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
@@ -94,7 +117,7 @@
 <span class="p">}</span></pre><p><code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> implements <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code>, but because of its generic type, can&#x27;t be automatically converted to its <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation, so we have to cast to it explicitly:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&quot;C2nxt/StdIO.h&quot;</span><span class="cp"></span>
 <span class="kt">void</span> <span class="nf">print_array</span><span class="p">(</span><span class="k">const</span> <span class="n">StdArray</span><span class="p">(</span><span class="n">YourType</span><span class="p">,</span> <span class="n">YourN</span><span class="p">)</span><span class="o">*</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">as_format_t</span><span class="p">(</span><span class="n">StdArray</span><span class="p">(</span><span class="n">YourType</span><span class="p">,</span> <span class="n">YourN</span><span class="p">),</span> <span class="o">*</span><span class="n">array</span><span class="p">);</span>
-<span class="p">}</span></pre><p>You can provide user-defined default-constructor, copy-constructor, and/or destructor for elements of your type, and custom allocator for memory allocations they might need to perform (<code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> is always stack allocated, so the memory allocator is <strong>only</strong> for constructor and destructor functions for your type)</p><pre class="m-code"><span class="n">YourType</span> <span class="nf">your_type_constructor</span><span class="p">(</span><span class="n">StdAllocator</span> <span class="n">allocator</span><span class="p">)</span> <span class="p">{</span>
+<span class="p">}</span></pre><aside class="m-note m-info"><h4>Note</h4><p><code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code>&#x27;s <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation will always be a debug representation, eg: &quot;[size: X, capacity: Y, data_ptr: Q]&quot;, and never a printout of contained elements</p></aside><p>You can provide user-defined default-constructor, copy-constructor, and destructor for elements of your type, and custom allocator for memory allocations they might need to perform. (<code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> is always stack allocated, so the memory allocator is <strong>only</strong> for constructor and destructor functions for your type)</p><pre class="m-code"><span class="n">YourType</span> <span class="nf">your_type_constructor</span><span class="p">(</span><span class="n">StdAllocator</span> <span class="n">allocator</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">let_mut</span> <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">YourType</span><span class="p">){</span><span class="mi">0</span><span class="p">};</span>
     <span class="c1">// whatever you need to do to init your type</span>
     <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
@@ -111,8 +134,13 @@
 <span class="p">}</span>
 
 <span class="n">StdArray</span><span class="p">(</span><span class="n">YourType</span><span class="p">,</span> <span class="n">YourN</span><span class="p">)</span> <span class="n">create_and_fill_your_type_array</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">let_mut</span> <span class="n">array</span> <span class="o">=</span> <span class="n">std_array_new_with_collection_data</span><span class="p">(</span><span class="n">YourType</span><span class="p">,</span>
+    <span class="n">let_mut</span> <span class="n">array</span> <span class="o">=</span> <span class="n">std_array_new_with_allocator_and_collection_data</span><span class="p">(</span><span class="n">YourType</span><span class="p">,</span>
                         <span class="n">YourN</span><span class="p">,</span>
+                        <span class="c1">// This `StdAllocator` will only be associated with this specific array,</span>
+                        <span class="c1">// not all `StdArray(YourType, YourN)`s</span>
+                        <span class="n">std_allocator_from_custom_stateless_allocator</span><span class="p">(</span><span class="n">your_malloc</span><span class="p">,</span>
+                                                                      <span class="n">your_realloc</span><span class="p">,</span>
+                                                                      <span class="n">your_free</span><span class="p">),</span>
                         <span class="c1">// This `StdCollectionData(CollectionType)` will only be</span>
                         <span class="c1">// associated with this specific array, not all</span>
                         <span class="c1">// `StdArray(YourType, YourN)`s</span>
@@ -124,11 +152,6 @@
                             <span class="p">.</span><span class="n">m_copy_constructor</span> <span class="o">=</span> <span class="n">your_type_copy_constructor</span><span class="p">,</span>
                             <span class="c1">// can be left NULL, will be defaulted</span>
                             <span class="p">.</span><span class="n">m_destructor</span> <span class="o">=</span> <span class="n">your_type_destructor</span>
-                            <span class="c1">// must explicitly provide an allocator, even just the default one,</span>
-                            <span class="c1">// if providing user-defined collection data</span>
-                            <span class="p">.</span><span class="n">m_allocator</span> <span class="o">=</span> <span class="n">std_allocator_from_custom_allocator</span><span class="p">(</span>
-                                                <span class="n">your_malloc_func</span><span class="p">,</span>
-                                                <span class="n">your_free_func</span><span class="p">)</span>
                         <span class="p">})</span>
                     <span class="p">);</span>
 
@@ -137,7 +160,7 @@
 
     <span class="k">return</span> <span class="n">array</span><span class="p">;</span>
 <span class="p">}</span></pre><p><code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> also provides C2nxt random access iterators and optional scoped destruction:</p><pre class="m-code"><span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">let_mut</span> <span class="n">std_array_scoped</span><span class="p">(</span><span class="n">u32</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="n">array</span> <span class="o">=</span> <span class="n">std_array_new</span><span class="p">(</span><span class="n">u32</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+    <span class="n">std_array_scoped</span><span class="p">(</span><span class="n">u32</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="n">array</span> <span class="o">=</span> <span class="n">std_array_new</span><span class="p">(</span><span class="n">u32</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
     <span class="n">ranged_for</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">std_array_push_back</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
     <span class="p">}</span>
@@ -161,19 +184,27 @@
             </dt>
             <dd>Macro alias for a <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> containing up to <code>N</code> <code>T</code>s.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gaf603ffb96f7a6ce96e76d14515e517b8" class="m-doc">DeclStdArray</a>(</span><span class="m-doc-wrap">T,
-              N)</span>
-            </dt>
-            <dd>Use this macro to instantiate the declarations for <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> containing up to <code>N</code> <code>T</code>s. This provides the struct declarations and definitions and function declarations for <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code>.</dd>
-            <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#gac7d7220af04476c2c2b6fcf8ef326863" class="m-doc">std_array_new</a>(</span><span class="m-doc-wrap">T,
               N)</span>
             </dt>
             <dd>Creates a new <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> with defaulted associated functions.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gae0c06326801e2f0033572dd3da599032" class="m-doc">std_array_new_with_collection_data</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#ga06b46bc3f71c85f372be97453056253c" class="m-doc">std_array_new_with_allocator</a>(</span><span class="m-doc-wrap">T,
               N,
-              collection_data)</span>
+              allocator)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> with defaulted associated functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1eaa11c8922b4b8b73aef00cf6d155fe" class="m-doc">std_array_new_with_collection_data</a>(</span><span class="m-doc-wrap">T,
+              N,
+              collection_data_ptr)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> with provided associated functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga74d1f64c4bbb94569066b2295f0abf70" class="m-doc">std_array_new_with_allocator_and_collection_data</a>(</span><span class="m-doc-wrap">T,
+              N,
+              allocator,
+              collection_data_ptr)</span>
             </dt>
             <dd>Creates a new <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> with provided associated functions.</dd>
             <dt>
@@ -316,11 +347,6 @@
               N)</span>
             </dt>
             <dd>declare a <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> variable with this attribute to have <code>std_array_free</code> automatically called on it at scope end</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gadc6bdc2510324046d6a141c131ef8f02" class="m-doc">ImplStdArray</a>(</span><span class="m-doc-wrap">T,
-              N)</span>
-            </dt>
-            <dd>Use this macro to instantiate the definitions for a <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> of capacity <code>N</code> containing <code>T</code>s. This provides the function definitions for <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code>.</dd>
           </dl>
         </section>
         <section>
@@ -362,33 +388,10 @@
     <span class="p">}</span>
 <span class="p">}</span>
 <span class="c1">// `array2` is destroyed here because it was scoped</span>
-<span class="c1">// `array` is not destroyed</span></pre><p>The above example assumes that the <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> template has been instantiated for <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(i32, 10)</a></code> in &quot;StdArray_i32_10.h&quot; and an associated &quot;.c&quot; file. See <code><a href="group__std__array.html#gaf603ffb96f7a6ce96e76d14515e517b8" class="m-doc">DeclStdArray(T, N)</a></code>, <code><a href="group__std__array.html#gadc6bdc2510324046d6a141c131ef8f02" class="m-doc">ImplStdArray(T, N)</a></code>, and the module-level page for details</p><p>Like other C2nxt collections, <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> provides its type-agnostic usage through a vtable pointer contained in the struct, and provides macros which wrap the usage of the vtable, making access simpler. If you prefer to not use this method of access, you can call the typed functions directly by in-fixing the contained type in the associated function name. IE: for <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(i32, 10)</a></code>, and an array <code>array</code>, the equivalent function call for <code><a href="group__std__array.html#gaef6d22f27d5cbee3b7a2d190729a9aca" class="m-doc">std_<wbr />array_<wbr />push_<wbr />back(array, element)</a></code> would be <code>std_array_i32_10_push_back(&amp;array, element)</code></p><aside class="m-note m-info"><h4>Note</h4><p>Note, however, that using the typed functions instead of the macros results in losing the reference-semantics of function-macros like <code><a href="group__std__array.html#gaa5742f9934936a427e0fe68128043e5b" class="m-doc">std_<wbr />array_<wbr />at(self, index)</a></code> and will instead be dealing with pointers directly. Example:</p><pre class="m-code"><span class="c1">// instead of:</span>
+<span class="c1">// `array` is not destroyed</span></pre><p>The above example assumes that the <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> template has been instantiated for <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(i32, 10)</a></code> in &quot;StdArray_i32_10.h&quot; and an associated &quot;.c&quot; file. See <code>DeclStdArray(T, N)</code>, <code>ImplStdArray(T, N)</code>, and the module-level page for details</p><p>Like other C2nxt collections, <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> provides its type-agnostic usage through a vtable pointer contained in the struct, and provides macros which wrap the usage of the vtable, making access simpler. If you prefer to not use this method of access, you can call the typed functions directly by in-fixing the contained type in the associated function name. IE: for <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(i32, 10)</a></code>, and an array <code>array</code>, the equivalent function call for <code><a href="group__std__array.html#gaef6d22f27d5cbee3b7a2d190729a9aca" class="m-doc">std_<wbr />array_<wbr />push_<wbr />back(array, element)</a></code> would be <code>std_array_i32_10_push_back(&amp;array, element)</code></p><aside class="m-note m-info"><h4>Note</h4><p>Note, however, that using the typed functions instead of the macros results in losing the reference-semantics of function-macros like <code><a href="group__std__array.html#gaa5742f9934936a427e0fe68128043e5b" class="m-doc">std_<wbr />array_<wbr />at(self, index)</a></code> and will instead be dealing with pointers directly. Example:</p><pre class="m-code"><span class="c1">// instead of:</span>
 <span class="n">std_array_at_mut</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
 <span class="c1">// you would have to do:</span>
 <span class="o">*</span><span class="n">std_array_i32_10_at_mut</span><span class="p">(</span><span class="o">&amp;</span><span class="n">self</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span></pre></aside>
-          </div></section>
-          <section class="m-doc-details" id="gaf603ffb96f7a6ce96e76d14515e517b8"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gaf603ffb96f7a6ce96e76d14515e517b8" class="m-doc-self">DeclStdArray</a>(</span><span class="m-doc-wrap">T,
-              N)</span>
-            </h3>
-            <p>Use this macro to instantiate the declarations for <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> containing up to <code>N</code> <code>T</code>s. This provides the struct declarations and definitions and function declarations for <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code>.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">T</td>
-                  <td>- The element type of the <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> instantiation</td>
-                </tr>
-                <tr>
-                  <td>N</td>
-                  <td>- The capacity of the <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> instantiation</td>
-                </tr>
-              </tbody>
-            </table>
-<p>Requires that the following have been met prior to use:</p><ol><li>a <code>typedef</code> of your type to provide an alphanumeric name for it as <code>T</code></li><li>a <code>typedef</code> for pointer to your type as <code><a href="group__std__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(YourType)</a></code></li><li>a <code>typedef</code> for pointer to const your type as <code><a href="group__std__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(YourType)</a></code></li><li>Instantiations for C2nxt iterators for the typedefs provided in (2) and (3)</li><li>Instantiation of <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(YourType)</a></code>, via provided macros (See <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code>)</li></ol>
           </div></section>
           <section class="m-doc-details" id="gac7d7220af04476c2c2b6fcf8ef326863"><div>
             <h3>
@@ -419,11 +422,45 @@
             </table>
 <p>Creates a new <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> with:</p><ol><li>default associated element default-constructor,</li><li>default associated element destructor</li><li>default associated memory allocator (potentially used in element constructor and destructor, memory for the <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> itself is stack allocated)</li></ol>
           </div></section>
-          <section class="m-doc-details" id="gae0c06326801e2f0033572dd3da599032"><div>
+          <section class="m-doc-details" id="ga06b46bc3f71c85f372be97453056253c"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gae0c06326801e2f0033572dd3da599032" class="m-doc-self">std_array_new_with_collection_data</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#ga06b46bc3f71c85f372be97453056253c" class="m-doc-self">std_array_new_with_allocator</a>(</span><span class="m-doc-wrap">T,
               N,
-              collection_data)</span>
+              allocator)</span>
+            </h3>
+            <p>Creates a new <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> with defaulted associated functions.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>N</td>
+                  <td>- The capacity of the <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The memory allocator to pass to the element default-constructor and destructor</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> with:</p><ol><li>default associated element default-constructor,</li><li>default associated element destructor</li><li>given associated memory allocator (potentially used in element constructor and destructor, memory for the <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> itself is stack allocated)</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="ga1eaa11c8922b4b8b73aef00cf6d155fe"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1eaa11c8922b4b8b73aef00cf6d155fe" class="m-doc-self">std_array_new_with_collection_data</a>(</span><span class="m-doc-wrap">T,
+              N,
+              collection_data_ptr)</span>
             </h3>
             <p>Creates a new <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> with provided associated functions.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -440,8 +477,47 @@
                   <td>- The capacity of the <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> instantiation to create</td>
                 </tr>
                 <tr>
-                  <td>collection_data</td>
-                  <td>- The <code>StdCollectionData</code> containing the element default-constructor, element destructor, and memory allocator to use</td>
+                  <td>collection_data_ptr</td>
+                  <td>- Pointer to the <code>StdCollectionData</code> containing the element default-constructor, element destructor, and element copy-constructor to use</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> with:</p><ol><li>possibly user-provided element default-constructor</li><li>possibly user-provided element destructor</li><li>default memory allocator (potentially used in element constructor and destructor, memory for the <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> itself is stack allocated)</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="ga74d1f64c4bbb94569066b2295f0abf70"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga74d1f64c4bbb94569066b2295f0abf70" class="m-doc-self">std_array_new_with_allocator_and_collection_data</a>(</span><span class="m-doc-wrap">T,
+              N,
+              allocator,
+              collection_data_ptr)</span>
+            </h3>
+            <p>Creates a new <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> with provided associated functions.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>N</td>
+                  <td>- The capacity of the <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The memory allocator to pass to the element default-constructor and destructor</td>
+                </tr>
+                <tr>
+                  <td>collection_data_ptr</td>
+                  <td>- Pointer to the <code>StdCollectionData</code> containing the element default-constructor, element destructor, and element copy-constructor to use</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -1168,29 +1244,6 @@
                 </tr>
               </tfoot>
             </table>
-          </div></section>
-          <section class="m-doc-details" id="gadc6bdc2510324046d6a141c131ef8f02"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gadc6bdc2510324046d6a141c131ef8f02" class="m-doc-self">ImplStdArray</a>(</span><span class="m-doc-wrap">T,
-              N)</span>
-            </h3>
-            <p>Use this macro to instantiate the definitions for a <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> of capacity <code>N</code> containing <code>T</code>s. This provides the function definitions for <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code>.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">T</td>
-                  <td>- The element type of the <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> instantiation</td>
-                </tr>
-                <tr>
-                  <td>N</td>
-                  <td>- The capacity of the <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> instantiation</td>
-                </tr>
-              </tbody>
-            </table>
-<p>Requires that <code><a href="group__std__array.html#gaf603ffb96f7a6ce96e76d14515e517b8" class="m-doc">DeclStdArray(T, N)</a></code> has already been used and is in scope, and that the requirements for that have already been met.</p>
           </div></section>
         </section>
       </div>

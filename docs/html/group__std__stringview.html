@@ -93,46 +93,46 @@
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="structStdStringView.html" class="m-doc">StdStringView</a> <a href="#ga96a93532d5bb65a3be6ef10c7f054551" class="m-doc">std_stringview_new</a>(</span><span class="m-doc-wrap">const <a href="structStdString.html" class="m-doc">StdString</a>*restrict string)</span>
+              <span class="m-doc-wrap-bumper"><a href="structStdStringView.html" class="m-doc">StdStringView</a> <a href="#gaa465d41f2c6a1620619cfd32fb4b828d" class="m-doc">std_stringview_new</a>(</span><span class="m-doc-wrap">const <a href="structStdString.html" class="m-doc">StdString</a>*restrict string)</span>
             </dt>
             <dd>Returns a new <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code> into the given <code><a href="structStdString.html" class="m-doc">StdString</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="structStdStringView.html" class="m-doc">StdStringView</a> <a href="#ga904d5bc829a52959e9e9ae3b82d8f318" class="m-doc">std_stringview_from</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> string,
+              <span class="m-doc-wrap-bumper"><a href="structStdStringView.html" class="m-doc">StdStringView</a> <a href="#ga143d8fee62f47169c942d15f8df9cbb9" class="m-doc">std_stringview_from</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> string,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index,
-              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length)</span>
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length) std_disable_if(!string</span>
             </dt>
             <dd>Returns a new <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code> into the given cstring.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga88d1fb873d629b523bfa7335f8819f98" class="m-doc">const_<wbr />char_<wbr />ptr</a> <a href="#ga9073e43630a6bf9d5c79de1aad39d2a9" class="m-doc">std_stringview_at</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self,
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga88d1fb873d629b523bfa7335f8819f98" class="m-doc">const_<wbr />char_<wbr />ptr</a> <a href="#ga865414b0c03ccf4bda5589dfa6ce322c" class="m-doc">std_stringview_at</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index)</span>
             </dt>
             <dd>Returns the character in the view located at the given index.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="#gadfbbf9a7d34afd108c5c08bff1c32466" class="m-doc">std_stringview_length</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="#ga05d2316f58dcc961e037c8c74d7567f9" class="m-doc">std_stringview_length</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span>
             </dt>
             <dd>Returns the length of the <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="#ga4ef00b6949fef9dc5f160e02c73bde15" class="m-doc">std_stringview_size</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="#ga9716f11f583932b56c4adc69070244f0" class="m-doc">std_stringview_size</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span>
             </dt>
             <dd>Returns the size of the <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> <a href="#gae494220b9ca4b60255050e48ade1df5b" class="m-doc">std_stringview_into_cstring</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> <a href="#ga77da12992dc5546c21a9d1e58a070652" class="m-doc">std_stringview_into_cstring</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span>
             </dt>
             <dd>Returns a <code>const_cstring</code> (<code>const char*</code>) representation of the <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">StdRandomAccessIteratorconst_char_ref <a href="#ga3bb2c6a46a018e48f499f6f2d2573f3d" class="m-doc">std_stringview_begin</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span>
+              <span class="m-doc-wrap-bumper">StdRandomAccessIteratorconst_char_ref <a href="#ga3c08d166f3aab890310ee96b4940401d" class="m-doc">std_stringview_begin</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span>
             </dt>
             <dd>Returns a <code><a href="group__iterators.html#ga218be3ec365146cd19e713d0eedf5488" class="m-doc">StdRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code>, at the beginning of the iteration (pointing at the beginning of the view)</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">StdRandomAccessIteratorconst_char_ref <a href="#ga1e1a2ca4a01be6a91efb42629e54102a" class="m-doc">std_stringview_end</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span>
+              <span class="m-doc-wrap-bumper">StdRandomAccessIteratorconst_char_ref <a href="#ga12cafe16504bd9ca92acf8c931549c1b" class="m-doc">std_stringview_end</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span>
             </dt>
             <dd>Returns a <code><a href="group__iterators.html#ga218be3ec365146cd19e713d0eedf5488" class="m-doc">StdRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code>, at the end of the iteration (pointing at the end of the view)</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">StdRandomAccessIteratorconst_char_ref <a href="#ga218e7731d57644a5e7a4e521db6f2ea7" class="m-doc">std_stringview_rbegin</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span>
+              <span class="m-doc-wrap-bumper">StdRandomAccessIteratorconst_char_ref <a href="#gae1912ac9d33e8f51d2a273baa18c0ab1" class="m-doc">std_stringview_rbegin</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span>
             </dt>
             <dd>Returns a <code><a href="group__iterators.html#ga218be3ec365146cd19e713d0eedf5488" class="m-doc">StdRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code> in reverse, at the beginning of the iteration (pointing at the end of the view)</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">StdRandomAccessIteratorconst_char_ref <a href="#ga52a78b57cb2b075a7f518beb882abf7d" class="m-doc">std_stringview_rend</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span>
+              <span class="m-doc-wrap-bumper">StdRandomAccessIteratorconst_char_ref <a href="#gaac1ee95399bb96c194aaedbafbbe7164" class="m-doc">std_stringview_rend</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span>
             </dt>
             <dd>Returns a <code><a href="group__iterators.html#ga218be3ec365146cd19e713d0eedf5488" class="m-doc">StdRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code> in reverse, at the end of the iteration (pointing at the beginning of the view)</dd>
           </dl>
@@ -193,9 +193,9 @@
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="ga96a93532d5bb65a3be6ef10c7f054551"><div>
+          <section class="m-doc-details" id="gaa465d41f2c6a1620619cfd32fb4b828d"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="structStdStringView.html" class="m-doc">StdStringView</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga96a93532d5bb65a3be6ef10c7f054551" class="m-doc-self">std_stringview_new</a>(</span><span class="m-doc-wrap">const <a href="structStdString.html" class="m-doc">StdString</a>*restrict string)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="structStdStringView.html" class="m-doc">StdStringView</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaa465d41f2c6a1620619cfd32fb4b828d" class="m-doc-self">std_stringview_new</a>(</span><span class="m-doc-wrap">const <a href="structStdString.html" class="m-doc">StdString</a>*restrict string)</span></span>
             </h3>
             <p>Returns a new <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code> into the given <code><a href="structStdString.html" class="m-doc">StdString</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -216,11 +216,11 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga904d5bc829a52959e9e9ae3b82d8f318"><div>
+          <section class="m-doc-details" id="ga143d8fee62f47169c942d15f8df9cbb9"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="structStdStringView.html" class="m-doc">StdStringView</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga904d5bc829a52959e9e9ae3b82d8f318" class="m-doc-self">std_stringview_from</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> string,
+              <span class="m-doc-wrap-bumper"><a href="structStdStringView.html" class="m-doc">StdStringView</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga143d8fee62f47169c942d15f8df9cbb9" class="m-doc-self">std_stringview_from</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> string,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index,
-              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length)</span></span>
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length) std_disable_if(!string</span></span>
             </h3>
             <p>Returns a new <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code> into the given cstring.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -249,9 +249,9 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga9073e43630a6bf9d5c79de1aad39d2a9"><div>
+          <section class="m-doc-details" id="ga865414b0c03ccf4bda5589dfa6ce322c"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga88d1fb873d629b523bfa7335f8819f98" class="m-doc">const_<wbr />char_<wbr />ptr</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga9073e43630a6bf9d5c79de1aad39d2a9" class="m-doc-self">std_stringview_at</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self,
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga88d1fb873d629b523bfa7335f8819f98" class="m-doc">const_<wbr />char_<wbr />ptr</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga865414b0c03ccf4bda5589dfa6ce322c" class="m-doc-self">std_stringview_at</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index)</span></span>
             </h3>
             <p>Returns the character in the view located at the given index.</p>
@@ -277,9 +277,9 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="gadfbbf9a7d34afd108c5c08bff1c32466"><div>
+          <section class="m-doc-details" id="ga05d2316f58dcc961e037c8c74d7567f9"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gadfbbf9a7d34afd108c5c08bff1c32466" class="m-doc-self">std_stringview_length</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga05d2316f58dcc961e037c8c74d7567f9" class="m-doc-self">std_stringview_length</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span></span>
             </h3>
             <p>Returns the length of the <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -300,9 +300,9 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga4ef00b6949fef9dc5f160e02c73bde15"><div>
+          <section class="m-doc-details" id="ga9716f11f583932b56c4adc69070244f0"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga4ef00b6949fef9dc5f160e02c73bde15" class="m-doc-self">std_stringview_size</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga9716f11f583932b56c4adc69070244f0" class="m-doc-self">std_stringview_size</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span></span>
             </h3>
             <p>Returns the size of the <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -323,9 +323,9 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="gae494220b9ca4b60255050e48ade1df5b"><div>
+          <section class="m-doc-details" id="ga77da12992dc5546c21a9d1e58a070652"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gae494220b9ca4b60255050e48ade1df5b" class="m-doc-self">std_stringview_into_cstring</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga77da12992dc5546c21a9d1e58a070652" class="m-doc-self">std_stringview_into_cstring</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span></span>
             </h3>
             <p>Returns a <code>const_cstring</code> (<code>const char*</code>) representation of the <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -346,9 +346,9 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga3bb2c6a46a018e48f499f6f2d2573f3d"><div>
+          <section class="m-doc-details" id="ga3c08d166f3aab890310ee96b4940401d"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">StdRandomAccessIteratorconst_char_ref </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3bb2c6a46a018e48f499f6f2d2573f3d" class="m-doc-self">std_stringview_begin</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span></span>
+              <span class="m-doc-wrap-bumper">StdRandomAccessIteratorconst_char_ref </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3c08d166f3aab890310ee96b4940401d" class="m-doc-self">std_stringview_begin</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span></span>
             </h3>
             <p>Returns a <code><a href="group__iterators.html#ga218be3ec365146cd19e713d0eedf5488" class="m-doc">StdRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code>, at the beginning of the iteration (pointing at the beginning of the view)</p>
             <table class="m-table m-fullwidth m-flat">
@@ -369,9 +369,9 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga1e1a2ca4a01be6a91efb42629e54102a"><div>
+          <section class="m-doc-details" id="ga12cafe16504bd9ca92acf8c931549c1b"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">StdRandomAccessIteratorconst_char_ref </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga1e1a2ca4a01be6a91efb42629e54102a" class="m-doc-self">std_stringview_end</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span></span>
+              <span class="m-doc-wrap-bumper">StdRandomAccessIteratorconst_char_ref </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga12cafe16504bd9ca92acf8c931549c1b" class="m-doc-self">std_stringview_end</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span></span>
             </h3>
             <p>Returns a <code><a href="group__iterators.html#ga218be3ec365146cd19e713d0eedf5488" class="m-doc">StdRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code>, at the end of the iteration (pointing at the end of the view)</p>
             <table class="m-table m-fullwidth m-flat">
@@ -392,9 +392,9 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga218e7731d57644a5e7a4e521db6f2ea7"><div>
+          <section class="m-doc-details" id="gae1912ac9d33e8f51d2a273baa18c0ab1"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">StdRandomAccessIteratorconst_char_ref </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga218e7731d57644a5e7a4e521db6f2ea7" class="m-doc-self">std_stringview_rbegin</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span></span>
+              <span class="m-doc-wrap-bumper">StdRandomAccessIteratorconst_char_ref </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gae1912ac9d33e8f51d2a273baa18c0ab1" class="m-doc-self">std_stringview_rbegin</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span></span>
             </h3>
             <p>Returns a <code><a href="group__iterators.html#ga218be3ec365146cd19e713d0eedf5488" class="m-doc">StdRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code> in reverse, at the beginning of the iteration (pointing at the end of the view)</p>
             <table class="m-table m-fullwidth m-flat">
@@ -415,9 +415,9 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga52a78b57cb2b075a7f518beb882abf7d"><div>
+          <section class="m-doc-details" id="gaac1ee95399bb96c194aaedbafbbe7164"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">StdRandomAccessIteratorconst_char_ref </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga52a78b57cb2b075a7f518beb882abf7d" class="m-doc-self">std_stringview_rend</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span></span>
+              <span class="m-doc-wrap-bumper">StdRandomAccessIteratorconst_char_ref </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaac1ee95399bb96c194aaedbafbbe7164" class="m-doc-self">std_stringview_rend</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict self)</span></span>
             </h3>
             <p>Returns a <code><a href="group__iterators.html#ga218be3ec365146cd19e713d0eedf5488" class="m-doc">StdRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code> in reverse, at the end of the iteration (pointing at the beginning of the view)</p>
             <table class="m-table m-fullwidth m-flat">

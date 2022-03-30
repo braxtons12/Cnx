@@ -56,7 +56,7 @@
             </li>
           </ul>
         </nav>
-<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.1</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-01-02</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.2</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-01-23</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
         <section id="define-members">
           <h2><a href="#define-members">Defines</a></h2>
           <dl class="m-doc">
@@ -101,6 +101,67 @@
               <span class="m-doc-wrap-bumper">#define <a href="group__std__arg__lists.html#ga9ef0c3184337ba62afe127f97f784c3b" class="m-doc">SELECTOR_LIST</a>(</span><span class="m-doc-wrap">N)</span>
             </dt>
             <dd>Returns a numeric token (number prefixed by underscore, eg <code>_1</code>) representing the given number.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__arg__lists.html#ga4202c0a979c90a9acb1d3780c0a3612f" class="m-doc">EMPTY</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Converts any list of arguments into an empty list.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__arg__lists.html#gad2eecb399acaadcb6ffa4294ff51a833" class="m-doc">DEFER</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Defers the preprocessing of the list of arguments one step.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__arg__lists.html#gaa35fecfa6a93ec3fdb4a3776f873be27" class="m-doc">EXPAND</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Expands the list of arguments.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__arg__lists.html#ga8a7e4673ff44090b2372efa0f164edee" class="m-doc">COMMA</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Converts the list of arguments into a single comma.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__arg__lists.html#gaff33878b8845fc6b8c4dd6332aab922d" class="m-doc">CONTAINS_COMMA</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Determines if the list of arguments contains a comma (contains more than one element)</dd>
+            <dt id="a456093317dcab76ee00301090516e3c2">
+              <span class="m-doc-wrap-bumper">#define <a href="#a456093317dcab76ee00301090516e3c2" class="m-doc-self">X_AS_COMMA</a>(</span><span class="m-doc-wrap">_head,
+              x,
+              ...)</span>
+            </dt>
+            <dd>Determines if the list of arguments contains a comma (contains more than one element)</dd>
+            <dt id="aa31a9bb41eeee19c9853f4b516272ba2">
+              <span class="m-doc-wrap-bumper">#define <a href="#aa31a9bb41eeee19c9853f4b516272ba2" class="m-doc-self">CONTAINS_COMMA_RESULT</a>(</span><span class="m-doc-wrap">x,
+              _,
+              result,
+              ...)</span>
+            </dt>
+            <dd>Determines if the list of arguments contains a comma (contains more than one element)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__arg__lists.html#ga95dfc80599f592f262b6d72516d365a9" class="m-doc">FIRST</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Returns the first element from the list.</dd>
+            <dt id="ab34d5e5e22c8b66af6160d29aa7610da">
+              <span class="m-doc-wrap-bumper">#define <a href="#ab34d5e5e22c8b66af6160d29aa7610da" class="m-doc-self">FIRST_IMPL</a>(</span><span class="m-doc-wrap">first,
+              ...)</span>
+            </dt>
+            <dd>Returns the first element from the list.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__arg__lists.html#ga3fbcd2681a3a5f73ae1a67c6d7927ea0" class="m-doc">SECOND</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Returns the second element from the list.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__arg__lists.html#ga1b78024ccb824a6e66369c53890930a5" class="m-doc">SECOND_IMPL</a>(</span><span class="m-doc-wrap">first,
+              second,
+              ...)</span>
+            </dt>
+            <dd>Returns the second element from the list.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__std__arg__lists.html#gacb5b97e8b7243052fa43cadaf1d804d9" class="m-doc">REMOVE_FIRST</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Removes the first element from the list, and returns the remaining elements.</dd>
+            <dt id="a9b87267a27aaf2426a9373f4eb4c25e0">
+              <span class="m-doc-wrap-bumper">#define <a href="#a9b87267a27aaf2426a9373f4eb4c25e0" class="m-doc-self">REMOVE_FIRST_IMPL</a>(</span><span class="m-doc-wrap">first,
+              ...)</span>
+            </dt>
+            <dd>Removes the first element from the list, and returns the remaining elements.</dd>
           </dl>
         </section>
       </div>

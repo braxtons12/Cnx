@@ -54,11 +54,19 @@
             </li>
           </ul>
         </nav>
-<p>C2nxt Ranges provides a &quot;struct template&quot; enabling a lazy, collection-agnostic way to view, filter, modify, and reference a collection&#x27;s elements.</p><p>Ranges is one of the C2nxt features that relies most heavily on GNU C extensions (currently), in particular, <code>__auto_type</code> and statement expressions. It would benefit the most from C2x standardization of <code>auto</code> and lambdas.</p><p>Requires:</p><ol><li>A C2nxt compatible collection.</li><li><code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> has been fully instantiated for the type contained in your collection (<code><a href="group__ranges.html#gaadf9183c2afb76d3d24bd10114ada822" class="m-doc">DeclStdRange(T)</a></code> has been used and is in scope, and <code><a href="group__ranges.html#ga0c5def99f3307aeb096ad03abc522f43" class="m-doc">ImplStdRange(T)</a></code> has been used in a translation unit that will be linked into the final binary).</li></ol><p>A C2nxt compatible collection provides:</p><ol><li>A vtable pointer member variable <code>m_vtable</code> which contains function pointers to the collection&#x27;s associated functions.</li><li>Some category of C2nxt compatible iterators (eg: <code><a href="group__iterators.html#ga6f81be5154c35a8da1ac730d26040155" class="m-doc">StdForwardIterator(Ref(T))</a></code>).</li><li><p>Functions to return begin and end iterators, named <code>begin</code> and <code>end</code>, respectively, in <code>m_vtable</code>. They should take the signature</p><pre>YourIteratorCategory(Ref(T)) (*const begin)(YourCollectionType* restrict self);
+<p>C2nxt Ranges provides a &quot;struct template&quot; enabling a lazy, collection-agnostic way to view, filter, modify, and reference a collection&#x27;s elements.</p><p>Ranges is one of the C2nxt features that relies most heavily on GNU C extensions (currently), in particular, <code>__auto_type</code> and statement expressions. It would benefit the most from C2x standardization of <code>auto</code> and lambdas.</p><p>Requires:</p><ol><li>A C2nxt compatible collection.</li><li><code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> has been fully instantiated for the type contained in your collection (<code>DeclStdRange(T)</code> has been used and is in scope, and <code>ImplStdRange(T)</code> has been used in a translation unit that will be linked into the final binary).</li></ol><p>A C2nxt compatible collection provides:</p><ol><li>A vtable pointer member variable <code>m_vtable</code> which contains function pointers to the collection&#x27;s associated functions.</li><li>Some category of C2nxt compatible iterators (eg: <code><a href="group__iterators.html#ga6f81be5154c35a8da1ac730d26040155" class="m-doc">StdForwardIterator(Ref(T))</a></code>).</li><li><p>Functions to return begin and end iterators, named <code>begin</code> and <code>end</code>, respectively, in <code>m_vtable</code>. They should take the signature</p><pre>YourIteratorCategory(Ref(T)) (*const begin)(YourCollectionType* restrict self);
 YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
-</pre><p>If these are met, your collection can be used with <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> and its abstractions.</p></li></ol><p>Example usage of <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code>:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&quot;C2nxt/StdVector.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;C2nxt/StdIO.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;C2nxt/StdRange.h&quot;</span><span class="cp"></span>
+</pre><p>If these are met, your collection can be used with <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> and its abstractions.</p></li></ol><p>Example usage of <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code>:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdDef.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#define VECTOR_INCLUDE_DEFAULT_INSTANTIATIONS TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdVector.h&gt;</span><span class="cp"></span>
+<span class="cp">#undef VECTOR_INCLUDE_DEFAULT_INSTANTIATIONS</span>
+
+<span class="cp">#define RANGE_INCLUDE_DEFAULT_INSTANTIATIONS TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdRange.h&gt;</span><span class="cp"></span>
+<span class="cp">#undef RANGE_INCLUDE_DEFAULT_INSTANTIATIONS</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdIO.h&gt;</span><span class="cp"></span>
 
 <span class="c1">// example function to pass to std_transform, multiplies all elements by 3</span>
 <span class="kt">void</span> <span class="nf">transform</span><span class="p">(</span><span class="n">u32</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">elem</span><span class="p">)</span> <span class="p">{</span>
@@ -179,10 +187,6 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
             </dt>
             <dd>Macro alias for accumulator function compatible with a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> instantiation.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gaadf9183c2afb76d3d24bd10114ada822" class="m-doc">DeclStdRange</a>(</span><span class="m-doc-wrap">T)</span>
-            </dt>
-            <dd>Instantiates <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> for the type <code>T</code></dd>
-            <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#gad9f1579addc3fce9075d9c2450e6b758" class="m-doc">std_range_from_iterators_filtered</a>(</span><span class="m-doc-wrap">T,
               begin,
               end,
@@ -280,10 +284,6 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               accumulation_function)</span>
             </dt>
             <dd>&quot;Accumulates&quot; the elements in the collection</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga0c5def99f3307aeb096ad03abc522f43" class="m-doc">ImplStdRange</a>(</span><span class="m-doc-wrap">T)</span>
-            </dt>
-            <dd>Instantiates <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> of the type <code>T</code></dd>
           </dl>
         </section>
         <section>
@@ -359,24 +359,6 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               </tbody>
             </table>
 <p>Used for creating and referencing a typedef for a filter function compatible with a specific <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> instantiation. A <code><a href="group__ranges.html#gafa7e85043ab42749db7f85bff0610382" class="m-doc">StdRangeAccumulator(T)</a></code> must take the signature:</p><pre class="m-code"><span class="n">T</span> <span class="p">(</span><span class="o">*</span><span class="n">accumulator</span><span class="p">)(</span><span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="n">current_value</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="n">elem</span><span class="p">);</span></pre>
-          </div></section>
-          <section class="m-doc-details" id="gaadf9183c2afb76d3d24bd10114ada822"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gaadf9183c2afb76d3d24bd10114ada822" class="m-doc-self">DeclStdRange</a>(</span><span class="m-doc-wrap">T)</span>
-            </h3>
-            <p>Instantiates <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> for the type <code>T</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">T</td>
-                  <td>- The type held by the collection <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> will abstract over</td>
-                </tr>
-              </tbody>
-            </table>
-<p>Instantiates the necessary function and variable declarations, and struct definitions, for a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> abstracting over a collection that holds <code>T</code>s.</p>
           </div></section>
           <section class="m-doc-details" id="gad9f1579addc3fce9075d9c2450e6b758"><div>
             <h3>
@@ -735,7 +717,7 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
                 </tr>
               </tfoot>
             </table>
-<p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> and copies the elements viewed by <code>range</code> into it</p>
+<p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> and copies the elements viewed by <code>range</code> into it</p><h4 id="autotoc_md13">Requirements</h4><ul><li>Requires that the <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> template has been instantiated for <code>T</code> and the instantiation is in scope</li></ul>
           </div></section>
           <section class="m-doc-details" id="ga64e2a4ed8e3cba42733a8f2ccffc0438"><div>
             <h3>
@@ -935,24 +917,6 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               </tfoot>
             </table>
 <p>&quot;Accumulates&quot; the elements in the given collection with the <code><a href="group__ranges.html#gafa7e85043ab42749db7f85bff0610382" class="m-doc">StdRangeAccumulator(T)</a></code>, <code>accumulation_function</code>, returning the result</p>
-          </div></section>
-          <section class="m-doc-details" id="ga0c5def99f3307aeb096ad03abc522f43"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga0c5def99f3307aeb096ad03abc522f43" class="m-doc-self">ImplStdRange</a>(</span><span class="m-doc-wrap">T)</span>
-            </h3>
-            <p>Instantiates <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> of the type <code>T</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">T</td>
-                  <td>- The type held by the collection <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> will abstract over</td>
-                </tr>
-              </tbody>
-            </table>
-<p>Instantiates the necessary function and variable definitions for <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> of the type <code>T</code>. Requires that <code><a href="group__ranges.html#gaadf9183c2afb76d3d24bd10114ada822" class="m-doc">DeclStdRange(T)</a></code> has been used and is in scope.</p>
           </div></section>
         </section>
       </div>

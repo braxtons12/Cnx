@@ -60,7 +60,7 @@
             </li>
           </ul>
         </nav>
-<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.1</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-01-07</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.1.1</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-02-24</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
         <section id="enum-members">
           <h2><a href="#enum-members">Enums</a></h2>
           <dl class="m-doc">
@@ -86,41 +86,45 @@
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="group__std__clock.html#gaf637e145c143deb6079b7b88381baedc" class="m-doc">std_clock_now</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="group__std__clock.html#ga8fbbfc219caf65495f0d6521ff522ecf" class="m-doc">std_clock_now</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span>
             </dt>
             <dd>Returns a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> corresponding to the current time on the given clock.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="group__std__clock.html#ga11035df98f4fd473cf0d32a0b5fb36f2" class="m-doc">std_clock_min_time_point</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="group__std__clock.html#ga56859cc3bb760d863fb3324db4f8d86c" class="m-doc">std_clock_min_time_point</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span>
             </dt>
             <dd>Returns the minimum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the given clock.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="group__std__clock.html#gab1ef136c850b27ad1acfc684a2879c6c" class="m-doc">std_clock_max_time_point</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="group__std__clock.html#ga02d46bae1fa9409187ab66acb688d6e3" class="m-doc">std_clock_max_time_point</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span>
             </dt>
             <dd>Returns the maximum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> able to be associated with the given clock.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__std__clock.html#ga30dd26c5c2dc57a87c8b3204ca2dbf1f" class="m-doc">StdClockResolution</a> <a href="group__std__clock.html#gaf047f03a540ecdaf3ba22e30bfb2120c" class="m-doc">std_clock_resolution</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__std__clock.html#ga30dd26c5c2dc57a87c8b3204ca2dbf1f" class="m-doc">StdClockResolution</a> <a href="group__std__clock.html#gaf5d690f8ce54e8596a0c60fa39e45857" class="m-doc">std_clock_resolution</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span>
             </dt>
             <dd>Returns the resolution of the given clock.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="structStdRatio.html" class="m-doc">StdRatio</a> <a href="group__std__clock.html#gaffbd7eafe5c39f130debde914667f004" class="m-doc">std_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span>
+              <span class="m-doc-wrap-bumper"><a href="structStdRatio.html" class="m-doc">StdRatio</a> <a href="group__std__clock.html#gad6b90f11b0159b2181d8f4e118d15b03" class="m-doc">std_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span>
             </dt>
             <dd>Returns the resolution of the given clock.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="group__std__clock.html#gad3d53e0addc6b0f010aa33a52f1e8392" class="m-doc">std_clock_format</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <span class="m-doc-wrap-bumper"><a href="group__std__time__point.html#ga12c7d6947a9863bc0ad76d105b4fccab" class="m-doc">StdTimePointLocale</a> <a href="group__std__clock.html#ga2effcd6fe82e20887c62ee05e6c9d810" class="m-doc">std_clock_locale</a>(</span><span class="m-doc-wrap">const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the locale associated with the given clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="group__std__clock.html#ga9b105ad0afd60960f6d8c697317f4140" class="m-doc">std_clock_format</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
               <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span>
             </dt>
             <dd>Implements the allocator un-aware portion of the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for all <code><a href="structStdClock.html" class="m-doc">StdClock</a></code>s.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="group__std__clock.html#ga59f28e265e8a1df68172351b6956094b" class="m-doc">std_clock_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="group__std__clock.html#ga8e47b7b5afa748ea450b79f6270ff159" class="m-doc">std_clock_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
               <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
-              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
+              StdAllocator allocator)</span>
             </dt>
             <dd>Implements the allocator aware portion of the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for all <code><a href="structStdClock.html" class="m-doc">StdClock</a></code>s.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> <a href="group__std__clock.html#ga1ae126a6aa598bee7bc84d2fcfe6073a" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <span class="m-doc-wrap-bumper">static  <a href="group__std__clock.html#ga1d5fad1259dccaf7e2100fdcf98797d6" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
               <a href="structStdClock.html" class="m-doc">StdClock</a>,
-              <a href="group__std__clock.html#gad3d53e0addc6b0f010aa33a52f1e8392" class="m-doc">std_<wbr />clock_<wbr />format</a>,
-              <a href="group__std__clock.html#ga59f28e265e8a1df68172351b6956094b" class="m-doc">std_<wbr />clock_<wbr />format_<wbr />with_<wbr />allocator</a>)</span>
+              <a href="group__std__clock.html#ga9b105ad0afd60960f6d8c697317f4140" class="m-doc">std_<wbr />clock_<wbr />format</a>,
+              <a href="group__std__clock.html#ga8e47b7b5afa748ea450b79f6270ff159" class="m-doc">std_<wbr />clock_<wbr />format_<wbr />with_<wbr />allocator</a>)</span>
             </dt>
             <dd>Implements the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for <code><a href="structStdClock.html" class="m-doc">StdClock</a></code></dd>
             <dt>
@@ -144,6 +148,10 @@
             </dt>
             <dd>Returns the resolution of the system clock.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__std__time__point.html#ga12c7d6947a9863bc0ad76d105b4fccab" class="m-doc">StdTimePointLocale</a> <a href="group__std__clock.html#ga0dedc13e5064897e6b6cab41b7ed4a2b" class="m-doc">std_system_clock_locale</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the locale of the system clock.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="group__std__clock.html#gaee0f976fb238fb6fda05c40b37e41ae2" class="m-doc">std_high_resolution_clock_now</a>(</span><span class="m-doc-wrap">void)</span>
             </dt>
             <dd>Returns a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> corresponding to the current time on the high resolution clock.</dd>
@@ -163,6 +171,10 @@
               <span class="m-doc-wrap-bumper"><a href="structStdRatio.html" class="m-doc">StdRatio</a> <a href="group__std__clock.html#ga26d7bc00022c3520e19a15f50d4d1e35" class="m-doc">std_high_resolution_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">void)</span>
             </dt>
             <dd>Returns the resolution of the high resolution clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__std__time__point.html#ga12c7d6947a9863bc0ad76d105b4fccab" class="m-doc">StdTimePointLocale</a> <a href="group__std__clock.html#gaa1baef47fdf471fb2069965753f2b03e" class="m-doc">std_high_resolution_clock_locale</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the locale of the high resolution clock.</dd>
             <dt>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="group__std__clock.html#ga11339b0b2cbf29c2065a5dd7ead9a1b1" class="m-doc">std_utc_clock_now</a>(</span><span class="m-doc-wrap">void)</span>
             </dt>
@@ -184,6 +196,10 @@
             </dt>
             <dd>Returns the resolution of the UTC clock.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__std__time__point.html#ga12c7d6947a9863bc0ad76d105b4fccab" class="m-doc">StdTimePointLocale</a> <a href="group__std__clock.html#ga8026344dd8e89e992f6aa34463f55371" class="m-doc">std_utc_clock_locale</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the locale of the UTC clock.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="group__std__clock.html#gad1005e8d1e8143dfb4ef775181cb8483" class="m-doc">std_local_clock_now</a>(</span><span class="m-doc-wrap">void)</span>
             </dt>
             <dd>Returns a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> corresponding to the current time on the local clock.</dd>
@@ -203,6 +219,10 @@
               <span class="m-doc-wrap-bumper"><a href="structStdRatio.html" class="m-doc">StdRatio</a> <a href="group__std__clock.html#ga912a3abaa1ae6fde7779d4aa8b079245" class="m-doc">std_local_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">void)</span>
             </dt>
             <dd>Returns the resolution of the local clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__std__time__point.html#ga12c7d6947a9863bc0ad76d105b4fccab" class="m-doc">StdTimePointLocale</a> <a href="group__std__clock.html#ga095bd2e78456f30d7f646c5bc5248b94" class="m-doc">std_local_clock_locale</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the locale of the local clock.</dd>
             <dt>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="group__std__clock.html#ga3a873aa7996fcaab46404a5aab857f3f" class="m-doc">std_convert_utc_to_local_time</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> utc)</span>
             </dt>

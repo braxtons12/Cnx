@@ -47,6 +47,14 @@
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
+            <li><a href="#autotoc_md16">Instantiation requirements:</a></li>
+            <li>
+              <a href="#autotoc_md17">Parameters</a>
+              <ul>
+                <li><a href="#autotoc_md18">Instantiation-Mode Parameters</a></li>
+                <li><a href="#autotoc_md19">Template Parameters</a></li>
+              </ul>
+            </li>
             <li>
               Reference
               <ul>
@@ -55,8 +63,7 @@
             </li>
           </ul>
         </nav>
-<p><code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> is a struct template for a type-safe dynamic-capacity array. It&#x27;s allocator aware, provides C2nxt compatible random access iterators, and supports user-defined default constructors, copy-constructors, and destructors for its elements. It&#x27;s design is based around both C++&#x27;s <code>std::vector</code> and Rust&#x27;s <code>std::vec::Vec</code>, but with slightly expanded functionality and semantics.</p><p><code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> has a small size optimization (SSO) that is user configurable. This allows for a compile-time configurable number of elements to be stored on the stack, before resorting to heap allocation, at the cost of <code>sizeof(StdVector(T))</code> being larger than otherwise necessary. By default, this optimization allows for up to 8 elements to be stored on the stack. This number can be changed by defining <code>STD_VECTOR_SHORT_OPTIMIZATION_NUM_ELEMENTS</code> to the desired number of elements. If the small size optimization is disabled (by defining <code>STD_VECTOR_SHORT_OPTIMIZATION_NUM_ELEMENTS</code> to 0), the default heap allocation size can be configured by defining <code>STD_VECTOR_DEFAULT_LONG_CAPACITY</code> to the desired number of elements. The default for this setting is 16.</p><p>Instantiations of <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> are already provided for builtin types like <code>i32</code> and some C2nxt types, like <code><a href="structStdString.html" class="m-doc">StdString</a></code>. Instantiating it for your own types is simple and requires minimal boiler-plate.</p><p>Instantiation requirements:</p><ol><li>a <code>typedef</code> of your type to provide and alphanumeric name for it. (for template and macro parameters)</li><li>a <code>typedef</code> for pointer to your type as <code><a href="group__std__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(YourType)</a></code>, for use with the iterators.</li><li>a <code>typedef</code> for pointer to const your type as <code><a href="group__std__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(YourType)</a></code>, for use with the iterators</li><li>Instantiations for C2nxt iterators for the typedefs provided in (2) and (3)</li><li>Instantiation of <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> for your type</li></ol><p>We recommend two routes for providing instantiations for user-defined types, either:</p><ol><li>Provide the instantiation together with your type&#x27;s public interface and implementation OR</li><li>Provide it as a separate &quot;template instantiation&quot; .h/.c file pair</li></ol><p>Example of (1).</p><pre class="m-code"><span class="c1">// in `YourType.h`</span>
-<span class="cp">#include</span> <span class="cpf">&quot;C2nxt/StdVector.h&quot;</span><span class="cp"></span>
+<p><code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> is a struct template for a type-safe dynamic-capacity array. It&#x27;s allocator aware, provides C2nxt compatible random access iterators, and supports user-defined default constructors, copy-constructors, and destructors for its elements. It&#x27;s design is similar to both C++&#x27;s <code>std::vector</code> and Rust&#x27;s <code>std::vec::Vec</code>, but with slightly expanded functionality and semantics.</p><p><code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> has a small size optimization (SSO) that is user configurable. This allows for a compile-time configurable number of elements to be stored on the stack, before resorting to heap allocation, at the cost of <code>sizeof(StdVector(T))</code> being larger than otherwise necessary. By default, this optimization allows for up to 8 elements to be stored on the stack. For information on how to configure this, see &quot;Template Parameters&quot; below.</p><p>Instantiations of <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> are already provided for builtin types like <code>i32</code> and some C2nxt types, like <code><a href="structStdString.html" class="m-doc">StdString</a></code>. Instantiating it for your own types is simple and requires minimal boiler-plate.</p><section id="autotoc_md16"><h2><a href="#autotoc_md16">Instantiation requirements:</a></h2><ol><li>a <code>typedef</code> of your type to provide an alphanumeric name for it. (for template and macro parameters)</li><li>a <code>typedef</code> for pointer to your type as <code><a href="group__std__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(YourType)</a></code>, for use with the iterators.</li><li>a <code>typedef</code> for pointer to const your type as <code><a href="group__std__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(YourType)</a></code>, for use with the iterators</li><li>Instantiations for C2nxt iterators for the typedefs provided in (2) and (3)</li><li>Instantiation of <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> for your type</li></ol><p>We recommend two routes for providing instantiations for user-defined types, either:</p><ol><li>Provide the instantiation together with your type&#x27;s public interface and implementation OR</li><li>Provide it as a separate &quot;template instantiation&quot; .h/.c file pair</li></ol></section><section id="autotoc_md17"><h2><a href="#autotoc_md17">Parameters</a></h2><p><code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> takes several instantiation-time macro parameters, in addition to the instantiation-mode macro parameters required of all C2nxt templates.</p><section id="autotoc_md18"><h3><a href="#autotoc_md18">Instantiation-Mode Parameters</a></h3><p>These signal to the implementation to instantiate the declarations, definitions, or both, for the template.</p><ol><li><code>VECTOR_DECL</code> (Optional) - Defining this to true signals to the implementation to declare the template instantiation when you include <code>&lt;<a href="StdVector_8h.html" class="m-doc">C2nxt/<wbr />StdVector.h</a>&gt;</code>. This will instantiate any required type declarations and definitions and any required function declarations. No functions will be defined. This is optional (but signals intent explicitly) - If required template parameters are defined and <code>VECTOR_IMPL</code> is not, then this will be inferred as true (<code>1</code>) by default.</li><li><code>VECTOR_IMPL</code> - Defining this to true signals to the implementation to define the template instantiation when you include <code>&lt;<a href="StdVector_8h.html" class="m-doc">C2nxt/<wbr />StdVector.h</a>&gt;</code>. This will instantiate any required function definitions. This is not required to be paired with <code>VECTOR_DECL</code> (you can declare the template without defining it), but it is eventually required to provide the definitions for the functions. If this instantiation-mode hasn&#x27;t been included in exactly one translation unit in your build, you will get linking errors due to the missing function definitions.</li></ol></section><section id="autotoc_md19"><h3><a href="#autotoc_md19">Template Parameters</a></h3><p>These provide the type or value parameters that the template is parameterized on to the template implementation. These should be <code>#define</code>d to their appropriate values.</p><ol><li><code>VECTOR_T</code> - The type to be stored in the vector (e.g. <code>u32</code> or <code><a href="structStdString.html" class="m-doc">StdString</a></code>). This is required.</li><li><code>VECTOR_SMALL_OPT_CAPACITY</code> - This is the small-optimization capacity to be stored in the vector directly when the size is at or below this, instead of resorting to heap allocation. <code>0</code> is a valid value for this. This is optional, and if not provided will default to <code>STD_VECTOR_DEFAULT_SHORT_OPT_CAPACITY</code> (which is defined as <code>8</code>). Heap allocations occurring after size exceeds <code>VECTOR_SMALL_OPT_CAPACITY</code> will follow the growth strategy of the collection.</li><li><code>VECTOR_DEFAULT_LONG_CAPACITY</code> - This is the initial capacity to be stored in the vector if <code>VECTOR_SMALL_OPT_CAPACITY</code> is defined as <code>0</code>. This is optional. If not provided and <code>VECTOR_SMALL_OPT_CAPACITY</code> is provided as <code>0</code>, this will default to <code>STD_VECTOR_VECTOR_DEFAULT_LONG_CAPACITY</code> (which is defined as <code>16</code>). If <code>VECTOR_SMALL_OPT_CAPACITY</code> is defaulted or provided as greater than 0, this will not be used. Heap allocations occurring after size exceeds whichever of the two possible initial storage strategies are used will follow the growth strategy of the collection.</li></ol><p>Example of (1).</p><pre class="m-code"><span class="c1">// in `YourType.h`</span>
 <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">YourType</span> <span class="p">{</span>
  <span class="c1">// members</span>
 <span class="p">}</span> <span class="n">YourType</span><span class="p">;</span>
@@ -67,15 +74,38 @@
 <span class="n">DeclStdIterators</span><span class="p">(</span><span class="n">Ref</span><span class="p">(</span><span class="n">YourType</span><span class="p">));</span>
 <span class="n">DeclStdIterators</span><span class="p">(</span><span class="n">ConstRef</span><span class="p">(</span><span class="n">YourType</span><span class="p">));</span>
 
-<span class="n">DeclStdOption</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+<span class="cp">#define OPTION_T YourType</span>
+<span class="cp">#define OPTION_DECL TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdOption.h&gt;</span><span class="cp"></span>
+<span class="cp">#undef OPTION_T</span>
+<span class="cp">#undef OPTION_DECL</span>
 
-<span class="n">DeclStdVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+<span class="c1">// define the template parameter, `VECTOR_T`</span>
+<span class="cp">#define VECTOR_T YourType</span>
+<span class="c1">// tell the template to instantiate the declarations</span>
+<span class="cp">#define VECTOR_DECL TRUE</span>
+<span class="c1">// `#undef`s all macro parameters after instantiating the template,</span>
+<span class="c1">// so they don&#39;t propagate around</span>
+<span class="cp">#define VECTOR_UNDEF_PARAMS TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdVector.h&gt;</span><span class="cp"></span>
 
 <span class="c1">// the rest of your public interface...</span>
 
 <span class="c1">// in `YourType.c`</span>
-<span class="n">ImplStdOption</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
-<span class="n">ImplStdVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+<span class="cp">#define OPTION_T YourType</span>
+<span class="cp">#define OPTION_IMPL TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdOption.h&gt;</span><span class="cp"></span>
+<span class="cp">#undef OPTION_T</span>
+<span class="cp">#undef OPTION_IMPL</span>
+
+<span class="c1">// define the template parameter, `VECTOR_T`</span>
+<span class="cp">#define VECTOR_T YourType</span>
+<span class="c1">// tell the template to instantiate the implementations</span>
+<span class="cp">#define VECTOR_IMPL TRUE</span>
+<span class="c1">// `#undef`s all macro parameters after instantiating the template,</span>
+<span class="c1">// so they don&#39;t propagate around</span>
+<span class="cp">#define VECTOR_UNDEF_PARAMS TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdVector.h&gt;</span><span class="cp"></span>
 
 <span class="c1">// the rest of your implementation</span></pre><p>Example of (2):</p><pre class="m-code"><span class="c1">// in `YourType.h`</span>
 <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">YourType</span> <span class="p">{</span>
@@ -91,20 +121,45 @@
 
 <span class="c1">// in `StdOptionYourType.h`</span>
 <span class="cp">#include</span> <span class="cpf">&quot;YourType.h&quot;</span><span class="cp"></span>
-<span class="n">DeclStdOption</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+<span class="cp">#define OPTION_T YourType</span>
+<span class="cp">#define OPTION_DECL TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdOption.h&gt;</span><span class="cp"></span>
+<span class="cp">#undef OPTION_T</span>
+<span class="cp">#undef OPTION_DECL</span>
 
 <span class="c1">// in `StdOptionYourType.c`</span>
 <span class="cp">#include</span> <span class="cpf">&quot;StdOptionYourType.h&quot;</span><span class="cp"></span>
-<span class="n">ImplStdOption</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+
+<span class="cp">#define OPTION_T YourType</span>
+<span class="cp">#define OPTION_IMPL TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdOption.h&gt;</span><span class="cp"></span>
+<span class="cp">#undef OPTION_T</span>
+<span class="cp">#undef OPTION_IMPL</span>
 
 <span class="c1">// in `StdVectorYourType.h`</span>
 <span class="cp">#include</span> <span class="cpf">&quot;YourType.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;StdOptionYourType.h&quot;</span><span class="cp"></span>
-<span class="n">DeclStdVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+
+<span class="c1">// define the template parameter, `VECTOR_T`</span>
+<span class="cp">#define VECTOR_T YourType</span>
+<span class="c1">// tell the template to instantiate the declarations</span>
+<span class="cp">#define VECTOR_DECL TRUE</span>
+<span class="c1">// `#undef`s all macro parameters after instantiating the template,</span>
+<span class="c1">// so they don&#39;t propagate around</span>
+<span class="cp">#define VECTOR_UNDEF_PARAMS TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdVector.h&gt;</span><span class="cp"></span>
 
 <span class="c1">// in `StdVectorYourType.c`</span>
-<span class="cp">#include</span> <span class="cpf">&quot;StdVectorYourType.c&quot;</span><span class="cp"></span>
-<span class="n">ImplStdVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span></pre><p>Then, somewhere else in your codebase, you can easily use the instantiation:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&quot;YourType.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;StdVectorYourType.h&quot;</span><span class="cp"></span>
+
+<span class="c1">// define the template parameter, `VECTOR_T`</span>
+<span class="cp">#define VECTOR_T YourType</span>
+<span class="c1">// tell the template to instantiate the implementations</span>
+<span class="cp">#define VECTOR_IMPL TRUE</span>
+<span class="c1">// `#undef`s all macro parameters after instantiating the template,</span>
+<span class="c1">// so they don&#39;t propagate around</span>
+<span class="cp">#define VECTOR_UNDEF_PARAMS TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdVector.h&gt;</span><span class="cp"></span></pre><p>Then, somewhere else in your codebase, you can easily use the instantiation:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&quot;YourType.h&quot;</span><span class="cp"></span>
 <span class="c1">// if instantiation method (2)</span>
 <span class="cp">#include</span> <span class="cpf">&quot;StdVectorYourType.h&quot;</span><span class="cp"></span>
 
@@ -117,61 +172,7 @@
 <span class="p">}</span></pre><p><code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> implements <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code>, but because of its generic type, can&#x27;t be automatically converted to its <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation, so we have to cast it explicitly:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&quot;C2nxt/StdIO.h&quot;</span><span class="cp"></span>
 <span class="kt">void</span> <span class="nf">print_vec</span><span class="p">(</span><span class="k">const</span> <span class="n">StdVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">)</span><span class="o">*</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">as_format_t</span><span class="p">(</span><span class="n">StdVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">),</span> <span class="o">*</span><span class="n">vec</span><span class="p">));</span>
-<span class="p">}</span></pre><p>You can provide user-defined default-constructor, copy-constructor, and/or destructor for elements of your type, and custom allocator for all memory allocation:</p><pre class="m-code"><span class="n">YourType</span> <span class="nf">your_type_constructor</span><span class="p">(</span><span class="n">StdAllocator</span> <span class="n">allocator</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">let_mut</span> <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">YourType</span><span class="p">){</span><span class="mi">0</span><span class="p">};</span>
-    <span class="c1">// whatever you need to do to init your type</span>
-    <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="n">YourType</span> <span class="nf">your_type_copy_constructor</span><span class="p">(</span><span class="k">const</span> <span class="n">YourType</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">elem</span><span class="p">,</span> <span class="n">StdAllocator</span> <span class="n">allocator</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">let_mut</span> <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">YourType</span><span class="p">){</span><span class="mi">0</span><span class="p">};</span>
-    <span class="c1">// whatever you need to do to copy `elem` to `t`</span>
-    <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="nf">your_type_destructor</span><span class="p">(</span><span class="n">YourType</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">t</span><span class="p">,</span> <span class="n">StdAllocator</span> <span class="n">allocator</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// whatever you need to do to cleanup `t`</span>
-<span class="p">}</span>
-
-<span class="n">StdVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">)</span> <span class="n">create_and_fill_your_type_vec</span><span class="p">(</span><span class="n">usize</span> <span class="n">num_elements</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// init a vec with num_elements capacity (zero size) and our custom collection data</span>
-    <span class="n">let_mut</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">std_vector_new_with_capacity_with_collection_data</span><span class="p">(</span><span class="n">YourType</span><span class="p">,</span>
-                        <span class="n">capacity</span><span class="p">,</span>
-                        <span class="c1">// This `StdCollectionData(CollectionType)` will only be</span>
-                        <span class="c1">// associated with this specific vector, not all `StdVector(YourType)`s</span>
-                        <span class="p">((</span><span class="n">StdCollectionData</span><span class="p">(</span><span class="n">StdVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">)))</span> <span class="p">{</span>
-                            <span class="c1">// can be left NULL, will be defaulted</span>
-                            <span class="p">.</span><span class="n">m_constructor</span> <span class="o">=</span> <span class="n">your_type_constructor</span><span class="p">,</span>
-                            <span class="c1">// can be left NULL, will disable `std_vector_clone(self)` for</span>
-                            <span class="c1">// this vector</span>
-                            <span class="p">.</span><span class="n">m_copy_constructor</span> <span class="o">=</span> <span class="n">your_type_copy_constructor</span><span class="p">,</span>
-                            <span class="c1">// can be left NULL, will be defaulted</span>
-                            <span class="p">.</span><span class="n">m_destructor</span> <span class="o">=</span> <span class="n">your_type_destructor</span>
-                            <span class="c1">// must explicitly provide an allocator, even just the default one,</span>
-                            <span class="c1">// if providing user-defined collection data</span>
-                            <span class="p">.</span><span class="n">m_allocator</span> <span class="o">=</span> <span class="n">std_allocator_from_custom_allocator</span><span class="p">(</span>
-                                                <span class="n">your_malloc_func</span><span class="p">,</span>
-                                                <span class="n">your_free_func</span><span class="p">)</span>
-                        <span class="p">})</span>
-                    <span class="p">);</span>
-
-    <span class="c1">// fill the vec with default constructed elements</span>
-    <span class="n">std_vector_resize</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">num_elements</span><span class="p">);</span>
-
-    <span class="k">return</span> <span class="n">vec</span><span class="p">;</span>
-<span class="p">}</span></pre><p><code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> also provides C2nxt random access iterators and optional scoped destruction:</p><pre class="m-code"><span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">let_mut</span> <span class="n">std_vector_scoped</span><span class="p">(</span><span class="n">u32</span><span class="p">)</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">std_vector_new_with_capacity</span><span class="p">(</span><span class="n">u32</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
-    <span class="n">ranged_for</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">std_vector_push_back</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="c1">// loop over the elements in the vector by value, as an iteration</span>
-    <span class="n">foreach</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">elem</span><span class="p">);</span>
-    <span class="p">}</span>
-    <span class="c1">// vec goes out of scope here and `std_vector_free(vec)` is called on it</span>
-    <span class="c1">// because we declared it as scoped</span>
-<span class="p">}</span></pre><p>Like other C2nxt collections, <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> provides its type-agnostic usage through a vtable pointer contained in the struct, and provides macros which wrap the usage of the vtable, making access simpler. If you prefer to not use this method of access, you can call the typed functions directly by in-fixing the contained type in the associated function name. IE: for <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(i32)</a></code>, <code>vec</code>, the equivalent function call for <code><a href="group__std__vector.html#ga68c1b117727513c31db46072b0d8707d" class="m-doc">std_<wbr />vector_<wbr />push_<wbr />back(vec, element)</a></code> would be <code>std_vector_i32_push_back(&amp;vec, element)</code></p>
+<span class="p">}</span></pre><aside class="m-note m-info"><h4>Note</h4><p><code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>&#x27;s <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation will always be a debug representation, eg: &quot;[size: X, capacity: Y, data_ptr: Q]&quot;, and never a printout of contained elements</p></aside></section></section>
         <section id="define-members">
           <h2><a href="#define-members">Defines</a></h2>
           <dl class="m-doc">
@@ -179,38 +180,58 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector</a>(</span><span class="m-doc-wrap">T)</span>
             </dt>
             <dd>macro alias for a <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> containing <code>T</code>s</dd>
-            <dt id="ga8e362b243f06661623e6a2e490f0cbcc">
-              <span class="m-doc-wrap-bumper">#define <a href="#ga8e362b243f06661623e6a2e490f0cbcc" class="m-doc-self">STD_VECTOR_SHORT_OPTIMIZATION_NUM_ELEMENTS</a></span>
+            <dt id="ga81f4d8b934c2767d979154d555ca975f">
+              <span class="m-doc-wrap-bumper">#define <a href="#ga81f4d8b934c2767d979154d555ca975f" class="m-doc-self">STD_VECTOR_DEFAULT_SHORT_OPT_CAPACITY</a></span>
             </dt>
-            <dd>The maximum number of elements storable using <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>&#x27;s small size optimization. Define this to a different value to change or disable the small size optimization.</dd>
+            <dd>The default small-vector optimization capacity if not given as a template parameter.</dd>
             <dt id="ga4e3d36e590816cf46564262e032c6651">
               <span class="m-doc-wrap-bumper">#define <a href="#ga4e3d36e590816cf46564262e032c6651" class="m-doc-self">STD_VECTOR_DEFAULT_LONG_CAPACITY</a></span>
             </dt>
-            <dd>The default memory allocation size for <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> if short optimization is disabled.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gaeeb06e70bd1b12b1bedbb89d7237f82d" class="m-doc">DeclStdVector</a>(</span><span class="m-doc-wrap">T)</span>
-            </dt>
-            <dd>Use this macro to instantiate the declarations for <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> containing <code>T</code>s. This provides the struct declarations and definitions and function declarations for <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>.</dd>
+            <dd>The default heap-allocated capacity if not given as a template parameter.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga80dae83b70ad850a72a593a495402e25" class="m-doc">std_vector_new</a>(</span><span class="m-doc-wrap">T)</span>
             </dt>
             <dd>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with defaulted associated functions and initial capacity.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga58e564ee4252f1e25851a515d9462c9c" class="m-doc">std_vector_new_with_collection_data</a>(</span><span class="m-doc-wrap">T,
-              collection_data)</span>
+              <span class="m-doc-wrap-bumper">#define <a href="#gacbf86362e5fc6844653143f143a86dcf" class="m-doc">std_vector_new_with_allocator</a>(</span><span class="m-doc-wrap">T,
+              allocator)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with defaulted capacity and associated functions and provided memory allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab99318e56247336713f83dcbe6e59951" class="m-doc">std_vector_new_with_collection_data</a>(</span><span class="m-doc-wrap">T,
+              collection_data_ptr)</span>
             </dt>
             <dd>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with defaulted capacity and provided associated functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga3a2ba56e89cf2961adf971724e6f4e90" class="m-doc">std_vector_new_with_allocator_and_collection_data</a>(</span><span class="m-doc-wrap">T,
+              allocator,
+              collection_data_ptr)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with defaulted capacity and provided associated functions and memory allocator.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga48829acef0cb046f485838671c25dc0e" class="m-doc">std_vector_new_with_capacity</a>(</span><span class="m-doc-wrap">T,
               capacity)</span>
             </dt>
             <dd>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with <strong>at least</strong> the given capacity and defaulted associated functions.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gaaf9ba95030914fb6fcdceb5c9f3bc472" class="m-doc">std_vector_new_with_capacity_with_collection_data</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4c7d9f1722cf64dcd30ddb2b7344aa91" class="m-doc">std_vector_new_with_capacity_and_allocator</a>(</span><span class="m-doc-wrap">T,
               capacity,
-              collection_data)</span>
+              allocator)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with <strong>at least</strong> the given capacity, defaulted associated functions, and provided memory allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5c6c368cb7b7c02783814cfe219e986f" class="m-doc">std_vector_new_with_capacity_and_collection_data</a>(</span><span class="m-doc-wrap">T,
+              capacity,
+              collection_data_ptr)</span>
             </dt>
             <dd>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with <strong>at least</strong> the given capacity and provided associated functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac035d8fd9598a938ebdebefb0f17eb5a" class="m-doc">std_vector_new_with_capacity_allocator_and_collection_data</a>(</span><span class="m-doc-wrap">T,
+              capacity,
+              allocator,
+              collection_data_ptr)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with <strong>at least</strong> the given capacity and provided associated functions and memory allocator.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga8e1ea438ddc419dd40dda41b8d19b7e2" class="m-doc">std_vector_clone</a>(</span><span class="m-doc-wrap">self)</span>
             </dt>
@@ -363,10 +384,6 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga10796f2ff6a701f80a8c7977569b7761" class="m-doc-self">std_vector_scoped</a>(</span><span class="m-doc-wrap">T)</span>
             </dt>
             <dd>declare a <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> variable with this attribute to have <code>std_vector_free</code> automatically called on it at scope end</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gac4185082dbf25baa989a3ac6c077b0e6" class="m-doc">ImplStdVector</a>(</span><span class="m-doc-wrap">T)</span>
-            </dt>
-            <dd>Use this macro to instantiate the definitions for a <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> containing <code>T</code>s. This provides the function definitions for <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>.</dd>
           </dl>
         </section>
         <section>
@@ -408,24 +425,6 @@
 <span class="p">}</span>
 <span class="c1">// `vec2` is freed here</span></pre><p>Like other C2nxt collections, <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> provides its type-agnostic usage through a vtable pointer contained in the struct, and provides macros which wrap the usage of the vtable, making access simpler. If you prefer to not use this method of access, you can call the typed functions directly by in-fixing the contained type in the associated function name. IE: for <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(i32)</a></code>, <code>vec</code>, the equivalent function call for <code><a href="group__std__vector.html#ga68c1b117727513c31db46072b0d8707d" class="m-doc">std_<wbr />vector_<wbr />push_<wbr />back(vec, element)</a></code> would be <code>std_vector_i32_push_back(&amp;vec, element)</code></p>
           </div></section>
-          <section class="m-doc-details" id="gaeeb06e70bd1b12b1bedbb89d7237f82d"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gaeeb06e70bd1b12b1bedbb89d7237f82d" class="m-doc-self">DeclStdVector</a>(</span><span class="m-doc-wrap">T)</span>
-            </h3>
-            <p>Use this macro to instantiate the declarations for <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> containing <code>T</code>s. This provides the struct declarations and definitions and function declarations for <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">T</td>
-                  <td>- The element type of the <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> instantiation</td>
-                </tr>
-              </tbody>
-            </table>
-<p>Requires that the following have been met prior to use:</p><ol><li>a <code>typedef</code> of your type to provide an alphanumeric name for it</li><li>a <code>typedef</code> for pointer to your type as <code><a href="group__std__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(YourType)</a></code></li><li>a <code>typedef</code> for pointer to const your type as <code><a href="group__std__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(YourType)</a></code></li><li>Instantiations for C2nxt iterators for the typedefs provided in (2) and (3)</li><li><p>Instantiation of <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(YourType)</a></code>, via provided macros</p><aside class="m-note m-default"><h4>See also</h4><p><code><a href="group__std__string.html#ga4bf1aba4bb8d1584235735fae6bbc360" class="m-doc">StdOption</a></code></p></aside></li></ol>
-          </div></section>
           <section class="m-doc-details" id="ga80dae83b70ad850a72a593a495402e25"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga80dae83b70ad850a72a593a495402e25" class="m-doc-self">std_vector_new</a>(</span><span class="m-doc-wrap">T)</span>
@@ -450,10 +449,39 @@
             </table>
 <p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with:</p><ol><li>defaulted initial capacity</li><li>defaulted associated element default-constructor</li><li>defaulted associated element copy-constructor</li><li>defaulted associated element destructor</li><li>defaulted associated memory allocator</li></ol>
           </div></section>
-          <section class="m-doc-details" id="ga58e564ee4252f1e25851a515d9462c9c"><div>
+          <section class="m-doc-details" id="gacbf86362e5fc6844653143f143a86dcf"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga58e564ee4252f1e25851a515d9462c9c" class="m-doc-self">std_vector_new_with_collection_data</a>(</span><span class="m-doc-wrap">T,
-              collection_data)</span>
+              <span class="m-doc-wrap-bumper">#define <a href="#gacbf86362e5fc6844653143f143a86dcf" class="m-doc-self">std_vector_new_with_allocator</a>(</span><span class="m-doc-wrap">T,
+              allocator)</span>
+            </h3>
+            <p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with defaulted capacity and associated functions and provided memory allocator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code>StdAllocator</code> to use for memory allocations</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with:</p><ol><li>defaulted initial capacity</li><li>defaulted associated element default-constructor</li><li>defaulted associated element copy-constructor</li><li>defaulted element destructor</li><li>user-provided memory allocator</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="gab99318e56247336713f83dcbe6e59951"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab99318e56247336713f83dcbe6e59951" class="m-doc-self">std_vector_new_with_collection_data</a>(</span><span class="m-doc-wrap">T,
+              collection_data_ptr)</span>
             </h3>
             <p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with defaulted capacity and provided associated functions.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -466,8 +494,42 @@
                   <td>- The element type of the <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> instantiation to create</td>
                 </tr>
                 <tr>
-                  <td>collection_data</td>
-                  <td>- The <code><a href="group__collections.html#ga53cfd9d58fc7437fb13ca08499a131f7" class="m-doc">StdCollectionData(CollectionType)</a></code> containing the element default-constructor, element copy-constructor, element destructor, and memory allocator to use</td>
+                  <td>collection_data_ptr</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with:</p><ol><li>defaulted initial capacity</li><li>possibly user-provided element default-constructor</li><li>possibly user-provided associated element copy-constructor</li><li>possibly user-provided element destructor</li><li>user-provided memory allocator</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="ga3a2ba56e89cf2961adf971724e6f4e90"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga3a2ba56e89cf2961adf971724e6f4e90" class="m-doc-self">std_vector_new_with_allocator_and_collection_data</a>(</span><span class="m-doc-wrap">T,
+              allocator,
+              collection_data_ptr)</span>
+            </h3>
+            <p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with defaulted capacity and provided associated functions and memory allocator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code>StdAllocator</code> to use for memory allocations</td>
+                </tr>
+                <tr>
+                  <td>collection_data_ptr</td>
+                  <td></td>
                 </tr>
               </tbody>
               <tfoot>
@@ -508,11 +570,45 @@
             </table>
 <p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with:</p><ol><li>given initial capacity</li><li>defaulted associated element default-constructor</li><li>defaulted associated element copy-constructor</li><li>defaulted associated element destructor</li><li>defaulted memory allocator</li></ol>
           </div></section>
-          <section class="m-doc-details" id="gaaf9ba95030914fb6fcdceb5c9f3bc472"><div>
+          <section class="m-doc-details" id="ga4c7d9f1722cf64dcd30ddb2b7344aa91"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gaaf9ba95030914fb6fcdceb5c9f3bc472" class="m-doc-self">std_vector_new_with_capacity_with_collection_data</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4c7d9f1722cf64dcd30ddb2b7344aa91" class="m-doc-self">std_vector_new_with_capacity_and_allocator</a>(</span><span class="m-doc-wrap">T,
               capacity,
-              collection_data)</span>
+              allocator)</span>
+            </h3>
+            <p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with <strong>at least</strong> the given capacity, defaulted associated functions, and provided memory allocator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>capacity</td>
+                  <td>- The initial capacity of the vector</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code>StdAllocator</code> to use for memory allocations</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with:</p><ol><li>given initial capacity</li><li>defaulted associated element default-constructor</li><li>defaulted associated element copy-constructor</li><li>defaulted associated element destructor</li><li>defaulted memory allocator</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="ga5c6c368cb7b7c02783814cfe219e986f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5c6c368cb7b7c02783814cfe219e986f" class="m-doc-self">std_vector_new_with_capacity_and_collection_data</a>(</span><span class="m-doc-wrap">T,
+              capacity,
+              collection_data_ptr)</span>
             </h3>
             <p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with <strong>at least</strong> the given capacity and provided associated functions.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -529,8 +625,47 @@
                   <td>- The initial capacity of the vector</td>
                 </tr>
                 <tr>
-                  <td>collection_data</td>
-                  <td>- The <code><a href="group__collections.html#ga53cfd9d58fc7437fb13ca08499a131f7" class="m-doc">StdCollectionData(CollectionType)</a></code> containing the element default-constructor, element copy-constructor, element destructor, and memory allocator to use</td>
+                  <td>collection_data_ptr</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with:</p><ol><li>given initial capacity</li><li>possibly user-provided associated element default-constructor</li><li>possibly user-provided associated element copy-constructor</li><li>possibly user-provided associated element destructor</li><li>user-provided memory allocator</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="gac035d8fd9598a938ebdebefb0f17eb5a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac035d8fd9598a938ebdebefb0f17eb5a" class="m-doc-self">std_vector_new_with_capacity_allocator_and_collection_data</a>(</span><span class="m-doc-wrap">T,
+              capacity,
+              allocator,
+              collection_data_ptr)</span>
+            </h3>
+            <p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> with <strong>at least</strong> the given capacity and provided associated functions and memory allocator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>capacity</td>
+                  <td>- The initial capacity of the vector</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code>StdAllocator</code> to use for memory allocations</td>
+                </tr>
+                <tr>
+                  <td>collection_data_ptr</td>
+                  <td></td>
                 </tr>
               </tbody>
               <tfoot>
@@ -1165,24 +1300,6 @@
                 </tr>
               </tfoot>
             </table>
-          </div></section>
-          <section class="m-doc-details" id="gac4185082dbf25baa989a3ac6c077b0e6"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gac4185082dbf25baa989a3ac6c077b0e6" class="m-doc-self">ImplStdVector</a>(</span><span class="m-doc-wrap">T)</span>
-            </h3>
-            <p>Use this macro to instantiate the definitions for a <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> containing <code>T</code>s. This provides the function definitions for <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">T</td>
-                  <td>- The element type of the <code>StdArray</code> instantiation</td>
-                </tr>
-              </tbody>
-            </table>
-<p>Requires that <code><a href="group__std__vector.html#gaeeb06e70bd1b12b1bedbb89d7237f82d" class="m-doc">DeclStdVector(T)</a></code> has already been used and is in scope, and that the requirements for that have already been met.</p>
           </div></section>
         </section>
       </div>
