@@ -5,7 +5,9 @@
 #include <C2nxt/StdMath.h>
 #include <criterion/criterion.h>
 
-#define TEST(...)					/** NOLINT(readability-function-cognitive-complexity) **/ Test(__VA_ARGS__)
+#define TEST(...)                                                                                                        \
+	/** NOLINTNEXTLINE(readability-function-cognitive-complexity,cppcoreguidelines-avoid-non-const-global-variables) **/ \
+	Test(__VA_ARGS__)
 #define TEST_ASSERT(condition, ...) cr_assert(condition __VA_OPT__(, ) __VA_ARGS__)
 #define TEST_ASSERT_EQUAL(actual, expected, ...) \
 	cr_assert_eq(actual, expected __VA_OPT__(, ) __VA_ARGS__)

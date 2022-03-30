@@ -8,6 +8,7 @@ docs/doxygen/xml
 docs/__pycache__/
 /.cache/
 /build/
+/build-gcc/
 /cmake-build-debug/
 /cmake-build-release/
 .idea/

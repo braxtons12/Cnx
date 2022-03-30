@@ -3,7 +3,7 @@
 /// @brief This module provides the type definitions and function declarations for a struct template
 /// for representing a uniquely owned pointer
 /// @version 0.2.0
-/// @date 2022-03-28
+/// @date 2022-03-29
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -29,6 +29,8 @@
 #include <C2nxt/StdDef.h>
 
 #if defined(UNIQUE_T) && defined(UNIQUE_DELETER) && UNIQUE_DECL
+
+IGNORE_MISSING_FIELD_INITIALIZERS_WARNING_START
 
 	#define STD_TEMPlATE_SUPPRESS_INSTANTIATIONS TRUE
 
@@ -166,4 +168,6 @@ StdUniquePtrIdentifier(UNIQUE_T, vtable);
 
 	#undef ___DISABLE_IF_NULL
 	#undef STD_TEMPlATE_SUPPRESS_INSTANTIATIONS
+
+IGNORE_MISSING_FIELD_INITIALIZERS_WARNING_STOP
 #endif // defined(UNIQUE_T) && UNIQUE_DECL

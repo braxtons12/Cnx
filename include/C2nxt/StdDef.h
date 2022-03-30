@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief StdDef provides various `#define`s for performing basic tasks and macro-related
 /// functions.
-/// @version 0.2
-/// @date 2022-03-06
+/// @version 0.2.1
+/// @date 2022-03-29
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -157,205 +157,205 @@
 		#define std_warn_if(condition, message) \
 			__attribute__((diagnose_if((condition), (message), "warning")))
 	#else
-			/// @brief Disables the preceding/following function at compile-time
-			///
-			/// Forces a compiler error with the given message if the associated function is called.
-			///
-			/// @param message - The error message for the compiler to show the user
-			/// @ingroup std_def
+		/// @brief Disables the preceding/following function at compile-time
+		///
+		/// Forces a compiler error with the given message if the associated function is called.
+		///
+		/// @param message - The error message for the compiler to show the user
+		/// @ingroup std_def
 		#define std_disable(message) __attribute__((error(message)))
-			/// @brief Disables the preceding/following function at compile-time, based on the given
-			/// `condition`
-			///
-			/// Forces a compiler error with the given message if the associated function is called
-			/// and `condition` evaluates to `true`. `condition` can include parameters to the
-			/// function if this is applied as a postfix, thus enabling things like:
-			/// @code {.c}
-			/// int func(int a, int b) std_disable_if(a < b, "a must be greater than b") {
-			/// 	// do things here...
-			/// }
-			/// @endcode
-			///
-			/// @param condition - The condition indicating whether the function should be disabled
-			/// @param message - The error message for the compiler to show the user
-			///
-			/// @note This is only available when compiling with Clang
-			///
-			/// @ingroup std_def
+		/// @brief Disables the preceding/following function at compile-time, based on the given
+		/// `condition`
+		///
+		/// Forces a compiler error with the given message if the associated function is called
+		/// and `condition` evaluates to `true`. `condition` can include parameters to the
+		/// function if this is applied as a postfix, thus enabling things like:
+		/// @code {.c}
+		/// int func(int a, int b) std_disable_if(a < b, "a must be greater than b") {
+		/// 	// do things here...
+		/// }
+		/// @endcode
+		///
+		/// @param condition - The condition indicating whether the function should be disabled
+		/// @param message - The error message for the compiler to show the user
+		///
+		/// @note This is only available when compiling with Clang
+		///
+		/// @ingroup std_def
 		#define std_disable_if(condition, message)
-			/// @brief Enables the preceding/following function at compile-time, based on the given
-			/// `condition`
-			///
-			/// Forces a compiler error with the given message if the associated function is called
-			/// and `condition` evaluates to `false`. `condition` can include parameters to the
-			/// function if this is applied as a postfix, thus enabling things like:
-			/// @code {.c}
-			/// int func(int a, int b) std_enable_if(a > b, "a must be greater than b") {
-			/// 	// do things here...
-			/// }
-			/// @endcode
-			///
-			/// @param condition - The condition indicating whether the function should be enabled
-			/// @param message - The error message for the compiler to show the user
-			///
-			/// @note This is only available when compiling with Clang
-			///
-			/// @ingroup std_def
+		/// @brief Enables the preceding/following function at compile-time, based on the given
+		/// `condition`
+		///
+		/// Forces a compiler error with the given message if the associated function is called
+		/// and `condition` evaluates to `false`. `condition` can include parameters to the
+		/// function if this is applied as a postfix, thus enabling things like:
+		/// @code {.c}
+		/// int func(int a, int b) std_enable_if(a > b, "a must be greater than b") {
+		/// 	// do things here...
+		/// }
+		/// @endcode
+		///
+		/// @param condition - The condition indicating whether the function should be enabled
+		/// @param message - The error message for the compiler to show the user
+		///
+		/// @note This is only available when compiling with Clang
+		///
+		/// @ingroup std_def
 		#define std_enable_if(condition, message)
-			/// @brief Emits a warning for using the preceding/following function at compile-time,
-			/// based on the given `condition`
-			///
-			/// Forces a compiler warning with the given message if the associated function is
-			/// called and `condition` evaluates to `true`. `condition` can include parameters to
-			/// the function if this is applied as a postfix, thus enabling things like:
-			/// @code {.c}
-			/// int func(int a, int b) std_warn_if(a < b, "a must be greater than b") {
-			/// 	// do things here...
-			/// }
-			/// @endcode
-			///
-			/// @param condition - The condition indicating whether using the function should cause
-			/// a warning
-			/// @param message - The error message for the compiler to show the user
-			///
-			/// @note This is only available when compiling with Clang
-			///
-			/// @ingroup std_def
+		/// @brief Emits a warning for using the preceding/following function at compile-time,
+		/// based on the given `condition`
+		///
+		/// Forces a compiler warning with the given message if the associated function is
+		/// called and `condition` evaluates to `true`. `condition` can include parameters to
+		/// the function if this is applied as a postfix, thus enabling things like:
+		/// @code {.c}
+		/// int func(int a, int b) std_warn_if(a < b, "a must be greater than b") {
+		/// 	// do things here...
+		/// }
+		/// @endcode
+		///
+		/// @param condition - The condition indicating whether using the function should cause
+		/// a warning
+		/// @param message - The error message for the compiler to show the user
+		///
+		/// @note This is only available when compiling with Clang
+		///
+		/// @ingroup std_def
 		#define std_warn_if(condition, message)
 	#endif
 #elif STD_PLATFORM_COMPILER_CLANG
-		/// @brief Disables the preceding/following function at compile-time
-		///
-		/// Forces a compiler error with the given message if the associated function is called.
-		///
-		/// @param message - The error message for the compiler to show the user
-		/// @ingroup std_def
+	/// @brief Disables the preceding/following function at compile-time
+	///
+	/// Forces a compiler error with the given message if the associated function is called.
+	///
+	/// @param message - The error message for the compiler to show the user
+	/// @ingroup std_def
 	#define std_disable(message) __attribute__((diagnose_if(true, (message), "error")))
-		/// @brief Disables the preceding/following function at compile-time, based on the given
-		/// `condition`
-		///
-		/// Forces a compiler error with the given message if the associated function is called and
-		/// `condition` evaluates to `true`. `condition` can include parameters to the function if
-		/// this is applied as a postfix, thus enabling things like:
-		/// @code {.c}
-		/// int func(int a, int b) std_disable_if(a < b, "a must be greater than b") {
-		/// 	// do things here...
-		/// }
-		/// @endcode
-		///
-		/// @param condition - The condition indicating whether the function should be disabled
-		/// @param message - The error message for the compiler to show the user
-		///
-		/// @note This is only available when compiling with Clang
-		///
-		/// @ingroup std_def
+	/// @brief Disables the preceding/following function at compile-time, based on the given
+	/// `condition`
+	///
+	/// Forces a compiler error with the given message if the associated function is called and
+	/// `condition` evaluates to `true`. `condition` can include parameters to the function if
+	/// this is applied as a postfix, thus enabling things like:
+	/// @code {.c}
+	/// int func(int a, int b) std_disable_if(a < b, "a must be greater than b") {
+	/// 	// do things here...
+	/// }
+	/// @endcode
+	///
+	/// @param condition - The condition indicating whether the function should be disabled
+	/// @param message - The error message for the compiler to show the user
+	///
+	/// @note This is only available when compiling with Clang
+	///
+	/// @ingroup std_def
 	#define std_disable_if(condition, message) \
 		__attribute__((diagnose_if((condition), (message), "error")))
-		/// @brief Enables the preceding/following function at compile-time, based on the given
-		/// `condition`
-		///
-		/// Forces a compiler error with the given message if the associated function is called and
-		/// `condition` evaluates to `false`. `condition` can include parameters to the function if
-		/// this is applied as a postfix, thus enabling things like:
-		/// @code {.c}
-		/// int func(int a, int b) std_enable_if(a > b, "a must be greater than b") {
-		/// 	// do things here...
-		/// }
-		/// @endcode
-		///
-		/// @param condition - The condition indicating whether the function should be enabled
-		/// @param message - The error message for the compiler to show the user
-		///
-		/// @note This is only available when compiling with Clang
-		///
-		/// @ingroup std_def
+	/// @brief Enables the preceding/following function at compile-time, based on the given
+	/// `condition`
+	///
+	/// Forces a compiler error with the given message if the associated function is called and
+	/// `condition` evaluates to `false`. `condition` can include parameters to the function if
+	/// this is applied as a postfix, thus enabling things like:
+	/// @code {.c}
+	/// int func(int a, int b) std_enable_if(a > b, "a must be greater than b") {
+	/// 	// do things here...
+	/// }
+	/// @endcode
+	///
+	/// @param condition - The condition indicating whether the function should be enabled
+	/// @param message - The error message for the compiler to show the user
+	///
+	/// @note This is only available when compiling with Clang
+	///
+	/// @ingroup std_def
 	#define std_enable_if(condition, message) std_disable_if(!(condition), (message))
-		/// @brief Emits a warning for using the preceding/following function at compile-time, based
-		/// on the given `condition`
-		///
-		/// Forces a compiler warning with the given message if the associated function is called
-		/// and `condition` evaluates to `true`. `condition` can include parameters to the function
-		/// if this is applied as a postfix, thus enabling things like:
-		/// @code {.c}
-		/// int func(int a, int b) std_warn_if(a < b, "a must be greater than b") {
-		/// 	// do things here...
-		/// }
-		/// @endcode
-		///
-		/// @param condition - The condition indicating whether using the function should cause a
-		/// warning
-		/// @param message - The error message for the compiler to show the user
-		///
-		/// @note This is only available when compiling with Clang
-		///
-		/// @ingroup std_def
+	/// @brief Emits a warning for using the preceding/following function at compile-time, based
+	/// on the given `condition`
+	///
+	/// Forces a compiler warning with the given message if the associated function is called
+	/// and `condition` evaluates to `true`. `condition` can include parameters to the function
+	/// if this is applied as a postfix, thus enabling things like:
+	/// @code {.c}
+	/// int func(int a, int b) std_warn_if(a < b, "a must be greater than b") {
+	/// 	// do things here...
+	/// }
+	/// @endcode
+	///
+	/// @param condition - The condition indicating whether using the function should cause a
+	/// warning
+	/// @param message - The error message for the compiler to show the user
+	///
+	/// @note This is only available when compiling with Clang
+	///
+	/// @ingroup std_def
 	#define std_warn_if(condition, message) \
 		__attribute__((diagnose_if((condition), (message), "warning")))
 #else
-		/// @brief Disables the preceding/following function at compile-time
-		///
-		/// Forces a compiler error with the given message if the associated function is called.
-		///
-		/// @param message - The error message for the compiler to show the user
-		/// @ingroup std_def
+	/// @brief Disables the preceding/following function at compile-time
+	///
+	/// Forces a compiler error with the given message if the associated function is called.
+	///
+	/// @param message - The error message for the compiler to show the user
+	/// @ingroup std_def
 	#define std_disable(message) __attribute__((error(message)))
-		/// @brief Disables the preceding/following function at compile-time, based on the given
-		/// `condition`
-		///
-		/// Forces a compiler error with the given message if the associated function is called and
-		/// `condition` evaluates to `true`. `condition` can include parameters to the function if
-		/// this is applied as a postfix, thus enabling things like:
-		/// @code {.c}
-		/// int func(int a, int b) std_disable_if(a < b, "a must be greater than b") {
-		/// 	// do things here...
-		/// }
-		/// @endcode
-		///
-		/// @param condition - The condition indicating whether the function should be disabled
-		/// @param message - The error message for the compiler to show the user
-		///
-		/// @note This is only available when compiling with Clang
-		///
-		/// @ingroup std_def
+	/// @brief Disables the preceding/following function at compile-time, based on the given
+	/// `condition`
+	///
+	/// Forces a compiler error with the given message if the associated function is called and
+	/// `condition` evaluates to `true`. `condition` can include parameters to the function if
+	/// this is applied as a postfix, thus enabling things like:
+	/// @code {.c}
+	/// int func(int a, int b) std_disable_if(a < b, "a must be greater than b") {
+	/// 	// do things here...
+	/// }
+	/// @endcode
+	///
+	/// @param condition - The condition indicating whether the function should be disabled
+	/// @param message - The error message for the compiler to show the user
+	///
+	/// @note This is only available when compiling with Clang
+	///
+	/// @ingroup std_def
 	#define std_disable_if(condition, message)
-		/// @brief Enables the preceding/following function at compile-time, based on the given
-		/// `condition`
-		///
-		/// Forces a compiler error with the given message if the associated function is called and
-		/// `condition` evaluates to `false`. `condition` can include parameters to the function if
-		/// this is applied as a postfix, thus enabling things like:
-		/// @code {.c}
-		/// int func(int a, int b) std_enable_if(a > b, "a must be greater than b") {
-		/// 	// do things here...
-		/// }
-		/// @endcode
-		///
-		/// @param condition - The condition indicating whether the function should be enabled
-		/// @param message - The error message for the compiler to show the user
-		///
-		/// @note This is only available when compiling with Clang
-		///
-		/// @ingroup std_def
+	/// @brief Enables the preceding/following function at compile-time, based on the given
+	/// `condition`
+	///
+	/// Forces a compiler error with the given message if the associated function is called and
+	/// `condition` evaluates to `false`. `condition` can include parameters to the function if
+	/// this is applied as a postfix, thus enabling things like:
+	/// @code {.c}
+	/// int func(int a, int b) std_enable_if(a > b, "a must be greater than b") {
+	/// 	// do things here...
+	/// }
+	/// @endcode
+	///
+	/// @param condition - The condition indicating whether the function should be enabled
+	/// @param message - The error message for the compiler to show the user
+	///
+	/// @note This is only available when compiling with Clang
+	///
+	/// @ingroup std_def
 	#define std_enable_if(condition, message)
-		/// @brief Emits a warning for using the preceding/following function at compile-time, based
-		/// on the given `condition`
-		///
-		/// Forces a compiler warning with the given message if the associated function is called
-		/// and `condition` evaluates to `true`. `condition` can include parameters to the function
-		/// if this is applied as a postfix, thus enabling things like:
-		/// @code {.c}
-		/// int func(int a, int b) std_warn_if(a < b, "a must be greater than b") {
-		/// 	// do things here...
-		/// }
-		/// @endcode
-		///
-		/// @param condition - The condition indicating whether using the function should cause a
-		/// warning
-		/// @param message - The error message for the compiler to show the user
-		///
-		/// @note This is only available when compiling with Clang
-		///
-		/// @ingroup std_def
+	/// @brief Emits a warning for using the preceding/following function at compile-time, based
+	/// on the given `condition`
+	///
+	/// Forces a compiler warning with the given message if the associated function is called
+	/// and `condition` evaluates to `true`. `condition` can include parameters to the function
+	/// if this is applied as a postfix, thus enabling things like:
+	/// @code {.c}
+	/// int func(int a, int b) std_warn_if(a < b, "a must be greater than b") {
+	/// 	// do things here...
+	/// }
+	/// @endcode
+	///
+	/// @param condition - The condition indicating whether using the function should cause a
+	/// warning
+	/// @param message - The error message for the compiler to show the user
+	///
+	/// @note This is only available when compiling with Clang
+	///
+	/// @ingroup std_def
 	#define std_warn_if(condition, message)
 #endif
 
@@ -416,6 +416,21 @@
 /// scope
 /// @ingroup std_def
 #define scoped(scope_end_func) [[gnu::cleanup(scope_end_func)]] let_mut
+
+/// @brief Moves `self` into the assigned-to or bound-to variable/parameter/etc.
+///
+/// This brings some semblance of C++ or Rust style move semantics to C
+///
+/// @param self - The object to move
+///
+/// @return the moved value
+/// @ingroup std_def
+#define move(self)                               \
+	({                                           \
+		let_mut UNIQUE_VAR(moved) = self;        \
+		self = (typeof(self)){0}; /** NOLINT **/ \
+		UNIQUE_VAR(moved);                       \
+	})
 
 /// @brief Declare a variable with `let` to create a `const` variable with inferred type.
 ///
@@ -564,6 +579,11 @@
 #define IGNORE_CAST_FUNCTION_TYPE_WARNING_START \
 	_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wcast-function-type\"")
 #define IGNORE_CAST_FUNCTION_TYPE_WARNING_STOP _Pragma("GCC diagnostic pop")
+
+#define IGNORE_MISSING_FIELD_INITIALIZERS_WARNING_START \
+	_Pragma("GCC diagnostic push")                      \
+		_Pragma("GCC diagnostic ignored \"-Wmissing-field-initializers\"")
+#define IGNORE_MISSING_FIELD_INITIALIZERS_WARNING_STOP _Pragma("GCC diagnostic pop")
 
 #if STD_PLATFORM_COMPILER_CLANG
 	#define IGNORE_RESERVED_IDENTIFIER_WARNING_START \

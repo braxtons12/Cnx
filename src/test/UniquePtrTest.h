@@ -153,4 +153,34 @@ TEST(StdUniquePtr, make_unique) {
 	TEST_ASSERT_EQUAL(*ptr(ptr), 4);
 }
 
+typedef struct {
+	i32 first;
+	i32 second;
+	i32 third;
+} UniquePtrTestStruct;
+
+#define UNIQUE_T			UniquePtrTestStruct
+#define UNIQUE_DECL			TRUE
+#define UNIQUE_IMPL			TRUE
+#define UNIQUE_UNDEF_PARAMS TRUE
+#include <C2nxt/StdUniquePtr.h>
+#undef UNIQUE_UNDEF_PARAMS
+
+TEST(StdUniquePtr, make_unique_struct) {
+	unique_scoped(UniquePtrTestStruct) ptr
+		= std_make_unique(UniquePtrTestStruct, .first = 3, .second = 4, .third = 1);
+
+	TEST_ASSERT_NOT_EQUAL(ptr(ptr), nullptr);
+
+	let contained = *ptr(ptr);
+
+	TEST_ASSERT_EQUAL(contained.first, 3);
+	TEST_ASSERT_EQUAL(contained.second, 4);
+	TEST_ASSERT_EQUAL(contained.third, 1);
+
+	TEST_ASSERT_EQUAL((*ptr(ptr)).first, 3);
+	TEST_ASSERT_EQUAL((*ptr(ptr)).second, 4);
+	TEST_ASSERT_EQUAL((*ptr(ptr)).third, 1);
+}
+
 #endif // STD_UNIQUE_PTR_TEST
