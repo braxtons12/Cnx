@@ -34,7 +34,7 @@
 #ifndef STD_ALLOCATORS
 	#define STD_ALLOCATORS
 
-/// @struct `StdAllocator`
+/// @struct StdAllocator
 /// @brief A `StdAllocator` is a convenient abstraction for wrapping memory allocation and
 /// deallocation, making it simple and easy to write allocator-configurable and/or allocator aware
 /// software
