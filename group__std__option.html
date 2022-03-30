@@ -55,10 +55,21 @@
             </li>
           </ul>
         </nav>
-<p><code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> is a &quot;struct template&quot; for representing an optional value. It enables a simple, type-safe way of working with values that may or may not exist or be value, without resorting to heap-allocation and pointers or out-parameters.</p><p><code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> shares some functionality, such as <code><a href="group__monadics.html#ga745eab30a42a750fe7e090cf8e49a2e5" class="m-doc">if_<wbr />let(var, self)</a></code>, with <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> (see <a href="group__monadics.html" class="m-doc">Monadic Interfaces</a>).</p><p>Example:</p><pre class="m-code"><span class="n">StdOption</span><span class="p">(</span><span class="n">u32</span><span class="p">)</span> <span class="n">checked_add</span><span class="p">(</span><span class="n">u32</span> <span class="n">left</span><span class="p">,</span> <span class="n">u32</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">left</span> <span class="o">&lt;</span> <span class="n">std_max</span><span class="p">(</span><span class="n">u32</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&amp;&amp;</span> <span class="n">right</span> <span class="o">&lt;</span> <span class="n">std_max</span><span class="p">(</span><span class="n">u32</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">?</span>
-                <span class="n">Some</span><span class="p">(</span><span class="n">u32</span><span class="p">,</span> <span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span> <span class="o">:</span>
-                <span class="n">None</span><span class="p">(</span><span class="n">u32</span><span class="p">);</span>
+<p><code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> is a &quot;struct template&quot; for an <code>Enum</code> representing an optional value. It enables a simple, type-safe way of working with values that may or may not exist or be valid, without resorting to heap-allocation and pointers or out-parameters.</p><p>Instantiating <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> for a given <code>T</code> is simple, and follows the same methodology as other C2nxt templates:</p><p>Example:</p><pre class="m-code"><span class="c1">// have the template automatically undef macro template parameters</span>
+<span class="cp">#define OPTION_UNDEF_PARAMS</span>
+
+<span class="c1">// instantiate the declarations of the `StdOption(T)` template</span>
+<span class="cp">#define T MyType</span>
+<span class="cp">#define OPTION_DECL TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdOption.h&gt;</span><span class="cp"></span>
+
+<span class="c1">// instantiate the definitions of the `StdOption(T)` template</span>
+<span class="cp">#define T MyType</span>
+<span class="cp">#define OPTION_DECL TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdOption.h&gt;</span><span class="cp"></span></pre><p>Once instantiated, <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> can be easily used: Example:</p><pre class="m-code"><span class="n">StdOption</span><span class="p">(</span><span class="n">u32</span><span class="p">)</span> <span class="n">checked_add</span><span class="p">(</span><span class="n">u32</span> <span class="n">left</span><span class="p">,</span> <span class="n">u32</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="n">std_max_value</span><span class="p">(</span><span class="n">u32</span><span class="p">)</span> <span class="o">-</span> <span class="n">right</span> <span class="o">?</span>
+            <span class="n">Some</span><span class="p">(</span><span class="n">u32</span><span class="p">,</span> <span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span> <span class="o">:</span>
+            <span class="n">None</span><span class="p">(</span><span class="n">u32</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="n">do_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
@@ -66,11 +77,14 @@
     <span class="n">let</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
     <span class="c1">// do something with left and/or right ...</span>
     <span class="n">let_mut</span> <span class="n">maybe_added</span> <span class="o">=</span> <span class="n">checked_add</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">);</span>
-    <span class="n">if_let</span><span class="p">(</span><span class="n">added</span><span class="p">,</span> <span class="n">maybe_added</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// do something with added...</span>
-    <span class="p">}</span>
-    <span class="k">else</span> <span class="p">{</span>
-        <span class="c1">// maybe_added was `None(u32)`, do something to recover...</span>
+
+    <span class="n">match</span><span class="p">(</span><span class="n">maybe_added</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">variant</span><span class="p">(</span><span class="n">Some</span><span class="p">,</span> <span class="n">added</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// do something with added</span>
+        <span class="p">}</span>
+        <span class="n">variant</span><span class="p">(</span><span class="n">None</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">maybe_added</span> <span class="n">was</span> <span class="n">the</span> <span class="err">`</span><span class="n">None</span><span class="err">`</span> <span class="n">variant</span><span class="p">,</span> <span class="k">do</span> <span class="n">something</span> <span class="n">to</span> <span class="n">recover</span>
+        <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span></pre>
         <section id="define-members">
@@ -80,10 +94,6 @@
               <span class="m-doc-wrap-bumper">#define <a href="#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption</a>(</span><span class="m-doc-wrap">T)</span>
             </dt>
             <dd>Macro alias for <code>StdOption</code> holding the type <code>T</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gab9c9030bde239415e70f7e22eb4dbab3" class="m-doc">DeclStdOption</a>(</span><span class="m-doc-wrap">T)</span>
-            </dt>
-            <dd>Instantiates <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> holding the type <code>T</code></dd>
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some</a>(</span><span class="m-doc-wrap">T,
               value)</span>
@@ -129,17 +139,47 @@
             </dt>
             <dd>Returns the value stored in this <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code></dd>
             <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7aca9905f4dd26a2aee6e3a80382cf32" class="m-doc">std_option_map</a>(</span><span class="m-doc-wrap">self,
+              MapType,
+              map_func)</span>
+            </dt>
+            <dd>Maps the value stored in this <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga0d2daf7ff40396972cd2b957b673d851" class="m-doc">std_option_map_or</a>(</span><span class="m-doc-wrap">self,
+              map_func,
+              default_value)</span>
+            </dt>
+            <dd>Maps the value stored in this <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaf399ef4c6dddb9cae90286c4abcde31b" class="m-doc">std_option_map_or_else</a>(</span><span class="m-doc-wrap">self,
+              map_func,
+              default_generator)</span>
+            </dt>
+            <dd>Maps the value stored in this <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga02b4b78a18a868f526ee195342671228" class="m-doc">std_option_and</a>(</span><span class="m-doc-wrap">self,
+              option_b)</span>
+            </dt>
+            <dd>Returns <code>option_b</code> if <code>self</code> is <code>Some</code>. Otherwise, returns <code>None</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad2f7d9a4613ce5588a88cedfb2eb7de5" class="m-doc">std_option_and_then</a>(</span><span class="m-doc-wrap">self,
+              next_func)</span>
+            </dt>
+            <dd>Returns the result of calling <code>next_func</code> with the contained value if this is <code>Some</code>, otherwise returns <code>None</code>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae67d0a0ec2a2ba33320736e3af1c966c" class="m-doc">std_option_or</a>(</span><span class="m-doc-wrap">self,
+              option_b)</span>
+            </dt>
+            <dd>Returns <code>self</code> if it is <code>Some</code>, otherwise returns <code>option_b</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae245e7b8ea9e8d8d18c7e8cdb2fd7b3f" class="m-doc">std_option_or_else</a>(</span><span class="m-doc-wrap">self,
+              func)</span>
+            </dt>
+            <dd>Returns <code>self</code> if it is <code>Some</code>, otherwise returns the result of calling <code>func</code></dd>
+            <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#gae038cfb7eab58a3dfbb920fcb3b74ca3" class="m-doc">std_option_as_bool</a>(</span><span class="m-doc-wrap">self)</span>
             </dt>
             <dd>Converts the given <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> to a <code>bool</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gac7c2a81a04362a8995d4423d0348d327" class="m-doc">ImplStdOption</a>(</span><span class="m-doc-wrap">T)</span>
-            </dt>
-            <dd>Instantiates the definitions for <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> holding the type <code>T</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga92bc7e897b94d6da1058aa0cbd4abbc8" class="m-doc">DeclAndImplStdOption</a>(</span><span class="m-doc-wrap">T)</span>
-            </dt>
-            <dd>Fully instantiates <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> holding the type <code>T</code></dd>
           </dl>
         </section>
         <section>
@@ -161,24 +201,6 @@
               </tbody>
             </table>
 <p>Used to generate and refer to a typedef name for <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> instantiations of type <code>T</code></p>
-          </div></section>
-          <section class="m-doc-details" id="gab9c9030bde239415e70f7e22eb4dbab3"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gab9c9030bde239415e70f7e22eb4dbab3" class="m-doc-self">DeclStdOption</a>(</span><span class="m-doc-wrap">T)</span>
-            </h3>
-            <p>Instantiates <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> holding the type <code>T</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">T</td>
-                  <td>- The type stored in the <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code></td>
-                </tr>
-              </tbody>
-            </table>
-<p>Instantiates the function and struct declarations for <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code></p>
           </div></section>
           <section class="m-doc-details" id="ga1296d313b4fd1d599cdcc927981a163e"><div>
             <h3>
@@ -422,7 +444,7 @@
                 </tr>
                 <tr>
                   <td>panic_message</td>
-                  <td>- The custom panic message to use if <code>self</code> is not the <code><a href="group__std__option.html#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some(T, value)</a></code> variant</td>
+                  <td>- The custom panic message to use if <code>self</code> is not the <code>Some(T, value)</code> variant</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -433,6 +455,220 @@
               </tfoot>
             </table>
 <aside class="m-note m-info"><h4>Note</h4><p>Panics if <code>self</code> does not contain a value, with the custom panic message <code>panic_message</code></p></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga7aca9905f4dd26a2aee6e3a80382cf32"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7aca9905f4dd26a2aee6e3a80382cf32" class="m-doc-self">std_option_map</a>(</span><span class="m-doc-wrap">self,
+              MapType,
+              map_func)</span>
+            </h3>
+            <p>Maps the value stored in this <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> to map</td>
+                </tr>
+                <tr>
+                  <td>MapType</td>
+                  <td>- The type to map to. This is the type that will be held by the returned <code>StdOption</code>, and <code>map_func</code> must return this type.</td>
+                </tr>
+                <tr>
+                  <td>map_func</td>
+                  <td>- The function to map the value stored in <code>self</code> to a <code>MapType</code>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(MapType)</a></code> resulting from the mapping</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If <code>self</code> is <code>Some</code>, maps the value stored in it by calling <code>map_func</code> on it. Otherwise, returns <code>None</code>.</p><p><code>map_func</code> must be a function type callable with <code>T</code> and returning <code>MapType</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga0d2daf7ff40396972cd2b957b673d851"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga0d2daf7ff40396972cd2b957b673d851" class="m-doc-self">std_option_map_or</a>(</span><span class="m-doc-wrap">self,
+              map_func,
+              default_value)</span>
+            </h3>
+            <p>Maps the value stored in this <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> to map</td>
+                </tr>
+                <tr>
+                  <td>map_func</td>
+                  <td>- The function to map the value stored in <code>self</code>.</td>
+                </tr>
+                <tr>
+                  <td>default_value</td>
+                  <td>- The value to return if <code>self</code> is <code>None</code>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The value resulting from the mapping</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If <code>self</code> is <code>Some</code>, maps the value stored in it by calling <code>map_func</code> on it. Otherwise, returns <code>default_value</code>.</p><p><code>map_func</code> must be a function type callable with <code>T</code> and returning the same type as <code>default_value</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="gaf399ef4c6dddb9cae90286c4abcde31b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaf399ef4c6dddb9cae90286c4abcde31b" class="m-doc-self">std_option_map_or_else</a>(</span><span class="m-doc-wrap">self,
+              map_func,
+              default_generator)</span>
+            </h3>
+            <p>Maps the value stored in this <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> to map</td>
+                </tr>
+                <tr>
+                  <td>map_func</td>
+                  <td>- The function to map the value stored in <code>self</code>.</td>
+                </tr>
+                <tr>
+                  <td>default_generator</td>
+                  <td>- The function to generate the returned value if <code>self</code> is <code>None</code>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The value resulting from the mapping</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If <code>self</code> is <code>Some</code>, maps the value stored in it by calling <code>map_func</code> on it. Otherwise, returns the result of calling <code>default_generator</code>.</p><p><code>map_func</code> must be a function type callable with <code>T</code>. <code>default_generator</code> must be a function type taking no arguments. Both <code>map_func</code> and <code>default_generator</code> must return the same type.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga02b4b78a18a868f526ee195342671228"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga02b4b78a18a868f526ee195342671228" class="m-doc-self">std_option_and</a>(</span><span class="m-doc-wrap">self,
+              option_b)</span>
+            </h3>
+            <p>Returns <code>option_b</code> if <code>self</code> is <code>Some</code>. Otherwise, returns <code>None</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> to &quot;and&quot; with <code>option_b</code>.</td>
+                </tr>
+                <tr>
+                  <td>option_b</td>
+                  <td>- another <code>StdOption</code> to &quot;and&quot; with <code>self</code>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>option_b</code> if both <code>self</code> is <code>Some</code>. Otherwise, <code>None</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gad2f7d9a4613ce5588a88cedfb2eb7de5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad2f7d9a4613ce5588a88cedfb2eb7de5" class="m-doc-self">std_option_and_then</a>(</span><span class="m-doc-wrap">self,
+              next_func)</span>
+            </h3>
+            <p>Returns the result of calling <code>next_func</code> with the contained value if this is <code>Some</code>, otherwise returns <code>None</code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> to operate on.</td>
+                </tr>
+                <tr>
+                  <td>next_func</td>
+                  <td>- The function type to call with the value stored in <code>self</code>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The result of calling <code>next_func</code> with the value stored in <code>self</code>. Otherwise, <code>None</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gae67d0a0ec2a2ba33320736e3af1c966c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae67d0a0ec2a2ba33320736e3af1c966c" class="m-doc-self">std_option_or</a>(</span><span class="m-doc-wrap">self,
+              option_b)</span>
+            </h3>
+            <p>Returns <code>self</code> if it is <code>Some</code>, otherwise returns <code>option_b</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> to &quot;or&quot; with <code>option_b</code>.</td>
+                </tr>
+                <tr>
+                  <td>option_b</td>
+                  <td>- another <code>StdOption</code> to &quot;or&quot; with <code>self</code>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>self</code> if is is <code>Some</code> Otherwise, <code>option_b</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gae245e7b8ea9e8d8d18c7e8cdb2fd7b3f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae245e7b8ea9e8d8d18c7e8cdb2fd7b3f" class="m-doc-self">std_option_or_else</a>(</span><span class="m-doc-wrap">self,
+              func)</span>
+            </h3>
+            <p>Returns <code>self</code> if it is <code>Some</code>, otherwise returns the result of calling <code>func</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code>.</td>
+                </tr>
+                <tr>
+                  <td>func</td>
+                  <td>- The function to call if <code>self</code> is <code>None</code>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>self</code> if is is <code>Some</code> Otherwise, <code>func()</code></td>
+                </tr>
+              </tfoot>
+            </table>
           </div></section>
           <section class="m-doc-details" id="gae038cfb7eab58a3dfbb920fcb3b74ca3"><div>
             <h3>
@@ -457,42 +693,6 @@
               </tfoot>
             </table>
 <p>This is equivalent to calling <code><a href="group__std__option.html#ga68126c61a197fea8cbbb7b100851dbb6" class="m-doc">std_<wbr />option_<wbr />is_<wbr />some(self)</a></code></p>
-          </div></section>
-          <section class="m-doc-details" id="gac7c2a81a04362a8995d4423d0348d327"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gac7c2a81a04362a8995d4423d0348d327" class="m-doc-self">ImplStdOption</a>(</span><span class="m-doc-wrap">T)</span>
-            </h3>
-            <p>Instantiates the definitions for <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> holding the type <code>T</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">T</td>
-                  <td>- The type stored in the <code>StdOption</code></td>
-                </tr>
-              </tbody>
-            </table>
-<p>Instantiates the variable and function definitions necessary for <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> holding type <code>T</code></p>
-          </div></section>
-          <section class="m-doc-details" id="ga92bc7e897b94d6da1058aa0cbd4abbc8"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga92bc7e897b94d6da1058aa0cbd4abbc8" class="m-doc-self">DeclAndImplStdOption</a>(</span><span class="m-doc-wrap">T)</span>
-            </h3>
-            <p>Fully instantiates <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> holding the type <code>T</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">T</td>
-                  <td>- The type stored in the <code>StdOption</code></td>
-                </tr>
-              </tbody>
-            </table>
-<p>Provides all function, variable, and struct declarations <strong>and</strong> definitions necessary for <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> holding type <code>T</code></p>
           </div></section>
         </section>
       </div>

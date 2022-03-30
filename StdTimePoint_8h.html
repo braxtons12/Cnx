@@ -59,7 +59,7 @@
             </li>
           </ul>
         </nav>
-<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.1.1</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-01-07</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.1.2</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-03-20</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
         <section id="nested-classes">
           <h2><a href="#nested-classes">Classes</a></h2>
           <dl class="m-doc">
@@ -101,14 +101,14 @@
             </dt>
             <dd>Constructs a new <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> representing the given time since the UNIX epoch, assuming the same precision as <code>std_system_clock</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="group__std__time__point.html#gab52519bd2a6aee7b41fa5091e5d53cd6" class="m-doc">std_time_point_new_with_clock</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> time_since_epoch,
-              const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict clock)</span>
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="group__std__time__point.html#gae70dff7c52ab779576f7e27fc93418ef" class="m-doc">std_time_point_new_with_clock</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> time_since_epoch,
+              const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict clock) std_disable_if(!clock</span>
             </dt>
             <dd>Constructs a new <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> representing the given time since the UNIX epoch, with the same precision of the given <code><a href="structStdClock.html" class="m-doc">StdClock</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="group__std__time__point.html#ga161fe3519fb48029ca9d8359a0c19626" class="m-doc">std_time_point_new_with_clock_and_locale</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> time_since_epoch,
+              <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="group__std__time__point.html#ga0fd108d926588f3157086a777f0f430d" class="m-doc">std_time_point_new_with_clock_and_locale</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> time_since_epoch,
               const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict clock,
-              <a href="group__std__time__point.html#ga12c7d6947a9863bc0ad76d105b4fccab" class="m-doc">StdTimePointLocale</a> locale)</span>
+              <a href="group__std__time__point.html#ga12c7d6947a9863bc0ad76d105b4fccab" class="m-doc">StdTimePointLocale</a> locale) std_disable_if(!clock</span>
             </dt>
             <dd>Constructs a new <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> representing the given time since the UNIX epoch, with the same precision of the given <code><a href="structStdClock.html" class="m-doc">StdClock</a></code></dd>
             <dt>
@@ -148,7 +148,7 @@
             </dt>
             <dd>Converts the given <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> to <code>time_t</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">tm* <a href="group__std__time__point.html#ga70833f7e70db40411206ca5b4079beae" class="m-doc">std_time_point_as_tm</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> to_cast)</span>
+              <span class="m-doc-wrap-bumper"> <a href="group__std__time__point.html#gaa271baa57e253dc545fe54a9f8f4b1f0" class="m-doc">StdResult</a>(</span><span class="m-doc-wrap">tm)</span>
             </dt>
             <dd>Converts the given <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> to <code>tm</code></dd>
             <dt>
@@ -236,11 +236,11 @@
             <dt>
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="group__std__time__point.html#gad2a7d0a5187a436180147ab03d8eb6cb" class="m-doc">std_time_point_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
               <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
-              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
+              StdAllocator allocator)</span>
             </dt>
             <dd>Implements the allocator-aware part of the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">static <a href="group__std__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a> <a href="group__std__time__point.html#ga6c53b8059a10f68e1ea3aaef29be741d" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <span class="m-doc-wrap-bumper">static  <a href="group__std__time__point.html#ga7692a8ac7bb8bb2da0e923fab3f83633" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
               <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a>,
               <a href="group__std__time__point.html#gae91d8c374bbd4c2abc4904d3eee3444b" class="m-doc">std_<wbr />time_<wbr />point_<wbr />format</a>,
               <a href="group__std__time__point.html#gad2a7d0a5187a436180147ab03d8eb6cb" class="m-doc">std_<wbr />time_<wbr />point_<wbr />format_<wbr />with_<wbr />allocator</a>)</span>

@@ -71,7 +71,7 @@
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="k">static</span> <span class="k">const</span> <span class="n">maybe_unused</span> <span class="n">StdErrorCategory</span> <span class="n">example_error_category</span>
+<span class="p">[[</span><span class="n">maybe_unused</span><span class="p">]]</span> <span class="k">static</span> <span class="k">const</span> <span class="n">StdErrorCategory</span> <span class="n">example_error_category</span>
     <span class="o">=</span> <span class="p">{.</span><span class="n">m_message_function</span> <span class="o">=</span> <span class="n">example_error_message_function</span><span class="p">};</span>
 
 <span class="n">StdResult</span><span class="p">(</span><span class="n">u32</span><span class="p">)</span> <span class="n">operation_that_can_fail</span><span class="p">(</span><span class="n">u32</span> <span class="n">important</span><span class="p">,</span> <span class="n">u32</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
@@ -108,14 +108,6 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult</a>(</span><span class="m-doc-wrap">T)</span>
             </dt>
             <dd>Macro Alias used to refer to an instantiation of <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> for type <code>T</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga8edf2be03677e167ad8834b368f871e7" class="m-doc">DeclStdResult</a>(</span><span class="m-doc-wrap">T)</span>
-            </dt>
-            <dd>Instantiates the declarations for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gaea7a1fa6af7b4a55216ccf30617e31c8" class="m-doc">DeclStdResultFormat</a>(</span><span class="m-doc-wrap">T)</span>
-            </dt>
-            <dd>Instantiates the declarations for implementing the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></dd>
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga45604f9f51cb2d871049f911e32047db" class="m-doc">Ok</a>(</span><span class="m-doc-wrap">T,
               value)</span>
@@ -166,22 +158,52 @@
             </dt>
             <dd>Returns the error stored in this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></dd>
             <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga12a2732f48ff4d85e717bb2269701b9f" class="m-doc">std_result_map</a>(</span><span class="m-doc-wrap">self,
+              MapType,
+              map_func)</span>
+            </dt>
+            <dd>Maps the value stored in this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaaed38a7e50f03ed7a3ab0cec5e6636da" class="m-doc">std_result_map_or</a>(</span><span class="m-doc-wrap">self,
+              map_func,
+              default_value)</span>
+            </dt>
+            <dd>Maps the value stored in this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaf7547d4b2400e45d0d05dcaef02a80ca" class="m-doc">std_result_map_or_else</a>(</span><span class="m-doc-wrap">self,
+              map_func,
+              default_generator)</span>
+            </dt>
+            <dd>Maps the value stored in this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga62d777725ec4af8cc4f652248602487a" class="m-doc">std_result_map_err</a>(</span><span class="m-doc-wrap">self,
+              map_func)</span>
+            </dt>
+            <dd>Maps the error stored in this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga52475ed712b35c901e859a7956a3b4c4" class="m-doc">std_result_and</a>(</span><span class="m-doc-wrap">self,
+              result_b)</span>
+            </dt>
+            <dd>Returns <code>result_b</code> is <code>self</code> is <code>Ok</code>. Otherwise returns the <code>Err</code> value of <code>self</code>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9969617328018f57b7c1af2a73567f4c" class="m-doc">std_result_and_then</a>(</span><span class="m-doc-wrap">self,
+              next_func)</span>
+            </dt>
+            <dd>Returns the result of calling <code>next_func</code> with the contained value if <code>self</code> is <code>Ok</code>. Otherwise, returns the <code>Err</code> value contained in <code>self</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac69fce1f9d062b6cc0b550136fedd85b" class="m-doc">std_result_or</a>(</span><span class="m-doc-wrap">self,
+              result_b)</span>
+            </dt>
+            <dd>Returns <code>self</code> if it is <code>Ok</code>, otherwise returns <code>result_b</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadc82d22b279ad3875281f7db89c375eb" class="m-doc">std_result_or_else</a>(</span><span class="m-doc-wrap">self,
+              func)</span>
+            </dt>
+            <dd>Returns <code>self</code> if it is <code>Ok</code>, otherwise returns the result of calling <code>func</code></dd>
+            <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga8c16094ae98722a1b984763e8f505a8f" class="m-doc">std_result_as_bool</a>(</span><span class="m-doc-wrap">self)</span>
             </dt>
             <dd>Converts this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> to a <code>bool</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga1f264c515ac1ccfb45555624ef23b452" class="m-doc">ImplStdResult</a>(</span><span class="m-doc-wrap">T)</span>
-            </dt>
-            <dd>Instantiates the definitions for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga5b629471bdb765a83a431dc93443a47a" class="m-doc">ImplStdResultFormat</a>(</span><span class="m-doc-wrap">T,
-              TypeToFormatAs)</span>
-            </dt>
-            <dd>Instantiates the definitions for implementing the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga80ec565de70838a5fbc5931c76c10b92" class="m-doc">DeclAndImplStdResult</a>(</span><span class="m-doc-wrap">T)</span>
-            </dt>
-            <dd>Fully instantiates <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></dd>
           </dl>
         </section>
         <section>
@@ -203,42 +225,6 @@
               </tbody>
             </table>
 <p>Used to create and refer to a typedef for an instantiation of <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></p>
-          </div></section>
-          <section class="m-doc-details" id="ga8edf2be03677e167ad8834b368f871e7"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga8edf2be03677e167ad8834b368f871e7" class="m-doc-self">DeclStdResult</a>(</span><span class="m-doc-wrap">T)</span>
-            </h3>
-            <p>Instantiates the declarations for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">T</td>
-                  <td>- The type stored in the <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></td>
-                </tr>
-              </tbody>
-            </table>
-<p>Instantiates the struct, function, and variable declarations necessary for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></p>
-          </div></section>
-          <section class="m-doc-details" id="gaea7a1fa6af7b4a55216ccf30617e31c8"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gaea7a1fa6af7b4a55216ccf30617e31c8" class="m-doc-self">DeclStdResultFormat</a>(</span><span class="m-doc-wrap">T)</span>
-            </h3>
-            <p>Instantiates the declarations for implementing the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">T</td>
-                  <td>- The type stored in the <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></td>
-                </tr>
-              </tbody>
-            </table>
-<p>Instantiates the struct, function, and variable declarations necessary for implementing <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code>. This is separate from the main declaration macro, to make <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> support for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> optional (for cases where <code>T</code> does not support <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code>)</p>
           </div></section>
           <section class="m-doc-details" id="ga45604f9f51cb2d871049f911e32047db"><div>
             <h3>
@@ -527,6 +513,249 @@
             </table>
 <p>Returns the error stored in this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> if this is the <code><a href="group__std__result.html#ga94ea6116cc8d169581b1f9f9dbf156f5" class="m-doc">Err(T, error)</a></code> variant. If this is not the <code><a href="group__std__result.html#ga94ea6116cc8d169581b1f9f9dbf156f5" class="m-doc">Err(T, error)</a></code> variant, then this invokes a panic.</p><aside class="m-note m-info"><h4>Note</h4><p>Panics if <code>self</code> does not contain an error</p></aside>
           </div></section>
+          <section class="m-doc-details" id="ga12a2732f48ff4d85e717bb2269701b9f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga12a2732f48ff4d85e717bb2269701b9f" class="m-doc-self">std_result_map</a>(</span><span class="m-doc-wrap">self,
+              MapType,
+              map_func)</span>
+            </h3>
+            <p>Maps the value stored in this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> to map</td>
+                </tr>
+                <tr>
+                  <td>MapType</td>
+                  <td>- The type to map to. This is the type that will be held by the returned <code>StdResult</code>, and <code>map_func</code> must return this type.</td>
+                </tr>
+                <tr>
+                  <td>map_func</td>
+                  <td>- The function to map the value stored in <code>self</code> to a <code>MapType</code>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(MapType)</a></code> resulting from the mapping</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If <code>self</code> is <code>Ok</code>, maps the value stored in it by calling <code>map_func</code> on it. Otherwise, <code>self</code> is <code>Err</code> and this returns the error contained in it.</p><p><code>map_func</code> must be a function type callable with <code>T</code> and returning <code>MapType</code></p>
+          </div></section>
+          <section class="m-doc-details" id="gaaed38a7e50f03ed7a3ab0cec5e6636da"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaaed38a7e50f03ed7a3ab0cec5e6636da" class="m-doc-self">std_result_map_or</a>(</span><span class="m-doc-wrap">self,
+              map_func,
+              default_value)</span>
+            </h3>
+            <p>Maps the value stored in this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> to map.</td>
+                </tr>
+                <tr>
+                  <td>map_func</td>
+                  <td>- The function to map the value stored in <code>self</code>.</td>
+                </tr>
+                <tr>
+                  <td>default_value</td>
+                  <td>- The value to return if <code>self</code> is <code>Err</code>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The value resulting from the mapping</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If <code>self</code> is <code>Ok</code>, maps the value stored in it by calling <code>map_func</code> on it. Otherwise, returns <code>default_value</code>.</p><p><code>map_func</code> must be a function type callable with <code>T</code> and returning the same type as <code>default_value</code></p>
+          </div></section>
+          <section class="m-doc-details" id="gaf7547d4b2400e45d0d05dcaef02a80ca"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaf7547d4b2400e45d0d05dcaef02a80ca" class="m-doc-self">std_result_map_or_else</a>(</span><span class="m-doc-wrap">self,
+              map_func,
+              default_generator)</span>
+            </h3>
+            <p>Maps the value stored in this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> to map.</td>
+                </tr>
+                <tr>
+                  <td>map_func</td>
+                  <td>- The function to map the value stored in <code>self</code>.</td>
+                </tr>
+                <tr>
+                  <td>default_generator</td>
+                  <td>- The function to generate the returned value if <code>self</code> is <code>Err</code>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The value resulting from the mapping</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If <code>self</code> is <code>Ok</code>, maps the value stored in it by calling <code>map_func</code> on it. Otherwise, returns the result of calling <code>default_generator</code>.</p><p><code>map_func</code> must be a function type callable with <code>T</code>. <code>default_generator</code> must be a function type taking no arguments. Both <code>map_func</code> and <code>default_generator</code> must return the same type.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga62d777725ec4af8cc4f652248602487a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga62d777725ec4af8cc4f652248602487a" class="m-doc-self">std_result_map_err</a>(</span><span class="m-doc-wrap">self,
+              map_func)</span>
+            </h3>
+            <p>Maps the error stored in this <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> to map.</td>
+                </tr>
+                <tr>
+                  <td>map_func</td>
+                  <td>- The function to map the error stored in <code>self</code>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> resulting from the mapping</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If <code>self</code> is <code>Err</code>, maps the error stored in it by calling <code>map_func</code> on it. Otherwise, returns <code>self</code>.</p><p><code>map_func</code> must be a function returning a <code><a href="structStdError.html" class="m-doc">StdError</a></code></p>
+          </div></section>
+          <section class="m-doc-details" id="ga52475ed712b35c901e859a7956a3b4c4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga52475ed712b35c901e859a7956a3b4c4" class="m-doc-self">std_result_and</a>(</span><span class="m-doc-wrap">self,
+              result_b)</span>
+            </h3>
+            <p>Returns <code>result_b</code> is <code>self</code> is <code>Ok</code>. Otherwise returns the <code>Err</code> value of <code>self</code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> to &quot;and&quot; with <code>result_b</code>.</td>
+                </tr>
+                <tr>
+                  <td>result_b</td>
+                  <td>- Another <code>StdResult</code>, of a potentially different <code>Ok</code> type to &quot;and&quot; with <code>self</code></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>result_b</code> if <code>self</code> is <code>Ok</code>. Otherwise the <code>Err</code> value of <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga9969617328018f57b7c1af2a73567f4c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9969617328018f57b7c1af2a73567f4c" class="m-doc-self">std_result_and_then</a>(</span><span class="m-doc-wrap">self,
+              next_func)</span>
+            </h3>
+            <p>Returns the result of calling <code>next_func</code> with the contained value if <code>self</code> is <code>Ok</code>. Otherwise, returns the <code>Err</code> value contained in <code>self</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> to operate on.</td>
+                </tr>
+                <tr>
+                  <td>next_func</td>
+                  <td>- The function type to call with the value stored in <code>self</code></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The result of calling <code>next_func</code> with the value stored in <code>self</code>. Otherwise, returns the <code>Err</code> value contained in <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gac69fce1f9d062b6cc0b550136fedd85b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac69fce1f9d062b6cc0b550136fedd85b" class="m-doc-self">std_result_or</a>(</span><span class="m-doc-wrap">self,
+              result_b)</span>
+            </h3>
+            <p>Returns <code>self</code> if it is <code>Ok</code>, otherwise returns <code>result_b</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> to &quot;or&quot; with <code>result_b</code></td>
+                </tr>
+                <tr>
+                  <td>result_b</td>
+                  <td>- Another <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> to &quot;or&quot; with <code>self</code>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>self</code> if it is <code>Ok</code>. Otherwise, <code>result_b</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gadc82d22b279ad3875281f7db89c375eb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadc82d22b279ad3875281f7db89c375eb" class="m-doc-self">std_result_or_else</a>(</span><span class="m-doc-wrap">self,
+              func)</span>
+            </h3>
+            <p>Returns <code>self</code> if it is <code>Ok</code>, otherwise returns the result of calling <code>func</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> to &quot;or&quot; with <code>result_b</code></td>
+                </tr>
+                <tr>
+                  <td>func</td>
+                  <td>- The function to call if <code>self</code> is <code>Err</code></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>self</code> if it is <code>Ok</code>. Otherwise, <code>func()</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
           <section class="m-doc-details" id="ga8c16094ae98722a1b984763e8f505a8f"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga8c16094ae98722a1b984763e8f505a8f" class="m-doc-self">std_result_as_bool</a>(</span><span class="m-doc-wrap">self)</span>
@@ -550,65 +779,6 @@
               </tfoot>
             </table>
 <p>This is effectively the same as calling <code><a href="group__std__result.html#gaa8a4886eba98e62dac24462137eb4c85" class="m-doc">std_<wbr />result_<wbr />is_<wbr />ok(self)</a></code>, as it converts to a bool on the condition that this is the <code><a href="group__std__result.html#ga45604f9f51cb2d871049f911e32047db" class="m-doc">Ok(T, value)</a></code> variant.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga1f264c515ac1ccfb45555624ef23b452"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga1f264c515ac1ccfb45555624ef23b452" class="m-doc-self">ImplStdResult</a>(</span><span class="m-doc-wrap">T)</span>
-            </h3>
-            <p>Instantiates the definitions for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">T</td>
-                  <td>- The type stored in the <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></td>
-                </tr>
-              </tbody>
-            </table>
-<p>Instantiates the function and variable definitions required for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></p>
-          </div></section>
-          <section class="m-doc-details" id="ga5b629471bdb765a83a431dc93443a47a"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga5b629471bdb765a83a431dc93443a47a" class="m-doc-self">ImplStdResultFormat</a>(</span><span class="m-doc-wrap">T,
-              TypeToFormatAs)</span>
-            </h3>
-            <p>Instantiates the definitions for implementing the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">T</td>
-                  <td>- The type stored in the <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code></td>
-                </tr>
-                <tr>
-                  <td>TypeToFormatAs</td>
-                  <td>- The type of the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation to use to format <code>T</code> Not all types can generically map correctly (e.g. <code>usize</code> will map to <code>u64</code> or <code>u32</code> in a <code>_Generic</code>, breaking deduction), so this is used to ensure correct type matching</td>
-                </tr>
-              </tbody>
-            </table>
-<p>Instantiates the function definitions required for implementing <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code>. This is separate from the main implementation macro,</p>
-          </div></section>
-          <section class="m-doc-details" id="ga80ec565de70838a5fbc5931c76c10b92"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga80ec565de70838a5fbc5931c76c10b92" class="m-doc-self">DeclAndImplStdResult</a>(</span><span class="m-doc-wrap">T)</span>
-            </h3>
-            <p>Fully instantiates <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">T</td>
-                  <td>- The type stored in the <code>StdResult</code></td>
-                </tr>
-              </tbody>
-            </table>
-<p>Instantiates all of the declarations and definitions necessary for <code><a href="group__std__result.html#ga0b1f67fd926286ef59a20af5c377a22a" class="m-doc">StdResult(T)</a></code> holding type <code>T</code></p>
           </div></section>
         </section>
       </div>

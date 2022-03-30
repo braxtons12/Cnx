@@ -57,52 +57,52 @@
             </li>
           </ul>
         </nav>
-<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.1</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-01-02</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.1.2</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-03-09</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
         <section id="func-members">
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a9a7bac1817df2cdf1e22b7a5269bb100" class="m-doc">print_</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> restrict format_string,
-              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <span class="m-doc-wrap-bumper">void <a href="#a4443253e9bbae4f7e7033c3c48c927ea" class="m-doc">print_</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              StdAllocator allocator,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
               ...)</span>
             </dt>
             <dd>Formats the given arguments into the specified format string then prints it to <code>stdout</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a69b6dcf45e229e35e908d80ac2036170" class="m-doc">eprint_</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> restrict format_string,
-              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <span class="m-doc-wrap-bumper">void <a href="#a9dfa9f9a02f58122d92a4aef69c0b3ae" class="m-doc">eprint_</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              StdAllocator allocator,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
               ...)</span>
             </dt>
             <dd>Formats the given arguments into the specified format string then prints it to <code>stderr</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a3ce6c31c669bcd561aa0c44fa1925e28" class="m-doc">fprint_</a>(</span><span class="m-doc-wrap">FILE* file,
-              <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> restrict format_string,
-              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <span class="m-doc-wrap-bumper">void <a href="#a492fa3b108dda3d0f8f3e19e2171a02e" class="m-doc">fprint_</a>(</span><span class="m-doc-wrap">FILE* file,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              StdAllocator allocator,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
-              ...)</span>
+              ...) std_disable_if(!file</span>
             </dt>
             <dd>Formats the given arguments into the specified format string then prints it to the given file.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#adfc6eeebb9ad14011d81d73f537b6e78" class="m-doc">println_</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> restrict format_string,
-              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <span class="m-doc-wrap-bumper">void <a href="#a8224596d8e577d20b717b5ded93eccba" class="m-doc">println_</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              StdAllocator allocator,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
               ...)</span>
             </dt>
             <dd>Formats the given arguments into the specified format string then prints it to <code>stdout</code>, followed by a newline.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a376be6c3d66bb2d29469041dd33f168c" class="m-doc">eprintln_</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> restrict format_string,
-              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <span class="m-doc-wrap-bumper">void <a href="#af2d5e1ce16dc89b58c4e672901d7adeb" class="m-doc">eprintln_</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              StdAllocator allocator,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
               ...)</span>
             </dt>
             <dd>Formats the given arguments into the specified format string then prints it to <code>stderr</code>, followed by a newline.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#ade4222d5ba55b390d9d87955f34ccf64" class="m-doc">fprintln_</a>(</span><span class="m-doc-wrap">FILE* file,
-              <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> restrict format_string,
-              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <span class="m-doc-wrap-bumper">void <a href="#af4e15d0fec7410905c2cd33ecd4eaa36" class="m-doc">fprintln_</a>(</span><span class="m-doc-wrap">FILE* file,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              StdAllocator allocator,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
-              ...)</span>
+              ...) std_disable_if(!file</span>
             </dt>
             <dd>Formats the given arguments into the specified format string then prints it to the given file, followed by a newline.</dd>
           </dl>
@@ -188,10 +188,10 @@
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a9a7bac1817df2cdf1e22b7a5269bb100"><div>
+          <section class="m-doc-details" id="a4443253e9bbae4f7e7033c3c48c927ea"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9a7bac1817df2cdf1e22b7a5269bb100" class="m-doc-self">print_</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> restrict format_string,
-              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4443253e9bbae4f7e7033c3c48c927ea" class="m-doc-self">print_</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              StdAllocator allocator,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
               ...)</span></span>
             </h3>
@@ -216,10 +216,10 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a69b6dcf45e229e35e908d80ac2036170"><div>
+          <section class="m-doc-details" id="a9dfa9f9a02f58122d92a4aef69c0b3ae"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a69b6dcf45e229e35e908d80ac2036170" class="m-doc-self">eprint_</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> restrict format_string,
-              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9dfa9f9a02f58122d92a4aef69c0b3ae" class="m-doc-self">eprint_</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              StdAllocator allocator,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
               ...)</span></span>
             </h3>
@@ -244,13 +244,13 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a3ce6c31c669bcd561aa0c44fa1925e28"><div>
+          <section class="m-doc-details" id="a492fa3b108dda3d0f8f3e19e2171a02e"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3ce6c31c669bcd561aa0c44fa1925e28" class="m-doc-self">fprint_</a>(</span><span class="m-doc-wrap">FILE* file,
-              <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> restrict format_string,
-              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a492fa3b108dda3d0f8f3e19e2171a02e" class="m-doc-self">fprint_</a>(</span><span class="m-doc-wrap">FILE* file,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              StdAllocator allocator,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
-              ...)</span></span>
+              ...) std_disable_if(!file</span></span>
             </h3>
             <p>Formats the given arguments into the specified format string then prints it to the given file.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -277,10 +277,10 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="adfc6eeebb9ad14011d81d73f537b6e78"><div>
+          <section class="m-doc-details" id="a8224596d8e577d20b717b5ded93eccba"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adfc6eeebb9ad14011d81d73f537b6e78" class="m-doc-self">println_</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> restrict format_string,
-              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8224596d8e577d20b717b5ded93eccba" class="m-doc-self">println_</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              StdAllocator allocator,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
               ...)</span></span>
             </h3>
@@ -305,10 +305,10 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a376be6c3d66bb2d29469041dd33f168c"><div>
+          <section class="m-doc-details" id="af2d5e1ce16dc89b58c4e672901d7adeb"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a376be6c3d66bb2d29469041dd33f168c" class="m-doc-self">eprintln_</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> restrict format_string,
-              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af2d5e1ce16dc89b58c4e672901d7adeb" class="m-doc-self">eprintln_</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              StdAllocator allocator,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
               ...)</span></span>
             </h3>
@@ -333,13 +333,13 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ade4222d5ba55b390d9d87955f34ccf64"><div>
+          <section class="m-doc-details" id="af4e15d0fec7410905c2cd33ecd4eaa36"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ade4222d5ba55b390d9d87955f34ccf64" class="m-doc-self">fprintln_</a>(</span><span class="m-doc-wrap">FILE* file,
-              <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> restrict format_string,
-              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator,
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af4e15d0fec7410905c2cd33ecd4eaa36" class="m-doc-self">fprintln_</a>(</span><span class="m-doc-wrap">FILE* file,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              StdAllocator allocator,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
-              ...)</span></span>
+              ...) std_disable_if(!file</span></span>
             </h3>
             <p>Formats the given arguments into the specified format string then prints it to the given file, followed by a newline.</p>
             <table class="m-table m-fullwidth m-flat">
