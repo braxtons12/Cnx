@@ -184,7 +184,7 @@
               ...)</span>
             </h3>
             <p>The function type (with optional name, for use in typedefs) of a deleter function used in smart pointer templates.</p>
-<p>Given an instance of <code>T</code>, <code>t</code>, the signature is: <code>void (*name)(Y* restrict to_deleter, StdAllocator allocator);</code> where <code>Y</code> is either:</p><ol><li><code><a href="group__std__def.html#ga64f556323b092e639c2e86743ebc852d" class="m-doc">typeof(t)</a></code> if <code>T</code> is <strong>NOT</strong> an array type (e.g. <code>int</code>, <code>usize</code>, <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(i32)</a></code>)</li><li><code><a href="group__std__def.html#ga64f556323b092e639c2e86743ebc852d" class="m-doc">typeof(t[0])</a> if</code>T<code>__IS__ an array type (e.g. a typedef to</code>int[]<code>or</code>usize[]`)</li></ol>
+<p>Given an instance of <code>T</code>, <code>t</code>, the signature is: <code>void (*name)(Y* restrict to_deleter, <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator);</code> where <code>Y</code> is either:</p><ol><li><code><a href="group__std__def.html#ga64f556323b092e639c2e86743ebc852d" class="m-doc">typeof(t)</a></code> if <code>T</code> is <strong>NOT</strong> an array type (e.g. <code>int</code>, <code>usize</code>, <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(i32)</a></code>)</li><li><code><a href="group__std__def.html#ga64f556323b092e639c2e86743ebc852d" class="m-doc">typeof(t[0])</a> if</code>T<code>__IS__ an array type (e.g. a typedef to</code>int[]<code>or</code>usize[]`)</li></ol>
           </div></section>
         </section>
       </div>

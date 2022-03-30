@@ -134,7 +134,7 @@
             </dt>
             <dd>Creates a new, empty <code><a href="structStdString.html" class="m-doc">StdString</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#ga4df2fc821217db1d857262b08c1daf0d" class="m-doc">std_string_new_with_allocator</a>(</span><span class="m-doc-wrap">StdAllocator allocator)</span>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#ga4df2fc821217db1d857262b08c1daf0d" class="m-doc">std_string_new_with_allocator</a>(</span><span class="m-doc-wrap"><a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
             </dt>
             <dd>Creates a new, empty <code><a href="structStdString.html" class="m-doc">StdString</a></code> that will use the given allocator.</dd>
             <dt>
@@ -143,7 +143,7 @@
             <dd>Creates a new <code><a href="structStdString.html" class="m-doc">StdString</a></code> with the given initial capacity.</dd>
             <dt>
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#gaf351b169380561ef4ecab5ad5926fc31" class="m-doc">std_string_new_with_capacity_with_allocator</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> capacity,
-              StdAllocator allocator)</span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
             </dt>
             <dd>Creates a new <code><a href="structStdString.html" class="m-doc">StdString</a></code> with the given initial capacity.</dd>
             <dt>
@@ -154,7 +154,7 @@
             <dt>
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#ga0d18fd6f6602a843043d9476662b5338" class="m-doc">std_string_from_cstring_with_allocator</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> string,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length,
-              StdAllocator allocator) std_disable_if(!string</span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator) std_disable_if(!string</span>
             </dt>
             <dd>Creates a new <code><a href="structStdString.html" class="m-doc">StdString</a></code> from the given <code>cstring</code></dd>
             <dt>
@@ -165,7 +165,7 @@
             <dt>
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#ga30822100e03ef17ba24f2d0d737da5cf" class="m-doc">std_string_from_wcstring_with_allocator</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga94d9d3ddae9a425c4883fee97b7625d6" class="m-doc">const_<wbr />wcstring</a> string,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length,
-              StdAllocator allocator) std_disable_if(!string</span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator) std_disable_if(!string</span>
             </dt>
             <dd>Creates a new <code><a href="structStdString.html" class="m-doc">StdString</a></code> from the given <code>wcstring</code></dd>
             <dt>
@@ -174,7 +174,7 @@
             <dd>Creates a new <code><a href="structStdString.html" class="m-doc">StdString</a></code> from the given <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code></dd>
             <dt>
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#ga04d96229f2d77f4c9226a5577c746718" class="m-doc">std_string_from_stringview_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict view,
-              StdAllocator allocator) std_disable_if(!view</span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator) std_disable_if(!view</span>
             </dt>
             <dd>Creates a new <code><a href="structStdString.html" class="m-doc">StdString</a></code> that will use the given memory allocator, from the given <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code></dd>
             <dt>
@@ -187,7 +187,7 @@
             <dd>Returns the <code>wcstring</code> converted representation of this <code><a href="structStdString.html" class="m-doc">StdString</a></code>. The result will be allocated with the same allocator used by this <code><a href="structStdString.html" class="m-doc">StdString</a></code></dd>
             <dt>
               <span class="m-doc-wrap-bumper"><a href="group__types.html#ga94d9d3ddae9a425c4883fee97b7625d6" class="m-doc">const_<wbr />wcstring</a> <a href="#gae94ea63e5628adc0b5379e5f57cee404" class="m-doc">std_string_into_wcstring_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdString.html" class="m-doc">StdString</a>*restrict self,
-              StdAllocator allocator)</span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
             </dt>
             <dd>Returns the <code>wcstring</code> converted representation of this <code><a href="structStdString.html" class="m-doc">StdString</a></code>, allocated with the given allocator;.</dd>
             <dt>
@@ -200,7 +200,7 @@
             <dd>Creates a copy of this <code><a href="structStdString.html" class="m-doc">StdString</a></code> using the same allocator.</dd>
             <dt>
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#gaed5c12b5379beb498cda7bfbd94b673c" class="m-doc">std_string_clone_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdString.html" class="m-doc">StdString</a>*restrict self,
-              StdAllocator allocator)</span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
             </dt>
             <dd>Creates a copy of this <code><a href="structStdString.html" class="m-doc">StdString</a></code> using the given allocator.</dd>
             <dt>
@@ -365,7 +365,7 @@
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#ga674a1544f88dbcef4a8cbb90af19c714" class="m-doc">std_string_substring_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdString.html" class="m-doc">StdString</a>*restrict self,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length,
-              StdAllocator allocator)</span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
             </dt>
             <dd>Returns the length <code>length</code> substring beginning at <code>index</code>, allocated with the given allocator.</dd>
             <dt>
@@ -409,20 +409,20 @@
             <dt>
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#ga77109e899472183d032fdc86f58a20ff" class="m-doc">std_string_concatenate_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdString.html" class="m-doc">StdString</a>*restrict left,
               const <a href="structStdString.html" class="m-doc">StdString</a>*restrict right,
-              StdAllocator allocator) std_disable_if(!right</span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator) std_disable_if(!right</span>
             </dt>
             <dd>Concatenates the two strings into a new one, using the given allocator.</dd>
             <dt>
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#ga0e6e7a5880ae6f6e2b42e0c2293a797f" class="m-doc">std_string_concatenate_cstring_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdString.html" class="m-doc">StdString</a>*restrict left,
               restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> right,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> right_length,
-              StdAllocator allocator) std_disable_if(!right</span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator) std_disable_if(!right</span>
             </dt>
             <dd>Concatenates the two strings into a new one, using the given allocator.</dd>
             <dt>
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#ga82e4d0ae737038026107db9862df3dd5" class="m-doc">std_string_concatenate_stringview_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdString.html" class="m-doc">StdString</a>*restrict left,
               const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict right,
-              StdAllocator allocator) std_disable_if(!right</span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator) std_disable_if(!right</span>
             </dt>
             <dd>Concatenates the two strings into a new one, using the given allocator.</dd>
             <dt>
@@ -430,13 +430,13 @@
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> left_length,
               restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> right,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> right_length,
-              StdAllocator allocator) std_disable_if(!left</span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator) std_disable_if(!left</span>
             </dt>
             <dd>Concatenates the two strings into a new one, using the given allocator.</dd>
             <dt>
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> <a href="#gae61310aaec115a2cde585349d6683919" class="m-doc">std_string_concatenate_stringviews_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict left,
               const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict right,
-              StdAllocator allocator) std_disable_if(!left</span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator) std_disable_if(!left</span>
             </dt>
             <dd>Concatenates the two strings into a new one, using the given allocator.</dd>
             <dt>
@@ -602,7 +602,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga06501478a411310d825de03579b01830" class="m-doc">std_string_from_with_allocator</a>(</span><span class="m-doc-wrap">string,
               allocator)</span>
             </dt>
-            <dd>Creates a new <code><a href="structStdString.html" class="m-doc">StdString</a></code> from the given string-like type, using the given <code>StdAllocator</code> for memory allocations.</dd>
+            <dd>Creates a new <code><a href="structStdString.html" class="m-doc">StdString</a></code> from the given string-like type, using the given <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> for memory allocations.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga99128e969d2b41c8b7311a658763103e" class="m-doc">std_string_concatenate</a>(</span><span class="m-doc-wrap">left,
               right)</span>
@@ -634,12 +634,12 @@
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga82f11a06f9c21b537162d569870b3992" class="m-doc">std_string_clone</a>(</span><span class="m-doc-wrap">self)</span>
             </dt>
-            <dd>Creates a copy of the given <code><a href="structStdString.html" class="m-doc">StdString</a></code>, <code>self</code>, using the <code>StdAllocator</code> associated with <code>self</code></dd>
+            <dd>Creates a copy of the given <code><a href="structStdString.html" class="m-doc">StdString</a></code>, <code>self</code>, using the <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> associated with <code>self</code></dd>
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga0e56b6b30f404cc45b24d1c8c84aba01" class="m-doc">std_string_clone_with_allocator</a>(</span><span class="m-doc-wrap">self,
               allocator)</span>
             </dt>
-            <dd>Creates a copy of the given <code><a href="structStdString.html" class="m-doc">StdString</a></code>, <code>self</code>, using the given <code>StdAllocator</code></dd>
+            <dd>Creates a copy of the given <code><a href="structStdString.html" class="m-doc">StdString</a></code>, <code>self</code>, using the given <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code></dd>
             <dt id="gadfa0f67e2883cdd8fe407406025a3390">
               <span class="m-doc-wrap-bumper">#define <a href="#gadfa0f67e2883cdd8fe407406025a3390" class="m-doc-self">std_string_free</a>(</span><span class="m-doc-wrap">self)</span>
             </dt>
@@ -681,12 +681,12 @@
               <span class="m-doc-wrap-bumper">#define <a href="#gaa2146d27e99b83fe58481a4f1c24eacd" class="m-doc">std_string_first</a>(</span><span class="m-doc-wrap">self,
               num_chars)</span>
             </dt>
-            <dd>Returns the first <code>num_chars</code> characters of <code>self</code> as a new <code><a href="structStdString.html" class="m-doc">StdString</a></code>, using the <code>StdAllocator</code> associated with <code>self</code></dd>
+            <dd>Returns the first <code>num_chars</code> characters of <code>self</code> as a new <code><a href="structStdString.html" class="m-doc">StdString</a></code>, using the <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> associated with <code>self</code></dd>
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#gaff81dab4897d5d51a33cbcab98061f5e" class="m-doc">std_string_first_cstring</a>(</span><span class="m-doc-wrap">self,
               num_chars)</span>
             </dt>
-            <dd>Returns the first <code>num_chars</code> characters of <code>self</code> as a new <code>cstring</code>, using the <code>StdAllocator</code> associated with <code>self</code></dd>
+            <dd>Returns the first <code>num_chars</code> characters of <code>self</code> as a new <code>cstring</code>, using the <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> associated with <code>self</code></dd>
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga30f2ecfc656b150de75e98092e71e48e" class="m-doc">std_string_first_stringview</a>(</span><span class="m-doc-wrap">self,
               num_chars)</span>
@@ -696,12 +696,12 @@
               <span class="m-doc-wrap-bumper">#define <a href="#gab65ccb28f0901b2f2247abb37ce787f2" class="m-doc">std_string_last</a>(</span><span class="m-doc-wrap">self,
               num_chars)</span>
             </dt>
-            <dd>Returns the last <code>num_chars</code> characters of <code>self</code> as a new <code><a href="structStdString.html" class="m-doc">StdString</a></code>, using the <code>StdAllocator</code> associated with <code>self</code></dd>
+            <dd>Returns the last <code>num_chars</code> characters of <code>self</code> as a new <code><a href="structStdString.html" class="m-doc">StdString</a></code>, using the <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> associated with <code>self</code></dd>
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga1e6d3151288d61ced0191904086d07e2" class="m-doc">std_string_last_cstring</a>(</span><span class="m-doc-wrap">self,
               num_chars)</span>
             </dt>
-            <dd>Returns the last <code>num_chars</code> characters of <code>self</code> as a new <code>cstring</code>, using the <code>StdAllocator</code> associated with <code>self</code></dd>
+            <dd>Returns the last <code>num_chars</code> characters of <code>self</code> as a new <code>cstring</code>, using the <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> associated with <code>self</code></dd>
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga513c9933e2e66124da46a404d29ab780" class="m-doc">std_string_last_stringview</a>(</span><span class="m-doc-wrap">self,
               num_chars)</span>
@@ -742,14 +742,14 @@
               index,
               length)</span>
             </dt>
-            <dd>Returns the substring of <code>self</code> starting at <code>index</code> with length <code>length</code> as a <code><a href="structStdString.html" class="m-doc">StdString</a></code>, using the <code>StdAllocator</code> associated with <code>self</code></dd>
+            <dd>Returns the substring of <code>self</code> starting at <code>index</code> with length <code>length</code> as a <code><a href="structStdString.html" class="m-doc">StdString</a></code>, using the <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> associated with <code>self</code></dd>
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga4d4532448edb57580ac1bb0b366d848f" class="m-doc">std_string_substring_with_allocator</a>(</span><span class="m-doc-wrap">self,
               index,
               length,
               allocator)</span>
             </dt>
-            <dd>Returns the substring of <code>self</code> starting at <code>index</code> with length <code>length</code> as a <code><a href="structStdString.html" class="m-doc">StdString</a></code>, associating the given <code>StdAllocator</code> with the substring.</dd>
+            <dd>Returns the substring of <code>self</code> starting at <code>index</code> with length <code>length</code> as a <code><a href="structStdString.html" class="m-doc">StdString</a></code>, associating the given <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> with the substring.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#gadb2970d2e372bbbe8200501b0dfd8cb4" class="m-doc">std_string_stringview_of</a>(</span><span class="m-doc-wrap">self,
               index,
@@ -904,7 +904,7 @@
           </div></section>
           <section class="m-doc-details" id="ga4df2fc821217db1d857262b08c1daf0d"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga4df2fc821217db1d857262b08c1daf0d" class="m-doc-self">std_string_new_with_allocator</a>(</span><span class="m-doc-wrap">StdAllocator allocator)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga4df2fc821217db1d857262b08c1daf0d" class="m-doc-self">std_string_new_with_allocator</a>(</span><span class="m-doc-wrap"><a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
             </h3>
             <p>Creates a new, empty <code><a href="structStdString.html" class="m-doc">StdString</a></code> that will use the given allocator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -951,7 +951,7 @@
           <section class="m-doc-details" id="gaf351b169380561ef4ecab5ad5926fc31"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaf351b169380561ef4ecab5ad5926fc31" class="m-doc-self">std_string_new_with_capacity_with_allocator</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> capacity,
-              StdAllocator allocator)</span></span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
             </h3>
             <p>Creates a new <code><a href="structStdString.html" class="m-doc">StdString</a></code> with the given initial capacity.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -1008,7 +1008,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga0d18fd6f6602a843043d9476662b5338" class="m-doc-self">std_string_from_cstring_with_allocator</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> string,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length,
-              StdAllocator allocator) std_disable_if(!string</span></span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator) std_disable_if(!string</span></span>
             </h3>
             <p>Creates a new <code><a href="structStdString.html" class="m-doc">StdString</a></code> from the given <code>cstring</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -1069,7 +1069,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga30822100e03ef17ba24f2d0d737da5cf" class="m-doc-self">std_string_from_wcstring_with_allocator</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga94d9d3ddae9a425c4883fee97b7625d6" class="m-doc">const_<wbr />wcstring</a> string,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length,
-              StdAllocator allocator) std_disable_if(!string</span></span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator) std_disable_if(!string</span></span>
             </h3>
             <p>Creates a new <code><a href="structStdString.html" class="m-doc">StdString</a></code> from the given <code>wcstring</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -1124,7 +1124,7 @@
           <section class="m-doc-details" id="ga04d96229f2d77f4c9226a5577c746718"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga04d96229f2d77f4c9226a5577c746718" class="m-doc-self">std_string_from_stringview_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict view,
-              StdAllocator allocator) std_disable_if(!view</span></span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator) std_disable_if(!view</span></span>
             </h3>
             <p>Creates a new <code><a href="structStdString.html" class="m-doc">StdString</a></code> that will use the given memory allocator, from the given <code><a href="structStdStringView.html" class="m-doc">StdStringView</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -1198,7 +1198,7 @@
           <section class="m-doc-details" id="gae94ea63e5628adc0b5379e5f57cee404"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="group__types.html#ga94d9d3ddae9a425c4883fee97b7625d6" class="m-doc">const_<wbr />wcstring</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gae94ea63e5628adc0b5379e5f57cee404" class="m-doc-self">std_string_into_wcstring_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdString.html" class="m-doc">StdString</a>*restrict self,
-              StdAllocator allocator)</span></span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
             </h3>
             <p>Returns the <code>wcstring</code> converted representation of this <code><a href="structStdString.html" class="m-doc">StdString</a></code>, allocated with the given allocator;.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -1272,7 +1272,7 @@
           <section class="m-doc-details" id="gaed5c12b5379beb498cda7bfbd94b673c"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaed5c12b5379beb498cda7bfbd94b673c" class="m-doc-self">std_string_clone_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdString.html" class="m-doc">StdString</a>*restrict self,
-              StdAllocator allocator)</span></span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
             </h3>
             <p>Creates a copy of this <code><a href="structStdString.html" class="m-doc">StdString</a></code> using the given allocator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -2188,7 +2188,7 @@
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga674a1544f88dbcef4a8cbb90af19c714" class="m-doc-self">std_string_substring_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdString.html" class="m-doc">StdString</a>*restrict self,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length,
-              StdAllocator allocator)</span></span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
             </h3>
             <p>Returns the length <code>length</code> substring beginning at <code>index</code>, allocated with the given allocator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -2415,7 +2415,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga77109e899472183d032fdc86f58a20ff" class="m-doc-self">std_string_concatenate_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdString.html" class="m-doc">StdString</a>*restrict left,
               const <a href="structStdString.html" class="m-doc">StdString</a>*restrict right,
-              StdAllocator allocator) std_disable_if(!right</span></span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator) std_disable_if(!right</span></span>
             </h3>
             <p>Concatenates the two strings into a new one, using the given allocator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -2449,7 +2449,7 @@
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga0e6e7a5880ae6f6e2b42e0c2293a797f" class="m-doc-self">std_string_concatenate_cstring_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdString.html" class="m-doc">StdString</a>*restrict left,
               restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> right,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> right_length,
-              StdAllocator allocator) std_disable_if(!right</span></span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator) std_disable_if(!right</span></span>
             </h3>
             <p>Concatenates the two strings into a new one, using the given allocator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -2486,7 +2486,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga82e4d0ae737038026107db9862df3dd5" class="m-doc-self">std_string_concatenate_stringview_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdString.html" class="m-doc">StdString</a>*restrict left,
               const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict right,
-              StdAllocator allocator) std_disable_if(!right</span></span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator) std_disable_if(!right</span></span>
             </h3>
             <p>Concatenates the two strings into a new one, using the given allocator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -2521,7 +2521,7 @@
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> left_length,
               restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> right,
               <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> right_length,
-              StdAllocator allocator) std_disable_if(!left</span></span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator) std_disable_if(!left</span></span>
             </h3>
             <p>Concatenates the two strings into a new one, using the given allocator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -2562,7 +2562,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gae61310aaec115a2cde585349d6683919" class="m-doc-self">std_string_concatenate_stringviews_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict left,
               const <a href="structStdStringView.html" class="m-doc">StdStringView</a>*restrict right,
-              StdAllocator allocator) std_disable_if(!left</span></span>
+              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator) std_disable_if(!left</span></span>
             </h3>
             <p>Concatenates the two strings into a new one, using the given allocator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -3332,7 +3332,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga06501478a411310d825de03579b01830" class="m-doc-self">std_string_from_with_allocator</a>(</span><span class="m-doc-wrap">string,
               allocator)</span>
             </h3>
-            <p>Creates a new <code><a href="structStdString.html" class="m-doc">StdString</a></code> from the given string-like type, using the given <code>StdAllocator</code> for memory allocations.</p>
+            <p>Creates a new <code><a href="structStdString.html" class="m-doc">StdString</a></code> from the given string-like type, using the given <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> for memory allocations.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -3405,7 +3405,7 @@
                 </tr>
                 <tr>
                   <td>allocator</td>
-                  <td>- The <code>StdAllocator</code> to allocate memory with</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocate memory with</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -3479,7 +3479,7 @@
                 </tr>
                 <tr>
                   <td>allocator</td>
-                  <td>- The <code>StdAllocator</code> to allocator memory for the <code>wcstring</code> with</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to allocator memory for the <code>wcstring</code> with</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -3517,7 +3517,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga82f11a06f9c21b537162d569870b3992" class="m-doc-self">std_string_clone</a>(</span><span class="m-doc-wrap">self)</span>
             </h3>
-            <p>Creates a copy of the given <code><a href="structStdString.html" class="m-doc">StdString</a></code>, <code>self</code>, using the <code>StdAllocator</code> associated with <code>self</code></p>
+            <p>Creates a copy of the given <code><a href="structStdString.html" class="m-doc">StdString</a></code>, <code>self</code>, using the <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> associated with <code>self</code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -3541,7 +3541,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga0e56b6b30f404cc45b24d1c8c84aba01" class="m-doc-self">std_string_clone_with_allocator</a>(</span><span class="m-doc-wrap">self,
               allocator)</span>
             </h3>
-            <p>Creates a copy of the given <code><a href="structStdString.html" class="m-doc">StdString</a></code>, <code>self</code>, using the given <code>StdAllocator</code></p>
+            <p>Creates a copy of the given <code><a href="structStdString.html" class="m-doc">StdString</a></code>, <code>self</code>, using the given <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -3553,7 +3553,7 @@
                 </tr>
                 <tr>
                   <td>allocator</td>
-                  <td>- The <code>StdAllocator</code> to associate with the new string</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to associate with the new string</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -3758,7 +3758,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#gaa2146d27e99b83fe58481a4f1c24eacd" class="m-doc-self">std_string_first</a>(</span><span class="m-doc-wrap">self,
               num_chars)</span>
             </h3>
-            <p>Returns the first <code>num_chars</code> characters of <code>self</code> as a new <code><a href="structStdString.html" class="m-doc">StdString</a></code>, using the <code>StdAllocator</code> associated with <code>self</code></p>
+            <p>Returns the first <code>num_chars</code> characters of <code>self</code> as a new <code><a href="structStdString.html" class="m-doc">StdString</a></code>, using the <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> associated with <code>self</code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -3786,7 +3786,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#gaff81dab4897d5d51a33cbcab98061f5e" class="m-doc-self">std_string_first_cstring</a>(</span><span class="m-doc-wrap">self,
               num_chars)</span>
             </h3>
-            <p>Returns the first <code>num_chars</code> characters of <code>self</code> as a new <code>cstring</code>, using the <code>StdAllocator</code> associated with <code>self</code></p>
+            <p>Returns the first <code>num_chars</code> characters of <code>self</code> as a new <code>cstring</code>, using the <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> associated with <code>self</code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -3842,7 +3842,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#gab65ccb28f0901b2f2247abb37ce787f2" class="m-doc-self">std_string_last</a>(</span><span class="m-doc-wrap">self,
               num_chars)</span>
             </h3>
-            <p>Returns the last <code>num_chars</code> characters of <code>self</code> as a new <code><a href="structStdString.html" class="m-doc">StdString</a></code>, using the <code>StdAllocator</code> associated with <code>self</code></p>
+            <p>Returns the last <code>num_chars</code> characters of <code>self</code> as a new <code><a href="structStdString.html" class="m-doc">StdString</a></code>, using the <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> associated with <code>self</code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -3870,7 +3870,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga1e6d3151288d61ced0191904086d07e2" class="m-doc-self">std_string_last_cstring</a>(</span><span class="m-doc-wrap">self,
               num_chars)</span>
             </h3>
-            <p>Returns the last <code>num_chars</code> characters of <code>self</code> as a new <code>cstring</code>, using the <code>StdAllocator</code> associated with <code>self</code></p>
+            <p>Returns the last <code>num_chars</code> characters of <code>self</code> as a new <code>cstring</code>, using the <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> associated with <code>self</code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -4095,7 +4095,7 @@
               index,
               length)</span>
             </h3>
-            <p>Returns the substring of <code>self</code> starting at <code>index</code> with length <code>length</code> as a <code><a href="structStdString.html" class="m-doc">StdString</a></code>, using the <code>StdAllocator</code> associated with <code>self</code></p>
+            <p>Returns the substring of <code>self</code> starting at <code>index</code> with length <code>length</code> as a <code><a href="structStdString.html" class="m-doc">StdString</a></code>, using the <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> associated with <code>self</code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -4129,7 +4129,7 @@
               length,
               allocator)</span>
             </h3>
-            <p>Returns the substring of <code>self</code> starting at <code>index</code> with length <code>length</code> as a <code><a href="structStdString.html" class="m-doc">StdString</a></code>, associating the given <code>StdAllocator</code> with the substring.</p>
+            <p>Returns the substring of <code>self</code> starting at <code>index</code> with length <code>length</code> as a <code><a href="structStdString.html" class="m-doc">StdString</a></code>, associating the given <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> with the substring.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -4149,7 +4149,7 @@
                 </tr>
                 <tr>
                   <td>allocator</td>
-                  <td>- The <code>StdAllocator</code> to associate with the substring</td>
+                  <td>- The <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code> to associate with the substring</td>
                 </tr>
               </tbody>
               <tfoot>
