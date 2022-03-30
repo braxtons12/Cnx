@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Algebraic Enums module | C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">C2nxt <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          Algebraic Enums <span class="m-thin">module</span></h1>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<p>This module provides macros for declaring algebraic datatypes called algebraic <code>Enum</code>s, similar to Rust&#x27;s <code>Enum</code>, and pattern matching on their variants.</p><p>A C2nxt <code>Enum</code> is an algebraic data type similar to tagged unions, but with additional capabilities and related abstractions that make working with them simple and pleasant, with no boilerplate.</p><p><code>Enum</code> declarations consist of a type name, followed by one or more variant layouts, followed by zero or more additional member declarations. Variant layouts are tuples of the form <code>(VariantName, MemberTypes...)</code> where <code>VariantName</code> is required, and <code>MemberTypes</code> can be zero or more type names (such as <code>int</code>, <code><a href="structStdString.html" class="m-doc">StdString</a></code>, or <code>struct timespec</code>). <code>Enum</code> declarations may alternately use a predefined <code>enum</code> type for identifying their variants. In this case, the <code>enum</code> members&#x27; identifiers must exactly match the names of the <code>Enum</code>&#x27;s variants.</p><p>Example:</p><pre class="m-code"><span class="c1">// An `Enum` declaration consisting of three variants</span>
+<span class="n">Enum</span><span class="p">(</span><span class="n">Example1</span><span class="p">,</span> <span class="p">(</span><span class="n">E1Variant1</span><span class="p">,</span> <span class="n">i32</span><span class="p">,</span> <span class="n">i32</span><span class="p">),</span> <span class="p">(</span><span class="n">E1Variant2</span><span class="p">,</span> <span class="n">u32</span><span class="p">),</span> <span class="p">(</span><span class="n">E1Variant3</span><span class="p">));</span>
+<span class="c1">// An `Enum` declaration consisting of two variants and one additional member</span>
+<span class="n">Enum</span><span class="p">(</span><span class="n">Example2</span><span class="p">,</span> <span class="p">(</span><span class="n">E2Variant1</span><span class="p">,</span> <span class="n">i32</span><span class="p">),</span> <span class="p">(</span><span class="n">E2Variant2</span><span class="p">,</span> <span class="n">f32</span><span class="p">),</span> <span class="kt">float</span> <span class="n">E2_member</span><span class="p">);</span>
+
+<span class="k">typedef</span> <span class="k">enum</span> <span class="n">Example3Enum</span> <span class="p">{</span>
+    <span class="n">E3Variant1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">E3Variant2</span>
+<span class="p">}</span>
+
+<span class="c1">// An `Enum` declaration with two variants, using an existing enum to tag its variants.</span>
+<span class="c1">// Note that the variant names exactly match the `enum` members, as they must</span>
+<span class="n">EnumWithTag</span><span class="p">(</span><span class="n">Example3</span><span class="p">,</span> <span class="n">Example3Enum</span><span class="p">,</span> <span class="p">(</span><span class="n">E3Variant1</span><span class="p">,</span> <span class="n">i32</span><span class="p">),</span> <span class="p">(</span><span class="n">E3Variant2</span><span class="p">,</span> <span class="n">f64</span><span class="p">));</span></pre><p>There are several abstractions that make working with <code>Enum</code>s simple and concise, such as pattern matching and conditional binding. Pattern matching is semantically similar to <code>switch</code> statements, but unlike <code>switch</code>, does not require the <code>break</code> keyword to prevent cascading. Binding abstractions allow for extracting an enum variant&#x27;s constituent members and assigning them to new variables. Binding is always done by value; to discourage mutating an enum in place, reference binding must be done manually.</p><p>Example:</p><pre class="m-code"><span class="c1">// we recommend `#define`ing constructor-macros to simplify creating `Enum` variants</span>
+<span class="cp">#define E1Variant2(first_int, second_int) \</span>
+<span class="cp">    (Example){                            \</span>
+<span class="cp">        .tag = E1Variant1,                \</span>
+<span class="cp">        .variant_identifier(E1Variant2) = {  \</span>
+<span class="cp">            (first_int),                  \</span>
+<span class="cp">            (second_int)},                \</span>
+<span class="cp">        },                                \</span>
+<span class="cp">    }</span>
+
+<span class="c1">// take an `Example1` `Enum` from above as a function parameter</span>
+<span class="kt">void</span> <span class="nf">example1</span><span class="p">(</span><span class="n">Example1</span> <span class="n">var</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1">// pattern match on the variant `var` currently is.</span>
+    <span class="c1">// Note that while some branches bind variables to variant members in this example,</span>
+    <span class="c1">// binding is optional, and pattern matching without binding is perfectly valid</span>
+    <span class="n">match</span><span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// if `var` is the `E1Variant1` variant, this branch will be taken and `first_int` and</span>
+        <span class="c1">// `second_int` will be bound to the members of the variant</span>
+        <span class="n">variant</span><span class="p">(</span><span class="n">E1Variant1</span><span class="p">,</span> <span class="n">first_int</span><span class="p">,</span> <span class="n">second_int</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&quot;E1Variant1: [first_int: {}, second_int: {}]&quot;</span><span class="p">,</span> <span class="n">first_int</span><span class="p">,</span> <span class="n">second_int</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="c1">// if `var` is the `E1Variant2` variant, this branch will be taken and `u32_value`</span>
+        <span class="c1">// will be bound to the member of the variant</span>
+        <span class="n">variant</span><span class="p">(</span><span class="n">E1Variant2</span><span class="p">,</span> <span class="n">u32_value</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&quot;E1Variant2: [u32_value: {}]&quot;</span><span class="p">,</span> <span class="n">u32_value</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="c1">// if `var` is the `E1Variant3` variant, this branch will be taken. As `E1Variant3` has</span>
+        <span class="c1">// no members, we can&#39;t bind any variables with this branch.</span>
+        <span class="n">variant</span><span class="p">(</span><span class="n">E1Variant3</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&quot;E1Variant3&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">example2</span><span class="p">(</span><span class="n">Example1</span> <span class="n">var</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// variants we don&#39;t care about explicitly matching can be globbed with `wildcard()`</span>
+    <span class="n">match</span><span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">variant</span><span class="p">(</span><span class="n">E1Variant1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&quot;E1Variant1&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">wildcard</span><span class="p">()</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&quot;Not E1Variant1&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">example3</span><span class="p">(</span><span class="n">Example1</span> <span class="n">var</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// conditionally bind if `var` is the specified variant</span>
+    <span class="n">match_let</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">E1Variant1</span><span class="p">,</span> <span class="n">first_int</span><span class="p">,</span> <span class="n">second_int</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;E1Variant1: [first_int: {}, second_int: {}]&quot;</span><span class="p">,</span> <span class="n">first_int</span><span class="p">,</span> <span class="n">second_int</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Not E1Variant1&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">example3</span><span class="p">(</span><span class="n">Example1</span> <span class="n">var</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// can `match_let` without binding</span>
+    <span class="n">match_let</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">E1Variant1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Is E1Variant1&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Not E1Variant1&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">example4</span><span class="p">(</span><span class="n">Example1</span> <span class="n">var</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// check is `var` is the specifier variant</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">is_variant</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">E1Variant1</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Is E1Variant1&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Not E1Variant1&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></pre>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae5bbfee640c17742a1a7c7bd07d3d751" class="m-doc">Enum</a>(</span><span class="m-doc-wrap">Type,
+              ...)</span>
+            </dt>
+            <dd>Declares and defines an <code>Enum</code>, <code>Type</code>, with the given variants and additional members.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga0bd74f7b3bc17e91de8aa7c85edad788" class="m-doc">EnumWithTag</a>(</span><span class="m-doc-wrap">Type,
+              TagType,
+              ...)</span>
+            </dt>
+            <dd>Declares and defines an <code>Enum</code>, <code>Type</code>, using an existing C-style <code>enum</code>, <code>TagType</code>, to tag/identify its variants.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad787b174770350aaad26eedc9292bfba" class="m-doc">match</a>(</span><span class="m-doc-wrap">x)</span>
+            </dt>
+            <dd>Pattern matches on the given <code>Enum</code>, <code>x</code> Pattern matching works similarly to <code>switch</code> statements, but with slightly different semantics. First off, pattern cases are declared with <code><a href="group__std__enum.html#ga5c65b7422f4e623e93795823f60a592e" class="m-doc">variant(...)</a></code>, which can, in addition to match the variant, optionally decompose the variant into one or more bound variables. Bound variables are bound by value, as decomposing a variant during pattern matching is intended to be consuming, so mutating the <code>Enum</code> variant&#x27;s members in place is not possible without manually doing so. Second, fallthrough is not possible, so <code>break</code>ing to prevent it is not necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5c65b7422f4e623e93795823f60a592e" class="m-doc">variant</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Declares a pattern-matching case in a <code>match</code> statement Pattern-matching cases declare a variant to match against and, in addition, can optionally decompose the variant into one or more bound variables. Bound variables are bound by value, as decomposing a variant during pattern matching is intended to be consuming, so mutating the <code>Enum</code> variant&#x27;s members in place is not possible without manually doing so. Unlike <code>switch</code> statements, fallthrough is not possible in <code>match</code> statements, so <code>break</code>ing between <code><a href="group__std__enum.html#ga5c65b7422f4e623e93795823f60a592e" class="m-doc">variant(...)</a></code>s is not necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab5ae623ebd1c1819cbccf669fe5c0d92" class="m-doc">wildcard</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Declares a catch-all pattern-matching case in a <code>match</code> statement This will match all variants that have not been explicitly matched against prior. Unlike <code>switch</code> statements, fallthrough is not possible in <code>match</code> statements, so <code>break</code>ing between <code><a href="group__std__enum.html#ga5c65b7422f4e623e93795823f60a592e" class="m-doc">variant(...)</a></code>s is not necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaacdb758ac67652e7d518762e36737c33" class="m-doc">match_let</a>(</span><span class="m-doc-wrap">self,
+              ...)</span>
+            </dt>
+            <dd>Conditionally pattern matches on the given <code>Enum</code>, <code>self</code> <code>match_let</code> works similarly to an <code>if</code> statement, but with slightly different semantics. First off, in addition to conditionally branching if <code>self</code> is the given variant, it can optionally decompose the variant into one or more bound variables. Bound variables are bound by value, as decomposing a variant during pattern matching is intended to be consuming, so mutating the <code>Enum</code> variant&#x27;s members in place is not possible without manually doing so.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga74e136471c537efb8b4d5da7b69299e8" class="m-doc">is_variant</a>(</span><span class="m-doc-wrap">self,
+              Variant)</span>
+            </dt>
+            <dd>Determines if <code>self</code> is the <code>Enum</code> variant <code>Variant</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab938f5c91d29297539bffc3ead525f1f" class="m-doc">extract_variant</a>(</span><span class="m-doc-wrap">self,
+              Variant)</span>
+            </dt>
+            <dd>Extracts the internal value of <code>self</code> as the variant <code>Variant</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga50d344ee62ce30d79addd6431289ad3b" class="m-doc">variant_identifier</a>(</span><span class="m-doc-wrap">Variant)</span>
+            </dt>
+            <dd>Generates the member identifier for an <code>Enum</code> variant, <code>Variant</code>, used in the struct definition of an <code>Enum</code></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Define documentation</h2>
+          <section class="m-doc-details" id="gae5bbfee640c17742a1a7c7bd07d3d751"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae5bbfee640c17742a1a7c7bd07d3d751" class="m-doc-self">Enum</a>(</span><span class="m-doc-wrap">Type,
+              ...)</span>
+            </h3>
+            <p>Declares and defines an <code>Enum</code>, <code>Type</code>, with the given variants and additional members.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">Type</td>
+                  <td>- The name for the <code>Enum</code></td>
+                </tr>
+                <tr>
+                  <td>...</td>
+                  <td>- The list of variant tuples and additional members</td>
+                </tr>
+              </tbody>
+            </table>
+<p><code>Enum</code> declarations consist of a type name, followed by one or more variant layouts, followed by zero or more additional member declarations. Variant layouts are tuples of the form <code>(VariantName, MemberTypes...)</code> where <code>VariantName</code> is required, and <code>MemberTypes</code> can be zero or more type names (such as <code>int</code>, <code><a href="structStdString.html" class="m-doc">StdString</a></code>, or <code>struct timespec</code>).</p>
+          </div></section>
+          <section class="m-doc-details" id="ga0bd74f7b3bc17e91de8aa7c85edad788"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga0bd74f7b3bc17e91de8aa7c85edad788" class="m-doc-self">EnumWithTag</a>(</span><span class="m-doc-wrap">Type,
+              TagType,
+              ...)</span>
+            </h3>
+            <p>Declares and defines an <code>Enum</code>, <code>Type</code>, using an existing C-style <code>enum</code>, <code>TagType</code>, to tag/identify its variants.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">Type</td>
+                  <td>- The name for the <code>Enum</code></td>
+                </tr>
+                <tr>
+                  <td>TagType</td>
+                  <td>- The C-style <code>enum</code> to use to identify the <code>Enum</code>s variants. The <code>enum</code>&#x27;s members&#x27; identifiers must exactly match the names of the <code>Enum</code>&#x27;s variants.</td>
+                </tr>
+                <tr>
+                  <td>...</td>
+                  <td>- The list of variant tuples and additional members</td>
+                </tr>
+              </tbody>
+            </table>
+<p><code>Enum</code> declarations consist of a type name, followed by one or more variant layouts, followed by zero or more additional member declarations. Variant layouts are tuples of the form <code>(VariantName, MemberTypes...)</code> where <code>VariantName</code> is required, and <code>MemberTypes</code> can be zero or more type names (such as <code>int</code>, <code><a href="structStdString.html" class="m-doc">StdString</a></code>, or <code>struct timespec</code>). <code>Enum</code> declarations may alternately use a predefined C-style <code>enum</code> type for identifying their variants. In this case, the C-style <code>enum</code>&#x27;s members&#x27; identifiers must exactly match the names of the <code>Enum</code>&#x27;s variants.</p>
+          </div></section>
+          <section class="m-doc-details" id="gad787b174770350aaad26eedc9292bfba"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad787b174770350aaad26eedc9292bfba" class="m-doc-self">match</a>(</span><span class="m-doc-wrap">x)</span>
+            </h3>
+            <p>Pattern matches on the given <code>Enum</code>, <code>x</code> Pattern matching works similarly to <code>switch</code> statements, but with slightly different semantics. First off, pattern cases are declared with <code><a href="group__std__enum.html#ga5c65b7422f4e623e93795823f60a592e" class="m-doc">variant(...)</a></code>, which can, in addition to match the variant, optionally decompose the variant into one or more bound variables. Bound variables are bound by value, as decomposing a variant during pattern matching is intended to be consuming, so mutating the <code>Enum</code> variant&#x27;s members in place is not possible without manually doing so. Second, fallthrough is not possible, so <code>break</code>ing to prevent it is not necessary.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>- The <code>Enum</code> to pattern match on</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Example:</p><pre class="m-code"><span class="n">Enum</span><span class="p">(</span><span class="n">Example</span><span class="p">,</span> <span class="p">(</span><span class="n">Variant1</span><span class="p">,</span> <span class="n">i32</span><span class="p">,</span> <span class="n">i32</span><span class="p">),</span> <span class="p">(</span><span class="n">Variant2</span><span class="p">,</span> <span class="n">f32</span><span class="p">,</span> <span class="n">f32</span><span class="p">),</span> <span class="p">(</span><span class="n">Variant3</span><span class="p">));</span>
+
+<span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="n">Example</span> <span class="n">var</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">match</span><span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">variant</span><span class="p">(</span><span class="n">Variant1</span><span class="p">,</span> <span class="n">first_i32</span><span class="p">,</span> <span class="n">second_i32</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&quot;Variant1: [first: {}, second: {}]&quot;</span><span class="p">,</span> <span class="n">first_i32</span><span class="p">,</span> <span class="n">second_i32</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">variant</span><span class="p">(</span><span class="n">Variant2</span><span class="p">,</span> <span class="n">first_f32</span><span class="p">,</span> <span class="n">second_f32</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&quot;Variant2: [first: {e}, second: {e}]&quot;</span><span class="p">,</span> <span class="n">first_f32</span><span class="p">,</span> <span class="n">second_f32</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">variant</span><span class="p">(</span><span class="n">Variant3</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&quot;Variant3&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></pre>
+          </div></section>
+          <section class="m-doc-details" id="ga5c65b7422f4e623e93795823f60a592e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5c65b7422f4e623e93795823f60a592e" class="m-doc-self">variant</a>(</span><span class="m-doc-wrap">...)</span>
+            </h3>
+            <p>Declares a pattern-matching case in a <code>match</code> statement Pattern-matching cases declare a variant to match against and, in addition, can optionally decompose the variant into one or more bound variables. Bound variables are bound by value, as decomposing a variant during pattern matching is intended to be consuming, so mutating the <code>Enum</code> variant&#x27;s members in place is not possible without manually doing so. Unlike <code>switch</code> statements, fallthrough is not possible in <code>match</code> statements, so <code>break</code>ing between <code><a href="group__std__enum.html#ga5c65b7422f4e623e93795823f60a592e" class="m-doc">variant(...)</a></code>s is not necessary.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">...</td>
+                  <td>- The variant name, followed by any decomposition variable names to bind the variant&#x27;s members to</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Example:</p><pre class="m-code"><span class="n">Enum</span><span class="p">(</span><span class="n">Example</span><span class="p">,</span> <span class="p">(</span><span class="n">Variant1</span><span class="p">,</span> <span class="n">i32</span><span class="p">,</span> <span class="n">i32</span><span class="p">),</span> <span class="p">(</span><span class="n">Variant2</span><span class="p">,</span> <span class="n">f32</span><span class="p">,</span> <span class="n">f32</span><span class="p">),</span> <span class="p">(</span><span class="n">Variant3</span><span class="p">));</span>
+
+<span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="n">Example</span> <span class="n">var</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">match</span><span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">variant</span><span class="p">(</span><span class="n">Variant1</span><span class="p">,</span> <span class="n">first_i32</span><span class="p">,</span> <span class="n">second_i32</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&quot;Variant1: [first: {}, second: {}]&quot;</span><span class="p">,</span> <span class="n">first_i32</span><span class="p">,</span> <span class="n">second_i32</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">variant</span><span class="p">(</span><span class="n">Variant2</span><span class="p">,</span> <span class="n">first_f32</span><span class="p">,</span> <span class="n">second_f32</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&quot;Variant2: [first: {e}, second: {e}]&quot;</span><span class="p">,</span> <span class="n">first_f32</span><span class="p">,</span> <span class="n">second_f32</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">variant</span><span class="p">(</span><span class="n">Variant3</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&quot;Variant3&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></pre>
+          </div></section>
+          <section class="m-doc-details" id="gab5ae623ebd1c1819cbccf669fe5c0d92"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab5ae623ebd1c1819cbccf669fe5c0d92" class="m-doc-self">wildcard</a>(</span><span class="m-doc-wrap">)</span>
+            </h3>
+            <p>Declares a catch-all pattern-matching case in a <code>match</code> statement This will match all variants that have not been explicitly matched against prior. Unlike <code>switch</code> statements, fallthrough is not possible in <code>match</code> statements, so <code>break</code>ing between <code><a href="group__std__enum.html#ga5c65b7422f4e623e93795823f60a592e" class="m-doc">variant(...)</a></code>s is not necessary.</p>
+<p>Example:</p><pre class="m-code">    <span class="n">Enum</span><span class="p">(</span><span class="n">Example</span><span class="p">,</span> <span class="p">(</span><span class="n">Variant1</span><span class="p">,</span> <span class="n">i32</span><span class="p">,</span> <span class="n">i32</span><span class="p">),</span> <span class="p">(</span><span class="n">Variant2</span><span class="p">,</span> <span class="n">f32</span><span class="p">,</span> <span class="n">f32</span><span class="p">),</span> <span class="p">(</span><span class="n">Variant3</span><span class="p">));</span>
+   
+    <span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="n">Example</span> <span class="n">var</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">match</span><span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">variant</span><span class="p">(</span><span class="n">Variant1</span><span class="p">,</span> <span class="n">first_i32</span><span class="p">,</span> <span class="n">second_i32</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">println</span><span class="p">(</span><span class="s">&quot;Variant1: [first: {}, second: {}]&quot;</span><span class="p">,</span> <span class="n">first_i32</span><span class="p">,</span> <span class="n">second_i32</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="n">wildcard</span><span class="p">()</span> <span class="p">{</span>
+                <span class="n">println</span><span class="p">(</span><span class="s">&quot;Not Variant1&quot;</span><span class="p">);</span>
+<span class="c1">// }</span>
+        <span class="p">}</span>
+    <span class="p">}</span></pre>
+          </div></section>
+          <section class="m-doc-details" id="gaacdb758ac67652e7d518762e36737c33"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaacdb758ac67652e7d518762e36737c33" class="m-doc-self">match_let</a>(</span><span class="m-doc-wrap">self,
+              ...)</span>
+            </h3>
+            <p>Conditionally pattern matches on the given <code>Enum</code>, <code>self</code> <code>match_let</code> works similarly to an <code>if</code> statement, but with slightly different semantics. First off, in addition to conditionally branching if <code>self</code> is the given variant, it can optionally decompose the variant into one or more bound variables. Bound variables are bound by value, as decomposing a variant during pattern matching is intended to be consuming, so mutating the <code>Enum</code> variant&#x27;s members in place is not possible without manually doing so.</p>
+<p>Example:</p><pre class="m-code"><span class="n">Enum</span><span class="p">(</span><span class="n">Example</span><span class="p">,</span> <span class="p">(</span><span class="n">Variant1</span><span class="p">,</span> <span class="n">i32</span><span class="p">,</span> <span class="n">i32</span><span class="p">),</span> <span class="p">(</span><span class="n">Variant2</span><span class="p">,</span> <span class="n">f32</span><span class="p">,</span> <span class="n">f32</span><span class="p">),</span> <span class="p">(</span><span class="n">Variant3</span><span class="p">));</span>
+
+<span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="n">Example</span> <span class="n">var</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">match</span><span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">variant</span><span class="p">(</span><span class="n">Variant1</span><span class="p">,</span> <span class="n">first_i32</span><span class="p">,</span> <span class="n">second_i32</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&quot;Variant1: [first: {}, second: {}]&quot;</span><span class="p">,</span> <span class="n">first_i32</span><span class="p">,</span> <span class="n">second_i32</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">variant</span><span class="p">(</span><span class="n">Variant2</span><span class="p">,</span> <span class="n">first_f32</span><span class="p">,</span> <span class="n">second_f32</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&quot;Variant2: [first: {e}, second: {e}]&quot;</span><span class="p">,</span> <span class="n">first_f32</span><span class="p">,</span> <span class="n">second_f32</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">variant</span><span class="p">(</span><span class="n">Variant3</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&quot;Variant3&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></pre>
+          </div></section>
+          <section class="m-doc-details" id="ga74e136471c537efb8b4d5da7b69299e8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga74e136471c537efb8b4d5da7b69299e8" class="m-doc-self">is_variant</a>(</span><span class="m-doc-wrap">self,
+              Variant)</span>
+            </h3>
+            <p>Determines if <code>self</code> is the <code>Enum</code> variant <code>Variant</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code>Enum</code> to check</td>
+                </tr>
+                <tr>
+                  <td>Variant</td>
+                  <td>- The variant to check if <code>self</code> is</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>whether <code>self</code> is the <code>Variant</code> variant</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Example:</p><pre class="m-code"><span class="n">Enum</span><span class="p">(</span><span class="n">Example</span><span class="p">,</span> <span class="p">(</span><span class="n">Variant1</span><span class="p">,</span> <span class="n">i32</span><span class="p">,</span> <span class="n">i32</span><span class="p">),</span> <span class="p">(</span><span class="n">Variant2</span><span class="p">,</span> <span class="n">f32</span><span class="p">,</span> <span class="n">f32</span><span class="p">),</span> <span class="p">(</span><span class="n">Variant3</span><span class="p">));</span>
+
+<span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="n">Example</span> <span class="n">var</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">is_variant</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">Variant2</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Is Variant2&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Not Variant2&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></pre>
+          </div></section>
+          <section class="m-doc-details" id="gab938f5c91d29297539bffc3ead525f1f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab938f5c91d29297539bffc3ead525f1f" class="m-doc-self">extract_variant</a>(</span><span class="m-doc-wrap">self,
+              Variant)</span>
+            </h3>
+            <p>Extracts the internal value of <code>self</code> as the variant <code>Variant</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code>Enum</code> to extract</td>
+                </tr>
+                <tr>
+                  <td>Variant</td>
+                  <td>- The <code>Enum</code> variant to extract <code>self</code> as</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>self</code>&#x27;s internal value, as <code>Variant</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If <code>self</code> is the variant <code>Variant</code>, extracts the internal value of <code>self</code> as that variant, so it can be used for further processing.</p><p>Example:</p><pre class="m-code"><span class="n">Enum</span><span class="p">(</span><span class="n">Example</span><span class="p">,</span> <span class="p">(</span><span class="n">Variant1</span><span class="p">,</span> <span class="n">i32</span><span class="p">,</span> <span class="n">i32</span><span class="p">),</span> <span class="p">(</span><span class="n">Variant2</span><span class="p">,</span> <span class="n">f32</span><span class="p">,</span> <span class="n">f32</span><span class="p">),</span> <span class="p">(</span><span class="n">Variant3</span><span class="p">));</span>
+
+<span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="n">Example</span> <span class="n">var</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let</span> <span class="n">variant2</span> <span class="o">=</span> <span class="n">extract_variant</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">Variant2</span><span class="p">);</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;first: {}, second: {}&quot;</span><span class="p">,</span> <span class="n">variant2</span><span class="p">.</span><span class="n">_1</span><span class="p">,</span> <span class="n">variant2</span><span class="p">.</span><span class="n">_2</span><span class="p">);</span>
+<span class="p">}</span></pre>
+          </div></section>
+          <section class="m-doc-details" id="ga50d344ee62ce30d79addd6431289ad3b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga50d344ee62ce30d79addd6431289ad3b" class="m-doc-self">variant_identifier</a>(</span><span class="m-doc-wrap">Variant)</span>
+            </h3>
+            <p>Generates the member identifier for an <code>Enum</code> variant, <code>Variant</code>, used in the struct definition of an <code>Enum</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">Variant</td>
+                  <td>- The name of the <code>Enum</code> variant</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The identifier used for <code>Variant</code> in an <code>Enum</code> struct definition</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>
