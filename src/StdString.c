@@ -1,8 +1,8 @@
 /// @file StdString.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides string and stringview types comparable to C++ for C2nxt
-/// @version 0.1.3
-/// @date 2022-03-28
+/// @version 0.1.4
+/// @date 2022-03-31
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -38,32 +38,32 @@
 /// @brief Declares `StdOption(T)` for `StdString`
 #define OPTION_T	StdString
 #define OPTION_IMPL TRUE
-#include <C2nxt/StdOption.h>
+#include <C2nxt/StdOption.h> // NOLINT(readability-duplicate-include)
 
 /// @brief Declares `StdOption(T)` for `Ref(StdString)`
 #define OPTION_T	Ref(StdString)
 #define OPTION_IMPL TRUE
-#include <C2nxt/StdOption.h>
+#include <C2nxt/StdOption.h> // NOLINT(readability-duplicate-include)
 
 /// @brief Declares `StdOption(T)` for `ConstRef(StdString)`
 #define OPTION_T	ConstRef(StdString)
 #define OPTION_IMPL TRUE
-#include <C2nxt/StdOption.h>
+#include <C2nxt/StdOption.h> // NOLINT(readability-duplicate-include)
 
 /// @brief Declares `StdOption(T)` for `StdStringView`
 #define OPTION_T	StdStringView
 #define OPTION_IMPL TRUE
-#include <C2nxt/StdOption.h>
+#include <C2nxt/StdOption.h> // NOLINT(readability-duplicate-include)
 
 /// @brief Declares `StdOption(T)` for `Ref(StdStringView)`
 #define OPTION_T	Ref(StdStringView)
 #define OPTION_IMPL TRUE
-#include <C2nxt/StdOption.h>
+#include <C2nxt/StdOption.h> // NOLINT(readability-duplicate-include)
 
 /// @brief Declares `StdOption(T)` for `ConstRef(StdStringView)`
 #define OPTION_T	ConstRef(StdStringView)
 #define OPTION_IMPL TRUE
-#include <C2nxt/StdOption.h>
+#include <C2nxt/StdOption.h> // NOLINT(readability-duplicate-include)
 
 #undef OPTION_UNDEF_PARAMS
 
@@ -480,7 +480,7 @@ StdString std_string_from_wcstring_with_allocator(restrict const_wcstring string
 }
 
 StdString std_string_from_stringview(const StdStringView* restrict view) {
-	return std_string_from_cstring(view->m_view, view->m_length);
+	return std_string_from_stringview_with_allocator(view, DEFAULT_ALLOCATOR);
 }
 
 StdString std_string_from_stringview_with_allocator(const StdStringView* restrict view,
@@ -946,8 +946,8 @@ StdString(std_string_substring_with_allocator)(const StdString* restrict self,
 	[[maybe_unused]] let self_length = std_string_length(*self);
 	std_assert(index < self_length,
 			   "std_string_substring called with index >= self->m_length (index out of bounds)");
-	std_assert(index + length < self_length,
-			   "std_string_substring called with index + length >= self->m_length (substring range "
+	std_assert(index + length <= self_length,
+			   "std_string_substring called with index + length > self->m_length (substring range "
 			   "out of bounds)");
 
 	let_mut string = std_string_new_with_capacity_with_allocator(length, allocator);
@@ -963,8 +963,8 @@ StdStringView(std_string_stringview_of)(const StdString* restrict self, usize in
 	std_assert(index < self_length,
 			   "std_stringview_of called with index >= self->m_length (index out of bounds)");
 	std_assert(
-		index + length < self_length,
-		"std_string_stringview_of called with index + length >= self->m_length (substring range "
+		index + length <= self_length,
+		"std_string_stringview_of called with index + length > self->m_length (substring range "
 		"out of bounds)");
 
 	return (StdStringView){.m_view = &std_string_at(*self, index),
@@ -1629,6 +1629,29 @@ usize(std_stringview_length)(const StdStringView* restrict self) {
 
 usize(std_stringview_size)(const StdStringView* restrict self) {
 	return self->m_length;
+}
+
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters
+bool(std_stringview_equal)(const StdStringView* restrict self,
+						   const StdStringView* restrict to_compare) {
+	if(self->m_length != to_compare->m_length) {
+		return false;
+	}
+
+	return memcmp(self->m_view, to_compare->m_view, self->m_length) == 0;
+}
+
+bool std_stringview_equal_string(const StdStringView* restrict self,
+								 const StdString* restrict to_compare) {
+	return std_string_equal_stringview(to_compare, self);
+}
+
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters
+bool std_stringview_equal_cstring(const StdStringView* restrict self,
+								  restrict const_cstring to_compare,
+								  usize to_compare_length) {
+	let view = std_stringview_from(to_compare, 0, to_compare_length);
+	return (std_stringview_equal)(self, &view);
 }
 
 const_cstring(std_stringview_into_cstring)(const StdStringView* restrict self) {

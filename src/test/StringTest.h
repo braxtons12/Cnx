@@ -2,6 +2,7 @@
 #define STD_STRING_TEST
 
 #include <C2nxt/StdString.h>
+#include <C2nxt/StdStringExt.h>
 
 #include "Criterion.h"
 
@@ -224,6 +225,11 @@ TEST(StdString, stringview_of) {
 	let view = std_string_stringview_of(string, 8, 6);
 	TEST_ASSERT(0 == memcmp(std_stringview_at(view, 0), "a test", 6));
 	TEST_ASSERT_EQUAL(std_stringview_length(view), 6);
+
+	let view2 = std_string_stringview_of(string, 15, 9);
+	TEST_ASSERT(0 == memcmp(std_stringview_at(view2, 0), "test test", 9));
+	TEST_ASSERT_EQUAL(std_stringview_length(view2), 9);
+
 	std_string_free(string);
 }
 
@@ -453,6 +459,71 @@ TEST(StdString, iterator) {
 	TEST_ASSERT(std_string_equal(string, &string2));
 	std_string_free(string);
 	std_string_free(string2);
+}
+
+TEST(StdString, split_on) {
+	std_string_scoped string = std_string_from("This=is=a=test=string");
+
+	std_vector_scoped(StdString) split = std_string_split_on(string, '=');
+
+	TEST_ASSERT_EQUAL(std_vector_size(split), 5); // NOLINT
+	TEST_ASSERT(std_string_equal(std_vector_at(split, 0), "This"));
+	TEST_ASSERT(std_string_equal(std_vector_at(split, 1), "is"));
+	TEST_ASSERT(std_string_equal(std_vector_at(split, 2), "a"));
+	TEST_ASSERT(std_string_equal(std_vector_at(split, 3), "test"));
+	TEST_ASSERT(std_string_equal(std_vector_at(split, 4), "string"));
+}
+
+TEST(StdString, view_split_on) {
+	std_string_scoped string = std_string_from("This=is=a=test=string");
+
+	std_vector_scoped(StdStringView) split = std_string_view_split_on(string, '=');
+
+	TEST_ASSERT_EQUAL(std_vector_size(split), 5); // NOLINT
+	TEST_ASSERT(std_stringview_equal(std_vector_at(split, 0), "This"));
+	TEST_ASSERT(std_stringview_equal(std_vector_at(split, 1), "is"));
+	TEST_ASSERT(std_stringview_equal(std_vector_at(split, 2), "a"));
+	TEST_ASSERT(std_stringview_equal(std_vector_at(split, 3), "test"));
+	TEST_ASSERT(std_stringview_equal(std_vector_at(split, 4), "string"));
+}
+
+TEST(StdString, occurences_of_char) {
+	std_string_scoped string = std_string_from("A=test=test=test=string");
+
+	let occurrences = std_string_occurrences_of_char(string, '=');
+
+	TEST_ASSERT_EQUAL(occurrences, 4);
+}
+
+TEST(StdString, occurrences_of) {
+	std_string_scoped string = std_string_from("A=test=test=test=string");
+
+	let occurrences = std_string_occurrences_of(string, "test");
+
+	TEST_ASSERT_EQUAL(occurrences, 3);
+}
+
+TEST(StdString, find_occurrences_of_char) {
+	std_string_scoped string = std_string_from("A=test=test=test=string");
+
+	std_vector_scoped(usize) occurrences = std_string_find_occurrences_of_char(string, '=');
+
+	TEST_ASSERT_EQUAL(std_vector_size(occurrences), 4);
+	TEST_ASSERT_EQUAL(std_vector_at(occurrences, 0), 1);
+	TEST_ASSERT_EQUAL(std_vector_at(occurrences, 1), 6);
+	TEST_ASSERT_EQUAL(std_vector_at(occurrences, 2), 11);
+	TEST_ASSERT_EQUAL(std_vector_at(occurrences, 3), 16);
+}
+
+TEST(StdString, find_occurrences_of) {
+	std_string_scoped string = std_string_from("A=test=test=test=string");
+
+	std_vector_scoped(usize) occurrences = std_string_find_occurrences_of(string, "test");
+
+	TEST_ASSERT_EQUAL(std_vector_size(occurrences), 3);
+	TEST_ASSERT_EQUAL(std_vector_at(occurrences, 0), 2);
+	TEST_ASSERT_EQUAL(std_vector_at(occurrences, 1), 7);
+	TEST_ASSERT_EQUAL(std_vector_at(occurrences, 2), 12);
 }
 
 #endif // STD_STRING_TEST

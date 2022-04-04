@@ -1,8 +1,8 @@
 /// @file StdString.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides string and stringview types comparable to C++ for C2nxt
-/// @version 0.2.1
-/// @date 2022-03-24
+/// @version 0.2.2
+/// @date 2022-03-31
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -90,6 +90,7 @@
 #include <C2nxt/StdAllocators.h>
 #include <C2nxt/StdBasicTypes.h>
 #include <C2nxt/StdIterator.h>
+#include <stdbool.h>
 #define OPTION_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
 #include <C2nxt/StdOption.h>
 #undef OPTION_INCLUDE_DEFAULT_INSTANTIATIONS
@@ -1698,6 +1699,44 @@ std_stringview_length(const StdStringView* restrict self) ___DISABLE_IF_NULL(sel
 /// @ingroup std_stringview
 [[nodiscard]] [[not_null(1)]] usize
 std_stringview_size(const StdStringView* restrict self) ___DISABLE_IF_NULL(self);
+
+/// @brief Returns whether the given `StdStringView`s are equivalent
+///
+/// @param self - The first `StdStringView` to compare
+/// @param to_compare - The `StdStringView` to compare to
+///
+/// @return whether the stringviews are equal
+/// @ingroup std_stringview
+[[nodiscard]] [[not_null(1, 2)]] bool
+std_stringview_equal(const StdStringView* restrict self, const StdStringView* restrict to_compare)
+	___DISABLE_IF_NULL(self) std_disable_if(!to_compare, "Can't compare a stringview to a nullptr");
+
+/// @brief Returns whether the given `StdStringView`s are equivalent
+///
+/// @param self - The first `StdStringView` to compare
+/// @param to_compare - The `StdStringView` to compare to
+///
+/// @return whether the stringviews are equal
+/// @ingroup std_stringview
+[[nodiscard]] [[not_null(1, 2)]] bool
+std_stringview_equal_string(const StdStringView* restrict self,
+							const StdString* restrict to_compare) ___DISABLE_IF_NULL(self)
+	std_disable_if(!to_compare, "Can't compare a stringview to a nullptr");
+
+/// @brief Returns whether the given `StdStringView` is equivalent to the given `cstring`
+///
+/// @param self - The first `StdStringView` to compare
+/// @param to_compare - The `cstring` to compare to
+/// @param to_compare_length - The length of the `cstring`
+///
+/// @return whether `self` is equalivalent to the given `cstring`
+/// @ingroup std_stringview
+[[nodiscard]] [[not_null(1, 2)]] bool
+std_stringview_equal_cstring(const StdStringView* restrict self,
+							 restrict const_cstring to_compare,
+							 usize to_compare_length) ___DISABLE_IF_NULL(self)
+	std_disable_if(!to_compare, "Can't compare a stringview to a nullptr");
+
 /// @brief Returns a `const_cstring` (`const char*`) representation of the `StdStringView`
 ///
 /// @param self - The `StdStringView` to get the `const_cstring` representation of
@@ -1812,8 +1851,8 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 ///
 /// @return The character at the given index
 /// @ingroup std_string
-#define std_string_at(self, index) *(_Generic((&(self)), 				\
-	StdString* 			: std_string_at_mut,  					\
+#define std_string_at(self, index) *(_Generic((&(self)), 			\
+	StdString* 			: std_string_at_mut,  						\
 	const StdString* 	: std_string_at_const)(&(self), (index)))
 // clang-format on
 // clang-format off
@@ -1824,7 +1863,7 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 /// @return The first character
 /// @ingroup std_string
 #define std_string_front(self) *(_Generic((&(self)), 			\
-	StdString*  		: std_string_front_mut, 			\
+	StdString*  		: std_string_front_mut, 				\
 	const StdString* 	: std_string_front_const)(&(self)))
 // clang-format on
 // clang-format off
@@ -1834,7 +1873,7 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 ///
 /// @return The last character
 /// @ingroup std_string
-#define std_string_back(self) *(_Generic((&(self)), 				\
+#define std_string_back(self) *(_Generic((&(self)), 		\
 	StdString* 			: std_string_back_mut, 				\
 	const StdString* 	: std_string_back_const)(&(self)))
 // clang-format on
@@ -1936,26 +1975,26 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 /// @return `true` if the two strings are equal, `false` otherwise
 /// @ingroup std_string
 #define std_string_equal(self, to_compare) _Generic((to_compare),                       		   \
-	const_cstring 				: 	std_string_equal_cstring(&(self), 					   \
-										static_cast(const_cstring)(to_compare), 				   \
-										strlen(static_cast(const_cstring)(to_compare))),      	   \
-	cstring 					: 	std_string_equal_cstring(&(self), 				   	   \
-										static_cast(cstring)(to_compare), 				    	   \
-										strlen(static_cast(cstring)(to_compare))),      		   \
-	const char[sizeof(to_compare)] 	: 	std_string_equal_cstring(&(self), 	/** NOLINT **/ \
-										static_cast(const_cstring)(to_compare), 				   \
-										sizeof(to_compare)), 						/** NOLINT **/ \
-	char[sizeof(to_compare)] 		: 	std_string_equal_cstring(&(self), 	/** NOLINT **/ \
-										static_cast(cstring)(to_compare),  						   \
-										sizeof(to_compare)), 						/** NOLINT **/ \
-	StdStringView* 				: 	std_string_equal_stringview(&(self), 			    	   \
-										static_cast(StdStringView*)(to_compare)), 		   		   \
-	const StdStringView* 		: 	std_string_equal_stringview(&(self), 			   	   \
-										static_cast(const StdStringView*)(to_compare)), 		   \
-	StdString* 					: 	std_string_equal(&(self), 							   \
-										static_cast(StdString*)(to_compare)),   				   \
-	const StdString* 			: 	std_string_equal(&(self), 							   \
-										static_cast(const StdString*)(to_compare)))
+	const_cstring 					: 	std_string_equal_cstring(&(self), 					   	   \
+											static_cast(const_cstring)(to_compare), 			   \
+											strlen(static_cast(const_cstring)(to_compare))),       \
+	cstring 						: 	std_string_equal_cstring(&(self), 				   	   	   \
+											static_cast(cstring)(to_compare), 				       \
+											strlen(static_cast(cstring)(to_compare))),      	   \
+	const char[sizeof(to_compare)] 	: 	std_string_equal_cstring(&(self), 			/** NOLINT **/ \
+											static_cast(const_cstring)(to_compare), 			   \
+											sizeof(to_compare)), 					/** NOLINT **/ \
+	char[sizeof(to_compare)] 		: 	std_string_equal_cstring(&(self), 			/** NOLINT **/ \
+											static_cast(cstring)(to_compare),  					   \
+											sizeof(to_compare)), 					/** NOLINT **/ \
+	StdStringView* 					: 	std_string_equal_stringview(&(self), 			    	   \
+											static_cast(StdStringView*)(to_compare)), 		   	   \
+	const StdStringView* 			: 	std_string_equal_stringview(&(self), 			   	   	   \
+											static_cast(const StdStringView*)(to_compare)), 	   \
+	StdString* 						: 	std_string_equal(&(self), 							   	   \
+											static_cast(StdString*)(to_compare)),   			   \
+	const StdString* 				: 	std_string_equal(&(self), 							   	   \
+											static_cast(const StdString*)(to_compare)))
 // clang-format on
 // clang-format off
 /// @brief Determines whether the string contains the given substring
@@ -1966,25 +2005,25 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 /// @return `true` if the string contains `substring`, otherwise `false`
 /// @ingroup std_string
 #define std_string_contains(self, substring) _Generic((substring), 								   \
-	const_cstring 					: std_string_contains_cstring(&(self), 				   \
+	const_cstring 					: std_string_contains_cstring(&(self), 				   		   \
 										static_cast(const_cstring)(substring),  				   \
 										strlen(static_cast(const_cstring)(substring))), 		   \
-	cstring 						: std_string_contains_cstring(&(self),  				   \
+	cstring 						: std_string_contains_cstring(&(self),  				   	   \
 										static_cast(cstring)(substring), 						   \
 										strlen(static_cast(cstring)(substring))), 				   \
-	const char[sizeof(substring)] 	: std_string_contains_cstring(&(self), 	/** NOLINT **/ \
+	const char[sizeof(substring)] 	: std_string_contains_cstring(&(self), 			/** NOLINT **/ \
 										static_cast(const_cstring)(substring), 					   \
 										sizeof(substring)), 						/** NOLINT **/ \
-	char[sizeof(substring)] 		: std_string_contains_cstring(&(self), 	/** NOLINT **/ \
+	char[sizeof(substring)] 		: std_string_contains_cstring(&(self), 			/** NOLINT **/ \
 										static_cast(cstring)(substring), 						   \
 										sizeof(substring)), 						/** NOLINT **/ \
-	StdStringView* 					: std_string_contains_stringview(&(self), 			   \
+	StdStringView* 					: std_string_contains_stringview(&(self), 			   		   \
 										static_cast(StdStringView*)(substring)), 				   \
-	const StdStringView* 			: std_string_contains_stringview(&(self), 			   \
+	const StdStringView* 			: std_string_contains_stringview(&(self), 			   		   \
 										static_cast(const StdStringView*)(substring)), 			   \
-	StdString* 						: std_string_contains(&(self), 						   \
+	StdString* 						: std_string_contains(&(self), 						   		   \
 										static_cast(StdString*)(substring)), 					   \
-	const StdString* 				: std_string_contains(&(self), 						   \
+	const StdString* 				: std_string_contains(&(self), 						   		   \
 										static_cast(const StdString*)(substring)))
 // clang-format on
 // clang-format off
@@ -1996,25 +2035,25 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 /// @return `true` if the string starts with `substring`, otherwise `false`
 /// @ingroup std_string
 #define std_string_starts_with(self, substring) _Generic((substring), 							   \
-	const_cstring 					: std_string_starts_with_cstring(&(self), 			   \
+	const_cstring 					: std_string_starts_with_cstring(&(self), 			   		   \
 										static_cast(const_cstring)(substring),  				   \
 										strlen(static_cast(const_cstring)(substring))), 		   \
-	cstring 						: std_string_starts_with_cstring(&(self),  			   \
+	cstring 						: std_string_starts_with_cstring(&(self),  			   		   \
 										static_cast(cstring)(substring), 						   \
 										strlen(static_cast(cstring)(substring))), 				   \
-	const char[sizeof(substring)] 	: std_string_starts_with_cstring(&(self), /** NOLINT **/ \
+	const char[sizeof(substring)] 	: std_string_starts_with_cstring(&(self), 		/** NOLINT **/ \
 										static_cast(const_cstring)(substring), 					   \
 										sizeof(substring)), 						/** NOLINT **/ \
-	char[sizeof(substring)] 		: std_string_starts_with_cstring(&(self), /** NOLINT **/ \
+	char[sizeof(substring)] 		: std_string_starts_with_cstring(&(self), 		/** NOLINT **/ \
 										static_cast(cstring)(substring), 						   \
 										sizeof(substring)), 						/** NOLINT **/ \
-	StdStringView* 					: std_string_starts_with_stringview(&(self), 			   \
+	StdStringView* 					: std_string_starts_with_stringview(&(self), 			   	   \
 										static_cast(StdStringView*)(substring)), 				   \
-	const StdStringView* 			: std_string_starts_with_stringview(&(self), 			   \
+	const StdStringView* 			: std_string_starts_with_stringview(&(self), 			   	   \
 										static_cast(const StdStringView*)(substring)), 			   \
-	StdString* 						: std_string_starts_with(&(self), 					   \
+	StdString* 						: std_string_starts_with(&(self), 					   		   \
 										static_cast(StdString*)(substring)), 					   \
-	const StdString* 				: std_string_starts_with(&(self), 					   \
+	const StdString* 				: std_string_starts_with(&(self), 					   		   \
 										static_cast(const StdString*)(substring)))
 // clang-format on
 // clang-format off
@@ -2026,25 +2065,25 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 /// @return `true` if the string ends with `substring`, otherwise `false`
 /// @ingroup std_string
 #define std_string_ends_with(self, substring) _Generic((substring), 							   \
-	const_cstring 					: std_string_ends_with_cstring(&(self), 				   \
+	const_cstring 					: std_string_ends_with_cstring(&(self), 				   	   \
 										static_cast(const_cstring)(substring),  				   \
 										strlen(static_cast(const_cstring)(substring))), 		   \
-	cstring 						: std_string_ends_with_cstring(&(self),  				   \
+	cstring 						: std_string_ends_with_cstring(&(self),  				   	   \
 										static_cast(cstring)(substring), 						   \
 										strlen(static_cast(cstring)(substring))), 				   \
-	const char[sizeof(substring)] 	: std_string_ends_with_cstring(&(self), 	/** NOLINT **/ \
+	const char[sizeof(substring)] 	: std_string_ends_with_cstring(&(self), 		/** NOLINT **/ \
 										static_cast(const_cstring)(substring), 					   \
 										sizeof(substring)), 						/** NOLINT **/ \
-	char[sizeof(substring)] 		: std_string_ends_with_cstring(&(self), 	/** NOLINT **/ \
+	char[sizeof(substring)] 		: std_string_ends_with_cstring(&(self), 		/** NOLINT **/ \
 										static_cast(cstring)(substring), 						   \
 										sizeof(substring)), 						/** NOLINT **/ \
-	StdStringView* 					: std_string_ends_with_stringview(&(self), 			   \
+	StdStringView* 					: std_string_ends_with_stringview(&(self), 			   		   \
 										static_cast(StdStringView*)(substring)), 				   \
-	const StdStringView* 			: std_string_ends_with_stringview(&(self), 			   \
+	const StdStringView* 			: std_string_ends_with_stringview(&(self), 			   		   \
 										static_cast(const StdStringView*)(substring)), 			   \
-	StdString* 						: std_string_ends_with(&(self), 						   \
+	StdString* 						: std_string_ends_with(&(self), 						   	   \
 										static_cast(StdString*)(substring)), 					   \
-	const StdString* 				: std_string_ends_with(&(self), 						   \
+	const StdString* 				: std_string_ends_with(&(self), 						   	   \
 										static_cast(const StdString*)(substring)))
 // clang-format on
 // clang-format off
@@ -2057,25 +2096,25 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 /// occurrence in `self`, if `self` contains the substring, otherwise `std_option_none`
 /// @ingroup std_string
 #define std_string_find_first(self, substring) _Generic((substring), 							   \
-	const_cstring 					: std_string_find_first_cstring(&(self), 				   \
+	const_cstring 					: std_string_find_first_cstring(&(self), 				   	   \
 										static_cast(const_cstring)(substring),  				   \
 										strlen(static_cast(const_cstring)(substring))), 		   \
-	cstring 						: std_string_find_first_cstring(&(self),  			   \
+	cstring 						: std_string_find_first_cstring(&(self),  			   		   \
 										static_cast(cstring)(substring), 						   \
 										strlen(static_cast(cstring)(substring))), 				   \
-	const char[sizeof(substring)] 	: std_string_find_first_cstring(&(self), 	/** NOLINT **/ \
+	const char[sizeof(substring)] 	: std_string_find_first_cstring(&(self), 		/** NOLINT **/ \
 										static_cast(const_cstring)(substring), 					   \
 										sizeof(substring)), 						/** NOLINT **/ \
-	char[sizeof(substring)] 		: std_string_find_first_cstring(&(self), 	/** NOLINT **/ \
+	char[sizeof(substring)] 		: std_string_find_first_cstring(&(self), 		/** NOLINT **/ \
 										static_cast(cstring)(substring), 						   \
 										sizeof(substring)), 						/** NOLINT **/ \
-	StdStringView* 					: std_string_find_first_stringview(&(self), 			   \
+	StdStringView* 					: std_string_find_first_stringview(&(self), 			   	   \
 										static_cast(StdStringView*)(substring)), 				   \
-	const StdStringView* 			: std_string_find_first_stringview(&(self), 			   \
+	const StdStringView* 			: std_string_find_first_stringview(&(self), 			   	   \
 										static_cast(const StdStringView*)(substring)), 			   \
-	StdString* 						: std_string_find_first(&(self), 						   \
+	StdString* 						: std_string_find_first(&(self), 						   	   \
 										static_cast(StdString*)(substring)), 					   \
-	const StdString* 				: std_string_find_first(&(self), 						   \
+	const StdString* 				: std_string_find_first(&(self), 						   	   \
 										static_cast(const StdString*)(substring)))
 // clang-format on
 // clang-format off
@@ -2088,25 +2127,25 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 /// occurrence in `self`, if `self` contains the substring, otherwise `std_option_none`
 /// @ingroup std_string
 #define std_string_find_last(self, substring) _Generic((substring), 							   \
-	const_cstring 					: std_string_find_last_cstring(&(self), 				   \
+	const_cstring 					: std_string_find_last_cstring(&(self), 				   	   \
 										static_cast(const_cstring)(substring),  				   \
 										strlen(static_cast(const_cstring)(substring))), 		   \
-	cstring 						: std_string_find_last_cstring(&(self),  				   \
+	cstring 						: std_string_find_last_cstring(&(self),  				   	   \
 										static_cast(cstring)(substring), 						   \
 										strlen(static_cast(cstring)(substring))), 				   \
-	const char[sizeof(substring)] 	: std_string_find_last_cstring(&(self), 	/** NOLINT **/ \
+	const char[sizeof(substring)] 	: std_string_find_last_cstring(&(self), 		/** NOLINT **/ \
 										static_cast(const_cstring)(substring), 					   \
 										sizeof(substring)), 						/** NOLINT **/ \
-	char[sizeof(substring)] 		: std_string_find_last_cstring(&(self), 	/** NOLINT **/ \
+	char[sizeof(substring)] 		: std_string_find_last_cstring(&(self), 		/** NOLINT **/ \
 										static_cast(cstring)(substring), 						   \
 										sizeof(substring)), 						/** NOLINT **/ \
-	StdStringView* 					: std_string_find_last_stringview(&(self), 			   \
+	StdStringView* 					: std_string_find_last_stringview(&(self), 			   		   \
 										static_cast(StdStringView*)(substring)), 				   \
-	const StdStringView* 			: std_string_find_last_stringview(&(self), 			   \
+	const StdStringView* 			: std_string_find_last_stringview(&(self), 			   		   \
 										static_cast(const StdStringView*)(substring)), 			   \
-	StdString* 						: std_string_find_last(&(self), 						   \
+	StdString* 						: std_string_find_last(&(self), 						   	   \
 										static_cast(StdString*)(substring)), 					   \
-	const StdString* 				: std_string_find_last(&(self), 						   \
+	const StdString* 				: std_string_find_last(&(self), 						   	   \
 										static_cast(const StdString*)(substring)))
 // clang-format on
 
@@ -2166,25 +2205,25 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 /// @param index - The index into `self` at which to insert the `to_insert`
 /// @ingroup std_string
 #define std_string_insert(self, to_insert, index) _Generic((to_insert), 						   \
-	const_cstring 					: std_string_insert_cstring(&(self), 					   \
+	const_cstring 					: std_string_insert_cstring(&(self), 					   	   \
 										static_cast(const_cstring)(to_insert),  				   \
 										strlen(static_cast(const_cstring)(to_insert)), index), 	   \
-	cstring 						: std_string_insert_cstring(&(self),  				   \
+	cstring 						: std_string_insert_cstring(&(self),  				   		   \
 										static_cast(cstring)(to_insert), 						   \
 										strlen(static_cast(cstring)(to_insert)), index), 		   \
-	const char[sizeof(to_insert)] 	: std_string_insert_cstring(&(self), 		/** NOLINT **/ \
+	const char[sizeof(to_insert)] 	: std_string_insert_cstring(&(self), 			/** NOLINT **/ \
 										static_cast(const_cstring)(to_insert), 					   \
 										sizeof(to_insert), index), 					/** NOLINT **/ \
-	char[sizeof(to_insert)] 		: std_string_insert_cstring(&(self), 		/** NOLINT **/ \
+	char[sizeof(to_insert)] 		: std_string_insert_cstring(&(self), 			/** NOLINT **/ \
 										static_cast(cstring)(to_insert), 						   \
 										sizeof(to_insert), index), 					/** NOLINT **/ \
-	StdStringView* 					: std_string_insert_stringview(&(self), 				   \
+	StdStringView* 					: std_string_insert_stringview(&(self), 				   	   \
 										static_cast(StdStringView*)(to_insert), index), 		   \
-	const StdStringView* 			: std_string_insert_stringview(&(self), 				   \
+	const StdStringView* 			: std_string_insert_stringview(&(self), 				   	   \
 										static_cast(const StdStringView*)(to_insert), index), 	   \
-	StdString* 						: std_string_insert(&(self), 							   \
+	StdString* 						: std_string_insert(&(self), 							   	   \
 										static_cast(StdString*)(to_insert), index), 			   \
-	const StdString* 				: std_string_insert(&(self), 							   \
+	const StdString* 				: std_string_insert(&(self), 							   	   \
 										static_cast(const StdString*)(to_insert), index))
 // clang-format on
 /// @brief Erases the character at the given `index` from `self`
@@ -2248,25 +2287,25 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 /// @param to_append - The string to append
 /// @ingroup std_string
 #define std_string_append(self, to_append) _Generic((to_append), 						   		   \
-	const_cstring 					: std_string_append_cstring(&(self), 					   \
+	const_cstring 					: std_string_append_cstring(&(self), 					   	   \
 										static_cast(const_cstring)(to_append),  				   \
 										strlen(static_cast(const_cstring)(to_append))), 	   	   \
-	cstring 						: std_string_append_cstring(&(self),  				   \
+	cstring 						: std_string_append_cstring(&(self),  				   		   \
 										static_cast(cstring)(to_append), 						   \
 										strlen(static_cast(cstring)(to_append))), 		   		   \
-	const char[sizeof(to_append)] 	: std_string_append_cstring(&(self), 		/** NOLINT **/ \
+	const char[sizeof(to_append)] 	: std_string_append_cstring(&(self), 			/** NOLINT **/ \
 										static_cast(const_cstring)(to_append), 					   \
 										sizeof(to_append)), 						/** NOLINT **/ \
-	char[sizeof(to_append)] 		: std_string_append_cstring(&(self), 		/** NOLINT **/ \
+	char[sizeof(to_append)] 		: std_string_append_cstring(&(self), 			/** NOLINT **/ \
 										static_cast(cstring)(to_append), 						   \
 										sizeof(to_append)), 						/** NOLINT **/ \
-	StdStringView* 					: std_string_append_stringview(&(self), 				   \
+	StdStringView* 					: std_string_append_stringview(&(self), 				   	   \
 										static_cast(StdStringView*)(to_append)), 		   		   \
-	const StdStringView* 			: std_string_append_stringview(&(self), 				   \
+	const StdStringView* 			: std_string_append_stringview(&(self), 				   	   \
 										static_cast(const StdStringView*)(to_append)), 		   	   \
-	StdString* 						: std_string_append(&(self), 							   \
+	StdString* 						: std_string_append(&(self), 							   	   \
 										static_cast(StdString*)(to_append)), 			   		   \
-	const StdString* 				: std_string_append(&(self), 							   \
+	const StdString* 				: std_string_append(&(self), 							   	   \
 										static_cast(const StdString*)(to_append)))
 // clang-format on
 // clang-format off
@@ -2276,25 +2315,25 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 /// @param to_prepend - The string to prepend
 /// @ingroup std_string
 #define std_string_prepend(self, to_prepend) _Generic((to_prepend), 						   	   \
-	const_cstring 					: std_string_prepend_cstring(&(self), 				   \
+	const_cstring 					: std_string_prepend_cstring(&(self), 				   		   \
 										static_cast(const_cstring)(to_prepend),  				   \
 										strlen(static_cast(const_cstring)(to_prepend))), 	   	   \
-	cstring 						: std_string_prepend_cstring(&(self),  				   \
+	cstring 						: std_string_prepend_cstring(&(self),  				   		   \
 										static_cast(cstring)(to_prepend), 						   \
 										strlen(static_cast(cstring)(to_prepend))), 		   		   \
-	const char[sizeof(to_prepend)] 	: std_string_prepend_cstring(&(self), 	/** NOLINT **/ \
+	const char[sizeof(to_prepend)] 	: std_string_prepend_cstring(&(self), 			/** NOLINT **/ \
 										static_cast(const_cstring)(to_prepend), 				   \
 										sizeof(to_prepend)), 						/** NOLINT **/ \
-	char[sizeof(to_prepend)] 		: std_string_prepend_cstring(&(self), 	/** NOLINT **/ \
+	char[sizeof(to_prepend)] 		: std_string_prepend_cstring(&(self), 			/** NOLINT **/ \
 										static_cast(cstring)(to_prepend), 						   \
 										sizeof(to_prepend)), 						/** NOLINT **/ \
-	StdStringView* 					: std_string_prepend_stringview(&(self), 				   \
+	StdStringView* 					: std_string_prepend_stringview(&(self), 				   	   \
 										static_cast(StdStringView*)(to_prepend)), 		   		   \
-	const StdStringView* 			: std_string_prepend_stringview(&(self), 				   \
+	const StdStringView* 			: std_string_prepend_stringview(&(self), 				   	   \
 										static_cast(const StdStringView*)(to_prepend)), 		   \
-	StdString* 						: std_string_prepend(&(self), 						   \
+	StdString* 						: std_string_prepend(&(self), 						   		   \
 										static_cast(StdString*)(to_prepend)), 			   		   \
-	const StdString* 				: std_string_prepend(&(self), 						   \
+	const StdString* 				: std_string_prepend(&(self), 						   		   \
 										static_cast(const StdString*)(to_prepend)))
 // clang-format on
 // clang-format off
@@ -2305,32 +2344,32 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 /// @param index - The index to start replacement at
 /// @ingroup std_string
 #define std_string_replace(self, to_replace_with, index) _Generic((to_replace_with), 			   \
-	const_cstring 						: std_string_replace_cstring(&(self), 			   \
+	const_cstring 						: std_string_replace_cstring(&(self), 			   		   \
 											static_cast(const_cstring)(to_replace_with),  		   \
 											strlen(static_cast(const_cstring)(to_replace_with)),   \
 											index), 	   										   \
-	cstring 							: std_string_replace_cstring(&(self),  			   \
+	cstring 							: std_string_replace_cstring(&(self),  			   		   \
 											static_cast(cstring)(to_replace_with), 				   \
 											strlen(static_cast(cstring)(to_replace_with)),		   \
 											index), 		   									   \
-	const char[sizeof(to_replace_with)] : std_string_replace_cstring(&(self), /** NOLINT **/ \
+	const char[sizeof(to_replace_with)] : std_string_replace_cstring(&(self), 		/** NOLINT **/ \
 											static_cast(const_cstring)(to_replace_with), 		   \
 											sizeof(to_replace_with), 				/** NOLINT **/ \
 											index), 											   \
-	char[sizeof(to_replace_with)] 		: std_string_replace_cstring(&(self), /** NOLINT **/ \
+	char[sizeof(to_replace_with)] 		: std_string_replace_cstring(&(self), 		/** NOLINT **/ \
 											static_cast(cstring)(to_replace_with), 				   \
 											sizeof(to_replace_with), 				/** NOLINT **/ \
 											index), 											   \
-	StdStringView* 						: std_string_replace_stringview(&(self), 			   \
+	StdStringView* 						: std_string_replace_stringview(&(self), 			   	   \
 											static_cast(StdStringView*)(to_replace_with), 		   \
 											index), 		       								   \
-	const StdStringView* 				: std_string_replace_stringview(&(self), 			   \
+	const StdStringView* 				: std_string_replace_stringview(&(self), 			   	   \
 											static_cast(const StdStringView*)(to_replace_with),	   \
 											index), 	   										   \
-	StdString* 							: std_string_replace(&(self), 					   \
+	StdString* 							: std_string_replace(&(self), 					   		   \
 											static_cast(StdString*)(to_replace_with),			   \
 											index), 			   	   							   \
-	const StdString* 					: std_string_replace(&(self), 					   \
+	const StdString* 					: std_string_replace(&(self), 					   		   \
 											static_cast(const StdString*)(to_replace_with), index))
 // clang-format on
 
@@ -2429,6 +2468,38 @@ std_stringview_rend(const StdStringView* restrict self) ___DISABLE_IF_NULL(self)
 /// @return the size of `self`
 /// @ingroup std_stringview
 #define std_stringview_size(self) std_stringview_size(&(self))
+// clang-format off
+
+/// @brief Returns whether the given `StdStringView`s are equivalent
+///
+/// @param self - The first `StdStringView` to compare
+/// @param to_compare - The `StdStringView` to compare to
+///
+/// @return whether the stringviews are equal
+/// @ingroup std_stringview
+#define std_stringview_equal(self, to_compare) _Generic((to_compare), 							   \
+	const_cstring 					: 	std_stringview_equal_cstring(&(self), 					   \
+											static_cast(const_cstring)(to_compare), 			   \
+											strlen(static_cast(const_cstring)(to_compare))),       \
+	cstring 						: 	std_stringview_equal_cstring(&(self), 				   	   \
+											static_cast(cstring)(to_compare), 				       \
+											strlen(static_cast(const_cstring)(to_compare))),       \
+	const char[sizeof(to_compare)] 	: 	std_stringview_equal_cstring(&(self), 		/** NOLINT **/ \
+											static_cast(const_cstring)(to_compare), 			   \
+											sizeof(to_compare)), 					/** NOLINT **/ \
+	char[sizeof(to_compare)] 		: 	std_stringview_equal_cstring(&(self), 		/** NOLINT **/ \
+											static_cast(const_cstring)(to_compare),  			   \
+											sizeof(to_compare)), 					/** NOLINT **/ \
+	StdStringView* 					: 	std_stringview_equal(&(self), 			    	   		   \
+											static_cast(const StdStringView*)(to_compare)), 	   \
+	const StdStringView* 			: 	std_stringview_equal(&(self), 			   	   			   \
+											static_cast(const StdStringView*)(to_compare)), 	   \
+	StdString* 						: 	std_stringview_equal_string(&(self), 			    	   \
+											static_cast(const StdString*)(to_compare)), 		   \
+	const StdString* 				: 	std_stringview_equal_string(&(self), 			   	   	   \
+											static_cast(const StdString*)(to_compare)))
+// clang-format on
+
 /// @brief Returns the `cstring` view of the given `StdStringView`
 ///
 /// @param self - The `StdStringView` to get the `cstring` view of
