@@ -10,7 +10,7 @@
 typedef Lambda(StdCompare, const StdString*) LambdaCmpStr;
 
 LambdaFunction(StdCompare, lambda_function, const StdString* restrict string) {
-	let binding = lambda_binding(LambdaBinding(const StdString*));
+	let binding = lambda_binding(const StdString*);
 	return std_string_equal(*binding._1, string) ? STD_EQUAL : STD_LESS_THAN;
 }
 

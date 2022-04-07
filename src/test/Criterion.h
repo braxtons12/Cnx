@@ -6,6 +6,7 @@
 #include <criterion/criterion.h>
 
 #define TEST(...)                                                                                                        \
+	/** NOLINT(readability-function-cognitive-complexity,cppcoreguidelines-avoid-non-const-global-variables) **/         \
 	/** NOLINTNEXTLINE(readability-function-cognitive-complexity,cppcoreguidelines-avoid-non-const-global-variables) **/ \
 	Test(__VA_ARGS__)
 #define TEST_ASSERT(condition, ...) cr_assert(condition __VA_OPT__(, ) __VA_ARGS__)
