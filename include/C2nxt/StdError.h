@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides an extensible type for communicating errors via both error codes and
 /// message strings.
-/// @version 0.2.1
-/// @date 2022-03-20
+/// @version 0.2.2
+/// @date 2022-04-06
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -69,7 +69,7 @@
 /// @brief A `std_error_category_message_function` is a function that converts an `i64` error code
 /// into its corresponding message string, for the error category the function is associated with.
 /// @ingroup std_error
-typedef const_cstring (*const std_error_category_message_function)(i64 error_code);
+typedef const_cstring (*std_error_category_message_function)(i64 error_code);
 
 /// @brief `StdErrorCategory` provides the mechanism to convert an arbitrary error code into a
 /// corresponding message associated with a specific class of errors
@@ -79,7 +79,7 @@ typedef const_cstring (*const std_error_category_message_function)(i64 error_cod
 /// @ingroup std_error
 typedef struct StdErrorCategory {
 	/// @brief converts a given `i64` error code into a `cstring`
-	const std_error_category_message_function m_message_function;
+	std_error_category_message_function m_message_function;
 } StdErrorCategory;
 
 /// @brief `StdError` provides an extensible, configurable type for communicating recoverable errors
