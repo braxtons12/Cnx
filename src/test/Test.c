@@ -7,6 +7,7 @@
 #include "RangeTest.h"
 #include "RatioTest.h"
 #include "StringTest.h"
+#include "ThreadTest.h"
 #include "TimePointTest.h"
 #include "UniquePtrTest.h"
 #include "VectorTest.h"

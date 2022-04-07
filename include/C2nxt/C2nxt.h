@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief C2nxt is a GNU C11 library providing type-safe collections and
 /// ergonomic features typical in higher-level languages, to C.
-/// @version 0.1
-/// @date 2022-01-23
+/// @version 0.2
+/// @date 2022-04-04
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -46,25 +46,36 @@
 /// a small selection of metaprogramming macros, a small set of math functions, and
 /// semantic-intention-indicating casts
 
-#include "StdAllocators.h"
-#include "StdArray.h"
-#include "StdAssert.h"
-#include "StdBasicTypes.h"
-#include "StdCollectionData.h"
-#include "StdDef.h"
-#include "StdEnum.h"
-#include "StdError.h"
-#include "StdFormat.h"
-#include "StdIO.h"
-#include "StdIterator.h"
-#include "StdLambda.h"
-#include "StdMath.h"
-#include "StdOption.h"
-#include "StdRange.h"
-#include "StdResult.h"
-#include "StdString.h"
-#include "StdTime.h"
-#include "StdTrait.h"
-#include "StdTuple.h"
-#include "StdTypeTraits.h"
-#include "StdVector.h"
+#include <C2nxt/StdAllocators.h>
+#include <C2nxt/StdArray.h>
+#include <C2nxt/StdAssert.h>
+#include <C2nxt/StdAtomic.h>
+#include <C2nxt/StdBasicTypes.h>
+#include <C2nxt/StdCollectionData.h>
+#include <C2nxt/StdDef.h>
+#include <C2nxt/StdEnum.h>
+#include <C2nxt/StdError.h>
+#include <C2nxt/StdFormat.h>
+#include <C2nxt/StdIO.h>
+#include <C2nxt/StdIterator.h>
+#include <C2nxt/StdLambda.h>
+#include <C2nxt/StdMath.h>
+#define OPTION_INCLUDE_DEFAULT_INSTANTATIONS TRUE
+#include <C2nxt/StdOption.h>
+#undef OPTION_INCLUDE_DEFAULT_INSTANTATIONS
+#include <C2nxt/StdPlatform.h>
+#include <C2nxt/StdRange.h>
+#include <C2nxt/StdRatio.h>
+#define RESULT_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
+#include <C2nxt/StdResult.h>
+#undef RESULT_INCLUDE_DEFAULT_INSTANTIATIONS
+#include <C2nxt/StdString.h>
+#include <C2nxt/StdStringExt.h>
+#include <C2nxt/StdTime.h>
+#include <C2nxt/StdTrait.h>
+#include <C2nxt/StdTuple.h>
+#include <C2nxt/StdTypeTraits.h>
+#define VECTOR_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
+#include <C2nxt/StdVector.h>
+#undef VECTOR_INCLUDE_DEFAULT_INSTANTIATIONS
+#include <C2nxt/StdUniquePtr.h>

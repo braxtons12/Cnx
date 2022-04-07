@@ -84,6 +84,7 @@ set(IMPLEMENTATIONS
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdResult.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdString.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdStringExt.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdThread.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdVector.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/time/StdClock.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/time/StdDuration.c"
@@ -210,6 +211,10 @@ if (APPLE)
 elseif (NOT WIN32)
 	target_link_libraries(C2nxt PUBLIC m)
 endif ()
+
+if(NOT WIN32)
+	target_link_libraries(C2nxt PUBLIC pthread)
+endif()
 
 target_link_libraries(FormatBenchmark PRIVATE C2nxt)
 target_link_libraries(Test PRIVATE C2nxt ${CRITERION_LIBRARIES})
