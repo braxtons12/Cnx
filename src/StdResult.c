@@ -1,8 +1,8 @@
 /// @file StdResult.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a struct template for representing the value of a fallible operation
-/// @version 0.2.0
-/// @date 2022-03-12
+/// @version 0.2.1
+/// @date 2022-04-06
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -25,68 +25,81 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#define STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
+#define RESULT_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
 
 #include <C2nxt/StdResult.h>
 
-#undef STD_TEMPLATE_INCLUDE_DEFAULT_INSTANTIATIONS
+#undef RESULT_INCLUDE_DEFAULT_INSTANTIATIONS
 
-#define STD_TEMPLATE_IMPL TRUE
+#define RESULT_IMPL TRUE
 
-#define T char
+#define RESULT_T char
 #include <C2nxt/std_result/StdResultImpl.h>
-#undef T
+#undef RESULT_T
 
-#define T u8
+#define RESULT_T u8
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_result/StdResultImpl.h>
-#undef T
+#undef RESULT_T
 
-#define T u16
+#define RESULT_T u16
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_result/StdResultImpl.h>
-#undef T
+#undef RESULT_T
 
-#define T u32
+#define RESULT_T u32
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_result/StdResultImpl.h>
-#undef T
+#undef RESULT_T
 
-#define T u64
+#define RESULT_T u64
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_result/StdResultImpl.h>
-#undef T
+#undef RESULT_T
 
-#define T usize
+#define RESULT_T usize
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_result/StdResultImpl.h>
-#undef T
+#undef RESULT_T
 
-#define T i8
+#define RESULT_T i8
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_result/StdResultImpl.h>
-#undef T
+#undef RESULT_T
 
-#define T i16
+#define RESULT_T i16
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_result/StdResultImpl.h>
-#undef T
+#undef RESULT_T
 
-#define T i32
+#define RESULT_T i32
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_result/StdResultImpl.h>
-#undef T
+#undef RESULT_T
 
-#define T i64
+#define RESULT_T i64
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_result/StdResultImpl.h>
-#undef T
+#undef RESULT_T
 
-#define T isize
+#define RESULT_T isize
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_result/StdResultImpl.h>
-#undef T
+#undef RESULT_T
 
-#define T f32
+#define RESULT_T f32
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_result/StdResultImpl.h>
-#undef T
+#undef RESULT_T
 
-#define T f64
+#define RESULT_T f64
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_result/StdResultImpl.h>
-#undef T
+#undef RESULT_T
 
-#define T cstring
+#define RESULT_T cstring
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_result/StdResultImpl.h>
-#undef T
+#undef RESULT_T
 
-#undef STD_TEMPLATE_IMPL
+#undef RESULT_IMPL

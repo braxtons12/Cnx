@@ -1,8 +1,8 @@
 /// @file StdResultDef.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides macro definitions for implementing and working with `StdResult(T)`
-/// @version 0.2
-/// @date 2022-03-12
+/// @version 0.2.1
+/// @date 2022-04-06
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -306,17 +306,17 @@ typedef enum Result {
 	///
 	/// @return `result_b` if `self` is `Ok`. Otherwise the `Err` value of `self`
 	/// @ingroup std_result
-	#define std_result_and(self, result_b)                                             \
-		({                                                                             \
-			typeof(result_b) UNIQUE_VAR(res);                                          \
-			if(std_result_is_ok(self)) {                                               \
-				UNIQUE_VAR(res) = (result_b);                                          \
-			}                                                                          \
-			else {                                                                     \
-				UNIQUE_VAR(res).tag = Err;                                             \
-				UNIQUE_VAR(res).variant_identifier(Err) = std_result_unwrap_err(self); \
-			}                                                                          \
-			UNIQUE_VAR(res);                                                           \
+	#define std_result_and(self, result_b)                                                \
+		({                                                                                \
+			typeof(result_b) UNIQUE_VAR(res);                                             \
+			if(std_result_is_ok(self)) {                                                  \
+				UNIQUE_VAR(res) = (result_b);                                             \
+			}                                                                             \
+			else {                                                                        \
+				UNIQUE_VAR(res).tag = Err;                                                \
+				UNIQUE_VAR(res).variant_identifier(Err)._1 = std_result_unwrap_err(self); \
+			}                                                                             \
+			UNIQUE_VAR(res);                                                              \
 		})
 
 	/// @brief Returns the result of calling `next_func` with the contained value if `self` is `Ok`.
@@ -328,17 +328,17 @@ typedef enum Result {
 	/// @return The result of calling `next_func` with the value stored in `self`.
 	/// Otherwise, returns the `Err` value contained in `self`
 	/// @ingroup std_result
-	#define std_result_and_then(self, next_func)                                       \
-		({                                                                             \
-			typeof(next_func(std_result_unwrap(self))) UNIQUE_VAR(res);                \
-			if(std_result_is_ok(self)) {                                               \
-				UNIQUE_VAR(res) = next_func(std_result_unwrap(self));                  \
-			}                                                                          \
-			else {                                                                     \
-				UNIQUE_VAR(res).tag = Err;                                             \
-				UNIQUE_VAR(res).variant_identifier(Err) = std_result_unwrap_err(self); \
-			}                                                                          \
-			UNIQUE_VAR(res);                                                           \
+	#define std_result_and_then(self, next_func)                                          \
+		({                                                                                \
+			typeof(next_func(std_result_unwrap(self))) UNIQUE_VAR(res);                   \
+			if(std_result_is_ok(self)) {                                                  \
+				UNIQUE_VAR(res) = next_func(std_result_unwrap(self));                     \
+			}                                                                             \
+			else {                                                                        \
+				UNIQUE_VAR(res).tag = Err;                                                \
+				UNIQUE_VAR(res).variant_identifier(Err)._1 = std_result_unwrap_err(self); \
+			}                                                                             \
+			UNIQUE_VAR(res);                                                              \
 		})
 
 	/// @brief Returns `self` if it is `Ok`, otherwise returns `result_b`

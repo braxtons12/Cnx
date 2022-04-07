@@ -178,6 +178,8 @@
 
 		#undef RESULT_DECL
 
+typedef StdResult(i32) StdResult;
+
 	#endif // STD_RESULT
 
 #endif // !defined(T) && !defined(RESULT_DECL) && !defined(RESULT_IMPL) \
