@@ -6,17 +6,12 @@
 
 #include "Criterion.h"
 
-LambdaFunction(void, add_one) {
+void LambdaFunction(add_one) {
 	let binding = lambda_binding(i32*);
 	*(binding._1) += 1;
 }
 
-LambdaFunction(void, add_one_synchronized) {
-	let binding = lambda_binding(atomic_i32*);
-	ignore(atomic_fetch_add(binding._1, 1));
-}
-
-LambdaFunction(void, add_loop) {
+void LambdaFunction(add_loop) {
 	let binding = lambda_binding(StdThreadLambda);
 	ranged_for(i, 0, 5) {
 		lambda_call(binding._1);
@@ -55,6 +50,11 @@ TEST(StdThread, test_multiple) {
 	}
 
 	TEST_ASSERT_TRUE(val >= 5);
+}
+
+void LambdaFunction(add_one_synchronized) {
+	let binding = lambda_binding(atomic_i32*);
+	ignore(atomic_fetch_add(binding._1, 1));
 }
 
 TEST(StdThread, test_synchronized) {

@@ -111,12 +111,10 @@ typedef void* StdLambdaCaptures;
 /// @brief A Lambda function definition.
 /// Can be bound to an instance of a lambda with `lambda` or `lambda_with_allocator`.
 ///
-/// @param ReturnType - The return type of the function
 /// @param Name - The name of the function
 /// @param ... - The function argument list
 /// @ingroup std_lambda
-#define LambdaFunction(ReturnType, Name, ...) \
-	ReturnType Name(StdLambdaCaptures captures __VA_OPT__(, ) __VA_ARGS__)
+#define LambdaFunction(Name, ...) Name(StdLambdaCaptures captures __VA_OPT__(, ) __VA_ARGS__)
 
 /// @brief A type storing a lambda's bound captures
 ///
