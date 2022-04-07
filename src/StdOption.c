@@ -1,8 +1,8 @@
 /// @file StdOption.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a struct template for representing an optional value
-/// @version 0.2.2
-/// @date 2022-03-20
+/// @version 0.2.3
+/// @date 2022-04-06
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -38,54 +38,67 @@
 #undef OPTION_T
 
 #define OPTION_T u8
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_option/StdOptionImpl.h>
 #undef OPTION_T
 
 #define OPTION_T u16
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_option/StdOptionImpl.h>
 #undef OPTION_T
 
 #define OPTION_T u32
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_option/StdOptionImpl.h>
 #undef OPTION_T
 
 #define OPTION_T u64
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_option/StdOptionImpl.h>
 #undef OPTION_T
 
 #define OPTION_T usize
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_option/StdOptionImpl.h>
 #undef OPTION_T
 
 #define OPTION_T i8
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_option/StdOptionImpl.h>
 #undef OPTION_T
 
 #define OPTION_T i16
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_option/StdOptionImpl.h>
 #undef OPTION_T
 
 #define OPTION_T i32
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_option/StdOptionImpl.h>
 #undef OPTION_T
 
 #define OPTION_T i64
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_option/StdOptionImpl.h>
 #undef OPTION_T
 
 #define OPTION_T isize
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_option/StdOptionImpl.h>
 #undef OPTION_T
 
 #define OPTION_T f32
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_option/StdOptionImpl.h>
 #undef OPTION_T
 
 #define OPTION_T f64
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_option/StdOptionImpl.h>
 #undef OPTION_T
 
 #define OPTION_T cstring
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_option/StdOptionImpl.h>
 #undef OPTION_T
 

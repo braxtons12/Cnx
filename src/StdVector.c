@@ -32,7 +32,7 @@
 
 #undef VECTOR_INCLUDE_DEFAULT_INSTANTIATIONS
 
-#define VECTOR_IMPL			  TRUE
+#define VECTOR_IMPL				  TRUE
 #define VECTOR_SMALL_OPT_CAPACITY 8
 
 #define VECTOR_T char
@@ -40,62 +40,77 @@
 #undef VECTOR_T
 
 #define VECTOR_T u8
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef VECTOR_T
 
 #define VECTOR_T u16
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef VECTOR_T
 
 #define VECTOR_T u32
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef VECTOR_T
 
 #define VECTOR_T u64
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef VECTOR_T
 
 #define VECTOR_T usize
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef VECTOR_T
 
 #define VECTOR_T i8
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef VECTOR_T
 
 #define VECTOR_T i16
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef VECTOR_T
 
 #define VECTOR_T i32
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef VECTOR_T
 
 #define VECTOR_T i64
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef VECTOR_T
 
 #define VECTOR_T isize
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef VECTOR_T
 
 #define VECTOR_T f32
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef VECTOR_T
 
 #define VECTOR_T f64
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef VECTOR_T
 
 #define VECTOR_T cstring
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef VECTOR_T
 
 #define VECTOR_T StdString
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef VECTOR_T
 
 #define VECTOR_T StdStringView
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/std_vector/StdVectorImpl.h>
 #undef VECTOR_T
 
