@@ -30,10 +30,44 @@
 #ifndef STD_ATOMIC
 #define STD_ATOMIC
 
+#include <C2nxt/StdBasicTypes.h>
 #include <C2nxt/StdPlatform.h>
 
 #if !STD_PLATFORM_WINDOWS || STD_PLATFORM_COMPILER_GCC
 	#include <stdatomic.h>
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////// Extension typedefs for our library ///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+typedef _Atomic i8 atomic_i8;
+typedef _Atomic i16 atomic_i16;
+typedef _Atomic i32 atomic_i32;
+typedef _Atomic i64 atomic_i64;
+typedef _Atomic isize atomic_isize;
+typedef _Atomic byte atomic_byte;
+typedef _Atomic u8 atomic_u8;
+typedef _Atomic u16 atomic_u16;
+typedef _Atomic u32 atomic_u32;
+typedef _Atomic u64 atomic_u64;
+typedef _Atomic usize atomic_usize;
+typedef void* _Atomic atomic_ptr;
+
+	////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////// Extension lock free indicators for our library////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////
+
+	#define ATOMIC_I8_LOCK_FREE	   2
+	#define ATOMIC_I16_LOCK_FREE   2
+	#define ATOMIC_I32_LOCK_FREE   2
+	#define ATOMIC_I64_LOCK_FREE   2
+	#define ATOMIC_ISIZE_LOCK_FREE 2
+	#define ATOMIC_U8_LOCK_FREE	   2
+	#define ATOMIC_U16_LOCK_FREE   2
+	#define ATOMIC_U32_LOCK_FREE   2
+	#define ATOMIC_U64_LOCK_FREE   2
+	#define ATOMIC_USIZE_LOCK_FREE 2
+
 #else
 	#include <C2nxt/std_atomic/StdAtomicImpl.h>
 
@@ -137,7 +171,9 @@ typedef void* _Atomic atomic_ptr;
 typedef __atomic_flag atomic_flag;
 
 	#define ATOMIC_FLAG_INIT \
-		(atomic_flag) { ._value = false }
+		(atomic_flag) {      \
+			._value = false  \
+		}
 	#define ATOMIC_VAR_INIT(value) __ATOMIC_VAR_INIT(value)
 
 	#define kill_dependency(object) __kill_dependency(object)
