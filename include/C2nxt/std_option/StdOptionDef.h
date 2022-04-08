@@ -1,8 +1,8 @@
 /// @file StdOptionDef.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides macro definitions for implementing and working with `StdOption(T)`
-/// @version 0.2.
-/// @date 2022-03-5
+/// @version 0.2.1
+/// @date 2022-04-07
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -56,11 +56,10 @@ typedef enum Option {
 	///
 	/// @return a `StdOption(T)` containing the given value
 	/// @ingroup std_option
-	#define Some(T, value)                                    \
-		(StdOption(T)) {                                      \
-			.tag = Some, .variant_identifier(Some) = {value}, \
-			.m_vtable = &StdOptionIdentifier(T, vtable_impl)  \
-		}
+	#define Some(T, value)                                   \
+		((StdOption(T)){.tag = Some,                         \
+						.variant_identifier(Some) = {value}, \
+						.m_vtable = &StdOptionIdentifier(T, vtable_impl)})
 
 	/// @brief Creates a `StdOption(T)` holding no value
 	///
@@ -68,11 +67,10 @@ typedef enum Option {
 	///
 	/// @return a `StdOption(T)` containing no value
 	/// @ingroup std_option
-	#define None(T)                                          \
-		(StdOption(T)) {                                     \
-			.tag = None, .variant_identifier(None) = {},     \
-			.m_vtable = &StdOptionIdentifier(T, vtable_impl) \
-		}
+	#define None(T)                                     \
+		((StdOption(T)){.tag = None,                    \
+						.variant_identifier(None) = {}, \
+						.m_vtable = &StdOptionIdentifier(T, vtable_impl)})
 
 	/// @brief Returns whether this `StdOption(T)` is holding a value
 	///

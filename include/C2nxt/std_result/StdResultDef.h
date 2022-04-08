@@ -1,8 +1,8 @@
 /// @file StdResultDef.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides macro definitions for implementing and working with `StdResult(T)`
-/// @version 0.2.1
-/// @date 2022-04-06
+/// @version 0.2.2
+/// @date 2022-04-07
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -56,11 +56,10 @@ typedef enum Result {
 	///
 	/// @return a `StdResult` containing the given value
 	/// @ingroup std_result
-	#define Ok(T, value)                                     \
-		(StdResult(T)) {                                     \
-			.tag = Ok, .variant_identifier(Ok) = {value},    \
-			.m_vtable = &StdResultIdentifier(T, vtable_impl) \
-		}
+	#define Ok(T, value)                                   \
+		((StdResult(T)){.tag = Ok,                         \
+						.variant_identifier(Ok) = {value}, \
+						.m_vtable = &StdResultIdentifier(T, vtable_impl)})
 
 	/// @brief Creates a `StdResult(T)` holding the given error
 	///
@@ -69,11 +68,10 @@ typedef enum Result {
 	///
 	/// @return a `StdResult` containing the given error
 	/// @ingroup std_result
-	#define Err(T, error)                                    \
-		(StdResult(T)) {                                     \
-			.tag = Err, .variant_identifier(Err) = {error},  \
-			.m_vtable = &StdResultIdentifier(T, vtable_impl) \
-		}
+	#define Err(T, error)                                   \
+		((StdResult(T)){.tag = Err,                         \
+						.variant_identifier(Err) = {error}, \
+						.m_vtable = &StdResultIdentifier(T, vtable_impl)})
 
 	/// @brief Returns whether this `StdResult(T)` is holding a value
 	///
@@ -306,17 +304,18 @@ typedef enum Result {
 	///
 	/// @return `result_b` if `self` is `Ok`. Otherwise the `Err` value of `self`
 	/// @ingroup std_result
-	#define std_result_and(self, result_b)                                                \
-		({                                                                                \
-			typeof(result_b) UNIQUE_VAR(res);                                             \
-			if(std_result_is_ok(self)) {                                                  \
-				UNIQUE_VAR(res) = (result_b);                                             \
-			}                                                                             \
-			else {                                                                        \
-				UNIQUE_VAR(res).tag = Err;                                                \
-				UNIQUE_VAR(res).variant_identifier(Err)._1 = std_result_unwrap_err(self); \
-			}                                                                             \
-			UNIQUE_VAR(res);                                                              \
+	#define std_result_and(self, result_b)                                 \
+		({                                                                 \
+			let_mut UNIQUE_VAR(res) = (result_b);                          \
+			if(std_result_is_err(self)) {                                  \
+				UNIQUE_VAR(res).variant_identifier(Ok)                     \
+					= (typeof(UNIQUE_VAR(res).variant_identifier(Ok))){0}; \
+				UNIQUE_VAR(res).tag = Err;                                 \
+				UNIQUE_VAR(res).variant_identifier(Err)                    \
+					= (typeof(UNIQUE_VAR(res).variant_identifier(Err))){   \
+						std_result_unwrap_err(self)};                      \
+			}                                                              \
+			UNIQUE_VAR(res);                                               \
 		})
 
 	/// @brief Returns the result of calling `next_func` with the contained value if `self` is `Ok`.
