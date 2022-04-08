@@ -63,6 +63,20 @@
 #undef RESULT_T
 #undef RESULT_IMPL
 
+struct timespec duration_to_timespec(StdDuration duration) {
+	let as_nanoseconds = std_duration_cast(duration, std_nanoseconds_period);
+	let seconds = as_nanoseconds.count / as_nanoseconds.period.den;
+	let nanoseconds = as_nanoseconds.count % as_nanoseconds.period.den;
+	return (struct timespec){.tv_sec = seconds, .tv_nsec = nanoseconds};
+}
+
+#define CHECK_ERROR_POSIX(res)                                           \
+	if((res) != 0) {                                                     \
+		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY)); \
+	}                                                                    \
+                                                                         \
+	return Ok(i32, 0)
+
 #if ___STD_HAS_C11_THREADS
 
 StdResult(StdBasicMutex) std_basic_mutex_new(void) {
@@ -72,21 +86,13 @@ StdResult(StdBasicMutex) std_basic_mutex_new(void) {
 }
 
 StdResult std_basic_mutex_init(StdBasicMutex* restrict mutex) {
-	let ret = mtx_init(mutex, mtx_plain);
-	if(ret != 0) {
-		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	return Ok(i32, 0);
+	let res = mtx_init(mutex, mtx_plain);
+	CHECK_ERROR_POSIX(res);
 }
 
 StdResult std_basic_mutex_lock(StdBasicMutex* restrict mutex) {
-	let ret = mtx_lock(mutex);
-	if(ret != 0) {
-		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	return Ok(i32, 0);
+	let res = mtx_lock(mutex);
+	CHECK_ERROR_POSIX(res);
 }
 
 bool std_basic_mutex_try_lock(StdBasicMutex* restrict mutex) {
@@ -94,12 +100,8 @@ bool std_basic_mutex_try_lock(StdBasicMutex* restrict mutex) {
 }
 
 StdResult std_basic_mutex_unlock(StdBasicMutex* restrict mutex) {
-	let ret = mtx_unlock(mutex);
-	if(ret != 0) {
-		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	return Ok(i32, 0);
+	let res = mtx_unlock(mutex);
+	CHECK_ERROR_POSIX(res);
 }
 
 StdResult std_basic_mutex_free(StdBasicMutex* restrict mutex) {
@@ -115,21 +117,13 @@ StdResult(StdRecursiveBasicMutex) std_recursive_basic_mutex_new(void) {
 
 StdResult std_recursive_basic_mutex_init(StdRecursiveBasicMutex* restrict mutex) {
 	// NOLINTNEXTLINE(hicpp-signed-bitwise)
-	let ret = mtx_init(mutex, mtx_plain | mtx_recursive);
-	if(ret != 0) {
-		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	return Ok(i32, 0);
+	let res = mtx_init(mutex, mtx_plain | mtx_recursive);
+	CHECK_ERROR_POSIX(res);
 }
 
 StdResult std_recursive_basic_mutex_lock(StdRecursiveBasicMutex* restrict mutex) {
-	let ret = mtx_lock(mutex);
-	if(ret != 0) {
-		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	return Ok(i32, 0);
+	let res = mtx_lock(mutex);
+	CHECK_ERROR_POSIX(res);
 }
 
 bool std_recursive_basic_mutex_try_lock(StdRecursiveBasicMutex* restrict mutex) {
@@ -137,12 +131,8 @@ bool std_recursive_basic_mutex_try_lock(StdRecursiveBasicMutex* restrict mutex) 
 }
 
 StdResult std_recursive_basic_mutex_unlock(StdRecursiveBasicMutex* restrict mutex) {
-	let ret = mtx_unlock(mutex);
-	if(ret != 0) {
-		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	return Ok(i32, 0);
+	let res = mtx_unlock(mutex);
+	CHECK_ERROR_POSIX(res);
 }
 
 StdResult std_recursive_basic_mutex_free(StdRecursiveBasicMutex* restrict mutex) {
@@ -157,55 +147,32 @@ StdResult(StdCondvar) std_condvar_new(void) {
 }
 
 StdResult std_condvar_init(StdCondvar* restrict condvar) {
-	let ret = cnd_init(condvar);
-	if(ret != 0) {
-		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	return Ok(i32, 0);
+	let res = cnd_init(condvar);
+	CHECK_ERROR_POSIX(res);
 }
 
 StdResult std_condvar_signal(StdCondvar* restrict condvar) {
-	let ret = cnd_signal(condvar);
-	if(ret != 0) {
-		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	return Ok(i32, 0);
+	let res = cnd_signal(condvar);
+	CHECK_ERROR_POSIX(res);
 }
 
 StdResult std_condvar_broadcast(StdCondvar* restrict condvar) {
-	let ret = cnd_broadcast(condvar);
-	if(ret != 0) {
-		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	return Ok(i32, 0);
+	let res = cnd_broadcast(condvar);
+	CHECK_ERROR_POSIX(res);
 }
 
 StdResult std_condvar_wait(StdCondvar* restrict condvar, StdBasicMutex* restrict mutex) {
-	let ret = cnd_wait(condvar, mutex);
-	if(ret != 0) {
-		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	return Ok(i32, 0);
+	let res = cnd_wait(condvar, mutex);
+	CHECK_ERROR_POSIX(res);
 }
 
 StdResult std_condvar_timedwait(StdCondvar* restrict condvar,
 								StdBasicMutex* restrict mutex,
 								StdDuration to_wait) {
-	let as_nanoseconds = std_duration_cast(to_wait, std_nanoseconds_period);
-	let seconds = as_nanoseconds.count / as_nanoseconds.period.den;
-	let nanoseconds = as_nanoseconds.count % as_nanoseconds.period.den;
-	let spec = (struct timespec){.tv_sec = seconds, .tv_nsec = nanoseconds};
+	let spec = duration_to_timespec(to_wait);
 
-	let ret = cnd_timedwait(condvar, mutex, &spec);
-	if(ret != 0) {
-		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	return Ok(i32, 0);
+	let res = cnd_timedwait(condvar, mutex, &spec);
+	CHECK_ERROR_POSIX(res);
 }
 
 StdResult std_condvar_free(StdCondvar* restrict condvar) {
@@ -256,12 +223,8 @@ StdResult(StdThread) std_thread_new(StdThreadLambda lambda) {
 }
 
 StdResult std_thread_init(StdThread* thread, StdThreadLambda lambda) {
-	let ret = thrd_create(thread, thread_invoke, lambda);
-	if(ret != 0) {
-		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	return Ok(i32, 0);
+	let res = thrd_create(thread, thread_invoke, lambda);
+	CHECK_ERROR_POSIX(res);
 }
 
 bool std_thread_is_null(const StdThread* restrict thread) {
@@ -275,8 +238,8 @@ StdThreadID std_thread_get_id(const StdThread* restrict thread) {
 // NOLINTNEXTLINE(readability-non-const-parameter)
 StdResult std_thread_join(StdThread* restrict thread) {
 	i32 res = 0;
-	let ret = thrd_join(*thread, &res);
-	if(ret != 0) {
+	let result = thrd_join(*thread, &res);
+	if(result != 0) {
 		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
 	}
 
@@ -285,12 +248,8 @@ StdResult std_thread_join(StdThread* restrict thread) {
 
 // NOLINTNEXTLINE(readability-non-const-parameter)
 StdResult std_thread_detach(StdThread* restrict thread) {
-	let ret = thrd_detach(*thread);
-	if(ret != 0) {
-		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	return Ok(i32, 0);
+	let res = thrd_detach(*thread);
+	CHECK_ERROR_POSIX(res);
 }
 
 void std_thread_free(void* thread) {
@@ -321,19 +280,13 @@ StdResult(StdTLSKey) std_tls_new(void* data, void (*destructor)(void*)) {
 }
 
 StdResult std_tls_init(StdTLSKey* restrict key, void* data, void (*destructor)(void*)) {
-	let_mut res = tss_create(key, destructor);
+	let res = tss_create(key, destructor);
 
 	if(res != 0) {
 		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
 	}
 
-	res = tss_set(*key, data);
-
-	if(res != 0) {
-		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	return Ok(i32, 0);
+	return std_tls_set(*key, data);
 }
 
 void* std_tls_get(StdTLSKey key) {
@@ -342,11 +295,7 @@ void* std_tls_get(StdTLSKey key) {
 
 StdResult std_tls_set(StdTLSKey key, void* data) {
 	let res = tss_set(key, data);
-	if(res != 0) {
-		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	return Ok(i32, 0);
+	CHECK_ERROR_POSIX(res);
 }
 
 #elif ___STD_HAS_PTHREADS
@@ -383,6 +332,227 @@ StdResult std_basic_mutex_init(StdBasicMutex* mutex) {
 	}
 
 	return Ok(i32, 0);
+}
+
+StdResult std_basic_mutex_lock(StdBasicMutex* restrict mutex) {
+	let res = pthread_mutex_lock(mutex);
+	CHECK_ERROR_POSIX(res);
+}
+
+bool std_basic_mutex_try_lock(StdBasicMutex* restrict mutex) {
+	return pthread_mutex_trylock(mutex) == 0;
+}
+
+StdResult std_basic_mutex_unlock(StdBasicMutex* restrict mutex) {
+	let res = pthread_mutex_unlock(mutex);
+	CHECK_ERROR_POSIX(res);
+}
+
+StdResult std_basic_mutex_free(StdBasicMutex* restrict mutex) {
+	let res = pthread_mutex_destroy(mutex);
+	CHECK_ERROR_POSIX(res);
+}
+
+StdResult(StdRecursiveBasicMutex) std_recursive_basic_mutex_new(void) {
+	StdRecursiveBasicMutex mutex;
+	let_mut res = std_recursive_basic_mutex_init(&mutex);
+	return std_result_and(res, Ok(StdRecursiveBasicMutex, mutex));
+}
+
+StdResult std_recursive_basic_mutex_init(StdRecursiveBasicMutex* mutex) {
+	pthread_mutexattr_t attribute;
+	let_mut res = pthread_mutexattr_init(&attribute);
+	if(res != 0) {
+		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
+	}
+
+	res = pthread_mutexattr_settype(&attribute, PTHREAD_MUTEX_RECURSIVE);
+	if(res != 0) {
+		pthread_mutexattr_destroy(&attribute);
+		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
+	}
+
+	res = pthread_mutex_init(mutex, &attribute);
+	if(res != 0) {
+		pthread_mutexattr_destroy(&attribute);
+		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
+	}
+
+	res = pthread_mutexattr_destroy(&attribute);
+	if(res != 0) {
+		pthread_mutex_destroy(mutex);
+		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
+	}
+
+	return Ok(i32, 0);
+}
+
+StdResult std_recursive_basic_mutex_lock(StdRecursiveBasicMutex* restrict mutex) {
+	let res = pthread_mutex_lock(mutex);
+	CHECK_ERROR_POSIX(res);
+}
+
+bool std_recursive_basic_mutex_try_lock(StdRecursiveBasicMutex* restrict mutex) {
+	return pthread_mutex_trylock(mutex) == 0;
+}
+
+StdResult std_recursive_basic_mutex_unlock(StdRecursiveBasicMutex* restrict mutex) {
+	let res = pthread_mutex_unlock(mutex);
+	CHECK_ERROR_POSIX(res);
+}
+
+StdResult std_recursive_basic_mutex_free(StdRecursiveBasicMutex* restrict mutex) {
+	let res = pthread_mutex_destroy(mutex);
+	CHECK_ERROR_POSIX(res);
+}
+
+StdResult(StdCondvar) std_condvar_new(void) {
+	StdCondvar condvar = __STD_CONDVAR_INITIALIZER;
+	return Ok(StdCondvar, condvar);
+}
+
+StdResult std_condvar_init(StdCondvar* restrict condvar) {
+	*condvar = __STD_CONDVAR_INITIALIZER;
+	return Ok(i32, 0);
+}
+
+StdResult std_condvar_signal(StdCondvar* restrict condvar) {
+	let res = pthread_cond_signal(condvar);
+	CHECK_ERROR_POSIX(res);
+}
+
+StdResult std_condvar_broadcast(StdCondvar* restrict condvar) {
+	let res = pthread_cond_broadcast(condvar);
+	CHECK_ERROR_POSIX(res);
+}
+
+StdResult std_condvar_wait(StdCondvar* restrict condvar, StdBasicMutex* restrict mutex) {
+	let res = pthread_cond_wait(condvar, mutex);
+	CHECK_ERROR_POSIX(res);
+}
+
+StdResult std_condvar_timedwait(StdCondvar* restrict condvar,
+								StdBasicMutex* restrict mutex,
+								StdDuration to_wait) {
+	let spec = duration_to_timespec(to_wait);
+
+	let res = pthread_cond_timedwait(condvar, mutex, &spec);
+	CHECK_ERROR_POSIX(res);
+}
+
+StdResult std_condvar_free(StdCondvar* restrict condvar) {
+	let res = pthread_cond_destroy(condvar);
+	CHECK_ERROR_POSIX(res);
+}
+
+StdResult std_execute_once(StdOnceFlag* restrict flag, void (*function)(void)) {
+	let res = pthread_once(flag, function);
+	CHECK_ERROR_POSIX(res);
+}
+
+StdCompare std_thread_id_compare(StdThreadID lhs, StdThreadID rhs) {
+	return pthread_equal(lhs, rhs) != 0 ? STD_EQUAL :
+										  (lhs < rhs ? STD_LESS_THAN : STD_GREATER_THAN);
+}
+
+bool std_thread_id_equal(StdThreadID lhs, StdThreadID rhs) {
+	return pthread_equal(lhs, rhs) != 0;
+}
+
+bool std_thread_id_less_than(StdThreadID lhs, StdThreadID rhs) {
+	return lhs < rhs;
+}
+
+bool std_thread_id_less_than_or_equal(StdThreadID lhs, StdThreadID rhs) {
+	return std_thread_id_equal(lhs, rhs) || std_thread_id_less_than(lhs, rhs);
+}
+
+bool std_thread_id_greater_than(StdThreadID lhs, StdThreadID rhs) {
+	return lhs > rhs;
+}
+
+bool std_thread_id_greater_than_or_equal(StdThreadID lhs, StdThreadID rhs) {
+	return std_thread_id_equal(lhs, rhs) || std_thread_id_greater_than(lhs, rhs);
+}
+
+[[always_inline]] [[not_null(1)]] static inline void* thread_invoke(void* lambda) {
+	lambda_scoped _lambda = static_cast(StdThreadLambda)(lambda);
+	lambda_call(_lambda);
+	return 0;
+}
+
+StdResult(StdThread) std_thread_new(StdThreadLambda lambda) {
+	StdThread thread = {0};
+	let_mut res = std_thread_init(&thread, lambda);
+	return std_result_and(res, Ok(StdThread, thread));
+}
+
+StdResult std_thread_init(StdThread* restrict thread, StdThreadLambda lambda) {
+	let res = pthread_create(thread, nullptr, thread_invoke, lambda);
+	CHECK_ERROR_POSIX(res);
+}
+
+bool std_thread_is_null(const StdThread* restrict thread) {
+	return std_thread_get_id(thread) == 0;
+}
+
+StdThreadID std_thread_get_id(const StdThread* restrict thread) {
+	return *thread;
+}
+
+// NOLINTNEXTLINE(readability-non-const-parameter)
+StdResult std_thread_join(StdThread* restrict thread) {
+	let res = pthread_join(*thread, nullptr);
+	CHECK_ERROR_POSIX(res);
+}
+
+// NOLINTNEXTLINE(readability-non-const-parameter)
+StdResult std_thread_detach(StdThread* restrict thread) {
+	let res = pthread_detach(*thread);
+	CHECK_ERROR_POSIX(res);
+}
+
+void std_thread_free(void* thread) {
+	ignore(std_thread_join(static_cast(StdThread*)(thread)));
+}
+
+void std_this_thread_yield(void) {
+	sched_yield();
+}
+
+void std_this_thread_sleep_for(StdDuration duration) {
+	let_mut spec = duration_to_timespec(duration);
+	while(nanosleep(&spec, &spec) == -1 && errno == EINTR) {
+	}
+}
+
+StdThreadID std_this_thread_get_id(void) {
+	let thread = pthread_self();
+	return std_thread_get_id(&thread);
+}
+
+StdResult(StdTLSKey) std_tls_new(void* data, void (*destructor)(void*)) {
+	StdTLSKey key = {0};
+	let_mut res = std_tls_init(&key, data, destructor);
+	return std_result_and(res, Ok(StdTLSKey, key));
+}
+
+StdResult std_tls_init(StdTLSKey* restrict key, void* data, void (*destructor)(void*)) {
+	let_mut res = pthread_key_create(key, destructor);
+	if(res != 0) {
+		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
+	}
+
+	return std_tls_set(*key, data);
+}
+
+void* std_tls_get(StdTLSKey key) {
+	return pthread_getspecific(key);
+}
+
+StdResult std_tls_set(StdTLSKey key, void* data) {
+	let res = pthread_setspecific(key, data);
+	CHECK_ERROR_POSIX(res);
 }
 
 #elif STD_PLATFORM_WINDOWS

@@ -83,31 +83,25 @@ typedef mtx_t __std_basic_mutex;
 
 typedef mtx_t __std_recursive_basic_mutex;
 
-	#define ___STD_MUTEX_INITIALIZER \
-		{                            \
-			0                        \
-		}
+	#define __STD_MUTEX_INITIALIZER ((__std_basic_mutex){0})
 
 typedef cnd_t __std_condvar;
 
-	#define ___STD_CONDVAR_INITIALIZER \
-		{                              \
-			0                          \
-		}
+	#define __STD_CONDVAR_INITIALIZER ((__std_condvar_){0})
 
 typedef once_flag __std_exec_once_flag;
 
-	#define ___STD_EXEC_ONCE_INITIALIZER ONCE_FLAG_INIT
+	#define __STD_EXEC_ONCE_INITIALIZER ((__std_exe__std_exec_once_flag)ONCE_FLAG_INIT)
 
 typedef thrd_t __std_thread_id;
 
 typedef thrd_t __std_thread;
 
-	#define ___STD_NULL_THREAD static_cast(__std_thread_id)(0)
+	#define __STD_NULL_THREAD static_cast(__std_thread_id)(0)
 
 typedef tss_t __std_tls_key;
 
-	#define ___STD_TLS_DESTRUCTOR_TAG
+	#define __STD_TLS_DESTRUCTOR_TAG
 
 #elif ___STD_HAS_PTHREADS
 
@@ -117,25 +111,25 @@ typedef pthread_mutex_t __std_basic_mutex;
 
 typedef pthread_mutex_t __std_recursive_basic_mutex;
 
-	#define ___STD_MUTEX_INITIALIZER PTHREAD_MUTEX_INITIALIZER
+	#define __STD_MUTEX_INITIALIZER ((__std_basic_mutex)PTHREAD_MUTEX_INITIALIZER)
 
 typedef pthread_cond_t __std_condvar;
 
-	#define __STD_CONDVAR_INITIALIZER PTHREAD_COND_INITIALIZER
+	#define __STD_CONDVAR_INITIALIZER ((__std_condvar)PTHREAD_COND_INITIALIZER)
 
 typedef pthread_once_t __std_exec_once_flag;
 
-	#define ___STD_EXEC_ONCE_INITIALIZER PTHREAD_ONCE_INIT
+	#define __STD_EXEC_ONCE_INITIALIZER PTHREAD_ONCE_INIT
 
 typedef pthread_t __std_thread_id;
 
 typedef pthread_t __std_thread;
 
-	#define ___STD_NULL_THREAD ((__std_thread){0})
+	#define __STD_NULL_THREAD ((__std_thread){0})
 
 typedef pthread_key_t __std_tls_key;
 
-	#define ___STD_TLS_DESTRUCTOR_TAG
+	#define __STD_TLS_DESTRUCTOR_TAG
 
 #elif ___STD_PLATFORM_WINDOWS
 
@@ -143,11 +137,11 @@ typedef void* __std_basic_mutex;
 
 typedef void* __std_recursive_basic_mutex[6];
 
-	#define __STD_MUTEX_INITIALIZER nullptr
+	#define __STD_MUTEX_INITIALIZER ((__std_basic_mutex) nullptr)
 
 typedef void* __std_condvar;
 
-	#define __STD_CONDVAR_INITIALIZER nullptr
+	#define __STD_CONDVAR_INITIALIZER ((__std_condvar) nullptr)
 
 typedef u32 __std_thread_id;
 
