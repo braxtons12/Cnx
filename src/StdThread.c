@@ -67,12 +67,8 @@
 
 StdResult(StdBasicMutex) std_basic_mutex_new(void) {
 	StdBasicMutex mutex;
-	let ret = mtx_init(&mutex, mtx_plain);
-	if(ret != 0) {
-		return Err(StdBasicMutex, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	return Ok(StdBasicMutex, mutex);
+	let_mut res = std_basic_mutex_init(&mutex);
+	return std_result_and(res, Ok(StdBasicMutex, mutex));
 }
 
 StdResult std_basic_mutex_init(StdBasicMutex* restrict mutex) {
@@ -113,13 +109,8 @@ StdResult std_basic_mutex_free(StdBasicMutex* restrict mutex) {
 
 StdResult(StdRecursiveBasicMutex) std_recursive_basic_mutex_new(void) {
 	StdRecursiveBasicMutex mutex;
-	// NOLINTNEXTLINE(hicpp-signed-bitwise)
-	let ret = mtx_init(&mutex, mtx_plain | mtx_recursive);
-	if(ret != 0) {
-		return Err(StdRecursiveBasicMutex, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	return Ok(StdRecursiveBasicMutex, mutex);
+	let_mut res = std_recursive_basic_mutex_init(&mutex);
+	return std_result_and(res, Ok(StdRecursiveBasicMutex, mutex));
 }
 
 StdResult std_recursive_basic_mutex_init(StdRecursiveBasicMutex* restrict mutex) {
@@ -161,12 +152,8 @@ StdResult std_recursive_basic_mutex_free(StdRecursiveBasicMutex* restrict mutex)
 
 StdResult(StdCondvar) std_condvar_new(void) {
 	StdCondvar condvar;
-	let ret = cnd_init(&condvar);
-	if(ret != 0) {
-		return Err(StdCondvar, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	return Ok(StdCondvar, condvar);
+	let_mut res = std_condvar_init(&condvar);
+	return std_result_and(res, Ok(StdCondvar, condvar));
 }
 
 StdResult std_condvar_init(StdCondvar* restrict condvar) {
@@ -232,12 +219,6 @@ StdResult std_execute_once(StdOnceFlag* restrict flag, void (*function)(void)) {
 	return Ok(i32, 0);
 }
 
-[[always_inline]] [[not_null(1)]] static inline int thread_invoke(void* lambda) {
-	let _lambda = static_cast(StdThreadLambda*)(lambda);
-	lambda_call(*_lambda);
-	return 0;
-}
-
 StdCompare std_thread_id_compare(StdThreadID lhs, StdThreadID rhs) {
 	return thrd_equal(lhs, rhs) != 0 ? STD_EQUAL : (lhs < rhs ? STD_LESS_THAN : STD_GREATER_THAN);
 }
@@ -262,19 +243,20 @@ bool std_thread_id_greater_than_or_equal(StdThreadID lhs, StdThreadID rhs) {
 	return std_thread_id_equal(lhs, rhs) || std_thread_id_greater_than(lhs, rhs);
 }
 
+[[always_inline]] [[not_null(1)]] static inline int thread_invoke(void* lambda) {
+	lambda_scoped _lambda = static_cast(StdThreadLambda)(lambda);
+	lambda_call(_lambda);
+	return 0;
+}
+
 StdResult(StdThread) std_thread_new(StdThreadLambda lambda) {
-	StdThread thread = {0};
-	let ret = thrd_create(&thread, thread_invoke, &lambda);
-
-	if(ret != 0) {
-		return Err(StdThread, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	return Ok(StdThread, thread);
+	StdThread thread; // NOLINT
+	let_mut res = std_thread_init(&thread, lambda);
+	return std_result_and(res, Ok(StdThread, thread));
 }
 
 StdResult std_thread_init(StdThread* thread, StdThreadLambda lambda) {
-	let ret = thrd_create(thread, thread_invoke, &lambda);
+	let ret = thrd_create(thread, thread_invoke, lambda);
 	if(ret != 0) {
 		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
 	}
@@ -334,18 +316,8 @@ StdThreadID std_this_thread_get_id(void) {
 
 StdResult(StdTLSKey) std_tls_new(void* data, void (*destructor)(void*)) {
 	StdTLSKey key = {0};
-	let_mut res = tss_create(&key, destructor);
-	if(res != 0) {
-		return Err(StdTLSKey, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	res = tss_set(key, data);
-
-	if(res != 0) {
-		return Err(StdTLSKey, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
-	}
-
-	return Ok(StdTLSKey, key);
+	let_mut res = std_tls_init(&key, data, destructor);
+	return std_result_and(res, Ok(StdTLSKey, key));
 }
 
 StdResult std_tls_init(StdTLSKey* restrict key, void* data, void (*destructor)(void*)) {
@@ -378,6 +350,40 @@ StdResult std_tls_set(StdTLSKey key, void* data) {
 }
 
 #elif ___STD_HAS_PTHREADS
+
+StdResult(StdBasicMutex) std_basic_mutex_new(void) {
+	StdBasicMutex mutex;
+	let_mut res = std_basic_mutex_init(&mutex);
+	return std_result_and(res, Ok(StdBasicMutex, mutex));
+}
+
+StdResult std_basic_mutex_init(StdBasicMutex* mutex) {
+	pthread_mutexattr_t attribute;
+	let_mut res = pthread_mutexattr_init(&attribute);
+	if(res != 0) {
+		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
+	}
+
+	res = pthread_mutexattr_settype(&attribute, PTHREAD_MUTEX_NORMAL);
+	if(res != 0) {
+		pthread_mutexattr_destroy(&attribute);
+		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
+	}
+
+	res = pthread_mutex_init(mutex, &attribute);
+	if(res != 0) {
+		pthread_mutexattr_destroy(&attribute);
+		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
+	}
+
+	res = pthread_mutexattr_destroy(&attribute);
+	if(res != 0) {
+		pthread_mutex_destroy(mutex);
+		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
+	}
+
+	return Ok(i32, 0);
+}
 
 #elif STD_PLATFORM_WINDOWS
 

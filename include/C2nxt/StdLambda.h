@@ -1,8 +1,8 @@
 /// @file StdLambda.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Basic lambda/closure implementation for C.
-/// @version 0.1.2
-/// @date 2022-04-06
+/// @version 0.1.3
+/// @date 2022-04-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -28,9 +28,10 @@
 #ifndef STD_LAMBDA
 #define STD_LAMBDA
 
-#include "StdAllocators.h"
-#include "StdBasicTypes.h"
-#include "StdDef.h"
+#include <C2nxt/StdAllocators.h>
+#include <C2nxt/StdAtomic.h>
+#include <C2nxt/StdBasicTypes.h>
+#include <C2nxt/StdDef.h>
 
 /// @defgroup std_lambda Lambdas/Closures
 /// This module provides as-ergonomic-as-possible Lambda/Closure facilities for C.
@@ -106,7 +107,7 @@ typedef void* StdLambdaCaptures;
 		ReturnType (*const call)(StdLambdaCaptures __VA_OPT__(, ) __VA_ARGS__); \
 		StdLambdaCaptures captures;                                             \
 		StdAllocator allocator;                                                 \
-	}
+	}*
 
 /// @brief A Lambda function definition.
 /// Can be bound to an instance of a lambda with `lambda` or `lambda_with_allocator`.
@@ -120,9 +121,12 @@ typedef void* StdLambdaCaptures;
 ///
 /// @param ... - The captured variables (or types of the captures) of the lambda binding
 /// @ingroup std_lambda
-#define LambdaBinding(...)                                                                      \
-	struct {                                                                                    \
-		DELIMIT_LIST(;, APPEND_EACH_TO_LIST(SELECTOR_LIST, APPLY_TO_LIST(typeof, __VA_ARGS__))) \
+#define LambdaBinding(...)                                                                   \
+	struct {                                                                                 \
+		atomic_usize ref_count;                                                              \
+		DELIMIT_LIST(;,                                                                      \
+					  APPEND_EACH_TO_LIST(SELECTOR_LIST,                                     \
+										  APPLY_TO_LIST(typeof __VA_OPT__(, ) __VA_ARGS__))) \
 	}
 
 /// @brief Binds the given function and captures as a lambda type, that can be called later
@@ -132,29 +136,33 @@ typedef void* StdLambdaCaptures;
 ///
 /// This version uses the provided memory allocator for memory allocation
 ///
-/// @param allocator - The allocator with which to allocate memory to store the captured values in
+/// @param alloc - The allocator with which to allocate memory to store the captured values in
 /// @param function_name - The function to bind captures to as a lambda
 /// @param ... - The list of variables to capture and bind to the lambda
 ///
 /// @return a bound lambda
 /// @ingroup std_lambda
-#define lambda_with_allocator(allocator, function_name, ...)                                       \
-	({                                                                                             \
-		let_mut UNIQUE_VAR(binding)                                                                \
-			= std_allocator_allocate_t(LambdaBinding(__VA_ARGS__), (allocator));                   \
-		LambdaBinding(__VA_ARGS__) UNIQUE_VAR(temp_binding) = {__VA_ARGS__};                       \
-		std_memcpy(LambdaBinding(__VA_ARGS__), UNIQUE_VAR(binding), &UNIQUE_VAR(temp_binding), 1); \
-                                                                                                   \
-		struct {                                                                                   \
-			typeof(function_name)* const call;                                                     \
-			StdLambdaCaptures captures;                                                            \
-			StdAllocator allocator;                                                                \
-		} UNIQUE_VAR(function) = {                                                                 \
-			.call = function_name,                                                                 \
-			.captures = UNIQUE_VAR(binding),                                                       \
-			.allocator = (allocator),                                                              \
-		};                                                                                         \
-		UNIQUE_VAR(function);                                                                      \
+#define lambda_with_allocator(alloc, function_name, ...)                                 \
+	({                                                                                   \
+		let_mut UNIQUE_VAR(binding)                                                      \
+			= std_allocator_allocate_t(LambdaBinding(__VA_ARGS__), (alloc));             \
+		*UNIQUE_VAR(binding)                                                             \
+			= (typeof(*UNIQUE_VAR(binding))){.ref_count = 1 __VA_OPT__(, ) __VA_ARGS__}; \
+                                                                                         \
+		let_mut UNIQUE_VAR(function) = std_allocator_allocate_t(                         \
+			struct {                                                                     \
+				typeof(function_name)* call;                                             \
+				StdLambdaCaptures captures;                                              \
+				StdAllocator allocator;                                                  \
+			},                                                                           \
+			(alloc));                                                                    \
+		*UNIQUE_VAR(function) = (typeof(*UNIQUE_VAR(function))){                         \
+			.call = function_name,                                                       \
+			.captures = UNIQUE_VAR(binding),                                             \
+			.allocator = (alloc),                                                        \
+		};                                                                               \
+                                                                                         \
+		UNIQUE_VAR(function);                                                            \
 	}) /** NOLINT(performance-no-int-to-ptr)**/
 
 /// @brief Binds the given function and captures as a lambda type, that can be called later
@@ -170,7 +178,7 @@ typedef void* StdLambdaCaptures;
 /// @return a bound lambda
 /// @ingroup std_lambda
 #define lambda(function_name, ...) \
-	lambda_with_allocator(DEFAULT_ALLOCATOR, function_name, __VA_ARGS__)
+	lambda_with_allocator(DEFAULT_ALLOCATOR, function_name __VA_OPT__(, ) __VA_ARGS__)
 
 /// @brief Calls the given lambda with the provided arguments as function parameters
 ///
@@ -179,14 +187,50 @@ typedef void* StdLambdaCaptures;
 ///
 /// @return The return value of the lambda function
 /// @ingroup std_lambda
-#define lambda_call(lambda, ...) (lambda).call((lambda).captures __VA_OPT__(, ) __VA_ARGS__)
+#define lambda_call(lambda, ...) (lambda)->call((lambda)->captures __VA_OPT__(, ) __VA_ARGS__)
+
+/// @brief Returns a clone of the given lambda, ensuring that (by-value) captures stay valid for the
+/// lifetime of the clone
+///
+/// @param lambda - The lambda to clone
+///
+/// @return a clone of the lambda
+///
+/// @note Only the lifetime of by-value captures can be extended to match a clone. By-reference
+/// captures must still outlive all clones of the lambda, otherwise undefined behavior
+/// (likely resulting in segmentation faults from accessing invalid memory) will occur
+/// @ingroup std_lambda
+#define lambda_clone(lambda)                                                    \
+	({                                                                          \
+		atomic_fetch_add((static_cast(atomic_usize*)((lambda)->captures)), 1);  \
+		let_mut UNIQUE_VAR(new)                                                 \
+			= std_allocator_allocate_t(typeof(*(lambda)), (lambda)->allocator); \
+		*UNIQUE_VAR(new) = *(lambda);                                           \
+		UNIQUE_VAR(new);                                                        \
+	})
 
 /// @brief Frees the given lambda, freeing associated memory and making it invalid for future use
 ///
 /// @param lambda - The lambda to free
 /// @ingroup std_lambda
-#define lambda_free(lambda) \
-	std_allocator_deallocate((lambda).allocator, const_cast(void*)((lambda).captures))
+[[always_inline]] [[not_null(1)]] static inline void lambda_free(void* lambda) {
+	let _lambda = *static_cast(struct {
+		void* func;
+		StdLambdaCaptures captures;
+		StdAllocator allocator;
+	}**)(lambda);
+	let_mut alloc = _lambda->allocator;
+	if(atomic_fetch_sub((static_cast(atomic_usize*)(_lambda->captures)), 1) == 1) {
+		std_allocator_deallocate(alloc, const_cast(void*)(_lambda->captures));
+	}
+	std_allocator_deallocate(alloc, _lambda);
+	lambda = nullptr;
+}
+
+/// @brief Declaration tag to scope a lambda, ensuring it is freed when it goes out of scoped and
+/// associated resources are cleaned up
+/// @ingroup std_lambda
+#define lambda_scoped scoped(lambda_free)
 
 /// @brief Casts the given `StdLambdaCaptures` to the given `BindingType`
 /// @param captures - The `StdLambdaCaptures` to cast
@@ -210,5 +254,5 @@ typedef void* StdLambdaCaptures;
 ///
 /// @return `lambda` as `Type`
 /// @ingroup std_lambda
-#define lambda_cast(lambda, Type) (*static_cast(Type*)(&(lambda)))
+#define lambda_cast(lambda, Type) (static_cast(Type)((lambda)))
 #endif // STD_LAMBDA

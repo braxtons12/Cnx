@@ -28,6 +28,7 @@
 #ifndef STD_THREAD
 #define STD_THREAD
 
+#include <C2nxt/StdAtomic.h>
 #include <C2nxt/StdDef.h>
 #include <C2nxt/StdLambda.h>
 #include <C2nxt/__std_thread/__std_thread.h>
@@ -42,6 +43,10 @@ typedef __std_recursive_basic_mutex StdRecursiveBasicMutex;
 typedef __std_condvar StdCondvar;
 typedef __std_thread_id StdThreadID;
 typedef __std_thread StdThread;
+typedef struct {
+	StdThread m_handle;
+	atomic_bool join_flag;
+} StdJThread;
 typedef __std_tls_key StdTLSKey;
 typedef __std_exec_once_flag StdOnceFlag;
 
@@ -130,6 +135,7 @@ std_condvar_wait(StdCondvar* restrict condvar, StdBasicMutex* restrict mutex)
 std_condvar_free(StdCondvar* restrict condvar) ___DISABLE_IF_NULL(condvar);
 
 [[nodiscard]] [[not_null(1, 2)]] StdResult
+// NOLINTNEXTLINE(readability-non-const-parameter)
 std_execute_once(StdOnceFlag* restrict flag, void (*function)(void))
 	std_disable_if(!flag, "Can't perform an execute once with a null `StdOnceFlag`")
 		std_disable_if(!function, "Can't execute a nullptr");

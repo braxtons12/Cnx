@@ -18,20 +18,20 @@ StdCompare lambda_receiver(LambdaCmpStr lambda) {
 	std_string_scoped string = std_string_from("Test2");
 
 	let ret = lambda_call(lambda, &string);
-	lambda_free(lambda);
+	lambda_free(&lambda);
 	return ret;
 }
 
 StdCompare lambda_caller1(void) {
 	std_string_scoped string = std_string_from("Test1");
-	let lambda = lambda(lambda_function, &string);
-	return lambda_receiver(lambda_cast(lambda, LambdaCmpStr));
+	lambda_scoped lambda = lambda(lambda_function, &string);
+	return lambda_receiver(lambda_cast(lambda_clone(lambda), LambdaCmpStr));
 }
 
 StdCompare lambda_caller2(void) {
 	std_string_scoped string = std_string_from("Test2");
-	let lambda = lambda(lambda_function, &string);
-	return lambda_receiver(lambda_cast(lambda, LambdaCmpStr));
+	lambda_scoped lambda = lambda(lambda_function, &string);
+	return lambda_receiver(lambda_cast(lambda_clone(lambda), LambdaCmpStr));
 }
 
 TEST(StdLambda, case1) {
