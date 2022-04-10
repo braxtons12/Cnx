@@ -183,11 +183,12 @@ void std_this_thread_sleep_for(StdDuration duration);
 	std_disable_if(!(tls), "Can't perform a thread-local storage operation on a nullptr")
 
 [[nodiscard]] [[not_null(1)]] StdResult(StdTLSKey)
-	std_tls_new(void* data, void (*destructor)(void*)) ___DISABLE_IF_NULL(data);
+	std_tls_new(void* data, void(__STD_TLS_DESTRUCTOR_TAG* destructor)(void*))
+		___DISABLE_IF_NULL(data);
 [[nodiscard]] [[not_null(1, 2)]] StdResult
 // NOLINTNEXTLINE(readability-non-const-parameter)
-std_tls_init(StdTLSKey* restrict key, void* data, void (*destructor)(void*)) ___DISABLE_IF_NULL(key)
-	___DISABLE_IF_NULL(data);
+std_tls_init(StdTLSKey* restrict key, void* data, void(__STD_TLS_DESTRUCTOR_TAG* destructor)(void*))
+	___DISABLE_IF_NULL(key) ___DISABLE_IF_NULL(data);
 [[nodiscard]] [[returns_not_null]] void* std_tls_get(StdTLSKey key);
 [[nodiscard]] [[not_null(2)]] StdResult
 std_tls_set(StdTLSKey key, void* data) ___DISABLE_IF_NULL(data);

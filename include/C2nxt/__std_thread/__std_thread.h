@@ -48,9 +48,11 @@ IGNORE_RESERVED_IDENTIFIER_WARNING_START
 		#define ___STD_HAS_PTHREADS FALSE
 	#endif // __has_include(<pthread.h>)
 
-	#if !___STD_HAS_C11_THREADS && !___STD_HAS_PTHREADS
-		#define ___STD_HAS_NO_THREADS
-	#endif // !___STD_HAS_C11_THREADS && !___STD_HAS_PTHREADS
+	#if !___STD_HAS_C11_THREADS && !___STD_HAS_PTHREADS && !STD_PLATFORM_WINDOWS
+		#define ___STD_HAS_NO_THREADS TRUE
+	#elif STD_PLATFORM_WINDOWS
+		#define ___STD_HAS_NO_THREADS FALSE
+	#endif // !___STD_HAS_C11_THREADS && !___STD_HAS_PTHREADS && !STD_PLATFORM_WINDOWS
 
 #elif STD_PLATFORM_LINUX || STD_PLATFORM_BSD || STD_PLATFORM_ANDROID
 
@@ -131,27 +133,36 @@ typedef pthread_key_t __std_tls_key;
 
 	#define __STD_TLS_DESTRUCTOR_TAG
 
-#elif ___STD_PLATFORM_WINDOWS
+#elif STD_PLATFORM_WINDOWS
 
-typedef void* __std_basic_mutex;
+	#define NOMINMAX
+	#define WIN32_LEAN_AND_MEAN
+	#include <Windows.h>
 
-typedef void* __std_recursive_basic_mutex[6];
+typedef SRWLOCK __std_basic_mutex;
+
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+typedef CRITICAL_SECTION __std_recursive_basic_mutex;
 
 	#define __STD_MUTEX_INITIALIZER ((__std_basic_mutex) nullptr)
 
-typedef void* __std_condvar;
+typedef CONDITION_VARIABLE __std_condvar;
 
 	#define __STD_CONDVAR_INITIALIZER ((__std_condvar) nullptr)
 
-typedef u32 __std_thread_id;
+typedef INIT_ONCE __std_exec_once_flag;
 
-typedef void* __std_thread;
+	#define __STD_EXEC_ONCE_INITIALIZER ((__std_exec_once_flag) nullptr)
+
+typedef DWORD __std_thread_id;
+
+typedef HANDLE __std_thread;
 
 	#define __STD_NULL_THREAD static_cast(__std_thread_id)(0)
 
-typedef u32 __std_tls_key;
+typedef DWORD __std_tls_key;
 
-	#define __STD_TLS_DESTRUCTOR_CC __stdcall
+	#define __STD_TLS_DESTRUCTOR_TAG __stdcall
 
 #endif // ___STD_HAS_C11_THREADS elif ___STD_HAS_PTHREADS elif ___STD_PLATFORM_WINDOWS
 

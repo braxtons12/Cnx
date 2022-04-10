@@ -87,6 +87,15 @@
 /// @return the type of the expression
 /// @ingroup std_def
 #define typeof(value) __typeof__(value)
+
+/// @brief Returns the alignment size in bytes of the given type
+///
+/// @param type - The type to get the alignment of
+///
+/// @return the alignment size of the type
+/// @ingroup std_def
+#define alignof(type) _Alignof(type)
+
 #if defined(__has_c_attribute)
 	#if __has_c_attribute(diagnose_if) || STD_PLATFORM_COMPILER_CLANG
 		/// @brief Disables the preceding/following function at compile-time
