@@ -1,8 +1,8 @@
 /// @file __std_thread.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Type definitions for threading functionality
-/// @version 0.1.2
-/// @date 2022-04-06
+/// @version 0.2.0
+/// @date 2022-04-10
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -34,12 +34,12 @@
 
 IGNORE_RESERVED_IDENTIFIER_WARNING_START
 
-#if defined(__has_include)
+#if defined(__has_include) && !STD_PLATFORM_WINDOWS
 
 	#if __has_include(<threads.h>)
 		#define ___STD_HAS_C11_THREADS TRUE
 	#else
-		#define ___STD_HAS____STD_HAS_C11_THREADS FALSE
+		#define ___STD_HAS_C11_THREADS FALSE
 	#endif // __has_include(<threads.h>)
 
 	#if __has_include(<pthread.h>)
@@ -48,11 +48,9 @@ IGNORE_RESERVED_IDENTIFIER_WARNING_START
 		#define ___STD_HAS_PTHREADS FALSE
 	#endif // __has_include(<pthread.h>)
 
-	#if !___STD_HAS_C11_THREADS && !___STD_HAS_PTHREADS && !STD_PLATFORM_WINDOWS
+	#if !___STD_HAS_C11_THREADS && !___STD_HAS_PTHREADS
 		#define ___STD_HAS_NO_THREADS TRUE
-	#elif STD_PLATFORM_WINDOWS
-		#define ___STD_HAS_NO_THREADS FALSE
-	#endif // !___STD_HAS_C11_THREADS && !___STD_HAS_PTHREADS && !STD_PLATFORM_WINDOWS
+	#endif // !___STD_HAS_C11_THREADS && !___STD_HAS_PTHREADS
 
 #elif STD_PLATFORM_LINUX || STD_PLATFORM_BSD || STD_PLATFORM_ANDROID
 
@@ -71,7 +69,7 @@ IGNORE_RESERVED_IDENTIFIER_WARNING_START
 
 	#define ___STD_HAS_NO_THREADS TRUE
 
-#endif // defined(__has_include)
+#endif // defined(__has_include) && !STD_PLATFORM_WINDOWS
 
 #if ___STD_HAS_NO_THREADS
 	#error Threads not supported on the target platform

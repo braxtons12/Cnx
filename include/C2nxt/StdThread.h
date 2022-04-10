@@ -1,8 +1,8 @@
 /// @file StdThread.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Type definitions and function declarations for threading functionality
-/// @version 0.1.2
-/// @date 2022-04-06
+/// @version 0.2.0
+/// @date 2022-04-10
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -89,27 +89,37 @@ typedef __std_exec_once_flag StdOnceFlag;
 
 [[nodiscard]] StdResult(StdBasicMutex) std_basic_mutex_new(void);
 [[nodiscard]] [[not_null(1)]] StdResult
+// NOLINTNEXTLINE(readability-non-const-parameter)
 std_basic_mutex_init(StdBasicMutex* restrict mutex) ___DISABLE_IF_NULL(mutex);
 [[nodiscard]] [[not_null(1)]] StdResult
+// NOLINTNEXTLINE(readability-non-const-parameter)
 std_basic_mutex_lock(StdBasicMutex* restrict mutex) ___DISABLE_IF_NULL(mutex);
 [[nodiscard]] [[not_null(1)]] bool
+// NOLINTNEXTLINE(readability-non-const-parameter)
 std_basic_mutex_try_lock(StdBasicMutex* restrict mutex) ___DISABLE_IF_NULL(mutex);
 [[nodiscard]] [[not_null(1)]] StdResult
+// NOLINTNEXTLINE(readability-non-const-parameter)
 std_basic_mutex_unlock(StdBasicMutex* restrict mutex) ___DISABLE_IF_NULL(mutex);
 [[nodiscard]] [[not_null(1)]] StdResult
+// NOLINTNEXTLINE(readability-non-const-parameter)
 std_basic_mutex_free(StdBasicMutex* restrict mutex) ___DISABLE_IF_NULL(mutex);
 
 [[nodiscard]] StdResult(StdRecursiveBasicMutex) std_recursive_basic_mutex_new(void);
 [[nodiscard]] [[not_null(1)]] StdResult
+// NOLINTNEXTLINE(readability-non-const-parameter)
 std_recursive_basic_mutex_init(StdRecursiveBasicMutex* restrict mutex) ___DISABLE_IF_NULL(mutex);
 [[nodiscard]] [[not_null(1)]] StdResult
+// NOLINTNEXTLINE(readability-non-const-parameter)
 std_recursive_basic_mutex_lock(StdRecursiveBasicMutex* restrict mutex) ___DISABLE_IF_NULL(mutex);
 [[nodiscard]] [[not_null(1)]] bool
+// NOLINTNEXTLINE(readability-non-const-parameter)
 std_recursive_basic_mutex_try_lock(StdRecursiveBasicMutex* restrict mutex)
 	___DISABLE_IF_NULL(mutex);
 [[nodiscard]] [[not_null(1)]] StdResult
+// NOLINTNEXTLINE(readability-non-const-parameter)
 std_recursive_basic_mutex_unlock(StdRecursiveBasicMutex* restrict mutex) ___DISABLE_IF_NULL(mutex);
 [[nodiscard]] [[not_null(1)]] StdResult
+// NOLINTNEXTLINE(readability-non-const-parameter)
 std_recursive_basic_mutex_free(StdRecursiveBasicMutex* restrict mutex) ___DISABLE_IF_NULL(mutex);
 
 #undef ___DISABLE_IF_NULL
@@ -119,19 +129,27 @@ std_recursive_basic_mutex_free(StdRecursiveBasicMutex* restrict mutex) ___DISABL
 
 [[nodiscard]] StdResult(StdCondvar) std_condvar_new(void);
 [[not_null(1)]] StdResult
+// NOLINTNEXTLINE(readability-non-const-parameter)
 std_condvar_init(StdCondvar* restrict condvar) ___DISABLE_IF_NULL(condvar);
 [[nodiscard]] [[not_null(1)]] StdResult
+// NOLINTNEXTLINE(readability-non-const-parameter)
 std_condvar_signal(StdCondvar* restrict condvar) ___DISABLE_IF_NULL(condvar);
 [[nodiscard]] [[not_null(1)]] StdResult
+// NOLINTNEXTLINE(readability-non-const-parameter)
 std_condvar_broadcast(StdCondvar* restrict condvar) ___DISABLE_IF_NULL(condvar);
 [[nodiscard]] [[not_null(1)]] StdResult
+// NOLINTNEXTLINE(readability-non-const-parameter)
 std_condvar_wait(StdCondvar* restrict condvar, StdBasicMutex* restrict mutex)
 	___DISABLE_IF_NULL(condvar);
-[[nodiscard]] [[not_null(1, 2)]] StdResult std_condvar_timedwait(StdCondvar* restrict condvar,
-																 StdBasicMutex* restrict mutex,
-																 StdDuration to_wait)
-	___DISABLE_IF_NULL(condvar) std_disable_if(!mutex, "Can't do a timed wait with a null mutex");
+// NOLINTNEXTLINE(readability-non-const-parameter)
+[[nodiscard]] [[not_null(1, 2)]] StdResult
+std_condvar_timedwait(StdCondvar* restrict condvar,
+					  // NOLINTNEXTLINE(readability-non-const-parameter)
+					  StdBasicMutex* restrict mutex,
+					  StdDuration to_wait) ___DISABLE_IF_NULL(condvar)
+	std_disable_if(!mutex, "Can't do a timed wait with a null mutex");
 [[nodiscard]] [[not_null(1)]] StdResult
+// NOLINTNEXTLINE(readability-non-const-parameter)
 std_condvar_free(StdCondvar* restrict condvar) ___DISABLE_IF_NULL(condvar);
 
 [[nodiscard]] [[not_null(1, 2)]] StdResult

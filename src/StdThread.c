@@ -1,8 +1,8 @@
 /// @file StdThread.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Function implementations for threading functionality
-/// @version 0.1.2
-/// @date 2022-04-06
+/// @version 0.2.0
+/// @date 2022-04-10
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -302,13 +302,13 @@ StdResult std_tls_set(StdTLSKey key, void* data) {
 #elif ___STD_HAS_PTHREADS
 
 StdResult(StdBasicMutex) std_basic_mutex_new(void) {
-	StdBasicMutex mutex;
+	StdBasicMutex mutex = {0};
 	let_mut res = std_basic_mutex_init(&mutex);
 	return std_result_and(res, Ok(StdBasicMutex, mutex));
 }
 
 StdResult std_basic_mutex_init(StdBasicMutex* mutex) {
-	pthread_mutexattr_t attribute;
+	pthread_mutexattr_t attribute = {0};
 	let_mut res = pthread_mutexattr_init(&attribute);
 	if(res != 0) {
 		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
@@ -355,13 +355,13 @@ StdResult std_basic_mutex_free(StdBasicMutex* restrict mutex) {
 }
 
 StdResult(StdRecursiveBasicMutex) std_recursive_basic_mutex_new(void) {
-	StdRecursiveBasicMutex mutex;
+	StdRecursiveBasicMutex mutex = {0};
 	let_mut res = std_recursive_basic_mutex_init(&mutex);
 	return std_result_and(res, Ok(StdRecursiveBasicMutex, mutex));
 }
 
 StdResult std_recursive_basic_mutex_init(StdRecursiveBasicMutex* mutex) {
-	pthread_mutexattr_t attribute;
+	pthread_mutexattr_t attribute = {0};
 	let_mut res = pthread_mutexattr_init(&attribute);
 	if(res != 0) {
 		return Err(i32, std_error_new(errno, STD_POSIX_ERROR_CATEGORY));
