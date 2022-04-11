@@ -47,10 +47,9 @@ jobs:
     - name: Push Docs
       # Execute tests defined by the CMake configuration.  
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      uses: https://github.com/jbrooksuk/github-subtree-push-action@master
+      uses: s0/git-publish-subdir-action@develop
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        directory: ${{github.workspace}}
-        branch: gh-pages
-        publish_directory: ${{github.workspace}}/docs/html
-        repository: https://github.com/braxtons12/C2nxt
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REPO: self
+        BRANCH: gh-pages
+        FOLDER: docs/html
