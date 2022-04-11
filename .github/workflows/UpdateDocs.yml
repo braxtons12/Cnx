@@ -53,3 +53,4 @@ jobs:
         directory: ${{github.workspace}}
         branch: gh-pages
         publish_directory: ${{github.workspace}}/docs/html
+        repository: ${{GITHUB_REPOSITORY}}
