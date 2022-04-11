@@ -27,8 +27,8 @@
 /// SOFTWARE.
 
 /// @defgroup std_def Standard Defines
-/// This module provides various `#define`s for performing basic tasks and macro-related functions,
-/// and some small meta-programming functionality
+/// This module provides various ```#define```s for performing basic tasks and macro-related
+/// functions, and some small meta-programming functionality
 
 #ifndef STD_DEF
 /// @brief definitions related to Standard Defines

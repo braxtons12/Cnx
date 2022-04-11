@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief StdEnum provides macros for declaring algebraic datatypes called algebraic `Enum`s,
 /// similar to Rust's `Enum`, and pattern matching on their variants.
-/// @version 0.2
-/// @date 2022-03-05
+/// @version 0.2.0
+/// @date 2022-04-11
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -339,7 +339,8 @@
 	/// }
 	/// @endcode
 	///
-	/// @param x - The `Enum` to pattern match on
+	/// @param self - The `Enum` to pattern match on
+	/// @param ... - The variables to bind the enum variant's members to
 	/// @ingroup std_enum
 	#define match_let(self, ...)                                            \
 		if((self).tag == FIRST(__VA_ARGS__))                                \

@@ -56,30 +56,35 @@ typedef __std_exec_once_flag StdOnceFlag;
 
 #define RESULT_T	StdBasicMutex
 #define RESULT_DECL TRUE
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/StdResult.h>
 #undef RESULT_T
 #undef RESULT_DECL
 
 #define RESULT_T	StdRecursiveBasicMutex
 #define RESULT_DECL TRUE
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/StdResult.h>
 #undef RESULT_T
 #undef RESULT_DECL
 
 #define RESULT_T	StdCondvar
 #define RESULT_DECL TRUE
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/StdResult.h>
 #undef RESULT_T
 #undef RESULT_DECL
 
 #define RESULT_T	StdThread
 #define RESULT_DECL TRUE
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/StdResult.h>
 #undef RESULT_T
 #undef RESULT_DECL
 
 #define RESULT_T	StdTLSKey
 #define RESULT_DECL TRUE
+// NOLINTNEXTLINE(readability-duplicate-include)
 #include <C2nxt/StdResult.h>
 #undef RESULT_T
 #undef RESULT_DECL

@@ -1,8 +1,8 @@
 /// @file StdVectorDef.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides macro definitions for implementing and working with `StdVector(T)`
-/// @version 0.1
-/// @date 2022-01-10
+/// @version 0.1.0
+/// @date 2022-04-11
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -142,7 +142,7 @@
 	/// 5. user-provided memory allocator
 	///
 	/// @param T - The element type of the `StdVector(T)` instantiation to create
-	/// @param collection_data - The `StdCollectionData(CollectionType)` containing the element
+	/// @param collection_data_ptr - The `StdCollectionData(CollectionType)` containing the element
 	/// default-constructor, element copy-constructor, element destructor, and memory allocator
 	/// to use
 	///
@@ -162,7 +162,7 @@
 	///
 	/// @param T - The element type of the `StdVector(T)` instantiation to create
 	/// @param allocator - The `StdAllocator` to use for memory allocations
-	/// @param collection_data - The `StdCollectionData(CollectionType)` containing the element
+	/// @param collection_data_ptr - The `StdCollectionData(CollectionType)` containing the element
 	/// default-constructor, element copy-constructor, element destructor, and memory allocator
 	/// to use
 	///
@@ -218,7 +218,7 @@
 	///
 	/// @param T - The element type of the `StdVector(T)` instantiation to create
 	/// @param capacity - The initial capacity of the vector
-	/// @param collection_data - The `StdCollectionData(CollectionType)` containing the element
+	/// @param collection_data_ptr - The `StdCollectionData(CollectionType)` containing the element
 	/// default-constructor, element copy-constructor, element destructor, and memory allocator
 	/// to use
 	///
@@ -239,7 +239,7 @@
 	/// @param T - The element type of the `StdVector(T)` instantiation to create
 	/// @param capacity - The initial capacity of the vector
 	/// @param allocator - The `StdAllocator` to use for memory allocations
-	/// @param collection_data - The `StdCollectionData(CollectionType)` containing the element
+	/// @param collection_data_ptr - The `StdCollectionData(CollectionType)` containing the element
 	/// default-constructor, element copy-constructor, element destructor, and memory allocator
 	/// to use
 	///

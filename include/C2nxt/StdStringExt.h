@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides additional functionality for working with `StdString`s
 /// @version 0.2.0
-/// @date 2022-03-31
+/// @date 2022-04-11
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -159,6 +159,7 @@ std_string_occurrences_of_stringview(const StdString* restrict self,
 ///
 /// @param self - The string to find the occurrences of `to_find` in
 /// @param to_find - The `cstring` to find in `self`
+/// @param to_find_length - The length of the `cstring` to find in `self`
 ///
 /// @return The number of times `to_find` occurs in `self`
 /// @ingroup std_string
@@ -229,6 +230,7 @@ std_string_occurrences_of_cstring(const StdString* restrict self,
 ///
 /// @param self - The string to find where `to_find` occurs in
 /// @param to_find - The `cstring` to find the occurrences of in `self`
+/// @param to_find_length - The length of the `cstring` to find the occurrences of in `self`
 ///
 /// @return a `StdVector(usize)` containing the indices at which `to_find` occurs in `self`
 /// @ingroup std_string
@@ -298,6 +300,7 @@ std_string_occurrences_of_cstring(const StdString* restrict self,
 ///
 /// @param self - The string to find where `to_find` occurs in
 /// @param to_find - The `cstring` to find the occurrences of in `self`
+/// @param to_find_length - The length of the `cstring` to find the occurrences of in `self`
 /// @param allocator - The allocator the returned vector will use for necessary memory allocations
 ///
 /// @return a `StdVector(usize)` containing the indices at which `to_find` occurs in `self`
@@ -510,6 +513,7 @@ std_string_occurrences_of_cstring(const StdString* restrict self,
 ///
 /// @param self - The string to find where `to_find` occurs in
 /// @param to_find - The string to find the occurrences of in `self`
+/// @param allocator - The allocator for the returned vector to use for memory allocations
 ///
 /// @return a `StdVector(usize)` containing the indices at which `to_find` occurs in `self`
 /// @ingroup std_string

@@ -3,11 +3,11 @@
 /// @brief This module provides an equivalent implementation (on Windows) of the
 /// atomic operations dictated by the C11 standard
 ///
-/// Implementation is based on Microsoft's implementation of C++'s <atomic> and mingw GCC's
-/// <stdatomic.h>, but simplified and altered to fit the restrictions faced when implementing it as
-/// a third party, and (slightly) extended to take advantage of our own fixed-width typedefs
+/// Implementation is based on Microsoft's implementation of C++'s `<atomic>` and mingw GCC's
+/// `<stdatomic.h>`, but simplified and altered to fit the restrictions faced when implementing it
+/// as a third party, and (slightly) extended to take advantage of our own fixed-width typedefs
 /// @version 0.2.0
-/// @date 2022-03-22
+/// @date 2022-04-11
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
