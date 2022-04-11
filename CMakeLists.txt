@@ -113,6 +113,7 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
 		-Wextra
 		-Weverything
 		-Werror
+		-Wno-unknown-warning-option
 		)
 	target_compile_options(Test PRIVATE
 		-std=gnu2x
@@ -121,6 +122,7 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
 		-Weverything
 		-Werror
 		-Wno-missing-variable-declarations
+		-Wno-unknown-warning-option
 		)
 	target_compile_options(C2nxt PRIVATE
 		-std=gnu2x
@@ -162,6 +164,7 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
 		-Wno-declaration-after-statement
 		-Wno-pre-c2x-compat
 		-Wno-documentation-unknown-command
+		-Wno-unknown-warning-option
 		)
 	if (WIN32)
 		target_compile_options(C2nxt PUBLIC
@@ -173,17 +176,22 @@ else ()
 		-std=gnu2x
 		-Wall
 		-Wextra
-		-Werror)
+		-Werror
+		-Wno-unknown-warning
+		)
 	target_compile_options(FormatBenchmark PRIVATE
 		-std=gnu2x
 		-Wall
 		-Wextra
-		-Werror)
+		-Werror
+		-Wno-unknown-warning
+		)
 	target_compile_options(C2nxt PRIVATE
 		-std=gnu2x
 		-Wall
 		-Wextra
-		-Werror)
+		-Werror
+		)
 	target_compile_options(C2nxt PUBLIC
 		-Wnonnull
 		-Wno-unused-value
@@ -192,6 +200,7 @@ else ()
 		-Wno-stringop-overflow
 		-Wno-comment
 		-Wno-strict-aliasing
+		-Wno-unknown-warning
 		)
 endif ()
 
