@@ -98,10 +98,12 @@ add_executable(Test "${CMAKE_CURRENT_SOURCE_DIR}/src/test/Test.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/test/StdArrayi32_10.c")
 
 if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang" OR APPLE)
-	set_target_properties(C2nxt PROPERTIES C_CLANG_TIDY clang-tidy)
-	set_target_properties(FormatBenchmark PROPERTIES C_CLANG_TIDY clang-tidy)
-	set_target_properties(Test PROPERTIES C_CLANG_TIDY clang-tidy)
-	SET(CMAKE_C_CLANG_TIDY clang-tidy)
+	if(NOT DEFINED CMAKE_C_CLANG_TIDY)
+		SET(CMAKE_C_CLANG_TIDY clang-tidy)
+	endif()
+	set_target_properties(C2nxt PROPERTIES C_CLANG_TIDY ${CMAKE_C_CLANG_TIDY})
+	set_target_properties(FormatBenchmark PROPERTIES C_CLANG_TIDY ${CMAKE_C_CLANG_TIDY})
+	set_target_properties(Test PROPERTIES C_CLANG_TIDY ${CMAKE_C_CLANG_TIDY})
 endif ()
 
 if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang")
