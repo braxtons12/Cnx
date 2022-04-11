@@ -22,6 +22,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
+    - name: Checkout submodules
+      run: git submodule update --init --recursive
+    
     - name: Install Clang
       run: wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && sudo ./llvm.sh 14 && sudo apt-get -y install clang-tidy-14
 
