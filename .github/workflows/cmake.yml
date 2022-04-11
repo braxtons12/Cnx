@@ -30,7 +30,7 @@ jobs:
       run: sudo apt-get -y install gcc-11
       
     - name: Install Criterion
-      run: sudo add-apt-repository ppa:snaipewastaken/ppa && sudo apt-get update && sudo apt-get -y install criterion-dev
+      run: sudo apt-get -y install libcriterion-dev
 
     - name: Configure CMake
       env:
