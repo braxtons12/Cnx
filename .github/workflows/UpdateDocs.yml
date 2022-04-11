@@ -36,6 +36,9 @@ jobs:
       
     - name: Install graphviz
       run: sudo apt-get -y install graphviz
+    
+    - name: Install libgs
+      run: sudo apt-get -y install libgs9 libgs9-common
 
     - name: Configure CMake
       env:
