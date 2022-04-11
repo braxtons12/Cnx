@@ -24,7 +24,13 @@ jobs:
     - uses: actions/checkout@v3
     
     - name: Install Clang
-      run: wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && sudo ./llvm.sh 12 && sudo ./llvm.sh 13 && sudo ./llvm.sh 14 && sudo apt-get -y install gcc-11
+      run: wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && sudo ./llvm.sh 12 && sudo ./llvm.sh 13 && sudo ./llvm.sh 14
+      
+    - name: Install GCC 11
+      run: sudo apt-get -y install gcc-11
+      
+    - name: Install Criterion
+      run: sudo add-apt-repository ppa:snaipewastaken/ppa && sudo apt-get update && sudo apt-get install criterion-dev
 
     - name: Configure CMake
       env:
