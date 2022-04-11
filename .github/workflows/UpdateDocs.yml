@@ -60,6 +60,6 @@ jobs:
       uses: s0/git-publish-subdir-action@develop
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        REPO: self
+        REPO: https://github.com/braxtons12/C2nxt.git
         BRANCH: gh-pages
         FOLDER: docs/html
