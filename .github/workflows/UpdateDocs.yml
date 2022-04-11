@@ -1,0 +1,55 @@
+name: Update Docs
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
+    # You can convert this to a matrix build if you need cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    runs-on: ubuntu-18.04
+    strategy:
+      fail-fast: false
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install Clang
+      run: wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && sudo ./llvm.sh 14 && sudo apt-get -y install clang-tidy-14
+
+    - name: Install Criterion
+      run: sudo add-apt-repository -y ppa:snaipewastaken/ppa && sudo apt-get update && sudo apt-get -y install criterion-dev
+
+    - name: Install Doxygen
+      run: sudo apt-get -y install doxygen
+
+    - name: Configure CMake
+      env:
+        CC: clang-14
+      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_C_CLANG_TIDY=clang-tidy-14
+
+    - name: Build
+      env:
+        CC: clang-14
+      # Build your program with the given configuration
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target Doxygen
+
+    - name: Push Docs
+      # Execute tests defined by the CMake configuration.  
+      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+      uses: https://github.com/jbrooksuk/github-subtree-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        directory: ${{github.workspace}}
+        branch: gh-pages
+        publish_directory: ${{github.workspace}}/docs/html
