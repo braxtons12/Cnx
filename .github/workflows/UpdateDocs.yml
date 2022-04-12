@@ -47,6 +47,12 @@ jobs:
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_C_CLANG_TIDY=clang-tidy-14
+      
+    - name: Configure Python
+      run: sudo apt-get -y install python3 && sudo pip3 install pygments --forced
+      
+    - name: Configure Docs Theme
+      run: cp m-theme-dark.css third-party/m.css/css -f && cp pygments-dark.py third-party/m.css/css -f && cd third-party/m.css/css && python3 postprocess.py m-dark.css m-documentation.css -o m-dark+documentation.compiled.css && python3 postprocess.py m-dark.css m-documentation.css --no-import -o m-dark.documentation.compiled.css
 
     - name: Build
       env:
