@@ -52,7 +52,7 @@ jobs:
       run: sudo apt-get -y install python3 && sudo pip3 install pygments
       
     - name: Configure Docs Theme
-      run: cp m-theme-dark.css third-party/m.css/css -f && cp pygments-dark.py third-party/m.css/css -f && cd third-party/m.css/css && python3 postprocess.py m-dark.css m-documentation.css -o m-dark+documentation.compiled.css && python3 postprocess.py m-dark.css m-documentation.css --no-import -o m-dark.documentation.compiled.css
+      run: cp m-theme-dark.css third-party/m.css/css -f && cp pygments-dark.py third-party/m.css/css -f && cp pygments-dark.css third-party/m.css/css -f && cd third-party/m.css/css && python3 postprocess.py m-dark.css m-documentation.css -o m-dark+documentation.compiled.css && python3 postprocess.py m-dark.css m-documentation.css --no-import -o m-dark.documentation.compiled.css
 
     - name: Build
       env:
