@@ -341,7 +341,7 @@ body { margin: 0; }
 
 html {
   font-size: 16px;
-  background-color: #2f363f;
+  background-color: #20242b;
 }
 body {
   font-family: 'Source Sans Pro', sans-serif;
@@ -430,7 +430,7 @@ pre, code {
   font-family: 'Source Code Pro', monospace, monospace, monospace;
   font-size: 0.9em;
   color: #e6e6e6;
-  background-color: #282e36;
+  background-color: #262b33;
 }
 pre.m-console, code.m-console {
   color: #e6e6e6;
@@ -585,7 +585,7 @@ dl.m-footnote dd span.m-footnote a {
   padding: 1rem;
 }
 .m-frame {
-  background-color: #2f363f;
+  background-color: #20242b;
   border-style: solid;
   border-width: 0.125rem;
   border-radius: 0.2rem;
@@ -740,7 +740,7 @@ table.m-table tr.m-info td, table.m-table td.m-info,
 table.m-table tr.m-info th, table.m-table th.m-info,
 table.m-table tr.m-dim td, table.m-table td.m-dim,
 table.m-table tr.m-dim th, table.m-table th.m-dim {
-  border-color: #2f363f;
+  border-color: #20242b;
 }
 .m-note pre, .m-note code,
 table.m-table tr.m-default pre, table.m-table tr.m-default code,
@@ -872,7 +872,7 @@ figure.m-figure.m-fullwidth::after {
   border-radius: 0.2rem;
 }
 .m-code-figure::before {
-  border-color: #282e36;
+  border-color: #262b33;
 }
 .m-console-figure::before {
   border-color: #1a1c1d;
@@ -911,7 +911,7 @@ figure.m-figure figcaption .m-figure-description a {
   text-decoration: underline;
 }
 .m-imagegrid > div {
-  background-color: #2f363f;
+  background-color: #20242b;
 }
 .m-imagegrid > div > figure {
   display: block;
@@ -928,7 +928,7 @@ figure.m-figure figcaption .m-figure-description a {
   left: 0;
   width: 100%;
   height: 100%;
-  border-color: #2f363f;
+  border-color: #20242b;
   border-style: solid;
   border-width: 0.25rem;
   padding: 0.5rem;
@@ -2027,7 +2027,7 @@ body > footer > nav {
   font-size: 0.85rem;
   text-align: center;
   color: #c5c5c5;
-  background-color: #444e5c;
+  background-color: #282e36;
 }
 body > footer > nav h3, body > footer > nav h3 a {
   text-transform: uppercase;
@@ -2165,7 +2165,7 @@ article#m-jumbo {
   margin-top: -1rem;
 }
 #m-landing-cover, #m-cover-image > div, article#m-jumbo > header #m-jumbo-cover {
-  background: linear-gradient(transparent 0%, transparent 50%, #2f363f 100%);
+  background: linear-gradient(transparent 0%, transparent 50%, #20242b 100%);
   width: 100%;
   height: 100%;
 }
@@ -2474,7 +2474,7 @@ article:last-child, article section:last-child { margin-bottom: 0; }
 @media screen and (min-width: 576px) {
   .m-container-inflatable section:target .m-center-s > figure.m-code-figure::before,
   .m-container-inflatable section:target .m-right-s > figure.m-code-figure::before {
-    border-color: #282e36;
+    border-color: #262b33;
   }
   .m-container-inflatable section:target .m-center-s > figure.m-console-figure::before,
   .m-container-inflatable section:target .m-right-s > figure.m-console-figure::before {
@@ -2484,7 +2484,7 @@ article:last-child, article section:last-child { margin-bottom: 0; }
 @media screen and (min-width: 768px) {
   .m-container-inflatable section:target .m-center-m > figure.m-code-figure::before,
   .m-container-inflatable section:target .m-right-m > figure.m-code-figure::before {
-    border-color: #282e36;
+    border-color: #262b33;
   }
   .m-container-inflatable section:target .m-center-m > figure.m-console-figure::before,
   .m-container-inflatable section:target .m-right-m > figure.m-console-figure::before {
@@ -2494,7 +2494,7 @@ article:last-child, article section:last-child { margin-bottom: 0; }
 @media screen and (min-width: 992px) {
   .m-container-inflatable section:target .m-center-l > figure.m-code-figure::before,
   .m-container-inflatable section:target .m-right-l > figure.m-code-figure::before {
-    border-color: #282e36;
+    border-color: #262b33;
   }
   .m-container-inflatable section:target .m-center-l > figure.m-console-figure::before,
   .m-container-inflatable section:target .m-right-l > figure.m-console-figure::before {
@@ -2529,71 +2529,71 @@ article:last-child, article section:last-child { margin-bottom: 0; }
 }
 
 .m-code .hll { background-color: #34424d }
-.m-code .c { color: #a5c9ea }
-.m-code .k { color: #ffffff; font-weight: bold }
-.m-code .n { color: #dcdcdc }
-.m-code .o { color: #aaaaaa }
-.m-code .p { color: #aaaaaa }
-.m-code .ch { color: #a5c9ea }
-.m-code .cm { color: #a5c9ea }
-.m-code .cp { color: #3bd267 }
-.m-code .cpf { color: #c7cf2f }
-.m-code .c1 { color: #a5c9ea }
-.m-code .cs { color: #a5c9ea }
+.m-code .c { color: #686e78 }
+.m-code .k { color: #c67ada; font-weight: bold }
+.m-code .n { color: #9daaaa }
+.m-code .o { color: #9daaaa }
+.m-code .p { color: #9daaaa }
+.m-code .ch { color: #9c80ff }
+.m-code .cm { color: #686e78 }
+.m-code .cp { color: #c67ada }
+.m-code .cpf { color: #83a76e }
+.m-code .c1 { color: #686e78 }
+.m-code .cs { color: #686e78 }
 .m-code .gd { color: #cd3431 }
 .m-code .ge { color: #e6e6e6; font-style: italic }
 .m-code .gh { color: #ffffff; font-weight: bold }
 .m-code .gi { color: #3bd267 }
 .m-code .gs { color: #e6e6e6; font-weight: bold }
 .m-code .gu { color: #5b9dd9 }
-.m-code .kc { color: #ffffff; font-weight: bold }
-.m-code .kd { color: #ffffff; font-weight: bold }
-.m-code .kn { color: #ffffff; font-weight: bold }
-.m-code .kp { color: #ffffff; font-weight: bold }
-.m-code .kr { color: #ffffff; font-weight: bold }
-.m-code .kt { color: #ffffff; font-weight: bold }
-.m-code .m { color: #c7cf2f }
-.m-code .s { color: #e07f7c }
-.m-code .na { color: #dcdcdc; font-weight: bold }
-.m-code .nb { color: #ffffff; font-weight: bold }
-.m-code .nc { color: #dcdcdc; font-weight: bold }
-.m-code .no { color: #dcdcdc }
-.m-code .nd { color: #dcdcdc }
-.m-code .ni { color: #dcdcdc }
-.m-code .ne { color: #dcdcdc }
-.m-code .nf { color: #dcdcdc }
-.m-code .nl { color: #dcdcdc }
-.m-code .nn { color: #dcdcdc }
-.m-code .nx { color: #dcdcdc }
-.m-code .py { color: #dcdcdc }
-.m-code .nt { color: #dcdcdc; font-weight: bold }
-.m-code .nv { color: #c7cf2f }
-.m-code .ow { color: #dcdcdc; font-weight: bold }
-.m-code .mb { color: #c7cf2f }
-.m-code .mf { color: #c7cf2f }
-.m-code .mh { color: #c7cf2f }
-.m-code .mi { color: #c7cf2f }
-.m-code .mo { color: #c7cf2f }
-.m-code .sa { color: #e07f7c }
-.m-code .sb { color: #e07f7c }
-.m-code .sc { color: #e07cdc }
-.m-code .dl { color: #e07f7c }
-.m-code .sd { color: #e07f7c }
-.m-code .s2 { color: #e07f7c }
-.m-code .se { color: #e07cdc }
-.m-code .sh { color: #e07f7c }
-.m-code .si { color: #a5c9ea }
-.m-code .sx { color: #e07f7c }
-.m-code .sr { color: #e07f7c }
-.m-code .s1 { color: #e07f7c }
-.m-code .ss { color: #e07f7c }
-.m-code .bp { color: #ffffff; font-weight: bold }
-.m-code .fm { color: #dcdcdc }
+.m-code .kc { color: #c67ada; font-weight: bold }
+.m-code .kd { color: #c67ada; font-weight: bold }
+.m-code .kn { color: #c67ada; font-weight: bold }
+.m-code .kp { color: #c67ada; font-weight: bold }
+.m-code .kr { color: #c67ada; font-weight: bold }
+.m-code .kt { color: #c67ada; font-weight: bold }
+.m-code .m { color: #d29767 }
+.m-code .s { color: #83a76e }
+.m-code .na { color: #9daaaa; font-weight: bold }
+.m-code .nb { color: #dbba75; font-weight: bold }
+.m-code .nc { color: #dbaa75; font-weight: bold }
+.m-code .no { color: #9daaaa }
+.m-code .nd { color: #9c80ff }
+.m-code .ni { color: #9daaaa }
+.m-code .ne { color: #dbba75 }
+.m-code .nf { color: #61afef }
+.m-code .nl { color: #9c80ff }
+.m-code .nn { color: #00997b }
+.m-code .nx { color: #9daaaa }
+.m-code .py { color: #c65156 }
+.m-code .nt { color: #61afef; font-weight: bold }
+.m-code .nv { color: #9daaaa }
+.m-code .ow { color: #c67ada; font-weight: bold }
+.m-code .mb { color: #d29767 }
+.m-code .mf { color: #d29767 }
+.m-code .mh { color: #d29767 }
+.m-code .mi { color: #d29767 }
+.m-code .mo { color: #d29767 }
+.m-code .sa { color: #83a76e }
+.m-code .sb { color: #83a76e }
+.m-code .sc { color: #83a76e }
+.m-code .dl { color: #83a76e }
+.m-code .sd { color: #83a76e }
+.m-code .s2 { color: #83a76e }
+.m-code .se { color: #83a76e }
+.m-code .sh { color: #83a76e }
+.m-code .si { color: #83a76e }
+.m-code .sx { color: #83a76e }
+.m-code .sr { color: #83a76e }
+.m-code .s1 { color: #83a76e }
+.m-code .ss { color: #83a76e }
+.m-code .bp { color: #dbba75 }
+.m-code .fm { color: #61afef }
 .m-code .vc { color: #c7cf2f }
 .m-code .vg { color: #c7cf2f }
 .m-code .vi { color: #c7cf2f }
 .m-code .vm { color: #c7cf2f }
-.m-code .il { color: #c7cf2f }
+.m-code .il { color: #d29767 }
 
 .m-console .hll { background-color: #ffffcc }
 .m-console .g-AnsiBackgroundBlack { background-color: #232627 }
@@ -2718,7 +2718,7 @@ ul.m-doc li.m-doc-expansible > ul.m-doc, ul.m-doc li.m-doc-collapsible > ul.m-do
   margin-left: 0.5rem;
 }
 ul.m-doc li.m-doc-expansible > a:first-child::before, ul.m-doc li.m-doc-collapsible > a:first-child::before {
-  background-color: #2f363f;
+  background-color: #20242b;
   display: inline-block;
   width: 0.4rem;
   font-weight: bold;
@@ -2777,13 +2777,13 @@ article section.m-doc-details > div::before {
   border-style: solid;
   border-width: 0.125rem;
   border-radius: 0.2rem;
-  border-color: #282e36;
+  border-color: #262b33;
 }
 article section.m-doc-details > div > h3:first-child {
   position: relative;
   margin: -1rem -1rem 1rem -1rem;
   padding: 0.5rem 1rem;
-  background-color: #282e36;
+  background-color: #262b33;
   border-top-left-radius: 0.2rem;
   border-top-right-radius: 0.2rem;
   border-bottom-left-radius: 0;
