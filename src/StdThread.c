@@ -28,6 +28,8 @@
 #include <C2nxt/StdAssert.h>
 #include <C2nxt/StdThread.h>
 #include <time.h>
+#include <C2nxt/time/StdTimePoint.h>
+#include <C2nxt/time/StdClock.h>
 
 #define RESULT_T	StdBasicMutex
 #define RESULT_IMPL TRUE
@@ -64,7 +66,9 @@
 #undef RESULT_IMPL
 
 struct timespec duration_to_timespec(StdDuration duration) {
-	let as_nanoseconds = std_duration_cast(duration, std_nanoseconds_period);
+	let now = std_clock_now(&std_utc_clock);
+	let added = std_time_point_add(now, duration);
+	let as_nanoseconds = std_duration_cast(std_time_point_time_since_epoch(added), std_nanoseconds_period);
 	let seconds = as_nanoseconds.count / as_nanoseconds.period.den;
 	let nanoseconds = as_nanoseconds.count % as_nanoseconds.period.den;
 	return (struct timespec){.tv_sec = seconds, .tv_nsec = static_cast(long)(nanoseconds)};
@@ -167,9 +171,9 @@ StdResult std_condvar_wait(StdCondvar* restrict condvar, StdBasicMutex* restrict
 	CHECK_ERROR_POSIX(res);
 }
 
-StdResult std_condvar_timedwait(StdCondvar* restrict condvar,
-								StdBasicMutex* restrict mutex,
-								StdDuration to_wait) {
+StdResult std_condvar_wait_for(StdCondvar* restrict condvar,
+							   StdBasicMutex* restrict mutex,
+							   StdDuration to_wait) {
 	let spec = duration_to_timespec(to_wait);
 
 	let res = cnd_timedwait(condvar, mutex, &spec);
@@ -432,9 +436,9 @@ StdResult std_condvar_wait(StdCondvar* restrict condvar, StdBasicMutex* restrict
 	CHECK_ERROR_POSIX(res);
 }
 
-StdResult std_condvar_timedwait(StdCondvar* restrict condvar,
-								StdBasicMutex* restrict mutex,
-								StdDuration to_wait) {
+StdResult std_condvar_wait_for(StdCondvar* restrict condvar,
+							   StdBasicMutex* restrict mutex,
+							   StdDuration to_wait) {
 	let spec = duration_to_timespec(to_wait);
 
 	let res = pthread_cond_timedwait(condvar, mutex, &spec);
@@ -648,9 +652,9 @@ StdResult std_condvar_wait(StdCondvar* restrict condvar, StdBasicMutex* restrict
 	return Ok(i32, 0);
 }
 
-StdResult std_condvar_timedwait(StdCondvar* restrict condvar,
-								StdBasicMutex* restrict mutex,
-								StdDuration to_wait) {
+StdResult std_condvar_wait_for(StdCondvar* restrict condvar,
+							   StdBasicMutex* restrict mutex,
+							   StdDuration to_wait) {
 	let milliseconds = std_duration_cast(to_wait, std_milliseconds_period);
 
 	if(!SleepConditionVariableSRW(condvar,
