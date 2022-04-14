@@ -195,6 +195,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gae5bbfee640c17742a1a7c7bd07d3d751" class="m-doc-self">Enum</a>(</span><span class="m-doc-wrap">Type,
               ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdEnum_8h.html">&lt;include/C2nxt/StdEnum.h&gt;</a></div>
             </h3>
             <p>Declares and defines an <code>Enum</code>, <code>Type</code>, with the given variants and additional members.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -219,6 +220,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga0bd74f7b3bc17e91de8aa7c85edad788" class="m-doc-self">EnumWithTag</a>(</span><span class="m-doc-wrap">Type,
               TagType,
               ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdEnum_8h.html">&lt;include/C2nxt/StdEnum.h&gt;</a></div>
             </h3>
             <p>Declares and defines an <code>Enum</code>, <code>Type</code>, using an existing C-style <code>enum</code>, <code>TagType</code>, to tag/identify its variants.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -245,6 +247,7 @@
           <section class="m-doc-details" id="gad787b174770350aaad26eedc9292bfba"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gad787b174770350aaad26eedc9292bfba" class="m-doc-self">match</a>(</span><span class="m-doc-wrap">x)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdEnum_8h.html">&lt;include/C2nxt/StdEnum.h&gt;</a></div>
             </h3>
             <p>Pattern matches on the given <code>Enum</code>, <code>x</code> Pattern matching works similarly to <code>switch</code> statements, but with slightly different semantics. First off, pattern cases are declared with <code><a href="group__std__enum.html#ga5c65b7422f4e623e93795823f60a592e" class="m-doc">variant(...)</a></code>, which can, in addition to match the variant, optionally decompose the variant into one or more bound variables. Bound variables are bound by value, as decomposing a variant during pattern matching is intended to be consuming, so mutating the <code>Enum</code> variant&#x27;s members in place is not possible without manually doing so. Second, fallthrough is not possible, so <code>break</code>ing to prevent it is not necessary.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -277,6 +280,7 @@
           <section class="m-doc-details" id="ga5c65b7422f4e623e93795823f60a592e"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga5c65b7422f4e623e93795823f60a592e" class="m-doc-self">variant</a>(</span><span class="m-doc-wrap">...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdEnum_8h.html">&lt;include/C2nxt/StdEnum.h&gt;</a></div>
             </h3>
             <p>Declares a pattern-matching case in a <code>match</code> statement Pattern-matching cases declare a variant to match against and, in addition, can optionally decompose the variant into one or more bound variables. Bound variables are bound by value, as decomposing a variant during pattern matching is intended to be consuming, so mutating the <code>Enum</code> variant&#x27;s members in place is not possible without manually doing so. Unlike <code>switch</code> statements, fallthrough is not possible in <code>match</code> statements, so <code>break</code>ing between <code><a href="group__std__enum.html#ga5c65b7422f4e623e93795823f60a592e" class="m-doc">variant(...)</a></code>s is not necessary.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -309,6 +313,7 @@
           <section class="m-doc-details" id="gab5ae623ebd1c1819cbccf669fe5c0d92"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gab5ae623ebd1c1819cbccf669fe5c0d92" class="m-doc-self">wildcard</a>(</span><span class="m-doc-wrap">)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdEnum_8h.html">&lt;include/C2nxt/StdEnum.h&gt;</a></div>
             </h3>
             <p>Declares a catch-all pattern-matching case in a <code>match</code> statement This will match all variants that have not been explicitly matched against prior. Unlike <code>switch</code> statements, fallthrough is not possible in <code>match</code> statements, so <code>break</code>ing between <code><a href="group__std__enum.html#ga5c65b7422f4e623e93795823f60a592e" class="m-doc">variant(...)</a></code>s is not necessary.</p>
 <p>Example:</p><pre class="m-code">    <span class="n">Enum</span><span class="p">(</span><span class="n">Example</span><span class="p">,</span> <span class="p">(</span><span class="n">Variant1</span><span class="p">,</span> <span class="n">i32</span><span class="p">,</span> <span class="n">i32</span><span class="p">),</span> <span class="p">(</span><span class="n">Variant2</span><span class="p">,</span> <span class="n">f32</span><span class="p">,</span> <span class="n">f32</span><span class="p">),</span> <span class="p">(</span><span class="n">Variant3</span><span class="p">));</span>
@@ -328,8 +333,24 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gaacdb758ac67652e7d518762e36737c33" class="m-doc-self">match_let</a>(</span><span class="m-doc-wrap">self,
               ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdEnum_8h.html">&lt;include/C2nxt/StdEnum.h&gt;</a></div>
             </h3>
             <p>Conditionally pattern matches on the given <code>Enum</code>, <code>self</code> <code>match_let</code> works similarly to an <code>if</code> statement, but with slightly different semantics. First off, in addition to conditionally branching if <code>self</code> is the given variant, it can optionally decompose the variant into one or more bound variables. Bound variables are bound by value, as decomposing a variant during pattern matching is intended to be consuming, so mutating the <code>Enum</code> variant&#x27;s members in place is not possible without manually doing so.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code>Enum</code> to pattern match on</td>
+                </tr>
+                <tr>
+                  <td>...</td>
+                  <td>- The variables to bind the enum variant&#x27;s members to</td>
+                </tr>
+              </tbody>
+            </table>
 <p>Example:</p><pre class="m-code"><span class="n">Enum</span><span class="p">(</span><span class="n">Example</span><span class="p">,</span> <span class="p">(</span><span class="n">Variant1</span><span class="p">,</span> <span class="n">i32</span><span class="p">,</span> <span class="n">i32</span><span class="p">),</span> <span class="p">(</span><span class="n">Variant2</span><span class="p">,</span> <span class="n">f32</span><span class="p">,</span> <span class="n">f32</span><span class="p">),</span> <span class="p">(</span><span class="n">Variant3</span><span class="p">));</span>
 
 <span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="n">Example</span> <span class="n">var</span><span class="p">)</span> <span class="p">{</span>
@@ -350,6 +371,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga74e136471c537efb8b4d5da7b69299e8" class="m-doc-self">is_variant</a>(</span><span class="m-doc-wrap">self,
               Variant)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdEnum_8h.html">&lt;include/C2nxt/StdEnum.h&gt;</a></div>
             </h3>
             <p>Determines if <code>self</code> is the <code>Enum</code> variant <code>Variant</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -388,6 +410,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gab938f5c91d29297539bffc3ead525f1f" class="m-doc-self">extract_variant</a>(</span><span class="m-doc-wrap">self,
               Variant)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdEnum_8h.html">&lt;include/C2nxt/StdEnum.h&gt;</a></div>
             </h3>
             <p>Extracts the internal value of <code>self</code> as the variant <code>Variant</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -421,6 +444,7 @@
           <section class="m-doc-details" id="ga50d344ee62ce30d79addd6431289ad3b"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga50d344ee62ce30d79addd6431289ad3b" class="m-doc-self">variant_identifier</a>(</span><span class="m-doc-wrap">Variant)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdEnum_8h.html">&lt;include/C2nxt/StdEnum.h&gt;</a></div>
             </h3>
             <p>Generates the member identifier for an <code>Enum</code> variant, <code>Variant</code>, used in the struct definition of an <code>Enum</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -486,7 +510,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

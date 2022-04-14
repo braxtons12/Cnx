@@ -277,8 +277,8 @@
               allocator)</span>
             </dt>
             <dd>Creates a <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> managing the array type <code>T</code> with the given initial capacity, allocated with the given allocator.</dd>
-            <dt id="ga663647c8c8962ecb3baf9e6524466b32">
-              <span class="m-doc-wrap-bumper">#define <a href="#ga663647c8c8962ecb3baf9e6524466b32" class="m-doc-self">unique_scoped</a>(</span><span class="m-doc-wrap">T)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga663647c8c8962ecb3baf9e6524466b32" class="m-doc">unique_scoped</a>(</span><span class="m-doc-wrap">T)</span>
             </dt>
             <dd>Declare a <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> with this declaration attribute/type to ensure it (and its managed object) is automatically freed when the <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> goes out of scope.</dd>
           </dl>
@@ -288,6 +288,7 @@
           <section class="m-doc-details" id="ga622dea273465bb87cc61ac40fda1586a"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga622dea273465bb87cc61ac40fda1586a" class="m-doc-self">StdUniquePtr</a>(</span><span class="m-doc-wrap">T)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>macro alias for a <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> maintaining ownership of an allocated <code>T</code></p>
 <p><code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> is a template for a &quot;smart&quot; pointer type that maintains (when used correctly) unique ownership of and manages an object through a contained pointer. The contained object is disposed of (&quot;freed&quot;) when the <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> is explicitly freed, when it goes out of scope when declared with the <code><a href="group__std__unique__ptr.html#ga663647c8c8962ecb3baf9e6524466b32" class="m-doc">unique_<wbr />scoped(T)</a></code> tagged declaration, or when <code>reset</code> (<code>std_unique_ptr_reset</code>) is called on the <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code>.</p><p><code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> is allocator aware and stores its associated allocator in itself.</p><p>The contained object is &quot;freed&quot; by a <code>StdDeleter</code>, a function taking a <code>T*</code> and a <code><a href="structStdAllocator.html" class="m-doc">StdAllocator</a></code>, whose task is to properly cleanup/free/etc. anything associated with the <code>T</code>. This deleter can be supplied as a template parameter, <code>UNIQUE_DELETER</code> when instantiating the <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> template. This template parameter is optional, and if not supplied the deleter used will be the default deleter, which will simply deallocate the <code>T</code> with the allocator associated with the given <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> instance.</p><p><code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> can own dynamically allocated array types, and provided functionality will be slightly different, though comparable, when <code>T</code> is an array type or a singular type. To instantiate the template for an array type, the type must be <code>typedef</code>ed, e.g.: <code>typedef int int_arr[];</code>, and the typedef provided as the <code>UNIQUE_T</code> template parameter.</p><p>Example:</p><pre class="m-code"><span class="c1">// include for `TRUE`</span>
@@ -324,6 +325,7 @@
           <section class="m-doc-details" id="ga067bba7cccc705a14ae12328002f2ea6"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga067bba7cccc705a14ae12328002f2ea6" class="m-doc-self">std_unique_ptr_new</a>(</span><span class="m-doc-wrap">T)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Creates a new uniquely, owned zero-initialized <code>T</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -349,6 +351,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gaac0031165c5ff7a9ca2b88d208e8b12d" class="m-doc-self">std_unique_ptr_new_with_allocator</a>(</span><span class="m-doc-wrap">T,
               allocator)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Creates a new uniquely owned, zero-initialized <code>T</code>, allocated with the given allocator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -378,6 +381,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gacc75eaacdb954449d1a3f2fb1a7a95c3" class="m-doc-self">std_unique_ptr_new_with_capacity</a>(</span><span class="m-doc-wrap">T,
               capacity)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Creates a new uniquely owned, zero-initialized, dynamically allocated array.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -408,6 +412,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga08e974bd20c07a6690b6787572f22205" class="m-doc-self">std_unique_ptr_new_with_capacity_and_allocator</a>(</span><span class="m-doc-wrap">T,
               capacity,
               allocator)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Creates a new uniquely owned, zero-initialized, dynamically allocated array, allocated with the given allocator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -441,6 +446,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga7dd27f8f194a0b8c7d7f13290d8148b9" class="m-doc-self">std_unique_ptr_from</a>(</span><span class="m-doc-wrap">T,
               ptr)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Creates a new <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> managing the given pointer.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -471,6 +477,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga0cb69597aeb99e9136606d14fe101c9d" class="m-doc-self">std_unique_ptr_from_with_allocator</a>(</span><span class="m-doc-wrap">T,
               ptr,
               allocator)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Creates a new <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> managing the given pointer, associated with the given allocator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -504,6 +511,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gaa244d5f958f0766ffc901c0039319bfe" class="m-doc-self">std_unique_ptr_free</a>(</span><span class="m-doc-wrap">T,
               self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Frees the given <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code>, calling the associated deleter on the managed object.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -526,6 +534,7 @@
           <section class="m-doc-details" id="ga494b179218d0d3d6e746bc93d1be6ee5"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga494b179218d0d3d6e746bc93d1be6ee5" class="m-doc-self">std_unique_ptr_release</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Releases the pointer managed by <code>self</code> from ownership.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -551,6 +560,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga7f78d9d3bd2c0890af029d586aa2f2ae" class="m-doc-self">std_unique_ptr_reset</a>(</span><span class="m-doc-wrap">self,
               new_ptr)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Frees the object currently managed by <code>self</code>, and replaces it with the one pointed to by <code>new_ptr</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -574,6 +584,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga306895c57f1257215d285f382def83dd" class="m-doc-self">std_unique_ptr_swap</a>(</span><span class="m-doc-wrap">self,
               other_ptr)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Swaps the managed objects of <code>self</code> and the <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> pointed to by <code>other_ptr</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -596,6 +607,7 @@
           <section class="m-doc-details" id="ga670b95ecbe316560eca56882defaf402"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga670b95ecbe316560eca56882defaf402" class="m-doc-self">std_unique_ptr_get_deleter</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Returns the <code><a href="group__std__smart__ptrs.html#ga138246bcb2207df93a2d94334ccc9670" class="m-doc">StdDeleter(T)</a></code> function pointer associated with the <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> instantiation <code>self</code> is an instance of.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -619,6 +631,7 @@
           <section class="m-doc-details" id="ga23575dea2e4b9e70236a793e97323094"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga23575dea2e4b9e70236a793e97323094" class="m-doc-self">std_unique_ptr_as_bool</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Returns whether the given <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> currently manages an object.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -642,6 +655,7 @@
           <section class="m-doc-details" id="ga63aeccbbc39fc0fea4c0302c805345cc"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga63aeccbbc39fc0fea4c0302c805345cc" class="m-doc-self">std_unique_ptr_get</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Returns a pointer to the object managed by <code>self</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -666,6 +680,7 @@
           <section class="m-doc-details" id="ga6a51266324dff6cf37b35b3464d1f2c8"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga6a51266324dff6cf37b35b3464d1f2c8" class="m-doc-self">std_unique_ptr_get_const</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Returns a pointer-to-const to the object managed by <code>self</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -690,6 +705,7 @@
           <section class="m-doc-details" id="gafd9c9f481608c956366bf5d949f929e2"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gafd9c9f481608c956366bf5d949f929e2" class="m-doc-self">std_unique_ptr_get_mut</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Returns a pointer-to-non-const to the object managed by <code>self</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -715,6 +731,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga6793c04d89e2dd636caf39ff804ffb86" class="m-doc-self">std_unique_ptr_at</a>(</span><span class="m-doc-wrap">self,
               index)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Returns a reference to the element at <code>index</code> in the array managed by <code>self</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -744,6 +761,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gae1fb2eb9b758259c5bbd9bd95196587c" class="m-doc-self">std_unique_ptr_at_const</a>(</span><span class="m-doc-wrap">self,
               index)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Returns a reference-to-const to the element at <code>index</code> in the array managed by <code>self</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -773,6 +791,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga69d974bbeeda0baeb4d9d763f0e6e4b0" class="m-doc-self">std_unique_ptr_at_mut</a>(</span><span class="m-doc-wrap">self,
               index)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Returns a reference-to-non-const to the element at <code>index</code> in the array managed by <code>self</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -802,6 +821,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gaf64b46b037ae97ab71e6d48add0d0eb5" class="m-doc-self">std_make_unique</a>(</span><span class="m-doc-wrap">T,
               ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Creates a <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> managing a <code>T</code> initialized with the given list of (potentially designated) initializers.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -832,6 +852,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga9a02e26caa145809c11e87cee89b51da" class="m-doc-self">std_make_unique_with_allocator</a>(</span><span class="m-doc-wrap">T,
               allocator,
               ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Creates a <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> managing a <code>T</code> initialized with the given list of (potentially designated) initializers, allocated with the given allocator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -865,6 +886,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga1af77810cfe861e01df18b72191894ad" class="m-doc-self">std_make_unique_array</a>(</span><span class="m-doc-wrap">T,
               capacity)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Creates a <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> managing the array type <code>T</code> with the given initial capacity.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -895,6 +917,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#gaac7120e1f5c93ae159195cd6029d136a" class="m-doc-self">std_make_unique_array_with_allocator</a>(</span><span class="m-doc-wrap">T,
               capacity,
               allocator)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
             </h3>
             <p>Creates a <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> managing the array type <code>T</code> with the given initial capacity, allocated with the given allocator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -923,6 +946,24 @@
               </tfoot>
             </table>
 <aside class="m-note m-info"><h4>Note</h4><p>This is only available if <code>T</code> <strong>IS</strong> an array type. To create a uniquely owned single object with an associated allocator, use <code>std_make_unique_with_allocator</code> or <code>std_unique_ptr_new_with_allocator</code>.</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga663647c8c8962ecb3baf9e6524466b32"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga663647c8c8962ecb3baf9e6524466b32" class="m-doc-self">unique_scoped</a>(</span><span class="m-doc-wrap">T)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdUniquePtrDef_8h.html">&lt;include/C2nxt/std_unique_ptr/StdUniquePtrDef.h&gt;</a></div>
+            </h3>
+            <p>Declare a <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> with this declaration attribute/type to ensure it (and its managed object) is automatically freed when the <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code> goes out of scope.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The type managed by the <code><a href="group__std__unique__ptr.html#ga622dea273465bb87cc61ac40fda1586a" class="m-doc">StdUniquePtr(T)</a></code></td>
+                </tr>
+              </tbody>
+            </table>
           </div></section>
         </section>
       </div>
@@ -969,7 +1010,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

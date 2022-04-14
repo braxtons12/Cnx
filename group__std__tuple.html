@@ -74,16 +74,16 @@
         <section id="define-members">
           <h2><a href="#define-members">Defines</a></h2>
           <dl class="m-doc">
-            <dt id="ga7a76041d2d0c4382a64d45bfe1ce3a8e">
-              <span class="m-doc-wrap-bumper">#define <a href="#ga7a76041d2d0c4382a64d45bfe1ce3a8e" class="m-doc-self">Tuple</a>(</span><span class="m-doc-wrap">...)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7a76041d2d0c4382a64d45bfe1ce3a8e" class="m-doc">Tuple</a>(</span><span class="m-doc-wrap">...)</span>
             </dt>
             <dd>Used to refer to a tuple type.</dd>
-            <dt id="ga120bd2baf9e7b32e9cc1534f103fc30f">
-              <span class="m-doc-wrap-bumper">#define <a href="#ga120bd2baf9e7b32e9cc1534f103fc30f" class="m-doc-self">DeclTuple</a>(</span><span class="m-doc-wrap">...)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga120bd2baf9e7b32e9cc1534f103fc30f" class="m-doc">DeclTuple</a>(</span><span class="m-doc-wrap">...)</span>
             </dt>
             <dd>Used to declare a tuple type.</dd>
-            <dt id="gadfe94275d34dfe5b1bfba0618a8721db">
-              <span class="m-doc-wrap-bumper">#define <a href="#gadfe94275d34dfe5b1bfba0618a8721db" class="m-doc-self">DeclNamedTuple</a>(</span><span class="m-doc-wrap">...)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadfe94275d34dfe5b1bfba0618a8721db" class="m-doc">DeclNamedTuple</a>(</span><span class="m-doc-wrap">...)</span>
             </dt>
             <dd>Used to declare a tuple type with a unique name The first argument must be the unique name to use for this tuple type. Subsequent arguments should be the types held by the tuple.</dd>
             <dt>
@@ -100,10 +100,65 @@
         </section>
         <section>
           <h2>Define documentation</h2>
+          <section class="m-doc-details" id="ga7a76041d2d0c4382a64d45bfe1ce3a8e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7a76041d2d0c4382a64d45bfe1ce3a8e" class="m-doc-self">Tuple</a>(</span><span class="m-doc-wrap">...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTuple_8h.html">&lt;include/C2nxt/StdTuple.h&gt;</a></div>
+            </h3>
+            <p>Used to refer to a tuple type.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">...</td>
+                  <td>- The types contained by the tuple</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga120bd2baf9e7b32e9cc1534f103fc30f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga120bd2baf9e7b32e9cc1534f103fc30f" class="m-doc-self">DeclTuple</a>(</span><span class="m-doc-wrap">...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTuple_8h.html">&lt;include/C2nxt/StdTuple.h&gt;</a></div>
+            </h3>
+            <p>Used to declare a tuple type.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">...</td>
+                  <td>- The types contained by the tuple</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gadfe94275d34dfe5b1bfba0618a8721db"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadfe94275d34dfe5b1bfba0618a8721db" class="m-doc-self">DeclNamedTuple</a>(</span><span class="m-doc-wrap">...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTuple_8h.html">&lt;include/C2nxt/StdTuple.h&gt;</a></div>
+            </h3>
+            <p>Used to declare a tuple type with a unique name The first argument must be the unique name to use for this tuple type. Subsequent arguments should be the types held by the tuple.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">...</td>
+                  <td>- The first argument must be the unique name. Subsequent arguments should be the types contained by the tuple.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
           <section class="m-doc-details" id="ga795cba0a08a830263d331b62d83db55e"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga795cba0a08a830263d331b62d83db55e" class="m-doc-self">tuple_bind</a>(</span><span class="m-doc-wrap">self,
               ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTuple_8h.html">&lt;include/C2nxt/StdTuple.h&gt;</a></div>
             </h3>
             <p>Decomposes the given tuple <code>self</code> into one or more of its members, in declared order Decomposes <code>self</code> into one or more of its members, using the given names to refer to its members. The given names exist within the current scope.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -134,6 +189,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gaf050859afebdae1ddfd799f1305aa71f" class="m-doc-self">scoped_tuple_bind</a>(</span><span class="m-doc-wrap">self,
               ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTuple_8h.html">&lt;include/C2nxt/StdTuple.h&gt;</a></div>
             </h3>
             <p>Decomposes the given tuple <code>self</code> into one or more of its members, in declared order Decomposes <code>self</code> into one or more of its members, using the given names to refer to its members. The given names are contained within a new scope.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -207,7 +263,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

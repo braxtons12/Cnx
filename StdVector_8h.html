@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>git/C2nxt/include/C2nxt/StdVector.h file | C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <title>include/C2nxt/StdVector.h file | C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -42,10 +42,94 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="dir_9bec7083027963d9f9ceae2cc7474de5.html">git</a>/</span><span class="m-breadcrumb"><a href="dir_49b122fa8cea83c8ef01de9aa5379c17.html">C2nxt</a>/</span><span class="m-breadcrumb"><a href="dir_c28551255240bd2a80f37986fd2bd3c8.html">include</a>/</span><span class="m-breadcrumb"><a href="dir_2502210eca0f861b6a41d90e00f0922f.html">C2nxt</a>/</span>StdVector.h <span class="m-thin">file</span>
+          <span class="m-breadcrumb"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a>/</span><span class="m-breadcrumb"><a href="dir_40b8c0d86bdcbc7ff85d5199b4386121.html">C2nxt</a>/</span>StdVector.h <span class="m-thin">file</span>
         </h1>
         <p>This module provides a dynamic-array type comparable to C++&#x27;s <code>std::vector</code> and Rust&#x27;s <code>std::vec::Vec</code> for C2nxt.</p>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
 <aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.2.2</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-03-21</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a52f66ab2627f4517b07032df55572197" class="m-doc">STD_VECTOR</a></span>
+            </dt>
+            <dd><code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> related declarations and definitions</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Define documentation</h2>
+          <section class="m-doc-details" id="a52f66ab2627f4517b07032df55572197"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a52f66ab2627f4517b07032df55572197" class="m-doc-self">STD_VECTOR</a></span>
+            </h3>
+            <p><code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> related declarations and definitions</p>
+<p>You can provide user-defined default-constructor, copy-constructor, and destructor for elements of your type, and custom allocator for all memory allocation:</p><pre class="m-code"><span class="n">YourType</span> <span class="nf">your_type_constructor</span><span class="p">(</span><span class="n">StdAllocator</span> <span class="n">allocator</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">YourType</span><span class="p">){</span><span class="mi">0</span><span class="p">};</span>
+    <span class="c1">// whatever you need to do to init your type</span>
+    <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">YourType</span> <span class="nf">your_type_copy_constructor</span><span class="p">(</span><span class="k">const</span> <span class="n">YourType</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">elem</span><span class="p">,</span> <span class="n">StdAllocator</span> <span class="n">allocator</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">YourType</span><span class="p">){</span><span class="mi">0</span><span class="p">};</span>
+    <span class="c1">// whatever you need to do to copy `elem` to `t`</span>
+    <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">your_type_destructor</span><span class="p">(</span><span class="n">YourType</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">t</span><span class="p">,</span> <span class="n">StdAllocator</span> <span class="n">allocator</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// whatever you need to do to cleanup `t`</span>
+<span class="p">}</span>
+
+<span class="n">StdVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">)</span> <span class="n">create_and_fill_your_type_vec</span><span class="p">(</span><span class="n">usize</span> <span class="n">num_elements</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// init a vec with num_elements capacity (zero size) and our custom collection data</span>
+    <span class="n">let_mut</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">std_vector_new_with_capacity_allocator_and_collection_data</span><span class="p">(</span><span class="n">YourType</span><span class="p">,</span>
+                        <span class="n">capacity</span><span class="p">,</span>
+                        <span class="c1">// This `StdAllocator` will only be associated with this specific array,</span>
+                        <span class="c1">// not all `StdArray(YourType, YourN)`s</span>
+                        <span class="n">std_allocator_from_custom_stateless_allocator</span><span class="p">(</span><span class="n">your_malloc</span><span class="p">,</span>
+                                                                      <span class="n">your_realloc</span><span class="p">,</span>
+                                                                      <span class="n">your_free</span><span class="p">),</span>
+                        <span class="c1">// This `StdCollectionData(CollectionType)` will only be</span>
+                        <span class="c1">// associated with this specific vector, not all `StdVector(YourType)`s</span>
+                        <span class="p">((</span><span class="n">StdCollectionData</span><span class="p">(</span><span class="n">StdVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">)))</span> <span class="p">{</span>
+                            <span class="c1">// can be left NULL, will be defaulted</span>
+                            <span class="p">.</span><span class="n">m_constructor</span> <span class="o">=</span> <span class="n">your_type_constructor</span><span class="p">,</span>
+                            <span class="c1">// can be left NULL, will disable `std_vector_clone(self)` for</span>
+                            <span class="c1">// this vector</span>
+                            <span class="p">.</span><span class="n">m_copy_constructor</span> <span class="o">=</span> <span class="n">your_type_copy_constructor</span><span class="p">,</span>
+                            <span class="c1">// can be left NULL, will be defaulted</span>
+                            <span class="p">.</span><span class="n">m_destructor</span> <span class="o">=</span> <span class="n">your_type_destructor</span>
+                        <span class="p">})</span>
+                    <span class="p">);</span>
+
+    <span class="c1">// fill the vec with default constructed elements</span>
+    <span class="n">std_vector_resize</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">num_elements</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">vec</span><span class="p">;</span>
+<span class="p">}</span></pre><p><code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> also provides C2nxt random access iterators and optional scoped destruction:</p><pre class="m-code"><span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">std_vector_scoped</span><span class="p">(</span><span class="n">u32</span><span class="p">)</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">std_vector_new_with_capacity</span><span class="p">(</span><span class="n">u32</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+    <span class="n">ranged_for</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">std_vector_push_back</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// loop over the elements in the vector by value, as an iteration</span>
+    <span class="n">foreach</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">elem</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">// vec goes out of scope here and `std_vector_free(vec)` is called on it</span>
+    <span class="c1">// because we declared it as scoped</span>
+<span class="p">}</span></pre><p>Like other C2nxt collections, <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> provides its type-agnostic usage through a vtable pointer contained in the struct, and provides macros which wrap the usage of the vtable, making access simpler. If you prefer to not use this method of access, you can call the typed functions directly by in-fixing the contained type in the associated function name. IE: for <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(i32)</a></code>, <code>vec</code>, the equivalent function call for <code><a href="group__std__vector.html#ga68c1b117727513c31db46072b0d8707d" class="m-doc">std_<wbr />vector_<wbr />push_<wbr />back(vec, element)</a></code> would be <code>std_vector_i32_push_back(&amp;vec, element)</code></p>
+          </div></section>
+        </section>
       </div>
     </div>
   </div>
@@ -90,7 +174,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

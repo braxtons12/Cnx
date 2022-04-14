@@ -68,7 +68,7 @@
 <span class="cp">#define STD_AS_FORMAT_USER_SUPPLIED_TYPES T*        : as_format_t(T, x),    \</span>
 <span class="cp">                                          const T*  : as_format_t(T2, x),   \</span>
 <span class="cp">                                          T2*       : as_format_t(T2, x),   \</span>
-<span class="cp">                                          const T2* : as_format_t(T2, x),</span></pre><p>where <code>T</code> and <code>T2</code> are your supplied types. <code>x</code> should always be the second argument to the conversion function (literally always give <code>x</code> as the second argument). <code><a href="group__format.html#ga9470755f912aae3ac2977adc596b4d61" class="m-doc">std_<wbr />format(format_<wbr />string, ...)</a></code> automatically applies the <code><a href="group__format.html#ga1f1f5d22f6179041556466971eb4bb61" class="m-doc">as_<wbr />format(x)</a></code> <code>_Generic</code> macro to all format arguments in the parameter pack to perform the automatic conversion to <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code>, and this syntax is necessary to provide valid match arms in the <code><a href="group__format.html#ga1f1f5d22f6179041556466971eb4bb61" class="m-doc">as_<wbr />format(x)</a></code> macro for that conversion.</p><p>A complete example of implementing and using <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code>:</p><pre class="m-code"><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">Point2D</span> <span class="p">{</span>
+<span class="cp">                                          const T2* : as_format_t(T2, x),</span></pre><p>where <code>T</code> and <code>T2</code> are your supplied types. <code>x</code> should always be the second argument to the conversion function (literally always give <code>x</code> as the second argument). <code><a href="group__format.html#ga9470755f912aae3ac2977adc596b4d61" class="m-doc">std_<wbr />format(format_<wbr />string, ...)</a></code> automatically applies the <code><a href="group__format.html#ga1f1f5d22f6179041556466971eb4bb61" class="m-doc">as_<wbr />format(x)</a></code> <code>_Generic</code> macro to all format arguments in the parameter pack to perform the automatic conversion to <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code>, and this syntax is necessary to provide valid match arms in the <code><a href="group__format.html#ga1f1f5d22f6179041556466971eb4bb61" class="m-doc">as_<wbr />format(x)</a></code> macro for that conversion.</p><p>A complete example of implementing and using <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code>:</p><pre class="m-code"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">Point2D</span> <span class="p">{</span>
     <span class="kt">float</span> <span class="n">x</span><span class="p">;</span>
     <span class="kt">float</span> <span class="n">y</span><span class="p">;</span>
 <span class="p">}</span> <span class="n">Point2D</span><span class="p">;</span>
@@ -79,7 +79,7 @@
 
 <span class="cp">#include</span> <span class="cpf">&quot;C2nxt/StdFormat.h&quot;</span><span class="cp"></span>
 
-<span class="kr">inline</span> <span class="k">static</span> <span class="n">StdString</span> <span class="n">point2d_format_with_allocator</span><span class="p">(</span><span class="k">const</span> <span class="n">StdFormat</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">self</span><span class="p">,</span>
+<span class="kr">inline</span> <span class="k">static</span> <span class="n">StdString</span> <span class="nf">point2d_format_with_allocator</span><span class="p">(</span><span class="k">const</span> <span class="n">StdFormat</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">self</span><span class="p">,</span>
                                                       <span class="n">StdFormatSpecifier</span> <span class="n">specifier</span><span class="p">,</span>
                                                       <span class="n">StdAllocator</span> <span class="n">allocator</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// we won&#39;t user the specifier for our implementation, so ignore it.</span>
@@ -88,12 +88,12 @@
     <span class="c1">// would be beyond the scope of this simple example.</span>
     <span class="n">ignore</span><span class="p">(</span><span class="n">specifier</span><span class="p">);</span>
     <span class="n">let</span> <span class="n">_self</span> <span class="o">=</span> <span class="n">static_cast</span><span class="p">(</span><span class="k">const</span> <span class="n">Point2D</span><span class="o">*</span><span class="p">)(</span><span class="n">self</span><span class="p">.</span><span class="n">m_self</span><span class="p">);</span>
-    <span class="k">return</span> <span class="nf">std_format_with_allocator</span><span class="p">(</span><span class="s">&quot;Point2D: [x: {}, y: {}]&quot;</span><span class="p">,</span> <span class="n">allocator</span><span class="p">,</span> <span class="n">_self</span><span class="o">-&gt;</span><span class="n">x</span><span class="p">,</span> <span class="n">_self</span><span class="o">-&gt;</span><span class="n">y</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">std_format_with_allocator</span><span class="p">(</span><span class="s">&quot;Point2D: [x: {}, y: {}]&quot;</span><span class="p">,</span> <span class="n">allocator</span><span class="p">,</span> <span class="n">_self</span><span class="o">-&gt;</span><span class="n">x</span><span class="p">,</span> <span class="n">_self</span><span class="o">-&gt;</span><span class="n">y</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="kr">inline</span> <span class="k">static</span> <span class="n">StdString</span> <span class="n">point2d_format</span><span class="p">(</span><span class="k">const</span> <span class="n">StdFormat</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">self</span><span class="p">,</span>
+<span class="kr">inline</span> <span class="k">static</span> <span class="n">StdString</span> <span class="nf">point2d_format</span><span class="p">(</span><span class="k">const</span> <span class="n">StdFormat</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">self</span><span class="p">,</span>
                                        <span class="n">StdFormatSpecifier</span> <span class="n">specifier</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nf">point2d_format_with_allocator</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">specifier</span><span class="p">,</span> <span class="n">std_allocator_new</span><span class="p">());</span>
+    <span class="k">return</span> <span class="n">point2d_format_with_allocator</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">specifier</span><span class="p">,</span> <span class="n">std_allocator_new</span><span class="p">());</span>
 <span class="p">}</span>
 
 <span class="p">[[</span><span class="n">maybe_unused</span><span class="p">]]</span> <span class="k">static</span>
@@ -198,6 +198,7 @@
           <section class="m-doc-details" id="ga997b3672633f043733fc40a6b7dac136"><div>
             <h3>
               enum <a href="#ga997b3672633f043733fc40a6b7dac136" class="m-doc-self">StdFormatTypes</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdFormat_8h.html">&lt;include/C2nxt/StdFormat.h&gt;</a></div>
             </h3>
             <p>C2nxt string formatting valid format specifiers.</p>
 <p>Formatting currently supports the following optional format specifiers:</p><ol><li><code>&#x27;d&#x27;</code>: standard decimal formatting. Applies to integral types and floating point numbers. Floating point numbers accept an additional numeric postfix to set the number of digits after the decimal point.</li><li><code>&#x27;x&#x27;</code>: lower-case hexadecimal. Applies to integral types.</li><li><code>&#x27;X&#x27;</code>: upper-case hexadecimal. Applies to integral types.</li><li><code>&#x27;e&#x27;</code>: Scientific notation. Applies to floating point types. Accepts an additional numeric postfix to set the number of digits after the decimal point.</li></ol><ol><li><code>&#x27;D&#x27;</code>: Debug formatting. For numeric types, this is identical to the default formatting. For other types, this should be used to request formatting in a structural representation instead of a human-presentable one</li></ol><p>The default for integral types is decimal, and the default for floating point numbers is scientific. The default number of digits after the decimal point for floating point types is 3. <code>bool</code>s are special cased and do not accept a format specifier. They will format directly to &quot;true&quot; or &quot;false&quot;.</p>
@@ -208,6 +209,7 @@
           <section class="m-doc-details" id="ga988f79bcdcfd944b1d43398d9c125e38"><div>
             <h3>
               typedef enum <a href="group__format.html#ga997b3672633f043733fc40a6b7dac136" class="m-doc">StdFormatTypes</a> <a href="#ga988f79bcdcfd944b1d43398d9c125e38" class="m-doc-self">StdFormatTypes</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdFormat_8h.html">&lt;include/C2nxt/StdFormat.h&gt;</a></div>
             </h3>
             <p>C2nxt string formatting valid format specifiers.</p>
 <p>Formatting currently supports the following optional format specifiers:</p><ol><li><code>&#x27;d&#x27;</code>: standard decimal formatting. Applies to integral types and floating point numbers. Floating point numbers accept an additional numeric postfix to set the number of digits after the decimal point.</li><li><code>&#x27;x&#x27;</code>: lower-case hexadecimal. Applies to integral types.</li><li><code>&#x27;X&#x27;</code>: upper-case hexadecimal. Applies to integral types.</li><li><code>&#x27;e&#x27;</code>: Scientific notation. Applies to floating point types. Accepts an additional numeric postfix to set the number of digits after the decimal point.</li></ol><ol><li><code>&#x27;D&#x27;</code>: Debug formatting. For numeric types, this is identical to the default formatting. For other types, this should be used to request formatting in a structural representation instead of a human-presentable one</li></ol><p>The default for integral types is decimal, and the default for floating point numbers is scientific. The default number of digits after the decimal point for floating point types is 3. <code>bool</code>s are special cased and do not accept a format specifier. They will format directly to &quot;true&quot; or &quot;false&quot;.</p>
@@ -215,6 +217,7 @@
           <section class="m-doc-details" id="gaa89f2140ff054a220ce3a81b3380f3bf"><div>
             <h3>
               typedef struct <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> <a href="#gaa89f2140ff054a220ce3a81b3380f3bf" class="m-doc-self">StdFormatSpecifier</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdFormat_8h.html">&lt;include/C2nxt/StdFormat.h&gt;</a></div>
             </h3>
             <p><code><a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a></code> provides a method for passing format specifiers to other steps in the formatting process</p>
 <p><code><a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a></code> is used internally by the builtin format implementations, and can be used by custom implementations, to communicate the required formatting method to the associated formatting functions</p>
@@ -225,6 +228,7 @@
           <section class="m-doc-details" id="ga0a597cb1a1e0b5be260624dd7ba131d9"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga0a597cb1a1e0b5be260624dd7ba131d9" class="m-doc-self">STD_FORMAT_DEFAULT_NUM_SIG_FIGS</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdFormat_8h.html">&lt;include/C2nxt/StdFormat.h&gt;</a></div>
             </h3>
             <p>The default number of significant figures for floating point formatting.</p>
 <p>By default, C2nxt floating point formatting provides 3 significant figures after the decimal point in formatted output</p>
@@ -233,6 +237,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga0755f0dd16e73aac58e4f1c104d1d40b" class="m-doc-self">as_format_t</a>(</span><span class="m-doc-wrap">T,
               x)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdFormat_8h.html">&lt;include/C2nxt/StdFormat.h&gt;</a></div>
             </h3>
             <p>Converts the given variable into its associated <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> Trait implementation.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -261,6 +266,7 @@
           <section class="m-doc-details" id="ga09e6377fe4c171e0cec8be7e71d7ed93"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga09e6377fe4c171e0cec8be7e71d7ed93" class="m-doc-self">STD_AS_FORMAT_USES_USER_SUPPLIED_TYPES</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdFormat_8h.html">&lt;include/C2nxt/StdFormat.h&gt;</a></div>
             </h3>
             <p>Feature enable macro to allow specific user-defined types to be automatically converted to their <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation when passed to <code><a href="group__format.html#ga9470755f912aae3ac2977adc596b4d61" class="m-doc">std_<wbr />format(format_<wbr />string, ...)</a></code> or a similar C2nxt string formatting function.</p>
 <p>Requires that <a href="group__format.html#gaffe845bdc325ce944073222a8cd02953" class="m-doc">STD_<wbr />AS_<wbr />FORMAT_<wbr />USER_<wbr />SUPPLIED_<wbr />TYPES</a> is also defined to a comma separated list of conversions Example:</p><pre class="m-code"><span class="cp">#define STD_AS_FORMAT_USES_USER_SUPPLIED_TYPES true</span>
@@ -272,6 +278,7 @@
           <section class="m-doc-details" id="gaffe845bdc325ce944073222a8cd02953"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gaffe845bdc325ce944073222a8cd02953" class="m-doc-self">STD_AS_FORMAT_USER_SUPPLIED_TYPES</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdFormat_8h.html">&lt;include/C2nxt/StdFormat.h&gt;</a></div>
             </h3>
             <p>Define this macro to a comma separated list of conversions to enable specific user-defined types to be automatically converted to their <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> implementation when passed to <code><a href="group__format.html#ga9470755f912aae3ac2977adc596b4d61" class="m-doc">std_<wbr />format(format_<wbr />string, ...)</a></code> or a similar C2nxt string formatting function.</p>
 <p>Requires that <a href="group__format.html#ga09e6377fe4c171e0cec8be7e71d7ed93" class="m-doc">STD_<wbr />AS_<wbr />FORMAT_<wbr />USES_<wbr />USER_<wbr />SUPPLIED_<wbr />TYPES</a> is also defined to <code>true</code> Example:</p><pre class="m-code"><span class="cp">#define STD_AS_FORMAT_USES_USER_SUPPLIED_TYPES true</span>
@@ -283,6 +290,7 @@
           <section class="m-doc-details" id="ga1f1f5d22f6179041556466971eb4bb61"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga1f1f5d22f6179041556466971eb4bb61" class="m-doc-self">as_format</a>(</span><span class="m-doc-wrap">x)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdFormat_8h.html">&lt;include/C2nxt/StdFormat.h&gt;</a></div>
             </h3>
             <p>Converts the given variable into its associated <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> Trait implementation.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -309,6 +317,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga3679de86da3061c10e5387e0a5c9a1c2" class="m-doc-self">std_format_with_allocator</a>(</span><span class="m-doc-wrap">format_string,
               allocator,
               ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdFormat_8h.html">&lt;include/C2nxt/StdFormat.h&gt;</a></div>
             </h3>
             <p>Formats the various parameter pack arguments into their associated place in the given format string, using the provided allocator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -341,6 +350,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga9470755f912aae3ac2977adc596b4d61" class="m-doc-self">std_format</a>(</span><span class="m-doc-wrap">format_string,
               ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdFormat_8h.html">&lt;include/C2nxt/StdFormat.h&gt;</a></div>
             </h3>
             <p>Formats the various parameter pack arguments into their associated place in the given format string, using the default allocator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -371,6 +381,7 @@
               allocator,
               num_args,
               list)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdFormat_8h.html">&lt;include/C2nxt/StdFormat.h&gt;</a></div>
             </h3>
             <p>Formats the various <code>va_list</code> parameter pack arguments into their associated place in the given format string, using the provided allocator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -408,6 +419,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga57e18a51bd9c4a465f92b135ceb64dd9" class="m-doc-self">std_vformat</a>(</span><span class="m-doc-wrap">format_string,
               num_args,
               list)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdFormat_8h.html">&lt;include/C2nxt/StdFormat.h&gt;</a></div>
             </h3>
             <p>Formats the various <code>va_list</code> parameter pack arguments into their associated place in the given format string, using the default allocator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -481,7 +493,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

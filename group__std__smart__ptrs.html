@@ -87,6 +87,7 @@
           <section class="m-doc-details" id="ga3d8e6f3bd247c62bef716df19f549111"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga3d8e6f3bd247c62bef716df19f549111" class="m-doc-self">ptr</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdSmartPtrDef_8h.html">&lt;include/C2nxt/std_smart_ptrs/StdSmartPtrDef.h&gt;</a></div>
             </h3>
             <p>Returns a pointer to the managed object of a C2nxt smart pointer.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -111,6 +112,7 @@
           <section class="m-doc-details" id="gad9bf0290b3adc0feaf3ad44d52da15a8"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gad9bf0290b3adc0feaf3ad44d52da15a8" class="m-doc-self">ptr_const</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdSmartPtrDef_8h.html">&lt;include/C2nxt/std_smart_ptrs/StdSmartPtrDef.h&gt;</a></div>
             </h3>
             <p>Returns a pointer-to-const to the managed object of a C2nxt smart pointer.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -134,6 +136,7 @@
           <section class="m-doc-details" id="gaca5c82b6dfe38195489f1c3311843d43"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gaca5c82b6dfe38195489f1c3311843d43" class="m-doc-self">ptr_mut</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdSmartPtrDef_8h.html">&lt;include/C2nxt/std_smart_ptrs/StdSmartPtrDef.h&gt;</a></div>
             </h3>
             <p>Returns a pointer-to-non-const to the managed object of a C2nxt smart pointer.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -157,6 +160,7 @@
           <section class="m-doc-details" id="gaa574157d2f4ff1a9898f613cd0e7ec93"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gaa574157d2f4ff1a9898f613cd0e7ec93" class="m-doc-self">ptr_move</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdSmartPtrDef_8h.html">&lt;include/C2nxt/std_smart_ptrs/StdSmartPtrDef.h&gt;</a></div>
             </h3>
             <p>Moves <code>self</code> into the assigned-to or bound-to variable/parameter/etc.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -182,6 +186,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga138246bcb2207df93a2d94334ccc9670" class="m-doc-self">StdDeleter</a>(</span><span class="m-doc-wrap">T,
               ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdSmartPtrDef_8h.html">&lt;include/C2nxt/std_smart_ptrs/StdSmartPtrDef.h&gt;</a></div>
             </h3>
             <p>The function type (with optional name, for use in typedefs) of a deleter function used in smart pointer templates.</p>
 <p>Given an instance of <code>T</code>, <code>t</code>, the signature is: <code>void (*name)(Y* restrict to_deleter, <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator);</code> where <code>Y</code> is either:</p><ol><li><code><a href="group__std__def.html#ga64f556323b092e639c2e86743ebc852d" class="m-doc">typeof(t)</a></code> if <code>T</code> is <strong>NOT</strong> an array type (e.g. <code>int</code>, <code>usize</code>, <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(i32)</a></code>)</li><li><code><a href="group__std__def.html#ga64f556323b092e639c2e86743ebc852d" class="m-doc">typeof(t[0])</a> if</code>T<code>__IS__ an array type (e.g. a typedef to</code>int[]<code>or</code>usize[]`)</li></ol>
@@ -231,7 +236,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

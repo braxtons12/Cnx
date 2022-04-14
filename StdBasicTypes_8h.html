@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>git/C2nxt/include/C2nxt/StdBasicTypes.h file | C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <title>include/C2nxt/StdBasicTypes.h file | C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -42,7 +42,7 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="dir_9bec7083027963d9f9ceae2cc7474de5.html">git</a>/</span><span class="m-breadcrumb"><a href="dir_49b122fa8cea83c8ef01de9aa5379c17.html">C2nxt</a>/</span><span class="m-breadcrumb"><a href="dir_c28551255240bd2a80f37986fd2bd3c8.html">include</a>/</span><span class="m-breadcrumb"><a href="dir_2502210eca0f861b6a41d90e00f0922f.html">C2nxt</a>/</span>StdBasicTypes.h <span class="m-thin">file</span>
+          <span class="m-breadcrumb"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a>/</span><span class="m-breadcrumb"><a href="dir_40b8c0d86bdcbc7ff85d5199b4386121.html">C2nxt</a>/</span>StdBasicTypes.h <span class="m-thin">file</span>
         </h1>
         <p>BasicTypes provides simple typedefs and limits for fixed-width types and semantic-intention-communicating typedefs for various other types.</p>
         <nav class="m-block m-default">
@@ -278,11 +278,11 @@
             </dt>
             <dd>Alias for <code>const wchar_t_ptr*</code>. This should be preferred wherever possible when semantically referring to a pointer to <code>const wcstring</code></dd>
             <dt>
-              using <a href="#aa1053f3b7e4a064eeb3eb52edaf8202f" class="m-doc">Ref</a> = <a href="group__types.html#ga5ea7d3fefa2144d9bddaf2053c9691a1" class="m-doc">char_<wbr />ptr</a>(char)
+              using <a href="#a057e6b216e3435868f0dd9608ee516d2" class="m-doc">Ref</a> = <a href="group__types.html#ga5ea7d3fefa2144d9bddaf2053c9691a1" class="m-doc">char_<wbr />ptr</a>(char)
             </dt>
             <dd>Alias for <code>char_ptr</code> used for the inner type of reference-like types (ie iterators)</dd>
             <dt>
-              using <a href="#a8cb390e0fd7c79f05c4e25d9a8a8747a" class="m-doc">ConstRef</a> = <a href="group__types.html#ga88d1fb873d629b523bfa7335f8819f98" class="m-doc">const_<wbr />char_<wbr />ptr</a>(char)
+              using <a href="#a3b6822c70af8818c2d3e4f4fe8f45f5d" class="m-doc">ConstRef</a> = <a href="group__types.html#ga88d1fb873d629b523bfa7335f8819f98" class="m-doc">const_<wbr />char_<wbr />ptr</a>(char)
             </dt>
             <dd>Alias for <code>const_char_ptr</code> used for the inner type of reference-like types (ie iterators)</dd>
             <dt id="abf9a1e7488f92c7791ee89bca70d8644">
@@ -303,7 +303,7 @@
             </dt>
             <dd>Declarations and definitions related to C2nxt&#x27;s builtin types.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gae18ec38d74193e54f18057f623347432" class="m-doc">nullptr</a></span>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga20843143e09e852c3e869d36c8f1b9ae" class="m-doc">nullptr</a></span>
             </dt>
             <dd><code>nullptr</code> is a <code>NULL</code> pointer</dd>
             <dt>
@@ -690,16 +690,16 @@
         </section>
         <section>
           <h2>Typedef documentation</h2>
-          <section class="m-doc-details" id="aa1053f3b7e4a064eeb3eb52edaf8202f"><div>
+          <section class="m-doc-details" id="a057e6b216e3435868f0dd9608ee516d2"><div>
             <h3>
-              typedef <a href="group__types.html#ga5ea7d3fefa2144d9bddaf2053c9691a1" class="m-doc">char_<wbr />ptr</a><a href="#aa1053f3b7e4a064eeb3eb52edaf8202f" class="m-doc-self">Ref</a>(char)
+              typedef <a href="group__types.html#ga5ea7d3fefa2144d9bddaf2053c9691a1" class="m-doc">char_<wbr />ptr</a><a href="#a057e6b216e3435868f0dd9608ee516d2" class="m-doc-self">Ref</a>(char)
             </h3>
             <p>Alias for <code>char_ptr</code> used for the inner type of reference-like types (ie iterators)</p>
 <p>Alias for <code>char_ptr*</code> used for the inner type of reference-like types (ie iterators). This should be preferred when semantically referring to a reference to a pointer to a single <code>char</code></p><p>Alias for <code>f64_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>f32_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>isize_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>i64_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>i32_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>i16_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>i8_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>usize_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>u64_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>u32_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>u16_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>u8_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>wcstring*</code> used for the inner type of reference-like types (ie iterators). This should be preferred wherever possible when semantically referring to a reference to <code>wcstring</code></p><p>Alias for <code>cstring*</code> used for the inner type of reference-like types (ie iterators). This should be preferred wherever possible when semantically referring to a reference to <code>cstring</code></p><p>Alias for <code>f64_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>f32_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>isize_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>i64_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>i32_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>i16_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>i8_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>usize_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>u64_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>u32_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>u16_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>u8_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p><code>Ref</code> and <code>ConstRef</code> aliases for pointer types, used for the inner type of reference-like types (ie iterators), follow</p>
           </div></section>
-          <section class="m-doc-details" id="a8cb390e0fd7c79f05c4e25d9a8a8747a"><div>
+          <section class="m-doc-details" id="a3b6822c70af8818c2d3e4f4fe8f45f5d"><div>
             <h3>
-              typedef <a href="group__types.html#ga88d1fb873d629b523bfa7335f8819f98" class="m-doc">const_<wbr />char_<wbr />ptr</a><a href="#a8cb390e0fd7c79f05c4e25d9a8a8747a" class="m-doc-self">ConstRef</a>(char)
+              typedef <a href="group__types.html#ga88d1fb873d629b523bfa7335f8819f98" class="m-doc">const_<wbr />char_<wbr />ptr</a><a href="#a3b6822c70af8818c2d3e4f4fe8f45f5d" class="m-doc-self">ConstRef</a>(char)
             </h3>
             <p>Alias for <code>const_char_ptr</code> used for the inner type of reference-like types (ie iterators)</p>
 <p>Alias for <code>const char_ptr*</code> used for the inner type of reference-like types (ie iterators). This should be preferred when semantically referring to a reference to a const pointer to a single <code>char</code></p><p>Alias for <code>const f64_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>const f32_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>const isize_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>const i64_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>const i32_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>const i16_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>const i8_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>const u8_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>const wcstring*</code> used for the inner type of reference-like types (ie iterators). This should be preferred wherever possible when semantically referring to a reference to <code>const wcstring</code></p><p>Alias for <code>const cstring*</code> used for the inner type of reference-like types (ie iterators). This should be preferred wherever possible when semantically referring to reference to <code>const cstring</code></p><p>Alias for <code>const_f64_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_f32_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_isize_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_i64_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_i32_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_i16_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_i8_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_usize_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_u64_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_u32_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_u16_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_u8_ptr</code> used for the inner type of reference-like types (ie iterators)</p>
@@ -749,7 +749,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

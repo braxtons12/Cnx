@@ -72,8 +72,8 @@
         <section id="enum-members">
           <h2><a href="#enum-members">Enums</a></h2>
           <dl class="m-doc">
-            <dt id="ga12c7d6947a9863bc0ad76d105b4fccab">
-              <span class="m-doc-wrap-bumper">enum <a href="#ga12c7d6947a9863bc0ad76d105b4fccab" class="m-doc-self">StdTimePointLocale</a> { </span><span class="m-doc-wrap"><a href="#gga12c7d6947a9863bc0ad76d105b4fccabacb7853e9706ab231347303cfa4d864bf" class="m-doc">STD_UTC_TIME</a> = 0,
+            <dt>
+              <span class="m-doc-wrap-bumper">enum <a href="#ga12c7d6947a9863bc0ad76d105b4fccab" class="m-doc">StdTimePointLocale</a> { </span><span class="m-doc-wrap"><a href="#gga12c7d6947a9863bc0ad76d105b4fccabacb7853e9706ab231347303cfa4d864bf" class="m-doc">STD_UTC_TIME</a> = 0,
               <a href="#gga12c7d6947a9863bc0ad76d105b4fccaba674df50ffa3c2b1b8962cf17f2827ea8" class="m-doc">STD_LOCAL_TIME</a>,
               <a href="#gga12c7d6947a9863bc0ad76d105b4fccabad1c212a2227565ad9b9cc5ab33b68f18" class="m-doc">STD_UNKNOWN_TIME</a> }</span>
             </dt>
@@ -83,12 +83,12 @@
         <section id="typedef-members">
           <h2><a href="#typedef-members">Typedefs</a></h2>
           <dl class="m-doc">
-            <dt id="ga2469b322ceff7db8cc823393ff7fdc48">
-              using <a href="#ga2469b322ceff7db8cc823393ff7fdc48" class="m-doc-self">StdTimePointLocale</a> = enum <a href="group__std__time__point.html#ga12c7d6947a9863bc0ad76d105b4fccab" class="m-doc">StdTimePointLocale</a>
+            <dt>
+              using <a href="#ga2469b322ceff7db8cc823393ff7fdc48" class="m-doc">StdTimePointLocale</a> = enum <a href="group__std__time__point.html#ga12c7d6947a9863bc0ad76d105b4fccab" class="m-doc">StdTimePointLocale</a>
             </dt>
             <dd>Indicates whether a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> is in UTC time, local time, or an unknown locale.</dd>
-            <dt id="gaa0629d22b2a7544821ed71c25ec81401">
-              using <a href="#gaa0629d22b2a7544821ed71c25ec81401" class="m-doc-self">StdTimePoint</a> = struct <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a>
+            <dt>
+              using <a href="#gaa0629d22b2a7544821ed71c25ec81401" class="m-doc">StdTimePoint</a> = struct <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a>
             </dt>
             <dd><code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> represents a specific point in time, since the UNIX epoch, represented in a particular level of precision</dd>
           </dl>
@@ -239,8 +239,8 @@
               <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span>
             </dt>
             <dd>Implements the allocator-aware part of the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code></dd>
-            <dt id="ga7692a8ac7bb8bb2da0e923fab3f83633">
-              <span class="m-doc-wrap-bumper">static  <a href="#ga7692a8ac7bb8bb2da0e923fab3f83633" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+            <dt>
+              <span class="m-doc-wrap-bumper">static  <a href="#ga7692a8ac7bb8bb2da0e923fab3f83633" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
               <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a>,
               <a href="group__std__time__point.html#gae91d8c374bbd4c2abc4904d3eee3444b" class="m-doc">std_<wbr />time_<wbr />point_<wbr />format</a>,
               <a href="group__std__time__point.html#gad2a7d0a5187a436180147ab03d8eb6cb" class="m-doc">std_<wbr />time_<wbr />point_<wbr />format_<wbr />with_<wbr />allocator</a>)</span>
@@ -251,21 +251,49 @@
         <section id="var-members">
           <h2><a href="#var-members">Variables</a></h2>
           <dl class="m-doc">
-            <dt id="gaab42880d780fb4289a5ee5c2c40b3008">
-              <a href="structStdDuration.html" class="m-doc">StdDuration</a> <a href="#gaab42880d780fb4289a5ee5c2c40b3008" class="m-doc-self">time_since_epoch</a>
+            <dt>
+              <a href="structStdDuration.html" class="m-doc">StdDuration</a> <a href="#gaab42880d780fb4289a5ee5c2c40b3008" class="m-doc">time_since_epoch</a>
             </dt>
             <dd>The point in time, represented as a duration since the UNIX epoch.</dd>
-            <dt id="ga328093a61c9200591058f297bc38a488">
-              const <a href="structStdClock.html" class="m-doc">StdClock</a>* <a href="#ga328093a61c9200591058f297bc38a488" class="m-doc-self">clock</a>
+            <dt>
+              const <a href="structStdClock.html" class="m-doc">StdClock</a>* <a href="#ga328093a61c9200591058f297bc38a488" class="m-doc">clock</a>
             </dt>
             <dd>The clock associated with this time point.</dd>
           </dl>
+        </section>
+        <section>
+          <h2>Enum documentation</h2>
+          <section class="m-doc-details" id="ga12c7d6947a9863bc0ad76d105b4fccab"><div>
+            <h3>
+              enum <a href="#ga12c7d6947a9863bc0ad76d105b4fccab" class="m-doc-self">StdTimePointLocale</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
+            </h3>
+            <p>Indicates whether a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> is in UTC time, local time, or an unknown locale.</p>
+          </div></section>
+        </section>
+        <section>
+          <h2>Typedef documentation</h2>
+          <section class="m-doc-details" id="ga2469b322ceff7db8cc823393ff7fdc48"><div>
+            <h3>
+              typedef enum <a href="group__std__time__point.html#ga12c7d6947a9863bc0ad76d105b4fccab" class="m-doc">StdTimePointLocale</a> <a href="#ga2469b322ceff7db8cc823393ff7fdc48" class="m-doc-self">StdTimePointLocale</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
+            </h3>
+            <p>Indicates whether a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> is in UTC time, local time, or an unknown locale.</p>
+          </div></section>
+          <section class="m-doc-details" id="gaa0629d22b2a7544821ed71c25ec81401"><div>
+            <h3>
+              typedef struct <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> <a href="#gaa0629d22b2a7544821ed71c25ec81401" class="m-doc-self">StdTimePoint</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
+            </h3>
+            <p><code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> represents a specific point in time, since the UNIX epoch, represented in a particular level of precision</p>
+          </div></section>
         </section>
         <section>
           <h2>Function documentation</h2>
           <section class="m-doc-details" id="gaa23a9cc575d35e376fa8d316fa3967da"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaa23a9cc575d35e376fa8d316fa3967da" class="m-doc-self">std_time_point_new</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> time_since_epoch)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Constructs a new <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> representing the given time since the UNIX epoch, assuming the same precision as <code>std_system_clock</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -291,6 +319,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gae70dff7c52ab779576f7e27fc93418ef" class="m-doc-self">std_time_point_new_with_clock</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> time_since_epoch,
               const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict clock) std_disable_if(!clock</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Constructs a new <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> representing the given time since the UNIX epoch, with the same precision of the given <code><a href="structStdClock.html" class="m-doc">StdClock</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -321,6 +350,7 @@
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga0fd108d926588f3157086a777f0f430d" class="m-doc-self">std_time_point_new_with_clock_and_locale</a>(</span><span class="m-doc-wrap"><a href="structStdDuration.html" class="m-doc">StdDuration</a> time_since_epoch,
               const <a href="structStdClock.html" class="m-doc">StdClock</a>*restrict clock,
               <a href="group__std__time__point.html#ga12c7d6947a9863bc0ad76d105b4fccab" class="m-doc">StdTimePointLocale</a> locale) std_disable_if(!clock</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Constructs a new <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> representing the given time since the UNIX epoch, with the same precision of the given <code><a href="structStdClock.html" class="m-doc">StdClock</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -353,6 +383,7 @@
           <section class="m-doc-details" id="ga0e7c3af9ef0d18c267d78066094cdb06"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdDuration.html" class="m-doc">StdDuration</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga0e7c3af9ef0d18c267d78066094cdb06" class="m-doc-self">std_time_point_time_since_epoch</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> self)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Returns the time since the UNIX epoch of the given <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -376,6 +407,7 @@
           <section class="m-doc-details" id="gaea2dca2c82f7e14e5c8382366b2e7d28"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaea2dca2c82f7e14e5c8382366b2e7d28" class="m-doc-self">std_time_point_min</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> self)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Returns the minimum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> with the same precision as the given one.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -399,6 +431,7 @@
           <section class="m-doc-details" id="ga34e35280eff77beaa3e3da08f03f8d69"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga34e35280eff77beaa3e3da08f03f8d69" class="m-doc-self">std_time_point_max</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> self)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Returns the maximum possible <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> with the same precision as the given one.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -423,6 +456,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gad4a99152bbf472858da4121b4240f868" class="m-doc-self">std_time_point_cast</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> to_cast,
               <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> new_precision)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Converts the first <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> to the same precision as the second one.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -452,6 +486,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga82e4cbfb67e542897d17f1b159a5789f" class="m-doc-self">std_time_point_ceil</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> to_cast,
               <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> new_precision)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Converts the first <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> to the same precision as the second one, taking the ceiling of any fractional part in the result.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -481,6 +516,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gafb9fbbeb9f0968ac24ef8d291ac44a24" class="m-doc-self">std_time_point_floor</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> to_cast,
               <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> new_precision)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Converts the first <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> to the same precision as the second one, taking the floor of any fractional part in the result.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -510,6 +546,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga35328f274fc3206407bc994f87cb36b1" class="m-doc-self">std_time_point_round</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> to_cast,
               <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> new_precision)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Converts the first <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> to the same precision as the second one, rounding any fractional part in the result.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -538,6 +575,7 @@
           <section class="m-doc-details" id="ga6ecf55d0bd06bc387b263136791d5302"><div>
             <h3>
               <span class="m-doc-wrap-bumper">time_t </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga6ecf55d0bd06bc387b263136791d5302" class="m-doc-self">std_time_point_as_time_t</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> to_cast)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Converts the given <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> to <code>time_t</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -561,6 +599,7 @@
           <section class="m-doc-details" id="gaa271baa57e253dc545fe54a9f8f4b1f0"><div>
             <h3>
               <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaa271baa57e253dc545fe54a9f8f4b1f0" class="m-doc-self">StdResult</a>(</span><span class="m-doc-wrap">tm)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Converts the given <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> to <code>tm</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -575,6 +614,7 @@
           <section class="m-doc-details" id="ga693bc967c81d9b4a0f5dcf5095922f44"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga693bc967c81d9b4a0f5dcf5095922f44" class="m-doc-self">std_time_point_from_time_t</a>(</span><span class="m-doc-wrap">time_t time)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Converts the given <code>time_t</code> to a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> in the system clock precision.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -598,6 +638,7 @@
           <section class="m-doc-details" id="ga07f6df1b64d0403d44a0c164d688c64a"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga07f6df1b64d0403d44a0c164d688c64a" class="m-doc-self">std_time_point_increment</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a>*restrict self)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Increments the given <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> by one unit.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -615,6 +656,7 @@
           <section class="m-doc-details" id="ga73556dff875a7e3f49029d7a8465f640"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga73556dff875a7e3f49029d7a8465f640" class="m-doc-self">std_time_point_decrement</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a>*restrict self)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Decrements the given <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> by one unit.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -633,6 +675,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga10c6041e110d1b6793d4068a72142618" class="m-doc-self">std_time_point_add</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> lhs,
               <a href="structStdDuration.html" class="m-doc">StdDuration</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Adds the given <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> to the given <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -661,6 +704,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gabbbd61259a798db4c1651e23073433a9" class="m-doc-self">std_time_point_subtract</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> lhs,
               <a href="structStdDuration.html" class="m-doc">StdDuration</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Subtracts the given <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> from the given <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -689,6 +733,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gace17154ae9e505e656cf207bde6d145d" class="m-doc-self">std_time_point_add_time_point</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> lhs,
               <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Adds the rhs <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> to the lhs <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -717,6 +762,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga98112916614f1f29a866b0573de621d1" class="m-doc-self">std_time_point_subtract_time_point</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> lhs,
               <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Subtracts the rhs <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> from the lhs <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -745,6 +791,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3035eff30fdd6869c2f0574e9e574900" class="m-doc-self">std_time_point_add_scalar</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> lhs,
               <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Adds the given scalar value to the given <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> as if it were a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> or <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> in the same precision.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -773,6 +820,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gad00b248acd05bd26afbc72e29cf501aa" class="m-doc-self">std_time_point_subtract_scalar</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> lhs,
               <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Subtracts the given scalar value from the given <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> as if it were a <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> or <code><a href="structStdDuration.html" class="m-doc">StdDuration</a></code> in the same precision.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -801,6 +849,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga04f3adf797d42f27c5ce325a8939705a" class="m-doc-self">std_time_point_equal</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> lhs,
               <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Determines if the two <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code>s are equivalent. Converts to the precision of the most precise of the two prior to comparison.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -829,6 +878,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga5d29416c1b372f54e56b684c16e9ade2" class="m-doc-self">std_time_point_not_equal</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> lhs,
               <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Determines if the two <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code>s are <strong>NOT</strong> equivalent. Converts to the precision of the most precise of the two prior to comparison.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -857,6 +907,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga8c17a9da614aaa3a10b2f8a81fbbb466" class="m-doc-self">std_time_point_less_than</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> lhs,
               <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Determines if the left-hand-side <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> is less than the right-hand-side Converts to the precision of the most precise of the two prior to comparison.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -885,6 +936,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gad9038d0c8c927487a1437d41ac8a8b83" class="m-doc-self">std_time_point_less_than_or_equal</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> lhs,
               <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Determines if the left-hand-side <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> is less than or equal to the right-hand-side. Converts to the precision of the most precise of the two prior to comparison.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -913,6 +965,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3fe3a0830561676abc029c48ea251b95" class="m-doc-self">std_time_point_greater_than</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> lhs,
               <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Determines if the left-hand-side <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> is greater than the right-hand-side Converts to the precision of the most precise of the two prior to comparison.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -941,6 +994,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gadfe4e1450fca5c6167bf8012f91cad54" class="m-doc-self">std_time_point_greater_than_or_equal</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> lhs,
               <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Determines if the left-hand-side <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code> is greater than or equal to the right-hand-side. Converts to the precision of the most precise of the two prior to comparison.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -969,6 +1023,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="StdBasicTypes_8h.html#a122b0205d13a40785ab6b4fd16d37827" class="m-doc">StdCompare</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaf7fa3108feb587541d967a9b47fb2ab3" class="m-doc-self">std_time_point_compare</a>(</span><span class="m-doc-wrap"><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> lhs,
               <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Performs a three-way comparison of <code>lhs</code> to <code>rhs</code>, determining how <code>lhs</code> mathematically relates to <code>rhs</code>. Converts to the precision of the most precise of the two prior to comparison.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -997,6 +1052,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gae91d8c374bbd4c2abc4904d3eee3444b" class="m-doc-self">std_time_point_format</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
               <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Implements the allocator-unaware part of the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -1026,6 +1082,7 @@
               <span class="m-doc-wrap-bumper"><a href="structStdString.html" class="m-doc">StdString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gad2a7d0a5187a436180147ab03d8eb6cb" class="m-doc-self">std_time_point_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structStdFormat.html" class="m-doc">StdFormat</a>*restrict self,
               <a href="structStdFormatSpecifier.html" class="m-doc">StdFormatSpecifier</a> specifier,
               <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> allocator)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
             </h3>
             <p>Implements the allocator-aware part of the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -1053,6 +1110,33 @@
                 </tr>
               </tfoot>
             </table>
+          </div></section>
+          <section class="m-doc-details" id="ga7692a8ac7bb8bb2da0e923fab3f83633"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga7692a8ac7bb8bb2da0e923fab3f83633" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structStdFormat.html" class="m-doc">StdFormat</a>,
+              <a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a>,
+              <a href="group__std__time__point.html#gae91d8c374bbd4c2abc4904d3eee3444b" class="m-doc">std_<wbr />time_<wbr />point_<wbr />format</a>,
+              <a href="group__std__time__point.html#gad2a7d0a5187a436180147ab03d8eb6cb" class="m-doc">std_<wbr />time_<wbr />point_<wbr />format_<wbr />with_<wbr />allocator</a>)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
+            </h3>
+            <p>Implements the <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> trait for <code><a href="structStdTimePoint.html" class="m-doc">StdTimePoint</a></code></p>
+          </div></section>
+        </section>
+        <section>
+          <h2>Variable documentation</h2>
+          <section class="m-doc-details" id="gaab42880d780fb4289a5ee5c2c40b3008"><div>
+            <h3>
+              <a href="structStdDuration.html" class="m-doc">StdDuration</a> <a href="#gaab42880d780fb4289a5ee5c2c40b3008" class="m-doc-self">time_since_epoch</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
+            </h3>
+            <p>The point in time, represented as a duration since the UNIX epoch.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga328093a61c9200591058f297bc38a488"><div>
+            <h3>
+              const <a href="structStdClock.html" class="m-doc">StdClock</a>* <a href="#ga328093a61c9200591058f297bc38a488" class="m-doc-self">clock</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdTimePoint_8h.html">&lt;include/C2nxt/time/StdTimePoint.h&gt;</a></div>
+            </h3>
+            <p>The clock associated with this time point.</p>
           </div></section>
         </section>
       </div>
@@ -1099,7 +1183,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

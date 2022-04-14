@@ -58,48 +58,194 @@
         <section id="define-members">
           <h2><a href="#define-members">Defines</a></h2>
           <dl class="m-doc">
-            <dt id="gaa8cecfc5c5c054d2875c03e77b7be15d">
-              <span class="m-doc-wrap-bumper">#define <a href="#gaa8cecfc5c5c054d2875c03e77b7be15d" class="m-doc-self">TRUE</a></span>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaa8cecfc5c5c054d2875c03e77b7be15d" class="m-doc">TRUE</a></span>
             </dt>
             <dd>Macro for logical <code>true</code>, used to clarify intent over using <code>1</code></dd>
-            <dt id="gaa93f0eb578d23995850d61f7d61c55c1">
-              <span class="m-doc-wrap-bumper">#define <a href="#gaa93f0eb578d23995850d61f7d61c55c1" class="m-doc-self">FALSE</a></span>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaa93f0eb578d23995850d61f7d61c55c1" class="m-doc">FALSE</a></span>
             </dt>
             <dd>Macro for logical <code>false</code>, used to clarify intent over using <code>0</code></dd>
-            <dt id="ga16cf9447733d1f0e39e8cbd12f67c0df">
-              <span class="m-doc-wrap-bumper">#define <a href="#ga16cf9447733d1f0e39e8cbd12f67c0df" class="m-doc-self">V_TRUE</a>(</span><span class="m-doc-wrap">...)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga16cf9447733d1f0e39e8cbd12f67c0df" class="m-doc">V_TRUE</a>(</span><span class="m-doc-wrap">...)</span>
             </dt>
             <dd>Macro for consuming a variadic argument pack and converting it to <code>true</code></dd>
-            <dt id="gac22adcae8a6f7e488196bf33bcae1b35">
-              <span class="m-doc-wrap-bumper">#define <a href="#gac22adcae8a6f7e488196bf33bcae1b35" class="m-doc-self">V_FALSE</a>(</span><span class="m-doc-wrap">...)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac22adcae8a6f7e488196bf33bcae1b35" class="m-doc">V_FALSE</a>(</span><span class="m-doc-wrap">...)</span>
             </dt>
             <dd>Macro for consuming a variadic argument pack and converting it to <code>false</code></dd>
-            <dt id="gab78eed9dfc4ff6a59b049d1ce5769efe">
-              <span class="m-doc-wrap-bumper">#define <a href="#gab78eed9dfc4ff6a59b049d1ce5769efe" class="m-doc-self">IF_ELSE</a>(</span><span class="m-doc-wrap">condition,
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab78eed9dfc4ff6a59b049d1ce5769efe" class="m-doc">IF_ELSE</a>(</span><span class="m-doc-wrap">condition,
               true_case,
               false_case)</span>
             </dt>
             <dd>Macro for performing if-else conditional branch in the preprocessor Evaluates condition, and if it is <code>TRUE</code>, preprocessing resolves to the token string <code>true_case</code>. Otherwise, processing resolves to the token string <code>false_case</code></dd>
-            <dt id="ga3944acd5599f3ec1a3cf7c346842cf91">
-              <span class="m-doc-wrap-bumper">#define <a href="#ga3944acd5599f3ec1a3cf7c346842cf91" class="m-doc-self">IF</a>(</span><span class="m-doc-wrap">condition,
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga3944acd5599f3ec1a3cf7c346842cf91" class="m-doc">IF</a>(</span><span class="m-doc-wrap">condition,
               true_case)</span>
             </dt>
             <dd>Macro for performing and if conditional branch in the preprocessor Evaluates condition, and if it is <code>TRUE</code>, preprocessing resolves to the token string <code>true_case</code>. Otherwise, processing resolves to no tokens.</dd>
-            <dt id="ga30c984add4da766f18737e88c810055b">
-              <span class="m-doc-wrap-bumper">#define <a href="#ga30c984add4da766f18737e88c810055b" class="m-doc-self">NOT</a>(</span><span class="m-doc-wrap">x)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga30c984add4da766f18737e88c810055b" class="m-doc">NOT</a>(</span><span class="m-doc-wrap">x)</span>
             </dt>
             <dd>Macro for performing logical not (e.g. <code>!</code>) in the preprocessor Evaluates <code>x</code>, and if it is <code>TRUE</code>, preprocessing resolves to <code>FALSE</code> Otherwise, processing resolves to <code>TRUE</code></dd>
-            <dt id="ga3f87df3225c40cab58350c5c26d238db">
-              <span class="m-doc-wrap-bumper">#define <a href="#ga3f87df3225c40cab58350c5c26d238db" class="m-doc-self">OR</a>(</span><span class="m-doc-wrap">x,
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga3f87df3225c40cab58350c5c26d238db" class="m-doc">OR</a>(</span><span class="m-doc-wrap">x,
               y)</span>
             </dt>
             <dd>Macro for performing logical or (e.g. <code>||</code>) in the preprocessor Evaluates <code>x</code> and <code>y</code>, and if either are <code>TRUE</code>, preprocessing resolves to <code>TRUE</code>. Otherwise, preprocessing resolves to <code>FALSE</code></dd>
-            <dt id="gaf278ff6bb3cac1f3b54e4daa538163b0">
-              <span class="m-doc-wrap-bumper">#define <a href="#gaf278ff6bb3cac1f3b54e4daa538163b0" class="m-doc-self">AND</a>(</span><span class="m-doc-wrap">x,
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaf278ff6bb3cac1f3b54e4daa538163b0" class="m-doc">AND</a>(</span><span class="m-doc-wrap">x,
               y)</span>
             </dt>
             <dd>Macro for performing logical and (e.g. <code>&amp;&amp;</code>) in the preprocessor Evaluates <code>x</code> and <code>y</code>, and if both are <code>TRUE</code>, preprocessing resolves to <code>TRUE</code>. Otherwise, preprocessing resolves to <code>FALSE</code></dd>
           </dl>
+        </section>
+        <section>
+          <h2>Define documentation</h2>
+          <section class="m-doc-details" id="gaa8cecfc5c5c054d2875c03e77b7be15d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaa8cecfc5c5c054d2875c03e77b7be15d" class="m-doc-self">TRUE</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdPPBool_8h.html">&lt;include/C2nxt/mpl/StdPPBool.h&gt;</a></div>
+            </h3>
+            <p>Macro for logical <code>true</code>, used to clarify intent over using <code>1</code></p>
+          </div></section>
+          <section class="m-doc-details" id="gaa93f0eb578d23995850d61f7d61c55c1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaa93f0eb578d23995850d61f7d61c55c1" class="m-doc-self">FALSE</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdPPBool_8h.html">&lt;include/C2nxt/mpl/StdPPBool.h&gt;</a></div>
+            </h3>
+            <p>Macro for logical <code>false</code>, used to clarify intent over using <code>0</code></p>
+          </div></section>
+          <section class="m-doc-details" id="ga16cf9447733d1f0e39e8cbd12f67c0df"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga16cf9447733d1f0e39e8cbd12f67c0df" class="m-doc-self">V_TRUE</a>(</span><span class="m-doc-wrap">...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdPPBool_8h.html">&lt;include/C2nxt/mpl/StdPPBool.h&gt;</a></div>
+            </h3>
+            <p>Macro for consuming a variadic argument pack and converting it to <code>true</code></p>
+          </div></section>
+          <section class="m-doc-details" id="gac22adcae8a6f7e488196bf33bcae1b35"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac22adcae8a6f7e488196bf33bcae1b35" class="m-doc-self">V_FALSE</a>(</span><span class="m-doc-wrap">...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdPPBool_8h.html">&lt;include/C2nxt/mpl/StdPPBool.h&gt;</a></div>
+            </h3>
+            <p>Macro for consuming a variadic argument pack and converting it to <code>false</code></p>
+          </div></section>
+          <section class="m-doc-details" id="gab78eed9dfc4ff6a59b049d1ce5769efe"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab78eed9dfc4ff6a59b049d1ce5769efe" class="m-doc-self">IF_ELSE</a>(</span><span class="m-doc-wrap">condition,
+              true_case,
+              false_case)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdPPBool_8h.html">&lt;include/C2nxt/mpl/StdPPBool.h&gt;</a></div>
+            </h3>
+            <p>Macro for performing if-else conditional branch in the preprocessor Evaluates condition, and if it is <code>TRUE</code>, preprocessing resolves to the token string <code>true_case</code>. Otherwise, processing resolves to the token string <code>false_case</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">condition</td>
+                  <td>- The boolean condition to evaluate. Must evaluate to <code>0</code> (<code>FALSE</code>) or <code>1</code> (<code>TRUE</code>) in the preprocessor</td>
+                </tr>
+                <tr>
+                  <td>true_case</td>
+                  <td>- The token string to evaluate to in the <code>TRUE</code> case</td>
+                </tr>
+                <tr>
+                  <td>false_case</td>
+                  <td>- The token string to evaluate to in the <code>FALSE</code> case</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga3944acd5599f3ec1a3cf7c346842cf91"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga3944acd5599f3ec1a3cf7c346842cf91" class="m-doc-self">IF</a>(</span><span class="m-doc-wrap">condition,
+              true_case)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdPPBool_8h.html">&lt;include/C2nxt/mpl/StdPPBool.h&gt;</a></div>
+            </h3>
+            <p>Macro for performing and if conditional branch in the preprocessor Evaluates condition, and if it is <code>TRUE</code>, preprocessing resolves to the token string <code>true_case</code>. Otherwise, processing resolves to no tokens.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">condition</td>
+                  <td>- The boolean condition to evaluate. Must evaluate to <code>0</code> (<code>FALSE</code>) or <code>1</code> (<code>TRUE</code>) in the preprocessor</td>
+                </tr>
+                <tr>
+                  <td>true_case</td>
+                  <td>- The token string to evaluate to in the <code>TRUE</code> case</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga30c984add4da766f18737e88c810055b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga30c984add4da766f18737e88c810055b" class="m-doc-self">NOT</a>(</span><span class="m-doc-wrap">x)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdPPBool_8h.html">&lt;include/C2nxt/mpl/StdPPBool.h&gt;</a></div>
+            </h3>
+            <p>Macro for performing logical not (e.g. <code>!</code>) in the preprocessor Evaluates <code>x</code>, and if it is <code>TRUE</code>, preprocessing resolves to <code>FALSE</code> Otherwise, processing resolves to <code>TRUE</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>- The boolean to evaluate. Must evaluate to <code>0</code> (<code>FALSE</code>) or <code>1</code> (<code>TRUE</code>) in the preprocessor</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga3f87df3225c40cab58350c5c26d238db"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga3f87df3225c40cab58350c5c26d238db" class="m-doc-self">OR</a>(</span><span class="m-doc-wrap">x,
+              y)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdPPBool_8h.html">&lt;include/C2nxt/mpl/StdPPBool.h&gt;</a></div>
+            </h3>
+            <p>Macro for performing logical or (e.g. <code>||</code>) in the preprocessor Evaluates <code>x</code> and <code>y</code>, and if either are <code>TRUE</code>, preprocessing resolves to <code>TRUE</code>. Otherwise, preprocessing resolves to <code>FALSE</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>- The first boolean to evalulate. Must evaluate to <code>0</code> (<code>FALSE</code>) or <code>1</code> (<code>TRUE</code>) in the preprocessor</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>- The second boolean to evalulate. Must evaluate to <code>0</code> (<code>FALSE</code>) or <code>1</code> (<code>TRUE</code>) in the preprocessor</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaf278ff6bb3cac1f3b54e4daa538163b0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaf278ff6bb3cac1f3b54e4daa538163b0" class="m-doc-self">AND</a>(</span><span class="m-doc-wrap">x,
+              y)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdPPBool_8h.html">&lt;include/C2nxt/mpl/StdPPBool.h&gt;</a></div>
+            </h3>
+            <p>Macro for performing logical and (e.g. <code>&amp;&amp;</code>) in the preprocessor Evaluates <code>x</code> and <code>y</code>, and if both are <code>TRUE</code>, preprocessing resolves to <code>TRUE</code>. Otherwise, preprocessing resolves to <code>FALSE</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>- The first boolean to evalulate. Must evaluate to <code>0</code> (<code>FALSE</code>) or <code>1</code> (<code>TRUE</code>) in the preprocessor</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>- The second boolean to evalulate. Must evaluate to <code>0</code> (<code>FALSE</code>) or <code>1</code> (<code>TRUE</code>) in the preprocessor</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
         </section>
       </div>
     </div>
@@ -145,7 +291,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

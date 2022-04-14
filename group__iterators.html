@@ -74,8 +74,8 @@
 <span class="p">}</span>
 <span class="n">foreach_ref_mut</span><span class="p">(</span><span class="n">character</span><span class="p">,</span> <span class="n">str</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// character is `char*`</span>
-<span class="p">}</span></pre><p>Most C2nxt collections will require const and non-const iterators for their associated type to be instantiated prior to their own instantiation. This is very simple, to provide instantiations of iterators for a collection of type <code>T</code>, just:</p><pre class="m-code"><span class="k">typedef</span> <span class="n">T</span><span class="o">*</span> <span class="n">Ref</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
-<span class="k">typedef</span> <span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="n">ConstRef</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+<span class="p">}</span></pre><p>Most C2nxt collections will require const and non-const iterators for their associated type to be instantiated prior to their own instantiation. This is very simple, to provide instantiations of iterators for a collection of type <code>T</code>, just:</p><pre class="m-code"><span class="k">typedef</span> <span class="n">T</span><span class="o">*</span> <span class="nf">Ref</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+<span class="k">typedef</span> <span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="nf">ConstRef</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
 <span class="n">DeclStdIterators</span><span class="p">(</span><span class="n">Ref</span><span class="p">(</span><span class="n">T</span><span class="p">));</span>
 <span class="n">DeclStdIterators</span><span class="p">(</span><span class="n">ConstRef</span><span class="p">(</span><span class="n">T</span><span class="p">));</span></pre><p>The above will instantiate iterators of all four categories for the type <code>T</code>, but you could also only instantiate forward iterators or reverse iterators, depending on the collection you intend to use. When unsure, instantiating all is the simplest solution.</p><p>To provide C2nxt iterators for your own collections, the process is a little more involved. First, you&#x27;ll need a concrete type to back your iterator (it will implement the desired iterator Traits). By design, these should contain, <strong>exactly</strong>, an <code>isize</code> index, <code>m_index</code>, and a pointer to associated collection, in <strong>exactly</strong> that order. If you deviate from this size, you will cause undefined behavior and <strong>should</strong> get a compiler error. If you deviate from this layout, you&#x27;ll break other abstractions built on top of iterators, like <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code>, for your type.</p><p>For example, the pseudo-code for the concrete type for <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>&#x27;s non-const iterator is:</p><pre class="m-code"><span class="k">typedef</span> <span class="nf">StdVector</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="n">Iterator</span> <span class="p">{</span>
     <span class="n">StdVector</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="o">*</span> <span class="n">m_vector</span><span class="p">;</span>
@@ -260,6 +260,7 @@
           <section class="m-doc-details" id="ga99f0d0693a74579d8911e12655839374"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga99f0d0693a74579d8911e12655839374" class="m-doc-self">STD_ITERATOR_CONCRETE_TYPE_SIZE</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>The maximum compatible size of a concrete type implementing a C2nxt iterator trait.</p>
 <p>C2nxt iterators are designed to have a maximum concrete size, as they are SizedTraits, and to be compatible a concrete type can&#x27;t exceed this (doing so would be UB and <strong>should</strong> cause a compiler error or warning).</p>
@@ -267,6 +268,7 @@
           <section class="m-doc-details" id="ga6f81be5154c35a8da1ac730d26040155"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga6f81be5154c35a8da1ac730d26040155" class="m-doc-self">StdForwardIterator</a>(</span><span class="m-doc-wrap">T)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Macro alias for <code>StdForwardIterator</code> of type <code>T</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -285,6 +287,7 @@
           <section class="m-doc-details" id="gac0c8cd7706da39298c4fbf57972e19b5"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gac0c8cd7706da39298c4fbf57972e19b5" class="m-doc-self">DeclStdForwardIterator</a>(</span><span class="m-doc-wrap">T)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Instantiates <code><a href="group__iterators.html#ga6f81be5154c35a8da1ac730d26040155" class="m-doc">StdForwardIterator(T)</a></code> for the type <code>T</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -305,6 +308,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga2b9d4407f2c008a09b35f07e2a8ad57a" class="m-doc-self">DeclIntoStdForwardIterator</a>(</span><span class="m-doc-wrap">CollectionType,
               T,
               IntoIterFuncName)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Instantiates an <code>into_iter</code> function declaration.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -337,6 +341,7 @@
               NextFunction,
               CurrentFunction,
               EqualsFunction)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Instantiates an <code>into_iter</code> function definition.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -390,6 +395,7 @@
           <section class="m-doc-details" id="ga3096ade1ab0302b1a9d564e55b217e34"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga3096ade1ab0302b1a9d564e55b217e34" class="m-doc-self">StdReverseIterator</a>(</span><span class="m-doc-wrap">T)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Macro alias for <code>StdReverseIterator</code> of type <code>T</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -408,6 +414,7 @@
           <section class="m-doc-details" id="gafb361a1453dd02438d145e38239cc1c7"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gafb361a1453dd02438d145e38239cc1c7" class="m-doc-self">DeclStdReverseIterator</a>(</span><span class="m-doc-wrap">T)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Instantiates <code><a href="group__iterators.html#ga3096ade1ab0302b1a9d564e55b217e34" class="m-doc">StdReverseIterator(T)</a></code> for the type <code>T</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -428,6 +435,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga163c76ff959e302f86ce1268a77e1213" class="m-doc-self">DeclIntoStdReverseIterator</a>(</span><span class="m-doc-wrap">CollectionType,
               T,
               IntoIterFuncName)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Instantiates an <code>into_iter</code> function declaration.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -460,6 +468,7 @@
               NextFunction,
               CurrentFunction,
               EqualsFunction)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Instantiates an <code>into_iter</code> function definition.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -513,6 +522,7 @@
           <section class="m-doc-details" id="ga0b9ba4de4f41d92ae11b1a1591261e23"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga0b9ba4de4f41d92ae11b1a1591261e23" class="m-doc-self">StdBidirectionalIterator</a>(</span><span class="m-doc-wrap">T)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Macro alias for <code>StdBidirectionalIterator</code> of type <code>T</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -531,6 +541,7 @@
           <section class="m-doc-details" id="gaae44a8892d5cfcb5c9f0f3c86381a15f"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gaae44a8892d5cfcb5c9f0f3c86381a15f" class="m-doc-self">DeclStdBidirectionalIterator</a>(</span><span class="m-doc-wrap">T)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Instantiates <code><a href="group__iterators.html#ga0b9ba4de4f41d92ae11b1a1591261e23" class="m-doc">StdBidirectionalIterator(T)</a></code> for the type <code>T</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -552,6 +563,7 @@
               T,
               IntoIterFuncName,
               IteratorConversionName)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Instantiates an <code>into_iter</code> function declaration and iterator conversion function declarations.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -590,6 +602,7 @@
               PreviousFunction,
               CurrentFunction,
               EqualsFunction)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Instantiates an <code>into_iter</code> function definition and iterator conversion function definitions.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -652,6 +665,7 @@
           <section class="m-doc-details" id="ga218be3ec365146cd19e713d0eedf5488"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga218be3ec365146cd19e713d0eedf5488" class="m-doc-self">StdRandomAccessIterator</a>(</span><span class="m-doc-wrap">T)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Macro alias for <code>StdRandomAccessIterator</code> of type <code>T</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -670,6 +684,7 @@
           <section class="m-doc-details" id="ga6c512db3cce026a4cef5806399fd1dde"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga6c512db3cce026a4cef5806399fd1dde" class="m-doc-self">DeclStdRandomAccessIterator</a>(</span><span class="m-doc-wrap">T)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Instantiates <code><a href="group__iterators.html#ga218be3ec365146cd19e713d0eedf5488" class="m-doc">StdRandomAccessIterator(T)</a></code> for the type <code>T</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -691,6 +706,7 @@
               T,
               IntoIterFuncName,
               IteratorConversionName)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Instantiates an <code>into_iter</code> function declaration and iterator conversion function declarations.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -730,6 +746,7 @@
               AtFunction,
               CurrentFunction,
               EqualsFunction)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Instantiates an <code>into_iter</code> function definition and iterator conversion function definitions.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -797,6 +814,7 @@
           <section class="m-doc-details" id="ga75a0ab544f2f8ac54f88e57b2acf8d37"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga75a0ab544f2f8ac54f88e57b2acf8d37" class="m-doc-self">std_iterator_next</a>(</span><span class="m-doc-wrap">iterator)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Advances the iterator to the next element.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -821,6 +839,7 @@
           <section class="m-doc-details" id="gaa03e34f3b2c068eb88d853f62b3da857"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gaa03e34f3b2c068eb88d853f62b3da857" class="m-doc-self">std_iterator_previous</a>(</span><span class="m-doc-wrap">iterator)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Decrements the iterator to the previous element.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -846,6 +865,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gafb622dd1ff9d58c76d778350b94211ad" class="m-doc-self">std_iterator_at</a>(</span><span class="m-doc-wrap">iterator,
               index)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Returns a reference to the element at the given index in the iteration.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -874,6 +894,7 @@
           <section class="m-doc-details" id="ga1791e78c278c29568bc7ad64f7a2ecc5"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga1791e78c278c29568bc7ad64f7a2ecc5" class="m-doc-self">std_iterator_current</a>(</span><span class="m-doc-wrap">iterator)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Returns a reference to the element associated with the current position of the iterator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -899,6 +920,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gac07ffbe4f742c22c46ad12bfe7d81714" class="m-doc-self">std_iterator_equals</a>(</span><span class="m-doc-wrap">lhs,
               rhs)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Returns whether the given iterators are equal.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -926,6 +948,7 @@
           <section class="m-doc-details" id="ga6e4ae9e5854ed6b0dadb1cd461a32831"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga6e4ae9e5854ed6b0dadb1cd461a32831" class="m-doc-self">std_iterator_into_std_forward_iterator</a>(</span><span class="m-doc-wrap">iterator)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Converts the given <code><a href="group__iterators.html#ga0b9ba4de4f41d92ae11b1a1591261e23" class="m-doc">StdBidirectionalIterator(T)</a></code> or <code><a href="group__iterators.html#ga218be3ec365146cd19e713d0eedf5488" class="m-doc">StdRandomAccessIterator(T)</a></code> into a <code><a href="group__iterators.html#ga6f81be5154c35a8da1ac730d26040155" class="m-doc">StdForwardIterator(T)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -950,6 +973,7 @@
           <section class="m-doc-details" id="ga4dde134e2a88535364f4b6b9d2df12aa"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga4dde134e2a88535364f4b6b9d2df12aa" class="m-doc-self">std_iterator_into_std_reverse_iterator</a>(</span><span class="m-doc-wrap">iterator)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Converts the given <code><a href="group__iterators.html#ga0b9ba4de4f41d92ae11b1a1591261e23" class="m-doc">StdBidirectionalIterator(T)</a></code> or <code><a href="group__iterators.html#ga218be3ec365146cd19e713d0eedf5488" class="m-doc">StdRandomAccessIterator(T)</a></code> into a <code><a href="group__iterators.html#ga3096ade1ab0302b1a9d564e55b217e34" class="m-doc">StdReverseIterator(T)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -974,6 +998,7 @@
           <section class="m-doc-details" id="gab3201b0fa7d8619b618875c05d566cd3"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gab3201b0fa7d8619b618875c05d566cd3" class="m-doc-self">std_iterator_into_std_bidirectional_iterator</a>(</span><span class="m-doc-wrap">iterator)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Converts the given <code><a href="group__iterators.html#ga218be3ec365146cd19e713d0eedf5488" class="m-doc">StdRandomAccessIterator(T)</a></code> into a <code><a href="group__iterators.html#ga0b9ba4de4f41d92ae11b1a1591261e23" class="m-doc">StdBidirectionalIterator(T)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -999,6 +1024,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga7b57696558c75269c211ea0aab825d37" class="m-doc-self">foreach</a>(</span><span class="m-doc-wrap">element,
               collection)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Loops over each element in the iteration of the given collection.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -1022,6 +1048,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga384ebd3068c1905ff1ce4b2410852971" class="m-doc-self">foreach_ref</a>(</span><span class="m-doc-wrap">element,
               collection)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Loops over each element in the iteration of the given collection.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -1045,6 +1072,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gacd96b2e26f2edf7a23ed80eca9f64394" class="m-doc-self">foreach_ref_mut</a>(</span><span class="m-doc-wrap">element,
               collection)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Loops over each element in the iteration of the given collection.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -1067,6 +1095,7 @@
           <section class="m-doc-details" id="gad4498cfb49a74625a9015bc4d4530861"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gad4498cfb49a74625a9015bc4d4530861" class="m-doc-self">DeclStdIterators</a>(</span><span class="m-doc-wrap">T)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdIterator_8h.html">&lt;include/C2nxt/StdIterator.h&gt;</a></div>
             </h3>
             <p>Instantiates each iterator category for the type T.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -1127,7 +1156,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

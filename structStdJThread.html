@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>StdString struct | C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <title>StdJThread struct | C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -42,63 +42,10 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          StdString <span class="m-thin">struct</span>
-          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdString_8h.html">&lt;include/C2nxt/StdString.h&gt;</a></div>
+          StdJThread <span class="m-thin">struct</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdThread_8h.html">&lt;include/C2nxt/StdThread.h&gt;</a></div>
         </h1>
-        <p>C2nxt string type <code><a href="structStdString.html" class="m-doc">StdString</a></code> is a bounds safe, allocator aware, potentially dynamically allocated string type with significantly improved ergonomics over <code>const char*</code>s (aka <code>cstring</code>s), but maintains compatibility with them (<code><a href="structStdString.html" class="m-doc">StdString</a></code> is always null terminated). Provides similar functionality to C++&#x27;s <code>std::string</code>, but in C.</p>
-        <nav class="m-block m-default">
-          <h3>Contents</h3>
-          <ul>
-            <li>
-              Reference
-              <ul>
-                <li><a href="#pub-attribs">Public variables</a></li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
-<p>Example:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&quot;C2nxt/StdString.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;C2nxt/StdIO.h&quot;</span><span class="cp"></span>
-<span class="c1">// create default allocator (malloc allocates, free frees)</span>
-<span class="n">let</span> <span class="n">allocator</span> <span class="o">=</span> <span class="n">std_allocator_new</span><span class="p">();</span>
-<span class="c1">// could also call std_string_from(&quot;This is a string&quot;) since we&#39;re using the default</span>
-<span class="c1">// allocator</span>
-<span class="n">let_mut</span> <span class="n">string</span> <span class="o">=</span> <span class="n">std_string_from_with_allocator</span><span class="p">(</span><span class="s">&quot;This is a string&quot;</span><span class="p">,</span> <span class="n">allocator</span><span class="p">);</span>
-<span class="n">std_string_append</span><span class="p">(</span><span class="o">&amp;</span><span class="n">string</span><span class="p">,</span> <span class="s">&quot; with some extra text&quot;</span><span class="p">);</span>
-<span class="n">std_string_prepend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">string</span><span class="p">,</span> <span class="s">&quot;Hello world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<span class="c1">// prints to stdout:</span>
-<span class="c1">// Hello world!</span>
-<span class="c1">// This is a string with some extra text</span>
-<span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">string</span><span class="p">);</span></pre>
-        <section id="pub-attribs">
-          <h2><a href="#pub-attribs">Public variables</a></h2>
-          <dl class="m-doc">
-            <dt id="aad04ecb1d27805f00808e92518318fcb">
-              <a href="group__types.html#ga00d8f39b4b304be8134e652bf61ff840" class="m-doc">cstring</a> <a href="#aad04ecb1d27805f00808e92518318fcb" class="m-doc-self">m_long</a>
-            </dt>
-            <dd>the long length string</dd>
-            <dt id="aa7c5b65ddc2c0a665b00742e1158d94f">
-              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="#aa7c5b65ddc2c0a665b00742e1158d94f" class="m-doc-self">m_length</a>
-            </dt>
-            <dd>The length of the string.</dd>
-            <dt id="a6a49c9e8465aa0c8e37dd927145b4fa1">
-              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="#a6a49c9e8465aa0c8e37dd927145b4fa1" class="m-doc-self">m_capacity</a>
-            </dt>
-            <dd>The capacity of the string.</dd>
-            <dt id="a98b942abdc78109dde47d3f0d3da88ec">
-              char <a href="#a98b942abdc78109dde47d3f0d3da88ec" class="m-doc-self">m_short</a>
-            </dt>
-            <dd>The short-length optimized string.</dd>
-            <dt id="ae8310d88e351673fc4033053c3764fb5">
-              <a href="structStdAllocator.html" class="m-doc">StdAllocator</a> <a href="#ae8310d88e351673fc4033053c3764fb5" class="m-doc-self">m_allocator</a>
-            </dt>
-            <dd>The allocator to use for memory allocation.</dd>
-            <dt id="a0b1e0aa46014e70630c6e608bf0b1a65">
-              const <a href="structstd__string__vtable__t.html" class="m-doc">std_<wbr />string_<wbr />vtable_<wbr />t</a>* <a href="#a0b1e0aa46014e70630c6e608bf0b1a65" class="m-doc-self">m_vtable</a>
-            </dt>
-            <dd>The function vector table of methods associated with <code><a href="structStdString.html" class="m-doc">StdString</a></code></dd>
-          </dl>
-        </section>
+        <p>A <code><a href="structStdJThread.html" class="m-doc">StdJThread</a></code> is the handle type for OS-level threads which are automatically joined when their handle goes out of scope and use a dedicated stop token to signal to the thread when its execution should halt.</p>
       </div>
     </div>
   </div>

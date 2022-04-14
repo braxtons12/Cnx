@@ -55,13 +55,13 @@
             </li>
           </ul>
         </nav>
-<p><code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> is a struct template for a type-safe fixed-capacity, dynamic-size, stack allocated array type. <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> is bounds safe, allocator aware, and provides C2nxt compatible random access iterators. It supports user-defined default-constructors, copy-constructors, and destructors for its elements. It&#x27;s design is similar to C++&#x27;s <code>std::array</code>, but with expanded semantics and functionality.</p><p>Because of its size, <code>N</code>, template parameter, instantiations of <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> for builtins or any C2nxt types are <strong>not</strong> provided, and will have to be instantiated by the user. The requirements are similar to <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, and requires minimal boiler-plate:</p><ol><li>a <code>typedef</code> of your type to provide an alphanumeric name for it. (for template and macro parameters)</li><li>a <code>typedef</code> for pointer to your type as <code><a href="group__std__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(YourType)</a>, for use with the iterators</code></li><li><code>a</code>typedef<code>for pointer to const your type as</code><a href="group__std__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(YourType)</a>`, for use with the iterators</li><li>Instantiations for C2nxt iterators for the typedefs provided in (2) and (3) (already instantiated for builtins and <code><a href="structStdString.html" class="m-doc">StdString</a></code>)</li><li>Instantiation of <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> for your type (already instantiated for builtins and <code><a href="structStdString.html" class="m-doc">StdString</a></code>)</li></ol><p>For <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> we recommend you provide the instantiation for user-defined types in a separate &quot;template instantiation&quot; .h/.c file pair, but you can also provide them inline with your type like discussed in <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>&#x27;s documentation.</p><aside class="m-note m-default"><h4>See also</h4><p><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector</a></p></aside><p>Example:</p><pre class="m-code"><span class="c1">// in `YourType.h`</span>
-<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">YourType</span> <span class="p">{</span>
+<p><code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> is a struct template for a type-safe fixed-capacity, dynamic-size, stack allocated array type. <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> is bounds safe, allocator aware, and provides C2nxt compatible random access iterators. It supports user-defined default-constructors, copy-constructors, and destructors for its elements. It&#x27;s design is similar to C++&#x27;s <code>std::array</code>, but with expanded semantics and functionality.</p><p>Because of its size, <code>N</code>, template parameter, instantiations of <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> for builtins or any C2nxt types are <strong>not</strong> provided, and will have to be instantiated by the user. The requirements are similar to <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>, and requires minimal boiler-plate:</p><ol><li>a <code>typedef</code> of your type to provide an alphanumeric name for it. (for template and macro parameters)</li><li>a <code>typedef</code> for pointer to your type as <code><a href="group__std__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(YourType)</a>, for use with the iterators</code></li><li><code>a</code>typedef<code>for pointer to const your type as</code><a href="group__std__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(YourType)</a>`, for use with the iterators</li><li>Instantiations for C2nxt iterators for the typedefs provided in (2) and (3) (already instantiated for builtins and <code><a href="structStdString.html" class="m-doc">StdString</a></code>)</li><li>Instantiation of <code><a href="group__std__option.html#gadfddd8a6f93d2375b37f7cca25a8af25" class="m-doc">StdOption(T)</a></code> for your type (already instantiated for builtins and <code><a href="structStdString.html" class="m-doc">StdString</a></code>)</li></ol><p>For <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> we recommend you provide the instantiation for user-defined types in a separate &quot;template instantiation&quot; .h/.c file pair, but you can also provide them inline with your type like discussed in <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code>&#x27;s documentation.</p><aside class="m-note m-default"><h4>See also</h4><p><a href="group__std__string.html#ga5bd9c627478ef3bd2675eb4c5e7299b9" class="m-doc">StdVector</a></p></aside><p>Example:</p><pre class="m-code"><span class="c1">// in `YourType.h`</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">YourType</span> <span class="p">{</span>
     <span class="c1">// members</span>
 <span class="p">}</span> <span class="n">YourType</span><span class="p">;</span>
 
-<span class="k">typedef</span> <span class="n">YourType</span><span class="o">*</span> <span class="n">Ref</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
-<span class="k">typedef</span> <span class="k">const</span> <span class="n">YourType</span><span class="o">*</span> <span class="n">ConstRef</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+<span class="k">typedef</span> <span class="n">YourType</span><span class="o">*</span> <span class="nf">Ref</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+<span class="k">typedef</span> <span class="k">const</span> <span class="n">YourType</span><span class="o">*</span> <span class="nf">ConstRef</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
 
 <span class="n">DeclStdIterators</span><span class="p">(</span><span class="n">Ref</span><span class="p">(</span><span class="n">YourType</span><span class="p">));</span>
 <span class="n">DeclStdIterators</span><span class="p">(</span><span class="n">ConstRef</span><span class="p">(</span><span class="n">YourType</span><span class="p">));</span>
@@ -266,8 +266,8 @@
               new_size)</span>
             </dt>
             <dd>Resizes the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> to <code>new_size</code></dd>
-            <dt id="gafbaa03a7fb6e723f6499d6c2e087017a">
-              <span class="m-doc-wrap-bumper">#define <a href="#gafbaa03a7fb6e723f6499d6c2e087017a" class="m-doc-self">std_array_clear</a>(</span><span class="m-doc-wrap">self)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gafbaa03a7fb6e723f6499d6c2e087017a" class="m-doc">std_array_clear</a>(</span><span class="m-doc-wrap">self)</span>
             </dt>
             <dd>Resets the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> to a size of zero, destroying any active elements in the array.</dd>
             <dt>
@@ -342,8 +342,8 @@
               second)</span>
             </dt>
             <dd>Returns whether the given pair of const iterators are equal (they belong to the same collection and point to the same element), IE: if <code>first == second</code></dd>
-            <dt id="gabbef26d26f469f30934f86b9bfa7b631">
-              <span class="m-doc-wrap-bumper">#define <a href="#gabbef26d26f469f30934f86b9bfa7b631" class="m-doc-self">std_array_scoped</a>(</span><span class="m-doc-wrap">T,
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gabbef26d26f469f30934f86b9bfa7b631" class="m-doc">std_array_scoped</a>(</span><span class="m-doc-wrap">T,
               N)</span>
             </dt>
             <dd>declare a <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> variable with this attribute to have <code>std_array_free</code> automatically called on it at scope end</dd>
@@ -355,6 +355,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga428c4e1c071e8827620a6c870168a404" class="m-doc-self">StdArray</a>(</span><span class="m-doc-wrap">T,
               N)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Macro alias for a <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> containing up to <code>N</code> <code>T</code>s.</p>
 <p><code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> is a generic, type-safe, fixed-capacity, dynamic-size, stack allocated array type. <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> is bounds safe and allocator aware. It&#x27;s implemented as a &quot;struct template&quot;, which enables 100% type safety while also providing abstractions that enable type agnostic use. It has greatly increased ergonomics over manually managing an array and provides many useful features such as random access iterators and optional scoped destruction.</p><p>Example:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&quot;C2nxt/StdArray.h&quot;</span><span class="cp"></span>
@@ -371,7 +372,7 @@
 <span class="p">}</span>
 
 <span class="n">prints</span> <span class="n">information</span> <span class="n">about</span> <span class="err">`</span><span class="n">array</span><span class="err">`</span> <span class="n">to</span> <span class="err">`</span><span class="n">stdout</span><span class="err">`</span>
-<span class="n">because</span> <span class="err">`</span><span class="n">StdArray</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span><span class="err">`</span> <span class="n">is</span> <span class="n">generic</span><span class="p">,</span> <span class="n">and</span> <span class="n">thus</span> <span class="n">can</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">be</span> <span class="n">used</span> <span class="n">in</span> <span class="n">a</span> <span class="err">`</span><span class="k">_Generic</span><span class="err">`</span> <span class="n">match</span> <span class="n">arm</span> <span class="n">prior</span>
+<span class="n">because</span> <span class="err">`</span><span class="n">StdArray</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span><span class="err">`</span> <span class="n">is</span> <span class="n">generic</span><span class="p">,</span> <span class="n">and</span> <span class="n">thus</span> <span class="n">can</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">be</span> <span class="n">used</span> <span class="n">in</span> <span class="n">a</span> <span class="err">`</span><span class="n">_Generic</span><span class="err">`</span> <span class="n">match</span> <span class="n">arm</span> <span class="n">prior</span>
 <span class="n">to</span> <span class="n">the</span> <span class="n">type</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">instantiation</span><span class="p">,</span> <span class="n">we</span> <span class="n">have</span> <span class="n">to</span> <span class="n">explicitly</span> <span class="n">cast</span> <span class="n">to</span> <span class="n">the</span> <span class="err">`</span><span class="n">StdFormat</span><span class="err">`</span> <span class="n">Trait</span> <span class="n">to</span> <span class="n">get</span>
 <span class="err">`</span><span class="n">StdArray</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span><span class="err">`&#39;</span><span class="n">s</span> <span class="n">implementation</span> <span class="n">of</span> <span class="n">the</span> <span class="n">Trait</span> <span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">std_as_format_t</span><span class="p">(</span><span class="n">StdArray</span><span class="p">(</span><span class="n">i32</span><span class="p">,</span>
 <span class="mi">10</span><span class="p">),</span> <span class="n">array</span><span class="p">));</span>
@@ -382,7 +383,7 @@
 <span class="p">}</span>
 
 <span class="p">{</span>
-    <span class="n">let_mut</span> <span class="nf">std_array_scoped</span><span class="p">(</span><span class="n">i32</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="n">array2</span> <span class="o">=</span> <span class="n">std_array_new</span><span class="p">(</span><span class="n">i32</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+    <span class="n">let_mut</span> <span class="n">std_array_scoped</span><span class="p">(</span><span class="n">i32</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="n">array2</span> <span class="o">=</span> <span class="n">std_array_new</span><span class="p">(</span><span class="n">i32</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
     <span class="n">foreach</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">std_array_push_back</span><span class="p">(</span><span class="n">array2</span><span class="p">,</span> <span class="n">elem</span><span class="p">);</span>
     <span class="p">}</span>
@@ -397,6 +398,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gac7d7220af04476c2c2b6fcf8ef326863" class="m-doc-self">std_array_new</a>(</span><span class="m-doc-wrap">T,
               N)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Creates a new <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> with defaulted associated functions.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -427,6 +429,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga06b46bc3f71c85f372be97453056253c" class="m-doc-self">std_array_new_with_allocator</a>(</span><span class="m-doc-wrap">T,
               N,
               allocator)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Creates a new <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> with defaulted associated functions.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -461,6 +464,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga1eaa11c8922b4b8b73aef00cf6d155fe" class="m-doc-self">std_array_new_with_collection_data</a>(</span><span class="m-doc-wrap">T,
               N,
               collection_data_ptr)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Creates a new <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> with provided associated functions.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -496,6 +500,7 @@
               N,
               allocator,
               collection_data_ptr)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Creates a new <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> with provided associated functions.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -532,6 +537,7 @@
           <section class="m-doc-details" id="ga91624f15c198683c9a3139112565d883"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga91624f15c198683c9a3139112565d883" class="m-doc-self">std_array_clone</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Clones the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -557,6 +563,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga808eca2e2285ebf1adbe0628aa2fc2ee" class="m-doc-self">std_array_at_mut</a>(</span><span class="m-doc-wrap">self,
               index)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns a mutable reference to the element at the given <code>index</code> into the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -585,6 +592,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gaa5742f9934936a427e0fe68128043e5b" class="m-doc-self">std_array_at</a>(</span><span class="m-doc-wrap">self,
               index)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns a const reference to the element at the given <code>index</code> into the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -612,6 +620,7 @@
           <section class="m-doc-details" id="gaa409577ece7a5fa870d4f85914626c0f"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gaa409577ece7a5fa870d4f85914626c0f" class="m-doc-self">std_array_front_mut</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns a mutable reference to the first element in the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -635,6 +644,7 @@
           <section class="m-doc-details" id="gac818dd08be45249b5cc91c47131267d4"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gac818dd08be45249b5cc91c47131267d4" class="m-doc-self">std_array_front</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns a const reference to the first element in the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -658,6 +668,7 @@
           <section class="m-doc-details" id="ga1b1ab0fae898980869435b0f5cf3ff9c"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga1b1ab0fae898980869435b0f5cf3ff9c" class="m-doc-self">std_array_back_mut</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns a mutable reference to the last element in the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -681,6 +692,7 @@
           <section class="m-doc-details" id="gaf268642a5fd4230de17fde1de190fb52"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gaf268642a5fd4230de17fde1de190fb52" class="m-doc-self">std_array_back</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns a const reference to the last element in the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -704,6 +716,7 @@
           <section class="m-doc-details" id="gad785533e4999ba7364e809017784178c"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gad785533e4999ba7364e809017784178c" class="m-doc-self">std_array_data_mut</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns a mutable reference to the internal array in the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -727,6 +740,7 @@
           <section class="m-doc-details" id="ga6d689b782478d27aa6db65d3748d6ebc"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga6d689b782478d27aa6db65d3748d6ebc" class="m-doc-self">std_array_data</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns a const reference to the internal array in the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -750,6 +764,7 @@
           <section class="m-doc-details" id="ga4608c0ae2c083f6ad91cfe9d132775df"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga4608c0ae2c083f6ad91cfe9d132775df" class="m-doc-self">std_array_is_empty</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns whether the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> is empty.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -773,6 +788,7 @@
           <section class="m-doc-details" id="ga895d18ee9436a7ed477df3934fc9f55f"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga895d18ee9436a7ed477df3934fc9f55f" class="m-doc-self">std_array_is_full</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns whether the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> is full.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -796,6 +812,7 @@
           <section class="m-doc-details" id="ga25845777d38322058703915ed163335e"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga25845777d38322058703915ed163335e" class="m-doc-self">std_array_size</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns the current size of the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -819,6 +836,7 @@
           <section class="m-doc-details" id="gafc89d8b01abbc6578dd3d52363e6b524"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gafc89d8b01abbc6578dd3d52363e6b524" class="m-doc-self">std_array_capacity</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns the capacity of the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> (ie the <code>N</code>)</p>
             <table class="m-table m-fullwidth m-flat">
@@ -843,6 +861,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga4f0cf16cdf4224135dc587c0a293e497" class="m-doc-self">std_array_resize</a>(</span><span class="m-doc-wrap">self,
               new_size)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Resizes the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> to <code>new_size</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -862,10 +881,29 @@
             </table>
 <p><code>new_size</code> must be strictly <code>&lt;= N</code>. If <code>new_size</code> is greater than the current size, elements will be default constructed until <code>self</code> contains <code>new_size</code> elements. If <code>new_size</code> is less than the current size, elements will be destroyed.</p>
           </div></section>
+          <section class="m-doc-details" id="gafbaa03a7fb6e723f6499d6c2e087017a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gafbaa03a7fb6e723f6499d6c2e087017a" class="m-doc-self">std_array_clear</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Resets the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> to a size of zero, destroying any active elements in the array.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> to clear</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
           <section class="m-doc-details" id="gaef6d22f27d5cbee3b7a2d190729a9aca"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gaef6d22f27d5cbee3b7a2d190729a9aca" class="m-doc-self">std_array_push_back</a>(</span><span class="m-doc-wrap">self,
               element)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Pushes a new element into the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code>, at the end.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -888,6 +926,7 @@
           <section class="m-doc-details" id="gae4b1ec27681fbdffec373fc7402e41ca"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gae4b1ec27681fbdffec373fc7402e41ca" class="m-doc-self">std_array_pop_back</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Removes the last element from the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> and returns it.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -913,6 +952,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#gadb8bcc15cea992da8b8774f9f0e8c0bb" class="m-doc-self">std_array_insert</a>(</span><span class="m-doc-wrap">self,
               element,
               index)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Inserts the given element at the given index in the <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -940,6 +980,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga2ebb602a8d01a9642f3948efd346cd93" class="m-doc-self">std_array_erase</a>(</span><span class="m-doc-wrap">self,
               index)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Erases the element at <code>index</code> from the <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -964,6 +1005,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga22a2baa1763fb6d0d3e6370d0c912a76" class="m-doc-self">std_array_erase_n</a>(</span><span class="m-doc-wrap">self,
               index,
               num_elements)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Erases <code>num_elements</code> elements from the <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code>, starting at <code>index</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -990,6 +1032,7 @@
           <section class="m-doc-details" id="gac4979957e9f96c2e5418a542ab3d9587"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gac4979957e9f96c2e5418a542ab3d9587" class="m-doc-self">std_array_free</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Frees the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code>, destroying its elements.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -1008,6 +1051,7 @@
           <section class="m-doc-details" id="ga3114e15f83aa78e20c17f057626c487c"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga3114e15f83aa78e20c17f057626c487c" class="m-doc-self">std_array_begin</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns a <code>StdRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code>, starting at the beginning of the iteration (pointing at the beginning of the array)</p>
             <table class="m-table m-fullwidth m-flat">
@@ -1031,6 +1075,7 @@
           <section class="m-doc-details" id="gac86c04ebd8bb281e9da09fde2e48ca6f"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gac86c04ebd8bb281e9da09fde2e48ca6f" class="m-doc-self">std_array_end</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns a <code>StdRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code>, starting at the end of the iteration (pointing at the end of the array)</p>
             <table class="m-table m-fullwidth m-flat">
@@ -1054,6 +1099,7 @@
           <section class="m-doc-details" id="ga83a86fe0d174c273960e180a625adc73"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga83a86fe0d174c273960e180a625adc73" class="m-doc-self">std_array_rbegin</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns a <code>StdRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code>, starting at the beginning of the reversed iteration (pointing at the end of the array)</p>
             <table class="m-table m-fullwidth m-flat">
@@ -1077,6 +1123,7 @@
           <section class="m-doc-details" id="ga7ced41c0a23f4f9501f073e7aa010937"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga7ced41c0a23f4f9501f073e7aa010937" class="m-doc-self">std_array_rend</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns a <code>StdRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code>, starting at the end of the reversed iteration (pointing at the beginning of the array)</p>
             <table class="m-table m-fullwidth m-flat">
@@ -1101,6 +1148,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gab1cad0f42a9b708b90a45b0a51b417a6" class="m-doc-self">std_array_iterator_equals</a>(</span><span class="m-doc-wrap">first,
               second)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns whether the given pair of iterators are equal (they belong to the same collection and point to the same element), IE: if <code>first == second</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -1128,6 +1176,7 @@
           <section class="m-doc-details" id="ga74eb04083eac0662ad28146eff9c5ddd"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga74eb04083eac0662ad28146eff9c5ddd" class="m-doc-self">std_array_cbegin</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns a <code>StdRandomAccessIterator</code> into the const iteration of the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code>, starting at the beginning of the iteration (pointing at the beginning of the array)</p>
             <table class="m-table m-fullwidth m-flat">
@@ -1151,6 +1200,7 @@
           <section class="m-doc-details" id="gaad42837dcf4e5627e1a244a44432c3dc"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gaad42837dcf4e5627e1a244a44432c3dc" class="m-doc-self">std_array_cend</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns a <code>StdRandomAccessIterator</code> into the const iteration of the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code>, starting at the end of the iteration (pointing at the end of the array)</p>
             <table class="m-table m-fullwidth m-flat">
@@ -1174,6 +1224,7 @@
           <section class="m-doc-details" id="ga76b28d063d9b45d45ad4ac1016a68759"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga76b28d063d9b45d45ad4ac1016a68759" class="m-doc-self">std_array_crbegin</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns a <code>StdRandomAccessIterator</code> into the const iteration of the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code>, starting at the beginning of the reversed iteration (pointing at the end of the array)</p>
             <table class="m-table m-fullwidth m-flat">
@@ -1197,6 +1248,7 @@
           <section class="m-doc-details" id="ga170e816176525ad58299fea28c91ab61"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga170e816176525ad58299fea28c91ab61" class="m-doc-self">std_array_crend</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns a <code>StdRandomAccessIterator</code> into the const iteration of the given <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code>, starting at the end of the reversed iteration (pointing at the beginning of the array)</p>
             <table class="m-table m-fullwidth m-flat">
@@ -1221,6 +1273,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga178e84de8ced06542c8f80691bae6fec" class="m-doc-self">std_array_const_iterator_equals</a>(</span><span class="m-doc-wrap">first,
               second)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
             </h3>
             <p>Returns whether the given pair of const iterators are equal (they belong to the same collection and point to the same element), IE: if <code>first == second</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -1243,6 +1296,29 @@
                   <td><code>true</code> if they are equal, <code>false</code> otherwise</td>
                 </tr>
               </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gabbef26d26f469f30934f86b9bfa7b631"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gabbef26d26f469f30934f86b9bfa7b631" class="m-doc-self">std_array_scoped</a>(</span><span class="m-doc-wrap">T,
+              N)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdArrayDef_8h.html">&lt;include/C2nxt/std_array/StdArrayDef.h&gt;</a></div>
+            </h3>
+            <p>declare a <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> variable with this attribute to have <code>std_array_free</code> automatically called on it at scope end</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> instantiation</td>
+                </tr>
+                <tr>
+                  <td>N</td>
+                  <td>- The capacity of the <code><a href="group__std__array.html#ga428c4e1c071e8827620a6c870168a404" class="m-doc">StdArray(T, N)</a></code> instantiation</td>
+                </tr>
+              </tbody>
             </table>
           </div></section>
         </section>
@@ -1290,7 +1366,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

@@ -49,8 +49,8 @@
             <li>
               Reference
               <ul>
-                <li><a href="#nested-classes">Classes</a></li>
                 <li><a href="#typedef-members">Typedefs</a></li>
+                <li><a href="#func-members">Functions</a></li>
                 <li><a href="#define-members">Defines</a></li>
               </ul>
             </li>
@@ -62,18 +62,18 @@
 <span class="k">typedef</span> <span class="nf">Lambda</span><span class="p">(</span><span class="kt">void</span><span class="p">,</span> <span class="n">StdString</span><span class="p">)</span> <span class="n">LambdaVoidString</span><span class="p">;</span>
 
 <span class="c1">// declare a lambda function named greet_place that returns `void` and takes in a `StdString`</span>
-<span class="n">LambdaFunction</span><span class="p">(</span><span class="kt">void</span><span class="p">,</span> <span class="n">greet_place</span><span class="p">,</span> <span class="n">StdString</span> <span class="n">greeting</span><span class="p">)</span> <span class="p">{</span>
+<span class="kt">void</span> <span class="nf">LambdaFunction</span><span class="p">(</span><span class="n">greet_place</span><span class="p">,</span> <span class="n">StdString</span> <span class="n">greeting</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// Retrieve the variable bindings from the lambda.</span>
-    <span class="c1">// The binding type (`LambdaBinding(StdString)` here) and the types of the variables passed</span>
+    <span class="c1">// The binding types (`StdString` here) and the types of the variables passed</span>
     <span class="c1">// to the generator macro (`lambda` or `lambda_with_allocator`)</span>
     <span class="c1">// __**MUST MATCH**__</span>
-    <span class="n">let</span> <span class="n">binding</span> <span class="o">=</span> <span class="n">lambda_binding</span><span class="p">(</span><span class="n">LambdaBinding</span><span class="p">(</span><span class="n">StdString</span><span class="p">));</span>
+    <span class="n">let</span> <span class="n">binding</span> <span class="o">=</span> <span class="n">lambda_binding</span><span class="p">(</span><span class="n">StdString</span><span class="p">);</span>
     <span class="c1">// get the first bound variable</span>
     <span class="n">let</span> <span class="n">place</span> <span class="o">=</span> <span class="n">binding</span><span class="p">.</span><span class="n">_1</span><span class="p">;</span>
     <span class="n">println</span><span class="p">(</span><span class="s">&quot;{}, {}!&quot;</span><span class="p">,</span> <span class="n">greeting</span><span class="p">,</span> <span class="n">place</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="kt">void</span> <span class="n">greet_with_hello</span><span class="p">(</span><span class="n">LambdaVoidString</span> <span class="n">lambda</span><span class="p">)</span> <span class="p">{</span>
+<span class="kt">void</span> <span class="nf">greet_with_hello</span><span class="p">(</span><span class="n">LambdaVoidString</span> <span class="n">lambda</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// call the lambda with &quot;Hello&quot; as the `greeting`</span>
     <span class="n">lambda_call</span><span class="p">(</span><span class="n">lambda</span><span class="p">,</span> <span class="n">std_string_from</span><span class="p">(</span><span class="s">&quot;Hello&quot;</span><span class="p">));</span>
     <span class="c1">// Free the memory associated w/ the lambda</span>
@@ -82,7 +82,7 @@
 <span class="p">}</span>
 
 <span class="c1">// Prints &quot;Hello, World!&quot;</span>
-<span class="kt">void</span> <span class="n">hello_world</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+<span class="kt">void</span> <span class="nf">hello_world</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">let</span> <span class="n">world</span> <span class="o">=</span> <span class="n">std_string_from</span><span class="p">(</span><span class="s">&quot;World&quot;</span><span class="p">);</span>
     <span class="c1">// lambdas capture by value, so if you need to bind a pointer,</span>
     <span class="c1">// take the address of the variable.</span>
@@ -97,51 +97,50 @@
 <span class="p">}</span>
 
 <span class="c1">// Prints &quot;Hello, C Programmers!&quot;</span>
-<span class="kt">void</span> <span class="n">hello_c_programmers</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+<span class="kt">void</span> <span class="nf">hello_c_programmers</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// multiple lambdas can be bound to a single `LambdaFunction` definition at the same time:</span>
     <span class="c1">// the bound data is separate from the `LambdaFunction`&#39;s definition.</span>
     <span class="c1">// Because lambdas capture by value, they can bind either lvalues or rvalues</span>
     <span class="n">let</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">lambda</span><span class="p">(</span><span class="n">greet_place</span><span class="p">,</span> <span class="n">std_string_from</span><span class="p">(</span><span class="s">&quot;C Programmers&quot;</span><span class="p">));</span>
     <span class="n">greet_with_hello</span><span class="p">(</span><span class="n">lambda_cast</span><span class="p">(</span><span class="n">lambda</span><span class="p">,</span> <span class="n">LambdaVoidString</span><span class="p">));</span>
 <span class="p">}</span></pre>
-        <section id="nested-classes">
-          <h2><a href="#nested-classes">Classes</a></h2>
+        <section id="typedef-members">
+          <h2><a href="#typedef-members">Typedefs</a></h2>
           <dl class="m-doc">
             <dt>
-              struct <a href="structStdLambdaCaptures.html" class="m-doc">StdLambdaCaptures</a>
+              using <a href="#ga0d70ed6344bb75d61fd07e681f2f5070" class="m-doc">StdLambdaCaptures</a> = void*
             </dt>
             <dd>Stores the captures/bindings of a lambda This is implicitly passed as the first parameter to a <code>LambdaFunction</code>, but as a user, will never need to be used or interacted with directly.</dd>
           </dl>
         </section>
-        <section id="typedef-members">
-          <h2><a href="#typedef-members">Typedefs</a></h2>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
-            <dt id="ga42109d744d958660f6417274d9e9c306">
-              using <a href="#ga42109d744d958660f6417274d9e9c306" class="m-doc-self">StdLambdaCaptures</a> = struct <a href="structStdLambdaCaptures.html" class="m-doc">StdLambdaCaptures</a>
+            <dt>
+              <span class="m-doc-wrap-bumper">static void <a href="#gac09abc2619ccd87f36cb2451a9a956be" class="m-doc">lambda_free</a>(</span><span class="m-doc-wrap">void* lambda)</span>
             </dt>
-            <dd>Stores the captures/bindings of a lambda This is implicitly passed as the first parameter to a <code>LambdaFunction</code>, but as a user, will never need to be used or interacted with directly.</dd>
+            <dd>Frees the given lambda, freeing associated memory and making it invalid for future use.</dd>
           </dl>
         </section>
         <section id="define-members">
           <h2><a href="#define-members">Defines</a></h2>
           <dl class="m-doc">
-            <dt id="ga6c17ca07e994de537a3d0ec3793139d8">
-              <span class="m-doc-wrap-bumper">#define <a href="#ga6c17ca07e994de537a3d0ec3793139d8" class="m-doc-self">Lambda</a>(</span><span class="m-doc-wrap">ReturnType,
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga6c17ca07e994de537a3d0ec3793139d8" class="m-doc">Lambda</a>(</span><span class="m-doc-wrap">ReturnType,
               ...)</span>
             </dt>
             <dd>The type of a complete lambda instance, binding a lambda function definition with a set of captured variables.</dd>
-            <dt id="gaeee07b134813b7bf832b57a84c847433">
-              <span class="m-doc-wrap-bumper">#define <a href="#gaeee07b134813b7bf832b57a84c847433" class="m-doc-self">LambdaFunction</a>(</span><span class="m-doc-wrap">ReturnType,
-              Name,
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae502c8abb2f3e5375752c7546e702008" class="m-doc">LambdaFunction</a>(</span><span class="m-doc-wrap">Name,
               ...)</span>
             </dt>
             <dd>A Lambda function definition. Can be bound to an instance of a lambda with <code>lambda</code> or <code>lambda_with_allocator</code>.</dd>
-            <dt id="ga08842d52ce6b2da0298c414492b96edb">
-              <span class="m-doc-wrap-bumper">#define <a href="#ga08842d52ce6b2da0298c414492b96edb" class="m-doc-self">LambdaBinding</a>(</span><span class="m-doc-wrap">...)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga08842d52ce6b2da0298c414492b96edb" class="m-doc">LambdaBinding</a>(</span><span class="m-doc-wrap">...)</span>
             </dt>
             <dd>A type storing a lambda&#x27;s bound captures.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga2d9b3ff640eda290134a4a9e540216e3" class="m-doc">lambda_with_allocator</a>(</span><span class="m-doc-wrap">allocator,
+              <span class="m-doc-wrap-bumper">#define <a href="#gab556fa70dfe76470f651ca3259366184" class="m-doc">lambda_with_allocator</a>(</span><span class="m-doc-wrap">alloc,
               function_name,
               ...)</span>
             </dt>
@@ -156,12 +155,16 @@
               ...)</span>
             </dt>
             <dd>Calls the given lambda with the provided arguments as function parameters.</dd>
-            <dt id="gac2087e4ff96a09491394e1d5c801af58">
-              <span class="m-doc-wrap-bumper">#define <a href="#gac2087e4ff96a09491394e1d5c801af58" class="m-doc-self">lambda_free</a>(</span><span class="m-doc-wrap">lambda)</span>
-            </dt>
-            <dd>Frees the given lambda, freeing associated memory and making it invalid for future use.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga96f6b574273a5fe49d728707b17542ac" class="m-doc">lambda_binding</a>(</span><span class="m-doc-wrap">BindingType)</span>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadb4c94ec3bf5aa9f4e4db1e0c5f87592" class="m-doc">lambda_clone</a>(</span><span class="m-doc-wrap">lambda)</span>
+            </dt>
+            <dd>Returns a clone of the given lambda, ensuring that (by-value) captures stay valid for the lifetime of the clone.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadb2bcac0a860ac20b013f8d91a99da0b" class="m-doc">lambda_scoped</a></span>
+            </dt>
+            <dd>Declaration tag to scope a lambda, ensuring it is freed when it goes out of scoped and associated resources are cleaned up.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaaf65fa95fae57314e3369b7c980db4a3" class="m-doc">lambda_binding</a>(</span><span class="m-doc-wrap">...)</span>
             </dt>
             <dd>Retrieves the bound captures from the enclosing lambda.</dd>
             <dt>
@@ -172,12 +175,108 @@
           </dl>
         </section>
         <section>
-          <h2>Define documentation</h2>
-          <section class="m-doc-details" id="ga2d9b3ff640eda290134a4a9e540216e3"><div>
+          <h2>Typedef documentation</h2>
+          <section class="m-doc-details" id="ga0d70ed6344bb75d61fd07e681f2f5070"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga2d9b3ff640eda290134a4a9e540216e3" class="m-doc-self">lambda_with_allocator</a>(</span><span class="m-doc-wrap">allocator,
+              typedef void* <a href="#ga0d70ed6344bb75d61fd07e681f2f5070" class="m-doc-self">StdLambdaCaptures</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdLambda_8h.html">&lt;include/C2nxt/StdLambda.h&gt;</a></div>
+            </h3>
+            <p>Stores the captures/bindings of a lambda This is implicitly passed as the first parameter to a <code>LambdaFunction</code>, but as a user, will never need to be used or interacted with directly.</p>
+          </div></section>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="gac09abc2619ccd87f36cb2451a9a956be"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gac09abc2619ccd87f36cb2451a9a956be" class="m-doc-self">lambda_free</a>(</span><span class="m-doc-wrap">void* lambda)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdLambda_8h.html">&lt;include/C2nxt/StdLambda.h&gt;</a></div>
+            </h3>
+            <p>Frees the given lambda, freeing associated memory and making it invalid for future use.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lambda</td>
+                  <td>- The lambda to free</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
+        <section>
+          <h2>Define documentation</h2>
+          <section class="m-doc-details" id="ga6c17ca07e994de537a3d0ec3793139d8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga6c17ca07e994de537a3d0ec3793139d8" class="m-doc-self">Lambda</a>(</span><span class="m-doc-wrap">ReturnType,
+              ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdLambda_8h.html">&lt;include/C2nxt/StdLambda.h&gt;</a></div>
+            </h3>
+            <p>The type of a complete lambda instance, binding a lambda function definition with a set of captured variables.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">ReturnType</td>
+                  <td>- The return type of the lambda</td>
+                </tr>
+                <tr>
+                  <td>...</td>
+                  <td>- The types of the lambda function arguments</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gae502c8abb2f3e5375752c7546e702008"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae502c8abb2f3e5375752c7546e702008" class="m-doc-self">LambdaFunction</a>(</span><span class="m-doc-wrap">Name,
+              ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdLambda_8h.html">&lt;include/C2nxt/StdLambda.h&gt;</a></div>
+            </h3>
+            <p>A Lambda function definition. Can be bound to an instance of a lambda with <code>lambda</code> or <code>lambda_with_allocator</code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">Name</td>
+                  <td>- The name of the function</td>
+                </tr>
+                <tr>
+                  <td>...</td>
+                  <td>- The function argument list</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga08842d52ce6b2da0298c414492b96edb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga08842d52ce6b2da0298c414492b96edb" class="m-doc-self">LambdaBinding</a>(</span><span class="m-doc-wrap">...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdLambda_8h.html">&lt;include/C2nxt/StdLambda.h&gt;</a></div>
+            </h3>
+            <p>A type storing a lambda&#x27;s bound captures.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">...</td>
+                  <td>- The captured variables (or types of the captures) of the lambda binding</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gab556fa70dfe76470f651ca3259366184"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab556fa70dfe76470f651ca3259366184" class="m-doc-self">lambda_with_allocator</a>(</span><span class="m-doc-wrap">alloc,
               function_name,
               ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdLambda_8h.html">&lt;include/C2nxt/StdLambda.h&gt;</a></div>
             </h3>
             <p>Binds the given function and captures as a lambda type, that can be called later.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -186,7 +285,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">allocator</td>
+                  <td style="width: 1%">alloc</td>
                   <td>- The allocator with which to allocate memory to store the captured values in</td>
                 </tr>
                 <tr>
@@ -211,6 +310,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga514a31356836b3d3c7f2d8fe79f6bded" class="m-doc-self">lambda</a>(</span><span class="m-doc-wrap">function_name,
               ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdLambda_8h.html">&lt;include/C2nxt/StdLambda.h&gt;</a></div>
             </h3>
             <p>Binds the given function and captures as a lambda type, that can be called later.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -240,6 +340,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga8d823bcc3c0617ae68ae4ae3d365c7d3" class="m-doc-self">lambda_call</a>(</span><span class="m-doc-wrap">lambda,
               ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdLambda_8h.html">&lt;include/C2nxt/StdLambda.h&gt;</a></div>
             </h3>
             <p>Calls the given lambda with the provided arguments as function parameters.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -264,24 +365,48 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga96f6b574273a5fe49d728707b17542ac"><div>
+          <section class="m-doc-details" id="gadb4c94ec3bf5aa9f4e4db1e0c5f87592"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga96f6b574273a5fe49d728707b17542ac" class="m-doc-self">lambda_binding</a>(</span><span class="m-doc-wrap">BindingType)</span>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadb4c94ec3bf5aa9f4e4db1e0c5f87592" class="m-doc-self">lambda_clone</a>(</span><span class="m-doc-wrap">lambda)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdLambda_8h.html">&lt;include/C2nxt/StdLambda.h&gt;</a></div>
             </h3>
-            <p>Retrieves the bound captures from the enclosing lambda.</p>
+            <p>Returns a clone of the given lambda, ensuring that (by-value) captures stay valid for the lifetime of the clone.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">BindingType</td>
-                  <td>- The <code>LambdaBinding</code> type listing the types of the captured variables</td>
+                  <td style="width: 1%">lambda</td>
+                  <td>- The lambda to clone</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
+                  <td>a clone of the lambda</td>
+                </tr>
+              </tfoot>
+            </table>
+<aside class="m-note m-info"><h4>Note</h4><p>Only the lifetime of by-value captures can be extended to match a clone. By-reference captures must still outlive all clones of the lambda, otherwise undefined behavior (likely resulting in segmentation faults from accessing invalid memory) will occur</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="gadb2bcac0a860ac20b013f8d91a99da0b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadb2bcac0a860ac20b013f8d91a99da0b" class="m-doc-self">lambda_scoped</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdLambda_8h.html">&lt;include/C2nxt/StdLambda.h&gt;</a></div>
+            </h3>
+            <p>Declaration tag to scope a lambda, ensuring it is freed when it goes out of scoped and associated resources are cleaned up.</p>
+          </div></section>
+          <section class="m-doc-details" id="gaaf65fa95fae57314e3369b7c980db4a3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaaf65fa95fae57314e3369b7c980db4a3" class="m-doc-self">lambda_binding</a>(</span><span class="m-doc-wrap">...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdLambda_8h.html">&lt;include/C2nxt/StdLambda.h&gt;</a></div>
+            </h3>
+            <p>Retrieves the bound captures from the enclosing lambda.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
                   <td>The struct containing the bound captures from the enclosing lambda</td>
                 </tr>
               </tfoot>
@@ -291,6 +416,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga55e31c29857165e8d09355daf38e26d6" class="m-doc-self">lambda_cast</a>(</span><span class="m-doc-wrap">lambda,
               Type)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdLambda_8h.html">&lt;include/C2nxt/StdLambda.h&gt;</a></div>
             </h3>
             <p>Casts the given lambda to the given named type, so it can be passed to a function or stored.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -360,7 +486,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

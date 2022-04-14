@@ -92,8 +92,8 @@
         <section id="typedef-members">
           <h2><a href="#typedef-members">Typedefs</a></h2>
           <dl class="m-doc">
-            <dt id="gad15352be5864807b2774032639005c87">
-              using <a href="#gad15352be5864807b2774032639005c87" class="m-doc-self">std_error_category_message_function</a> = <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a>(*const)(i64 error_code)
+            <dt>
+              using <a href="#ga69532a7ddfb3ecacd191380a70a57f39" class="m-doc">std_error_category_message_function</a> = <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a>(*)(i64 error_code)
             </dt>
             <dd>A <code>std_error_category_message_function</code> is a function that converts an <code>i64</code> error code into its corresponding message string, for the error category the function is associated with.</dd>
             <dt>
@@ -155,9 +155,17 @@
         </section>
         <section>
           <h2>Typedef documentation</h2>
+          <section class="m-doc-details" id="ga69532a7ddfb3ecacd191380a70a57f39"><div>
+            <h3>
+              typedef <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a>(*<a href="#ga69532a7ddfb3ecacd191380a70a57f39" class="m-doc-self">std_error_category_message_function</a>)(i64 error_code)
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdError_8h.html">&lt;include/C2nxt/StdError.h&gt;</a></div>
+            </h3>
+            <p>A <code>std_error_category_message_function</code> is a function that converts an <code>i64</code> error code into its corresponding message string, for the error category the function is associated with.</p>
+          </div></section>
           <section class="m-doc-details" id="gac10e7c74bd7e29c2eb5e2608b5799969"><div>
             <h3>
               typedef struct <a href="structStdErrorCategory.html" class="m-doc">StdErrorCategory</a> <a href="#gac10e7c74bd7e29c2eb5e2608b5799969" class="m-doc-self">StdErrorCategory</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdError_8h.html">&lt;include/C2nxt/StdError.h&gt;</a></div>
             </h3>
             <p><code><a href="structStdErrorCategory.html" class="m-doc">StdErrorCategory</a></code> provides the mechanism to convert an arbitrary error code into a corresponding message associated with a specific class of errors</p>
 <p><code><a href="structStdErrorCategory.html" class="m-doc">StdErrorCategory</a></code> is what allows a <code><a href="structStdError.html" class="m-doc">StdError</a></code> to communicate error messages unique to the module the error originated from.</p>
@@ -165,6 +173,7 @@
           <section class="m-doc-details" id="gad5b3d17d2ebeb5376570279ec9c8e1eb"><div>
             <h3>
               typedef struct <a href="structStdError.html" class="m-doc">StdError</a> <a href="#gad5b3d17d2ebeb5376570279ec9c8e1eb" class="m-doc-self">StdError</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdError_8h.html">&lt;include/C2nxt/StdError.h&gt;</a></div>
             </h3>
             <p><code><a href="structStdError.html" class="m-doc">StdError</a></code> provides an extensible, configurable type for communicating recoverable errors via error codes and error message strings</p>
 <p>Example</p><pre class="m-code"><span class="n">StdError</span> <span class="nf">do_thing</span><span class="p">(</span><span class="n">i64</span> <span class="n">input</span><span class="p">,</span> <span class="n">i64</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">out</span><span class="p">)</span> <span class="p">{</span>
@@ -193,6 +202,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structStdError.html" class="m-doc">StdError</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gabaf731b27a22ed34d559d67705787fb3" class="m-doc-self">std_error_new</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> error_code,
               <a href="structStdErrorCategory.html" class="m-doc">StdErrorCategory</a> error_category)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdError_8h.html">&lt;include/C2nxt/StdError.h&gt;</a></div>
             </h3>
             <p>Creates a <code><a href="structStdError.html" class="m-doc">StdError</a></code> with the given error code and category.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -220,6 +230,7 @@
           <section class="m-doc-details" id="ga844f3038e8b65edb1d1d7a4a1248e4da"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga844f3038e8b65edb1d1d7a4a1248e4da" class="m-doc-self">std_error_code</a>(</span><span class="m-doc-wrap">const <a href="structStdError.html" class="m-doc">StdError</a>*restrict self)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdError_8h.html">&lt;include/C2nxt/StdError.h&gt;</a></div>
             </h3>
             <p>Returns the error code associated with the given error.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -243,6 +254,7 @@
           <section class="m-doc-details" id="gadec8f0cd4e97c6b751dea4ca1d7da0a5"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gadec8f0cd4e97c6b751dea4ca1d7da0a5" class="m-doc-self">std_error_message</a>(</span><span class="m-doc-wrap">const <a href="structStdError.html" class="m-doc">StdError</a>*restrict self)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdError_8h.html">&lt;include/C2nxt/StdError.h&gt;</a></div>
             </h3>
             <p>Returns the error message associated with the given error, as a <code>cstring</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -267,6 +279,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gae3d2891ef51bcedad1877140833c46ee" class="m-doc-self">std_error_category_get_message</a>(</span><span class="m-doc-wrap"><a href="structStdErrorCategory.html" class="m-doc">StdErrorCategory</a> self,
               <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> error_code)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdError_8h.html">&lt;include/C2nxt/StdError.h&gt;</a></div>
             </h3>
             <p>Returns the error message associated with the given error code, as a <code>cstring</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -294,6 +307,7 @@
           <section class="m-doc-details" id="ga88fc2869e66805cf5fab4e9846c66d73"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga88fc2869e66805cf5fab4e9846c66d73" class="m-doc-self">std_error_category_get_posix_message</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> error_code)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdError_8h.html">&lt;include/C2nxt/StdError.h&gt;</a></div>
             </h3>
             <p>Returns the POSIX error message associated with the given error code, as a <code>cstring</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -320,6 +334,7 @@
               <a href="structStdError.html" class="m-doc">StdError</a>,
               <a href="StdError_8h.html#a9d79c493c604522cf4b1f9fa4fc4324a" class="m-doc">std_<wbr />error_<wbr />format</a>,
               <a href="StdError_8h.html#adced6e6316a699d741236de910b9160c" class="m-doc">std_<wbr />error_<wbr />format_<wbr />with_<wbr />allocator</a>)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdError_8h.html">&lt;include/C2nxt/StdError.h&gt;</a></div>
             </h3>
             <p>Implement <code><a href="structStdFormat.html" class="m-doc">StdFormat</a></code> for <code><a href="structStdError.html" class="m-doc">StdError</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -337,6 +352,7 @@
           <section class="m-doc-details" id="gaf497fc82255f5204c2637e230a6523e5"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gaf497fc82255f5204c2637e230a6523e5" class="m-doc-self">STD_POSIX_ERROR_CATEGORY</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdError_8h.html">&lt;include/C2nxt/StdError.h&gt;</a></div>
             </h3>
             <p>The <code><a href="structStdErrorCategory.html" class="m-doc">StdErrorCategory</a></code> to map POSIX error codes.</p>
 <p><code>STD_POSIX_ERROR_CATEGORY</code> is the error category to map POSIX error codes to their associated error messages. It will produce equivalent results to <code>strerror</code> in standard C</p>
@@ -344,6 +360,7 @@
           <section class="m-doc-details" id="ga86b14f08d8118a24c4e0fd44edfd25fb"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga86b14f08d8118a24c4e0fd44edfd25fb" class="m-doc-self">STD_DEFAULT_ERROR_CATEGORY</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdError_8h.html">&lt;include/C2nxt/StdError.h&gt;</a></div>
             </h3>
             <p>the default <code><a href="structStdErrorCategory.html" class="m-doc">StdErrorCategory</a></code>. By default, this is <code>STD_POSIX_ERROR_CATEGORY</code></p>
 <p>This can be overridden by defining <code>STD_DEFAULT_ERROR_CATEGORY</code> to a compound literal of your chosen <code><a href="structStdErrorCategory.html" class="m-doc">StdErrorCategory</a></code> prior to including &quot;StdError.h&quot;</p>
@@ -393,7 +410,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>
