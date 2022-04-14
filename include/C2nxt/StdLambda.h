@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Basic lambda/closure implementation for C.
 /// @version 0.1.3
-/// @date 2022-04-08
+/// @date 2022-04-12
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -46,12 +46,12 @@
 /// typedef Lambda(void, StdString) LambdaVoidString;
 ///
 /// // declare a lambda function named greet_place that returns `void` and takes in a `StdString`
-/// LambdaFunction(void, greet_place, StdString greeting) {
+/// void LambdaFunction(greet_place, StdString greeting) {
 /// 	// Retrieve the variable bindings from the lambda.
-///		// The binding type (`LambdaBinding(StdString)` here) and the types of the variables passed
+///		// The binding types (`StdString` here) and the types of the variables passed
 /// 	// to the generator macro (`lambda` or `lambda_with_allocator`)
 /// 	// __**MUST MATCH**__
-/// 	let binding = lambda_binding(LambdaBinding(StdString));
+/// 	let binding = lambda_binding(StdString);
 ///		// get the first bound variable
 ///		let place = binding._1;
 ///		println("{}, {}!", greeting, place);
