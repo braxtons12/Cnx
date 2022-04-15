@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Token Metaprogramming module | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          Token Metaprogramming <span class="m-thin">module</span></h1>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<p>This module provides various macros for metaprogramming on/with tokens/text</p>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga770b921e59b3151931ee939a1ecf450e" class="m-doc">CONCAT</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Concatenates an arbitrary number of arguments.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga8ec853617a78c1b3a930bdaa79620f17" class="m-doc">CONCAT_DEFERRED</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Concatenates an arbitrary number of arguments, with one additional layer of indirection.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaddc95bd9d5b7be96dedb30d495233d14" class="m-doc">CONCAT0</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Concatenates zero arguments.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga65c5e0c5a3508f071721f40f3cd366b7" class="m-doc">CONCAT1</a>(</span><span class="m-doc-wrap">A)</span>
+            </dt>
+            <dd>Concatenates nothing to one argument (returns the given argument)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga38ba2770a67d7c4b4b1a81e2f9062369" class="m-doc">CONCAT2</a>(</span><span class="m-doc-wrap">A,
+              B)</span>
+            </dt>
+            <dd>Concatenates the two arguments.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5fcc3cf7d2d7a0365992a17b58ca1b0a" class="m-doc">CONCAT2_DEFERRED</a>(</span><span class="m-doc-wrap">A,
+              B)</span>
+            </dt>
+            <dd>Concatenates the two arguments with one additional layer of indirection.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaaba67c5dc5854bfeb0905a66228ec2fa" class="m-doc">CONCAT3</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C)</span>
+            </dt>
+            <dd>Concatenates the three arguments.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae83d1373c0d8abe26793ecd6f82be0c0" class="m-doc">CONCAT4</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C,
+              D)</span>
+            </dt>
+            <dd>Concatenates the four arguments.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac334ed3c39379a5065d8a26e127a0c83" class="m-doc">CONCAT5</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C,
+              D,
+              E)</span>
+            </dt>
+            <dd>Concatenates the five arguments.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1fad6eb61043063f5281a2e1ad07b907" class="m-doc">CONCAT6</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C,
+              D,
+              E,
+              F)</span>
+            </dt>
+            <dd>Concatenates the 6 arguments.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae6f2780404e6edac66f13355044fe95c" class="m-doc">CONCAT7</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C,
+              D,
+              E,
+              F,
+              G)</span>
+            </dt>
+            <dd>Concatenates the 7 arguments.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga6f6a36f7639ad1b453668401eee17a11" class="m-doc">CONCAT8</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C,
+              D,
+              E,
+              F,
+              G,
+              H)</span>
+            </dt>
+            <dd>Concatenates the 8 arguments.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga8ac9e3a3d443ce9c2d0536b8f7d049bc" class="m-doc">CONCAT9</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C,
+              D,
+              E,
+              F,
+              G,
+              H,
+              I)</span>
+            </dt>
+            <dd>Concatenates the 9 arguments.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1d6714fb6c2514b9844b41f68c38f5bc" class="m-doc">CONCAT10</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C,
+              D,
+              E,
+              F,
+              G,
+              H,
+              I,
+              J)</span>
+            </dt>
+            <dd>Concatenates the 10 arguments.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaebc5c8a4c6c63baad313140c53f480f2" class="m-doc">CONCAT11</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C,
+              D,
+              E,
+              F,
+              G,
+              H,
+              I,
+              J,
+              K)</span>
+            </dt>
+            <dd>Concatenates the 11 arguments.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7fb435cab0e529a95087e6e7b3eda3a0" class="m-doc">CONCAT12</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C,
+              D,
+              E,
+              F,
+              G,
+              H,
+              I,
+              J,
+              K,
+              L)</span>
+            </dt>
+            <dd>Concatenates the 12 arguments.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4fb1a8aa3be3183efbe45c3d5844609f" class="m-doc">CONCAT13</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C,
+              D,
+              E,
+              F,
+              G,
+              H,
+              I,
+              J,
+              K,
+              L,
+              M)</span>
+            </dt>
+            <dd>Concatenates the 13 arguments.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga0476482b803062ace343dea5ede878c2" class="m-doc">AS_STRING</a>(</span><span class="m-doc-wrap">x)</span>
+            </dt>
+            <dd>Stringifies the given textual argument.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Define documentation</h2>
+          <section class="m-doc-details" id="ga770b921e59b3151931ee939a1ecf450e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga770b921e59b3151931ee939a1ecf450e" class="m-doc-self">CONCAT</a>(</span><span class="m-doc-wrap">...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Def_8h.html">&lt;include/Cnx/Def.h&gt;</a></div>
+            </h3>
+            <p>Concatenates an arbitrary number of arguments.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">...</td>
+                  <td>- The arguments to concatenate</td>
+                </tr>
+              </tbody>
+            </table>
+<p>The arguments must be alphanumeric, macro-concatenation compatible sequences of characters</p>
+          </div></section>
+          <section class="m-doc-details" id="ga8ec853617a78c1b3a930bdaa79620f17"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga8ec853617a78c1b3a930bdaa79620f17" class="m-doc-self">CONCAT_DEFERRED</a>(</span><span class="m-doc-wrap">...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Def_8h.html">&lt;include/Cnx/Def.h&gt;</a></div>
+            </h3>
+            <p>Concatenates an arbitrary number of arguments, with one additional layer of indirection.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">...</td>
+                  <td>- The arguments to concatenate</td>
+                </tr>
+              </tbody>
+            </table>
+<p>The arguments must be alphanumeric, macro-concatenation compatible sequences of characters. This is useful for use in a macro chain when the result must be deferred through one-further stage of macro replacement than the normal <code><a href="group__cnx__pp__strings.html#ga770b921e59b3151931ee939a1ecf450e" class="m-doc">CONCAT(...)</a></code> provides</p>
+          </div></section>
+          <section class="m-doc-details" id="gaddc95bd9d5b7be96dedb30d495233d14"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaddc95bd9d5b7be96dedb30d495233d14" class="m-doc-self">CONCAT0</a>(</span><span class="m-doc-wrap">...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="PPStrings_8h.html">&lt;include/Cnx/mpl/PPStrings.h&gt;</a></div>
+            </h3>
+            <p>Concatenates zero arguments.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">...</td>
+                  <td>- The arguments that will not be concatenated</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>nothing</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga65c5e0c5a3508f071721f40f3cd366b7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga65c5e0c5a3508f071721f40f3cd366b7" class="m-doc-self">CONCAT1</a>(</span><span class="m-doc-wrap">A)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="PPStrings_8h.html">&lt;include/Cnx/mpl/PPStrings.h&gt;</a></div>
+            </h3>
+            <p>Concatenates nothing to one argument (returns the given argument)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">A</td>
+                  <td>- the argument to concatenate nothing to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>A</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga38ba2770a67d7c4b4b1a81e2f9062369"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga38ba2770a67d7c4b4b1a81e2f9062369" class="m-doc-self">CONCAT2</a>(</span><span class="m-doc-wrap">A,
+              B)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="PPStrings_8h.html">&lt;include/Cnx/mpl/PPStrings.h&gt;</a></div>
+            </h3>
+            <p>Concatenates the two arguments.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">A</td>
+                  <td>- the left-side portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>- the right-side portion of the concatenation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the concatenation of <code>A</code> and <code>B</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p><code>A</code> and <code>B</code> must be alphanumeric, macro-concatenation compatible sequences of characters</p>
+          </div></section>
+          <section class="m-doc-details" id="ga5fcc3cf7d2d7a0365992a17b58ca1b0a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5fcc3cf7d2d7a0365992a17b58ca1b0a" class="m-doc-self">CONCAT2_DEFERRED</a>(</span><span class="m-doc-wrap">A,
+              B)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="PPStrings_8h.html">&lt;include/Cnx/mpl/PPStrings.h&gt;</a></div>
+            </h3>
+            <p>Concatenates the two arguments with one additional layer of indirection.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">A</td>
+                  <td>- the left-side portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>- the right-side portion of the concatenation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the concatenation of <code>A</code> and <code>B</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p><code>A</code> and <code>B</code> must be alphanumeric, macro-concatenation compatible sequences of characters This is useful for use in a macro chain when the result must be deferred through one-further stage of macro replacement than the normal <code><a href="group__cnx__pp__strings.html#ga38ba2770a67d7c4b4b1a81e2f9062369" class="m-doc">CONCAT2(A, B)</a></code> provides</p>
+          </div></section>
+          <section class="m-doc-details" id="gaaba67c5dc5854bfeb0905a66228ec2fa"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaaba67c5dc5854bfeb0905a66228ec2fa" class="m-doc-self">CONCAT3</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="PPStrings_8h.html">&lt;include/Cnx/mpl/PPStrings.h&gt;</a></div>
+            </h3>
+            <p>Concatenates the three arguments.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">A</td>
+                  <td>- the left-side portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>- the middle portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>C</td>
+                  <td>- the right-side portion of the concatenation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the concatenation of <code>A</code>, <code>B</code>, and <code>C</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p><code>A</code>, <code>B</code>, and <code>C</code> must be alphanumeric, macro-concatenation compatible sequences of characters</p>
+          </div></section>
+          <section class="m-doc-details" id="gae83d1373c0d8abe26793ecd6f82be0c0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae83d1373c0d8abe26793ecd6f82be0c0" class="m-doc-self">CONCAT4</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C,
+              D)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="PPStrings_8h.html">&lt;include/Cnx/mpl/PPStrings.h&gt;</a></div>
+            </h3>
+            <p>Concatenates the four arguments.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">A</td>
+                  <td>- the left-side portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>- the left-middle portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>C</td>
+                  <td>- the right-middle portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>D</td>
+                  <td>- the right-side portion of the concatenation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the concatenation of <code>A</code>, <code>B</code>, <code>C</code>, and <code>D</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p><code>A</code>, <code>B</code>, <code>C</code>, and <code>D</code> must be alphanumeric, macro-concatenation compatible sequences of characters</p>
+          </div></section>
+          <section class="m-doc-details" id="gac334ed3c39379a5065d8a26e127a0c83"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac334ed3c39379a5065d8a26e127a0c83" class="m-doc-self">CONCAT5</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C,
+              D,
+              E)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="PPStrings_8h.html">&lt;include/Cnx/mpl/PPStrings.h&gt;</a></div>
+            </h3>
+            <p>Concatenates the five arguments.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">A</td>
+                  <td>- the first portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>- the second portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>C</td>
+                  <td>- the third portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>D</td>
+                  <td>- the fourth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>E</td>
+                  <td>- the fifth portion of the concatenation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the concatenation of <code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, <code>E</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p><code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, <code>E</code> must be alphanumeric, macro-concatenation compatible sequences of characters</p>
+          </div></section>
+          <section class="m-doc-details" id="ga1fad6eb61043063f5281a2e1ad07b907"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1fad6eb61043063f5281a2e1ad07b907" class="m-doc-self">CONCAT6</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C,
+              D,
+              E,
+              F)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="PPStrings_8h.html">&lt;include/Cnx/mpl/PPStrings.h&gt;</a></div>
+            </h3>
+            <p>Concatenates the 6 arguments.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">A</td>
+                  <td>- the first portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>- the second portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>C</td>
+                  <td>- the third portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>D</td>
+                  <td>- the fourth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>E</td>
+                  <td>- the fifth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>F</td>
+                  <td>- the sixth portion of the concatenation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the concatenation of <code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, <code>E</code>, <code>F</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p><code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, <code>E</code>, <code>F</code> must be alphanumeric, macro-concatenation compatible sequences of characters</p>
+          </div></section>
+          <section class="m-doc-details" id="gae6f2780404e6edac66f13355044fe95c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae6f2780404e6edac66f13355044fe95c" class="m-doc-self">CONCAT7</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C,
+              D,
+              E,
+              F,
+              G)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="PPStrings_8h.html">&lt;include/Cnx/mpl/PPStrings.h&gt;</a></div>
+            </h3>
+            <p>Concatenates the 7 arguments.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">A</td>
+                  <td>- the first portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>- the second portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>C</td>
+                  <td>- the third portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>D</td>
+                  <td>- the fourth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>E</td>
+                  <td>- the fifth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>F</td>
+                  <td>- the sixth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>G</td>
+                  <td>- the seventh portion of the concatenation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the concatenation of <code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, <code>E</code>, <code>F</code>, <code>G</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p><code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, <code>E</code>, <code>F</code>, <code>G</code> must be alphanumeric, macro-concatenation compatible sequences of characters</p>
+          </div></section>
+          <section class="m-doc-details" id="ga6f6a36f7639ad1b453668401eee17a11"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga6f6a36f7639ad1b453668401eee17a11" class="m-doc-self">CONCAT8</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C,
+              D,
+              E,
+              F,
+              G,
+              H)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="PPStrings_8h.html">&lt;include/Cnx/mpl/PPStrings.h&gt;</a></div>
+            </h3>
+            <p>Concatenates the 8 arguments.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">A</td>
+                  <td>- the first portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>- the second portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>C</td>
+                  <td>- the third portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>D</td>
+                  <td>- the fourth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>E</td>
+                  <td>- the fifth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>F</td>
+                  <td>- the sixth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>G</td>
+                  <td>- the seventh portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>H</td>
+                  <td>- the eight portion of the concatenation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the concatenation of <code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, <code>E</code>, <code>F</code>, <code>G</code>, <code>H</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p><code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, <code>E</code>, <code>F</code>, <code>G</code>, <code>H</code> must be alphanumeric, macro-concatenation compatible sequences of characters</p>
+          </div></section>
+          <section class="m-doc-details" id="ga8ac9e3a3d443ce9c2d0536b8f7d049bc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga8ac9e3a3d443ce9c2d0536b8f7d049bc" class="m-doc-self">CONCAT9</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C,
+              D,
+              E,
+              F,
+              G,
+              H,
+              I)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="PPStrings_8h.html">&lt;include/Cnx/mpl/PPStrings.h&gt;</a></div>
+            </h3>
+            <p>Concatenates the 9 arguments.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">A</td>
+                  <td>- the first portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>- the second portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>C</td>
+                  <td>- the third portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>D</td>
+                  <td>- the fourth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>E</td>
+                  <td>- the fifth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>F</td>
+                  <td>- the sixth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>G</td>
+                  <td>- the seventh portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>H</td>
+                  <td>- the eight portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>I</td>
+                  <td>- the ninth portion of the concatenation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the concatenation of <code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, <code>E</code>, <code>F</code>, <code>G</code>, <code>H</code>, <code>I</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p><code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, <code>E</code>, <code>F</code>, <code>G</code>, <code>H</code>, <code>I</code> must be alphanumeric, macro-concatenation compatible sequences of characters</p>
+          </div></section>
+          <section class="m-doc-details" id="ga1d6714fb6c2514b9844b41f68c38f5bc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1d6714fb6c2514b9844b41f68c38f5bc" class="m-doc-self">CONCAT10</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C,
+              D,
+              E,
+              F,
+              G,
+              H,
+              I,
+              J)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="PPStrings_8h.html">&lt;include/Cnx/mpl/PPStrings.h&gt;</a></div>
+            </h3>
+            <p>Concatenates the 10 arguments.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">A</td>
+                  <td>- the first portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>- the second portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>C</td>
+                  <td>- the third portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>D</td>
+                  <td>- the fourth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>E</td>
+                  <td>- the fifth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>F</td>
+                  <td>- the sixth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>G</td>
+                  <td>- the seventh portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>H</td>
+                  <td>- the eight portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>I</td>
+                  <td>- the ninth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>J</td>
+                  <td>- the tenth portion of the concatenation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the concatenation of <code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, <code>E</code>, <code>F</code>, <code>G</code>, <code>H</code>, <code>I</code>, <code>J</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p><code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, <code>E</code>, <code>F</code>, <code>G</code>, <code>H</code>, <code>I</code>, <code>J</code> must be alphanumeric, macro-concatenation compatible sequences of characters</p>
+          </div></section>
+          <section class="m-doc-details" id="gaebc5c8a4c6c63baad313140c53f480f2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaebc5c8a4c6c63baad313140c53f480f2" class="m-doc-self">CONCAT11</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C,
+              D,
+              E,
+              F,
+              G,
+              H,
+              I,
+              J,
+              K)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="PPStrings_8h.html">&lt;include/Cnx/mpl/PPStrings.h&gt;</a></div>
+            </h3>
+            <p>Concatenates the 11 arguments.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">A</td>
+                  <td>- the first portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>- the second portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>C</td>
+                  <td>- the third portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>D</td>
+                  <td>- the fourth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>E</td>
+                  <td>- the fifth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>F</td>
+                  <td>- the sixth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>G</td>
+                  <td>- the seventh portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>H</td>
+                  <td>- the eight portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>I</td>
+                  <td>- the ninth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>J</td>
+                  <td>- the tenth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>K</td>
+                  <td>- the eleventh portion of the concatenation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the concatenation of <code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, <code>E</code>, <code>F</code>, <code>G</code>, <code>H</code>, <code>I</code>, <code>J</code>, <code>K</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p><code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, <code>E</code>, <code>F</code>, <code>G</code>, <code>H</code>, <code>I</code>, <code>J</code>, <code>K</code> must be alphanumeric, macro-concatenation compatible sequences of characters</p>
+          </div></section>
+          <section class="m-doc-details" id="ga7fb435cab0e529a95087e6e7b3eda3a0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7fb435cab0e529a95087e6e7b3eda3a0" class="m-doc-self">CONCAT12</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C,
+              D,
+              E,
+              F,
+              G,
+              H,
+              I,
+              J,
+              K,
+              L)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="PPStrings_8h.html">&lt;include/Cnx/mpl/PPStrings.h&gt;</a></div>
+            </h3>
+            <p>Concatenates the 12 arguments.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">A</td>
+                  <td>- the first portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>- the second portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>C</td>
+                  <td>- the third portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>D</td>
+                  <td>- the fourth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>E</td>
+                  <td>- the fifth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>F</td>
+                  <td>- the sixth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>G</td>
+                  <td>- the seventh portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>H</td>
+                  <td>- the eight portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>I</td>
+                  <td>- the ninth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>J</td>
+                  <td>- the tenth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>K</td>
+                  <td>- the eleventh portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>L</td>
+                  <td>- the twelfth portion of the concatenation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the concatenation of <code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, <code>E</code>, <code>F</code>, <code>G</code>, <code>H</code>, <code>I</code>, <code>J</code>, <code>K</code>, <code>L</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p><code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, <code>E</code>, <code>F</code>, <code>G</code>, <code>H</code>, <code>I</code>, <code>J</code>, <code>K</code>, <code>L</code> must be alphanumeric, macro-concatenation compatible sequences of characters</p>
+          </div></section>
+          <section class="m-doc-details" id="ga4fb1a8aa3be3183efbe45c3d5844609f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4fb1a8aa3be3183efbe45c3d5844609f" class="m-doc-self">CONCAT13</a>(</span><span class="m-doc-wrap">A,
+              B,
+              C,
+              D,
+              E,
+              F,
+              G,
+              H,
+              I,
+              J,
+              K,
+              L,
+              M)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="PPStrings_8h.html">&lt;include/Cnx/mpl/PPStrings.h&gt;</a></div>
+            </h3>
+            <p>Concatenates the 13 arguments.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">A</td>
+                  <td>- the first portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>- the second portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>C</td>
+                  <td>- the third portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>D</td>
+                  <td>- the fourth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>E</td>
+                  <td>- the fifth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>F</td>
+                  <td>- the sixth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>G</td>
+                  <td>- the seventh portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>H</td>
+                  <td>- the eight portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>I</td>
+                  <td>- the ninth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>J</td>
+                  <td>- the tenth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>K</td>
+                  <td>- the eleventh portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>L</td>
+                  <td>- the twelfth portion of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>M</td>
+                  <td>- the thirteenth portion of the concatenation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the concatenation of <code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, <code>E</code>, <code>F</code>, <code>G</code>, <code>H</code>, <code>I</code>, <code>J</code>, <code>K</code>, <code>L</code>, <code>M</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p><code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, <code>E</code>, <code>F</code>, <code>G</code>, <code>H</code>, <code>I</code>, <code>J</code>, <code>K</code>, <code>L</code>, <code>M</code> must be alphanumeric, macro-concatenation compatible sequences of characters</p>
+          </div></section>
+          <section class="m-doc-details" id="ga0476482b803062ace343dea5ede878c2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga0476482b803062ace343dea5ede878c2" class="m-doc-self">AS_STRING</a>(</span><span class="m-doc-wrap">x)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="PPStrings_8h.html">&lt;include/Cnx/mpl/PPStrings.h&gt;</a></div>
+            </h3>
+            <p>Stringifies the given textual argument.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>- The text to stringify</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>x</code> as a string literal</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Converts the given argument into a string literal, performing macro expansion if necessary</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

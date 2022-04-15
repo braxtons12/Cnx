@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Collections &raquo; CnxArray module | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="group__collections.html">Collections</a> &raquo;</span>
+          CnxArray <span class="m-thin">module</span></h1>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<p><code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> is a struct template for a type-safe fixed-capacity, dynamic-size, stack allocated array type. <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> is bounds safe, allocator aware, and provides Cnx compatible random access iterators. It supports user-defined default-constructors, copy-constructors, and destructors for its elements. It&#x27;s design is similar to C++&#x27;s <code>std::array</code>, but with expanded semantics and functionality.</p><p>Because of its size, <code>N</code>, template parameter, instantiations of <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> for builtins or any Cnx types are <strong>not</strong> provided, and will have to be instantiated by the user. The requirements are similar to <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, and requires minimal boiler-plate:</p><ol><li>a <code>typedef</code> of your type to provide an alphanumeric name for it. (for template and macro parameters)</li><li>a <code>typedef</code> for pointer to your type as <code><a href="group__cnx__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(YourType)</a>, for use with the iterators</code></li><li><code>a</code>typedef<code>for pointer to const your type as</code><a href="group__cnx__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(YourType)</a>`, for use with the iterators</li><li>Instantiations for Cnx iterators for the typedefs provided in (2) and (3) (already instantiated for builtins and <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>)</li><li>Instantiation of <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for your type (already instantiated for builtins and <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>)</li></ol><p>For <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> we recommend you provide the instantiation for user-defined types in a separate &quot;template instantiation&quot; .h/.c file pair, but you can also provide them inline with your type like discussed in <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>&#x27;s documentation.</p><aside class="m-note m-default"><h4>See also</h4><p><a href="group__cnx__string.html#gae5104aa67000504001379fdb7799f41b" class="m-doc">CnxVector</a></p></aside><p>Example:</p><pre class="m-code"><span class="c1">// in `YourType.h`</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">YourType</span> <span class="p">{</span>
+    <span class="c1">// members</span>
+<span class="p">}</span> <span class="n">YourType</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="n">YourType</span><span class="o">*</span> <span class="nf">Ref</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+<span class="k">typedef</span> <span class="k">const</span> <span class="n">YourType</span><span class="o">*</span> <span class="nf">ConstRef</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+
+<span class="n">DeclCnxIterators</span><span class="p">(</span><span class="n">Ref</span><span class="p">(</span><span class="n">YourType</span><span class="p">));</span>
+<span class="n">DeclCnxIterators</span><span class="p">(</span><span class="n">ConstRef</span><span class="p">(</span><span class="n">YourType</span><span class="p">));</span>
+<span class="c1">// the rest of your public interface</span>
+
+<span class="c1">// in `CnxOptionYourType.h`</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/Def.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;YourType.h&quot;</span><span class="cp"></span>
+<span class="cp">#define OPTION_T YourType</span>
+<span class="cp">#define OPTION_DECL TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/Option.h&gt;</span><span class="cp"></span>
+<span class="cp">#undef OPTION_T</span>
+<span class="cp">#undef OPTION_DECL</span>
+
+<span class="c1">// in `CnxOptionYourType.c`</span>
+<span class="cp">#include</span> <span class="cpf">&quot;CnxOptionYourType.h&quot;</span><span class="cp"></span>
+<span class="cp">#define OPTION_T YourType</span>
+<span class="cp">#define OPTION_IMPL TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/Option.h&gt;</span><span class="cp"></span>
+<span class="cp">#undef OPTION_T</span>
+<span class="cp">#undef OPTION_IMPL</span>
+
+<span class="c1">// in `CnxArrayYourTypeYourN.h&quot;</span>
+<span class="cp">#include</span> <span class="cpf">&quot;YourType.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;CnxOptionYourType.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#define ARRAY_T YourType</span>
+<span class="cp">#define ARRAY_N YourN</span>
+<span class="cp">#define ARRAY_DECL TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/Array.h&gt;</span><span class="cp"></span>
+<span class="cp">#undef ARRAY_T</span>
+<span class="cp">#undef ARRAY_N</span>
+<span class="cp">#undef ARRAY_DECL</span>
+
+<span class="c1">// in `CnxArrayYourTypeYourN.c`</span>
+<span class="cp">#include</span> <span class="cpf">&quot;CnxArrayYourTypeYourN.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#define ARRAY_T YourType</span>
+<span class="cp">#define ARRAY_N YourN</span>
+<span class="cp">#define ARRAY_IMPL TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/Array.h&gt;</span><span class="cp"></span>
+<span class="cp">#undef ARRAY_T</span>
+<span class="cp">#undef ARRAY_N</span>
+<span class="cp">#undef ARRAY_IMPL</span></pre><p>The, somewhere else in your codebase, you can easily use the instantiation:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&quot;YourType.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;CnxArrayYourTypeYourN.h&quot;</span><span class="cp"></span>
+
+<span class="n">CnxArray</span><span class="p">(</span><span class="n">YourType</span><span class="p">,</span> <span class="n">YourN</span><span class="p">)</span> <span class="n">create_and_fill_your_type_array</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">array</span> <span class="o">=</span> <span class="n">cnx_array_new</span><span class="p">(</span><span class="n">YourType</span><span class="p">,</span> <span class="n">YourN</span><span class="p">);</span>
+
+    <span class="n">cnx_array_resize</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">YourN</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">array</span><span class="p">;</span>
+<span class="p">}</span></pre><p><code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> implements <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code>, but because of its generic type, can&#x27;t be automatically converted to its <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation, so we have to cast to it explicitly:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&quot;Cnx/IO.h&quot;</span><span class="cp"></span>
+<span class="kt">void</span> <span class="nf">print_array</span><span class="p">(</span><span class="k">const</span> <span class="n">CnxArray</span><span class="p">(</span><span class="n">YourType</span><span class="p">,</span> <span class="n">YourN</span><span class="p">)</span><span class="o">*</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">as_format_t</span><span class="p">(</span><span class="n">CnxArray</span><span class="p">(</span><span class="n">YourType</span><span class="p">,</span> <span class="n">YourN</span><span class="p">),</span> <span class="o">*</span><span class="n">array</span><span class="p">);</span>
+<span class="p">}</span></pre><aside class="m-note m-info"><h4>Note</h4><p><code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>&#x27;s <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation will always be a debug representation, eg: &quot;[size: X, capacity: Y, data_ptr: Q]&quot;, and never a printout of contained elements</p></aside><p>You can provide user-defined default-constructor, copy-constructor, and destructor for elements of your type, and custom allocator for memory allocations they might need to perform. (<code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> is always stack allocated, so the memory allocator is <strong>only</strong> for constructor and destructor functions for your type)</p><pre class="m-code"><span class="n">YourType</span> <span class="nf">your_type_constructor</span><span class="p">(</span><span class="n">CnxAllocator</span> <span class="n">allocator</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">YourType</span><span class="p">){</span><span class="mi">0</span><span class="p">};</span>
+    <span class="c1">// whatever you need to do to init your type</span>
+    <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">YourType</span> <span class="nf">your_type_copy_constructor</span><span class="p">(</span><span class="k">const</span> <span class="n">YourType</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">elem</span><span class="p">,</span> <span class="n">CnxAllocator</span> <span class="n">allocator</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">YourType</span><span class="p">){</span><span class="mi">0</span><span class="p">};</span>
+    <span class="c1">// whatever you need to do to copy `elem` to `t`</span>
+    <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">your_type_destructor</span><span class="p">(</span><span class="n">YourType</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">t</span><span class="p">,</span> <span class="n">CnxAllocator</span> <span class="n">allocator</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// whatever you need to do to cleanup `t`</span>
+<span class="p">}</span>
+
+<span class="n">CnxArray</span><span class="p">(</span><span class="n">YourType</span><span class="p">,</span> <span class="n">YourN</span><span class="p">)</span> <span class="n">create_and_fill_your_type_array</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">array</span> <span class="o">=</span> <span class="n">cnx_array_new_with_allocator_and_collection_data</span><span class="p">(</span><span class="n">YourType</span><span class="p">,</span>
+                        <span class="n">YourN</span><span class="p">,</span>
+                        <span class="c1">// This `CnxAllocator` will only be associated with this specific array,</span>
+                        <span class="c1">// not all `CnxArray(YourType, YourN)`s</span>
+                        <span class="n">cnx_allocator_from_custom_stateless_allocator</span><span class="p">(</span><span class="n">your_malloc</span><span class="p">,</span>
+                                                                      <span class="n">your_realloc</span><span class="p">,</span>
+                                                                      <span class="n">your_free</span><span class="p">),</span>
+                        <span class="c1">// This `CnxCollectionData(CollectionType)` will only be</span>
+                        <span class="c1">// associated with this specific array, not all</span>
+                        <span class="c1">// `CnxArray(YourType, YourN)`s</span>
+                        <span class="p">((</span><span class="n">CnxCollectionData</span><span class="p">(</span><span class="n">CnxArray</span><span class="p">(</span><span class="n">YourType</span><span class="p">,</span> <span class="n">YourN</span><span class="p">)))</span> <span class="p">{</span>
+                            <span class="c1">// can be left NULL, will be defaulted</span>
+                            <span class="p">.</span><span class="n">m_constructor</span> <span class="o">=</span> <span class="n">your_type_constructor</span><span class="p">,</span>
+                            <span class="c1">// can be left NULL, will disable `cnx_array_clone(self)` for</span>
+                            <span class="c1">// this array</span>
+                            <span class="p">.</span><span class="n">m_copy_constructor</span> <span class="o">=</span> <span class="n">your_type_copy_constructor</span><span class="p">,</span>
+                            <span class="c1">// can be left NULL, will be defaulted</span>
+                            <span class="p">.</span><span class="n">m_destructor</span> <span class="o">=</span> <span class="n">your_type_destructor</span>
+                        <span class="p">})</span>
+                    <span class="p">);</span>
+
+    <span class="c1">// fill the array with default constructed elements</span>
+    <span class="n">cnx_array_resize</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">YourN</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">array</span><span class="p">;</span>
+<span class="p">}</span></pre><p><code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> also provides Cnx random access iterators and optional scoped destruction:</p><pre class="m-code"><span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">cnx_array_scoped</span><span class="p">(</span><span class="n">u32</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="n">array</span> <span class="o">=</span> <span class="n">cnx_array_new</span><span class="p">(</span><span class="n">u32</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+    <span class="n">ranged_for</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cnx_array_push_back</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// loop over the elements in the array by value, as an iteration</span>
+    <span class="n">foreach</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">elem</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">// array goes out of scope here and `cnx_array_free(array)` is called on it</span>
+    <span class="c1">// because we declared it as scoped</span>
+<span class="p">}</span></pre><p>Like other Cnx collections, <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> provides its type-agnostic usage through a vtable pointer contained in the struct, and provides macros which wrap the usage of the vtable, making access simpler. If you prefer to not use this method of access, you can call the typed functions directly by in-fixing the contained type in the associated function name. IE: for <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(i32, 10)</a></code>, and an array <code>array</code>, the equivalent function call for <code><a href="group__cnx__array.html#gaa71d011690fbf30569cb2e33b7773da7" class="m-doc">cnx_<wbr />array_<wbr />push_<wbr />back(array, element)</a></code> would be <code>cnx_array_i32_10_push_back(&amp;array, element)</code></p><aside class="m-note m-info"><h4>Note</h4><p>Note, however, that using the typed functions instead of the macros results in losing the reference-semantics of function-macros like <code><a href="group__cnx__array.html#gadd0cc5cfa15d101a7ea09c5a50e912dc" class="m-doc">cnx_<wbr />array_<wbr />at(self, index)</a></code> and will instead be dealing with pointers directly. Example:</p><pre class="m-code"><span class="c1">// instead of:</span>
+<span class="n">cnx_array_at_mut</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="c1">// you would have to do:</span>
+<span class="o">*</span><span class="n">cnx_array_i32_10_at_mut</span><span class="p">(</span><span class="o">&amp;</span><span class="n">self</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span></pre></aside>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray</a>(</span><span class="m-doc-wrap">T,
+              N)</span>
+            </dt>
+            <dd>Macro alias for a <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> containing up to <code>N</code> <code>T</code>s.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga95e961c2a941310ab743126bc1d87993" class="m-doc">cnx_array_new</a>(</span><span class="m-doc-wrap">T,
+              N)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> with defaulted associated functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga94e6e692131c151bd8503d2e287518ad" class="m-doc">cnx_array_new_with_allocator</a>(</span><span class="m-doc-wrap">T,
+              N,
+              allocator)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> with defaulted associated functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9067e3618feb1bd4141fcdaa666cdde0" class="m-doc">cnx_array_new_with_collection_data</a>(</span><span class="m-doc-wrap">T,
+              N,
+              collection_data_ptr)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> with provided associated functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaab4d094a0b84491d0a9f6e0bc02a3c44" class="m-doc">cnx_array_new_with_allocator_and_collection_data</a>(</span><span class="m-doc-wrap">T,
+              N,
+              allocator,
+              collection_data_ptr)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> with provided associated functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gabc6bf11d15aa9ae1bd29077611334fb7" class="m-doc">cnx_array_clone</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Clones the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga24d128e1f9a568895e4ec7a1ac1cb407" class="m-doc">cnx_array_at_mut</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>Returns a mutable reference to the element at the given <code>index</code> into the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadd0cc5cfa15d101a7ea09c5a50e912dc" class="m-doc">cnx_array_at</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>Returns a const reference to the element at the given <code>index</code> into the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae73e059ed9c9cfbf5fb8f2385ed381cf" class="m-doc">cnx_array_front_mut</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a mutable reference to the first element in the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga3a69d5b99f41001745d6233028622422" class="m-doc">cnx_array_front</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a const reference to the first element in the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaaead910f1924538f8cdf8d5fce33a5cc" class="m-doc">cnx_array_back_mut</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a mutable reference to the last element in the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaf77c9f2c050419d297b287a59a0237e5" class="m-doc">cnx_array_back</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a const reference to the last element in the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7e1f08422f843e34801b12e4c34f8c8c" class="m-doc">cnx_array_data_mut</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a mutable reference to the internal array in the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga53fe218b54f0ac7ec4b16a3800323ec2" class="m-doc">cnx_array_data</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a const reference to the internal array in the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9e4f54cbfa8d34860c5417d25a0f2bb4" class="m-doc">cnx_array_is_empty</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns whether the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> is empty.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae64ac594cb248c33f466fa89bb814ef3" class="m-doc">cnx_array_is_full</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns whether the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> is full.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga10e8c585ed4d473924a99507a08dee81" class="m-doc">cnx_array_size</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the current size of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga707c2aad778e9f3c7df65fe4e21a455c" class="m-doc">cnx_array_capacity</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the capacity of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> (ie the <code>N</code>)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7d8c1d8b08b6a618674cf9d0d36f71a4" class="m-doc">cnx_array_resize</a>(</span><span class="m-doc-wrap">self,
+              new_size)</span>
+            </dt>
+            <dd>Resizes the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to <code>new_size</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga0e52367e509f2000437cde4de60cda78" class="m-doc">cnx_array_clear</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Resets the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to a size of zero, destroying any active elements in the array.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaa71d011690fbf30569cb2e33b7773da7" class="m-doc">cnx_array_push_back</a>(</span><span class="m-doc-wrap">self,
+              element)</span>
+            </dt>
+            <dd>Pushes a new element into the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, at the end.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaf6f6f94bf4de2b80616ad655d650a18d" class="m-doc">cnx_array_pop_back</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Removes the last element from the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> and returns it.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga47d4c39971facbda7f5616244c5a052b" class="m-doc">cnx_array_insert</a>(</span><span class="m-doc-wrap">self,
+              element,
+              index)</span>
+            </dt>
+            <dd>Inserts the given element at the given index in the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9143dc285ac8c7bc877e461397b06c87" class="m-doc">cnx_array_erase</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>Erases the element at <code>index</code> from the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga261f5ae6e693b8e45e759494fb7bb2a6" class="m-doc">cnx_array_erase_n</a>(</span><span class="m-doc-wrap">self,
+              index,
+              num_elements)</span>
+            </dt>
+            <dd>Erases <code>num_elements</code> elements from the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, starting at <code>index</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae6099b29a565e083c97d0edf9972c44f" class="m-doc">cnx_array_free</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Frees the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, destroying its elements.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga95e57e5381a1049ea78dc406613e68b7" class="m-doc">cnx_array_begin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, starting at the beginning of the iteration (pointing at the beginning of the array)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga65fd48aa44473f39661c7ba69c4398f6" class="m-doc">cnx_array_end</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, starting at the end of the iteration (pointing at the end of the array)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4730ec892d2f3feda7071c67b4cfe789" class="m-doc">cnx_array_rbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, starting at the beginning of the reversed iteration (pointing at the end of the array)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga08a9b4cbd0383ea5817f8f95edf12db0" class="m-doc">cnx_array_rend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, starting at the end of the reversed iteration (pointing at the beginning of the array)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9ef227768538fa6e9776360202892a03" class="m-doc">cnx_array_iterator_equals</a>(</span><span class="m-doc-wrap">first,
+              second)</span>
+            </dt>
+            <dd>Returns whether the given pair of iterators are equal (they belong to the same collection and point to the same element), IE: if <code>first == second</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab67982bac3ab501d0520cd8d428051ee" class="m-doc">cnx_array_cbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, starting at the beginning of the iteration (pointing at the beginning of the array)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga22b6a87f8593ac655627b150a90f4413" class="m-doc">cnx_array_cend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, starting at the end of the iteration (pointing at the end of the array)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac6b8207508303066d65a7c46ffc936e6" class="m-doc">cnx_array_crbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, starting at the beginning of the reversed iteration (pointing at the end of the array)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga71d0447a57c400c3b68474c706b3a778" class="m-doc">cnx_array_crend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, starting at the end of the reversed iteration (pointing at the beginning of the array)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga595a419dd0aea2507c0888d9c766e0b6" class="m-doc">cnx_array_const_iterator_equals</a>(</span><span class="m-doc-wrap">first,
+              second)</span>
+            </dt>
+            <dd>Returns whether the given pair of const iterators are equal (they belong to the same collection and point to the same element), IE: if <code>first == second</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga978b0aa03e20ff8203f7f4bf6366c5a6" class="m-doc">cnx_array_scoped</a>(</span><span class="m-doc-wrap">T,
+              N)</span>
+            </dt>
+            <dd>declare a <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> variable with this attribute to have <code>cnx_array_free</code> automatically called on it at scope end</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Define documentation</h2>
+          <section class="m-doc-details" id="gaaa58177bcbc426c1e85308132dd07a21"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc-self">CnxArray</a>(</span><span class="m-doc-wrap">T,
+              N)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Macro alias for a <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> containing up to <code>N</code> <code>T</code>s.</p>
+<p><code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> is a generic, type-safe, fixed-capacity, dynamic-size, stack allocated array type. <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> is bounds safe and allocator aware. It&#x27;s implemented as a &quot;struct template&quot;, which enables 100% type safety while also providing abstractions that enable type agnostic use. It has greatly increased ergonomics over manually managing an array and provides many useful features such as random access iterators and optional scoped destruction.</p><p>Example:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&quot;Cnx/Array.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;Cnx/IO.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;Array_i32_10.h&quot;</span><span class="cp"></span>
+
+<span class="c1">// create a `CnxArray(i32, 10)` with default allocator, element default-constructor, and</span>
+<span class="n">element</span>
+<span class="c1">// destructor</span>
+<span class="n">let_mut</span> <span class="n">array</span> <span class="o">=</span> <span class="n">cnx_array_new</span><span class="p">(</span><span class="n">i32</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+<span class="c1">// fill the array with 10 elements</span>
+<span class="n">ranged_for</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">cnx_array_push_back</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">prints</span> <span class="n">information</span> <span class="n">about</span> <span class="err">`</span><span class="n">array</span><span class="err">`</span> <span class="n">to</span> <span class="err">`</span><span class="n">stdout</span><span class="err">`</span>
+<span class="n">because</span> <span class="err">`</span><span class="n">CnxArray</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span><span class="err">`</span> <span class="n">is</span> <span class="n">generic</span><span class="p">,</span> <span class="n">and</span> <span class="n">thus</span> <span class="n">can</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">be</span> <span class="n">used</span> <span class="n">in</span> <span class="n">a</span> <span class="err">`</span><span class="n">_Generic</span><span class="err">`</span> <span class="n">match</span> <span class="n">arm</span> <span class="n">prior</span>
+<span class="n">to</span> <span class="n">the</span> <span class="n">type</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">instantiation</span><span class="p">,</span> <span class="n">we</span> <span class="n">have</span> <span class="n">to</span> <span class="n">explicitly</span> <span class="n">cast</span> <span class="n">to</span> <span class="n">the</span> <span class="err">`</span><span class="n">CnxFormat</span><span class="err">`</span> <span class="n">Trait</span> <span class="n">to</span> <span class="n">get</span>
+<span class="err">`</span><span class="n">CnxArray</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span><span class="err">`&#39;</span><span class="n">s</span> <span class="n">implementation</span> <span class="n">of</span> <span class="n">the</span> <span class="n">Trait</span> <span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">cnx_as_format_t</span><span class="p">(</span><span class="n">CnxArray</span><span class="p">(</span><span class="n">i32</span><span class="p">,</span>
+<span class="mi">10</span><span class="p">),</span> <span class="n">array</span><span class="p">));</span>
+
+<span class="c1">// prints `array`&#39;s elements to stdout</span>
+<span class="n">foreach</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">elem</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">cnx_array_scoped</span><span class="p">(</span><span class="n">i32</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="n">array2</span> <span class="o">=</span> <span class="n">cnx_array_new</span><span class="p">(</span><span class="n">i32</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+    <span class="n">foreach</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cnx_array_push_back</span><span class="p">(</span><span class="n">array2</span><span class="p">,</span> <span class="n">elem</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1">// `array2` is destroyed here because it was scoped</span>
+<span class="c1">// `array` is not destroyed</span></pre><p>The above example assumes that the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> template has been instantiated for <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(i32, 10)</a></code> in &quot;Array_i32_10.h&quot; and an associated &quot;.c&quot; file. See the module-level page for details</p><p>Like other Cnx collections, <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> provides its type-agnostic usage through a vtable pointer contained in the struct, and provides macros which wrap the usage of the vtable, making access simpler. If you prefer to not use this method of access, you can call the typed functions directly by in-fixing the contained type in the associated function name. IE: for <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(i32, 10)</a></code>, and an array <code>array</code>, the equivalent function call for <code><a href="group__cnx__array.html#gaa71d011690fbf30569cb2e33b7773da7" class="m-doc">cnx_<wbr />array_<wbr />push_<wbr />back(array, element)</a></code> would be <code>cnx_array_i32_10_push_back(&amp;array, element)</code></p><aside class="m-note m-info"><h4>Note</h4><p>Note, however, that using the typed functions instead of the macros results in losing the reference-semantics of function-macros like <code><a href="group__cnx__array.html#gadd0cc5cfa15d101a7ea09c5a50e912dc" class="m-doc">cnx_<wbr />array_<wbr />at(self, index)</a></code> and will instead be dealing with pointers directly. Example:</p><pre class="m-code"><span class="c1">// instead of:</span>
+<span class="n">cnx_array_at_mut</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="c1">// you would have to do:</span>
+<span class="o">*</span><span class="n">cnx_array_i32_10_at_mut</span><span class="p">(</span><span class="o">&amp;</span><span class="n">self</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span></pre></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga95e961c2a941310ab743126bc1d87993"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga95e961c2a941310ab743126bc1d87993" class="m-doc-self">cnx_array_new</a>(</span><span class="m-doc-wrap">T,
+              N)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Creates a new <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> with defaulted associated functions.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>N</td>
+                  <td>- The capacity of the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> instantiation to create</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> with:</p><ol><li>default associated element default-constructor,</li><li>default associated element destructor</li><li>default associated memory allocator (potentially used in element constructor and destructor, memory for the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> itself is stack allocated)</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="ga94e6e692131c151bd8503d2e287518ad"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga94e6e692131c151bd8503d2e287518ad" class="m-doc-self">cnx_array_new_with_allocator</a>(</span><span class="m-doc-wrap">T,
+              N,
+              allocator)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Creates a new <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> with defaulted associated functions.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>N</td>
+                  <td>- The capacity of the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The memory allocator to pass to the element default-constructor and destructor</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> with:</p><ol><li>default associated element default-constructor,</li><li>default associated element destructor</li><li>given associated memory allocator (potentially used in element constructor and destructor, memory for the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> itself is stack allocated)</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="ga9067e3618feb1bd4141fcdaa666cdde0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9067e3618feb1bd4141fcdaa666cdde0" class="m-doc-self">cnx_array_new_with_collection_data</a>(</span><span class="m-doc-wrap">T,
+              N,
+              collection_data_ptr)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Creates a new <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> with provided associated functions.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>N</td>
+                  <td>- The capacity of the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>collection_data_ptr</td>
+                  <td>- Pointer to the <code>CnxCollectionData</code> containing the element default-constructor, element destructor, and element copy-constructor to use</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> with:</p><ol><li>possibly user-provided element default-constructor</li><li>possibly user-provided element destructor</li><li>default memory allocator (potentially used in element constructor and destructor, memory for the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> itself is stack allocated)</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="gaab4d094a0b84491d0a9f6e0bc02a3c44"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaab4d094a0b84491d0a9f6e0bc02a3c44" class="m-doc-self">cnx_array_new_with_allocator_and_collection_data</a>(</span><span class="m-doc-wrap">T,
+              N,
+              allocator,
+              collection_data_ptr)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Creates a new <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> with provided associated functions.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>N</td>
+                  <td>- The capacity of the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The memory allocator to pass to the element default-constructor and destructor</td>
+                </tr>
+                <tr>
+                  <td>collection_data_ptr</td>
+                  <td>- Pointer to the <code>CnxCollectionData</code> containing the element default-constructor, element destructor, and element copy-constructor to use</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> with:</p><ol><li>possibly user-provided element default-constructor</li><li>possibly user-provided element destructor</li><li>user-provided memory allocator (potentially used in element constructor and destructor, memory for the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> itself is stack allocated)</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="gabc6bf11d15aa9ae1bd29077611334fb7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gabc6bf11d15aa9ae1bd29077611334fb7" class="m-doc-self">cnx_array_clone</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Clones the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to clone</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a clone of the given array</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a deep copy of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> calling the associated copy constructor for each element stored in it.</p><aside class="m-note m-info"><h4>Note</h4><p>Requires that a copy constructor is defined for the elements contained in the array, either the default one provided by the implementation or a user-defined one. If it isn&#x27;t provided or is explicitly provided as <code>nullptr</code> when creating the <code><a href="group__collections.html#gae797ce56fe4e9867552c9f9229e33303" class="m-doc">CnxCollectionData(CollectionType)</a></code> associated with this array, this <strong>may</strong> trigger a compiler error on clang, and will always trigger a runtime assert for all compilers</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga24d128e1f9a568895e4ec7a1ac1cb407"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga24d128e1f9a568895e4ec7a1ac1cb407" class="m-doc-self">cnx_array_at_mut</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a mutable reference to the element at the given <code>index</code> into the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to get an element from</td>
+                </tr>
+                <tr>
+                  <td>index</td>
+                  <td>- The index of the desired element</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a mutable reference to the element at the given index</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gadd0cc5cfa15d101a7ea09c5a50e912dc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadd0cc5cfa15d101a7ea09c5a50e912dc" class="m-doc-self">cnx_array_at</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a const reference to the element at the given <code>index</code> into the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to get an element from</td>
+                </tr>
+                <tr>
+                  <td>index</td>
+                  <td>- The index of the desired element</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a const reference to the element at the given index</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gae73e059ed9c9cfbf5fb8f2385ed381cf"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae73e059ed9c9cfbf5fb8f2385ed381cf" class="m-doc-self">cnx_array_front_mut</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a mutable reference to the first element in the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to get the first element from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a mutable reference to the first element</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga3a69d5b99f41001745d6233028622422"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga3a69d5b99f41001745d6233028622422" class="m-doc-self">cnx_array_front</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a const reference to the first element in the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to get the first element from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a const reference to the first element</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaaead910f1924538f8cdf8d5fce33a5cc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaaead910f1924538f8cdf8d5fce33a5cc" class="m-doc-self">cnx_array_back_mut</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a mutable reference to the last element in the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to get the last element from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a mutable reference to the last element</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaf77c9f2c050419d297b287a59a0237e5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaf77c9f2c050419d297b287a59a0237e5" class="m-doc-self">cnx_array_back</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a const reference to the last element in the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to get the last element from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a const reference to the last element</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga7e1f08422f843e34801b12e4c34f8c8c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7e1f08422f843e34801b12e4c34f8c8c" class="m-doc-self">cnx_array_data_mut</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a mutable reference to the internal array in the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to get the internal array from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a mutable reference to the internal array</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga53fe218b54f0ac7ec4b16a3800323ec2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga53fe218b54f0ac7ec4b16a3800323ec2" class="m-doc-self">cnx_array_data</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a const reference to the internal array in the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to get the internal array from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a const reference to the internal array</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga9e4f54cbfa8d34860c5417d25a0f2bb4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9e4f54cbfa8d34860c5417d25a0f2bb4" class="m-doc-self">cnx_array_is_empty</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns whether the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> is empty.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to check for emptiness</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if empty, <code>false</code> otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gae64ac594cb248c33f466fa89bb814ef3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae64ac594cb248c33f466fa89bb814ef3" class="m-doc-self">cnx_array_is_full</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns whether the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> is full.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to check for fullness</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if full, <code>false</code> otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga10e8c585ed4d473924a99507a08dee81"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga10e8c585ed4d473924a99507a08dee81" class="m-doc-self">cnx_array_size</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns the current size of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to get the size of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the size of the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga707c2aad778e9f3c7df65fe4e21a455c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga707c2aad778e9f3c7df65fe4e21a455c" class="m-doc-self">cnx_array_capacity</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns the capacity of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> (ie the <code>N</code>)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to get the capacity of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the capacity of the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga7d8c1d8b08b6a618674cf9d0d36f71a4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7d8c1d8b08b6a618674cf9d0d36f71a4" class="m-doc-self">cnx_array_resize</a>(</span><span class="m-doc-wrap">self,
+              new_size)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Resizes the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to <code>new_size</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to resize</td>
+                </tr>
+                <tr>
+                  <td>new_size</td>
+                  <td>- The new size for the given array</td>
+                </tr>
+              </tbody>
+            </table>
+<p><code>new_size</code> must be strictly <code>&lt;= N</code>. If <code>new_size</code> is greater than the current size, elements will be default constructed until <code>self</code> contains <code>new_size</code> elements. If <code>new_size</code> is less than the current size, elements will be destroyed.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga0e52367e509f2000437cde4de60cda78"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga0e52367e509f2000437cde4de60cda78" class="m-doc-self">cnx_array_clear</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Resets the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to a size of zero, destroying any active elements in the array.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to clear</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaa71d011690fbf30569cb2e33b7773da7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaa71d011690fbf30569cb2e33b7773da7" class="m-doc-self">cnx_array_push_back</a>(</span><span class="m-doc-wrap">self,
+              element)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Pushes a new element into the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, at the end.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to add an element to</td>
+                </tr>
+                <tr>
+                  <td>element</td>
+                  <td>- The element to add to the array</td>
+                </tr>
+              </tbody>
+            </table>
+<p>The current size must be strictly less than <code>N</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="gaf6f6f94bf4de2b80616ad655d650a18d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaf6f6f94bf4de2b80616ad655d650a18d" class="m-doc-self">cnx_array_pop_back</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Removes the last element from the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> and returns it.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to pop the last element from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code><a href="group__cnx__option.html#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some(T)</a></code> if size greater than 0, otherwise <code><a href="group__cnx__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga47d4c39971facbda7f5616244c5a052b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga47d4c39971facbda7f5616244c5a052b" class="m-doc-self">cnx_array_insert</a>(</span><span class="m-doc-wrap">self,
+              element,
+              index)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Inserts the given element at the given index in the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to insert in to</td>
+                </tr>
+                <tr>
+                  <td>element</td>
+                  <td>- The element to insert into the array</td>
+                </tr>
+                <tr>
+                  <td>index</td>
+                  <td>- The index to insert <code>element</code> at</td>
+                </tr>
+              </tbody>
+            </table>
+<p>The current size must be strictly less than <code>N</code>. <code>index</code> must be strictly less than <code>N</code>. `index must be strictly less than the current size.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga9143dc285ac8c7bc877e461397b06c87"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9143dc285ac8c7bc877e461397b06c87" class="m-doc-self">cnx_array_erase</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Erases the element at <code>index</code> from the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to erase from</td>
+                </tr>
+                <tr>
+                  <td>index</td>
+                  <td>- The index of the element to erase</td>
+                </tr>
+              </tbody>
+            </table>
+<p><code>index</code> must be strictly less than <code>N</code>. <code>index</code> must be strictly less than the current size.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga261f5ae6e693b8e45e759494fb7bb2a6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga261f5ae6e693b8e45e759494fb7bb2a6" class="m-doc-self">cnx_array_erase_n</a>(</span><span class="m-doc-wrap">self,
+              index,
+              num_elements)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Erases <code>num_elements</code> elements from the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, starting at <code>index</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to erase from</td>
+                </tr>
+                <tr>
+                  <td>index</td>
+                  <td>- The index to begin erasing at</td>
+                </tr>
+                <tr>
+                  <td>num_elements</td>
+                  <td>- The number of elements to erase</td>
+                </tr>
+              </tbody>
+            </table>
+<p><code>index</code> must be strictly less than <code>N</code> <code>index</code> must be strictly less than the current size. <code>index + num_elements</code> must be strictly less than <code>N</code> <code>index + num_elements</code> must be strictly less than the current size</p>
+          </div></section>
+          <section class="m-doc-details" id="gae6099b29a565e083c97d0edf9972c44f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae6099b29a565e083c97d0edf9972c44f" class="m-doc-self">cnx_array_free</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Frees the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, destroying its elements.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to free</td>
+                </tr>
+              </tbody>
+            </table>
+<p><code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> does not allocate memory itself, so it does not necessarily need to be freed, but if elements require a provided destructor to run, then <code>cnx_array_free</code> should be called on the array to ensure elements are properly cleaned up.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga95e57e5381a1049ea78dc406613e68b7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga95e57e5381a1049ea78dc406613e68b7" class="m-doc-self">cnx_array_begin</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, starting at the beginning of the iteration (pointing at the beginning of the array)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the beginning of the array</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga65fd48aa44473f39661c7ba69c4398f6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga65fd48aa44473f39661c7ba69c4398f6" class="m-doc-self">cnx_array_end</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, starting at the end of the iteration (pointing at the end of the array)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the end of the array</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga4730ec892d2f3feda7071c67b4cfe789"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4730ec892d2f3feda7071c67b4cfe789" class="m-doc-self">cnx_array_rbegin</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, starting at the beginning of the reversed iteration (pointing at the end of the array)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the beginning of the reversed array</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga08a9b4cbd0383ea5817f8f95edf12db0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga08a9b4cbd0383ea5817f8f95edf12db0" class="m-doc-self">cnx_array_rend</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, starting at the end of the reversed iteration (pointing at the beginning of the array)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the end of the reversed array</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga9ef227768538fa6e9776360202892a03"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9ef227768538fa6e9776360202892a03" class="m-doc-self">cnx_array_iterator_equals</a>(</span><span class="m-doc-wrap">first,
+              second)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns whether the given pair of iterators are equal (they belong to the same collection and point to the same element), IE: if <code>first == second</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">first</td>
+                  <td>- The LHS iterator of the equality check</td>
+                </tr>
+                <tr>
+                  <td>second</td>
+                  <td>- The RHS iterator of the equality check</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if they are equal, <code>false</code> otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gab67982bac3ab501d0520cd8d428051ee"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab67982bac3ab501d0520cd8d428051ee" class="m-doc-self">cnx_array_cbegin</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, starting at the beginning of the iteration (pointing at the beginning of the array)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the beginning of the array</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga22b6a87f8593ac655627b150a90f4413"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga22b6a87f8593ac655627b150a90f4413" class="m-doc-self">cnx_array_cend</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, starting at the end of the iteration (pointing at the end of the array)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the end of the array</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gac6b8207508303066d65a7c46ffc936e6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac6b8207508303066d65a7c46ffc936e6" class="m-doc-self">cnx_array_crbegin</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, starting at the beginning of the reversed iteration (pointing at the end of the array)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the beginning of the reversed array</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga71d0447a57c400c3b68474c706b3a778"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga71d0447a57c400c3b68474c706b3a778" class="m-doc-self">cnx_array_crend</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code>, starting at the end of the reversed iteration (pointing at the beginning of the array)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the end of the reversed array</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga595a419dd0aea2507c0888d9c766e0b6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga595a419dd0aea2507c0888d9c766e0b6" class="m-doc-self">cnx_array_const_iterator_equals</a>(</span><span class="m-doc-wrap">first,
+              second)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>Returns whether the given pair of const iterators are equal (they belong to the same collection and point to the same element), IE: if <code>first == second</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">first</td>
+                  <td>- The LHS iterator of the equality check</td>
+                </tr>
+                <tr>
+                  <td>second</td>
+                  <td>- The RHS iterator of the equality check</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if they are equal, <code>false</code> otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga978b0aa03e20ff8203f7f4bf6366c5a6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga978b0aa03e20ff8203f7f4bf6366c5a6" class="m-doc-self">cnx_array_scoped</a>(</span><span class="m-doc-wrap">T,
+              N)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="ArrayDef_8h.html">&lt;include/Cnx/array/ArrayDef.h&gt;</a></div>
+            </h3>
+            <p>declare a <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> variable with this attribute to have <code>cnx_array_free</code> automatically called on it at scope end</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> instantiation</td>
+                </tr>
+                <tr>
+                  <td>N</td>
+                  <td>- The capacity of the <code><a href="group__cnx__array.html#gaaa58177bcbc426c1e85308132dd07a21" class="m-doc">CnxArray(T, N)</a></code> instantiation</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

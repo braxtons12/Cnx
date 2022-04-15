@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>include/Cnx/BasicTypes.h file | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a>/</span><span class="m-breadcrumb"><a href="dir_eb0c9390901bc8c114e0f1e21e68b5be.html">Cnx</a>/</span>BasicTypes.h <span class="m-thin">file</span>
+        </h1>
+        <p>BasicTypes provides simple typedefs and limits for fixed-width types and semantic-intention-communicating typedefs for various other types.</p>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#enum-members">Enums</a></li>
+                <li><a href="#typedef-members">Typedefs</a></li>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.1</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-01-02</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        <section id="enum-members">
+          <h2><a href="#enum-members">Enums</a></h2>
+          <dl class="m-doc">
+            <dt id="ac0f09b727f79ee723c399162a0f8e8b2">
+              <span class="m-doc-wrap-bumper">enum <a href="#ac0f09b727f79ee723c399162a0f8e8b2" class="m-doc-self">CnxCompare</a> { </span><span class="m-doc-wrap"><a href="#ac0f09b727f79ee723c399162a0f8e8b2ab1265b650c482624ad5cd82e7d13f5d7" class="m-doc">CNX_LESS_THAN</a> = -1,
+              <a href="#ac0f09b727f79ee723c399162a0f8e8b2a8589bb08a2798cfb6a09a6947aa91899" class="m-doc">CNX_EQUAL</a> = 0,
+              <a href="#ac0f09b727f79ee723c399162a0f8e8b2a411015da6cb846c651cada66da264fcc" class="m-doc">CNX_GREATER_THAN</a> = 1 }</span>
+            </dt>
+            <dd>Type signifying how a given value compares to another.</dd>
+          </dl>
+        </section>
+        <section id="typedef-members">
+          <h2><a href="#typedef-members">Typedefs</a></h2>
+          <dl class="m-doc">
+            <dt>
+              using <a href="group__types.html#ga3fb3b2ff539eeed58a5802e9979022c8" class="m-doc">nullptr_t</a> = void*
+            </dt>
+            <dd><code>nullptr_t</code> makes using <code>NULL</code> to represent a null pointer (aka a <code>nullptr</code>) a first-class type of its own</dd>
+            <dt>
+              using <a href="group__types.html#ga92c50087ca0e64fa93fc59402c55f8ca" class="m-doc">u8</a> = uint8_t
+            </dt>
+            <dd><code>u8</code> is a fixed-width 8 bit unsigned integer</dd>
+            <dt>
+              using <a href="group__types.html#gace9d960e74685e2cd84b36132dbbf8aa" class="m-doc">u16</a> = uint16_t
+            </dt>
+            <dd><code>u16</code> is a fixed-width 16 bit unsigned integer</dd>
+            <dt>
+              using <a href="group__types.html#gafaa62991928fb9fb18ff0db62a040aba" class="m-doc">u32</a> = uint32_t
+            </dt>
+            <dd><code>u32</code> is a fixed-width 32 bit unsigned integer</dd>
+            <dt>
+              using <a href="group__types.html#ga3f7e2bcbb0b4c338f3c4f6c937cd4234" class="m-doc">u64</a> = uint64_t
+            </dt>
+            <dd><code>u64</code> is a fixed-width 64 bit unsigned integer</dd>
+            <dt>
+              using <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> = size_t
+            </dt>
+            <dd><code>usize</code> is the unsigned, platform-dependent type to represent a size</dd>
+            <dt>
+              using <a href="group__types.html#gab862f2d862051450cf946971b59176da" class="m-doc">byte</a> = <a href="group__types.html#ga92c50087ca0e64fa93fc59402c55f8ca" class="m-doc">u8</a>
+            </dt>
+            <dd>a <code>byte</code> is an 8 bit unsigned integer</dd>
+            <dt>
+              using <a href="group__types.html#gae3702327b5f47e83b431e22b33da7b58" class="m-doc">i8</a> = int8_t
+            </dt>
+            <dd><code>i8</code> is a fixed-width 8 bit signed integer</dd>
+            <dt>
+              using <a href="group__types.html#gad309dbcaeea13aa602d686964156ea0b" class="m-doc">i16</a> = int16_t
+            </dt>
+            <dd><code>i16</code> is a fixed-width 16 bit signed integer</dd>
+            <dt>
+              using <a href="group__types.html#ga48d6cd8e4135fb2ff7e7f2dac84089ec" class="m-doc">i32</a> = int32_t
+            </dt>
+            <dd><code>i32</code> is a fixed-width 32 bit signed integer</dd>
+            <dt>
+              using <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> = int64_t
+            </dt>
+            <dd><code>i64</code> is a fixed-width 64 bit signed integer</dd>
+            <dt>
+              using <a href="group__types.html#gaf0649fce3fc685bc58645fa7a6399fef" class="m-doc">isize</a> = ssize_t
+            </dt>
+            <dd><code>isize</code> is the platform-dependent type to represent a signed size. It is the signed alternative to <code>usize</code></dd>
+            <dt>
+              using <a href="group__types.html#ga5f6906312a689f27d70e9d086649d3fd" class="m-doc">f32</a> = float
+            </dt>
+            <dd><code>f32</code> is a 32-bit floating point number</dd>
+            <dt>
+              using <a href="group__types.html#ga94dab5770726ccbef8c7d026cfbdf8e5" class="m-doc">f64</a> = double
+            </dt>
+            <dd><code>f64</code> is a 64-bit floating point number</dd>
+            <dt id="a0214818eaa5187a83d101fe539359bf4">
+              using <a href="#a0214818eaa5187a83d101fe539359bf4" class="m-doc-self">CnxCompare</a> = enum <a href="BasicTypes_8h.html#ac0f09b727f79ee723c399162a0f8e8b2" class="m-doc">CnxCompare</a>
+            </dt>
+            <dd>Type signifying how a given value compares to another.</dd>
+            <dt id="af1e74057c8255f0e08ad2f95816ff57e">
+              using <a href="#af1e74057c8255f0e08ad2f95816ff57e" class="m-doc-self">u8_ptr</a> = <a href="group__types.html#ga92c50087ca0e64fa93fc59402c55f8ca" class="m-doc">u8</a>*
+            </dt>
+            <dd>alias for a <code>u8</code> pointer</dd>
+            <dt id="a235793fce2c74f3752071f72f631df53">
+              using <a href="#a235793fce2c74f3752071f72f631df53" class="m-doc-self">u16_ptr</a> = <a href="group__types.html#gace9d960e74685e2cd84b36132dbbf8aa" class="m-doc">u16</a>*
+            </dt>
+            <dd>alias for a <code>u16</code> pointer</dd>
+            <dt id="a7fc3830668efe50d5b6b9e10e94f0bd9">
+              using <a href="#a7fc3830668efe50d5b6b9e10e94f0bd9" class="m-doc-self">u32_ptr</a> = <a href="group__types.html#gafaa62991928fb9fb18ff0db62a040aba" class="m-doc">u32</a>*
+            </dt>
+            <dd>alias for a <code>u32</code> pointer</dd>
+            <dt id="a73bbee06c95999ebe57e001035cbecfe">
+              using <a href="#a73bbee06c95999ebe57e001035cbecfe" class="m-doc-self">u64_ptr</a> = <a href="group__types.html#ga3f7e2bcbb0b4c338f3c4f6c937cd4234" class="m-doc">u64</a>*
+            </dt>
+            <dd>alias for a <code>u64</code> pointer</dd>
+            <dt id="a3c24d86c7e186e97a5d668e9d00d9b5a">
+              using <a href="#a3c24d86c7e186e97a5d668e9d00d9b5a" class="m-doc-self">usize_ptr</a> = <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a>*
+            </dt>
+            <dd>alias for a <code>usize</code> pointer</dd>
+            <dt id="a5dce9c95d0736180b19ccad97ac797f9">
+              using <a href="#a5dce9c95d0736180b19ccad97ac797f9" class="m-doc-self">i8_ptr</a> = <a href="group__types.html#gae3702327b5f47e83b431e22b33da7b58" class="m-doc">i8</a>*
+            </dt>
+            <dd>alias for a <code>i8</code> pointer</dd>
+            <dt id="af8a9b820fdbd14ed63cb1325bc11eb11">
+              using <a href="#af8a9b820fdbd14ed63cb1325bc11eb11" class="m-doc-self">i16_ptr</a> = <a href="group__types.html#gad309dbcaeea13aa602d686964156ea0b" class="m-doc">i16</a>*
+            </dt>
+            <dd>alias for a <code>i16</code> pointer</dd>
+            <dt id="af66074b6e38e01d8259789122a189749">
+              using <a href="#af66074b6e38e01d8259789122a189749" class="m-doc-self">i32_ptr</a> = <a href="group__types.html#ga48d6cd8e4135fb2ff7e7f2dac84089ec" class="m-doc">i32</a>*
+            </dt>
+            <dd>alias for a <code>i32</code> pointer</dd>
+            <dt id="a7bdffa6d600d13a01c158f49794fd88a">
+              using <a href="#a7bdffa6d600d13a01c158f49794fd88a" class="m-doc-self">i64_ptr</a> = <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a>*
+            </dt>
+            <dd>alias for a <code>i64</code> pointer</dd>
+            <dt id="abf75176a23e77410e7e822ef8111896d">
+              using <a href="#abf75176a23e77410e7e822ef8111896d" class="m-doc-self">isize_ptr</a> = <a href="group__types.html#gaf0649fce3fc685bc58645fa7a6399fef" class="m-doc">isize</a>*
+            </dt>
+            <dd>alias for a <code>isize</code> pointer</dd>
+            <dt id="a9cca9caaf26c163cdb323dfb04529724">
+              using <a href="#a9cca9caaf26c163cdb323dfb04529724" class="m-doc-self">f32_ptr</a> = <a href="group__types.html#ga5f6906312a689f27d70e9d086649d3fd" class="m-doc">f32</a>*
+            </dt>
+            <dd>alias for a <code>f32</code> pointer</dd>
+            <dt id="a4b3f79e707830caada6dbe9b588e36a0">
+              using <a href="#a4b3f79e707830caada6dbe9b588e36a0" class="m-doc-self">f64_ptr</a> = <a href="group__types.html#ga94dab5770726ccbef8c7d026cfbdf8e5" class="m-doc">f64</a>*
+            </dt>
+            <dd>alias for a <code>f64</code> pointer</dd>
+            <dt id="aa8986ee48295c65f10773c6903475ab8">
+              using <a href="#aa8986ee48295c65f10773c6903475ab8" class="m-doc-self">const_u8_ptr</a> = const <a href="group__types.html#ga92c50087ca0e64fa93fc59402c55f8ca" class="m-doc">u8</a>*
+            </dt>
+            <dd>alias for a const <code>u8</code> pointer</dd>
+            <dt id="a00ef666018be847960950ab68bb8397a">
+              using <a href="#a00ef666018be847960950ab68bb8397a" class="m-doc-self">const_u16_ptr</a> = const <a href="group__types.html#gace9d960e74685e2cd84b36132dbbf8aa" class="m-doc">u16</a>*
+            </dt>
+            <dd>alias for a const <code>u16</code> pointer</dd>
+            <dt id="aab6c70869bfa70db8e51b0e3ff9055ca">
+              using <a href="#aab6c70869bfa70db8e51b0e3ff9055ca" class="m-doc-self">const_u32_ptr</a> = const <a href="group__types.html#gafaa62991928fb9fb18ff0db62a040aba" class="m-doc">u32</a>*
+            </dt>
+            <dd>alias for a const <code>u32</code> pointer</dd>
+            <dt id="af35c7b503c0354d213cd7be94fb21ccc">
+              using <a href="#af35c7b503c0354d213cd7be94fb21ccc" class="m-doc-self">const_u64_ptr</a> = const <a href="group__types.html#ga3f7e2bcbb0b4c338f3c4f6c937cd4234" class="m-doc">u64</a>*
+            </dt>
+            <dd>alias for a const <code>u64</code> pointer</dd>
+            <dt id="a248574b79605b9d0e38685a07ebf3252">
+              using <a href="#a248574b79605b9d0e38685a07ebf3252" class="m-doc-self">const_usize_ptr</a> = const <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a>*
+            </dt>
+            <dd>alias for a const <code>usize</code> pointer</dd>
+            <dt id="a1c20a9344519470964f322f30378dcf3">
+              using <a href="#a1c20a9344519470964f322f30378dcf3" class="m-doc-self">const_i8_ptr</a> = const <a href="group__types.html#gae3702327b5f47e83b431e22b33da7b58" class="m-doc">i8</a>*
+            </dt>
+            <dd>alias for a const <code>i8</code> pointer</dd>
+            <dt id="a575827cc5b02943402303c2db6879871">
+              using <a href="#a575827cc5b02943402303c2db6879871" class="m-doc-self">const_i16_ptr</a> = const <a href="group__types.html#gad309dbcaeea13aa602d686964156ea0b" class="m-doc">i16</a>*
+            </dt>
+            <dd>alias for a const <code>i16</code> pointer</dd>
+            <dt id="a9619c75ee7ff1bff41a7e703fd1c1cc2">
+              using <a href="#a9619c75ee7ff1bff41a7e703fd1c1cc2" class="m-doc-self">const_i32_ptr</a> = const <a href="group__types.html#ga48d6cd8e4135fb2ff7e7f2dac84089ec" class="m-doc">i32</a>*
+            </dt>
+            <dd>alias for a const <code>i32</code> pointer</dd>
+            <dt id="a9362d7d8257d589784aec32c07148a8c">
+              using <a href="#a9362d7d8257d589784aec32c07148a8c" class="m-doc-self">const_i64_ptr</a> = const <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a>*
+            </dt>
+            <dd>alias for a const <code>i64</code> pointer</dd>
+            <dt id="a1464320e7f7fed4f7f11726a13ade2dc">
+              using <a href="#a1464320e7f7fed4f7f11726a13ade2dc" class="m-doc-self">const_isize_ptr</a> = const <a href="group__types.html#gaf0649fce3fc685bc58645fa7a6399fef" class="m-doc">isize</a>*
+            </dt>
+            <dd>alias for a const <code>isize</code> pointer</dd>
+            <dt id="a9c829c1033ad92145c95ecdaedd13589">
+              using <a href="#a9c829c1033ad92145c95ecdaedd13589" class="m-doc-self">const_f32_ptr</a> = const <a href="group__types.html#ga5f6906312a689f27d70e9d086649d3fd" class="m-doc">f32</a>*
+            </dt>
+            <dd>alias for a const <code>f32</code> pointer</dd>
+            <dt id="acc538f1bb21d22120faf19d96c79117a">
+              using <a href="#acc538f1bb21d22120faf19d96c79117a" class="m-doc-self">const_f64_ptr</a> = const <a href="group__types.html#ga94dab5770726ccbef8c7d026cfbdf8e5" class="m-doc">f64</a>*
+            </dt>
+            <dd>alias for a const <code>f64</code> pointer</dd>
+            <dt>
+              using <a href="group__types.html#ga00d8f39b4b304be8134e652bf61ff840" class="m-doc">cstring</a> = char*
+            </dt>
+            <dd><code>cstring</code> represents a null-terminated legacy C-style string (aka a <code>char*</code>) and should be preferred when semantically referring to a string instead of <code>char*</code> to differentiate from references to a pointer to single <code>char</code></dd>
+            <dt>
+              using <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_cstring</a> = const char*
+            </dt>
+            <dd><code>const_cstring</code> represents a const null-terminated legacy C-style string (aka a <code>const char*</code>) and should be preferred when semantically referring to a string instead of <code>char*</code> to differentiate from references to a pointer to single <code>const char</code></dd>
+            <dt>
+              using <a href="group__types.html#ga034fdc3d7f233ce34b7ad133ec39f364" class="m-doc">wcstring</a> = wchar_t*
+            </dt>
+            <dd><code>wcstring</code> represents a null-terminated legacy C-style wide string (aka a <code>wchar_t*</code>) and should be preferred when semantically referring to a wide string instead of <code>wchar_t*</code> to differentiate from references to a pointer to single <code>wchar_t</code></dd>
+            <dt>
+              using <a href="group__types.html#ga94d9d3ddae9a425c4883fee97b7625d6" class="m-doc">const_wcstring</a> = const wchar_t*
+            </dt>
+            <dd><code>const_wcstring</code> represents a const null-terminated legacy C-style wide string (aka a <code>const wchar_t*</code>) and should be preferred when semantically referring to a wide string instead of <code>const wchar_t*</code> to differentiate from references to a pointer to single <code>const wchar_t</code></dd>
+            <dt>
+              using <a href="group__types.html#ga5ea7d3fefa2144d9bddaf2053c9691a1" class="m-doc">char_ptr</a> = char*
+            </dt>
+            <dd><code>char_ptr</code> represents a pointer to a single <code>char</code> and should be preferred when referring to a pointer to single <code>char</code> over <code>char*</code> to differentiate from references to a string</dd>
+            <dt>
+              using <a href="group__types.html#ga88d1fb873d629b523bfa7335f8819f98" class="m-doc">const_char_ptr</a> = const char*
+            </dt>
+            <dd><code>const_char_ptr</code> represents a pointer to a single <code>const char</code> and should be preferred when referring to a pointer to single <code>const char</code> over <code>const char*</code> to differentiate from references to a const string</dd>
+            <dt>
+              using <a href="group__types.html#ga10501bea077fb9613125aee8c02ff476" class="m-doc">wchar_t_ptr</a> = wchar_t*
+            </dt>
+            <dd><code>wchar_t_ptr</code> represents a pointer to a single <code>wchar_t</code> and should be preferred when referring to a pointer to single <code>wchar_t</code> over <code>wchar_t*</code> to differentiate from references to a wide string</dd>
+            <dt>
+              using <a href="group__types.html#ga9dab98df0f3d4cf738e8099bd5383d1d" class="m-doc">const_wchar_t_ptr</a> = const wchar_t*
+            </dt>
+            <dd><code>const_wchar_t_ptr</code> represents a pointer to a single <code>const wchar_t</code> and should be preferred when referring to a pointer to single <code>const wchar_t</code> over <code>const wchar_t*</code> to differentiate from references to a wide string</dd>
+            <dt id="a248f703f0c97bf1692e38a108722a401">
+              using <a href="#a248f703f0c97bf1692e38a108722a401" class="m-doc-self">cstring_ptr</a> = <a href="group__types.html#ga5ea7d3fefa2144d9bddaf2053c9691a1" class="m-doc">char_<wbr />ptr</a>*
+            </dt>
+            <dd>Alias for <code>char_ptr*</code>. This should be preferred wherever possible when semantically referring to a pointer to <code>cstring</code></dd>
+            <dt id="ab4012f4bb324f0da2de0d21045b8244a">
+              using <a href="#ab4012f4bb324f0da2de0d21045b8244a" class="m-doc-self">const_cstring_ptr</a> = const char**
+            </dt>
+            <dd>Alias for <code>const char_ptr*</code>. This should be preferred wherever possible when semantically referring to a pointer to <code>const cstring</code></dd>
+            <dt id="a2456140615c8012007d949bbacb6c785">
+              using <a href="#a2456140615c8012007d949bbacb6c785" class="m-doc-self">wcstring_ptr</a> = <a href="group__types.html#ga10501bea077fb9613125aee8c02ff476" class="m-doc">wchar_<wbr />t_<wbr />ptr</a>*
+            </dt>
+            <dd>Alias for <code>wchar_t_ptr*</code>. This should be preferred wherever possible when semantically referring to a pointer to <code>wcstring</code></dd>
+            <dt id="a46a4711de01fedcf00421dcbf173a240">
+              using <a href="#a46a4711de01fedcf00421dcbf173a240" class="m-doc-self">const_wcstring_ptr</a> = const wchar_t**
+            </dt>
+            <dd>Alias for <code>const wchar_t_ptr*</code>. This should be preferred wherever possible when semantically referring to a pointer to <code>const wcstring</code></dd>
+            <dt>
+              using <a href="#ac7b9bf4b1524f9a26af66f9165604f7d" class="m-doc">Ref</a> = <a href="group__types.html#ga5ea7d3fefa2144d9bddaf2053c9691a1" class="m-doc">char_<wbr />ptr</a>(char)
+            </dt>
+            <dd>Alias for <code>char_ptr</code> used for the inner type of reference-like types (ie iterators)</dd>
+            <dt>
+              using <a href="#ad393d99153ec33dd6b2595d694d6f89b" class="m-doc">ConstRef</a> = <a href="group__types.html#ga88d1fb873d629b523bfa7335f8819f98" class="m-doc">const_<wbr />char_<wbr />ptr</a>(char)
+            </dt>
+            <dd>Alias for <code>const_char_ptr</code> used for the inner type of reference-like types (ie iterators)</dd>
+            <dt id="abf9a1e7488f92c7791ee89bca70d8644">
+              using <a href="#abf9a1e7488f92c7791ee89bca70d8644" class="m-doc-self">wchar_t_ptr_ref</a> = <a href="group__types.html#ga10501bea077fb9613125aee8c02ff476" class="m-doc">wchar_<wbr />t_<wbr />ptr</a>*
+            </dt>
+            <dd>Alias for <code>wchar_t_ptr*</code> used for the inner type of reference-like types (ie iterators). This should be preferred when semantically referring to a reference to a pointer to a single <code>wchar_t</code></dd>
+            <dt id="a72dd27f18d2cfe848f2d915a5d2b5740">
+              using <a href="#a72dd27f18d2cfe848f2d915a5d2b5740" class="m-doc-self">const_wchar_t_ptr_ref</a> = const <a href="group__types.html#ga10501bea077fb9613125aee8c02ff476" class="m-doc">wchar_<wbr />t_<wbr />ptr</a>*
+            </dt>
+            <dd>Alias for <code>const wchar_t_ptr*</code> used for the inner type of reference-like types (ie iterators). This should be preferred when semantically referring to a reference to a const pointer to a single <code>wchar_t</code></dd>
+          </dl>
+        </section>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt id="a453bfa21901aca6b3d59ab987c02bdb9">
+              <span class="m-doc-wrap-bumper">#define <a href="#a453bfa21901aca6b3d59ab987c02bdb9" class="m-doc-self">CNX_BASIC_TYPES</a></span>
+            </dt>
+            <dd>Declarations and definitions related to Cnx&#x27;s builtin types.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga20843143e09e852c3e869d36c8f1b9ae" class="m-doc">nullptr</a></span>
+            </dt>
+            <dd><code>nullptr</code> is a <code>NULL</code> pointer</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gab79819e619e6af9b66719ae8d9ac60b5" class="m-doc">CNX_OFORMAT_U8</a></span>
+            </dt>
+            <dd><code>u8</code> decimal format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gae512cd5e8736bcb767bcc0e5fd8e1a1d" class="m-doc">CNX_OFORMAT_U16</a></span>
+            </dt>
+            <dd><code>u16</code> decimal format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gacea2fea48534918bbd68d33b2fe341d2" class="m-doc">CNX_OFORMAT_U32</a></span>
+            </dt>
+            <dd><code>u32</code> decimal format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gaed3a5e2b165a8f286862202a73a7681a" class="m-doc">CNX_OFORMAT_U64</a></span>
+            </dt>
+            <dd><code>u64</code> decimal format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gac78f9b6db90c0dea2dba18cd748351dc" class="m-doc">CNX_OFORMAT_USIZE</a></span>
+            </dt>
+            <dd><code>usize</code> decimal format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga33d3a4ed4cf8c266e844eb2ce962728b" class="m-doc">CNX_OFORMAT_UMAX</a></span>
+            </dt>
+            <dd><code>umax</code> decimal format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga7df1590e91e331c50c2e186772f1f588" class="m-doc">CNX_OFORMAT_BYTE</a></span>
+            </dt>
+            <dd><code>byte</code> decimal format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gac3db9c0dc5863e4485a9b2c064984392" class="m-doc">CNX_OFORMAT_I8</a></span>
+            </dt>
+            <dd><code>i8</code> decimal format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga8bf3d75b4ded9531b77f8ad2b2bdea7f" class="m-doc">CNX_OFORMAT_I16</a></span>
+            </dt>
+            <dd><code>i16</code> decimal format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gacd4bce89088718bee5b8f0e0a2e44e59" class="m-doc">CNX_OFORMAT_I32</a></span>
+            </dt>
+            <dd><code>i32</code> decimal format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gac0780ea0fa218cf742bb4529cff856ec" class="m-doc">CNX_OFORMAT_I64</a></span>
+            </dt>
+            <dd><code>i64</code> decimal format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gaed84b22d0d72195553cb70d81c6ddb71" class="m-doc">CNX_OFORMAT_ISIZE</a></span>
+            </dt>
+            <dd><code>isize</code> decimal format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gaeb85b1db52b967e6baa3d4ee8fdaee1d" class="m-doc">CNX_OFORMAT_IMAX</a></span>
+            </dt>
+            <dd><code>imax</code> decimal format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga6e4a8aae5d6fc0909e23688917b60218" class="m-doc">CNX_OFORMAT_U8_OCT</a></span>
+            </dt>
+            <dd><code>u8</code> octal format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gae7e50cff2fc34d0936b68539018440a2" class="m-doc">CNX_OFORMAT_U16_OCT</a></span>
+            </dt>
+            <dd><code>u16</code> octal format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga182512ac55a77add6f608831f68cba9d" class="m-doc">CNX_OFORMAT_U32_OCT</a></span>
+            </dt>
+            <dd><code>u32</code> octal format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga31f04ef6896f636b3637804dbb91ace1" class="m-doc">CNX_OFORMAT_U64_OCT</a></span>
+            </dt>
+            <dd><code>u64</code> octal format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gacf744b84df45676ee01951fd035b029b" class="m-doc">CNX_OFORMAT_USIZE_OCT</a></span>
+            </dt>
+            <dd><code>usize</code> octal format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gad1947d449f1ff29cbc87efdf0dbd0332" class="m-doc">CNX_OFORMAT_UMAX_OCT</a></span>
+            </dt>
+            <dd><code>umax</code> octal format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga5c20f411f9270ba06867a88ecffe8849" class="m-doc">CNX_OFORMAT_BYTE_OCT</a></span>
+            </dt>
+            <dd><code>byte</code> octal format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga4b69da06e8a14614024aa3b1a6a2d4db" class="m-doc">CNX_OFORMAT_U8_HEX</a></span>
+            </dt>
+            <dd><code>u8</code> lower-case hex format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gab3c79d2ada19c1dde3c5c1c6affc0e14" class="m-doc">CNX_OFORMAT_U16_HEX</a></span>
+            </dt>
+            <dd><code>u16</code> lower-case hex format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga9b0d58732f5a8819faade59068c22e56" class="m-doc">CNX_OFORMAT_U32_HEX</a></span>
+            </dt>
+            <dd><code>u32</code> lower-case hex format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga9ca50002ccaa35bb1cf3162a46d39567" class="m-doc">CNX_OFORMAT_U64_HEX</a></span>
+            </dt>
+            <dd><code>u64</code> lower-case hex format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gab623798b4f47f50a38e373556c66bb13" class="m-doc">CNX_OFORMAT_USIZE_HEX</a></span>
+            </dt>
+            <dd><code>usize</code> lower-case hex format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gace73519243d9b88c05c9f23ec8127204" class="m-doc">CNX_OFORMAT_UMAX_HEX</a></span>
+            </dt>
+            <dd><code>umax</code> lower-case hex format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gac6d4707e784876a5955997846731c210" class="m-doc">CNX_OFORMAT_BYTE_HEX</a></span>
+            </dt>
+            <dd><code>byte</code> lower-case hex format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga9d0a72884ed477dc8cf421281f1c2957" class="m-doc">CNX_OFORMAT_U8_HEX_UP</a></span>
+            </dt>
+            <dd><code>u8</code> upper-case hex format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gac7826431c212378b2f5a64eee670fbfc" class="m-doc">CNX_OFORMAT_U16_HEX_UP</a></span>
+            </dt>
+            <dd><code>u16</code> upper-case hex format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga610f5e1adbe69cb35342d820b4eb4455" class="m-doc">CNX_OFORMAT_U32_HEX_UP</a></span>
+            </dt>
+            <dd><code>u32</code> upper-case hex format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gaacacae79ba8d2b6b83c831093f788d43" class="m-doc">CNX_OFORMAT_U64_HEX_UP</a></span>
+            </dt>
+            <dd><code>u64</code> upper-case hex format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga0942ca604b0025d2064d80ea5aec3c92" class="m-doc">CNX_OFORMAT_USIZE_HEX_UP</a></span>
+            </dt>
+            <dd><code>usize</code> upper-case hex format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gade3006d335ef0727dbf9650124d3dad0" class="m-doc">CNX_OFORMAT_UMAX_HEX_UP</a></span>
+            </dt>
+            <dd><code>umax</code> upper-case hex format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga580b65b95936392ba3114a286c294a38" class="m-doc">CNX_OFORMAT_BYTE_HEX_UP</a></span>
+            </dt>
+            <dd><code>byte</code> upper-case hex format specifier for legacy formatted output functions (<code>printf</code>, <code>fprintf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga6d393919b6958034c01076aed6a206f9" class="m-doc">CNX_IFORMAT_U8</a></span>
+            </dt>
+            <dd><code>u8</code> decimal format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga61de940cdcf54b3db01f95898d180b3a" class="m-doc">CNX_IFORMAT_U16</a></span>
+            </dt>
+            <dd><code>u16</code> decimal format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gac759b5ae8990aae8860f0b1540d70c22" class="m-doc">CNX_IFORMAT_U32</a></span>
+            </dt>
+            <dd><code>u32</code> decimal format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga895bed533c7df3d51e592c198cd91005" class="m-doc">CNX_IFORMAT_U64</a></span>
+            </dt>
+            <dd><code>u64</code> decimal format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga16db17b111c76cb0fea11144aadec9a4" class="m-doc">CNX_IFORMAT_USIZE</a></span>
+            </dt>
+            <dd><code>usize</code> decimal format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga9aeba385eb1307a705e2aad3fdcc8410" class="m-doc">CNX_IFORMAT_UMAX</a></span>
+            </dt>
+            <dd><code>umax</code> decimal format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga95dd2834732ea2b9207b968232053529" class="m-doc">CNX_IFORMAT_BYTE</a></span>
+            </dt>
+            <dd><code>byte</code> decimal format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga71fe0a19acb7479f8c35595eb338cf2c" class="m-doc">CNX_IFORMAT_I8</a></span>
+            </dt>
+            <dd><code>i8</code> decimal format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gaafa33e6fbb137362f48694a0cb91e051" class="m-doc">CNX_IFORMAT_I16</a></span>
+            </dt>
+            <dd><code>i16</code> decimal format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga5ac66020ec6287271f3148f9981ba5f8" class="m-doc">CNX_IFORMAT_I32</a></span>
+            </dt>
+            <dd><code>i32</code> decimal format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga4000f8fda540793eb518043b11faf201" class="m-doc">CNX_IFORMAT_I64</a></span>
+            </dt>
+            <dd><code>i64</code> decimal format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga93a7f0a64240c41eeca05d342dd089dd" class="m-doc">CNX_IFORMAT_ISIZE</a></span>
+            </dt>
+            <dd><code>isize</code> decimal format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gaa0186a7ae81a5f23c94429a152663ce5" class="m-doc">CNX_IFORMAT_IMAX</a></span>
+            </dt>
+            <dd><code>imax</code> decimal format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gaec4044a3beb3f7d5a9bfbcbe22dc69b1" class="m-doc">CNX_IFORMAT_U8_OCT</a></span>
+            </dt>
+            <dd><code>u8</code> octal format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga8fc9b7005f214f00366ae0d2ae2432b5" class="m-doc">CNX_IFORMAT_U16_OCT</a></span>
+            </dt>
+            <dd><code>u16</code> octal format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gaf8dec99d15eb1464435ace164bb8ac41" class="m-doc">CNX_IFORMAT_U32_OCT</a></span>
+            </dt>
+            <dd><code>u32</code> octal format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gaafc8227405753442b0637af2dd2b7a70" class="m-doc">CNX_IFORMAT_U64_OCT</a></span>
+            </dt>
+            <dd><code>u64</code> octal format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gafb658e0edfbdf36cc808ca515f192535" class="m-doc">CNX_IFORMAT_USIZE_OCT</a></span>
+            </dt>
+            <dd><code>usize</code> octal format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga8ef3438c26fe74c3b0cc617f02ed2711" class="m-doc">CNX_IFORMAT_UMAX_OCT</a></span>
+            </dt>
+            <dd><code>umax</code> octal format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga715a11fa2f5fc651dc0f6a47bd56b56d" class="m-doc">CNX_IFORMAT_BYTE_OCT</a></span>
+            </dt>
+            <dd><code>byte</code> octal format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga594096dc50c96f2b6b64c4578ff6fe56" class="m-doc">CNX_IFORMAT_U8_HEX</a></span>
+            </dt>
+            <dd><code>u8</code> lower-case hex format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga16d301709949d1356dd0df5081b8703a" class="m-doc">CNX_IFORMAT_U16_HEX</a></span>
+            </dt>
+            <dd><code>u16</code> lower-case hex format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gaaa6777189af9ec75d039877057cb4b47" class="m-doc">CNX_IFORMAT_U32_HEX</a></span>
+            </dt>
+            <dd><code>u32</code> lower-case hex format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gade5c3879ba0091a261085bd19870ba98" class="m-doc">CNX_IFORMAT_U64_HEX</a></span>
+            </dt>
+            <dd><code>u64</code> lower-case hex format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga67d6096d2f24868563dd65a9ad360645" class="m-doc">CNX_IFORMAT_USIZE_HEX</a></span>
+            </dt>
+            <dd><code>usize</code> lower-case hex format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga8988782734fe9bdb56bfddd7d6cb612c" class="m-doc">CNX_IFORMAT_UMAX_HEX</a></span>
+            </dt>
+            <dd><code>umax</code> lower-case hex format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga85996ddb8df58414e0756faec1ed9973" class="m-doc">CNX_IFORMAT_BYTE_HEX</a></span>
+            </dt>
+            <dd><code>byte</code> lower-case hex format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gaf918d99d843c2926fcd3d08224b35c57" class="m-doc">CNX_IFORMAT_U8_HEX_UP</a></span>
+            </dt>
+            <dd><code>u8</code> upper-case hex format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gac276a13fcd83cbab7f206902a63ef35f" class="m-doc">CNX_IFORMAT_U16_HEX_UP</a></span>
+            </dt>
+            <dd><code>u16</code> upper-case hex format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga33c5932fe2d9e3f93c5e6440cb802f9a" class="m-doc">CNX_IFORMAT_U32_HEX_UP</a></span>
+            </dt>
+            <dd><code>u32</code> upper-case hex format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga82b013132df6a7adcbea826b10732ad4" class="m-doc">CNX_IFORMAT_U64_HEX_UP</a></span>
+            </dt>
+            <dd><code>u64</code> upper-case hex format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gaf340a1b1167797753fff31c1abef198c" class="m-doc">CNX_IFORMAT_UMAX_HEX_UP</a></span>
+            </dt>
+            <dd><code>umax</code> upper-case hex format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga00e458e7d3a47fbcee98846585b4b612" class="m-doc">CNX_IFORMAT_BYTE_HEX_UP</a></span>
+            </dt>
+            <dd><code>byte</code> upper-case hex format specifier for legacy formatted input functions (<code>scanf</code>, <code>fscanf</code>, etc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga4c4530543ed1cea5a17d9e9c3085ac54" class="m-doc">cnx_max_u8</a></span>
+            </dt>
+            <dd>Maximum value of a <code>u8</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga4a9922612b871dfb9bc16b9c22ef64cd" class="m-doc">cnx_max_u16</a></span>
+            </dt>
+            <dd>Maximum value of a <code>u16</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga232ae16be7b83fd5be447bdcdc73d375" class="m-doc">cnx_max_u32</a></span>
+            </dt>
+            <dd>Maximum value of a <code>u32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga3ce4b508ad99e996b01a44ce27ba5aa7" class="m-doc">cnx_max_u64</a></span>
+            </dt>
+            <dd>Maximum value of a <code>u64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga57fbba452a1190baf5ff0c1701c57486" class="m-doc">cnx_max_usize</a></span>
+            </dt>
+            <dd>Maximum value of a <code>usize</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gae07b61cae0392c6689d007480b78fa5f" class="m-doc">cnx_max_i8</a></span>
+            </dt>
+            <dd>Maximum value of an <code>i8</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gab06a05bcb2140d0363e44658c471628e" class="m-doc">cnx_max_i16</a></span>
+            </dt>
+            <dd>Maximum value of an <code>i16</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gae779d271bbd0beb5b016c4e8fc27f138" class="m-doc">cnx_max_i32</a></span>
+            </dt>
+            <dd>Maximum value of an <code>i32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga0d9c9d5aefe36e61feaf75f310d7102a" class="m-doc">cnx_max_i64</a></span>
+            </dt>
+            <dd>Maximum value of an <code>i64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gaa38bef9401eb09512b431ec10640bede" class="m-doc">cnx_max_isize</a></span>
+            </dt>
+            <dd>Maximum value of an <code>isize</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga8a6f60b1e8d9900f578734c7602dc159" class="m-doc">cnx_max_f32</a></span>
+            </dt>
+            <dd>Maximum value of an <code>f32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga2293314519611e49e969e95ede746f66" class="m-doc">cnx_max_f64</a></span>
+            </dt>
+            <dd>Maximum value of an <code>f64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gaaad4e2f9febe187b0afd935844a2b673" class="m-doc">cnx_min_u8</a></span>
+            </dt>
+            <dd>Minimum value of a <code>u8</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga6096677f39a8611ef23c33a18d21fd07" class="m-doc">cnx_min_u16</a></span>
+            </dt>
+            <dd>Minimum value of a <code>u16</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gaae38eb9671a4c448621951c03540543f" class="m-doc">cnx_min_u32</a></span>
+            </dt>
+            <dd>Minimum value of a <code>u32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gaa0452261b157e72911dc8e8ed03cd064" class="m-doc">cnx_min_u64</a></span>
+            </dt>
+            <dd>Minimum value of a <code>u64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gaed69b1eee30ee158fda70f5efc8e7842" class="m-doc">cnx_min_usize</a></span>
+            </dt>
+            <dd>Minimum value of a <code>usize</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga25ba2e764a14747fb72231261b311549" class="m-doc">cnx_min_i8</a></span>
+            </dt>
+            <dd>Minimum value of an <code>i8</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga86065f28284039b3a22e44ae8a99f88c" class="m-doc">cnx_min_i16</a></span>
+            </dt>
+            <dd>Minimum value of an <code>i16</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gae4f250ed1139384b442780b22cb80430" class="m-doc">cnx_min_i32</a></span>
+            </dt>
+            <dd>Minimum value of an <code>i32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga4ddac7ee544a93fcbda8683f62d960ea" class="m-doc">cnx_min_i64</a></span>
+            </dt>
+            <dd>Minimum value of an <code>i64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga666c63f54f1db963ef53872048c42f70" class="m-doc">cnx_min_isize</a></span>
+            </dt>
+            <dd>Minimum value of an <code>isize</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gac31876c0a002ee1de0bc77a755a7e227" class="m-doc">cnx_min_f32</a></span>
+            </dt>
+            <dd>Minimum value of an <code>f32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga6b80206a523ad47313f275bad8c569bd" class="m-doc">cnx_min_f64</a></span>
+            </dt>
+            <dd>Minimum value of an <code>f64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gae42d59720906b7efba224eff0fbca7c1" class="m-doc">cnx_min_diff_f32</a></span>
+            </dt>
+            <dd>Minimum discernible difference value of an <code>f32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga4e5d60017ca0982680a88f9016a17c4b" class="m-doc">cnx_min_diff_f64</a></span>
+            </dt>
+            <dd>Minimum discernible difference value of an <code>f64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#gab521d144edcd51b7608f4c5e2fca5ab2" class="m-doc">cnx_max_value</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>Returns the maximum possible value of the given type.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__types.html#ga34ae036aa9d8499d8ec0d28f664a526a" class="m-doc">cnx_min_value</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>Returns the minimum possible value of the given type.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Typedef documentation</h2>
+          <section class="m-doc-details" id="ac7b9bf4b1524f9a26af66f9165604f7d"><div>
+            <h3>
+              typedef <a href="group__types.html#ga5ea7d3fefa2144d9bddaf2053c9691a1" class="m-doc">char_<wbr />ptr</a><a href="#ac7b9bf4b1524f9a26af66f9165604f7d" class="m-doc-self">Ref</a>(char)
+            </h3>
+            <p>Alias for <code>char_ptr</code> used for the inner type of reference-like types (ie iterators)</p>
+<p>type alias for a reference to <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p><p>Alias for <code>char_ptr*</code> used for the inner type of reference-like types (ie iterators). This should be preferred when semantically referring to a reference to a pointer to a single <code>char</code></p><p>Alias for <code>f64_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>f32_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>isize_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>i64_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>i32_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>i16_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>i8_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>usize_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>u64_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>u32_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>u16_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>u8_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>wcstring*</code> used for the inner type of reference-like types (ie iterators). This should be preferred wherever possible when semantically referring to a reference to <code>wcstring</code></p><p>Alias for <code>cstring*</code> used for the inner type of reference-like types (ie iterators). This should be preferred wherever possible when semantically referring to a reference to <code>cstring</code></p><p>Alias for <code>f64_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>f32_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>isize_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>i64_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>i32_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>i16_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>i8_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>usize_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>u64_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>u32_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>u16_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>u8_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p><code>Ref</code> and <code>ConstRef</code> aliases for pointer types, used for the inner type of reference-like types (ie iterators), follow</p>
+          </div></section>
+          <section class="m-doc-details" id="ad393d99153ec33dd6b2595d694d6f89b"><div>
+            <h3>
+              typedef <a href="group__types.html#ga88d1fb873d629b523bfa7335f8819f98" class="m-doc">const_<wbr />char_<wbr />ptr</a><a href="#ad393d99153ec33dd6b2595d694d6f89b" class="m-doc-self">ConstRef</a>(char)
+            </h3>
+            <p>Alias for <code>const_char_ptr</code> used for the inner type of reference-like types (ie iterators)</p>
+<p>type alias for a const reference to <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p><p>Alias for <code>const char_ptr*</code> used for the inner type of reference-like types (ie iterators). This should be preferred when semantically referring to a reference to a const pointer to a single <code>char</code></p><p>Alias for <code>const f64_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>const f32_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>const isize_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>const i64_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>const i32_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>const i16_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>const i8_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>const u8_ptr*</code> used for the inner type of reference-like types (ie iterators).</p><p>Alias for <code>const wcstring*</code> used for the inner type of reference-like types (ie iterators). This should be preferred wherever possible when semantically referring to a reference to <code>const wcstring</code></p><p>Alias for <code>const cstring*</code> used for the inner type of reference-like types (ie iterators). This should be preferred wherever possible when semantically referring to reference to <code>const cstring</code></p><p>Alias for <code>const_f64_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_f32_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_isize_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_i64_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_i32_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_i16_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_i8_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_usize_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_u64_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_u32_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_u16_ptr</code> used for the inner type of reference-like types (ie iterators)</p><p>Alias for <code>const_u8_ptr</code> used for the inner type of reference-like types (ie iterators)</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

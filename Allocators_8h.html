@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>include/Cnx/Allocators.h file | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a>/</span><span class="m-breadcrumb"><a href="dir_eb0c9390901bc8c114e0f1e21e68b5be.html">Cnx</a>/</span>Allocators.h <span class="m-thin">file</span>
+        </h1>
+        <p>Allocators provides an abstraction to modularize custom memory allocators to make custom allocator use simple and configurable.</p>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#typedef-members">Typedefs</a></li>
+                <li><a href="#func-members">Functions</a></li>
+                <li><a href="#var-members">Variables</a></li>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.2.2</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-04-11</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        <section id="typedef-members">
+          <h2><a href="#typedef-members">Typedefs</a></h2>
+          <dl class="m-doc">
+            <dt>
+              using <a href="group__memory.html#ga51231d014bd46304aebd3f19d552afed" class="m-doc">allocate_function</a> = void*(*)(CnxAllocator*restrict self, usize size_bytes)
+            </dt>
+            <dd>A memory allocation function used with <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> must follow this signature.</dd>
+            <dt>
+              using <a href="group__memory.html#gad0cae8b51c20f82a2067c320ee181cb6" class="m-doc">reallocate_function</a> = void*(*)(CnxAllocator*restrict self, void*memory, usize new_size_bytes)
+            </dt>
+            <dd>A memory reallocation function used with <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> must follow this signature.</dd>
+            <dt>
+              using <a href="group__memory.html#ga74e7fba1d8da313add53a4fc8b5ddb03" class="m-doc">deallocate_function</a> = void(*)(CnxAllocator*restrict self, void*memory)
+            </dt>
+            <dd>A memory deallocation function used with <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> must follow this signature.</dd>
+          </dl>
+        </section>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">void* <a href="group__memory.html#gae0d18029fa0ab523ea549a9b7669c5b7" class="m-doc">cnx_allocate</a>(</span><span class="m-doc-wrap"><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a>*restrict self,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> size_bytes) cnx_disable_if(!self</span>
+            </dt>
+            <dd>Wrapper for <code>malloc</code> so it can be used in <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code>s Behavior matches that of <code>malloc</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void* <a href="group__memory.html#gadcbadcf8f6017192538c27291d013406" class="m-doc">cnx_reallocate</a>(</span><span class="m-doc-wrap"><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a>*restrict self,
+              void* memory,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> new_size_bytes) cnx_disable_if(!self</span>
+            </dt>
+            <dd>Wrapper for <code>realloc</code> so it can be used in <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code>s Behavior matches that of <code>realloc</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__memory.html#ga4e464667bf77346d96854dc0c529dc80" class="m-doc">cnx_deallocate</a>(</span><span class="m-doc-wrap"><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a>*restrict self,
+              void* memory) cnx_disable_if(!self</span>
+            </dt>
+            <dd>Wrapper for <code>free</code> so it can be used in <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code>s Behavior matches that of <code>free</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> <a href="group__memory.html#gae05e759a412af924e76a686e8565d9fb" class="m-doc">cnx_allocator_new</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Creates a new <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> with the default allocation and default deallocation functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void* <a href="group__memory.html#ga85b31307615fed1975664e21060bbe33" class="m-doc">cnx_allocator_allocate</a>(</span><span class="m-doc-wrap"><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> size_bytes)</span>
+            </dt>
+            <dd>Allocates new memory with the given <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void* <a href="group__memory.html#ga1546661be8385b124c850a0674f05bdb" class="m-doc">cnx_allocator_allocate_array</a>(</span><span class="m-doc-wrap"><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_elements,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> element_size_bytes)</span>
+            </dt>
+            <dd>Allocates new memory for an array of the given size with the given <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void* <a href="group__memory.html#ga1dbdcce37736cc3c66de205cd197186d" class="m-doc">cnx_allocator_reallocate</a>(</span><span class="m-doc-wrap"><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              void* memory,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> old_size_bytes,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> new_size_bytes)</span>
+            </dt>
+            <dd>Allocates new memory large enough to store <code>new_size_bytes</code> bytes of data, and copies the old contents over.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void* <a href="group__memory.html#gadb3e793a8e5d9d43471783cfac847d1c" class="m-doc">cnx_allocator_reallocate_array</a>(</span><span class="m-doc-wrap"><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              void* memory,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> old_num_elements,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> new_num_elements,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> element_size_bytes)</span>
+            </dt>
+            <dd>Allocates new memory large enough to store <code>new_num_elements</code> elements of size <code>element_size_bytes</code>, and copies the old contents over.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__memory.html#ga38b4489916b4df6c3a862b683bada057" class="m-doc">cnx_allocator_deallocate</a>(</span><span class="m-doc-wrap"><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              void* memory)</span>
+            </dt>
+            <dd>Deallocates (aka frees) the given memory with the given <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code></dd>
+          </dl>
+        </section>
+        <section id="var-members">
+          <h2><a href="#var-members">Variables</a></h2>
+          <dl class="m-doc">
+            <dt>
+              const <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> <a href="group__memory.html#ga462aad3fba55f774944e8c2c53a59dd8" class="m-doc">DEFAULT_ALLOCATOR</a>
+            </dt>
+            <dd>The default <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code></dd>
+          </dl>
+        </section>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__memory.html#ga381fbb401ccbd54e235a9ea85dc449aa" class="m-doc">CNX_DEFAULT_ALLOCATOR_FUNCTION</a></span>
+            </dt>
+            <dd>The default <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> allocation function Define this to your desired function to override the default allocation function.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__memory.html#ga2321e161adc6a260366b15287e3a37da" class="m-doc">CNX_DEFAULT_DEALLOCATOR_FUNCTION</a></span>
+            </dt>
+            <dd>The default <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> deallocation (free) function Define this to your desired function to override the default deallocation function.</dd>
+            <dt id="a44b0c4cdc806391c4adbd5bd5188f44f">
+              <span class="m-doc-wrap-bumper">#define <a href="#a44b0c4cdc806391c4adbd5bd5188f44f" class="m-doc-self">CNX_DEFAULT_REALLOCATOR_FUNCTION</a></span>
+            </dt>
+            <dd>The default <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> reallocation (realloc) function Define this to your desired function to override the default reallocation function.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__memory.html#ga3f6bc4c723632e09771fca35c001e783" class="m-doc">CNX_ALLOCATOR_ABORT_ON_ALLOCATION_FAILURE</a></span>
+            </dt>
+            <dd><code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> allocation failure strategy. By default allocation failure will abort the process. Define this to false to disable this behavior</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__memory.html#ga4e752412c19f30fc284d3658f65187aa" class="m-doc">impl_cnx_allocator_for_custom_typed_allocator</a>(</span><span class="m-doc-wrap">SelfType,
+              allocate,
+              reallocate,
+              deallocate)</span>
+            </dt>
+            <dd>Implements <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> for the given custom allocator type.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__memory.html#ga3663f25e762ac2e098416f3ca0673386" class="m-doc">cnx_allocator_from_custom_typed_allocator</a>(</span><span class="m-doc-wrap">SelfType,
+              self)</span>
+            </dt>
+            <dd>Creates a new <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> with the given custom allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__memory.html#ga9a7bd5e2f64dd7ac107665cb666f5ec5" class="m-doc">cnx_allocator_from_custom_stateless_allocator</a>(</span><span class="m-doc-wrap">allocate_function,
+              reallocate_function,
+              deallocate_function)</span>
+            </dt>
+            <dd>Creates a new &quot;stateless&quot; <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> with the given custom allocator functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__memory.html#gac94af6ddaad9f2fc0080fa60e91aada2" class="m-doc">CNX_DEFAULT_ALLOCATOR</a></span>
+            </dt>
+            <dd>The default <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> Define this to your desired <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> compound literal to override the default <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__memory.html#ga4d254ae46864ea7d59d7d47c8421c35f" class="m-doc">cnx_allocator_allocate_t</a>(</span><span class="m-doc-wrap">T,
+              allocator)</span>
+            </dt>
+            <dd>Allocates enough new memory to store a type <code>T</code> with the given <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__memory.html#gabe110cdd2ddc0c457216d09ea81612ef" class="m-doc">cnx_allocator_allocate_array_t</a>(</span><span class="m-doc-wrap">T,
+              allocator,
+              num_elements)</span>
+            </dt>
+            <dd>Allocates enough new memory to store an array of <code>num_elements</code> of type <code>T</code> with the given <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__memory.html#gadb8b391ebb352fb77d44ab8fae53ee02" class="m-doc">cnx_allocator_reallocate_t</a>(</span><span class="m-doc-wrap">T,
+              allocator,
+              memory_ptr)</span>
+            </dt>
+            <dd>Allocates new memory large enough to store a <code>T</code>, and copies the old contents over.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__memory.html#ga34c270c7c7f57dc8b279af19a58cee7d" class="m-doc">cnx_allocator_reallocate_array_t</a>(</span><span class="m-doc-wrap">T,
+              allocator,
+              memory_ptr,
+              old_num_elements,
+              new_num_elements)</span>
+            </dt>
+            <dd>Allocates new memory large enough to store <code>new_num_elements</code> elements of type <code>T</code>, and copies the old contents over.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__memory.html#gabe9db44b0a79c9de2c91382cfefc4405" class="m-doc">cnx_memcpy</a>(</span><span class="m-doc-wrap">T,
+              dest_ptr,
+              src_ptr,
+              num_elements)</span>
+            </dt>
+            <dd>Copies memory containing an array of type <code>T</code> from <code>src_ptr</code> to <code>dst_ptr</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__memory.html#ga4747d9c607484d891782dc4bb717184e" class="m-doc">cnx_memmove</a>(</span><span class="m-doc-wrap">T,
+              dest_ptr,
+              src_ptr,
+              num_elements)</span>
+            </dt>
+            <dd>Moves memory containing an array of type <code>T</code> from <code>src_ptr</code> to <code>dst_ptr</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__memory.html#ga56003138600d823b8bb65b67e40bc77d" class="m-doc">cnx_memset</a>(</span><span class="m-doc-wrap">T,
+              dest_ptr,
+              value,
+              num_elements)</span>
+            </dt>
+            <dd>Sets the memory at <code>dest_ptr</code>, containing an array of type <code>T</code>, to the given <code>value</code></dd>
+          </dl>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

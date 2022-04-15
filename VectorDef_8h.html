@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>include/Cnx/vector/VectorDef.h file | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a>/</span><span class="m-breadcrumb"><a href="dir_eb0c9390901bc8c114e0f1e21e68b5be.html">Cnx</a>/</span><span class="m-breadcrumb"><a href="dir_23ba398f20d0c321db256f409e0afc36.html">vector</a>/</span>VectorDef.h <span class="m-thin">file</span>
+        </h1>
+        <p>This module provides macro definitions for implementing and working with <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></p>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.1.0</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-04-11</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>macro alias for a <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> containing <code>T</code>s</dd>
+            <dt id="a7196b741cebf83765cc5416f9edf82bc">
+              <span class="m-doc-wrap-bumper">#define <a href="#a7196b741cebf83765cc5416f9edf82bc" class="m-doc-self">CnxVectorIterator</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>macro alias for the concrete type for an iterator into the mutable iteration of a <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> containing <code>T</code>s</dd>
+            <dt id="a4b15492fcf2b2209907aff3738736c23">
+              <span class="m-doc-wrap-bumper">#define <a href="#a4b15492fcf2b2209907aff3738736c23" class="m-doc-self">CnxVectorConstIterator</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>macro alias for the concrete type for an iterator into the const iteration of a <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> containing <code>T</code>s</dd>
+            <dt id="a7ccbf72093c55004f762d3979f7cfce3">
+              <span class="m-doc-wrap-bumper">#define <a href="#a7ccbf72093c55004f762d3979f7cfce3" class="m-doc-self">CnxVectorIdentifier</a>(</span><span class="m-doc-wrap">T,
+              Identifier)</span>
+            </dt>
+            <dd>macro alias for an identifier (type, function, etc) associated with a <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> containing <code>T</code>s</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga039924ef44577b87b58a14ed6a44b720" class="m-doc">CNX_VECTOR_DEFAULT_SHORT_OPT_CAPACITY</a></span>
+            </dt>
+            <dd>The default small-vector optimization capacity if not given as a template parameter.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#gadd124c9fe6cc8953ff50bb29cf725789" class="m-doc">CNX_VECTOR_DEFAULT_LONG_CAPACITY</a></span>
+            </dt>
+            <dd>The default heap-allocated capacity if not given as a template parameter.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#gabbbf41ce4d6fe7a67e6ce643e29febec" class="m-doc">cnx_vector_new</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with defaulted associated functions and initial capacity.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#gab30bca5270a48f2f0f33d0a46535564b" class="m-doc">cnx_vector_new_with_allocator</a>(</span><span class="m-doc-wrap">T,
+              allocator)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with defaulted capacity and associated functions and provided memory allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga3c3068368eaffd392e8f2f5d815f041f" class="m-doc">cnx_vector_new_with_collection_data</a>(</span><span class="m-doc-wrap">T,
+              collection_data_ptr)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with defaulted capacity and provided associated functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga83867da6a5e6df88f170706b0fe01fcb" class="m-doc">cnx_vector_new_with_allocator_and_collection_data</a>(</span><span class="m-doc-wrap">T,
+              allocator,
+              collection_data_ptr)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with defaulted capacity and provided associated functions and memory allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#gac0bccd10d94137e90f0b80f784eb10c6" class="m-doc">cnx_vector_new_with_capacity</a>(</span><span class="m-doc-wrap">T,
+              capacity)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with <strong>at least</strong> the given capacity and defaulted associated functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga4116cc6d2c4e21d7bd4a492d3bd53e92" class="m-doc">cnx_vector_new_with_capacity_and_allocator</a>(</span><span class="m-doc-wrap">T,
+              capacity,
+              allocator)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with <strong>at least</strong> the given capacity, defaulted associated functions, and provided memory allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#gad05f099e1829a2362ca2abee03cefb09" class="m-doc">cnx_vector_new_with_capacity_and_collection_data</a>(</span><span class="m-doc-wrap">T,
+              capacity,
+              collection_data_ptr)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with <strong>at least</strong> the given capacity and provided associated functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga4cb0c20dcfe77db18ca78a7e59dd9b00" class="m-doc">cnx_vector_new_with_capacity_allocator_and_collection_data</a>(</span><span class="m-doc-wrap">T,
+              capacity,
+              allocator,
+              collection_data_ptr)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with <strong>at least</strong> the given capacity and provided associated functions and memory allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga27ab9e315de7800b499caecb36379c34" class="m-doc">cnx_vector_clone</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Clones the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga74a0f4f50149ee36d0cb24ed1690bfc4" class="m-doc">cnx_vector_at_mut</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>Returns a mutable reference to the element at the given <code>index</code> into the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga908d64ca4b02cc6f80815fb74196bdf5" class="m-doc">cnx_vector_at</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>Returns a const reference to the element at the given <code>index</code> into the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga55e39869b80f0aa2819f3332c460f51f" class="m-doc">cnx_vector_front_mut</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a mutable reference to the first element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga146e7c94003770b700865400dbe6e277" class="m-doc">cnx_vector_front</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a const reference to the first element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga4d55152faf551bc1c3b8bb1da734e8da" class="m-doc">cnx_vector_back_mut</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a mutable reference to the last element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga39ad262e0e5dca6688aba58019204cc6" class="m-doc">cnx_vector_back</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a const reference to the last element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga5acaa4fd8a3352694ac260d2c4616156" class="m-doc">cnx_vector_data_mut</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a pointer to the mutable raw array containing the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>&#x27;s elements.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga9132fe7bb983d1f9e0999452b4e4d9cf" class="m-doc">cnx_vector_data</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a pointer to the const raw array containing the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>&#x27;s elements.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga9df367c5736c87c8e94e1774f8cd542e" class="m-doc">cnx_vector_is_empty</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns whether the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>is empty.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#gad6b6db1a36260aeeee1038593ba30f8c" class="m-doc">cnx_vector_is_full</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns whether the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> is full (size equals capacity)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga0c197586cc3364011f439968115e6be1" class="m-doc">cnx_vector_size</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the current size of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#gaeded0e1a9af3ab30d0d9f5be785ca1e4" class="m-doc">cnx_vector_max_size</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>Returns the maximum possible size of a <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> containing type <code>T</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#gab088668b2c8fcb1122b82a2a88292e94" class="m-doc">cnx_vector_capacity</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the current capacity of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga3b4d9e406707285ad154ada21eb3bdf2" class="m-doc">cnx_vector_reserve</a>(</span><span class="m-doc-wrap">self,
+              new_capacity)</span>
+            </dt>
+            <dd>Ensures enough memory to store at least <code>new_capacity</code> number of elements in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, reallocating if necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga0f3c1000ed39e10275e8f04ca30aa30c" class="m-doc">cnx_vector_resize</a>(</span><span class="m-doc-wrap">self,
+              new_size)</span>
+            </dt>
+            <dd>Resizes the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to <code>new_size</code> number of elements. If <code>new_size</code> is greater than the current size, this will allocate memory if necessary and default-construct new elements. If <code>new_size</code> is less than the current size, this will destruct <code>size - new_size</code> number of elements and, if <code>new_size</code> is less than the SSO capacity, deallocate memory.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga5ca32274e1c47744f4b75419fde81c52" class="m-doc">cnx_vector_shrink_to_fit</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Shrinks the memory allocation for the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to match its current size.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga5438520edacc15b0b4e56aa48f6fde9c" class="m-doc">cnx_vector_clear</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Clears the contents of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, destructing all of its elements.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga1172753ff12a6633ec77fd018d488b9a" class="m-doc">cnx_vector_push_back</a>(</span><span class="m-doc-wrap">self,
+              element)</span>
+            </dt>
+            <dd>Appends the given element to the end of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, reallocating memory if necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#gaf60b54def1366b8afd1050a384295d4e" class="m-doc">cnx_vector_pop_back</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Removes the last element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> and removes it, if the size is greater than zero.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga8306834fdcec1970171f0d17fa7a22f4" class="m-doc">cnx_vector_insert</a>(</span><span class="m-doc-wrap">self,
+              element,
+              index)</span>
+            </dt>
+            <dd>Inserts the given element at the given index in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, moving elements backward in the vector if necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#gac8105cf1f94265c753e0fac95a238258" class="m-doc">cnx_vector_erase</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>Removes the element at the given index from the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, moving elements forward in the vector if necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#gacacf3fecf011fe6b5b9d3466c294a8b9" class="m-doc">cnx_vector_erase_n</a>(</span><span class="m-doc-wrap">self,
+              index,
+              num_elements)</span>
+            </dt>
+            <dd>Removes <code>num_elements</code> elements from the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting with the element at <code>index</code>, and moving elements forward in the vector afterward, if necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga99b17e311af5f965268018725546435b" class="m-doc">cnx_vector_free</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Frees the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, calling the element destructor on each element and freeing any allocated memory.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#gab0233700396bf88e0c7f09ee944440bb" class="m-doc">cnx_vector_begin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the beginning of the iteration (pointing at the beginning of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#gada5c567e029ecf8f5accf3b8395998e6" class="m-doc">cnx_vector_end</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the end of the iteration (pointing at the end of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga4155396a074386aaa958798da3c5a144" class="m-doc">cnx_vector_rbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the beginning of the reversed iteration (pointing at the end of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#gabfc0c22b3eadd0ec599859165fd071de" class="m-doc">cnx_vector_rend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the end of the reversed iteration (pointing at the beginning of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga35ff6a5caa2eb49e317b5fa3bb8839fa" class="m-doc">cnx_vector_iterator_equals</a>(</span><span class="m-doc-wrap">first,
+              second)</span>
+            </dt>
+            <dd>Returns whether the given pair of iterators are equal (they belong to the same collection and point to the same element), IE: if <code>first == second</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga6a423b0550033b3f75115bf7857c9293" class="m-doc">cnx_vector_cbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the beginning of the iteration (pointing at the beginning of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#gae42089199071a8c3458b1bd0fd440bf6" class="m-doc">cnx_vector_cend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the end of the iteration (pointing at the end of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#gae9541de20df9860089276701dc5ab930" class="m-doc">cnx_vector_crbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the beginning of the reversed iteration (pointing at the end of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga78784027638224ec059ffe4651432294" class="m-doc">cnx_vector_crend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the end of the reversed iteration (pointing at the beginning of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#gaae474d8c45aa01ecd742668dab60b399" class="m-doc">cnx_vector_const_iterator_equals</a>(</span><span class="m-doc-wrap">first,
+              second)</span>
+            </dt>
+            <dd>Returns whether the given pair of const iterators are equal (they belong to the same collection and point to the same element), IE: if <code>first == second</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a7792c2c18a81d72a6d85b6b9c05de7a8" class="m-doc">cnx_vector_into_iter</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a4402f322df806f1d7a0649ef501ff5ce" class="m-doc">cnx_vector_into_reverse_iter</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the mutable reversed iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#af05900f5f7874e37e8f35f1064bab9be" class="m-doc">cnx_vector_into_const_iter</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a20e111210f67abde7ce04a6b2e4f3c90" class="m-doc">cnx_vector_into_reverse_const_iter</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the const reversed iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__vector.html#ga62efe732d707ad26fa0e62b2376d9040" class="m-doc">cnx_vector_scoped</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>declare a <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> variable with this attribute to have <code>Cnx_vector_free</code> automatically called on it at scope end</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Define documentation</h2>
+          <section class="m-doc-details" id="a7792c2c18a81d72a6d85b6b9c05de7a8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a7792c2c18a81d72a6d85b6b9c05de7a8" class="m-doc-self">cnx_vector_into_iter</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator into the vector</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4402f322df806f1d7a0649ef501ff5ce"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a4402f322df806f1d7a0649ef501ff5ce" class="m-doc-self">cnx_vector_into_reverse_iter</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns a <code>CnxRandomAccessIterator</code> into the mutable reversed iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator into the reversed vector</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af05900f5f7874e37e8f35f1064bab9be"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#af05900f5f7874e37e8f35f1064bab9be" class="m-doc-self">cnx_vector_into_const_iter</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator into the vector</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a20e111210f67abde7ce04a6b2e4f3c90"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a20e111210f67abde7ce04a6b2e4f3c90" class="m-doc-self">cnx_vector_into_reverse_const_iter</a>(</span><span class="m-doc-wrap">self)</span>
+            </h3>
+            <p>Returns a <code>CnxRandomAccessIterator</code> into the const reversed iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator into the reversed vector</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

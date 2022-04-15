@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>include/Cnx/Enum.h file | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a>/</span><span class="m-breadcrumb"><a href="dir_eb0c9390901bc8c114e0f1e21e68b5be.html">Cnx</a>/</span>Enum.h <span class="m-thin">file</span>
+        </h1>
+        <p>CnxEnum provides macros for declaring algebraic datatypes called algebraic <code>Enum</code>s, similar to Rust&#x27;s <code>Enum</code>, and pattern matching on their variants.</p>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.2.0</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-04-11</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__enum.html#gae5bbfee640c17742a1a7c7bd07d3d751" class="m-doc">Enum</a>(</span><span class="m-doc-wrap">Type,
+              ...)</span>
+            </dt>
+            <dd>Declares and defines an <code>Enum</code>, <code>Type</code>, with the given variants and additional members.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__enum.html#ga0bd74f7b3bc17e91de8aa7c85edad788" class="m-doc">EnumWithTag</a>(</span><span class="m-doc-wrap">Type,
+              TagType,
+              ...)</span>
+            </dt>
+            <dd>Declares and defines an <code>Enum</code>, <code>Type</code>, using an existing C-style <code>enum</code>, <code>TagType</code>, to tag/identify its variants.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__enum.html#gad787b174770350aaad26eedc9292bfba" class="m-doc">match</a>(</span><span class="m-doc-wrap">x)</span>
+            </dt>
+            <dd>Pattern matches on the given <code>Enum</code>, <code>x</code> Pattern matching works similarly to <code>switch</code> statements, but with slightly different semantics. First off, pattern cases are declared with <code><a href="group__cnx__enum.html#ga5c65b7422f4e623e93795823f60a592e" class="m-doc">variant(...)</a></code>, which can, in addition to match the variant, optionally decompose the variant into one or more bound variables. Bound variables are bound by value, as decomposing a variant during pattern matching is intended to be consuming, so mutating the <code>Enum</code> variant&#x27;s members in place is not possible without manually doing so. Second, fallthrough is not possible, so <code>break</code>ing to prevent it is not necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__enum.html#ga5c65b7422f4e623e93795823f60a592e" class="m-doc">variant</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Declares a pattern-matching case in a <code>match</code> statement Pattern-matching cases declare a variant to match against and, in addition, can optionally decompose the variant into one or more bound variables. Bound variables are bound by value, as decomposing a variant during pattern matching is intended to be consuming, so mutating the <code>Enum</code> variant&#x27;s members in place is not possible without manually doing so. Unlike <code>switch</code> statements, fallthrough is not possible in <code>match</code> statements, so <code>break</code>ing between <code><a href="group__cnx__enum.html#ga5c65b7422f4e623e93795823f60a592e" class="m-doc">variant(...)</a></code>s is not necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__enum.html#gab5ae623ebd1c1819cbccf669fe5c0d92" class="m-doc">wildcard</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Declares a catch-all pattern-matching case in a <code>match</code> statement This will match all variants that have not been explicitly matched against prior. Unlike <code>switch</code> statements, fallthrough is not possible in <code>match</code> statements, so <code>break</code>ing between <code><a href="group__cnx__enum.html#ga5c65b7422f4e623e93795823f60a592e" class="m-doc">variant(...)</a></code>s is not necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__enum.html#gaacdb758ac67652e7d518762e36737c33" class="m-doc">match_let</a>(</span><span class="m-doc-wrap">self,
+              ...)</span>
+            </dt>
+            <dd>Conditionally pattern matches on the given <code>Enum</code>, <code>self</code> <code>match_let</code> works similarly to an <code>if</code> statement, but with slightly different semantics. First off, in addition to conditionally branching if <code>self</code> is the given variant, it can optionally decompose the variant into one or more bound variables. Bound variables are bound by value, as decomposing a variant during pattern matching is intended to be consuming, so mutating the <code>Enum</code> variant&#x27;s members in place is not possible without manually doing so.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__enum.html#ga74e136471c537efb8b4d5da7b69299e8" class="m-doc">is_variant</a>(</span><span class="m-doc-wrap">self,
+              Variant)</span>
+            </dt>
+            <dd>Determines if <code>self</code> is the <code>Enum</code> variant <code>Variant</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__enum.html#gab938f5c91d29297539bffc3ead525f1f" class="m-doc">extract_variant</a>(</span><span class="m-doc-wrap">self,
+              Variant)</span>
+            </dt>
+            <dd>Extracts the internal value of <code>self</code> as the variant <code>Variant</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__enum.html#ga50d344ee62ce30d79addd6431289ad3b" class="m-doc">variant_identifier</a>(</span><span class="m-doc-wrap">Variant)</span>
+            </dt>
+            <dd>Generates the member identifier for an <code>Enum</code> variant, <code>Variant</code>, used in the struct definition of an <code>Enum</code></dd>
+            <dt id="ac95ca6cbd065fa42a41732808d0503b9">
+              <span class="m-doc-wrap-bumper">#define <a href="#ac95ca6cbd065fa42a41732808d0503b9" class="m-doc-self">___ENUM_GET_TYPE_NAMES</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>extracts the <code>Enum</code> variant names from a list of <code>Enum</code> parameters</dd>
+            <dt id="ac7288ccb3b528c914ff3ff241369f1a3">
+              <span class="m-doc-wrap-bumper">#define <a href="#ac7288ccb3b528c914ff3ff241369f1a3" class="m-doc-self">___ENUM_CHECK_IS_TUPLE_AND_EXTRACT_TYPE</a>(</span><span class="m-doc-wrap">x)</span>
+            </dt>
+            <dd>extract the <code>Enum</code> variant name from an <code>Enum</code> parameter</dd>
+            <dt id="abdad52fc03e53d4626d45c0c566992e7">
+              <span class="m-doc-wrap-bumper">#define <a href="#abdad52fc03e53d4626d45c0c566992e7" class="m-doc-self">___ENUM_DEFINE_STRUCTS</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Defines the structs used to represent <code>Enum</code> variants in an <code>Enum</code> declaration.</dd>
+            <dt id="a6bef2c49edc082dd8496a9d7fedca864">
+              <span class="m-doc-wrap-bumper">#define <a href="#a6bef2c49edc082dd8496a9d7fedca864" class="m-doc-self">___ENUM_DEFINE_STRUCT</a>(</span><span class="m-doc-wrap">x)</span>
+            </dt>
+            <dd>Defines a struct used to represent an <code>Enum</code> variant in an <code>Enum</code> declaration.</dd>
+            <dt id="a22a955c3071e5a14cce7561b9a0ea6c4">
+              <span class="m-doc-wrap-bumper">#define <a href="#a22a955c3071e5a14cce7561b9a0ea6c4" class="m-doc-self">___ENUM_DEFINE_EMPTY_STRUCT</a>(</span><span class="m-doc-wrap">Name)</span>
+            </dt>
+            <dd>Defines a struct used to represent an <code>Enum</code> variant in an <code>Enum</code> declaration.</dd>
+            <dt id="acbf98b1da944cc4735c78984a68c0779">
+              <span class="m-doc-wrap-bumper">#define <a href="#acbf98b1da944cc4735c78984a68c0779" class="m-doc-self">___ENUM_DEFINE_STRUCT_IMPL</a>(</span><span class="m-doc-wrap">Name,
+              x)</span>
+            </dt>
+            <dd>Defines a struct used to represent an <code>Enum</code> variant in an <code>Enum</code> declaration.</dd>
+            <dt id="aeac4325b75314de44a01c0d912ae0c94">
+              <span class="m-doc-wrap-bumper">#define <a href="#aeac4325b75314de44a01c0d912ae0c94" class="m-doc-self">___ENUM_EXPAND_STRUCT_IMPL</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Defines a struct used to represent an <code>Enum</code> variant in an <code>Enum</code> declaration.</dd>
+            <dt id="ab697fb12a88dc7ba135fb6e4f7ac7bd5">
+              <span class="m-doc-wrap-bumper">#define <a href="#ab697fb12a88dc7ba135fb6e4f7ac7bd5" class="m-doc-self">___ENUM_DEFINE_MEMBERS</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Defines any additional members of an <code>Enum</code> in an <code>Enum</code> declaration.</dd>
+            <dt id="a72482e7a11f9473e8e4fd8ca51908a0e">
+              <span class="m-doc-wrap-bumper">#define <a href="#a72482e7a11f9473e8e4fd8ca51908a0e" class="m-doc-self">___ENUM_DEFINE_MEMBER</a>(</span><span class="m-doc-wrap">x)</span>
+            </dt>
+            <dd>Defines an additional members of an <code>Enum</code> in an <code>Enum</code> declaration.</dd>
+            <dt id="ad887f28e39110ec680a1cfeaa4d2031f">
+              <span class="m-doc-wrap-bumper">#define <a href="#ad887f28e39110ec680a1cfeaa4d2031f" class="m-doc-self">___ENUM_BIND_VARIANT</a>(</span><span class="m-doc-wrap">variant_name,
+              ...)</span>
+            </dt>
+            <dd>Binds an <code>Enum</code> to a decomposition of the variant <code>variant_name</code></dd>
+            <dt id="a047ab118ee558f209a5c752fa2e3cc41">
+              <span class="m-doc-wrap-bumper">#define <a href="#a047ab118ee558f209a5c752fa2e3cc41" class="m-doc-self">___ENUM_LET_BIND_VARIANT</a>(</span><span class="m-doc-wrap">self,
+              variant_name,
+              ...)</span>
+            </dt>
+            <dd>Binds an <code>Enum</code> to a decomposition of the variant <code>variant_name</code></dd>
+          </dl>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

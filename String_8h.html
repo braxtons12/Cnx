@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>include/Cnx/String.h file | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a>/</span><span class="m-breadcrumb"><a href="dir_eb0c9390901bc8c114e0f1e21e68b5be.html">Cnx</a>/</span>String.h <span class="m-thin">file</span>
+        </h1>
+        <p>This module provides string and stringview types comparable to C++ for Cnx.</p>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#typedef-members">Typedefs</a></li>
+                <li><a href="#func-members">Functions</a></li>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.2.2</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-03-31</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        <section id="nested-classes">
+          <h2><a href="#nested-classes">Classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              struct <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>
+            </dt>
+            <dd>Cnx stringview type. A stringview is a &quot;view&quot; into a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>. It allows you to lazily inspect the contents of the string, but not modify them. It is effectively a fat pointer into the contents of the associated <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              struct <a href="structCnxString.html" class="m-doc">CnxString</a>
+            </dt>
+            <dd>Cnx string type <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> is a bounds safe, allocator aware, potentially dynamically allocated string type with significantly improved ergonomics over <code>const char*</code>s (aka <code>cstring</code>s), but maintains compatibility with them (<code><a href="structCnxString.html" class="m-doc">CnxString</a></code> is always null terminated). Provides similar functionality to C++&#x27;s <code>std::string</code>, but in C.</dd>
+            <dt>
+              struct <a href="structCnxStringIterator.html" class="m-doc">CnxStringIterator</a>
+            </dt>
+            <dd>Cnx string iterator storage type <code><a href="structCnxStringIterator.html" class="m-doc">CnxStringIterator</a></code> is the underlying storage type used by <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> for its non-const iterator type (<code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(char_<wbr />ptr)</a></code>)</dd>
+            <dt>
+              struct <a href="structCnxStringConstIterator.html" class="m-doc">CnxStringConstIterator</a>
+            </dt>
+            <dd>Cnx string const iterator storage type <code><a href="structCnxStringIterator.html" class="m-doc">CnxStringIterator</a></code> is the underlying storage type used by <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> for its const iterator type (<code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ptr)</a></code>)</dd>
+            <dt>
+              struct <a href="structCnxStringViewIterator.html" class="m-doc">CnxStringViewIterator</a>
+            </dt>
+            <dd>Cnx stringview const iterator storage type <code><a href="structCnxStringViewIterator.html" class="m-doc">CnxStringViewIterator</a></code> is the underlying storage type used by <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> for its const iterator type (<code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ptr)</a></code>)</dd>
+            <dt>
+              struct <a href="structcnx__stringview__vtable__t.html" class="m-doc">cnx_stringview_vtable_t</a>
+            </dt>
+            <dd>The function vector table of methods associated with <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              struct <a href="structcnx__string__vtable__t.html" class="m-doc">cnx_string_vtable_t</a>
+            </dt>
+            <dd>The function vector table of methods associated with <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+          </dl>
+        </section>
+        <section id="typedef-members">
+          <h2><a href="#typedef-members">Typedefs</a></h2>
+          <dl class="m-doc">
+            <dt>
+              using <a href="group__cnx__stringview.html#ga798946c839526e84326e8e31438f71b1" class="m-doc">cnx_stringview_vtable_t</a> = struct <a href="structcnx__stringview__vtable__t.html" class="m-doc">cnx_<wbr />stringview_<wbr />vtable_<wbr />t</a>
+            </dt>
+            <dd>The function vector table of methods associated with <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              using <a href="group__cnx__stringview.html#ga18f981d1063ed7e35d1b59a3887485e3" class="m-doc">CnxStringView</a> = struct <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>
+            </dt>
+            <dd>Cnx stringview type. A stringview is a &quot;view&quot; into a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>. It allows you to lazily inspect the contents of the string, but not modify them. It is effectively a fat pointer into the contents of the associated <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              using <a href="group__cnx__string.html#ga1b5df9ba836d967857138035589fb606" class="m-doc">cnx_string_vtable_t</a> = struct <a href="structcnx__string__vtable__t.html" class="m-doc">cnx_<wbr />string_<wbr />vtable_<wbr />t</a>
+            </dt>
+            <dd>The function vector table of methods associated with <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              using <a href="group__cnx__string.html#gae625779e0e82ba4f74acca5a55c83c9c" class="m-doc">CnxString</a> = struct <a href="structCnxString.html" class="m-doc">CnxString</a>
+            </dt>
+            <dd>Cnx string type <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> is a bounds safe, allocator aware, potentially dynamically allocated string type with significantly improved ergonomics over <code>const char*</code>s (aka <code>cstring</code>s), but maintains compatibility with them (<code><a href="structCnxString.html" class="m-doc">CnxString</a></code> is always null terminated). Provides similar functionality to C++&#x27;s <code>std::string</code>, but in C.</dd>
+            <dt>
+              using <a href="group__cnx__string.html#ga1b0cedfa9f15f12d7e1fb283b7362c1b" class="m-doc">CnxStringIterator</a> = struct <a href="structCnxStringIterator.html" class="m-doc">CnxStringIterator</a>
+            </dt>
+            <dd>Cnx string iterator storage type <code><a href="structCnxStringIterator.html" class="m-doc">CnxStringIterator</a></code> is the underlying storage type used by <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> for its non-const iterator type (<code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(char_<wbr />ptr)</a></code>)</dd>
+            <dt>
+              using <a href="group__cnx__string.html#ga11765fdec8a647681babdcccc0ddeb1f" class="m-doc">CnxStringConstIterator</a> = struct <a href="structCnxStringConstIterator.html" class="m-doc">CnxStringConstIterator</a>
+            </dt>
+            <dd>Cnx string const iterator storage type <code><a href="structCnxStringIterator.html" class="m-doc">CnxStringIterator</a></code> is the underlying storage type used by <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> for its const iterator type (<code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ptr)</a></code>)</dd>
+            <dt>
+              using <a href="group__cnx__stringview.html#ga0d1e0b3ead857e457e4ed6ef2b79ad4e" class="m-doc">CnxStringViewIterator</a> = struct <a href="structCnxStringViewIterator.html" class="m-doc">CnxStringViewIterator</a>
+            </dt>
+            <dd>Cnx stringview const iterator storage type <code><a href="structCnxStringViewIterator.html" class="m-doc">CnxStringViewIterator</a></code> is the underlying storage type used by <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> for its const iterator type (<code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ptr)</a></code>)</dd>
+            <dt>
+              using <a href="#ae3d7182a3dd0c7422732e8af09d9cd1a" class="m-doc">Ref</a> = <a href="structCnxString.html" class="m-doc">CnxString</a>*(CnxString)
+            </dt>
+            <dd>type alias for a reference to <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              using <a href="#a9020553c75a48d42d57c9cfbd01b819c" class="m-doc">ConstRef</a> = const <a href="structCnxString.html" class="m-doc">CnxString</a>*(CnxString)
+            </dt>
+            <dd>type alias for a const reference to <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+          </dl>
+        </section>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt id="a630348d3d44f8fc790eb2bff3a25e7d3">
+              <span class="m-doc-wrap-bumper"> <a href="#a630348d3d44f8fc790eb2bff3a25e7d3" class="m-doc-self">DeclCnxIterators</a>(</span><span class="m-doc-wrap"><a href="String_8h.html#ae3d7182a3dd0c7422732e8af09d9cd1a" class="m-doc">Ref</a>(<a href="structCnxString.html" class="m-doc">CnxString</a>))</span>
+            </dt>
+            <dd>Declares iterator types for <code><a href="String_8h.html#ae3d7182a3dd0c7422732e8af09d9cd1a" class="m-doc">Ref(CnxString)</a></code></dd>
+            <dt id="ae4b84cd4547fd76a79be6daef6128381">
+              <span class="m-doc-wrap-bumper"> <a href="#ae4b84cd4547fd76a79be6daef6128381" class="m-doc-self">DeclCnxIterators</a>(</span><span class="m-doc-wrap"><a href="String_8h.html#a9020553c75a48d42d57c9cfbd01b819c" class="m-doc">ConstRef</a>(<a href="structCnxString.html" class="m-doc">CnxString</a>))</span>
+            </dt>
+            <dd>Declares iterator types for <code><a href="String_8h.html#a9020553c75a48d42d57c9cfbd01b819c" class="m-doc">ConstRef(CnxString)</a></code></dd>
+            <dt id="af78b9bc38d5b3813fb679d643bf088b2">
+              <span class="m-doc-wrap-bumper"> <a href="#af78b9bc38d5b3813fb679d643bf088b2" class="m-doc-self">DeclCnxIterators</a>(</span><span class="m-doc-wrap"><a href="String_8h.html#ae3d7182a3dd0c7422732e8af09d9cd1a" class="m-doc">Ref</a>(<a href="structCnxStringView.html" class="m-doc">CnxStringView</a>))</span>
+            </dt>
+            <dd>Declares iterator types for <code><a href="group__cnx__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(CnxStringView)</a></code></dd>
+            <dt id="a2c48e91c8be765a90ac9c8360f7621ad">
+              <span class="m-doc-wrap-bumper"> <a href="#a2c48e91c8be765a90ac9c8360f7621ad" class="m-doc-self">DeclCnxIterators</a>(</span><span class="m-doc-wrap"><a href="String_8h.html#a9020553c75a48d42d57c9cfbd01b819c" class="m-doc">ConstRef</a>(<a href="structCnxStringView.html" class="m-doc">CnxStringView</a>))</span>
+            </dt>
+            <dd>Declares iterator types for <code><a href="group__cnx__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(CnxStringView)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#gaa93bd62e428bca3a3e20b79316e4b626" class="m-doc">cnx_string_new</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Creates a new, empty <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#ga3ff1ac44565a5e762936a1ff8fb1001d" class="m-doc">cnx_string_new_with_allocator</a>(</span><span class="m-doc-wrap"><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>Creates a new, empty <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> that will use the given allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#gacd2452a1ae1c1f7dfc847c8bdc8c5a08" class="m-doc">cnx_string_new_with_capacity</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> capacity)</span>
+            </dt>
+            <dd>Creates a new <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> with the given initial capacity.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#ga2f8726714a24250cfd0d9a24da3c80e9" class="m-doc">cnx_string_new_with_capacity_with_allocator</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> capacity,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>Creates a new <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> with the given initial capacity.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#ga6edd4d3daa0416b9c2fa6698eb5fe935" class="m-doc">cnx_string_from_cstring</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> string,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length) cnx_disable_if(!string</span>
+            </dt>
+            <dd>Creates a new <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> from the given <code>cstring</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#ga943c53914bbe587513775b35a80a6235" class="m-doc">cnx_string_from_cstring_with_allocator</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> string,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator) cnx_disable_if(!string</span>
+            </dt>
+            <dd>Creates a new <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> from the given <code>cstring</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#gac370c164e4abc5cc62501a405d72b523" class="m-doc">cnx_string_from_wcstring</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga94d9d3ddae9a425c4883fee97b7625d6" class="m-doc">const_<wbr />wcstring</a> string,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length) cnx_disable_if(!string</span>
+            </dt>
+            <dd>Creates a new <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> from the given <code>wcstring</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#ga0430bf1104fd589f4df31d6d6ead67d3" class="m-doc">cnx_string_from_wcstring_with_allocator</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga94d9d3ddae9a425c4883fee97b7625d6" class="m-doc">const_<wbr />wcstring</a> string,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator) cnx_disable_if(!string</span>
+            </dt>
+            <dd>Creates a new <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> from the given <code>wcstring</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#ga302779b7daa77249b693f05a3bd82529" class="m-doc">cnx_string_from_stringview</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict view) cnx_disable_if(!view</span>
+            </dt>
+            <dd>Creates a new <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> from the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#ga750b5e1d89eaee6d52b12abd984cd74a" class="m-doc">cnx_string_from_stringview_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict view,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator) cnx_disable_if(!view</span>
+            </dt>
+            <dd>Creates a new <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> that will use the given memory allocator, from the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> <a href="group__cnx__string.html#ga1b5d8450f21275d4fdf0747f6f1159a5" class="m-doc">cnx_string_into_cstring</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the <code>cstring</code> representation of this <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga94d9d3ddae9a425c4883fee97b7625d6" class="m-doc">const_<wbr />wcstring</a> <a href="group__cnx__string.html#ga3294b9b0dcba5814659e28c2ca0de2b0" class="m-doc">cnx_string_into_wcstring</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the <code>wcstring</code> converted representation of this <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>. The result will be allocated with the same allocator used by this <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga94d9d3ddae9a425c4883fee97b7625d6" class="m-doc">const_<wbr />wcstring</a> <a href="group__cnx__string.html#gac18e7849e6081d5ea0227bff57f8d611" class="m-doc">cnx_string_into_wcstring_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>Returns the <code>wcstring</code> converted representation of this <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, allocated with the given allocator;.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxStringView.html" class="m-doc">CnxStringView</a> <a href="group__cnx__string.html#ga06b821a603c886f792417004b13f5883" class="m-doc">cnx_string_into_stringview</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> into this <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#ga677def59d92e76a5280d34c3191f99ee" class="m-doc">cnx_string_clone</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Creates a copy of this <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> using the same allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#gaaeb05e9b297a7ed191bbbf46ff954543" class="m-doc">cnx_string_clone_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>Creates a copy of this <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> using the given allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#gaed3bf134bdf3028bb3ea8a52c51f2d5a" class="m-doc">cnx_string_free</a>(</span><span class="m-doc-wrap">void*restrict self)</span>
+            </dt>
+            <dd>Frees the allocated memory of the string, if it is not small string optimized.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5ea7d3fefa2144d9bddaf2053c9691a1" class="m-doc">char_<wbr />ptr</a> <a href="group__cnx__string.html#ga0f63db393c7ca868fab193f5bea76c6c" class="m-doc">cnx_string_at_mut</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index)</span>
+            </dt>
+            <dd>Returns a pointer to the character at the given index.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga88d1fb873d629b523bfa7335f8819f98" class="m-doc">const_<wbr />char_<wbr />ptr</a> <a href="group__cnx__string.html#gab3fc20ec2d92e8ce2f008bf535de7c3d" class="m-doc">cnx_string_at_const</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index)</span>
+            </dt>
+            <dd>Returns a pointer to the character at the given index.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5ea7d3fefa2144d9bddaf2053c9691a1" class="m-doc">char_<wbr />ptr</a> <a href="group__cnx__string.html#ga180882363ea22b45812c56062c84306b" class="m-doc">cnx_string_front_mut</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the character at the beginning of the string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga88d1fb873d629b523bfa7335f8819f98" class="m-doc">const_<wbr />char_<wbr />ptr</a> <a href="group__cnx__string.html#ga037f709ecac80df3abad9cc4157cbf6e" class="m-doc">cnx_string_front_const</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the character at the beginning of the string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5ea7d3fefa2144d9bddaf2053c9691a1" class="m-doc">char_<wbr />ptr</a> <a href="group__cnx__string.html#gaf4640daac143a637c100ead22f6bd0ab" class="m-doc">cnx_string_back_mut</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the character at the end of the string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga88d1fb873d629b523bfa7335f8819f98" class="m-doc">const_<wbr />char_<wbr />ptr</a> <a href="group__cnx__string.html#ga9fd0e6d81294739e5cd024214d3d1cf1" class="m-doc">cnx_string_back_const</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the character at the end of the string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__string.html#gac67019be59a3b263f9546b53ee09efa7" class="m-doc">cnx_string_is_empty</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Returns whether the string is empty or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__string.html#ga91747a2f0d709e687ffb7824dedf27d5" class="m-doc">cnx_string_is_full</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Returns whether the string contains capacity number of characters.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="group__cnx__string.html#ga8d99555aac117680ad1bdce5e7fabc8a" class="m-doc">cnx_string_size</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the current size of the string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="group__cnx__string.html#ga736546269b2f18817223c4475b31b3bb" class="m-doc">cnx_string_length</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the current length of the string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="group__cnx__string.html#ga6e773aeda7dc32bcc301c235a1ff379c" class="m-doc">cnx_string_max_size</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the maximum possible size of a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="group__cnx__string.html#ga7a08c3d1df39a2c1151405905d0adb14" class="m-doc">cnx_string_capacity</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the current capacity of the string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#ga6b17d463521ba2c105e72f32530b15bf" class="m-doc">cnx_string_first</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_chars) cnx_disable_if(num_chars</span>
+            </dt>
+            <dd>Returns the first <code>num_chars</code> characters in the string as a new <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga00d8f39b4b304be8134e652bf61ff840" class="m-doc">cstring</a> <a href="group__cnx__string.html#ga9ee91418f3be2658d1f1b9dbaab7908e" class="m-doc">cnx_string_first_cstring</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_chars) cnx_disable_if(num_chars</span>
+            </dt>
+            <dd>Returns the first <code>num_chars</code> characters in the string as a <code>cstring</code> allocated with the allocator associated with <code>self</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxStringView.html" class="m-doc">CnxStringView</a> <a href="group__cnx__string.html#ga1e7f8422afc3d4830770a2e65785687a" class="m-doc">cnx_string_first_stringview</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_chars) cnx_disable_if(num_chars</span>
+            </dt>
+            <dd>Returns the first <code>num_chars</code> characters in the string as a <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#gaf6d99023f26dc8b43231d71917fa5eb6" class="m-doc">cnx_string_last</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_chars) cnx_disable_if(num_chars</span>
+            </dt>
+            <dd>Returns the last <code>num_chars</code> characters in the string as a new <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga00d8f39b4b304be8134e652bf61ff840" class="m-doc">cstring</a> <a href="group__cnx__string.html#ga76b35f302eb889b8d318b0025e2cdac1" class="m-doc">cnx_string_last_cstring</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_chars) cnx_disable_if(num_chars</span>
+            </dt>
+            <dd>Returns the last <code>num_chars</code> characters in the string as a <code>cstring</code> allocated with the allocator associated with <code>self</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxStringView.html" class="m-doc">CnxStringView</a> <a href="group__cnx__string.html#ga04c5180b21f7dfd4211e308162f9fa8b" class="m-doc">cnx_string_last_stringview</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_chars) cnx_disable_if(num_chars</span>
+            </dt>
+            <dd>Returns the last <code>num_chars</code> characters in the string as a <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__string.html#ga77c62d1d9fd538260b7916f1174cde38" class="m-doc">cnx_string_equal</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict to_compare) cnx_disable_if(!to_compare</span>
+            </dt>
+            <dd>Determines if the given strings are equal.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__string.html#gaa007dd6aa53a41bcf31b323d5519b228" class="m-doc">cnx_string_equal_cstring</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> to_compare,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length) cnx_disable_if(!to_compare</span>
+            </dt>
+            <dd>Determines if the given strings are equal.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__string.html#ga37ffff1ace150b214866936cea51c99c" class="m-doc">cnx_string_equal_stringview</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict to_compare) cnx_disable_if(!to_compare</span>
+            </dt>
+            <dd>Determines if the given strings are equal.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__string.html#gaf9672eaa3c84bb80704aa1d315af261c" class="m-doc">cnx_string_contains</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict substring) cnx_disable_if(!substring</span>
+            </dt>
+            <dd>Determines if the string contains the given substring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__string.html#ga93e167e029393a53e868c463dd09c2d4" class="m-doc">cnx_string_contains_cstring</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> substring,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> substring_length) cnx_disable_if(!substring</span>
+            </dt>
+            <dd>Determines if the string contains the given substring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__string.html#gad1b5b470dee42bc1ed84ec9be19c481b" class="m-doc">cnx_string_contains_stringview</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict substring) cnx_disable_if(!substring</span>
+            </dt>
+            <dd>Determines if the string contains the given substring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__string.html#gac2b4e79dba030ae591565bd6d8ee8c83" class="m-doc">cnx_string_starts_with</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict substring) cnx_disable_if(!substring</span>
+            </dt>
+            <dd>Determines if the string begins with the given substring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__string.html#ga5a9992241170ee6d298bed268bdad2c1" class="m-doc">cnx_string_starts_with_cstring</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> substring,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> substring_length) cnx_disable_if(!substring</span>
+            </dt>
+            <dd>Determines if the string begins with the given substring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__string.html#ga86e72d13ffdf3703e18478a0cce1fc55" class="m-doc">cnx_string_starts_with_stringview</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict substring) cnx_disable_if(!substring</span>
+            </dt>
+            <dd>Determines if the string begins with the given substring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__string.html#gad7cef9b5e66bf05e00471a47f1e36839" class="m-doc">cnx_string_ends_with</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict substring) cnx_disable_if(!substring</span>
+            </dt>
+            <dd>Determines if the string ends with the given substring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__string.html#gadff6eaa6697c6543f87bc7d567c5c100" class="m-doc">cnx_string_ends_with_cstring</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> substring,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> substring_length) cnx_disable_if(!substring</span>
+            </dt>
+            <dd>Determines if the string ends with the given substring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__string.html#gaa06b584fa1539df58b4f148a1d7b2fb7" class="m-doc">cnx_string_ends_with_stringview</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict substring) cnx_disable_if(!substring</span>
+            </dt>
+            <dd>Determines if the string ends with the given substring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"> <a href="group__cnx__string.html#gabfe4d478a9da051b7a6f3cd85830db46" class="m-doc">CnxOption</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a>) cnx_string_find_first(const CnxString *restrict self</span>
+            </dt>
+            <dd>Returns the index of the first occurrence of the given substring, or <code>None</code> if the substring does not occur.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#gabafba1e0d105f45c861e79cf9f6a17ec" class="m-doc">cnx_string_substring</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length)</span>
+            </dt>
+            <dd>Returns the length <code>length</code> substring beginning at <code>index</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#ga6a8a5282f190bc2a76235e282dedf0f1" class="m-doc">cnx_string_substring_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>Returns the length <code>length</code> substring beginning at <code>index</code>, allocated with the given allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxStringView.html" class="m-doc">CnxStringView</a> <a href="group__cnx__string.html#ga716c53b81479fb567a693af84cb0051b" class="m-doc">cnx_string_stringview_of</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length)</span>
+            </dt>
+            <dd>Returns a <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> into <code>self</code> of the range [index, index + length)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#gad3c9fbb5ce853dec10aac7e2109c6d26" class="m-doc">cnx_string_concatenate</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict left,
+              const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict right) cnx_disable_if(!right</span>
+            </dt>
+            <dd>Concatenates the two strings into a new one, using the allocator associated with <code>left</code>, if necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#gaedd4ccde192dcfbee25ba09fae5983d4" class="m-doc">cnx_string_concatenate_cstring</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict left,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> right,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> right_length) cnx_disable_if(!right</span>
+            </dt>
+            <dd>Concatenates the two strings into a new one, using the allocator associated with <code>left</code>, if necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#gabbcd2fbdb030c54bbe51f412c498e401" class="m-doc">cnx_string_concatenate_cstrings</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> left,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> left_length,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> right,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> right_length) cnx_disable_if(!left</span>
+            </dt>
+            <dd>Concatenates the two strings into a new <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, using the default allocator (malloc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#ga64b2e94cff05a52dde9ae2e76d344e92" class="m-doc">cnx_string_concatenate_stringview</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict left,
+              const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict right) cnx_disable_if(!left</span>
+            </dt>
+            <dd>Concatenates the two strings into a new one, using the allocator associated with <code>left</code>, if necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#gad59511211c2a8539274748e48acadd95" class="m-doc">cnx_string_concatenate_stringviews</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict left,
+              const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict right) cnx_disable_if(!left</span>
+            </dt>
+            <dd>Concatenates the two stringviews into a new <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, using the default allocator (malloc)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#ga1f6f37aa2b16bede11b6b80a50f17b80" class="m-doc">invalid_types_passed_to_cnx_string_concatenate</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>This function is an __INTENTIONALLY_ undefined function so that improper use of <code>cnx_string_concatenate</code> (passing values of invalid type(s)) will result in a build failure.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#ga260c336ee8ccba1da70893043f4169d4" class="m-doc">cnx_string_concatenate_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict left,
+              const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict right,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator) cnx_disable_if(!right</span>
+            </dt>
+            <dd>Concatenates the two strings into a new one, using the given allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#ga5e63946d60ecd8255da85d75f58e172b" class="m-doc">cnx_string_concatenate_cstring_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict left,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> right,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> right_length,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator) cnx_disable_if(!right</span>
+            </dt>
+            <dd>Concatenates the two strings into a new one, using the given allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#gafa4c4f112a2a2fa5bb21117ae3c54720" class="m-doc">cnx_string_concatenate_stringview_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict left,
+              const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict right,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator) cnx_disable_if(!right</span>
+            </dt>
+            <dd>Concatenates the two strings into a new one, using the given allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#gad3f802c7b06edcc687491053f80286e0" class="m-doc">cnx_string_concatenate_cstrings_with_allocator</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> left,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> left_length,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> right,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> right_length,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator) cnx_disable_if(!left</span>
+            </dt>
+            <dd>Concatenates the two strings into a new one, using the given allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__string.html#gada2903ff26e671171d0114106331a3db" class="m-doc">cnx_string_concatenate_stringviews_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict left,
+              const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict right,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator) cnx_disable_if(!left</span>
+            </dt>
+            <dd>Concatenates the two strings into a new one, using the given allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#ga7e351a55525bc2767d55b0b2b95d3cc0" class="m-doc">cnx_string_fill</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              char character)</span>
+            </dt>
+            <dd>Fills the string with the given character.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#ga7a42b5a3796215366a9cdd11d123d108" class="m-doc">cnx_string_clear</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Clears the string, filling it with null.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#ga3f28a0d10f6682210d72474c5e1ab6a8" class="m-doc">cnx_string_shrink_to_fit</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Shrinks the string so its capacity equals its size.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#gac5610fdab45304b35e1f47f99ad42cfb" class="m-doc">cnx_string_insert</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict to_insert,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index) cnx_disable_if(!to_insert</span>
+            </dt>
+            <dd>Inserts the given string <code>to_insert</code> into <code>self</code> at the given <code>index</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#gaddd4d2841721c97cdb54ff5c4c6e8c22" class="m-doc">cnx_string_insert_cstring</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> to_insert,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> to_insert_length,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index) cnx_disable_if(!to_insert</span>
+            </dt>
+            <dd>Inserts the given string <code>to_insert</code> into <code>self</code> at the given <code>index</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#ga8aa6f1491bd8486b94b4df48f8159b35" class="m-doc">cnx_string_insert_stringview</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict to_insert,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index) cnx_disable_if(!to_insert</span>
+            </dt>
+            <dd>Inserts the given string <code>to_insert</code> into <code>self</code> at the given <code>index</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#ga20467e543720720633a6a9c6a37e35ff" class="m-doc">cnx_string_erase</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index)</span>
+            </dt>
+            <dd>Erases the character at the given index from the string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#ga283908047d014257696d263b46dcf8ea" class="m-doc">cnx_string_erase_n</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_characters)</span>
+            </dt>
+            <dd>Erases <code>num_character</code> characters from the string, starting at the given index.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#gaa1d8bf75b01a25563f5c6b31daf5502c" class="m-doc">cnx_string_resize</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> new_size)</span>
+            </dt>
+            <dd>Resizes the string to the new size, null padding or truncating if necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#ga858d2b83eaeda93e0cc9ae37347f0253" class="m-doc">cnx_string_reserve</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> new_capacity)</span>
+            </dt>
+            <dd>Reserves additional capacity in the string This will allocate enough memory to store <strong>at least</strong> <code>new_capacity</code> number of characters,.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#ga4b84a75c337b6d24ff3f917cab90d2b8" class="m-doc">cnx_string_push_back</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              char character)</span>
+            </dt>
+            <dd>Appends the given character to the end of the string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#ga4f05fff3fdd6daf91be9303094188011" class="m-doc">cnx_string_push_front</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              char character)</span>
+            </dt>
+            <dd>Prepends the given character to the beginning of the string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"> <a href="group__cnx__string.html#gaf9464bbae320c45896cdd215c9f5fdca" class="m-doc">CnxOption</a>(</span><span class="m-doc-wrap">char)</span>
+            </dt>
+            <dd>Removes the last character in the string and returns it.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#gaad02285328f5e3ee42787af2033b7614" class="m-doc">cnx_string_append</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict to_append) cnx_disable_if(!to_append</span>
+            </dt>
+            <dd>Appends the given string to the end of the string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#ga8cae0f3ab457b53842f0fa5e0e02edcc" class="m-doc">cnx_string_append_cstring</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> to_append,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> to_append_length) cnx_disable_if(!to_append</span>
+            </dt>
+            <dd>Appends the given string to the end of the string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#ga1ef2101756c8e53325f4ec67cd0815a1" class="m-doc">cnx_string_append_stringview</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict to_append) cnx_disable_if(!to_append</span>
+            </dt>
+            <dd>Appends the given string to the end of the string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#gae83cf927c8799633806b49bd2992286c" class="m-doc">cnx_string_prepend</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict to_prepend) cnx_disable_if(!to_prepend</span>
+            </dt>
+            <dd>Prepends the given string to the beginning of the string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#ga14d46804cb1d35980d3f7f77a79882df" class="m-doc">cnx_string_prepend_cstring</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> to_prepend,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> to_prepend_length) cnx_disable_if(!to_prepend</span>
+            </dt>
+            <dd>Prepends the given string to the beginning of the string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#ga9b227bed7cf52c392a23a721919b61f8" class="m-doc">cnx_string_prepend_stringview</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict to_prepend) cnx_disable_if(!to_prepend</span>
+            </dt>
+            <dd>Prepends the given string to the beginning of the string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#ga07fd337e126ecc561950a1826e727ca7" class="m-doc">cnx_string_replace</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict to_replace_with,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index) cnx_disable_if(!to_replace_with</span>
+            </dt>
+            <dd>Replaces the substring beginning at <code>index</code> with the given one.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#gacd9a47a5eeb4e790483217a89598b7db" class="m-doc">cnx_string_replace_cstring</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> to_replace_with,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> to_replace_with_length,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index) cnx_disable_if(!to_replace_with</span>
+            </dt>
+            <dd>Replaces the substring beginning at <code>index</code> with the given one.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__string.html#ga62bc9edde4f8b28e1b5c1a1099b78aad" class="m-doc">cnx_string_replace_stringview</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict to_replace_with,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index) cnx_disable_if(!to_replace_with</span>
+            </dt>
+            <dd>Replaces the substring beginning at <code>index</code> with the given one.</dd>
+            <dt id="ab7bc7253460859086a541d3df600ee1d">
+              <span class="m-doc-wrap-bumper"> <a href="#ab7bc7253460859086a541d3df600ee1d" class="m-doc-self">DeclIntoCnxRandomAccessIterator</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>,
+              char_ref,
+              cnx_string_into_iter,
+              into)</span>
+            </dt>
+            <dd>Implement the Trait <code>CnxRandomAccessIterator</code> for <code><a href="structCnxStringIterator.html" class="m-doc">CnxStringIterator</a></code></dd>
+            <dt id="afe6cbe7dd11ebc4457444632cc6c540b">
+              <span class="m-doc-wrap-bumper"> <a href="#afe6cbe7dd11ebc4457444632cc6c540b" class="m-doc-self">DeclIntoCnxRandomAccessIterator</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>,
+              char_ref,
+              cnx_string_into_reverse_iter,
+              into_reverse)</span>
+            </dt>
+            <dd>Implement the Trait <code>CnxRandomAccessIterator</code> for a reverse <code><a href="structCnxStringIterator.html" class="m-doc">CnxStringIterator</a></code></dd>
+            <dt id="af9d6780c9b388212b6fa061c653ecaa5">
+              <span class="m-doc-wrap-bumper"> <a href="#af9d6780c9b388212b6fa061c653ecaa5" class="m-doc-self">DeclIntoCnxRandomAccessIterator</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>,
+              const_char_ref,
+              cnx_string_into_const_iter,
+              into)</span>
+            </dt>
+            <dd>Implement the Trait <code>CnxRandomAccessIterator</code> for <code><a href="structCnxStringConstIterator.html" class="m-doc">CnxStringConstIterator</a></code></dd>
+            <dt id="a1708a773366528ebc7fb8521e7c8a19b">
+              <span class="m-doc-wrap-bumper"> <a href="#a1708a773366528ebc7fb8521e7c8a19b" class="m-doc-self">DeclIntoCnxRandomAccessIterator</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>,
+              const_char_ref,
+              cnx_string_into_reverse_const_iter,
+              into_reverse)</span>
+            </dt>
+            <dd>Implement the Trait <code>CnxRandomAccessIterator</code> for a reverse <code><a href="structCnxStringConstIterator.html" class="m-doc">CnxStringConstIterator</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">CnxRandomAccessIteratorchar_ref <a href="group__cnx__string.html#ga7286d522c06337bd57e51e922fc45b1f" class="m-doc">cnx_string_begin</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(char_<wbr />ref)</a></code> into the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, at the beginning of the iteration (pointing at the beginning of the string)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">CnxRandomAccessIteratorchar_ref <a href="group__cnx__string.html#ga854d12c32e208699665a91c28d476824" class="m-doc">cnx_string_end</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(char_<wbr />ref)</a></code> into the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, at the end of the iteration (pointing at the end of the string)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">CnxRandomAccessIteratorchar_ref <a href="group__cnx__string.html#gabbe32e261a4755e71476100bd0b0fd6b" class="m-doc">cnx_string_rbegin</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(char_<wbr />ref)</a></code> into the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, at the beginning of the reversed iteration (pointing at the end of the string)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">CnxRandomAccessIteratorchar_ref <a href="group__cnx__string.html#gaa02a2bce56e9d421f5564a5a525beb04" class="m-doc">cnx_string_rend</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(char_<wbr />ref)</a></code> into the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, at the end of the reversed iteration (pointing at the beginning of the string)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">CnxRandomAccessIteratorconst_char_ref <a href="group__cnx__string.html#ga283f59eed12127a70475ff929092bb51" class="m-doc">cnx_string_cbegin</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, at the beginning of the iteration (pointing at the beginning of the string)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">CnxRandomAccessIteratorconst_char_ref <a href="group__cnx__string.html#ga594ccbf122d143ba52642225cb5bc6da" class="m-doc">cnx_string_cend</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, at the end of the iteration (pointing at the end of the string)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">CnxRandomAccessIteratorconst_char_ref <a href="group__cnx__string.html#ga4c230951b06c55da4c3b66099af89847" class="m-doc">cnx_string_crbegin</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, at the beginning of the reversed iteration (pointing at the end of the string)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">CnxRandomAccessIteratorconst_char_ref <a href="group__cnx__string.html#gaf5b39077bcba28c3d64d2e65ad0f0c48" class="m-doc">cnx_string_crend</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, at the end of the reversed iteration (pointing at the beginning of the string)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxStringView.html" class="m-doc">CnxStringView</a> <a href="group__cnx__stringview.html#ga997577a471a95e9035d1970e513b477b" class="m-doc">cnx_stringview_new</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict string)</span>
+            </dt>
+            <dd>Returns a new <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> into the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxStringView.html" class="m-doc">CnxStringView</a> <a href="group__cnx__stringview.html#gac652d9578922bf9d8d003587fabe946c" class="m-doc">cnx_stringview_from</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> string,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length) cnx_disable_if(!string</span>
+            </dt>
+            <dd>Returns a new <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> into the given cstring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga88d1fb873d629b523bfa7335f8819f98" class="m-doc">const_<wbr />char_<wbr />ptr</a> <a href="group__cnx__stringview.html#gacd2d92e95ff428f6267f1d6459b47604" class="m-doc">cnx_stringview_at</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index)</span>
+            </dt>
+            <dd>Returns the character in the view located at the given index.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="group__cnx__stringview.html#gadb9dca767094b2711401c53328c1456c" class="m-doc">cnx_stringview_length</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the length of the <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="group__cnx__stringview.html#ga66fc5d9d06a93ca7e7e96635a3eb75cb" class="m-doc">cnx_stringview_size</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the size of the <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__stringview.html#gac452ba6fc9c235de8344bd97f87b2f3f" class="m-doc">cnx_stringview_equal</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self,
+              const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict to_compare) cnx_disable_if(!to_compare</span>
+            </dt>
+            <dd>Returns whether the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>s are equivalent.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__stringview.html#ga28ece51b36936e71d932ab90d663cca9" class="m-doc">cnx_stringview_equal_string</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self,
+              const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict to_compare) cnx_disable_if(!to_compare</span>
+            </dt>
+            <dd>Returns whether the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>s are equivalent.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__stringview.html#ga9fe7bb7f667807d412eb46b2ab990b6e" class="m-doc">cnx_stringview_equal_cstring</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> to_compare,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> to_compare_length) cnx_disable_if(!to_compare</span>
+            </dt>
+            <dd>Returns whether the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> is equivalent to the given <code>cstring</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> <a href="group__cnx__stringview.html#ga544aa5b1131dd891671d6bcbb6b16d96" class="m-doc">cnx_stringview_into_cstring</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code>const_cstring</code> (<code>const char*</code>) representation of the <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt id="acd0b56a4a4517d577c89b2141908f33a">
+              <span class="m-doc-wrap-bumper"> <a href="#acd0b56a4a4517d577c89b2141908f33a" class="m-doc-self">DeclIntoCnxRandomAccessIterator</a>(</span><span class="m-doc-wrap"><a href="structCnxStringView.html" class="m-doc">CnxStringView</a>,
+              const_char_ref,
+              cnx_stringview_into_iter,
+              into)</span>
+            </dt>
+            <dd>Implement the Trait <code>CnxRandomAccessIterator</code> for <code><a href="structCnxStringViewIterator.html" class="m-doc">CnxStringViewIterator</a></code></dd>
+            <dt id="a35411c1f981f9216c2001fd13cfd9f3a">
+              <span class="m-doc-wrap-bumper"> <a href="#a35411c1f981f9216c2001fd13cfd9f3a" class="m-doc-self">DeclIntoCnxRandomAccessIterator</a>(</span><span class="m-doc-wrap"><a href="structCnxStringView.html" class="m-doc">CnxStringView</a>,
+              const_char_ref,
+              cnx_stringview_into_reverse_iter,
+              into_reverse)</span>
+            </dt>
+            <dd>Implement the Trait <code>CnxRandomAccessIterator</code> for <code><a href="structCnxStringViewIterator.html" class="m-doc">CnxStringViewIterator</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">CnxRandomAccessIteratorconst_char_ref <a href="group__cnx__stringview.html#gad00dd05c47a456f74d3bd7cd9ba1ee58" class="m-doc">cnx_stringview_begin</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the beginning of the iteration (pointing at the beginning of the view)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">CnxRandomAccessIteratorconst_char_ref <a href="group__cnx__stringview.html#ga3ef8547452b2267e664a13fd519bd8a0" class="m-doc">cnx_stringview_end</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the end of the iteration (pointing at the end of the view)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">CnxRandomAccessIteratorconst_char_ref <a href="group__cnx__stringview.html#ga4d73c71891fb27d813f3996b7a97b885" class="m-doc">cnx_stringview_rbegin</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> in reverse, at the beginning of the iteration (pointing at the end of the view)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">CnxRandomAccessIteratorconst_char_ref <a href="group__cnx__stringview.html#gaec78e9a75bd064db2200748ee5985083" class="m-doc">cnx_stringview_rend</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> in reverse, at the end of the iteration (pointing at the beginning of the view)</dd>
+          </dl>
+        </section>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt id="aaa7f38118f296f721e6746c35dde4a4d">
+              <span class="m-doc-wrap-bumper">#define <a href="#aaa7f38118f296f721e6746c35dde4a4d" class="m-doc-self">CNX_STRING</a></span>
+            </dt>
+            <dd>CNX_STRING.</dd>
+            <dt id="a9bc2cf06b6cd05fc562efcfb52de87fa">
+              <span class="m-doc-wrap-bumper">#define <a href="#a9bc2cf06b6cd05fc562efcfb52de87fa" class="m-doc-self">CNX_STRING_SIZEOF_LONG_REP</a></span>
+            </dt>
+            <dd>The size of the long string representation of <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt id="afa6e5a6ff84757f31b14a7ffb818b82d">
+              <span class="m-doc-wrap-bumper">#define <a href="#afa6e5a6ff84757f31b14a7ffb818b82d" class="m-doc-self">CNX_STRING_SHORT_OPTIMIZATION_ARRAY_SIZE</a></span>
+            </dt>
+            <dd>The number of <code>char</code>s in a SSOd <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt id="a3c6473193057a2978b7feba00a342d60">
+              <span class="m-doc-wrap-bumper">#define <a href="#a3c6473193057a2978b7feba00a342d60" class="m-doc-self">CNX_STRING_SHORT_OPTIMIZATION_CAPACITY</a></span>
+            </dt>
+            <dd>The number of <code>char</code>s in a SSOd <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a749d63434294bae0161278a9e98d2227" class="m-doc">OPTION_T</a></span>
+            </dt>
+            <dd>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a749d63434294bae0161278a9e98d2227" class="m-doc">OPTION_T</a></span>
+            </dt>
+            <dd>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a749d63434294bae0161278a9e98d2227" class="m-doc">OPTION_T</a></span>
+            </dt>
+            <dd>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a749d63434294bae0161278a9e98d2227" class="m-doc">OPTION_T</a></span>
+            </dt>
+            <dd>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a749d63434294bae0161278a9e98d2227" class="m-doc">OPTION_T</a></span>
+            </dt>
+            <dd>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a749d63434294bae0161278a9e98d2227" class="m-doc">OPTION_T</a></span>
+            </dt>
+            <dd>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#gac066eaf23b258604862e5468db4a9765" class="m-doc">cnx_string_from</a>(</span><span class="m-doc-wrap">string)</span>
+            </dt>
+            <dd>Creates a new <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> from the given string-like type.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga74392762097890e4ba81a27d96d82d99" class="m-doc">cnx_string_from_with_allocator</a>(</span><span class="m-doc-wrap">string,
+              allocator)</span>
+            </dt>
+            <dd>Creates a new <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> from the given string-like type, using the given <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> for memory allocations.</dd>
+            <dt id="a8aed8a12f3c8dca851751e981ef43b44">
+              <span class="m-doc-wrap-bumper">#define <a href="#a8aed8a12f3c8dca851751e981ef43b44" class="m-doc-self">cnx_string_scoped</a></span>
+            </dt>
+            <dd>declare a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> variable with this attribute to have <code>cnx_string_free</code> automatically called on it at scope end</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a4d530ed44fde57f27cc596a388b2de96" class="m-doc">cnx_string_concatenate_cstrings__</a>(</span><span class="m-doc-wrap">left,
+              left_size,
+              right)</span>
+            </dt>
+            <dd>Concatenates the two <code>cstring</code>s, <code>left</code> and <code>right</code> and returns the result as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a8f9a96a954daada9b495ca39b887546a" class="m-doc">cnx_string_concatenate_stringviews__</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>Concatenates the two <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>s, <code>left</code> and <code>right</code> and returns the result as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a131408be02d9fd5ab5ce44139c98bff9" class="m-doc">cnx_string_concatenate_string__</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>Concatenates the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, <code>left</code>, with the given string of arbitrary type, <code>right</code>, and returns the result as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#gae1826a7702b41ac2ed7450ce4de0bc8c" class="m-doc">cnx_string_concatenate</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </dt>
+            <dd>Concatenates the two strings and returns the result as a new <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#aede038b148ee68b8390588f653813221" class="m-doc">cnx_string_concatenate_cstrings_with_allocator__</a>(</span><span class="m-doc-wrap">left,
+              left_size,
+              right,
+              allocator)</span>
+            </dt>
+            <dd>Concatenates the two <code>cstring</code>s, <code>left</code> and <code>right</code> and returns the result as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#aaab9dff8f430e3e5e2947fcca6c28eec" class="m-doc">cnx_string_concatenate_stringviews_with_allocator__</a>(</span><span class="m-doc-wrap">left,
+              right,
+              allocator)</span>
+            </dt>
+            <dd>Concatenates the two <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>s, <code>left</code> and <code>right</code> and returns the result as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#a3208ed4389033e922a867ff64d53431a" class="m-doc">cnx_string_concatenate_string_with_allocator__</a>(</span><span class="m-doc-wrap">left,
+              right,
+              allocator)</span>
+            </dt>
+            <dd>Concatenates the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, <code>left</code>, with the given string of arbitrary type, <code>right</code>, and returns the result as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga59fec95d00adb6af43eafbfca1d0828e" class="m-doc">cnx_string_concatenate_with_allocator</a>(</span><span class="m-doc-wrap">left,
+              right,
+              allocator)</span>
+            </dt>
+            <dd>Concatenates the two strings and returns the result as a new <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#gac16682268be30f0a58b365c1cee1a26e" class="m-doc">cnx_string_into_cstring</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the <code>cstring</code> representation of the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga78ff854a21dc13479e42c363a78a0d3e" class="m-doc">cnx_string_into_wcstring</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the <code>wcstring</code> representation of the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga091d0d40588b6314298d23e206cce161" class="m-doc">cnx_string_into_wcstring_with_allocator</a>(</span><span class="m-doc-wrap">self,
+              allocator)</span>
+            </dt>
+            <dd>Returns the <code>wcstring</code> representation of the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga7c4c21e43d3bbcd04c792d71afd2e63c" class="m-doc">cnx_string_into_stringview</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> into self.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga48f50c4fa7df158daf5ead2a7254860c" class="m-doc">cnx_string_clone</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Creates a copy of the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, <code>self</code>, using the <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> associated with <code>self</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga2f3f4c99add373f3ef9b504db0c2f4d9" class="m-doc">cnx_string_clone_with_allocator</a>(</span><span class="m-doc-wrap">self,
+              allocator)</span>
+            </dt>
+            <dd>Creates a copy of the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, <code>self</code>, using the given <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga5c83c1b560c5db88ffcd454fec96bde0" class="m-doc">cnx_string_free</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Cleans up the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, freeing any allocated memory.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#gaf55a11285ce85d9c90fdd5ed5df0ccee" class="m-doc">cnx_string_at</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>Returns a reference to the character at the given index.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga90ab12e1258c09e4eeb24011daf2b143" class="m-doc">cnx_string_front</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a reference to the character at the beginning of the string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#gae486c989507505f586a0df953d11f027" class="m-doc">cnx_string_back</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a reference to the character at the end of the string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#gaf494ba3ba8340c7735a3adae21017ba5" class="m-doc">cnx_string_is_empty</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns whether the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> is empty or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#gacebe31ee2a7bcf4142bb52df5549f36b" class="m-doc">cnx_string_is_full</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns whether the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> is full.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga4d7e1cb27d78bc79ca4a0d0a9e62cece" class="m-doc">cnx_string_size</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the current size of the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga46c38829e8c7d44aa1a3a49315327eab" class="m-doc">cnx_string_length</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the current length of the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga5b99335b773521fb2e949502eb1d1192" class="m-doc">cnx_string_capacity</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the current capacity of the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga70f07d565dc0cb7637324baf0368cf94" class="m-doc">cnx_string_first</a>(</span><span class="m-doc-wrap">self,
+              num_chars)</span>
+            </dt>
+            <dd>Returns the first <code>num_chars</code> characters of <code>self</code> as a new <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, using the <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> associated with <code>self</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga274ee9ca2d28b921fdff56b40a8a7e6b" class="m-doc">cnx_string_first_cstring</a>(</span><span class="m-doc-wrap">self,
+              num_chars)</span>
+            </dt>
+            <dd>Returns the first <code>num_chars</code> characters of <code>self</code> as a new <code>cstring</code>, using the <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> associated with <code>self</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga35c6ac1f26b622db322d1586158b6b2e" class="m-doc">cnx_string_first_stringview</a>(</span><span class="m-doc-wrap">self,
+              num_chars)</span>
+            </dt>
+            <dd>Returns the first <code>num_chars</code> characters of <code>self</code> as a <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga733178dae99b53b0b61eae188ec47e32" class="m-doc">cnx_string_last</a>(</span><span class="m-doc-wrap">self,
+              num_chars)</span>
+            </dt>
+            <dd>Returns the last <code>num_chars</code> characters of <code>self</code> as a new <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, using the <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> associated with <code>self</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga6da68878453a0fc45164f38545ea1633" class="m-doc">cnx_string_last_cstring</a>(</span><span class="m-doc-wrap">self,
+              num_chars)</span>
+            </dt>
+            <dd>Returns the last <code>num_chars</code> characters of <code>self</code> as a new <code>cstring</code>, using the <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> associated with <code>self</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#gacbe441cade2bfdee1b137e678c1da58b" class="m-doc">cnx_string_last_stringview</a>(</span><span class="m-doc-wrap">self,
+              num_chars)</span>
+            </dt>
+            <dd>Returns the last <code>num_chars</code> characters of <code>self</code> as a <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga7d255c82721a28c3f9aa7abcf9f465ae" class="m-doc">cnx_string_equal</a>(</span><span class="m-doc-wrap">self,
+              to_compare)</span>
+            </dt>
+            <dd>Determines if this string and the given one are equal.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga579bacd3e2ecddb8e190fd88494889f6" class="m-doc">cnx_string_contains</a>(</span><span class="m-doc-wrap">self,
+              substring)</span>
+            </dt>
+            <dd>Determines whether the string contains the given substring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga1a1971dc9104d76ec4f0a5862492d51e" class="m-doc">cnx_string_starts_with</a>(</span><span class="m-doc-wrap">self,
+              substring)</span>
+            </dt>
+            <dd>Determines whether the string starts with the given substring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga3f91f46525ff074e123a5705ba615d78" class="m-doc">cnx_string_ends_with</a>(</span><span class="m-doc-wrap">self,
+              substring)</span>
+            </dt>
+            <dd>Determines whether the string ends with the given substring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga5cba00d267bd578a2a393f92c35f5863" class="m-doc">cnx_string_find_first</a>(</span><span class="m-doc-wrap">self,
+              substring)</span>
+            </dt>
+            <dd>Finds the first occurrence of the given substring in <code>self</code>, if any.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga9ff23af3cf1197b642858453911e59b8" class="m-doc">cnx_string_find_last</a>(</span><span class="m-doc-wrap">self,
+              substring)</span>
+            </dt>
+            <dd>Finds the last occurrence of the given substring in <code>self</code>, if any.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga84447c8274a6c02e9a6f6f74b40f29bd" class="m-doc">cnx_string_substring</a>(</span><span class="m-doc-wrap">self,
+              index,
+              length)</span>
+            </dt>
+            <dd>Returns the substring of <code>self</code> starting at <code>index</code> with length <code>length</code> as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, using the <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> associated with <code>self</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#gabb01a6e3e71ed361ba0d703fbdbc0b8c" class="m-doc">cnx_string_substring_with_allocator</a>(</span><span class="m-doc-wrap">self,
+              index,
+              length,
+              allocator)</span>
+            </dt>
+            <dd>Returns the substring of <code>self</code> starting at <code>index</code> with length <code>length</code> as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, associating the given <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> with the substring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga51e0c21df1c625e61e2fc7593bc99512" class="m-doc">cnx_string_stringview_of</a>(</span><span class="m-doc-wrap">self,
+              index,
+              length)</span>
+            </dt>
+            <dd>Returns a <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> into <code>self</code> beginning at <code>index</code> with length <code>length</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga63d7dca17ee1002aa7e92c5c2fa86ab3" class="m-doc">cnx_string_fill</a>(</span><span class="m-doc-wrap">self,
+              character)</span>
+            </dt>
+            <dd>Fills the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> with the given character.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#gaf8ba6267bc4b29a870c5911c63fa2a3b" class="m-doc">cnx_string_clear</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Clears the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga5984b4b33558582d9608e6eb71e7ae1c" class="m-doc">cnx_string_shrink_to_fit</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Shrinks the capacity of the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> to its size.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#gabbb0d3f6377ad0643a37c62641c0ea5b" class="m-doc">cnx_string_insert</a>(</span><span class="m-doc-wrap">self,
+              to_insert,
+              index)</span>
+            </dt>
+            <dd>Inserts <code>to_insert</code> into <code>self</code> at the given index.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga05d2f7bc16e88d9806c5ce7b7a4ca287" class="m-doc">cnx_string_erase</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>Erases the character at the given <code>index</code> from <code>self</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga7d806c95ebc365651b275f39a321f554" class="m-doc">cnx_string_erase_n</a>(</span><span class="m-doc-wrap">self,
+              index,
+              num_characters)</span>
+            </dt>
+            <dd>Erases <code>num_characters</code> characters from <code>self</code>, beginning at <code>index</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga24362a0706e26e3d392728f0199df440" class="m-doc">cnx_string_resize</a>(</span><span class="m-doc-wrap">self,
+              new_size)</span>
+            </dt>
+            <dd>Resizes the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> to the given <code>new_size</code>, filling the characters in the expanded size with null.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga99ea30fbca35fb6eb311cee84433d75e" class="m-doc">cnx_string_reserve</a>(</span><span class="m-doc-wrap">self,
+              new_capacity)</span>
+            </dt>
+            <dd>Allocates memory such that at least <code>new_capacity</code> number of characters can be stored in the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#gaff516d11b604540de7eb47954905b977" class="m-doc">cnx_string_push_back</a>(</span><span class="m-doc-wrap">self,
+              character)</span>
+            </dt>
+            <dd>Pushes the given character onto the end of the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga7a126c81b34a663cf24683e38c894ca0" class="m-doc">cnx_string_push_front</a>(</span><span class="m-doc-wrap">self,
+              character)</span>
+            </dt>
+            <dd>Pushes the given character onto the beginning of the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga478661a6216528e96beb3017be645e5c" class="m-doc">cnx_string_pop_back</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Removes the last character in <code>self</code> if <code><a href="group__cnx__string.html#ga4d7e1cb27d78bc79ca4a0d0a9e62cece" class="m-doc">cnx_<wbr />string_<wbr />size(self)</a> &gt; 0</code>, and returns it.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga76d9e753c8eb1169a4875810e34a7b6b" class="m-doc">cnx_string_pop_front</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Removes the first character in <code>self</code> if <code><a href="group__cnx__string.html#ga4d7e1cb27d78bc79ca4a0d0a9e62cece" class="m-doc">cnx_<wbr />string_<wbr />size(self)</a> &gt; 0</code>, and returns it.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga058fad609fa4a06aa8670f51d3886d70" class="m-doc">cnx_string_append</a>(</span><span class="m-doc-wrap">self,
+              to_append)</span>
+            </dt>
+            <dd>Appends <code>to_append</code> to the end of <code>self</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga41f29dfa360a5ba0dfbb3cfe0402f06b" class="m-doc">cnx_string_prepend</a>(</span><span class="m-doc-wrap">self,
+              to_prepend)</span>
+            </dt>
+            <dd>Prepends <code>to_prepend</code> to the beginning of <code>self</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga63969ad136d1320878bb5fa0740a67cd" class="m-doc">cnx_string_replace</a>(</span><span class="m-doc-wrap">self,
+              to_replace_with,
+              index)</span>
+            </dt>
+            <dd>Replaces the contents of <code>self</code> with <code>to_replace_with</code>, beginning at the given index.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga707cc83d429a4da83351d4201bd6c408" class="m-doc">cnx_string_begin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(char_<wbr />ref)</a></code> into the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, at the beginning of the iteration (pointing at the beginning of the string)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga9bd3ddb9e7ceb1bae5f540e13781c0ee" class="m-doc">cnx_string_end</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(char_<wbr />ref)</a></code> into the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, at the end of the iteration (pointing at the end of the string)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga7fd149b1604f1e54f4974057f7b72d6d" class="m-doc">cnx_string_rbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(char_<wbr />ref)</a></code> into the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, at the beginning of the reversed iteration (pointing at the end of the string)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga0d2d77fde18d120a130b6f04528cf676" class="m-doc">cnx_string_rend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(char_<wbr />ref)</a></code> into the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, at the end of the reversed iteration (pointing at the beginning of the string)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#gaffd3351e088bf37ec55ee85c883e9c28" class="m-doc">cnx_string_cbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, at the beginning of the iteration (pointing at the beginning of the string)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#ga761f62c808799ab7d8426ef4c356ae0d" class="m-doc">cnx_string_cend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, at the end of the iteration (pointing at the end of the string)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#gac0101de0e3c705e77c8c689de49af00a" class="m-doc">cnx_string_crbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, at the beginning of the reversed iteration (pointing at the end of the string)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__string.html#gac94e3d2231861abbfe801662e04c1f93" class="m-doc">cnx_string_crend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, at the end of the reversed iteration (pointing at the beginning of the string)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__stringview.html#ga2cc71bc15de309f29a1b832f78200e57" class="m-doc">cnx_stringview_at</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>Returns a const reference to the character at <code>index</code> in the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__stringview.html#ga02c130eda125e434dc4e40fad7be0af5" class="m-doc">cnx_stringview_length</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the current length of the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__stringview.html#ga33c6f295e3be70007d427e15ac40ef62" class="m-doc">cnx_stringview_size</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the current size of the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__stringview.html#ga5a4ccf8a66811826814da26457cdf111" class="m-doc">cnx_stringview_equal</a>(</span><span class="m-doc-wrap">self,
+              to_compare)</span>
+            </dt>
+            <dd>Returns whether the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>s are equivalent.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__stringview.html#ga380c417a91358a8cb848549f437d158a" class="m-doc">cnx_stringview_into_cstring</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the <code>cstring</code> view of the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__stringview.html#ga48044de4eaea0dca6ffc6413ba31322a" class="m-doc">cnx_stringview_begin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the beginning of the iteration (pointing at the beginning of the view)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__stringview.html#ga8452c3ba324bdb826fcbe2f2ac6def96" class="m-doc">cnx_stringview_end</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the end of the iteration (pointing at the end of the view)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__stringview.html#gac2bc5111bcbf81268adc856a588719e9" class="m-doc">cnx_stringview_rbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the beginning of the reversed iteration (pointing at the end of the view)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__stringview.html#gacc1b62c941d77e3cedc480fb11c0eb09" class="m-doc">cnx_stringview_rend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the end of the reversed iteration (pointing at the beginning of the view)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__stringview.html#ga632e0f9edaaee2af7430cb6e58d8a423" class="m-doc">cnx_stringview_cbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the beginning of the iteration (pointing at the beginning of the view)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__stringview.html#ga88ec4a031f54b32bffdfcf696986486a" class="m-doc">cnx_stringview_cend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the end of the iteration (pointing at the end of the view)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__stringview.html#gaa5049cc1d04baba63853d602d7679eac" class="m-doc">cnx_stringview_crbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the beginning of the reversed iteration (pointing at the end of the view)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__stringview.html#ga57fa7ddbedccfdf0bbdb979e86a3e797" class="m-doc">cnx_stringview_crend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the end of the reversed iteration (pointing at the beginning of the view)</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Typedef documentation</h2>
+          <section class="m-doc-details" id="ae3d7182a3dd0c7422732e8af09d9cd1a"><div>
+            <h3>
+              typedef <a href="structCnxString.html" class="m-doc">CnxString</a>*<a href="#ae3d7182a3dd0c7422732e8af09d9cd1a" class="m-doc-self">Ref</a>(CnxString)
+            </h3>
+            <p>type alias for a reference to <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p>
+<p>type alias for a reference to <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p>
+          </div></section>
+          <section class="m-doc-details" id="a9020553c75a48d42d57c9cfbd01b819c"><div>
+            <h3>
+              typedef const <a href="structCnxString.html" class="m-doc">CnxString</a>*<a href="#a9020553c75a48d42d57c9cfbd01b819c" class="m-doc-self">ConstRef</a>(CnxString)
+            </h3>
+            <p>type alias for a const reference to <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p>
+<p>type alias for a const reference to <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p>
+          </div></section>
+        </section>
+        <section>
+          <h2>Define documentation</h2>
+          <section class="m-doc-details" id="a749d63434294bae0161278a9e98d2227"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a749d63434294bae0161278a9e98d2227" class="m-doc-self">OPTION_T</a></span>
+            </h3>
+            <p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p>
+<p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="group__cnx__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(CnxStringView)</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="group__cnx__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(CnxStringView)</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="String_8h.html#a9020553c75a48d42d57c9cfbd01b819c" class="m-doc">ConstRef(CnxString)</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="String_8h.html#ae3d7182a3dd0c7422732e8af09d9cd1a" class="m-doc">Ref(CnxString)</a></code></p>
+          </div></section>
+          <section class="m-doc-details" id="a749d63434294bae0161278a9e98d2227"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a749d63434294bae0161278a9e98d2227" class="m-doc-self">OPTION_T</a></span>
+            </h3>
+            <p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p>
+<p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="group__cnx__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(CnxStringView)</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="group__cnx__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(CnxStringView)</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="String_8h.html#a9020553c75a48d42d57c9cfbd01b819c" class="m-doc">ConstRef(CnxString)</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="String_8h.html#ae3d7182a3dd0c7422732e8af09d9cd1a" class="m-doc">Ref(CnxString)</a></code></p>
+          </div></section>
+          <section class="m-doc-details" id="a749d63434294bae0161278a9e98d2227"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a749d63434294bae0161278a9e98d2227" class="m-doc-self">OPTION_T</a></span>
+            </h3>
+            <p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p>
+<p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="group__cnx__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(CnxStringView)</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="group__cnx__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(CnxStringView)</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="String_8h.html#a9020553c75a48d42d57c9cfbd01b819c" class="m-doc">ConstRef(CnxString)</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="String_8h.html#ae3d7182a3dd0c7422732e8af09d9cd1a" class="m-doc">Ref(CnxString)</a></code></p>
+          </div></section>
+          <section class="m-doc-details" id="a749d63434294bae0161278a9e98d2227"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a749d63434294bae0161278a9e98d2227" class="m-doc-self">OPTION_T</a></span>
+            </h3>
+            <p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p>
+<p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="group__cnx__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(CnxStringView)</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="group__cnx__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(CnxStringView)</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="String_8h.html#a9020553c75a48d42d57c9cfbd01b819c" class="m-doc">ConstRef(CnxString)</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="String_8h.html#ae3d7182a3dd0c7422732e8af09d9cd1a" class="m-doc">Ref(CnxString)</a></code></p>
+          </div></section>
+          <section class="m-doc-details" id="a749d63434294bae0161278a9e98d2227"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a749d63434294bae0161278a9e98d2227" class="m-doc-self">OPTION_T</a></span>
+            </h3>
+            <p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p>
+<p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="group__cnx__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(CnxStringView)</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="group__cnx__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(CnxStringView)</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="String_8h.html#a9020553c75a48d42d57c9cfbd01b819c" class="m-doc">ConstRef(CnxString)</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="String_8h.html#ae3d7182a3dd0c7422732e8af09d9cd1a" class="m-doc">Ref(CnxString)</a></code></p>
+          </div></section>
+          <section class="m-doc-details" id="a749d63434294bae0161278a9e98d2227"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a749d63434294bae0161278a9e98d2227" class="m-doc-self">OPTION_T</a></span>
+            </h3>
+            <p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p>
+<p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="group__cnx__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(CnxStringView)</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="group__cnx__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(CnxStringView)</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="String_8h.html#a9020553c75a48d42d57c9cfbd01b819c" class="m-doc">ConstRef(CnxString)</a></code></p><p>Declares <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for <code><a href="String_8h.html#ae3d7182a3dd0c7422732e8af09d9cd1a" class="m-doc">Ref(CnxString)</a></code></p>
+          </div></section>
+          <section class="m-doc-details" id="a4d530ed44fde57f27cc596a388b2de96"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a4d530ed44fde57f27cc596a388b2de96" class="m-doc-self">cnx_string_concatenate_cstrings__</a>(</span><span class="m-doc-wrap">left,
+              left_size,
+              right)</span>
+            </h3>
+            <p>Concatenates the two <code>cstring</code>s, <code>left</code> and <code>right</code> and returns the result as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The left-side string of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>left_size</td>
+                  <td>- The size of <code>left_size</code></td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The right-side string of the concatenation. Its size will be inferred</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The concatenated result as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8f9a96a954daada9b495ca39b887546a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a8f9a96a954daada9b495ca39b887546a" class="m-doc-self">cnx_string_concatenate_stringviews__</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>Concatenates the two <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>s, <code>left</code> and <code>right</code> and returns the result as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The left-side string of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The right-side string of the concatenation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The concatenated result as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a131408be02d9fd5ab5ce44139c98bff9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a131408be02d9fd5ab5ce44139c98bff9" class="m-doc-self">cnx_string_concatenate_string__</a>(</span><span class="m-doc-wrap">left,
+              right)</span>
+            </h3>
+            <p>Concatenates the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, <code>left</code>, with the given string of arbitrary type, <code>right</code>, and returns the result as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The left-side string of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The right-side string of the concatenation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The concatenated result as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aede038b148ee68b8390588f653813221"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#aede038b148ee68b8390588f653813221" class="m-doc-self">cnx_string_concatenate_cstrings_with_allocator__</a>(</span><span class="m-doc-wrap">left,
+              left_size,
+              right,
+              allocator)</span>
+            </h3>
+            <p>Concatenates the two <code>cstring</code>s, <code>left</code> and <code>right</code> and returns the result as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The left-side string of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>left_size</td>
+                  <td>- The size of <code>left_size</code></td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The right-side string of the concatenation. Its size will be inferred</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to use for memory allocation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The concatenated result as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aaab9dff8f430e3e5e2947fcca6c28eec"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#aaab9dff8f430e3e5e2947fcca6c28eec" class="m-doc-self">cnx_string_concatenate_stringviews_with_allocator__</a>(</span><span class="m-doc-wrap">left,
+              right,
+              allocator)</span>
+            </h3>
+            <p>Concatenates the two <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>s, <code>left</code> and <code>right</code> and returns the result as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The left-side string of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The right-side string of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to use for memory allocation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The concatenated result as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3208ed4389033e922a867ff64d53431a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#a3208ed4389033e922a867ff64d53431a" class="m-doc-self">cnx_string_concatenate_string_with_allocator__</a>(</span><span class="m-doc-wrap">left,
+              right,
+              allocator)</span>
+            </h3>
+            <p>Concatenates the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, <code>left</code>, with the given string of arbitrary type, <code>right</code>, and returns the result as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">left</td>
+                  <td>- The left-side string of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>right</td>
+                  <td>- The right-side string of the concatenation</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to use for memory allocation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The concatenated result as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

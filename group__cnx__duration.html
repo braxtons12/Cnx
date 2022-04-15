@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Time &raquo; CnxDuration module | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="group__cnx__time.html">Time</a> &raquo;</span>
+          CnxDuration <span class="m-thin">module</span></h1>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#typedef-members">Typedefs</a></li>
+                <li><a href="#func-members">Functions</a></li>
+                <li><a href="#var-members">Variables</a></li>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<p><code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> represents a positive or negative duration in a particular unit of time (e.g. a (signed) number of seconds, nanoseconds, or years)</p>
+        <section id="nested-classes">
+          <h2><a href="#nested-classes">Classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              struct <a href="structCnxDuration.html" class="m-doc">CnxDuration</a>
+            </dt>
+            <dd><code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> represents a duration in a particular unit of time A <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> occurs in a particular unit of time (e.g. seconds, nanoseconds, or years), and can represent a positive or negative amount of that unit</dd>
+          </dl>
+        </section>
+        <section id="typedef-members">
+          <h2><a href="#typedef-members">Typedefs</a></h2>
+          <dl class="m-doc">
+            <dt>
+              using <a href="#ga6249a20dc9324046a94bc582f74a5d78" class="m-doc">CnxDuration</a> = struct <a href="structCnxDuration.html" class="m-doc">CnxDuration</a>
+            </dt>
+            <dd><code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> represents a duration in a particular unit of time A <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> occurs in a particular unit of time (e.g. seconds, nanoseconds, or years), and can represent a positive or negative amount of that unit</dd>
+          </dl>
+        </section>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> <a href="#gabf887040b68ec63e7812cc93bf87c022" class="m-doc">cnx_duration_new</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> count,
+              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> period)</span>
+            </dt>
+            <dd>Creates a new <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> with the given count and period.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> <a href="#gad2b2359c46fdd1eec73dd2f08b856d3d" class="m-doc">cnx_duration_cast</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> to_cast,
+              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> new_period)</span>
+            </dt>
+            <dd>Converts the given <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to one with a different period Converts the given <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> with a different period, truncating any fractional portion caused by the conversion.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> <a href="#ga63563837725436a29d74dcda34150adb" class="m-doc">cnx_duration_floor</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> to_floor,
+              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> new_period)</span>
+            </dt>
+            <dd>Converts the given <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to one with a different period Converts the given <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> with a different period, flooring any fractional portion caused by the conversion.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> <a href="#ga5bf39f74744f1114b87bee9cdc33bf70" class="m-doc">cnx_duration_ceil</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> to_ceil,
+              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> new_period)</span>
+            </dt>
+            <dd>Converts the given <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to one with a different period Converts the given <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> with a different period, taking the ceiling of any fractional portion caused by the conversion.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> <a href="#gafa66db4ef470225d964b24d23da7eb2a" class="m-doc">cnx_duration_round</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> to_round,
+              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> new_period)</span>
+            </dt>
+            <dd>Converts the given <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to one with a different period Converts the given <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> with a different period, rounding any fractional portion caused by the conversion.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> <a href="#gae2e68e4b7dfffdcd1b021b879d2bff8a" class="m-doc">cnx_duration_abs</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> duration)</span>
+            </dt>
+            <dd>Takes the absolute value of the given `CnxDuration.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> <a href="#ga97c62df0a6223f0157a33c743c338f60" class="m-doc">cnx_duration_add</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> rhs)</span>
+            </dt>
+            <dd>Casts <code>rhs</code> to the same period as <code>lhs</code>, then adds the two.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> <a href="#gab9f2b45808ed7acd7854a72b43830978" class="m-doc">cnx_duration_add_scalar</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> rhs)</span>
+            </dt>
+            <dd>Adds <code>rhs</code> to <code>lhs</code> as if it were a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> of the same period.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> <a href="#gad1d5cdf88d94fa49f9312704d5cbeed9" class="m-doc">cnx_duration_subtract</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> rhs)</span>
+            </dt>
+            <dd>Casts <code>rhs</code> to the same period as <code>lhs</code>, then subtracts <code>rhs</code> from <code>lhs</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> <a href="#gafddd50acc5a1362bc09e81a8f08a7dcc" class="m-doc">cnx_duration_subtract_scalar</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> rhs)</span>
+            </dt>
+            <dd>Subtracts <code>rhs</code> from <code>lhs</code> as if it were a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> of the same period.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> <a href="#ga44b866cf28f0979f9b9cfa2a18d3bf8a" class="m-doc">cnx_duration_multiply</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> rhs)</span>
+            </dt>
+            <dd>Multiplies <code>lhs</code> by the scalar value <code>rhs</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> <a href="#ga33842db9220fb8d734654ad3b6abf5fe" class="m-doc">cnx_duration_divide</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> rhs)</span>
+            </dt>
+            <dd>Divides <code>lhs</code> by the scalar value <code>rhs</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#ga3a1f466f1d4fa315cb29a050b9a9ecf5" class="m-doc">cnx_duration_equal</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> rhs)</span>
+            </dt>
+            <dd>Determines if the two <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code>s are equal.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#gace052301d9102b39e571030223a6b2a0" class="m-doc">cnx_duration_not_equal</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> rhs)</span>
+            </dt>
+            <dd>Determines if the two <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code>s are <strong>NOT</strong> equal.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#ga35063418e8569d0cf515f44e5603cadb" class="m-doc">cnx_duration_less_than</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> rhs)</span>
+            </dt>
+            <dd>Determines if <code>lhs</code> is strictly less than <code>rhs</code>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#gae0f3cd230309d186dd6ad1d7780e18d8" class="m-doc">cnx_duration_less_than_or_equal</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> rhs)</span>
+            </dt>
+            <dd>Determines if <code>lhs</code> is less than or equal to <code>rhs</code>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#ga758b26e72fc95a29e50bd01c20480324" class="m-doc">cnx_duration_greater_than</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> rhs)</span>
+            </dt>
+            <dd>Determines if <code>lhs</code> is strictly greater than <code>rhs</code>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#gaf32f6494f7d861a0b5d8d771b368ed13" class="m-doc">cnx_duration_greater_than_or_equal</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> rhs)</span>
+            </dt>
+            <dd>Determines if <code>lhs</code> is greater than or equal to <code>rhs</code>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="BasicTypes_8h.html#ac0f09b727f79ee723c399162a0f8e8b2" class="m-doc">CnxCompare</a> <a href="#ga0950bba16da5a1983977425b0e820d9d" class="m-doc">cnx_duration_compare</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> rhs)</span>
+            </dt>
+            <dd>Performs a three-way comparison of <code>lhs</code> to <code>rhs</code>, determining how <code>lhs</code> mathematically relates to <code>rhs</code>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#gaad2a6022fa311731f540b66d3fbdff00" class="m-doc">cnx_duration_format</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>Implements the allocator-unaware part of the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#gaadbc64a4978bfd7d996f9eedcd062cb5" class="m-doc">cnx_duration_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>Implements the allocator-aware part of the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static  <a href="#ga4992eea3de15e6b0abf2cfe53b206488" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a>,
+              <a href="group__cnx__duration.html#gaad2a6022fa311731f540b66d3fbdff00" class="m-doc">cnx_<wbr />duration_<wbr />format</a>,
+              <a href="group__cnx__duration.html#gaadbc64a4978bfd7d996f9eedcd062cb5" class="m-doc">cnx_<wbr />duration_<wbr />format_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>Implements the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code></dd>
+          </dl>
+        </section>
+        <section id="var-members">
+          <h2><a href="#var-members">Variables</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> <a href="#gadb6b8ccb6d9c2e4fc4f493d9ac4f92eb" class="m-doc">count</a>
+            </dt>
+            <dd>The length of the duration.</dd>
+            <dt>
+              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="#ga8c95d83bf83424ab7f5f5a5748e2790f" class="m-doc">period</a>
+            </dt>
+            <dd>The unit of the duration as a <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> For example, for a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> in milliseconds, the <code>period</code> would be <code>cnx_milli</code> or <code>cnx_milliseconds_period</code></dd>
+            <dt>
+              static const <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="#ga7fb9cc7b2ffcaa239b8e90608b82b72b" class="m-doc">cnx_duration_valid_periods</a>
+            </dt>
+            <dd>Valid periods for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</dd>
+          </dl>
+        </section>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9d1ea18c54bff64a3f9ebf00198300ef" class="m-doc">cnx_nanoseconds_period</a></span>
+            </dt>
+            <dd>Period representing nanoseconds for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaa7d3728b71a8cfe92a239b0f7daa9aa5" class="m-doc">cnx_microseconds_period</a></span>
+            </dt>
+            <dd>Period representing microseconds for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga88a1fcf140905af064a44a9107cf46fa" class="m-doc">cnx_milliseconds_period</a></span>
+            </dt>
+            <dd>Period representing milliseconds for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad3cab41943bd00233c21a5c6b5ab4490" class="m-doc">cnx_seconds_period</a></span>
+            </dt>
+            <dd>Period representing seconds for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga329e34ce9de3585599c5b195eaa2454b" class="m-doc">cnx_minutes_period</a></span>
+            </dt>
+            <dd>Period representing minutes for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac9196a096ca29ee0d25d902094da86f1" class="m-doc">cnx_hours_period</a></span>
+            </dt>
+            <dd>Period representing hours for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaba6d347a05b3997943bb730fbff8aac9" class="m-doc">cnx_days_period</a></span>
+            </dt>
+            <dd>Period representing days for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga45c5f69f4b9214505761208a8f776fee" class="m-doc">cnx_weeks_period</a></span>
+            </dt>
+            <dd>Period representing weeks for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga24c4fedeccaee0805cd9c6fc5752f357" class="m-doc">cnx_months_period</a></span>
+            </dt>
+            <dd>Period representing months for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac4dfb421f87dc76e71a3ce5c653964e2" class="m-doc">cnx_years_period</a></span>
+            </dt>
+            <dd>Period representing years for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaf104366c8005356adaf56eca4aa1e33d" class="m-doc">cnx_nanoseconds</a>(</span><span class="m-doc-wrap">val)</span>
+            </dt>
+            <dd>Returns a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of nanoseconds.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga75f20486008293ae11a0c2c6d615e4f2" class="m-doc">cnx_microseconds</a>(</span><span class="m-doc-wrap">val)</span>
+            </dt>
+            <dd>Returns a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of microseconds.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga8583d00fa0ff9f6030062c0875b37f1b" class="m-doc">cnx_milliseconds</a>(</span><span class="m-doc-wrap">val)</span>
+            </dt>
+            <dd>Returns a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of milliseconds.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga90d3f81c69d7c6729e929760c62098f6" class="m-doc">cnx_seconds</a>(</span><span class="m-doc-wrap">val)</span>
+            </dt>
+            <dd>Returns a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of seconds.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4a4fc459f9c4abab403b21379091e986" class="m-doc">cnx_minutes</a>(</span><span class="m-doc-wrap">val)</span>
+            </dt>
+            <dd>Returns a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of minutes.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad26dd611a3a89ffad7846f70fa73e133" class="m-doc">cnx_hours</a>(</span><span class="m-doc-wrap">val)</span>
+            </dt>
+            <dd>Returns a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of hours.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad08fdc3ed593f761ecbbed4e9f442ccc" class="m-doc">cnx_days</a>(</span><span class="m-doc-wrap">val)</span>
+            </dt>
+            <dd>Returns a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of days.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga38c8f1cb4e170dc40a75a02ed8dc1661" class="m-doc">cnx_weeks</a>(</span><span class="m-doc-wrap">val)</span>
+            </dt>
+            <dd>Returns a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of weeks.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1e4f1e697f22189edfea104b3dad9dd6" class="m-doc">cnx_months</a>(</span><span class="m-doc-wrap">val)</span>
+            </dt>
+            <dd>Returns a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of months.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadd0ceea55e46b68a8a7ff1f048d556e6" class="m-doc">cnx_years</a>(</span><span class="m-doc-wrap">val)</span>
+            </dt>
+            <dd>Returns a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of years.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Typedef documentation</h2>
+          <section class="m-doc-details" id="ga6249a20dc9324046a94bc582f74a5d78"><div>
+            <h3>
+              typedef struct <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> <a href="#ga6249a20dc9324046a94bc582f74a5d78" class="m-doc-self">CnxDuration</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p><code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> represents a duration in a particular unit of time A <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> occurs in a particular unit of time (e.g. seconds, nanoseconds, or years), and can represent a positive or negative amount of that unit</p>
+          </div></section>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="gabf887040b68ec63e7812cc93bf87c022"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gabf887040b68ec63e7812cc93bf87c022" class="m-doc-self">cnx_duration_new</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> count,
+              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> period)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Creates a new <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> with the given count and period.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">count</td>
+                  <td>- The value of the duration. The number of <code>period</code>s it represents</td>
+                </tr>
+                <tr>
+                  <td>period</td>
+                  <td>- The period of the duration. The unit of time it represents (e.g. seconds, hours, etc.)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<aside class="m-note m-info"><h4>Note</h4><p>period must be valid for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code>. It must be contained in <code>cnx_duration_valid_periods</code></p></aside>
+          </div></section>
+          <section class="m-doc-details" id="gad2b2359c46fdd1eec73dd2f08b856d3d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gad2b2359c46fdd1eec73dd2f08b856d3d" class="m-doc-self">cnx_duration_cast</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> to_cast,
+              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> new_period)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Converts the given <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to one with a different period Converts the given <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> with a different period, truncating any fractional portion caused by the conversion.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">to_cast</td>
+                  <td>- The <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to cast</td>
+                </tr>
+                <tr>
+                  <td>new_period</td>
+                  <td>- The <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> representing the new period</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>to_cast</code> converted a new period</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga63563837725436a29d74dcda34150adb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga63563837725436a29d74dcda34150adb" class="m-doc-self">cnx_duration_floor</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> to_floor,
+              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> new_period)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Converts the given <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to one with a different period Converts the given <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> with a different period, flooring any fractional portion caused by the conversion.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">to_floor</td>
+                  <td>- The <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to cast</td>
+                </tr>
+                <tr>
+                  <td>new_period</td>
+                  <td>- The <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> representing the new period</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>to_cast</code> converted a new period</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga5bf39f74744f1114b87bee9cdc33bf70"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga5bf39f74744f1114b87bee9cdc33bf70" class="m-doc-self">cnx_duration_ceil</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> to_ceil,
+              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> new_period)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Converts the given <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to one with a different period Converts the given <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> with a different period, taking the ceiling of any fractional portion caused by the conversion.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">to_ceil</td>
+                  <td>- The <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to cast</td>
+                </tr>
+                <tr>
+                  <td>new_period</td>
+                  <td>- The <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> representing the new period</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>to_cast</code> converted a new period</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gafa66db4ef470225d964b24d23da7eb2a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gafa66db4ef470225d964b24d23da7eb2a" class="m-doc-self">cnx_duration_round</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> to_round,
+              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> new_period)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Converts the given <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to one with a different period Converts the given <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> with a different period, rounding any fractional portion caused by the conversion.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">to_round</td>
+                  <td>- The <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to cast</td>
+                </tr>
+                <tr>
+                  <td>new_period</td>
+                  <td>- The <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> representing the new period</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>to_cast</code> converted a new period</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gae2e68e4b7dfffdcd1b021b879d2bff8a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gae2e68e4b7dfffdcd1b021b879d2bff8a" class="m-doc-self">cnx_duration_abs</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> duration)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Takes the absolute value of the given `CnxDuration.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">duration</td>
+                  <td>- The <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to get the absolute value of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the absolute value of <code>duration</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga97c62df0a6223f0157a33c743c338f60"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga97c62df0a6223f0157a33c743c338f60" class="m-doc-self">cnx_duration_add</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Casts <code>rhs</code> to the same period as <code>lhs</code>, then adds the two.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>- The lhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to add</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>- The rhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to add. Will be cast to the same period as <code>lhs</code></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the equivalent of <code>lhs + Cnx_duration_cast(rhs, lhs.period)</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gab9f2b45808ed7acd7854a72b43830978"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gab9f2b45808ed7acd7854a72b43830978" class="m-doc-self">cnx_duration_add_scalar</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Adds <code>rhs</code> to <code>lhs</code> as if it were a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> of the same period.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>- The lhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to add</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>- The scalar value to add. Will be treated as a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> of the same period as <code>lhs</code></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the sum of <code>lhs</code> and <code>rhs</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gad1d5cdf88d94fa49f9312704d5cbeed9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gad1d5cdf88d94fa49f9312704d5cbeed9" class="m-doc-self">cnx_duration_subtract</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Casts <code>rhs</code> to the same period as <code>lhs</code>, then subtracts <code>rhs</code> from <code>lhs</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>- The lhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to subtract from</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>- The rhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to subtract. Will be cast to the same period as <code>lhs</code></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the equivalent of <code>lhs - Cnx_duration_cast(rhs, lhs.period)</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gafddd50acc5a1362bc09e81a8f08a7dcc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gafddd50acc5a1362bc09e81a8f08a7dcc" class="m-doc-self">cnx_duration_subtract_scalar</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Subtracts <code>rhs</code> from <code>lhs</code> as if it were a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> of the same period.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>- The lhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to subtract from</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>- The scalar value to subtract. Will be treated as a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> of the same period as <code>lhs</code></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the difference between <code>lhs</code> and <code>rhs</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga44b866cf28f0979f9b9cfa2a18d3bf8a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga44b866cf28f0979f9b9cfa2a18d3bf8a" class="m-doc-self">cnx_duration_multiply</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Multiplies <code>lhs</code> by the scalar value <code>rhs</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>- The lhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to multiply</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>- The scalar value to multiply by.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the product of <code>lhs</code> and <code>rhs</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga33842db9220fb8d734654ad3b6abf5fe"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga33842db9220fb8d734654ad3b6abf5fe" class="m-doc-self">cnx_duration_divide</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Divides <code>lhs</code> by the scalar value <code>rhs</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>- The lhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to divide</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>- The scalar value to divide by.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the quotient of <code>lhs</code> and <code>rhs</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga3a1f466f1d4fa315cb29a050b9a9ecf5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3a1f466f1d4fa315cb29a050b9a9ecf5" class="m-doc-self">cnx_duration_equal</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Determines if the two <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code>s are equal.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>- The lhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to compare</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>- The rhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>whether <code>lhs</code> and <code>rhs</code> are equivalent</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Determines if the two <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code>s are equal by comparing them in the most precise period of the two. For example, if <code>lhs</code>&#x27;s period is <code>cnx_milliseconds_period</code> and <code>rhs</code>&#x27;s period is <code>cnx_seconds_period</code>, <code>rhs</code> will be converted to a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> in <code>cnx_milliseconds_period</code> before the comparison.</p>
+          </div></section>
+          <section class="m-doc-details" id="gace052301d9102b39e571030223a6b2a0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gace052301d9102b39e571030223a6b2a0" class="m-doc-self">cnx_duration_not_equal</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Determines if the two <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code>s are <strong>NOT</strong> equal.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>- The lhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to compare</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>- The rhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>whether <code>lhs</code> and <code>rhs</code> are <strong>NOT</strong> equivalent</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Determines if the two <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code>s are <strong>NOT</strong> equal by comparing them in the most precise period of the two. For example, if <code>lhs</code>&#x27;s period is <code>cnx_milliseconds_period</code> and <code>rhs</code>&#x27;s period is <code>cnx_seconds_period</code>, <code>rhs</code> will be converted to a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> in <code>cnx_milliseconds_period</code> before the comparison.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga35063418e8569d0cf515f44e5603cadb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga35063418e8569d0cf515f44e5603cadb" class="m-doc-self">cnx_duration_less_than</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Determines if <code>lhs</code> is strictly less than <code>rhs</code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>- The lhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to compare</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>- The rhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>whether <code>lhs</code> is strictly less than <code>rhs</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Determines if <code>lhs</code> is strictly less than <code>rhs</code> by comparing them in the most precise period of the two. For example, if <code>lhs</code>&#x27;s period is <code>cnx_milliseconds_period</code> and <code>rhs</code>&#x27;s period is <code>cnx_seconds_period</code>, <code>rhs</code> will be converted to a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> in <code>cnx_milliseconds_period</code> before the comparison.</p>
+          </div></section>
+          <section class="m-doc-details" id="gae0f3cd230309d186dd6ad1d7780e18d8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gae0f3cd230309d186dd6ad1d7780e18d8" class="m-doc-self">cnx_duration_less_than_or_equal</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Determines if <code>lhs</code> is less than or equal to <code>rhs</code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>- The lhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to compare</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>- The rhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>whether <code>lhs</code> is less than or equal to <code>rhs</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Determines if <code>lhs</code> is less than or equal to <code>rhs</code> by comparing them in the most precise period of the two. For example, if <code>lhs</code>&#x27;s period is <code>cnx_milliseconds_period</code> and <code>rhs</code>&#x27;s period is <code>cnx_seconds_period</code>, <code>rhs</code> will be converted to a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> in <code>cnx_milliseconds_period</code> before the comparison.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga758b26e72fc95a29e50bd01c20480324"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga758b26e72fc95a29e50bd01c20480324" class="m-doc-self">cnx_duration_greater_than</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Determines if <code>lhs</code> is strictly greater than <code>rhs</code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>- The lhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to compare</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>- The rhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>whether <code>lhs</code> is strictly greater than <code>rhs</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Determines if <code>lhs</code> is strictly greater than <code>rhs</code> by comparing them in the most precise period of the two. For example, if <code>lhs</code>&#x27;s period is <code>cnx_milliseconds_period</code> and <code>rhs</code>&#x27;s period is <code>cnx_seconds_period</code>, <code>rhs</code> will be converted to a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> in <code>cnx_milliseconds_period</code> before the comparison.</p>
+          </div></section>
+          <section class="m-doc-details" id="gaf32f6494f7d861a0b5d8d771b368ed13"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaf32f6494f7d861a0b5d8d771b368ed13" class="m-doc-self">cnx_duration_greater_than_or_equal</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Determines if <code>lhs</code> is greater than or equal to <code>rhs</code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>- The lhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to compare</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>- The rhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>whether <code>lhs</code> is greater than or equal to <code>rhs</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Determines if <code>lhs</code> is greater than or equal to <code>rhs</code> by comparing them in the most precise period of the two. For example, if <code>lhs</code>&#x27;s period is <code>cnx_milliseconds_period</code> and <code>rhs</code>&#x27;s period is <code>cnx_seconds_period</code>, <code>rhs</code> will be converted to a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> in <code>cnx_milliseconds_period</code> before the comparison.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga0950bba16da5a1983977425b0e820d9d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="BasicTypes_8h.html#ac0f09b727f79ee723c399162a0f8e8b2" class="m-doc">CnxCompare</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga0950bba16da5a1983977425b0e820d9d" class="m-doc-self">cnx_duration_compare</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> lhs,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> rhs)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Performs a three-way comparison of <code>lhs</code> to <code>rhs</code>, determining how <code>lhs</code> mathematically relates to <code>rhs</code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>- The lhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to compare</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>- The rhs <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>how <code>lhs</code> mathematically compares to <code>rhs</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Performs a three-way comparison of <code>lhs</code> to <code>rhs</code> by comparing them in the most precise period of the two. For example, if <code>lhs</code>&#x27;s period is <code>cnx_milliseconds_period</code> and <code>rhs</code>&#x27;s period is <code>cnx_seconds_period</code>, <code>rhs</code> will be converted to a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> in <code>cnx_milliseconds_period</code> before the comparison.</p>
+          </div></section>
+          <section class="m-doc-details" id="gaad2a6022fa311731f540b66d3fbdff00"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaad2a6022fa311731f540b66d3fbdff00" class="m-doc-self">cnx_duration_format</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Implements the allocator-unaware part of the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to format, as its <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait representation</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier representing how to format <code>self</code>. Should be unused/left default in the format string</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>self</code> formatted as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaadbc64a4978bfd7d996f9eedcd062cb5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaadbc64a4978bfd7d996f9eedcd062cb5" class="m-doc-self">cnx_duration_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Implements the allocator-aware part of the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to format, as its <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait representation</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier representing how to format <code>self</code>. Should be unused/left default in the format string</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to allocate memory with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>self</code> formatted as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga4992eea3de15e6b0abf2cfe53b206488"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga4992eea3de15e6b0abf2cfe53b206488" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a>,
+              <a href="group__cnx__duration.html#gaad2a6022fa311731f540b66d3fbdff00" class="m-doc">cnx_<wbr />duration_<wbr />format</a>,
+              <a href="group__cnx__duration.html#gaadbc64a4978bfd7d996f9eedcd062cb5" class="m-doc">cnx_<wbr />duration_<wbr />format_<wbr />with_<wbr />allocator</a>)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Implements the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code></p>
+          </div></section>
+        </section>
+        <section>
+          <h2>Variable documentation</h2>
+          <section class="m-doc-details" id="gadb6b8ccb6d9c2e4fc4f493d9ac4f92eb"><div>
+            <h3>
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> <a href="#gadb6b8ccb6d9c2e4fc4f493d9ac4f92eb" class="m-doc-self">count</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>The length of the duration.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga8c95d83bf83424ab7f5f5a5748e2790f"><div>
+            <h3>
+              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="#ga8c95d83bf83424ab7f5f5a5748e2790f" class="m-doc-self">period</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>The unit of the duration as a <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> For example, for a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> in milliseconds, the <code>period</code> would be <code>cnx_milli</code> or <code>cnx_milliseconds_period</code></p>
+          </div></section>
+          <section class="m-doc-details" id="ga7fb9cc7b2ffcaa239b8e90608b82b72b"><div>
+            <h3>
+              static const <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="#ga7fb9cc7b2ffcaa239b8e90608b82b72b" class="m-doc-self">cnx_duration_valid_periods</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Valid periods for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</p>
+          </div></section>
+        </section>
+        <section>
+          <h2>Define documentation</h2>
+          <section class="m-doc-details" id="ga9d1ea18c54bff64a3f9ebf00198300ef"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9d1ea18c54bff64a3f9ebf00198300ef" class="m-doc-self">cnx_nanoseconds_period</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Period representing nanoseconds for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</p>
+          </div></section>
+          <section class="m-doc-details" id="gaa7d3728b71a8cfe92a239b0f7daa9aa5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaa7d3728b71a8cfe92a239b0f7daa9aa5" class="m-doc-self">cnx_microseconds_period</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Period representing microseconds for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga88a1fcf140905af064a44a9107cf46fa"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga88a1fcf140905af064a44a9107cf46fa" class="m-doc-self">cnx_milliseconds_period</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Period representing milliseconds for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</p>
+          </div></section>
+          <section class="m-doc-details" id="gad3cab41943bd00233c21a5c6b5ab4490"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad3cab41943bd00233c21a5c6b5ab4490" class="m-doc-self">cnx_seconds_period</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Period representing seconds for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga329e34ce9de3585599c5b195eaa2454b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga329e34ce9de3585599c5b195eaa2454b" class="m-doc-self">cnx_minutes_period</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Period representing minutes for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</p>
+          </div></section>
+          <section class="m-doc-details" id="gac9196a096ca29ee0d25d902094da86f1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac9196a096ca29ee0d25d902094da86f1" class="m-doc-self">cnx_hours_period</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Period representing hours for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</p>
+          </div></section>
+          <section class="m-doc-details" id="gaba6d347a05b3997943bb730fbff8aac9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaba6d347a05b3997943bb730fbff8aac9" class="m-doc-self">cnx_days_period</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Period representing days for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga45c5f69f4b9214505761208a8f776fee"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga45c5f69f4b9214505761208a8f776fee" class="m-doc-self">cnx_weeks_period</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Period representing weeks for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga24c4fedeccaee0805cd9c6fc5752f357"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga24c4fedeccaee0805cd9c6fc5752f357" class="m-doc-self">cnx_months_period</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Period representing months for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</p>
+          </div></section>
+          <section class="m-doc-details" id="gac4dfb421f87dc76e71a3ce5c653964e2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac4dfb421f87dc76e71a3ce5c653964e2" class="m-doc-self">cnx_years_period</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Period representing years for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> and other time-related facilities.</p>
+          </div></section>
+          <section class="m-doc-details" id="gaf104366c8005356adaf56eca4aa1e33d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaf104366c8005356adaf56eca4aa1e33d" class="m-doc-self">cnx_nanoseconds</a>(</span><span class="m-doc-wrap">val)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of nanoseconds.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">val</td>
+                  <td>- The number of nanoseconds</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of nanoseconds</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga75f20486008293ae11a0c2c6d615e4f2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga75f20486008293ae11a0c2c6d615e4f2" class="m-doc-self">cnx_microseconds</a>(</span><span class="m-doc-wrap">val)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of microseconds.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">val</td>
+                  <td>- The number of nanoseconds</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of microseconds</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga8583d00fa0ff9f6030062c0875b37f1b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga8583d00fa0ff9f6030062c0875b37f1b" class="m-doc-self">cnx_milliseconds</a>(</span><span class="m-doc-wrap">val)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of milliseconds.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">val</td>
+                  <td>- The number of nanoseconds</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of milliseconds</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga90d3f81c69d7c6729e929760c62098f6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga90d3f81c69d7c6729e929760c62098f6" class="m-doc-self">cnx_seconds</a>(</span><span class="m-doc-wrap">val)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of seconds.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">val</td>
+                  <td>- The number of nanoseconds</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of seconds</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga4a4fc459f9c4abab403b21379091e986"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4a4fc459f9c4abab403b21379091e986" class="m-doc-self">cnx_minutes</a>(</span><span class="m-doc-wrap">val)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of minutes.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">val</td>
+                  <td>- The number of nanoseconds</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of minutes</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gad26dd611a3a89ffad7846f70fa73e133"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad26dd611a3a89ffad7846f70fa73e133" class="m-doc-self">cnx_hours</a>(</span><span class="m-doc-wrap">val)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of hours.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">val</td>
+                  <td>- The number of nanoseconds</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of hours</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gad08fdc3ed593f761ecbbed4e9f442ccc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad08fdc3ed593f761ecbbed4e9f442ccc" class="m-doc-self">cnx_days</a>(</span><span class="m-doc-wrap">val)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of days.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">val</td>
+                  <td>- The number of nanoseconds</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of days</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga38c8f1cb4e170dc40a75a02ed8dc1661"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga38c8f1cb4e170dc40a75a02ed8dc1661" class="m-doc-self">cnx_weeks</a>(</span><span class="m-doc-wrap">val)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of weeks.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">val</td>
+                  <td>- The number of nanoseconds</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of weeks</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga1e4f1e697f22189edfea104b3dad9dd6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1e4f1e697f22189edfea104b3dad9dd6" class="m-doc-self">cnx_months</a>(</span><span class="m-doc-wrap">val)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of months.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">val</td>
+                  <td>- The number of nanoseconds</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of months</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gadd0ceea55e46b68a8a7ff1f048d556e6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadd0ceea55e46b68a8a7ff1f048d556e6" class="m-doc-self">cnx_years</a>(</span><span class="m-doc-wrap">val)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of years.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">val</td>
+                  <td>- The number of nanoseconds</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> representing a number of years</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

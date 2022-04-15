@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>include/Cnx/unique_ptr/UniquePtrDef.h file | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a>/</span><span class="m-breadcrumb"><a href="dir_eb0c9390901bc8c114e0f1e21e68b5be.html">Cnx</a>/</span><span class="m-breadcrumb"><a href="dir_01c3ba839f3219d573a1c475db8875f9.html">unique_ptr</a>/</span>UniquePtrDef.h <span class="m-thin">file</span>
+        </h1>
+        <p>This module provides the macro definitions for a struct template for representing a uniquely owned pointer.</p>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.2.0</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-03-29</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#ga4f89e1df817ea99d186cadfed15131ed" class="m-doc">CnxUniquePtr</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>macro alias for a <code><a href="group__cnx__unique__ptr.html#ga4f89e1df817ea99d186cadfed15131ed" class="m-doc">CnxUniquePtr(T)</a></code> maintaining ownership of an allocated <code>T</code></dd>
+            <dt id="a57de0ec928c08ce7579fc39a3df8af49">
+              <span class="m-doc-wrap-bumper">#define <a href="#a57de0ec928c08ce7579fc39a3df8af49" class="m-doc-self">CnxUniquePtrIdentifier</a>(</span><span class="m-doc-wrap">T,
+              Identifier)</span>
+            </dt>
+            <dd>macro alias for an identifier (type, function, etc) associated with a <code><a href="group__cnx__unique__ptr.html#ga4f89e1df817ea99d186cadfed15131ed" class="m-doc">CnxUniquePtr(T)</a></code> instantiation</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#ga97999060631f3e56ef6d08502ad1b0f7" class="m-doc">cnx_unique_ptr_new</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>Creates a new uniquely, owned zero-initialized <code>T</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#ga43b519c5d8cc8c85845e307039ee71b9" class="m-doc">cnx_unique_ptr_new_with_allocator</a>(</span><span class="m-doc-wrap">T,
+              allocator)</span>
+            </dt>
+            <dd>Creates a new uniquely owned, zero-initialized <code>T</code>, allocated with the given allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#gadbf9825e0b32c5974ad5bea81af8585c" class="m-doc">cnx_unique_ptr_new_with_capacity</a>(</span><span class="m-doc-wrap">T,
+              capacity)</span>
+            </dt>
+            <dd>Creates a new uniquely owned, zero-initialized, dynamically allocated array.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#ga1ea7b4c32c755c6f1c188b883b181036" class="m-doc">cnx_unique_ptr_new_with_capacity_and_allocator</a>(</span><span class="m-doc-wrap">T,
+              capacity,
+              allocator)</span>
+            </dt>
+            <dd>Creates a new uniquely owned, zero-initialized, dynamically allocated array, allocated with the given allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#ga8244f3212b3405656829e6107940359e" class="m-doc">cnx_unique_ptr_from</a>(</span><span class="m-doc-wrap">T,
+              ptr)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__unique__ptr.html#ga4f89e1df817ea99d186cadfed15131ed" class="m-doc">CnxUniquePtr(T)</a></code> managing the given pointer.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#ga911fc6aaabedb03f04ed08b876003ee7" class="m-doc">cnx_unique_ptr_from_with_allocator</a>(</span><span class="m-doc-wrap">T,
+              ptr,
+              allocator)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__unique__ptr.html#ga4f89e1df817ea99d186cadfed15131ed" class="m-doc">CnxUniquePtr(T)</a></code> managing the given pointer, associated with the given allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#ga3e4085bcd4a57e88652b4f22dc8ce6ad" class="m-doc">cnx_unique_ptr_free</a>(</span><span class="m-doc-wrap">T,
+              self)</span>
+            </dt>
+            <dd>Frees the given <code><a href="group__cnx__unique__ptr.html#ga4f89e1df817ea99d186cadfed15131ed" class="m-doc">CnxUniquePtr(T)</a></code>, calling the associated deleter on the managed object.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#ga16a4f38258ba91a60aa800cb6aafda5f" class="m-doc">cnx_unique_ptr_release</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Releases the pointer managed by <code>self</code> from ownership.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#ga54779918dea26eb95d8f8e4501a31718" class="m-doc">cnx_unique_ptr_reset</a>(</span><span class="m-doc-wrap">self,
+              new_ptr)</span>
+            </dt>
+            <dd>Frees the object currently managed by <code>self</code>, and replaces it with the one pointed to by <code>new_ptr</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#ga6c1db08d8c39221761558ed5bce81bc8" class="m-doc">cnx_unique_ptr_swap</a>(</span><span class="m-doc-wrap">self,
+              other_ptr)</span>
+            </dt>
+            <dd>Swaps the managed objects of <code>self</code> and the <code><a href="group__cnx__unique__ptr.html#ga4f89e1df817ea99d186cadfed15131ed" class="m-doc">CnxUniquePtr(T)</a></code> pointed to by <code>other_ptr</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#ga089d453734932e8856f234055ae69e56" class="m-doc">cnx_unique_ptr_get_deleter</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the <code><a href="group__cnx__smart__ptrs.html#ga9290669aabf1ea806c11f2252812bf61" class="m-doc">CnxDeleter(T)</a></code> function pointer associated with the <code><a href="group__cnx__unique__ptr.html#ga4f89e1df817ea99d186cadfed15131ed" class="m-doc">CnxUniquePtr(T)</a></code> instantiation <code>self</code> is an instance of.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#ga1d95dce63d9df68ddfecec3e9dea76d3" class="m-doc">cnx_unique_ptr_as_bool</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns whether the given <code><a href="group__cnx__unique__ptr.html#ga4f89e1df817ea99d186cadfed15131ed" class="m-doc">CnxUniquePtr(T)</a></code> currently manages an object.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#gaedd7b033cc599cef57a51da17e2c464b" class="m-doc">cnx_unique_ptr_get</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a pointer to the object managed by <code>self</code></dd>
+            <dt id="ab32cfad6022164f25265748cc27b7310">
+              <span class="m-doc-wrap-bumper">#define <a href="#ab32cfad6022164f25265748cc27b7310" class="m-doc-self">__cnx_unique_ptr_get</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>implementation of <code>cnx_unique_ptr_get</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#ga01323abc1d3be362aaa9c961afeadda8" class="m-doc">cnx_unique_ptr_get_const</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a pointer-to-const to the object managed by <code>self</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#ga83ec89b995f19fcc6f3b14732682fe08" class="m-doc">cnx_unique_ptr_get_mut</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a pointer-to-non-const to the object managed by <code>self</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#ga6dd519e222f5543a5a9ca0d393c44695" class="m-doc">cnx_unique_ptr_at</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>Returns a reference to the element at <code>index</code> in the array managed by <code>self</code></dd>
+            <dt id="a79eff2da594592dd0351134ab517afcd">
+              <span class="m-doc-wrap-bumper">#define <a href="#a79eff2da594592dd0351134ab517afcd" class="m-doc-self">__cnx_unique_ptr_at</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>implementation of <code>cnx_unique_ptr_at</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#gaa435f6f50cbfc90ce621f59a4b485d3f" class="m-doc">cnx_unique_ptr_at_const</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>Returns a reference-to-const to the element at <code>index</code> in the array managed by <code>self</code></dd>
+            <dt id="a1c18dbfa4fb910448fb3a7ad24106494">
+              <span class="m-doc-wrap-bumper">#define <a href="#a1c18dbfa4fb910448fb3a7ad24106494" class="m-doc-self">__cnx_unique_ptr_at_const</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>implementation of <code>cnx_unique_ptr_at_const</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#gaf46391dc60141058cec8622133db2331" class="m-doc">cnx_unique_ptr_at_mut</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>Returns a reference-to-non-const to the element at <code>index</code> in the array managed by <code>self</code></dd>
+            <dt id="addca58dff0bc609e106f1cb55493b517">
+              <span class="m-doc-wrap-bumper">#define <a href="#addca58dff0bc609e106f1cb55493b517" class="m-doc-self">__cnx_unique_ptr_at_mut</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>implementation of <code>cnx_unique_ptr_at_mut</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#ga64b8e604a0cbe7e2d84d5bc58aa6e22e" class="m-doc">cnx_make_unique</a>(</span><span class="m-doc-wrap">T,
+              ...)</span>
+            </dt>
+            <dd>Creates a <code><a href="group__cnx__unique__ptr.html#ga4f89e1df817ea99d186cadfed15131ed" class="m-doc">CnxUniquePtr(T)</a></code> managing a <code>T</code> initialized with the given list of (potentially designated) initializers.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#ga8bb3feeee65f10563fca47c0a3de34ba" class="m-doc">cnx_make_unique_with_allocator</a>(</span><span class="m-doc-wrap">T,
+              allocator,
+              ...)</span>
+            </dt>
+            <dd>Creates a <code><a href="group__cnx__unique__ptr.html#ga4f89e1df817ea99d186cadfed15131ed" class="m-doc">CnxUniquePtr(T)</a></code> managing a <code>T</code> initialized with the given list of (potentially designated) initializers, allocated with the given allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#gac780abb88a64805b603877f2f298f7e5" class="m-doc">cnx_make_unique_array</a>(</span><span class="m-doc-wrap">T,
+              capacity)</span>
+            </dt>
+            <dd>Creates a <code><a href="group__cnx__unique__ptr.html#ga4f89e1df817ea99d186cadfed15131ed" class="m-doc">CnxUniquePtr(T)</a></code> managing the array type <code>T</code> with the given initial capacity.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#ga772f606beab2042306ec8238dc744060" class="m-doc">cnx_make_unique_array_with_allocator</a>(</span><span class="m-doc-wrap">T,
+              capacity,
+              allocator)</span>
+            </dt>
+            <dd>Creates a <code><a href="group__cnx__unique__ptr.html#ga4f89e1df817ea99d186cadfed15131ed" class="m-doc">CnxUniquePtr(T)</a></code> managing the array type <code>T</code> with the given initial capacity, allocated with the given allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__unique__ptr.html#ga663647c8c8962ecb3baf9e6524466b32" class="m-doc">unique_scoped</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>Declare a <code><a href="group__cnx__unique__ptr.html#ga4f89e1df817ea99d186cadfed15131ed" class="m-doc">CnxUniquePtr(T)</a></code> with this declaration attribute/type to ensure it (and its managed object) is automatically freed when the <code><a href="group__cnx__unique__ptr.html#ga4f89e1df817ea99d186cadfed15131ed" class="m-doc">CnxUniquePtr(T)</a></code> goes out of scope.</dd>
+            <dt id="a5462309a74b58ff780fa1fa1c5d16f1a">
+              <span class="m-doc-wrap-bumper">#define <a href="#a5462309a74b58ff780fa1fa1c5d16f1a" class="m-doc-self">__UNIQUE_PTR_CHECK_INSTANCE_IS_ARRAY</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>wrapper for __SMART_PTR_CHECK_INSTANCE_IS_ARRAY</dd>
+            <dt id="a67154227e1f5e7850da0a4047759a890">
+              <span class="m-doc-wrap-bumper">#define <a href="#a67154227e1f5e7850da0a4047759a890" class="m-doc-self">__UNIQUE_PTR_IS_ARRAY</a></span>
+            </dt>
+            <dd>wrapper for __SMART_PTR_IS_ARRAY</dd>
+            <dt id="afaab0b1a298268dc537305324a251520">
+              <span class="m-doc-wrap-bumper">#define <a href="#afaab0b1a298268dc537305324a251520" class="m-doc-self">__UNIQUE_PTR_IS_ARRAY_GENERIC</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>wrapper for __SMART_PTR_IS_ARRAY</dd>
+            <dt id="aeca5b0e84b97d5988bd03cec4abf326a">
+              <span class="m-doc-wrap-bumper">#define <a href="#aeca5b0e84b97d5988bd03cec4abf326a" class="m-doc-self">__UNIQUE_PTR_ELEMENT_PTR_BASE</a></span>
+            </dt>
+            <dd>wrapper for __SMART_PTR_ELEMENT_PTR_BASE</dd>
+            <dt id="a40db01f39fb24806345f161611a21fc5">
+              <span class="m-doc-wrap-bumper">#define <a href="#a40db01f39fb24806345f161611a21fc5" class="m-doc-self">__UNIQUE_PTR_CONST_ELEMENT_PTR_BASE</a></span>
+            </dt>
+            <dd>wrapper for __SMART_PTR_CONST_ELEMENT_PTR_BASE</dd>
+            <dt id="a0c1833b7996cf572d09fb46569919dbb">
+              <span class="m-doc-wrap-bumper">#define <a href="#a0c1833b7996cf572d09fb46569919dbb" class="m-doc-self">__UNIQUE_PTR_ELEMENT_PTR</a></span>
+            </dt>
+            <dd>wrapper for __SMART_PTR_ELEMENT_PTR</dd>
+            <dt id="a673dc7233def33a7508c77a0d4a99916">
+              <span class="m-doc-wrap-bumper">#define <a href="#a673dc7233def33a7508c77a0d4a99916" class="m-doc-self">__UNIQUE_PTR_CONST_ELEMENT_PTR</a></span>
+            </dt>
+            <dd>wrapper for __SMART_PTR_CONST_ELEMENT_PTR</dd>
+            <dt id="a203aba23bbcb1e38fcc526adbe663421">
+              <span class="m-doc-wrap-bumper">#define <a href="#a203aba23bbcb1e38fcc526adbe663421" class="m-doc-self">__UNIQUE_PTR_ELEMENT</a></span>
+            </dt>
+            <dd>wrapper for __SMART_PTR_ELEMENT</dd>
+          </dl>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

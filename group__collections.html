@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Collections module | C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <title>Collections module | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -13,7 +13,7 @@
 <header><nav id="navigation">
   <div class="m-container">
     <div class="m-row">
-      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">C2nxt <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
       <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
         <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
           <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
@@ -55,15 +55,15 @@
             </li>
           </ul>
         </nav>
-<p>C2nxt Collections provide ergonomic type-generic (where-applicable) type-safe collections with modern features and ergonomics</p>
+<p>Cnx Collections provide ergonomic type-generic (where-applicable) type-safe collections with modern features and ergonomics</p>
         <section id="groups">
           <h2><a href="#groups">Modules</a></h2>
           <dl class="m-doc">
-            <dt>module <a href="group__std__array.html" class="m-doc">StdArray</a></dt>
+            <dt>module <a href="group__cnx__array.html" class="m-doc">CnxArray</a></dt>
             <dd></dd>
-            <dt>module <a href="group__std__string.html" class="m-doc">StdString</a></dt>
+            <dt>module <a href="group__cnx__string.html" class="m-doc">CnxString</a></dt>
             <dd></dd>
-            <dt>module <a href="group__std__vector.html" class="m-doc">StdVector</a></dt>
+            <dt>module <a href="group__cnx__vector.html" class="m-doc">CnxVector</a></dt>
             <dd></dd>
           </dl>
         </section>
@@ -71,28 +71,28 @@
           <h2><a href="#define-members">Defines</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gad12233d1712f2076b9883b54dd4ab650" class="m-doc">std_collection_element_default_constructor</a>(</span><span class="m-doc-wrap">T)</span>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga65669078a69e8783784cd07f21dfe998" class="m-doc">cnx_collection_element_default_constructor</a>(</span><span class="m-doc-wrap">T)</span>
             </dt>
             <dd>Macro alias for an element default-constructor for type <code>T</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gae65a98f5bf4adc9dbd916a645eb3407e" class="m-doc">std_collection_element_copy_constructor</a>(</span><span class="m-doc-wrap">T)</span>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga8c0fd358f05a4728982e88dadd5a2704" class="m-doc">cnx_collection_element_copy_constructor</a>(</span><span class="m-doc-wrap">T)</span>
             </dt>
             <dd>Macro alias for an element copy-constructor for type <code>T</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gaf1b391f0a3383c8e0fc9b58a8d5060ab" class="m-doc">std_collection_element_destructor</a>(</span><span class="m-doc-wrap">T)</span>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1b3b91d6fed9b1b28d94828a50358986" class="m-doc">cnx_collection_element_destructor</a>(</span><span class="m-doc-wrap">T)</span>
             </dt>
             <dd>Macro alias for an element destructor for type <code>T</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga53cfd9d58fc7437fb13ca08499a131f7" class="m-doc">StdCollectionData</a>(</span><span class="m-doc-wrap">CollectionType)</span>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae797ce56fe4e9867552c9f9229e33303" class="m-doc">CnxCollectionData</a>(</span><span class="m-doc-wrap">CollectionType)</span>
             </dt>
-            <dd>Macro alias for a <code>StdCollectionData</code> for a collection of type <code>CollectionType</code></dd>
+            <dd>Macro alias for a <code>CnxCollectionData</code> for a collection of type <code>CollectionType</code></dd>
           </dl>
         </section>
         <section>
           <h2>Define documentation</h2>
-          <section class="m-doc-details" id="gad12233d1712f2076b9883b54dd4ab650"><div>
+          <section class="m-doc-details" id="ga65669078a69e8783784cd07f21dfe998"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gad12233d1712f2076b9883b54dd4ab650" class="m-doc-self">std_collection_element_default_constructor</a>(</span><span class="m-doc-wrap">T)</span>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga65669078a69e8783784cd07f21dfe998" class="m-doc-self">cnx_collection_element_default_constructor</a>(</span><span class="m-doc-wrap">T)</span>
             </h3>
             <p>Macro alias for an element default-constructor for type <code>T</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -108,9 +108,9 @@
             </table>
 <p>Used to generate and refer to a unique typedef name for the constructor</p>
           </div></section>
-          <section class="m-doc-details" id="gae65a98f5bf4adc9dbd916a645eb3407e"><div>
+          <section class="m-doc-details" id="ga8c0fd358f05a4728982e88dadd5a2704"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gae65a98f5bf4adc9dbd916a645eb3407e" class="m-doc-self">std_collection_element_copy_constructor</a>(</span><span class="m-doc-wrap">T)</span>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga8c0fd358f05a4728982e88dadd5a2704" class="m-doc-self">cnx_collection_element_copy_constructor</a>(</span><span class="m-doc-wrap">T)</span>
             </h3>
             <p>Macro alias for an element copy-constructor for type <code>T</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -126,9 +126,9 @@
             </table>
 <p>Used to generate and refer to a unique typedef name for the constructor</p>
           </div></section>
-          <section class="m-doc-details" id="gaf1b391f0a3383c8e0fc9b58a8d5060ab"><div>
+          <section class="m-doc-details" id="ga1b3b91d6fed9b1b28d94828a50358986"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gaf1b391f0a3383c8e0fc9b58a8d5060ab" class="m-doc-self">std_collection_element_destructor</a>(</span><span class="m-doc-wrap">T)</span>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1b3b91d6fed9b1b28d94828a50358986" class="m-doc-self">cnx_collection_element_destructor</a>(</span><span class="m-doc-wrap">T)</span>
             </h3>
             <p>Macro alias for an element destructor for type <code>T</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -144,11 +144,11 @@
             </table>
 <p>Used to generate and refer to a unique typedef name for the destructor</p>
           </div></section>
-          <section class="m-doc-details" id="ga53cfd9d58fc7437fb13ca08499a131f7"><div>
+          <section class="m-doc-details" id="gae797ce56fe4e9867552c9f9229e33303"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga53cfd9d58fc7437fb13ca08499a131f7" class="m-doc-self">StdCollectionData</a>(</span><span class="m-doc-wrap">CollectionType)</span>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae797ce56fe4e9867552c9f9229e33303" class="m-doc-self">CnxCollectionData</a>(</span><span class="m-doc-wrap">CollectionType)</span>
             </h3>
-            <p>Macro alias for a <code>StdCollectionData</code> for a collection of type <code>CollectionType</code></p>
+            <p>Macro alias for a <code>CnxCollectionData</code> for a collection of type <code>CollectionType</code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -156,11 +156,11 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">CollectionType</td>
-                  <td>- The type of the collection associated with this <code>StdCollectionData</code></td>
+                  <td>- The type of the collection associated with this <code>CnxCollectionData</code></td>
                 </tr>
               </tbody>
             </table>
-<p>Used to generate and refer to a unique typedef name for a particular collection instantiation&#x27;s associated <code>StdCollectionData</code> type.</p>
+<p>Used to generate and refer to a unique typedef name for a particular collection instantiation&#x27;s associated <code>CnxCollectionData</code> type.</p>
           </div></section>
         </section>
       </div>
@@ -207,7 +207,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

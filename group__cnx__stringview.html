@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Views &raquo; CnxStringView module | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="group__views.html">Views</a> &raquo;</span>
+          CnxStringView <span class="m-thin">module</span></h1>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#typedef-members">Typedefs</a></li>
+                <li><a href="#func-members">Functions</a></li>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<p>A <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> is a &quot;view&quot; into a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>. It allows you to lazily inspect the contents of its associated string, but not modify them. It is effectively a fat reference to the contents of its associated string.</p>
+        <section id="nested-classes">
+          <h2><a href="#nested-classes">Classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              struct <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>
+            </dt>
+            <dd>Cnx stringview type. A stringview is a &quot;view&quot; into a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>. It allows you to lazily inspect the contents of the string, but not modify them. It is effectively a fat pointer into the contents of the associated <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              struct <a href="structCnxStringViewIterator.html" class="m-doc">CnxStringViewIterator</a>
+            </dt>
+            <dd>Cnx stringview const iterator storage type <code><a href="structCnxStringViewIterator.html" class="m-doc">CnxStringViewIterator</a></code> is the underlying storage type used by <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> for its const iterator type (<code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ptr)</a></code>)</dd>
+          </dl>
+        </section>
+        <section id="typedef-members">
+          <h2><a href="#typedef-members">Typedefs</a></h2>
+          <dl class="m-doc">
+            <dt>
+              using <a href="#ga798946c839526e84326e8e31438f71b1" class="m-doc">cnx_stringview_vtable_t</a> = struct <a href="structcnx__stringview__vtable__t.html" class="m-doc">cnx_<wbr />stringview_<wbr />vtable_<wbr />t</a>
+            </dt>
+            <dd>The function vector table of methods associated with <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              using <a href="#ga18f981d1063ed7e35d1b59a3887485e3" class="m-doc">CnxStringView</a> = struct <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>
+            </dt>
+            <dd>Cnx stringview type. A stringview is a &quot;view&quot; into a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>. It allows you to lazily inspect the contents of the string, but not modify them. It is effectively a fat pointer into the contents of the associated <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              using <a href="#ga0d1e0b3ead857e457e4ed6ef2b79ad4e" class="m-doc">CnxStringViewIterator</a> = struct <a href="structCnxStringViewIterator.html" class="m-doc">CnxStringViewIterator</a>
+            </dt>
+            <dd>Cnx stringview const iterator storage type <code><a href="structCnxStringViewIterator.html" class="m-doc">CnxStringViewIterator</a></code> is the underlying storage type used by <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> for its const iterator type (<code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ptr)</a></code>)</dd>
+          </dl>
+        </section>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxStringView.html" class="m-doc">CnxStringView</a> <a href="#ga997577a471a95e9035d1970e513b477b" class="m-doc">cnx_stringview_new</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict string)</span>
+            </dt>
+            <dd>Returns a new <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> into the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxStringView.html" class="m-doc">CnxStringView</a> <a href="#gac652d9578922bf9d8d003587fabe946c" class="m-doc">cnx_stringview_from</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> string,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length) cnx_disable_if(!string</span>
+            </dt>
+            <dd>Returns a new <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> into the given cstring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga88d1fb873d629b523bfa7335f8819f98" class="m-doc">const_<wbr />char_<wbr />ptr</a> <a href="#gacd2d92e95ff428f6267f1d6459b47604" class="m-doc">cnx_stringview_at</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index)</span>
+            </dt>
+            <dd>Returns the character in the view located at the given index.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="#gadb9dca767094b2711401c53328c1456c" class="m-doc">cnx_stringview_length</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the length of the <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="#ga66fc5d9d06a93ca7e7e96635a3eb75cb" class="m-doc">cnx_stringview_size</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the size of the <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#gac452ba6fc9c235de8344bd97f87b2f3f" class="m-doc">cnx_stringview_equal</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self,
+              const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict to_compare) cnx_disable_if(!to_compare</span>
+            </dt>
+            <dd>Returns whether the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>s are equivalent.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#ga28ece51b36936e71d932ab90d663cca9" class="m-doc">cnx_stringview_equal_string</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self,
+              const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict to_compare) cnx_disable_if(!to_compare</span>
+            </dt>
+            <dd>Returns whether the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>s are equivalent.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#ga9fe7bb7f667807d412eb46b2ab990b6e" class="m-doc">cnx_stringview_equal_cstring</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> to_compare,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> to_compare_length) cnx_disable_if(!to_compare</span>
+            </dt>
+            <dd>Returns whether the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> is equivalent to the given <code>cstring</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> <a href="#ga544aa5b1131dd891671d6bcbb6b16d96" class="m-doc">cnx_stringview_into_cstring</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code>const_cstring</code> (<code>const char*</code>) representation of the <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">CnxRandomAccessIteratorconst_char_ref <a href="#gad00dd05c47a456f74d3bd7cd9ba1ee58" class="m-doc">cnx_stringview_begin</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the beginning of the iteration (pointing at the beginning of the view)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">CnxRandomAccessIteratorconst_char_ref <a href="#ga3ef8547452b2267e664a13fd519bd8a0" class="m-doc">cnx_stringview_end</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the end of the iteration (pointing at the end of the view)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">CnxRandomAccessIteratorconst_char_ref <a href="#ga4d73c71891fb27d813f3996b7a97b885" class="m-doc">cnx_stringview_rbegin</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> in reverse, at the beginning of the iteration (pointing at the end of the view)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">CnxRandomAccessIteratorconst_char_ref <a href="#gaec78e9a75bd064db2200748ee5985083" class="m-doc">cnx_stringview_rend</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> in reverse, at the end of the iteration (pointing at the beginning of the view)</dd>
+          </dl>
+        </section>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga2cc71bc15de309f29a1b832f78200e57" class="m-doc">cnx_stringview_at</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>Returns a const reference to the character at <code>index</code> in the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga02c130eda125e434dc4e40fad7be0af5" class="m-doc">cnx_stringview_length</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the current length of the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga33c6f295e3be70007d427e15ac40ef62" class="m-doc">cnx_stringview_size</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the current size of the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5a4ccf8a66811826814da26457cdf111" class="m-doc">cnx_stringview_equal</a>(</span><span class="m-doc-wrap">self,
+              to_compare)</span>
+            </dt>
+            <dd>Returns whether the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>s are equivalent.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga380c417a91358a8cb848549f437d158a" class="m-doc">cnx_stringview_into_cstring</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the <code>cstring</code> view of the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga48044de4eaea0dca6ffc6413ba31322a" class="m-doc">cnx_stringview_begin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the beginning of the iteration (pointing at the beginning of the view)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga8452c3ba324bdb826fcbe2f2ac6def96" class="m-doc">cnx_stringview_end</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the end of the iteration (pointing at the end of the view)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac2bc5111bcbf81268adc856a588719e9" class="m-doc">cnx_stringview_rbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the beginning of the reversed iteration (pointing at the end of the view)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gacc1b62c941d77e3cedc480fb11c0eb09" class="m-doc">cnx_stringview_rend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the end of the reversed iteration (pointing at the beginning of the view)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga632e0f9edaaee2af7430cb6e58d8a423" class="m-doc">cnx_stringview_cbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the beginning of the iteration (pointing at the beginning of the view)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga88ec4a031f54b32bffdfcf696986486a" class="m-doc">cnx_stringview_cend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the end of the iteration (pointing at the end of the view)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaa5049cc1d04baba63853d602d7679eac" class="m-doc">cnx_stringview_crbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the beginning of the reversed iteration (pointing at the end of the view)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga57fa7ddbedccfdf0bbdb979e86a3e797" class="m-doc">cnx_stringview_crend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the end of the reversed iteration (pointing at the beginning of the view)</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Typedef documentation</h2>
+          <section class="m-doc-details" id="ga798946c839526e84326e8e31438f71b1"><div>
+            <h3>
+              typedef struct <a href="structcnx__stringview__vtable__t.html" class="m-doc">cnx_<wbr />stringview_<wbr />vtable_<wbr />t</a> <a href="#ga798946c839526e84326e8e31438f71b1" class="m-doc-self">cnx_stringview_vtable_t</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>The function vector table of methods associated with <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p>
+          </div></section>
+          <section class="m-doc-details" id="ga18f981d1063ed7e35d1b59a3887485e3"><div>
+            <h3>
+              typedef struct <a href="structCnxStringView.html" class="m-doc">CnxStringView</a> <a href="#ga18f981d1063ed7e35d1b59a3887485e3" class="m-doc-self">CnxStringView</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Cnx stringview type. A stringview is a &quot;view&quot; into a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>. It allows you to lazily inspect the contents of the string, but not modify them. It is effectively a fat pointer into the contents of the associated <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p>
+          </div></section>
+          <section class="m-doc-details" id="ga0d1e0b3ead857e457e4ed6ef2b79ad4e"><div>
+            <h3>
+              typedef struct <a href="structCnxStringViewIterator.html" class="m-doc">CnxStringViewIterator</a> <a href="#ga0d1e0b3ead857e457e4ed6ef2b79ad4e" class="m-doc-self">CnxStringViewIterator</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Cnx stringview const iterator storage type <code><a href="structCnxStringViewIterator.html" class="m-doc">CnxStringViewIterator</a></code> is the underlying storage type used by <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> for its const iterator type (<code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ptr)</a></code>)</p>
+          </div></section>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ga997577a471a95e9035d1970e513b477b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxStringView.html" class="m-doc">CnxStringView</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga997577a471a95e9035d1970e513b477b" class="m-doc-self">cnx_stringview_new</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict string)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns a new <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> into the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">string</td>
+                  <td>- The <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> to get the view of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> into the given string</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gac652d9578922bf9d8d003587fabe946c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxStringView.html" class="m-doc">CnxStringView</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gac652d9578922bf9d8d003587fabe946c" class="m-doc-self">cnx_stringview_from</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> string,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> length) cnx_disable_if(!string</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns a new <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> into the given cstring.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">string</td>
+                  <td>- The cstring to get the view of</td>
+                </tr>
+                <tr>
+                  <td>index</td>
+                  <td>- The index to begin the view at</td>
+                </tr>
+                <tr>
+                  <td>length</td>
+                  <td>- The length of the view</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> into the given string</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gacd2d92e95ff428f6267f1d6459b47604"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga88d1fb873d629b523bfa7335f8819f98" class="m-doc">const_<wbr />char_<wbr />ptr</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gacd2d92e95ff428f6267f1d6459b47604" class="m-doc-self">cnx_stringview_at</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> index)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns the character in the view located at the given index.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to retrieve a character from</td>
+                </tr>
+                <tr>
+                  <td>index</td>
+                  <td>- The index of the character to get</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the character at index</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gadb9dca767094b2711401c53328c1456c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gadb9dca767094b2711401c53328c1456c" class="m-doc-self">cnx_stringview_length</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns the length of the <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to get the length of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the length of the stringview</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga66fc5d9d06a93ca7e7e96635a3eb75cb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga66fc5d9d06a93ca7e7e96635a3eb75cb" class="m-doc-self">cnx_stringview_size</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns the size of the <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to get the size of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the size of the stringview</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gac452ba6fc9c235de8344bd97f87b2f3f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gac452ba6fc9c235de8344bd97f87b2f3f" class="m-doc-self">cnx_stringview_equal</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self,
+              const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict to_compare) cnx_disable_if(!to_compare</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns whether the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>s are equivalent.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The first <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to compare</td>
+                </tr>
+                <tr>
+                  <td>to_compare</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to compare to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>whether the stringviews are equal</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga28ece51b36936e71d932ab90d663cca9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga28ece51b36936e71d932ab90d663cca9" class="m-doc-self">cnx_stringview_equal_string</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self,
+              const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict to_compare) cnx_disable_if(!to_compare</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns whether the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>s are equivalent.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The first <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to compare</td>
+                </tr>
+                <tr>
+                  <td>to_compare</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to compare to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>whether the stringviews are equal</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga9fe7bb7f667807d412eb46b2ab990b6e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga9fe7bb7f667807d412eb46b2ab990b6e" class="m-doc-self">cnx_stringview_equal_cstring</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> to_compare,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> to_compare_length) cnx_disable_if(!to_compare</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns whether the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> is equivalent to the given <code>cstring</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The first <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to compare</td>
+                </tr>
+                <tr>
+                  <td>to_compare</td>
+                  <td>- The <code>cstring</code> to compare to</td>
+                </tr>
+                <tr>
+                  <td>to_compare_length</td>
+                  <td>- The length of the <code>cstring</code></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>whether <code>self</code> is equalivalent to the given <code>cstring</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga544aa5b1131dd891671d6bcbb6b16d96"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga544aa5b1131dd891671d6bcbb6b16d96" class="m-doc-self">cnx_stringview_into_cstring</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code>const_cstring</code> (<code>const char*</code>) representation of the <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to get the <code>const_cstring</code> representation of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the <code>const_cstring</code> representation of the stringview</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gad00dd05c47a456f74d3bd7cd9ba1ee58"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">CnxRandomAccessIteratorconst_char_ref </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gad00dd05c47a456f74d3bd7cd9ba1ee58" class="m-doc-self">cnx_stringview_begin</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the beginning of the iteration (pointing at the beginning of the view)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to get an iterator into</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>an iterator at the beginning of the iteration (pointing at the beginning of the view)</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga3ef8547452b2267e664a13fd519bd8a0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">CnxRandomAccessIteratorconst_char_ref </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3ef8547452b2267e664a13fd519bd8a0" class="m-doc-self">cnx_stringview_end</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the end of the iteration (pointing at the end of the view)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to get an iterator into</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>an iterator at the end of the iteration (pointing at the end of the view)</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga4d73c71891fb27d813f3996b7a97b885"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">CnxRandomAccessIteratorconst_char_ref </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga4d73c71891fb27d813f3996b7a97b885" class="m-doc-self">cnx_stringview_rbegin</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> in reverse, at the beginning of the iteration (pointing at the end of the view)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to get an iterator into</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>an iterator at the beginning of the reverse iteration (pointing at the end of the view)</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaec78e9a75bd064db2200748ee5985083"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">CnxRandomAccessIteratorconst_char_ref </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaec78e9a75bd064db2200748ee5985083" class="m-doc-self">cnx_stringview_rend</a>(</span><span class="m-doc-wrap">const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict self)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> in reverse, at the end of the iteration (pointing at the beginning of the view)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to get an iterator into</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>an iterator at the end of the reverse iteration (pointing at the beginning of the view)</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+        <section>
+          <h2>Define documentation</h2>
+          <section class="m-doc-details" id="ga2cc71bc15de309f29a1b832f78200e57"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga2cc71bc15de309f29a1b832f78200e57" class="m-doc-self">cnx_stringview_at</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns a const reference to the character at <code>index</code> in the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to get a character from</td>
+                </tr>
+                <tr>
+                  <td>index</td>
+                  <td>- The index of the desired character in <code>self</code></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a const reference to the character at <code>index</code> in `self</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga02c130eda125e434dc4e40fad7be0af5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga02c130eda125e434dc4e40fad7be0af5" class="m-doc-self">cnx_stringview_length</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns the current length of the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to get the length of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the length of <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga33c6f295e3be70007d427e15ac40ef62"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga33c6f295e3be70007d427e15ac40ef62" class="m-doc-self">cnx_stringview_size</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns the current size of the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to get the size of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the size of <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga5a4ccf8a66811826814da26457cdf111"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5a4ccf8a66811826814da26457cdf111" class="m-doc-self">cnx_stringview_equal</a>(</span><span class="m-doc-wrap">self,
+              to_compare)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns whether the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>s are equivalent.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The first <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to compare</td>
+                </tr>
+                <tr>
+                  <td>to_compare</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to compare to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>whether the stringviews are equal</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga380c417a91358a8cb848549f437d158a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga380c417a91358a8cb848549f437d158a" class="m-doc-self">cnx_stringview_into_cstring</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns the <code>cstring</code> view of the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to get the <code>cstring</code> view of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>self</code> as a <code>cstring</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga48044de4eaea0dca6ffc6413ba31322a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga48044de4eaea0dca6ffc6413ba31322a" class="m-doc-self">cnx_stringview_begin</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the beginning of the iteration (pointing at the beginning of the view)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to get an iterator into</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>an iterator at the beginning of the iteration (pointing at the beginning of the view)</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga8452c3ba324bdb826fcbe2f2ac6def96"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga8452c3ba324bdb826fcbe2f2ac6def96" class="m-doc-self">cnx_stringview_end</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the end of the iteration (pointing at the end of the view)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to get an iterator into</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>an iterator at the end of the iteration (pointing at the end of the view)</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gac2bc5111bcbf81268adc856a588719e9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac2bc5111bcbf81268adc856a588719e9" class="m-doc-self">cnx_stringview_rbegin</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the beginning of the reversed iteration (pointing at the end of the view)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to get an iterator into</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>an iterator at the beginning of the reversed iteration (pointing at the end of the view)</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gacc1b62c941d77e3cedc480fb11c0eb09"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gacc1b62c941d77e3cedc480fb11c0eb09" class="m-doc-self">cnx_stringview_rend</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the end of the reversed iteration (pointing at the beginning of the view)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to get an iterator into</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>an iterator at the end of the reversed iteration (pointing at the beginning of the view)</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga632e0f9edaaee2af7430cb6e58d8a423"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga632e0f9edaaee2af7430cb6e58d8a423" class="m-doc-self">cnx_stringview_cbegin</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the beginning of the iteration (pointing at the beginning of the view)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to get an iterator into</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>an iterator at the beginning of the iteration (pointing at the beginning of the view)</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga88ec4a031f54b32bffdfcf696986486a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga88ec4a031f54b32bffdfcf696986486a" class="m-doc-self">cnx_stringview_cend</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the end of the iteration (pointing at the end of the view)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to get an iterator into</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>an iterator at the end of the iteration (pointing at the end of the view)</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaa5049cc1d04baba63853d602d7679eac"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaa5049cc1d04baba63853d602d7679eac" class="m-doc-self">cnx_stringview_crbegin</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the beginning of the reversed iteration (pointing at the end of the view)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to get an iterator into</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>an iterator at the beginning of the reversed iteration (pointing at the end of the view)</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga57fa7ddbedccfdf0bbdb979e86a3e797"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga57fa7ddbedccfdf0bbdb979e86a3e797" class="m-doc-self">cnx_stringview_crend</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="group__iterators.html#ga4b74af4e86b91d69e67b7c45fa449220" class="m-doc">CnxRandomAccessIterator(const_<wbr />char_<wbr />ref)</a></code> into the given <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code>, at the end of the reversed iteration (pointing at the beginning of the view)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to get an iterator into</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>an iterator at the end of the reversed iteration (pointing at the beginning of the view)</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

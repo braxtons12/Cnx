@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>include/Cnx/time/Clock.h file | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a>/</span><span class="m-breadcrumb"><a href="dir_eb0c9390901bc8c114e0f1e21e68b5be.html">Cnx</a>/</span><span class="m-breadcrumb"><a href="dir_9da10a18b5226014e6ddb9931c9f5938.html">time</a>/</span>Clock.h <span class="m-thin">file</span>
+        </h1>
+        <p>This module provides methods for operating with system clocks.</p>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#enum-members">Enums</a></li>
+                <li><a href="#typedef-members">Typedefs</a></li>
+                <li><a href="#func-members">Functions</a></li>
+                <li><a href="#var-members">Variables</a></li>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.1.1</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-02-24</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        <section id="enum-members">
+          <h2><a href="#enum-members">Enums</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">enum <a href="group__cnx__clock.html#ga39216fb7dcff92de3a0802683b6607aa" class="m-doc">CnxClockResolution</a> { </span><span class="m-doc-wrap"><a href="#gga39216fb7dcff92de3a0802683b6607aaa4c457029c0a77f883950d4393a008d8d" class="m-doc">CNX_CLOCK_NANOSECONDS</a>,
+              <a href="#gga39216fb7dcff92de3a0802683b6607aaa4996c3bb794ee9efbfd11bd119f6addf" class="m-doc">CNX_CLOCK_MICROSECONDS</a>,
+              <a href="#gga39216fb7dcff92de3a0802683b6607aaa50eff79d9bb8c672b8323f0a421601f5" class="m-doc">CNX_CLOCK_MILLISECONDS</a>,
+              <a href="#gga39216fb7dcff92de3a0802683b6607aaa1c152017a8a8982dcc8dfc2808412521" class="m-doc">CNX_CLOCK_SECONDS</a> }</span>
+            </dt>
+            <dd><code>CnxClockResolution</code> lists the valid resolutions for <code><a href="structCnxClock.html" class="m-doc">CnxClock</a></code> compatible clocks</dd>
+          </dl>
+        </section>
+        <section id="typedef-members">
+          <h2><a href="#typedef-members">Typedefs</a></h2>
+          <dl class="m-doc">
+            <dt>
+              using <a href="group__cnx__clock.html#ga221f21abc29265d673ef2f4311b809c1" class="m-doc">CnxClockResolution</a> = enum <a href="group__cnx__clock.html#ga39216fb7dcff92de3a0802683b6607aa" class="m-doc">CnxClockResolution</a>
+            </dt>
+            <dd><code>CnxClockResolution</code> lists the valid resolutions for <code><a href="structCnxClock.html" class="m-doc">CnxClock</a></code> compatible clocks</dd>
+          </dl>
+        </section>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__clock.html#gad72426e0e2370b0e08f6cb31194b7ad5" class="m-doc">cnx_clock_now</a>(</span><span class="m-doc-wrap">const <a href="structCnxClock.html" class="m-doc">CnxClock</a>*restrict self)</span>
+            </dt>
+            <dd>Returns a <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> corresponding to the current time on the given clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__clock.html#ga44e0be949f21afbf23452d4629575ae3" class="m-doc">cnx_clock_min_time_point</a>(</span><span class="m-doc-wrap">const <a href="structCnxClock.html" class="m-doc">CnxClock</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the minimum possible <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> able to be associated with the given clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__clock.html#ga9fbaaa0978d2a828ff6f977755c1899f" class="m-doc">cnx_clock_max_time_point</a>(</span><span class="m-doc-wrap">const <a href="structCnxClock.html" class="m-doc">CnxClock</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the maximum possible <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> able to be associated with the given clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__clock.html#ga39216fb7dcff92de3a0802683b6607aa" class="m-doc">CnxClockResolution</a> <a href="group__cnx__clock.html#ga8469894f7c2c370040a1b493c00a28c5" class="m-doc">cnx_clock_resolution</a>(</span><span class="m-doc-wrap">const <a href="structCnxClock.html" class="m-doc">CnxClock</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the resolution of the given clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="group__cnx__clock.html#ga21161c07fe3b8a8ce2895837fa4c068e" class="m-doc">cnx_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">const <a href="structCnxClock.html" class="m-doc">CnxClock</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the resolution of the given clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#gaba7dfa35a6a117f109eed893b4ba9cc7" class="m-doc">CnxTimePointLocale</a> <a href="group__cnx__clock.html#ga7fa2875e44a17c6a81c43ebfe52b16cd" class="m-doc">cnx_clock_locale</a>(</span><span class="m-doc-wrap">const <a href="structCnxClock.html" class="m-doc">CnxClock</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the locale associated with the given clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__clock.html#ga6356de51a9e8ce4ed554bbe5dbd56d6a" class="m-doc">cnx_clock_format</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>Implements the allocator un-aware portion of the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for all <code><a href="structCnxClock.html" class="m-doc">CnxClock</a></code>s.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__clock.html#gae4760c7b6cf5526d4628f3810b211f08" class="m-doc">cnx_clock_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>Implements the allocator aware portion of the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for all <code><a href="structCnxClock.html" class="m-doc">CnxClock</a></code>s.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static  <a href="group__cnx__clock.html#gacc52ba2e0931a9d514f477155996ae0e" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="structCnxClock.html" class="m-doc">CnxClock</a>,
+              <a href="group__cnx__clock.html#ga6356de51a9e8ce4ed554bbe5dbd56d6a" class="m-doc">cnx_<wbr />clock_<wbr />format</a>,
+              <a href="group__cnx__clock.html#gae4760c7b6cf5526d4628f3810b211f08" class="m-doc">cnx_<wbr />clock_<wbr />format_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>Implements the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for <code><a href="structCnxClock.html" class="m-doc">CnxClock</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__clock.html#ga9cd2d7bbe07a4407f3d4fbfc01c24b5e" class="m-doc">cnx_system_clock_now</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns a <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> corresponding to the current time on the system clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__clock.html#ga079e6751ba8eea3490cbce023eb6301f" class="m-doc">cnx_system_clock_min_time_point</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the minimum possible <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> able to be associated with the system clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__clock.html#ga532485105897eed7393550449745c7aa" class="m-doc">cnx_system_clock_max_time_point</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the maximum possible <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> able to be associated with the system clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__clock.html#ga39216fb7dcff92de3a0802683b6607aa" class="m-doc">CnxClockResolution</a> <a href="group__cnx__clock.html#ga10cf338ff67427288d0407722e7b6a99" class="m-doc">cnx_system_clock_resolution</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the resolution of the system clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="group__cnx__clock.html#ga1e3b1cf01ccc451fdb05562f331bce0f" class="m-doc">cnx_system_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the resolution of the system clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#gaba7dfa35a6a117f109eed893b4ba9cc7" class="m-doc">CnxTimePointLocale</a> <a href="group__cnx__clock.html#gadbc913903aadd83c2d2665a82ec7c765" class="m-doc">cnx_system_clock_locale</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the locale of the system clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__clock.html#ga90f795bc3bcdbc82937569e98f089d23" class="m-doc">cnx_high_resolution_clock_now</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns a <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> corresponding to the current time on the high resolution clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__clock.html#ga9f5e00d506fb8936ad5af42491a9ff3c" class="m-doc">cnx_high_resolution_clock_min_time_point</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the minimum possible <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> able to be associated with the high resolution clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__clock.html#gacef3aeeeabac51fa870a0dab0bcf5e92" class="m-doc">cnx_high_resolution_clock_max_time_point</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the maximum possible <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> able to be associated with the high resolution clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__clock.html#ga39216fb7dcff92de3a0802683b6607aa" class="m-doc">CnxClockResolution</a> <a href="group__cnx__clock.html#ga4858f473234ba92bcdf717d4efac8477" class="m-doc">cnx_high_resolution_clock_resolution</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the resolution of the high resolution clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="group__cnx__clock.html#ga735076df1ac79a3aa95fe41c1890d200" class="m-doc">cnx_high_resolution_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the resolution of the high resolution clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#gaba7dfa35a6a117f109eed893b4ba9cc7" class="m-doc">CnxTimePointLocale</a> <a href="group__cnx__clock.html#ga0ea4dc953e65326890e36c3c17f80c4b" class="m-doc">cnx_high_resolution_clock_locale</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the locale of the high resolution clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__clock.html#ga34000fc8b31b78bcc77c1d3810659e62" class="m-doc">cnx_utc_clock_now</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns a <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> corresponding to the current time on the UTC clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__clock.html#gaf2daee573314b3fea192aad569bab349" class="m-doc">cnx_utc_clock_min_time_point</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the minimum possible <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> able to be associated with the UTC clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__clock.html#gad03e2be7e78f480ea25586acaef54443" class="m-doc">cnx_utc_clock_max_time_point</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the maximum possible <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> able to be associated with the UTC clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__clock.html#ga39216fb7dcff92de3a0802683b6607aa" class="m-doc">CnxClockResolution</a> <a href="group__cnx__clock.html#ga833c7a76a9cc83fefe4ae56fb3501ee2" class="m-doc">cnx_utc_clock_resolution</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the resolution of the UTC clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="group__cnx__clock.html#gaca762f56d4b01851d32df0cbc029c172" class="m-doc">cnx_utc_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the resolution of the UTC clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#gaba7dfa35a6a117f109eed893b4ba9cc7" class="m-doc">CnxTimePointLocale</a> <a href="group__cnx__clock.html#gabf4c367d3cc94f086b8c54f7a3c6bf83" class="m-doc">cnx_utc_clock_locale</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the locale of the UTC clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__clock.html#ga7270b32b6046d6f66c17169f46a22e28" class="m-doc">cnx_local_clock_now</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns a <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> corresponding to the current time on the local clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__clock.html#gafda0837aeac4169b1a1983610ab05340" class="m-doc">cnx_local_clock_min_time_point</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the minimum possible <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> able to be associated with the local clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__clock.html#gab20b98af0859cae2c4be0c62d82ecbdf" class="m-doc">cnx_local_clock_max_time_point</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the maximum possible <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> able to be associated with the local clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__clock.html#ga39216fb7dcff92de3a0802683b6607aa" class="m-doc">CnxClockResolution</a> <a href="group__cnx__clock.html#gad796f32b0e85cd52ddf966181f61cdda" class="m-doc">cnx_local_clock_resolution</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the resolution of the local clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="group__cnx__clock.html#gae0393658a9d75913db0286aebf34cae2" class="m-doc">cnx_local_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the resolution of the local clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#gaba7dfa35a6a117f109eed893b4ba9cc7" class="m-doc">CnxTimePointLocale</a> <a href="group__cnx__clock.html#ga768353a21948f28d24140534749cba39" class="m-doc">cnx_local_clock_locale</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the locale of the local clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__clock.html#ga29fa17b918a80a5e4567ed7e59aed68b" class="m-doc">cnx_convert_utc_to_local_time</a>(</span><span class="m-doc-wrap"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> utc)</span>
+            </dt>
+            <dd>Converts the given <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> in UTC time to a <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> in local time.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__clock.html#ga537c383409c5286f30edd95d4ce9dd6d" class="m-doc">cnx_convert_local_time_to_utc</a>(</span><span class="m-doc-wrap"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> local_time)</span>
+            </dt>
+            <dd>Converts the given <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> in local time to a <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> in UTC time.</dd>
+          </dl>
+        </section>
+        <section id="var-members">
+          <h2><a href="#var-members">Variables</a></h2>
+          <dl class="m-doc">
+            <dt>
+              static <a href="group__cnx__def.html#ga045dd54932944d8830380f4596d64446" class="m-doc">let</a> <a href="group__cnx__clock.html#ga7e0002477635ce71aa3281229397a460" class="m-doc">cnx_system_clock</a>
+            </dt>
+            <dd>The system clock.</dd>
+            <dt>
+              static <a href="group__cnx__def.html#ga045dd54932944d8830380f4596d64446" class="m-doc">let</a> <a href="group__cnx__clock.html#ga0507d02d39f12248d77b1fc4836e215b" class="m-doc">cnx_high_resolution_clock</a>
+            </dt>
+            <dd>The high resolution clock This will be equivalent to <code>cnx_system_clock</code> if <code>CNX_NO_MONOTONIC_CLOCK</code> is true (in which case a monotonic clock is not supported on the being-compiled-for platform). Otherwise, it will be a monotonic clock equivalent to <code>cnx_steady_clock</code></dd>
+            <dt>
+              static <a href="group__cnx__def.html#ga045dd54932944d8830380f4596d64446" class="m-doc">let</a> <a href="group__cnx__clock.html#ga5ce0ad97c07dcb4485b8ea96d0ae4ecd" class="m-doc">cnx_utc_clock</a>
+            </dt>
+            <dd>The UTC clock.</dd>
+            <dt>
+              static <a href="group__cnx__def.html#ga045dd54932944d8830380f4596d64446" class="m-doc">let</a> <a href="group__cnx__clock.html#gab160207eded8ed7f08dcc7fe25c064c8" class="m-doc">cnx_local_clock</a>
+            </dt>
+            <dd>The local time clock.</dd>
+          </dl>
+        </section>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__clock.html#ga43d7e52c644206446679505c87c368ab" class="m-doc">CNX_NO_MONOTONIC_CLOCK</a></span>
+            </dt>
+            <dd>If <code>CNX_NO_MONOTONIC_CLOCK</code> is true, then either Cnx doesn&#x27;t support a monotonic clock on the being-compiled-for-platform, the being-compiled-for platform itself doesn&#x27;t, or both, and cnx_steady_clock and related functions are not available.</dd>
+          </dl>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

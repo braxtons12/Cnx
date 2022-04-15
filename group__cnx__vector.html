@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Collections &raquo; CnxVector module | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="group__collections.html">Collections</a> &raquo;</span>
+          CnxVector <span class="m-thin">module</span></h1>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li><a href="#autotoc_md17">Instantiation requirements:</a></li>
+            <li>
+              <a href="#autotoc_md18">Parameters</a>
+              <ul>
+                <li><a href="#autotoc_md19">Instantiation-Mode Parameters</a></li>
+                <li><a href="#autotoc_md20">Template Parameters</a></li>
+              </ul>
+            </li>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<p><code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> is a struct template for a type-safe dynamic-capacity array. It&#x27;s allocator aware, provides Cnx compatible random access iterators, and supports user-defined default constructors, copy-constructors, and destructors for its elements. It&#x27;s design is similar to both C++&#x27;s <code>std::vector</code> and Rust&#x27;s <code>std::vec::Vec</code>, but with slightly expanded functionality and semantics.</p><p><code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> has a small size optimization (SSO) that is user configurable. This allows for a compile-time configurable number of elements to be stored on the stack, before resorting to heap allocation, at the cost of <code>sizeof(CnxVector(T))</code> being larger than otherwise necessary. By default, this optimization allows for up to 8 elements to be stored on the stack. For information on how to configure this, see &quot;Template Parameters&quot; below.</p><p>Instantiations of <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> are already provided for builtin types like <code>i32</code> and some Cnx types, like <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>. Instantiating it for your own types is simple and requires minimal boiler-plate.</p><section id="autotoc_md17"><h2><a href="#autotoc_md17">Instantiation requirements:</a></h2><ol><li>a <code>typedef</code> of your type to provide an alphanumeric name for it. (for template and macro parameters)</li><li>a <code>typedef</code> for pointer to your type as <code><a href="group__cnx__def.html#ga7191be90cf98ca676e9ee986a5222ef2" class="m-doc">Ref(YourType)</a></code>, for use with the iterators.</li><li>a <code>typedef</code> for pointer to const your type as <code><a href="group__cnx__def.html#ga8ad8b8520603f26389c69fdc341ae80a" class="m-doc">ConstRef(YourType)</a></code>, for use with the iterators</li><li>Instantiations for Cnx iterators for the typedefs provided in (2) and (3)</li><li>Instantiation of <code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(T)</a></code> for your type</li></ol><p>We recommend two routes for providing instantiations for user-defined types, either:</p><ol><li>Provide the instantiation together with your type&#x27;s public interface and implementation OR</li><li>Provide it as a separate &quot;template instantiation&quot; .h/.c file pair</li></ol></section><section id="autotoc_md18"><h2><a href="#autotoc_md18">Parameters</a></h2><p><code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> takes several instantiation-time macro parameters, in addition to the instantiation-mode macro parameters required of all Cnx templates.</p><section id="autotoc_md19"><h3><a href="#autotoc_md19">Instantiation-Mode Parameters</a></h3><p>These signal to the implementation to instantiate the declarations, definitions, or both, for the template.</p><ol><li><code>VECTOR_DECL</code> (Optional) - Defining this to true signals to the implementation to declare the template instantiation when you include <code>&lt;<a href="Vector_8h.html" class="m-doc">Cnx/<wbr />Vector.h</a>&gt;</code>. This will instantiate any required type declarations and definitions and any required function declarations. No functions will be defined. This is optional (but signals intent explicitly) - If required template parameters are defined and <code>VECTOR_IMPL</code> is not, then this will be inferred as true (<code>1</code>) by default.</li><li><code>VECTOR_IMPL</code> - Defining this to true signals to the implementation to define the template instantiation when you include <code>&lt;<a href="Vector_8h.html" class="m-doc">Cnx/<wbr />Vector.h</a>&gt;</code>. This will instantiate any required function definitions. This is not required to be paired with <code>VECTOR_DECL</code> (you can declare the template without defining it), but it is eventually required to provide the definitions for the functions. If this instantiation-mode hasn&#x27;t been included in exactly one translation unit in your build, you will get linking errors due to the missing function definitions.</li></ol></section><section id="autotoc_md20"><h3><a href="#autotoc_md20">Template Parameters</a></h3><p>These provide the type or value parameters that the template is parameterized on to the template implementation. These should be <code>#define</code>d to their appropriate values.</p><ol><li><code>VECTOR_T</code> - The type to be stored in the vector (e.g. <code>u32</code> or <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>). This is required.</li><li><code>VECTOR_SMALL_OPT_CAPACITY</code> - This is the small-optimization capacity to be stored in the vector directly when the size is at or below this, instead of resorting to heap allocation. <code>0</code> is a valid value for this. This is optional, and if not provided will default to <code>CNX_VECTOR_DEFAULT_SHORT_OPT_CAPACITY</code> (which is defined as <code>8</code>). Heap allocations occurring after size exceeds <code>VECTOR_SMALL_OPT_CAPACITY</code> will follow the growth strategy of the collection.</li><li><code>VECTOR_DEFAULT_LONG_CAPACITY</code> - This is the initial capacity to be stored in the vector if <code>VECTOR_SMALL_OPT_CAPACITY</code> is defined as <code>0</code>. This is optional. If not provided and <code>VECTOR_SMALL_OPT_CAPACITY</code> is provided as <code>0</code>, this will default to <code>CNX_VECTOR_VECTOR_DEFAULT_LONG_CAPACITY</code> (which is defined as <code>16</code>). If <code>VECTOR_SMALL_OPT_CAPACITY</code> is defaulted or provided as greater than 0, this will not be used. Heap allocations occurring after size exceeds whichever of the two possible initial storage strategies are used will follow the growth strategy of the collection.</li></ol><p>Example of (1).</p><pre class="m-code"><span class="c1">// in `YourType.h`</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">YourType</span> <span class="p">{</span>
+ <span class="c1">// members</span>
+<span class="p">}</span> <span class="n">YourType</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="n">YourType</span><span class="o">*</span> <span class="nf">Ref</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+<span class="k">typedef</span> <span class="k">const</span> <span class="n">YourType</span><span class="o">*</span> <span class="nf">ConstRef</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+
+<span class="n">DeclCnxIterators</span><span class="p">(</span><span class="n">Ref</span><span class="p">(</span><span class="n">YourType</span><span class="p">));</span>
+<span class="n">DeclCnxIterators</span><span class="p">(</span><span class="n">ConstRef</span><span class="p">(</span><span class="n">YourType</span><span class="p">));</span>
+
+<span class="cp">#define OPTION_T YourType</span>
+<span class="cp">#define OPTION_DECL TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/Option.h&gt;</span><span class="cp"></span>
+<span class="cp">#undef OPTION_T</span>
+<span class="cp">#undef OPTION_DECL</span>
+
+<span class="c1">// define the template parameter, `VECTOR_T`</span>
+<span class="cp">#define VECTOR_T YourType</span>
+<span class="c1">// tell the template to instantiate the declarations</span>
+<span class="cp">#define VECTOR_DECL TRUE</span>
+<span class="c1">// `#undef`s all macro parameters after instantiating the template,</span>
+<span class="c1">// so they don&#39;t propagate around</span>
+<span class="cp">#define VECTOR_UNDEF_PARAMS TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/Vector.h&gt;</span><span class="cp"></span>
+
+<span class="c1">// the rest of your public interface...</span>
+
+<span class="c1">// in `YourType.c`</span>
+<span class="cp">#define OPTION_T YourType</span>
+<span class="cp">#define OPTION_IMPL TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/Option.h&gt;</span><span class="cp"></span>
+<span class="cp">#undef OPTION_T</span>
+<span class="cp">#undef OPTION_IMPL</span>
+
+<span class="c1">// define the template parameter, `VECTOR_T`</span>
+<span class="cp">#define VECTOR_T YourType</span>
+<span class="c1">// tell the template to instantiate the implementations</span>
+<span class="cp">#define VECTOR_IMPL TRUE</span>
+<span class="c1">// `#undef`s all macro parameters after instantiating the template,</span>
+<span class="c1">// so they don&#39;t propagate around</span>
+<span class="cp">#define VECTOR_UNDEF_PARAMS TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/Vector.h&gt;</span><span class="cp"></span>
+
+<span class="c1">// the rest of your implementation</span></pre><p>Example of (2):</p><pre class="m-code"><span class="c1">// in `YourType.h`</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">YourType</span> <span class="p">{</span>
+    <span class="c1">// members</span>
+<span class="p">}</span> <span class="n">YourType</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="n">YourType</span><span class="o">*</span> <span class="nf">Ref</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+<span class="k">typedef</span> <span class="k">const</span> <span class="n">YourType</span><span class="o">*</span> <span class="nf">ConstRef</span><span class="p">(</span><span class="n">YourType</span><span class="p">);</span>
+
+<span class="n">DeclCnxIterators</span><span class="p">(</span><span class="n">Ref</span><span class="p">(</span><span class="n">YourType</span><span class="p">));</span>
+<span class="n">DeclCnxIterators</span><span class="p">(</span><span class="n">ConstRef</span><span class="p">(</span><span class="n">YourType</span><span class="p">));</span>
+<span class="c1">// the rest of your public interface</span>
+
+<span class="c1">// in `CnxOptionYourType.h`</span>
+<span class="cp">#include</span> <span class="cpf">&quot;YourType.h&quot;</span><span class="cp"></span>
+<span class="cp">#define OPTION_T YourType</span>
+<span class="cp">#define OPTION_DECL TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/Option.h&gt;</span><span class="cp"></span>
+<span class="cp">#undef OPTION_T</span>
+<span class="cp">#undef OPTION_DECL</span>
+
+<span class="c1">// in `CnxOptionYourType.c`</span>
+<span class="cp">#include</span> <span class="cpf">&quot;CnxOptionYourType.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#define OPTION_T YourType</span>
+<span class="cp">#define OPTION_IMPL TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/Option.h&gt;</span><span class="cp"></span>
+<span class="cp">#undef OPTION_T</span>
+<span class="cp">#undef OPTION_IMPL</span>
+
+<span class="c1">// in `CnxVectorYourType.h`</span>
+<span class="cp">#include</span> <span class="cpf">&quot;YourType.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;CnxOptionYourType.h&quot;</span><span class="cp"></span>
+
+<span class="c1">// define the template parameter, `VECTOR_T`</span>
+<span class="cp">#define VECTOR_T YourType</span>
+<span class="c1">// tell the template to instantiate the declarations</span>
+<span class="cp">#define VECTOR_DECL TRUE</span>
+<span class="c1">// `#undef`s all macro parameters after instantiating the template,</span>
+<span class="c1">// so they don&#39;t propagate around</span>
+<span class="cp">#define VECTOR_UNDEF_PARAMS TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/Vector.h&gt;</span><span class="cp"></span>
+
+<span class="c1">// in `CnxVectorYourType.c`</span>
+<span class="cp">#include</span> <span class="cpf">&quot;CnxVectorYourType.h&quot;</span><span class="cp"></span>
+
+<span class="c1">// define the template parameter, `VECTOR_T`</span>
+<span class="cp">#define VECTOR_T YourType</span>
+<span class="c1">// tell the template to instantiate the implementations</span>
+<span class="cp">#define VECTOR_IMPL TRUE</span>
+<span class="c1">// `#undef`s all macro parameters after instantiating the template,</span>
+<span class="c1">// so they don&#39;t propagate around</span>
+<span class="cp">#define VECTOR_UNDEF_PARAMS TRUE</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/Vector.h&gt;</span><span class="cp"></span></pre><p>Then, somewhere else in your codebase, you can easily use the instantiation:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&quot;YourType.h&quot;</span><span class="cp"></span>
+<span class="c1">// if instantiation method (2)</span>
+<span class="cp">#include</span> <span class="cpf">&quot;CnxVectorYourType.h&quot;</span><span class="cp"></span>
+
+<span class="n">CnxVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">)</span> <span class="n">create_and_fill_your_type_vec</span><span class="p">(</span><span class="n">usize</span> <span class="n">num_elements</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">cnx_vector_new_with_capacity</span><span class="p">(</span><span class="n">YourType</span><span class="p">,</span> <span class="n">num_elements</span><span class="p">);</span>
+
+    <span class="n">cnx_vector_resize</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">num_elements</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">vec</span><span class="p">;</span>
+<span class="p">}</span></pre><p><code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> implements <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code>, but because of its generic type, can&#x27;t be automatically converted to its <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation, so we have to cast it explicitly:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&quot;Cnx/IO.h&quot;</span><span class="cp"></span>
+<span class="kt">void</span> <span class="nf">print_vec</span><span class="p">(</span><span class="k">const</span> <span class="n">CnxVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">)</span><span class="o">*</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">as_format_t</span><span class="p">(</span><span class="n">CnxVector</span><span class="p">(</span><span class="n">YourType</span><span class="p">),</span> <span class="o">*</span><span class="n">vec</span><span class="p">));</span>
+<span class="p">}</span></pre><aside class="m-note m-info"><h4>Note</h4><p><code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>&#x27;s <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation will always be a debug representation, eg: &quot;[size: X, capacity: Y, data_ptr: Q]&quot;, and never a printout of contained elements</p></aside></section></section>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>macro alias for a <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> containing <code>T</code>s</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga039924ef44577b87b58a14ed6a44b720" class="m-doc">CNX_VECTOR_DEFAULT_SHORT_OPT_CAPACITY</a></span>
+            </dt>
+            <dd>The default small-vector optimization capacity if not given as a template parameter.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadd124c9fe6cc8953ff50bb29cf725789" class="m-doc">CNX_VECTOR_DEFAULT_LONG_CAPACITY</a></span>
+            </dt>
+            <dd>The default heap-allocated capacity if not given as a template parameter.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gabbbf41ce4d6fe7a67e6ce643e29febec" class="m-doc">cnx_vector_new</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with defaulted associated functions and initial capacity.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab30bca5270a48f2f0f33d0a46535564b" class="m-doc">cnx_vector_new_with_allocator</a>(</span><span class="m-doc-wrap">T,
+              allocator)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with defaulted capacity and associated functions and provided memory allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga3c3068368eaffd392e8f2f5d815f041f" class="m-doc">cnx_vector_new_with_collection_data</a>(</span><span class="m-doc-wrap">T,
+              collection_data_ptr)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with defaulted capacity and provided associated functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga83867da6a5e6df88f170706b0fe01fcb" class="m-doc">cnx_vector_new_with_allocator_and_collection_data</a>(</span><span class="m-doc-wrap">T,
+              allocator,
+              collection_data_ptr)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with defaulted capacity and provided associated functions and memory allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac0bccd10d94137e90f0b80f784eb10c6" class="m-doc">cnx_vector_new_with_capacity</a>(</span><span class="m-doc-wrap">T,
+              capacity)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with <strong>at least</strong> the given capacity and defaulted associated functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4116cc6d2c4e21d7bd4a492d3bd53e92" class="m-doc">cnx_vector_new_with_capacity_and_allocator</a>(</span><span class="m-doc-wrap">T,
+              capacity,
+              allocator)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with <strong>at least</strong> the given capacity, defaulted associated functions, and provided memory allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad05f099e1829a2362ca2abee03cefb09" class="m-doc">cnx_vector_new_with_capacity_and_collection_data</a>(</span><span class="m-doc-wrap">T,
+              capacity,
+              collection_data_ptr)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with <strong>at least</strong> the given capacity and provided associated functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4cb0c20dcfe77db18ca78a7e59dd9b00" class="m-doc">cnx_vector_new_with_capacity_allocator_and_collection_data</a>(</span><span class="m-doc-wrap">T,
+              capacity,
+              allocator,
+              collection_data_ptr)</span>
+            </dt>
+            <dd>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with <strong>at least</strong> the given capacity and provided associated functions and memory allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga27ab9e315de7800b499caecb36379c34" class="m-doc">cnx_vector_clone</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Clones the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga74a0f4f50149ee36d0cb24ed1690bfc4" class="m-doc">cnx_vector_at_mut</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>Returns a mutable reference to the element at the given <code>index</code> into the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga908d64ca4b02cc6f80815fb74196bdf5" class="m-doc">cnx_vector_at</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>Returns a const reference to the element at the given <code>index</code> into the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga55e39869b80f0aa2819f3332c460f51f" class="m-doc">cnx_vector_front_mut</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a mutable reference to the first element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga146e7c94003770b700865400dbe6e277" class="m-doc">cnx_vector_front</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a const reference to the first element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4d55152faf551bc1c3b8bb1da734e8da" class="m-doc">cnx_vector_back_mut</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a mutable reference to the last element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga39ad262e0e5dca6688aba58019204cc6" class="m-doc">cnx_vector_back</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a const reference to the last element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5acaa4fd8a3352694ac260d2c4616156" class="m-doc">cnx_vector_data_mut</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a pointer to the mutable raw array containing the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>&#x27;s elements.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9132fe7bb983d1f9e0999452b4e4d9cf" class="m-doc">cnx_vector_data</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a pointer to the const raw array containing the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>&#x27;s elements.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9df367c5736c87c8e94e1774f8cd542e" class="m-doc">cnx_vector_is_empty</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns whether the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>is empty.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad6b6db1a36260aeeee1038593ba30f8c" class="m-doc">cnx_vector_is_full</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns whether the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> is full (size equals capacity)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga0c197586cc3364011f439968115e6be1" class="m-doc">cnx_vector_size</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the current size of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaeded0e1a9af3ab30d0d9f5be785ca1e4" class="m-doc">cnx_vector_max_size</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>Returns the maximum possible size of a <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> containing type <code>T</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab088668b2c8fcb1122b82a2a88292e94" class="m-doc">cnx_vector_capacity</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the current capacity of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga3b4d9e406707285ad154ada21eb3bdf2" class="m-doc">cnx_vector_reserve</a>(</span><span class="m-doc-wrap">self,
+              new_capacity)</span>
+            </dt>
+            <dd>Ensures enough memory to store at least <code>new_capacity</code> number of elements in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, reallocating if necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga0f3c1000ed39e10275e8f04ca30aa30c" class="m-doc">cnx_vector_resize</a>(</span><span class="m-doc-wrap">self,
+              new_size)</span>
+            </dt>
+            <dd>Resizes the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to <code>new_size</code> number of elements. If <code>new_size</code> is greater than the current size, this will allocate memory if necessary and default-construct new elements. If <code>new_size</code> is less than the current size, this will destruct <code>size - new_size</code> number of elements and, if <code>new_size</code> is less than the SSO capacity, deallocate memory.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5ca32274e1c47744f4b75419fde81c52" class="m-doc">cnx_vector_shrink_to_fit</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Shrinks the memory allocation for the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to match its current size.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5438520edacc15b0b4e56aa48f6fde9c" class="m-doc">cnx_vector_clear</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Clears the contents of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, destructing all of its elements.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1172753ff12a6633ec77fd018d488b9a" class="m-doc">cnx_vector_push_back</a>(</span><span class="m-doc-wrap">self,
+              element)</span>
+            </dt>
+            <dd>Appends the given element to the end of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, reallocating memory if necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaf60b54def1366b8afd1050a384295d4e" class="m-doc">cnx_vector_pop_back</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Removes the last element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> and removes it, if the size is greater than zero.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga8306834fdcec1970171f0d17fa7a22f4" class="m-doc">cnx_vector_insert</a>(</span><span class="m-doc-wrap">self,
+              element,
+              index)</span>
+            </dt>
+            <dd>Inserts the given element at the given index in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, moving elements backward in the vector if necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac8105cf1f94265c753e0fac95a238258" class="m-doc">cnx_vector_erase</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+            </dt>
+            <dd>Removes the element at the given index from the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, moving elements forward in the vector if necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gacacf3fecf011fe6b5b9d3466c294a8b9" class="m-doc">cnx_vector_erase_n</a>(</span><span class="m-doc-wrap">self,
+              index,
+              num_elements)</span>
+            </dt>
+            <dd>Removes <code>num_elements</code> elements from the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting with the element at <code>index</code>, and moving elements forward in the vector afterward, if necessary.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga99b17e311af5f965268018725546435b" class="m-doc">cnx_vector_free</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Frees the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, calling the element destructor on each element and freeing any allocated memory.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab0233700396bf88e0c7f09ee944440bb" class="m-doc">cnx_vector_begin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the beginning of the iteration (pointing at the beginning of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gada5c567e029ecf8f5accf3b8395998e6" class="m-doc">cnx_vector_end</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the end of the iteration (pointing at the end of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4155396a074386aaa958798da3c5a144" class="m-doc">cnx_vector_rbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the beginning of the reversed iteration (pointing at the end of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gabfc0c22b3eadd0ec599859165fd071de" class="m-doc">cnx_vector_rend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the end of the reversed iteration (pointing at the beginning of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga35ff6a5caa2eb49e317b5fa3bb8839fa" class="m-doc">cnx_vector_iterator_equals</a>(</span><span class="m-doc-wrap">first,
+              second)</span>
+            </dt>
+            <dd>Returns whether the given pair of iterators are equal (they belong to the same collection and point to the same element), IE: if <code>first == second</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga6a423b0550033b3f75115bf7857c9293" class="m-doc">cnx_vector_cbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the beginning of the iteration (pointing at the beginning of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae42089199071a8c3458b1bd0fd440bf6" class="m-doc">cnx_vector_cend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the end of the iteration (pointing at the end of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae9541de20df9860089276701dc5ab930" class="m-doc">cnx_vector_crbegin</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the beginning of the reversed iteration (pointing at the end of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga78784027638224ec059ffe4651432294" class="m-doc">cnx_vector_crend</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the end of the reversed iteration (pointing at the beginning of the vector)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaae474d8c45aa01ecd742668dab60b399" class="m-doc">cnx_vector_const_iterator_equals</a>(</span><span class="m-doc-wrap">first,
+              second)</span>
+            </dt>
+            <dd>Returns whether the given pair of const iterators are equal (they belong to the same collection and point to the same element), IE: if <code>first == second</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga62efe732d707ad26fa0e62b2376d9040" class="m-doc">cnx_vector_scoped</a>(</span><span class="m-doc-wrap">T)</span>
+            </dt>
+            <dd>declare a <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> variable with this attribute to have <code>Cnx_vector_free</code> automatically called on it at scope end</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Define documentation</h2>
+          <section class="m-doc-details" id="ga20ef1dda4889be96e378b40dfe573619"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga20ef1dda4889be96e378b40dfe573619" class="m-doc-self">CnxVector</a>(</span><span class="m-doc-wrap">T)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>macro alias for a <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> containing <code>T</code>s</p>
+<p><code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> is a bounds-safe, allocator aware, generic dynamic-capacity array type. It is implemented as a struct template, which enables 100% type safety, while providing abstractions that allow type agnostic use. It has greatly increased ergonomics over manual array management and provides many useful features such as random access iterators and optional scoped destruction.</p><p>Example:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&lt;Cnx/Vector.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/IO.h&gt;</span><span class="cp"></span>
+
+<span class="c1">// create a `CnxVector(i32)` with default allocator, element default-constructor, and</span>
+<span class="n">element</span>
+<span class="c1">// destructor</span>
+<span class="n">let_mut</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">cnx_vector_new</span><span class="p">(</span><span class="n">i32</span><span class="p">);</span>
+
+<span class="c1">// append 10 elements to the vector</span>
+<span class="n">ranged_for</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">cnx_vector_push_back</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// prints information about `vec` to `stdout`</span>
+<span class="c1">// because `CnxVector(T)` is generic, and thus can&#39;t be used in a `_Generic` match arm prior</span>
+<span class="n">to</span>
+<span class="c1">// the type&#39;s instantiation, we have to explicitly cast to the `CnxFormat` Trait to get</span>
+<span class="c1">// `CnxVector(T)`&#39;s implementation of the Trait</span>
+<span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">Cnx_as_format_t</span><span class="p">(</span><span class="n">CnxVector</span><span class="p">(</span><span class="n">i32</span><span class="p">),</span> <span class="n">vec</span><span class="p">));</span>
+<span class="c1">// prints `vec`&#39;s elements to `stdout`</span>
+<span class="n">foreach</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">elem</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">cnx_vector_scoped</span><span class="p">(</span><span class="n">i32</span><span class="p">)</span> <span class="n">vec2</span> <span class="o">=</span> <span class="n">cnx_vector_new</span><span class="p">(</span><span class="n">i32</span><span class="p">);</span>
+    <span class="n">foreach</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cnx_vector_push_back</span><span class="p">(</span><span class="n">vec2</span><span class="p">,</span> <span class="n">elem</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1">// `vec2` is freed here</span></pre><p>Like other Cnx collections, <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> provides its type-agnostic usage through a vtable pointer contained in the struct, and provides macros which wrap the usage of the vtable, making access simpler. If you prefer to not use this method of access, you can call the typed functions directly by in-fixing the contained type in the associated function name. IE: for <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(i32)</a></code>, <code>vec</code>, the equivalent function call for <code><a href="group__cnx__vector.html#ga1172753ff12a6633ec77fd018d488b9a" class="m-doc">cnx_<wbr />vector_<wbr />push_<wbr />back(vec, element)</a></code> would be <code>cnx_vector_i32_push_back(&amp;vec, element)</code></p>
+          </div></section>
+          <section class="m-doc-details" id="ga039924ef44577b87b58a14ed6a44b720"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga039924ef44577b87b58a14ed6a44b720" class="m-doc-self">CNX_VECTOR_DEFAULT_SHORT_OPT_CAPACITY</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>The default small-vector optimization capacity if not given as a template parameter.</p>
+          </div></section>
+          <section class="m-doc-details" id="gadd124c9fe6cc8953ff50bb29cf725789"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadd124c9fe6cc8953ff50bb29cf725789" class="m-doc-self">CNX_VECTOR_DEFAULT_LONG_CAPACITY</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>The default heap-allocated capacity if not given as a template parameter.</p>
+          </div></section>
+          <section class="m-doc-details" id="gabbbf41ce4d6fe7a67e6ce643e29febec"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gabbbf41ce4d6fe7a67e6ce643e29febec" class="m-doc-self">cnx_vector_new</a>(</span><span class="m-doc-wrap">T)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with defaulted associated functions and initial capacity.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> instantiation to create</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with:</p><ol><li>defaulted initial capacity</li><li>defaulted associated element default-constructor</li><li>defaulted associated element copy-constructor</li><li>defaulted associated element destructor</li><li>defaulted associated memory allocator</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="gab30bca5270a48f2f0f33d0a46535564b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab30bca5270a48f2f0f33d0a46535564b" class="m-doc-self">cnx_vector_new_with_allocator</a>(</span><span class="m-doc-wrap">T,
+              allocator)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with defaulted capacity and associated functions and provided memory allocator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to use for memory allocations</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with:</p><ol><li>defaulted initial capacity</li><li>defaulted associated element default-constructor</li><li>defaulted associated element copy-constructor</li><li>defaulted element destructor</li><li>user-provided memory allocator</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="ga3c3068368eaffd392e8f2f5d815f041f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga3c3068368eaffd392e8f2f5d815f041f" class="m-doc-self">cnx_vector_new_with_collection_data</a>(</span><span class="m-doc-wrap">T,
+              collection_data_ptr)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with defaulted capacity and provided associated functions.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>collection_data_ptr</td>
+                  <td>- The <code><a href="group__collections.html#gae797ce56fe4e9867552c9f9229e33303" class="m-doc">CnxCollectionData(CollectionType)</a></code> containing the element default-constructor, element copy-constructor, element destructor, and memory allocator to use</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with:</p><ol><li>defaulted initial capacity</li><li>possibly user-provided element default-constructor</li><li>possibly user-provided associated element copy-constructor</li><li>possibly user-provided element destructor</li><li>user-provided memory allocator</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="ga83867da6a5e6df88f170706b0fe01fcb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga83867da6a5e6df88f170706b0fe01fcb" class="m-doc-self">cnx_vector_new_with_allocator_and_collection_data</a>(</span><span class="m-doc-wrap">T,
+              allocator,
+              collection_data_ptr)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with defaulted capacity and provided associated functions and memory allocator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to use for memory allocations</td>
+                </tr>
+                <tr>
+                  <td>collection_data_ptr</td>
+                  <td>- The <code><a href="group__collections.html#gae797ce56fe4e9867552c9f9229e33303" class="m-doc">CnxCollectionData(CollectionType)</a></code> containing the element default-constructor, element copy-constructor, element destructor, and memory allocator to use</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with:</p><ol><li>defaulted initial capacity</li><li>possibly user-provided element default-constructor</li><li>possibly user-provided associated element copy-constructor</li><li>possibly user-provided element destructor</li><li>user-provided memory allocator</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="gac0bccd10d94137e90f0b80f784eb10c6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac0bccd10d94137e90f0b80f784eb10c6" class="m-doc-self">cnx_vector_new_with_capacity</a>(</span><span class="m-doc-wrap">T,
+              capacity)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with <strong>at least</strong> the given capacity and defaulted associated functions.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>capacity</td>
+                  <td>- The initial capacity of the vector</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with:</p><ol><li>given initial capacity</li><li>defaulted associated element default-constructor</li><li>defaulted associated element copy-constructor</li><li>defaulted associated element destructor</li><li>defaulted memory allocator</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="ga4116cc6d2c4e21d7bd4a492d3bd53e92"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4116cc6d2c4e21d7bd4a492d3bd53e92" class="m-doc-self">cnx_vector_new_with_capacity_and_allocator</a>(</span><span class="m-doc-wrap">T,
+              capacity,
+              allocator)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with <strong>at least</strong> the given capacity, defaulted associated functions, and provided memory allocator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>capacity</td>
+                  <td>- The initial capacity of the vector</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to use for memory allocations</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with:</p><ol><li>given initial capacity</li><li>defaulted associated element default-constructor</li><li>defaulted associated element copy-constructor</li><li>defaulted associated element destructor</li><li>defaulted memory allocator</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="gad05f099e1829a2362ca2abee03cefb09"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad05f099e1829a2362ca2abee03cefb09" class="m-doc-self">cnx_vector_new_with_capacity_and_collection_data</a>(</span><span class="m-doc-wrap">T,
+              capacity,
+              collection_data_ptr)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with <strong>at least</strong> the given capacity and provided associated functions.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>capacity</td>
+                  <td>- The initial capacity of the vector</td>
+                </tr>
+                <tr>
+                  <td>collection_data_ptr</td>
+                  <td>- The <code><a href="group__collections.html#gae797ce56fe4e9867552c9f9229e33303" class="m-doc">CnxCollectionData(CollectionType)</a></code> containing the element default-constructor, element copy-constructor, element destructor, and memory allocator to use</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with:</p><ol><li>given initial capacity</li><li>possibly user-provided associated element default-constructor</li><li>possibly user-provided associated element copy-constructor</li><li>possibly user-provided associated element destructor</li><li>user-provided memory allocator</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="ga4cb0c20dcfe77db18ca78a7e59dd9b00"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4cb0c20dcfe77db18ca78a7e59dd9b00" class="m-doc-self">cnx_vector_new_with_capacity_allocator_and_collection_data</a>(</span><span class="m-doc-wrap">T,
+              capacity,
+              allocator,
+              collection_data_ptr)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with <strong>at least</strong> the given capacity and provided associated functions and memory allocator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> instantiation to create</td>
+                </tr>
+                <tr>
+                  <td>capacity</td>
+                  <td>- The initial capacity of the vector</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to use for memory allocations</td>
+                </tr>
+                <tr>
+                  <td>collection_data_ptr</td>
+                  <td>- The <code><a href="group__collections.html#gae797ce56fe4e9867552c9f9229e33303" class="m-doc">CnxCollectionData(CollectionType)</a></code> containing the element default-constructor, element copy-constructor, element destructor, and memory allocator to use</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> with:</p><ol><li>given initial capacity</li><li>possibly user-provided associated element default-constructor</li><li>possibly user-provided associated element copy-constructor</li><li>possibly user-provided associated element destructor</li><li>user-provided memory allocator</li></ol>
+          </div></section>
+          <section class="m-doc-details" id="ga27ab9e315de7800b499caecb36379c34"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga27ab9e315de7800b499caecb36379c34" class="m-doc-self">cnx_vector_clone</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Clones the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to clone</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a clone of the given vector</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a deep copy of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> calling the associated copy constructor for each element stored in it.</p><aside class="m-note m-info"><h4>Note</h4><p>Requires that a copy constructor is defined for the elements contained in the vector, either the default one provided by the implementation, or a user-defined one. If it isn&#x27;t provided or is explicitly provided as <code>nullptr</code> when creating the <code><a href="group__collections.html#gae797ce56fe4e9867552c9f9229e33303" class="m-doc">CnxCollectionData(CollectionType)</a></code> associated with this vector, this <strong>may</strong> trigger a compiler error on clang, and will always trigger a runtime assert for all compilers</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga74a0f4f50149ee36d0cb24ed1690bfc4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga74a0f4f50149ee36d0cb24ed1690bfc4" class="m-doc-self">cnx_vector_at_mut</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a mutable reference to the element at the given <code>index</code> into the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get an element from</td>
+                </tr>
+                <tr>
+                  <td>index</td>
+                  <td>- The index of the desired element</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a mutable reference to the element at the given index</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga908d64ca4b02cc6f80815fb74196bdf5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga908d64ca4b02cc6f80815fb74196bdf5" class="m-doc-self">cnx_vector_at</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a const reference to the element at the given <code>index</code> into the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get an element from</td>
+                </tr>
+                <tr>
+                  <td>index</td>
+                  <td>- The index of the desired element</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a const reference to the element at the given index</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga55e39869b80f0aa2819f3332c460f51f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga55e39869b80f0aa2819f3332c460f51f" class="m-doc-self">cnx_vector_front_mut</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a mutable reference to the first element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get the first element from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a mutable reference to the first element</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga146e7c94003770b700865400dbe6e277"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga146e7c94003770b700865400dbe6e277" class="m-doc-self">cnx_vector_front</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a const reference to the first element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get the first element from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a const reference to the first element</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga4d55152faf551bc1c3b8bb1da734e8da"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4d55152faf551bc1c3b8bb1da734e8da" class="m-doc-self">cnx_vector_back_mut</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a mutable reference to the last element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get the last element from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a mutable reference to the last element</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga39ad262e0e5dca6688aba58019204cc6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga39ad262e0e5dca6688aba58019204cc6" class="m-doc-self">cnx_vector_back</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a const reference to the last element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get the last element from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a const reference to the last element</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga5acaa4fd8a3352694ac260d2c4616156"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5acaa4fd8a3352694ac260d2c4616156" class="m-doc-self">cnx_vector_data_mut</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a pointer to the mutable raw array containing the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>&#x27;s elements.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get the raw array from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a pointer to the raw array</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga9132fe7bb983d1f9e0999452b4e4d9cf"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9132fe7bb983d1f9e0999452b4e4d9cf" class="m-doc-self">cnx_vector_data</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a pointer to the const raw array containing the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>&#x27;s elements.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get the raw array from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a pointer to the raw array</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga9df367c5736c87c8e94e1774f8cd542e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9df367c5736c87c8e94e1774f8cd542e" class="m-doc-self">cnx_vector_is_empty</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns whether the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>is empty.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to check for emptiness</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if empty, <code>false</code> otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gad6b6db1a36260aeeee1038593ba30f8c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad6b6db1a36260aeeee1038593ba30f8c" class="m-doc-self">cnx_vector_is_full</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns whether the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> is full (size equals capacity)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to check for fullness</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if full, <code>false</code> otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga0c197586cc3364011f439968115e6be1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga0c197586cc3364011f439968115e6be1" class="m-doc-self">cnx_vector_size</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns the current size of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get the size of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the size of the <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaeded0e1a9af3ab30d0d9f5be785ca1e4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaeded0e1a9af3ab30d0d9f5be785ca1e4" class="m-doc-self">cnx_vector_max_size</a>(</span><span class="m-doc-wrap">T)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns the maximum possible size of a <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> containing type <code>T</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> instantiation</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The maximum possible size</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gab088668b2c8fcb1122b82a2a88292e94"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab088668b2c8fcb1122b82a2a88292e94" class="m-doc-self">cnx_vector_capacity</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns the current capacity of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get the capacity of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the capacity of the <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga3b4d9e406707285ad154ada21eb3bdf2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga3b4d9e406707285ad154ada21eb3bdf2" class="m-doc-self">cnx_vector_reserve</a>(</span><span class="m-doc-wrap">self,
+              new_capacity)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Ensures enough memory to store at least <code>new_capacity</code> number of elements in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, reallocating if necessary.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to reserve memory for</td>
+                </tr>
+                <tr>
+                  <td>new_capacity</td>
+                  <td>- The desired minimum number of storable elements</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga0f3c1000ed39e10275e8f04ca30aa30c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga0f3c1000ed39e10275e8f04ca30aa30c" class="m-doc-self">cnx_vector_resize</a>(</span><span class="m-doc-wrap">self,
+              new_size)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Resizes the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to <code>new_size</code> number of elements. If <code>new_size</code> is greater than the current size, this will allocate memory if necessary and default-construct new elements. If <code>new_size</code> is less than the current size, this will destruct <code>size - new_size</code> number of elements and, if <code>new_size</code> is less than the SSO capacity, deallocate memory.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to resize</td>
+                </tr>
+                <tr>
+                  <td>new_size</td>
+                  <td>- The desired size of the <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga5ca32274e1c47744f4b75419fde81c52"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5ca32274e1c47744f4b75419fde81c52" class="m-doc-self">cnx_vector_shrink_to_fit</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Shrinks the memory allocation for the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to match its current size.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to shrink</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga5438520edacc15b0b4e56aa48f6fde9c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5438520edacc15b0b4e56aa48f6fde9c" class="m-doc-self">cnx_vector_clear</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Clears the contents of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, destructing all of its elements.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to clear</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga1172753ff12a6633ec77fd018d488b9a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1172753ff12a6633ec77fd018d488b9a" class="m-doc-self">cnx_vector_push_back</a>(</span><span class="m-doc-wrap">self,
+              element)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Appends the given element to the end of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, reallocating memory if necessary.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to append to</td>
+                </tr>
+                <tr>
+                  <td>element</td>
+                  <td>- The element to append</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaf60b54def1366b8afd1050a384295d4e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaf60b54def1366b8afd1050a384295d4e" class="m-doc-self">cnx_vector_pop_back</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Removes the last element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> and removes it, if the size is greater than zero.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get the last element from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code><a href="group__cnx__option.html#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some(T)</a></code> if size &gt; 0, otherwise <code><a href="group__cnx__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga8306834fdcec1970171f0d17fa7a22f4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga8306834fdcec1970171f0d17fa7a22f4" class="m-doc-self">cnx_vector_insert</a>(</span><span class="m-doc-wrap">self,
+              element,
+              index)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Inserts the given element at the given index in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, moving elements backward in the vector if necessary.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to insert into</td>
+                </tr>
+                <tr>
+                  <td>element</td>
+                  <td>- The element to insert</td>
+                </tr>
+                <tr>
+                  <td>index</td>
+                  <td>- The index at which to insert <code>element</code></td>
+                </tr>
+              </tbody>
+            </table>
+<aside class="m-note m-info"><h4>Note</h4><p>If <code>index</code> is past the end of the <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> (<code>index</code> &gt; size), subsequent behavior of the collection is undefined</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="gac8105cf1f94265c753e0fac95a238258"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gac8105cf1f94265c753e0fac95a238258" class="m-doc-self">cnx_vector_erase</a>(</span><span class="m-doc-wrap">self,
+              index)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Removes the element at the given index from the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, moving elements forward in the vector if necessary.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to remove an element from</td>
+                </tr>
+                <tr>
+                  <td>index</td>
+                  <td>- The index of the element to remove</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gacacf3fecf011fe6b5b9d3466c294a8b9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gacacf3fecf011fe6b5b9d3466c294a8b9" class="m-doc-self">cnx_vector_erase_n</a>(</span><span class="m-doc-wrap">self,
+              index,
+              num_elements)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Removes <code>num_elements</code> elements from the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting with the element at <code>index</code>, and moving elements forward in the vector afterward, if necessary.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to remove elements from</td>
+                </tr>
+                <tr>
+                  <td>index</td>
+                  <td>- The index to begin removal at</td>
+                </tr>
+                <tr>
+                  <td>num_elements</td>
+                  <td>- The number of elements to remove from the vector</td>
+                </tr>
+              </tbody>
+            </table>
+<aside class="m-note m-info"><h4>Note</h4><p>The given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> must contain the specified number of elements within the range [index, size). IE: <code>index + num_elements</code> must be strictly less than the current size of the vector</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga99b17e311af5f965268018725546435b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga99b17e311af5f965268018725546435b" class="m-doc-self">cnx_vector_free</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Frees the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, calling the element destructor on each element and freeing any allocated memory.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to free</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gab0233700396bf88e0c7f09ee944440bb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab0233700396bf88e0c7f09ee944440bb" class="m-doc-self">cnx_vector_begin</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the beginning of the iteration (pointing at the beginning of the vector)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the beginning of the vector</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gada5c567e029ecf8f5accf3b8395998e6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gada5c567e029ecf8f5accf3b8395998e6" class="m-doc-self">cnx_vector_end</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the end of the iteration (pointing at the end of the vector)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the end of the vector</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga4155396a074386aaa958798da3c5a144"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4155396a074386aaa958798da3c5a144" class="m-doc-self">cnx_vector_rbegin</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the beginning of the reversed iteration (pointing at the end of the vector)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the beginning of the reversed vector</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gabfc0c22b3eadd0ec599859165fd071de"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gabfc0c22b3eadd0ec599859165fd071de" class="m-doc-self">cnx_vector_rend</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code>CnxRandomAccessIterator</code> into the mutable iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the end of the reversed iteration (pointing at the beginning of the vector)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the end of the reversed vector</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga35ff6a5caa2eb49e317b5fa3bb8839fa"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga35ff6a5caa2eb49e317b5fa3bb8839fa" class="m-doc-self">cnx_vector_iterator_equals</a>(</span><span class="m-doc-wrap">first,
+              second)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns whether the given pair of iterators are equal (they belong to the same collection and point to the same element), IE: if <code>first == second</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">first</td>
+                  <td>- The LHS iterator of the equality check</td>
+                </tr>
+                <tr>
+                  <td>second</td>
+                  <td>- The RHS iterator of the equality check</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if they are equal, <code>false</code> otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga6a423b0550033b3f75115bf7857c9293"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga6a423b0550033b3f75115bf7857c9293" class="m-doc-self">cnx_vector_cbegin</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the beginning of the iteration (pointing at the beginning of the vector)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the beginning of the vector</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gae42089199071a8c3458b1bd0fd440bf6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae42089199071a8c3458b1bd0fd440bf6" class="m-doc-self">cnx_vector_cend</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the end of the iteration (pointing at the end of the vector)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the end of the vector</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gae9541de20df9860089276701dc5ab930"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae9541de20df9860089276701dc5ab930" class="m-doc-self">cnx_vector_crbegin</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the beginning of the reversed iteration (pointing at the end of the vector)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the beginning of the reversed vector</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga78784027638224ec059ffe4651432294"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga78784027638224ec059ffe4651432294" class="m-doc-self">cnx_vector_crend</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code>CnxRandomAccessIterator</code> into the const iteration of the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code>, starting at the end of the reversed iteration (pointing at the beginning of the vector)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get an iterator to</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a random access iterator at the end of the reversed vector</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaae474d8c45aa01ecd742668dab60b399"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaae474d8c45aa01ecd742668dab60b399" class="m-doc-self">cnx_vector_const_iterator_equals</a>(</span><span class="m-doc-wrap">first,
+              second)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns whether the given pair of const iterators are equal (they belong to the same collection and point to the same element), IE: if <code>first == second</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">first</td>
+                  <td>- The LHS iterator of the equality check</td>
+                </tr>
+                <tr>
+                  <td>second</td>
+                  <td>- The RHS iterator of the equality check</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga62efe732d707ad26fa0e62b2376d9040"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga62efe732d707ad26fa0e62b2376d9040" class="m-doc-self">cnx_vector_scoped</a>(</span><span class="m-doc-wrap">T)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>declare a <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> variable with this attribute to have <code>Cnx_vector_free</code> automatically called on it at scope end</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>- The element type of the <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> instantiation</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

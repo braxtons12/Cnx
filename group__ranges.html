@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Ranges module | C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
+  <title>Ranges module | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -13,7 +13,7 @@
 <header><nav id="navigation">
   <div class="m-container">
     <div class="m-row">
-      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">C2nxt <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C and C2x</span></a>
       <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
         <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
           <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
@@ -54,42 +54,42 @@
             </li>
           </ul>
         </nav>
-<p>C2nxt Ranges provides a &quot;struct template&quot; enabling a lazy, collection-agnostic way to view, filter, modify, and reference a collection&#x27;s elements.</p><p>Ranges is one of the C2nxt features that relies most heavily on GNU C extensions (currently), in particular, <code>__auto_type</code> and statement expressions. It would benefit the most from C2x standardization of <code>auto</code> and lambdas.</p><p>Requires:</p><ol><li>A C2nxt compatible collection.</li><li><code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> has been fully instantiated for the type contained in your collection (<code>DeclStdRange(T)</code> has been used and is in scope, and <code>ImplStdRange(T)</code> has been used in a translation unit that will be linked into the final binary).</li></ol><p>A C2nxt compatible collection provides:</p><ol><li>A vtable pointer member variable <code>m_vtable</code> which contains function pointers to the collection&#x27;s associated functions.</li><li>Some category of C2nxt compatible iterators (eg: <code><a href="group__iterators.html#ga6f81be5154c35a8da1ac730d26040155" class="m-doc">StdForwardIterator(Ref(T))</a></code>).</li><li><p>Functions to return begin and end iterators, named <code>begin</code> and <code>end</code>, respectively, in <code>m_vtable</code>. They should take the signature</p><pre>YourIteratorCategory(Ref(T)) (*const begin)(YourCollectionType* restrict self);
+<p>Cnx Ranges provides a &quot;struct template&quot; enabling a lazy, collection-agnostic way to view, filter, modify, and reference a collection&#x27;s elements.</p><p>Ranges is one of the Cnx features that relies most heavily on GNU C extensions (currently), in particular, <code>__auto_type</code> and statement expressions. It would benefit the most from C2x standardization of <code>auto</code> and lambdas.</p><p>Requires:</p><ol><li>A Cnx compatible collection.</li><li><code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> has been fully instantiated for the type contained in your collection (<code>&lt;C2nxt/Range.h&gt;</code> has been included and in scope with <code>RANGE_T</code> defined to the type and and <code>RANGE_DECL</code> defined to <code>TRUE</code>, and it has been included in exactly one translation unit in your binary with <code>RANGE_T</code> defined to the type and <code>RANGE_IMPL</code> defined to true).</li></ol><p>A Cnx compatible collection provides:</p><ol><li>A vtable pointer member variable <code>m_vtable</code> which contains function pointers to the collection&#x27;s associated functions.</li><li>Some category of Cnx compatible iterators (eg: <code><a href="group__iterators.html#gaa667d63f099a5e6df037c865d90c56a6" class="m-doc">CnxForwardIterator(Ref(T))</a></code>).</li><li><p>Functions to return begin and end iterators, named <code>begin</code> and <code>end</code>, respectively, in <code>m_vtable</code>. They should take the signature</p><pre>YourIteratorCategory(Ref(T)) (*const begin)(YourCollectionType* restrict self);
 YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
-</pre><p>If these are met, your collection can be used with <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> and its abstractions.</p></li></ol><p>Example usage of <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code>:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdDef.h&gt;</span><span class="cp"></span>
+</pre><p>If these are met, your collection can be used with <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> and its abstractions.</p></li></ol><p>Example usage of <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code>:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&lt;Cnx/Def.h&gt;</span><span class="cp"></span>
 
 <span class="cp">#define VECTOR_INCLUDE_DEFAULT_INSTANTIATIONS TRUE</span>
-<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdVector.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/Vector.h&gt;</span><span class="cp"></span>
 <span class="cp">#undef VECTOR_INCLUDE_DEFAULT_INSTANTIATIONS</span>
 
 <span class="cp">#define RANGE_INCLUDE_DEFAULT_INSTANTIATIONS TRUE</span>
-<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdRange.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/Range.h&gt;</span><span class="cp"></span>
 <span class="cp">#undef RANGE_INCLUDE_DEFAULT_INSTANTIATIONS</span>
 
-<span class="cp">#include</span> <span class="cpf">&lt;C2nxt/StdIO.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/IO.h&gt;</span><span class="cp"></span>
 
-<span class="c1">// example function to pass to std_transform, multiplies all elements by 3</span>
+<span class="c1">// example function to pass to cnx_transform, multiplies all elements by 3</span>
 <span class="kt">void</span> <span class="nf">transform</span><span class="p">(</span><span class="n">u32</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">elem</span><span class="p">)</span> <span class="p">{</span>
     <span class="p">(</span><span class="o">*</span><span class="n">elem</span><span class="p">)</span> <span class="o">*=</span> <span class="mi">3</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="c1">// example function to pass to std_filter, hides odd elements from view</span>
+<span class="c1">// example function to pass to cnx_filter, hides odd elements from view</span>
 <span class="kt">bool</span> <span class="nf">filter</span><span class="p">(</span><span class="k">const</span> <span class="n">u32</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">elem</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="o">*</span><span class="n">elem</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="c1">// example function to pass to std_accumulate, sums all elements</span>
+<span class="c1">// example function to pass to cnx_accumulate, sums all elements</span>
 <span class="n">u32</span> <span class="nf">accumulate</span><span class="p">(</span><span class="k">const</span> <span class="n">u32</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">current</span><span class="p">,</span> <span class="k">const</span> <span class="n">u32</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">elem</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="p">(</span><span class="o">*</span><span class="n">current</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="o">*</span><span class="n">elem</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">let_mut</span> <span class="n">std_vector_scoped</span><span class="p">(</span><span class="n">u32</span><span class="p">)</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">std_vector_new</span><span class="p">(</span><span class="n">u32</span><span class="p">);</span>
+    <span class="n">let_mut</span> <span class="n">cnx_vector_scoped</span><span class="p">(</span><span class="n">u32</span><span class="p">)</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">cnx_vector_new</span><span class="p">(</span><span class="n">u32</span><span class="p">);</span>
     <span class="n">ranged_for</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0U</span><span class="p">,</span> <span class="mi">10U</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">std_vector_push_back</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+        <span class="n">cnx_vector_push_back</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
     <span class="p">}</span>
 
-    <span class="n">let_mut</span> <span class="n">range</span> <span class="o">=</span> <span class="n">std_range_from</span><span class="p">(</span><span class="n">u32</span><span class="p">,</span> <span class="n">vec</span><span class="p">);</span>
+    <span class="n">let_mut</span> <span class="n">range</span> <span class="o">=</span> <span class="n">cnx_range_from</span><span class="p">(</span><span class="n">u32</span><span class="p">,</span> <span class="n">vec</span><span class="p">);</span>
 
     <span class="c1">// prints the elements of `range` (thus the elements of `vec`),</span>
     <span class="c1">// with a newline after each element</span>
@@ -100,7 +100,7 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
 
     <span class="c1">// transform the elements with `transform`</span>
     <span class="c1">// then filter them out of the view of the created range `range2` `with `filter`</span>
-    <span class="n">let_mut</span> <span class="n">range2</span> <span class="o">=</span> <span class="n">std_range_transform_then_filter</span><span class="p">(</span><span class="n">range</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="n">filter</span><span class="p">);</span>
+    <span class="n">let_mut</span> <span class="n">range2</span> <span class="o">=</span> <span class="n">cnx_range_transform_then_filter</span><span class="p">(</span><span class="n">range</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="n">filter</span><span class="p">);</span>
     <span class="c1">// print the elements in `range2`</span>
     <span class="c1">//(thus the elements of `vec` `range2` still sees after `filter`),</span>
     <span class="c1">// followed by a newline</span>
@@ -111,7 +111,7 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
 
     <span class="c1">// copy the elements viewed by range (thus the elements in `vec`)</span>
     <span class="c1">// into a new vector `vec2`</span>
-    <span class="n">let_mut</span> <span class="n">std_vector_scoped</span><span class="p">(</span><span class="n">u32</span><span class="p">)</span> <span class="n">vec2</span> <span class="o">=</span> <span class="n">std_range_collect</span><span class="p">(</span><span class="n">u32</span><span class="p">,</span> <span class="n">range</span><span class="p">);</span>
+    <span class="n">let_mut</span> <span class="n">cnx_vector_scoped</span><span class="p">(</span><span class="n">u32</span><span class="p">)</span> <span class="n">vec2</span> <span class="o">=</span> <span class="n">cnx_range_collect</span><span class="p">(</span><span class="n">u32</span><span class="p">,</span> <span class="n">range</span><span class="p">);</span>
     <span class="c1">// print the elements of `vec`</span>
     <span class="c1">// you&#39;ll see multiples of 3 from 0 thru 27</span>
     <span class="n">foreach</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
@@ -125,7 +125,7 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
     <span class="p">}</span>
 
     <span class="c1">// &quot;accumulates&quot; (in this case, sums), the elements in `vec2`</span>
-    <span class="n">let</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">std_accumulate</span><span class="p">(</span><span class="n">u32</span><span class="p">,</span> <span class="n">vec2</span><span class="p">,</span> <span class="n">accumulate</span><span class="p">)</span>
+    <span class="n">let</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">cnx_accumulate</span><span class="p">(</span><span class="n">u32</span><span class="p">,</span> <span class="n">vec2</span><span class="p">,</span> <span class="n">accumulate</span><span class="p">)</span>
     <span class="c1">// prints the accumulation followed by a newline, you&#39;ll see 135</span>
     <span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span> <span class="n">acc</span><span class="p">);</span>
 <span class="p">}</span>
@@ -171,115 +171,115 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
           <h2><a href="#define-members">Defines</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange</a>(</span><span class="m-doc-wrap">T)</span>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange</a>(</span><span class="m-doc-wrap">T)</span>
             </dt>
-            <dd>Macro alias for an instantiation of <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> for the type <code>T</code></dd>
+            <dd>Macro alias for an instantiation of <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> for the type <code>T</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga85f2023a40c72f5c5603b3dc341c664f" class="m-doc">StdRangeFilter</a>(</span><span class="m-doc-wrap">T)</span>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4c7f3f9c5087cfd5ed0bbcc51b57dc53" class="m-doc">CnxRangeFilter</a>(</span><span class="m-doc-wrap">T)</span>
             </dt>
-            <dd>Macro alias for filter function compatible with a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> instantiation.</dd>
+            <dd>Macro alias for filter function compatible with a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> instantiation.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga20195a98b08333de2c8778b4d134262e" class="m-doc">StdRangeTransform</a>(</span><span class="m-doc-wrap">T)</span>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga494d96cc6d6be91b9a347be5a0c3ba94" class="m-doc">CnxRangeTransform</a>(</span><span class="m-doc-wrap">T)</span>
             </dt>
-            <dd>Macro alias for transform function compatible with a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> instantiation.</dd>
+            <dd>Macro alias for transform function compatible with a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> instantiation.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gafa7e85043ab42749db7f85bff0610382" class="m-doc">StdRangeAccumulator</a>(</span><span class="m-doc-wrap">T)</span>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaa8f3cfdaa4fe9b4970a88d0d859d738a" class="m-doc">CnxRangeAccumulator</a>(</span><span class="m-doc-wrap">T)</span>
             </dt>
-            <dd>Macro alias for accumulator function compatible with a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> instantiation.</dd>
+            <dd>Macro alias for accumulator function compatible with a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> instantiation.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gad9f1579addc3fce9075d9c2450e6b758" class="m-doc">std_range_from_iterators_filtered</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#ga74a4fdd4e2882d6fcdfa9e825321a877" class="m-doc">cnx_range_from_iterators_filtered</a>(</span><span class="m-doc-wrap">T,
               begin,
               end,
               filter)</span>
             </dt>
-            <dd>Creates a filtered <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code></dd>
+            <dd>Creates a filtered <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga8a2f3014d2d1859fc819fa1ca7cf42c1" class="m-doc">std_range_from_iterators</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9b574916ebb785bd85e718b9e7c0ba28" class="m-doc">cnx_range_from_iterators</a>(</span><span class="m-doc-wrap">T,
               begin,
               end)</span>
             </dt>
-            <dd>Creates a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code></dd>
+            <dd>Creates a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga6ac5f5bbdfdca117889ee1cb5553bbb1" class="m-doc">std_range_from_filtered</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#gafb2e53f2c95c5bde89b20d20de3fec86" class="m-doc">cnx_range_from_filtered</a>(</span><span class="m-doc-wrap">T,
               collection,
               filter)</span>
             </dt>
-            <dd>Creates a filtered <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code></dd>
+            <dd>Creates a filtered <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gaad4e32188f61008eae8eb6d3bd3de464" class="m-doc">std_range_from</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#gadd86755adfe53ee5c19af9b68c7cd1fc" class="m-doc">cnx_range_from</a>(</span><span class="m-doc-wrap">T,
               collection)</span>
             </dt>
-            <dd>Creates a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code></dd>
+            <dd>Creates a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga5f5f27c1239539ab242995bf3364d9f3" class="m-doc">std_range_begin</a>(</span><span class="m-doc-wrap">self)</span>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga49da442daa188d18d7228598cf215e56" class="m-doc">cnx_range_begin</a>(</span><span class="m-doc-wrap">self)</span>
             </dt>
-            <dd>Returns at the beginning of the <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code></dd>
+            <dd>Returns at the beginning of the <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gad95b5010bb79768dca0f57cbb5c8e8e5" class="m-doc">std_range_end</a>(</span><span class="m-doc-wrap">self)</span>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga135dcbcab13f34cd8d6870f8eddea64d" class="m-doc">cnx_range_end</a>(</span><span class="m-doc-wrap">self)</span>
             </dt>
-            <dd>Returns at the end of the <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code></dd>
+            <dd>Returns at the end of the <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga8cbdd2a5e6fa1674ebcbb605d25f4b45" class="m-doc">std_range_filter_iterators</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#ga65ac775c11a62782b02d4e02291568a1" class="m-doc">cnx_range_filter_iterators</a>(</span><span class="m-doc-wrap">T,
               begin,
               end,
               filter)</span>
             </dt>
-            <dd>Creates a filtered <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code></dd>
+            <dd>Creates a filtered <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga8f95d2bf573ca7b8b9308b3bcea0f44d" class="m-doc">std_range_filter</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#ga174241a4bbdbad79703105b9062729ee" class="m-doc">cnx_range_filter</a>(</span><span class="m-doc-wrap">T,
               collection,
               filter)</span>
             </dt>
-            <dd>Creates a filtered <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code></dd>
+            <dd>Creates a filtered <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gadc44524d8340e9bb7ad3337f9314b15e" class="m-doc">std_range_take_first_from_iterators</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#gacb10ec8f0d4680204af8145752b84380" class="m-doc">cnx_range_take_first_from_iterators</a>(</span><span class="m-doc-wrap">T,
               n,
               begin,
               end)</span>
             </dt>
-            <dd>Creates a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> over the first <code>n</code> elements in the iteration.</dd>
+            <dd>Creates a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> over the first <code>n</code> elements in the iteration.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gaf55a194ec5300daf6c9e5b4d286304af" class="m-doc">std_range_take_first</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#ga975dd7edc74ca6bce315681b9533c302" class="m-doc">cnx_range_take_first</a>(</span><span class="m-doc-wrap">T,
               n,
               collection)</span>
             </dt>
-            <dd>Creates a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> over the first <code>n</code> elements in the collection.</dd>
+            <dd>Creates a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> over the first <code>n</code> elements in the collection.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gad9cc5619b74429b657af01e7d34b643e" class="m-doc">std_range_collect</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#gac80cb297d50cf0657819642665362f3d" class="m-doc">cnx_range_collect</a>(</span><span class="m-doc-wrap">T,
               range)</span>
             </dt>
-            <dd>Collects the elements viewed by the range into a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></dd>
+            <dd>Collects the elements viewed by the range into a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga64e2a4ed8e3cba42733a8f2ccffc0438" class="m-doc">std_range_transform</a>(</span><span class="m-doc-wrap">range,
+              <span class="m-doc-wrap-bumper">#define <a href="#gac330b2611bdb20bc894e00ed53ea13f4" class="m-doc">cnx_range_transform</a>(</span><span class="m-doc-wrap">range,
               transform_function)</span>
             </dt>
-            <dd>Transforms the elements viewed by the <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code></dd>
+            <dd>Transforms the elements viewed by the <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gadca6fc167f7aecb604998d069829042f" class="m-doc">std_transform</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#ga857ae17e2c8b55d1703ece92383e0db8" class="m-doc">cnx_transform</a>(</span><span class="m-doc-wrap">T,
               collection,
               transform_function)</span>
             </dt>
             <dd>Transforms the elements in the collection.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga067a52e875e53f870d4dcbb237daffbe" class="m-doc">std_range_transform_then_filter</a>(</span><span class="m-doc-wrap">range,
+              <span class="m-doc-wrap-bumper">#define <a href="#ga6aa3891af39d32de076d72101d3846c7" class="m-doc">cnx_range_transform_then_filter</a>(</span><span class="m-doc-wrap">range,
               transform_function,
               filter_function)</span>
             </dt>
-            <dd>Transforms the elements viewed by the <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code>, then filters the range.</dd>
+            <dd>Transforms the elements viewed by the <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code>, then filters the range.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga6a98859fa812e0431ddd10679437ae15" class="m-doc">std_transform_then_filter</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#gac991c650975024e74f2c3734a2961ee2" class="m-doc">cnx_transform_then_filter</a>(</span><span class="m-doc-wrap">T,
               collection,
               transform_function,
               filter_function)</span>
             </dt>
-            <dd>Transforms the elements in the collection, then returns a filtered <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> over the collection.</dd>
+            <dd>Transforms the elements in the collection, then returns a filtered <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> over the collection.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga280f9d91458841c454a5f523b22985c2" class="m-doc">std_range_accumulate</a>(</span><span class="m-doc-wrap">range,
+              <span class="m-doc-wrap-bumper">#define <a href="#gafbee3500477ee07395f6009e58e426a5" class="m-doc">cnx_range_accumulate</a>(</span><span class="m-doc-wrap">range,
               accumulation_function)</span>
             </dt>
-            <dd>&quot;Accumulates&quot; the elements viewed by the <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code></dd>
+            <dd>&quot;Accumulates&quot; the elements viewed by the <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gaee83f4e9060d2f0bbe8426f715dffb1f" class="m-doc">std_accumulate</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#ga19f57eb22110b24eb60122894e58cbd6" class="m-doc">cnx_accumulate</a>(</span><span class="m-doc-wrap">T,
               collection,
               accumulation_function)</span>
             </dt>
@@ -288,12 +288,12 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
         </section>
         <section>
           <h2>Define documentation</h2>
-          <section class="m-doc-details" id="ga0c3e413222c6c5072b1c6ac94b1e7fb6"><div>
+          <section class="m-doc-details" id="ga65e27f15e85a18ea3b930790ca4a27e9"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc-self">StdRange</a>(</span><span class="m-doc-wrap">T)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc-self">CnxRange</a>(</span><span class="m-doc-wrap">T)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
-            <p>Macro alias for an instantiation of <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> for the type <code>T</code></p>
+            <p>Macro alias for an instantiation of <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> for the type <code>T</code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -301,18 +301,18 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">T</td>
-                  <td>- The type held by the collection <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> will abstract over</td>
+                  <td>- The type held by the collection <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> will abstract over</td>
                 </tr>
               </tbody>
             </table>
-<p>Used for creating and referencing a typedef for a specific <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> instantiation</p>
+<p>Used for creating and referencing a typedef for a specific <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> instantiation</p>
           </div></section>
-          <section class="m-doc-details" id="ga85f2023a40c72f5c5603b3dc341c664f"><div>
+          <section class="m-doc-details" id="ga4c7f3f9c5087cfd5ed0bbcc51b57dc53"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga85f2023a40c72f5c5603b3dc341c664f" class="m-doc-self">StdRangeFilter</a>(</span><span class="m-doc-wrap">T)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4c7f3f9c5087cfd5ed0bbcc51b57dc53" class="m-doc-self">CnxRangeFilter</a>(</span><span class="m-doc-wrap">T)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
-            <p>Macro alias for filter function compatible with a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> instantiation.</p>
+            <p>Macro alias for filter function compatible with a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> instantiation.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -320,18 +320,18 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">T</td>
-                  <td>- The type held by the collection <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> will abstract over</td>
+                  <td>- The type held by the collection <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> will abstract over</td>
                 </tr>
               </tbody>
             </table>
-<p>Used for creating and referencing a typedef for a filter function compatible with a specific <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> instantiation. A <code><a href="group__ranges.html#ga85f2023a40c72f5c5603b3dc341c664f" class="m-doc">StdRangeFilter(T)</a></code> must take the signature:</p><pre class="m-code"><span class="kt">bool</span> <span class="p">(</span><span class="o">*</span><span class="n">filter</span><span class="p">)(</span><span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">elem</span><span class="p">);</span></pre>
+<p>Used for creating and referencing a typedef for a filter function compatible with a specific <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> instantiation. A <code><a href="group__ranges.html#ga4c7f3f9c5087cfd5ed0bbcc51b57dc53" class="m-doc">CnxRangeFilter(T)</a></code> must take the signature:</p><pre class="m-code"><span class="kt">bool</span> <span class="p">(</span><span class="o">*</span><span class="n">filter</span><span class="p">)(</span><span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">elem</span><span class="p">);</span></pre>
           </div></section>
-          <section class="m-doc-details" id="ga20195a98b08333de2c8778b4d134262e"><div>
+          <section class="m-doc-details" id="ga494d96cc6d6be91b9a347be5a0c3ba94"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga20195a98b08333de2c8778b4d134262e" class="m-doc-self">StdRangeTransform</a>(</span><span class="m-doc-wrap">T)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga494d96cc6d6be91b9a347be5a0c3ba94" class="m-doc-self">CnxRangeTransform</a>(</span><span class="m-doc-wrap">T)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
-            <p>Macro alias for transform function compatible with a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> instantiation.</p>
+            <p>Macro alias for transform function compatible with a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> instantiation.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -339,18 +339,18 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">T</td>
-                  <td>- The type held by the collection <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> will abstract over</td>
+                  <td>- The type held by the collection <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> will abstract over</td>
                 </tr>
               </tbody>
             </table>
-<p>Used for creating and referencing a typedef for a filter function compatible with a specific <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> instantiation. A <code><a href="group__ranges.html#ga20195a98b08333de2c8778b4d134262e" class="m-doc">StdRangeTransform(T)</a></code> must take the signature:</p><pre class="m-code"><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">transform</span><span class="p">)(</span><span class="n">T</span><span class="o">*</span> <span class="k">restrict</span> <span class="n">elem</span><span class="p">);</span></pre>
+<p>Used for creating and referencing a typedef for a filter function compatible with a specific <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> instantiation. A <code><a href="group__ranges.html#ga494d96cc6d6be91b9a347be5a0c3ba94" class="m-doc">CnxRangeTransform(T)</a></code> must take the signature:</p><pre class="m-code"><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">transform</span><span class="p">)(</span><span class="n">T</span><span class="o">*</span> <span class="k">restrict</span> <span class="n">elem</span><span class="p">);</span></pre>
           </div></section>
-          <section class="m-doc-details" id="gafa7e85043ab42749db7f85bff0610382"><div>
+          <section class="m-doc-details" id="gaa8f3cfdaa4fe9b4970a88d0d859d738a"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gafa7e85043ab42749db7f85bff0610382" class="m-doc-self">StdRangeAccumulator</a>(</span><span class="m-doc-wrap">T)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaa8f3cfdaa4fe9b4970a88d0d859d738a" class="m-doc-self">CnxRangeAccumulator</a>(</span><span class="m-doc-wrap">T)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
-            <p>Macro alias for accumulator function compatible with a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> instantiation.</p>
+            <p>Macro alias for accumulator function compatible with a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> instantiation.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -358,21 +358,21 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">T</td>
-                  <td>- The type held by the collection <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> will abstract over</td>
+                  <td>- The type held by the collection <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> will abstract over</td>
                 </tr>
               </tbody>
             </table>
-<p>Used for creating and referencing a typedef for a filter function compatible with a specific <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> instantiation. A <code><a href="group__ranges.html#gafa7e85043ab42749db7f85bff0610382" class="m-doc">StdRangeAccumulator(T)</a></code> must take the signature:</p><pre class="m-code"><span class="n">T</span> <span class="p">(</span><span class="o">*</span><span class="n">accumulator</span><span class="p">)(</span><span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="n">current_value</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="n">elem</span><span class="p">);</span></pre>
+<p>Used for creating and referencing a typedef for a filter function compatible with a specific <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> instantiation. A <code><a href="group__ranges.html#gaa8f3cfdaa4fe9b4970a88d0d859d738a" class="m-doc">CnxRangeAccumulator(T)</a></code> must take the signature:</p><pre class="m-code"><span class="n">T</span> <span class="p">(</span><span class="o">*</span><span class="n">accumulator</span><span class="p">)(</span><span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="n">current_value</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="n">elem</span><span class="p">);</span></pre>
           </div></section>
-          <section class="m-doc-details" id="gad9f1579addc3fce9075d9c2450e6b758"><div>
+          <section class="m-doc-details" id="ga74a4fdd4e2882d6fcdfa9e825321a877"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gad9f1579addc3fce9075d9c2450e6b758" class="m-doc-self">std_range_from_iterators_filtered</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#ga74a4fdd4e2882d6fcdfa9e825321a877" class="m-doc-self">cnx_range_from_iterators_filtered</a>(</span><span class="m-doc-wrap">T,
               begin,
               end,
               filter)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
-            <p>Creates a filtered <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code></p>
+            <p>Creates a filtered <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -380,7 +380,7 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">T</td>
-                  <td>- The type held by the collection <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> will abstract over</td>
+                  <td>- The type held by the collection <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> will abstract over</td>
                 </tr>
                 <tr>
                   <td>begin</td>
@@ -392,26 +392,26 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
                 </tr>
                 <tr>
                   <td>filter</td>
-                  <td>- The <code><a href="group__ranges.html#ga85f2023a40c72f5c5603b3dc341c664f" class="m-doc">StdRangeFilter(T)</a></code> to filter the range with</td>
+                  <td>- The <code><a href="group__ranges.html#ga4c7f3f9c5087cfd5ed0bbcc51b57dc53" class="m-doc">CnxRangeFilter(T)</a></code> to filter the range with</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> over the given iteration, filtered with <code>filter</code></td>
+                  <td>a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> over the given iteration, filtered with <code>filter</code></td>
                 </tr>
               </tfoot>
             </table>
-<p>Creates a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> from the given iterators, filtered with the <code><a href="group__ranges.html#ga85f2023a40c72f5c5603b3dc341c664f" class="m-doc">StdRangeFilter(T)</a></code>, <code>filter</code></p>
+<p>Creates a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> from the given iterators, filtered with the <code><a href="group__ranges.html#ga4c7f3f9c5087cfd5ed0bbcc51b57dc53" class="m-doc">CnxRangeFilter(T)</a></code>, <code>filter</code></p>
           </div></section>
-          <section class="m-doc-details" id="ga8a2f3014d2d1859fc819fa1ca7cf42c1"><div>
+          <section class="m-doc-details" id="ga9b574916ebb785bd85e718b9e7c0ba28"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga8a2f3014d2d1859fc819fa1ca7cf42c1" class="m-doc-self">std_range_from_iterators</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9b574916ebb785bd85e718b9e7c0ba28" class="m-doc-self">cnx_range_from_iterators</a>(</span><span class="m-doc-wrap">T,
               begin,
               end)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
-            <p>Creates a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code></p>
+            <p>Creates a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -419,7 +419,7 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">T</td>
-                  <td>- The type held by the collection <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> will abstract over</td>
+                  <td>- The type held by the collection <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> will abstract over</td>
                 </tr>
                 <tr>
                   <td>begin</td>
@@ -433,20 +433,20 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> over the given iteration</td>
+                  <td>a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> over the given iteration</td>
                 </tr>
               </tfoot>
             </table>
-<p>Creates a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> from the given iterators</p>
+<p>Creates a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> from the given iterators</p>
           </div></section>
-          <section class="m-doc-details" id="ga6ac5f5bbdfdca117889ee1cb5553bbb1"><div>
+          <section class="m-doc-details" id="gafb2e53f2c95c5bde89b20d20de3fec86"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga6ac5f5bbdfdca117889ee1cb5553bbb1" class="m-doc-self">std_range_from_filtered</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#gafb2e53f2c95c5bde89b20d20de3fec86" class="m-doc-self">cnx_range_from_filtered</a>(</span><span class="m-doc-wrap">T,
               collection,
               filter)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
-            <p>Creates a filtered <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code></p>
+            <p>Creates a filtered <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -454,7 +454,7 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">T</td>
-                  <td>- The type held by the collection <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> will abstract over</td>
+                  <td>- The type held by the collection <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> will abstract over</td>
                 </tr>
                 <tr>
                   <td>collection</td>
@@ -462,25 +462,25 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
                 </tr>
                 <tr>
                   <td>filter</td>
-                  <td>- The <code><a href="group__ranges.html#ga85f2023a40c72f5c5603b3dc341c664f" class="m-doc">StdRangeFilter(T)</a></code> to filter the range with</td>
+                  <td>- The <code><a href="group__ranges.html#ga4c7f3f9c5087cfd5ed0bbcc51b57dc53" class="m-doc">CnxRangeFilter(T)</a></code> to filter the range with</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> over the given collection, filtered with <code>filter</code></td>
+                  <td>a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> over the given collection, filtered with <code>filter</code></td>
                 </tr>
               </tfoot>
             </table>
-<p>Creates a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> from the given collection, filtered with the <code><a href="group__ranges.html#ga85f2023a40c72f5c5603b3dc341c664f" class="m-doc">StdRangeFilter(T)</a></code>, <code>filter</code></p>
+<p>Creates a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> from the given collection, filtered with the <code><a href="group__ranges.html#ga4c7f3f9c5087cfd5ed0bbcc51b57dc53" class="m-doc">CnxRangeFilter(T)</a></code>, <code>filter</code></p>
           </div></section>
-          <section class="m-doc-details" id="gaad4e32188f61008eae8eb6d3bd3de464"><div>
+          <section class="m-doc-details" id="gadd86755adfe53ee5c19af9b68c7cd1fc"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gaad4e32188f61008eae8eb6d3bd3de464" class="m-doc-self">std_range_from</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#gadd86755adfe53ee5c19af9b68c7cd1fc" class="m-doc-self">cnx_range_from</a>(</span><span class="m-doc-wrap">T,
               collection)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
-            <p>Creates a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code></p>
+            <p>Creates a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -488,7 +488,7 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">T</td>
-                  <td>- The type held by the collection <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> will abstract over</td>
+                  <td>- The type held by the collection <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> will abstract over</td>
                 </tr>
                 <tr>
                   <td>collection</td>
@@ -498,18 +498,18 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> over the given collection</td>
+                  <td>a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> over the given collection</td>
                 </tr>
               </tfoot>
             </table>
-<p>Creates a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> from the given collection</p>
+<p>Creates a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> from the given collection</p>
           </div></section>
-          <section class="m-doc-details" id="ga5f5f27c1239539ab242995bf3364d9f3"><div>
+          <section class="m-doc-details" id="ga49da442daa188d18d7228598cf215e56"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga5f5f27c1239539ab242995bf3364d9f3" class="m-doc-self">std_range_begin</a>(</span><span class="m-doc-wrap">self)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga49da442daa188d18d7228598cf215e56" class="m-doc-self">cnx_range_begin</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
-            <p>Returns at the beginning of the <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code></p>
+            <p>Returns at the beginning of the <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -517,24 +517,24 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">self</td>
-                  <td>- The <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> to get an iterator into</td>
+                  <td>- The <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> to get an iterator into</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>a <code><a href="group__iterators.html#ga6f81be5154c35a8da1ac730d26040155" class="m-doc">StdForwardIterator(Ref(T))</a></code> at the beginning of the range</td>
+                  <td>a <code><a href="group__iterators.html#gaa667d63f099a5e6df037c865d90c56a6" class="m-doc">CnxForwardIterator(Ref(T))</a></code> at the beginning of the range</td>
                 </tr>
               </tfoot>
             </table>
-<p>Returns a <code><a href="group__iterators.html#ga6f81be5154c35a8da1ac730d26040155" class="m-doc">StdForwardIterator(Ref(T))</a></code> into the given <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code>, at the beginning of the iteration</p>
+<p>Returns a <code><a href="group__iterators.html#gaa667d63f099a5e6df037c865d90c56a6" class="m-doc">CnxForwardIterator(Ref(T))</a></code> into the given <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code>, at the beginning of the iteration</p>
           </div></section>
-          <section class="m-doc-details" id="gad95b5010bb79768dca0f57cbb5c8e8e5"><div>
+          <section class="m-doc-details" id="ga135dcbcab13f34cd8d6870f8eddea64d"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gad95b5010bb79768dca0f57cbb5c8e8e5" class="m-doc-self">std_range_end</a>(</span><span class="m-doc-wrap">self)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga135dcbcab13f34cd8d6870f8eddea64d" class="m-doc-self">cnx_range_end</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
-            <p>Returns at the end of the <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code></p>
+            <p>Returns at the end of the <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -542,27 +542,27 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">self</td>
-                  <td>- The <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> to get an iterator into</td>
+                  <td>- The <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> to get an iterator into</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>a <code><a href="group__iterators.html#ga6f81be5154c35a8da1ac730d26040155" class="m-doc">StdForwardIterator(Ref(T))</a></code> at the end of the range</td>
+                  <td>a <code><a href="group__iterators.html#gaa667d63f099a5e6df037c865d90c56a6" class="m-doc">CnxForwardIterator(Ref(T))</a></code> at the end of the range</td>
                 </tr>
               </tfoot>
             </table>
-<p>Returns a <code><a href="group__iterators.html#ga6f81be5154c35a8da1ac730d26040155" class="m-doc">StdForwardIterator(Ref(T))</a></code> into the given <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code>, at the end of the iteration</p>
+<p>Returns a <code><a href="group__iterators.html#gaa667d63f099a5e6df037c865d90c56a6" class="m-doc">CnxForwardIterator(Ref(T))</a></code> into the given <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code>, at the end of the iteration</p>
           </div></section>
-          <section class="m-doc-details" id="ga8cbdd2a5e6fa1674ebcbb605d25f4b45"><div>
+          <section class="m-doc-details" id="ga65ac775c11a62782b02d4e02291568a1"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga8cbdd2a5e6fa1674ebcbb605d25f4b45" class="m-doc-self">std_range_filter_iterators</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#ga65ac775c11a62782b02d4e02291568a1" class="m-doc-self">cnx_range_filter_iterators</a>(</span><span class="m-doc-wrap">T,
               begin,
               end,
               filter)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
-            <p>Creates a filtered <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code></p>
+            <p>Creates a filtered <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -570,7 +570,7 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">T</td>
-                  <td>- The type held by the collection <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> will abstract over</td>
+                  <td>- The type held by the collection <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> will abstract over</td>
                 </tr>
                 <tr>
                   <td>begin</td>
@@ -582,26 +582,26 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
                 </tr>
                 <tr>
                   <td>filter</td>
-                  <td>- The <code><a href="group__ranges.html#ga85f2023a40c72f5c5603b3dc341c664f" class="m-doc">StdRangeFilter(T)</a></code> to filter the range with</td>
+                  <td>- The <code><a href="group__ranges.html#ga4c7f3f9c5087cfd5ed0bbcc51b57dc53" class="m-doc">CnxRangeFilter(T)</a></code> to filter the range with</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> over the given iteration, filtered with <code>filter</code></td>
+                  <td>a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> over the given iteration, filtered with <code>filter</code></td>
                 </tr>
               </tfoot>
             </table>
-<p>Creates a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> from the given iterators, filtered with the <code><a href="group__ranges.html#ga85f2023a40c72f5c5603b3dc341c664f" class="m-doc">StdRangeFilter(T)</a></code>, <code>filter</code></p>
+<p>Creates a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> from the given iterators, filtered with the <code><a href="group__ranges.html#ga4c7f3f9c5087cfd5ed0bbcc51b57dc53" class="m-doc">CnxRangeFilter(T)</a></code>, <code>filter</code></p>
           </div></section>
-          <section class="m-doc-details" id="ga8f95d2bf573ca7b8b9308b3bcea0f44d"><div>
+          <section class="m-doc-details" id="ga174241a4bbdbad79703105b9062729ee"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga8f95d2bf573ca7b8b9308b3bcea0f44d" class="m-doc-self">std_range_filter</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#ga174241a4bbdbad79703105b9062729ee" class="m-doc-self">cnx_range_filter</a>(</span><span class="m-doc-wrap">T,
               collection,
               filter)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
-            <p>Creates a filtered <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code></p>
+            <p>Creates a filtered <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -609,7 +609,7 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">T</td>
-                  <td>- The type held by the collection <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> will abstract over</td>
+                  <td>- The type held by the collection <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> will abstract over</td>
                 </tr>
                 <tr>
                   <td>collection</td>
@@ -617,27 +617,27 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
                 </tr>
                 <tr>
                   <td>filter</td>
-                  <td>- The <code><a href="group__ranges.html#ga85f2023a40c72f5c5603b3dc341c664f" class="m-doc">StdRangeFilter(T)</a></code> to filter the range with</td>
+                  <td>- The <code><a href="group__ranges.html#ga4c7f3f9c5087cfd5ed0bbcc51b57dc53" class="m-doc">CnxRangeFilter(T)</a></code> to filter the range with</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> over the given collection, filtered with <code>filter</code></td>
+                  <td>a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> over the given collection, filtered with <code>filter</code></td>
                 </tr>
               </tfoot>
             </table>
-<p>Creates a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> from the given collection, filtered with the <code><a href="group__ranges.html#ga85f2023a40c72f5c5603b3dc341c664f" class="m-doc">StdRangeFilter(T)</a></code>, <code>filter</code></p>
+<p>Creates a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> from the given collection, filtered with the <code><a href="group__ranges.html#ga4c7f3f9c5087cfd5ed0bbcc51b57dc53" class="m-doc">CnxRangeFilter(T)</a></code>, <code>filter</code></p>
           </div></section>
-          <section class="m-doc-details" id="gadc44524d8340e9bb7ad3337f9314b15e"><div>
+          <section class="m-doc-details" id="gacb10ec8f0d4680204af8145752b84380"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gadc44524d8340e9bb7ad3337f9314b15e" class="m-doc-self">std_range_take_first_from_iterators</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#gacb10ec8f0d4680204af8145752b84380" class="m-doc-self">cnx_range_take_first_from_iterators</a>(</span><span class="m-doc-wrap">T,
               n,
               begin,
               end)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
-            <p>Creates a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> over the first <code>n</code> elements in the iteration.</p>
+            <p>Creates a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> over the first <code>n</code> elements in the iteration.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -645,7 +645,7 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">T</td>
-                  <td>- The type held by the collection <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> will abstract over</td>
+                  <td>- The type held by the collection <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> will abstract over</td>
                 </tr>
                 <tr>
                   <td>n</td>
@@ -663,20 +663,20 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> over the first n elements of the iteration</td>
+                  <td>a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> over the first n elements of the iteration</td>
                 </tr>
               </tfoot>
             </table>
-<p>Creates a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> beginning at begin and ending at begin + n</p>
+<p>Creates a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> beginning at begin and ending at begin + n</p>
           </div></section>
-          <section class="m-doc-details" id="gaf55a194ec5300daf6c9e5b4d286304af"><div>
+          <section class="m-doc-details" id="ga975dd7edc74ca6bce315681b9533c302"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gaf55a194ec5300daf6c9e5b4d286304af" class="m-doc-self">std_range_take_first</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#ga975dd7edc74ca6bce315681b9533c302" class="m-doc-self">cnx_range_take_first</a>(</span><span class="m-doc-wrap">T,
               n,
               collection)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
-            <p>Creates a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> over the first <code>n</code> elements in the collection.</p>
+            <p>Creates a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> over the first <code>n</code> elements in the collection.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -684,7 +684,7 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">T</td>
-                  <td>- The type held by the collection <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> will abstract over</td>
+                  <td>- The type held by the collection <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> will abstract over</td>
                 </tr>
                 <tr>
                   <td>n</td>
@@ -698,19 +698,19 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> over the first n elements of the iteration</td>
+                  <td>a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> over the first n elements of the iteration</td>
                 </tr>
               </tfoot>
             </table>
-<p>Creates a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> beginning at the beginning of the collection and ending at begin + n</p>
+<p>Creates a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> beginning at the beginning of the collection and ending at begin + n</p>
           </div></section>
-          <section class="m-doc-details" id="gad9cc5619b74429b657af01e7d34b643e"><div>
+          <section class="m-doc-details" id="gac80cb297d50cf0657819642665362f3d"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gad9cc5619b74429b657af01e7d34b643e" class="m-doc-self">std_range_collect</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#gac80cb297d50cf0657819642665362f3d" class="m-doc-self">cnx_range_collect</a>(</span><span class="m-doc-wrap">T,
               range)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
-            <p>Collects the elements viewed by the range into a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code></p>
+            <p>Collects the elements viewed by the range into a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -718,29 +718,29 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">T</td>
-                  <td>- The type held by the collection <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> will abstract over</td>
+                  <td>- The type held by the collection <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> will abstract over</td>
                 </tr>
                 <tr>
                   <td>range</td>
-                  <td>- The <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> to collect</td>
+                  <td>- The <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> to collect</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>a <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> containing the elements viewed by <code>range</code></td>
+                  <td>a <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> containing the elements viewed by <code>range</code></td>
                 </tr>
               </tfoot>
             </table>
-<p>Creates a new <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> and copies the elements viewed by <code>range</code> into it</p><h4 id="autotoc_md13">Requirements</h4><ul><li>Requires that the <code><a href="group__std__vector.html#ga4079328f875ae061145d750c84c3b44c" class="m-doc">StdVector(T)</a></code> template has been instantiated for <code>T</code> and the instantiation is in scope</li></ul>
+<p>Creates a new <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> and copies the elements viewed by <code>range</code> into it</p><h4 id="autotoc_md13">Requirements</h4><ul><li>Requires that the <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> template has been instantiated for <code>T</code> and the instantiation is in scope</li></ul>
           </div></section>
-          <section class="m-doc-details" id="ga64e2a4ed8e3cba42733a8f2ccffc0438"><div>
+          <section class="m-doc-details" id="gac330b2611bdb20bc894e00ed53ea13f4"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga64e2a4ed8e3cba42733a8f2ccffc0438" class="m-doc-self">std_range_transform</a>(</span><span class="m-doc-wrap">range,
+              <span class="m-doc-wrap-bumper">#define <a href="#gac330b2611bdb20bc894e00ed53ea13f4" class="m-doc-self">cnx_range_transform</a>(</span><span class="m-doc-wrap">range,
               transform_function)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
-            <p>Transforms the elements viewed by the <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code></p>
+            <p>Transforms the elements viewed by the <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -748,11 +748,11 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">range</td>
-                  <td>- The <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> to transform</td>
+                  <td>- The <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> to transform</td>
                 </tr>
                 <tr>
                   <td>transform_function</td>
-                  <td>- The <code><a href="group__ranges.html#ga20195a98b08333de2c8778b4d134262e" class="m-doc">StdRangeTransform(T)</a></code> to transform elements with</td>
+                  <td>- The <code><a href="group__ranges.html#ga494d96cc6d6be91b9a347be5a0c3ba94" class="m-doc">CnxRangeTransform(T)</a></code> to transform elements with</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -762,14 +762,14 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
                 </tr>
               </tfoot>
             </table>
-<p>Transforms the elements viewed by the range in place with the <code><a href="group__ranges.html#ga20195a98b08333de2c8778b4d134262e" class="m-doc">StdRangeTransform(T)</a></code> function, <code>transform_function</code></p>
+<p>Transforms the elements viewed by the range in place with the <code><a href="group__ranges.html#ga494d96cc6d6be91b9a347be5a0c3ba94" class="m-doc">CnxRangeTransform(T)</a></code> function, <code>transform_function</code></p>
           </div></section>
-          <section class="m-doc-details" id="gadca6fc167f7aecb604998d069829042f"><div>
+          <section class="m-doc-details" id="ga857ae17e2c8b55d1703ece92383e0db8"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gadca6fc167f7aecb604998d069829042f" class="m-doc-self">std_transform</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#ga857ae17e2c8b55d1703ece92383e0db8" class="m-doc-self">cnx_transform</a>(</span><span class="m-doc-wrap">T,
               collection,
               transform_function)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
             <p>Transforms the elements in the collection.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -779,7 +779,7 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">T</td>
-                  <td>- The type held by the collection <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> will abstract over</td>
+                  <td>- The type held by the collection <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> will abstract over</td>
                 </tr>
                 <tr>
                   <td>collection</td>
@@ -787,7 +787,7 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
                 </tr>
                 <tr>
                   <td>transform_function</td>
-                  <td>- The <code><a href="group__ranges.html#ga20195a98b08333de2c8778b4d134262e" class="m-doc">StdRangeTransform(T)</a></code> to transform elements with</td>
+                  <td>- The <code><a href="group__ranges.html#ga494d96cc6d6be91b9a347be5a0c3ba94" class="m-doc">CnxRangeTransform(T)</a></code> to transform elements with</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -797,16 +797,16 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
                 </tr>
               </tfoot>
             </table>
-<p>Transforms the elements in the collection in place with the <code><a href="group__ranges.html#ga20195a98b08333de2c8778b4d134262e" class="m-doc">StdRangeTransform(T)</a></code> function, <code>transform_function</code>, and returns a <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> viewing the collection</p>
+<p>Transforms the elements in the collection in place with the <code><a href="group__ranges.html#ga494d96cc6d6be91b9a347be5a0c3ba94" class="m-doc">CnxRangeTransform(T)</a></code> function, <code>transform_function</code>, and returns a <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> viewing the collection</p>
           </div></section>
-          <section class="m-doc-details" id="ga067a52e875e53f870d4dcbb237daffbe"><div>
+          <section class="m-doc-details" id="ga6aa3891af39d32de076d72101d3846c7"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga067a52e875e53f870d4dcbb237daffbe" class="m-doc-self">std_range_transform_then_filter</a>(</span><span class="m-doc-wrap">range,
+              <span class="m-doc-wrap-bumper">#define <a href="#ga6aa3891af39d32de076d72101d3846c7" class="m-doc-self">cnx_range_transform_then_filter</a>(</span><span class="m-doc-wrap">range,
               transform_function,
               filter_function)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
-            <p>Transforms the elements viewed by the <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code>, then filters the range.</p>
+            <p>Transforms the elements viewed by the <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code>, then filters the range.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -814,15 +814,15 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">range</td>
-                  <td>- The <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> to transform and filter</td>
+                  <td>- The <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> to transform and filter</td>
                 </tr>
                 <tr>
                   <td>transform_function</td>
-                  <td>- The <code><a href="group__ranges.html#ga20195a98b08333de2c8778b4d134262e" class="m-doc">StdRangeTransform(T)</a></code> to transform elements with</td>
+                  <td>- The <code><a href="group__ranges.html#ga494d96cc6d6be91b9a347be5a0c3ba94" class="m-doc">CnxRangeTransform(T)</a></code> to transform elements with</td>
                 </tr>
                 <tr>
                   <td>filter_function</td>
-                  <td>- The <code><a href="group__ranges.html#ga85f2023a40c72f5c5603b3dc341c664f" class="m-doc">StdRangeFilter(T)</a></code> to filter the range with</td>
+                  <td>- The <code><a href="group__ranges.html#ga4c7f3f9c5087cfd5ed0bbcc51b57dc53" class="m-doc">CnxRangeFilter(T)</a></code> to filter the range with</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -832,17 +832,17 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
                 </tr>
               </tfoot>
             </table>
-<p>Transforms the elements viewed by the range in place with the <code><a href="group__ranges.html#ga20195a98b08333de2c8778b4d134262e" class="m-doc">StdRangeTransform(T)</a></code> function, <code>transform_function</code>, then filters the range with the <code><a href="group__ranges.html#ga85f2023a40c72f5c5603b3dc341c664f" class="m-doc">StdRangeFilter(T)</a></code>, <code>filter_function</code></p>
+<p>Transforms the elements viewed by the range in place with the <code><a href="group__ranges.html#ga494d96cc6d6be91b9a347be5a0c3ba94" class="m-doc">CnxRangeTransform(T)</a></code> function, <code>transform_function</code>, then filters the range with the <code><a href="group__ranges.html#ga4c7f3f9c5087cfd5ed0bbcc51b57dc53" class="m-doc">CnxRangeFilter(T)</a></code>, <code>filter_function</code></p>
           </div></section>
-          <section class="m-doc-details" id="ga6a98859fa812e0431ddd10679437ae15"><div>
+          <section class="m-doc-details" id="gac991c650975024e74f2c3734a2961ee2"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga6a98859fa812e0431ddd10679437ae15" class="m-doc-self">std_transform_then_filter</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#gac991c650975024e74f2c3734a2961ee2" class="m-doc-self">cnx_transform_then_filter</a>(</span><span class="m-doc-wrap">T,
               collection,
               transform_function,
               filter_function)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
-            <p>Transforms the elements in the collection, then returns a filtered <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> over the collection.</p>
+            <p>Transforms the elements in the collection, then returns a filtered <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> over the collection.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -850,7 +850,7 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">T</td>
-                  <td>- The type held by the collection <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> will abstract over</td>
+                  <td>- The type held by the collection <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> will abstract over</td>
                 </tr>
                 <tr>
                   <td>collection</td>
@@ -858,11 +858,11 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
                 </tr>
                 <tr>
                   <td>transform_function</td>
-                  <td>- The <code><a href="group__ranges.html#ga20195a98b08333de2c8778b4d134262e" class="m-doc">StdRangeTransform(T)</a></code> to transform elements with</td>
+                  <td>- The <code><a href="group__ranges.html#ga494d96cc6d6be91b9a347be5a0c3ba94" class="m-doc">CnxRangeTransform(T)</a></code> to transform elements with</td>
                 </tr>
                 <tr>
                   <td>filter_function</td>
-                  <td>- The <code><a href="group__ranges.html#ga85f2023a40c72f5c5603b3dc341c664f" class="m-doc">StdRangeFilter(T)</a></code> to filter the range with</td>
+                  <td>- The <code><a href="group__ranges.html#ga4c7f3f9c5087cfd5ed0bbcc51b57dc53" class="m-doc">CnxRangeFilter(T)</a></code> to filter the range with</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -872,15 +872,15 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
                 </tr>
               </tfoot>
             </table>
-<p>Transforms the elements viewed in the collection in place with the <code><a href="group__ranges.html#ga20195a98b08333de2c8778b4d134262e" class="m-doc">StdRangeTransform(T)</a></code> function, <code>transform_function</code>, then returns a range over the collection filtered with the <code><a href="group__ranges.html#ga85f2023a40c72f5c5603b3dc341c664f" class="m-doc">StdRangeFilter(T)</a></code>, <code>filter_function</code></p>
+<p>Transforms the elements viewed in the collection in place with the <code><a href="group__ranges.html#ga494d96cc6d6be91b9a347be5a0c3ba94" class="m-doc">CnxRangeTransform(T)</a></code> function, <code>transform_function</code>, then returns a range over the collection filtered with the <code><a href="group__ranges.html#ga4c7f3f9c5087cfd5ed0bbcc51b57dc53" class="m-doc">CnxRangeFilter(T)</a></code>, <code>filter_function</code></p>
           </div></section>
-          <section class="m-doc-details" id="ga280f9d91458841c454a5f523b22985c2"><div>
+          <section class="m-doc-details" id="gafbee3500477ee07395f6009e58e426a5"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga280f9d91458841c454a5f523b22985c2" class="m-doc-self">std_range_accumulate</a>(</span><span class="m-doc-wrap">range,
+              <span class="m-doc-wrap-bumper">#define <a href="#gafbee3500477ee07395f6009e58e426a5" class="m-doc-self">cnx_range_accumulate</a>(</span><span class="m-doc-wrap">range,
               accumulation_function)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
-            <p>&quot;Accumulates&quot; the elements viewed by the <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code></p>
+            <p>&quot;Accumulates&quot; the elements viewed by the <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -888,11 +888,11 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">range</td>
-                  <td>- The <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> to accumulate the elements of</td>
+                  <td>- The <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> to accumulate the elements of</td>
                 </tr>
                 <tr>
                   <td>accumulation_function</td>
-                  <td>- The <code><a href="group__ranges.html#gafa7e85043ab42749db7f85bff0610382" class="m-doc">StdRangeAccumulator(T)</a></code> to accumulate elements with</td>
+                  <td>- The <code><a href="group__ranges.html#gaa8f3cfdaa4fe9b4970a88d0d859d738a" class="m-doc">CnxRangeAccumulator(T)</a></code> to accumulate elements with</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -902,14 +902,14 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
                 </tr>
               </tfoot>
             </table>
-<p>&quot;Accumulates&quot; the elements viewed by the given <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> with the <code><a href="group__ranges.html#gafa7e85043ab42749db7f85bff0610382" class="m-doc">StdRangeAccumulator(T)</a></code>, <code>accumulation_function</code>, returning the result</p>
+<p>&quot;Accumulates&quot; the elements viewed by the given <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> with the <code><a href="group__ranges.html#gaa8f3cfdaa4fe9b4970a88d0d859d738a" class="m-doc">CnxRangeAccumulator(T)</a></code>, <code>accumulation_function</code>, returning the result</p>
           </div></section>
-          <section class="m-doc-details" id="gaee83f4e9060d2f0bbe8426f715dffb1f"><div>
+          <section class="m-doc-details" id="ga19f57eb22110b24eb60122894e58cbd6"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gaee83f4e9060d2f0bbe8426f715dffb1f" class="m-doc-self">std_accumulate</a>(</span><span class="m-doc-wrap">T,
+              <span class="m-doc-wrap-bumper">#define <a href="#ga19f57eb22110b24eb60122894e58cbd6" class="m-doc-self">cnx_accumulate</a>(</span><span class="m-doc-wrap">T,
               collection,
               accumulation_function)</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="StdRangeDef_8h.html">&lt;include/C2nxt/std_range/StdRangeDef.h&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="RangeDef_8h.html">&lt;include/Cnx/range/RangeDef.h&gt;</a></div>
             </h3>
             <p>&quot;Accumulates&quot; the elements in the collection</p>
             <table class="m-table m-fullwidth m-flat">
@@ -919,7 +919,7 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
               <tbody>
                 <tr>
                   <td style="width: 1%">T</td>
-                  <td>- The type held by the collection <code><a href="group__ranges.html#ga0c3e413222c6c5072b1c6ac94b1e7fb6" class="m-doc">StdRange(T)</a></code> will abstract over</td>
+                  <td>- The type held by the collection <code><a href="group__ranges.html#ga65e27f15e85a18ea3b930790ca4a27e9" class="m-doc">CnxRange(T)</a></code> will abstract over</td>
                 </tr>
                 <tr>
                   <td>collection</td>
@@ -927,7 +927,7 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
                 </tr>
                 <tr>
                   <td>accumulation_function</td>
-                  <td>- The <code><a href="group__ranges.html#gafa7e85043ab42749db7f85bff0610382" class="m-doc">StdRangeAccumulator(T)</a></code> to accumulate elements with</td>
+                  <td>- The <code><a href="group__ranges.html#gaa8f3cfdaa4fe9b4970a88d0d859d738a" class="m-doc">CnxRangeAccumulator(T)</a></code> to accumulate elements with</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -937,7 +937,7 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
                 </tr>
               </tfoot>
             </table>
-<p>&quot;Accumulates&quot; the elements in the given collection with the <code><a href="group__ranges.html#gafa7e85043ab42749db7f85bff0610382" class="m-doc">StdRangeAccumulator(T)</a></code>, <code>accumulation_function</code>, returning the result</p>
+<p>&quot;Accumulates&quot; the elements in the given collection with the <code><a href="group__ranges.html#gaa8f3cfdaa4fe9b4970a88d0d859d738a" class="m-doc">CnxRangeAccumulator(T)</a></code>, <code>accumulation_function</code>, returning the result</p>
           </div></section>
         </section>
       </div>
@@ -984,7 +984,7 @@ YourIteratorCategory(Ref(T)) (*const end)(YourCollectionType* restrict self);
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>C2nxt A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C and C2x. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>
