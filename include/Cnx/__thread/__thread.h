@@ -113,7 +113,7 @@ typedef pthread_mutex_t __cnx_recursive_basic_mutex;
 
 	#define __CNX_MUTEX_INITIALIZER ((__cnx_basic_mutex)PTHREAD_MUTEX_INITIALIZER)
 
-typedef pthread_cond_t __CNX_condvar;
+typedef pthread_cond_t __cnx_condvar;
 
 	#define __CNX_CONDVAR_INITIALIZER ((__cnx_condvar)PTHREAD_COND_INITIALIZER)
 
