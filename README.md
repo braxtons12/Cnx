@@ -77,18 +77,18 @@ i32 main(i32 argc, const_cstring* argv) {
 
 	// vector is already instantiated for builtins like `i32` and some provided types like `CnxString`,
 	// so, we can just use it directly here
-	let_mut vec = Cnx_vector_new_with_capacity(i32, 10);
+	let_mut vec = cnx_vector_new_with_capacity(i32, 10);
 
 	// insert 10 elements, 0 through 9, into the vector
 	ranged_for(i, 0, 10) {
-		Cnx_vector_push_back(vec, i);
+		cnx_vector_push_back(vec, i);
 	}
 
 	// print information about the vector (size, capacity, whether it is currently in
-	// small-size-optimization mode) to Cnxout, followed by a newline.
+	// small-size-optimization mode) to `stdout`, followed by a newline.
 	println("{}", as_format_t(CnxVector(i32), vec));
 
-	// print each element, followed by a newline, to Cnxout
+	// print each element, followed by a newline, to `stdout`
 	// prints 0 through 9
 	foreach(elem, vec) {
 		println("{}", elem);	
@@ -96,9 +96,9 @@ i32 main(i32 argc, const_cstring* argv) {
 
 	// transform the elements in the vector with the above-defined `transform` function
 	// and returns a view of the vector as a `CnxRange(i32)` (that we ignore)
-	Cnx_transform(i32, vec, transform);
+	cnx_transform(i32, vec, transform);
 
-	// print each element, followed by a newline, to Cnxout
+	// print each element, followed by a newline, to `stdout`
 	// prints multiples of 3 from 0 through 27
 	foreach(elem, vec) {
 		println("{}", elem);	
@@ -135,7 +135,7 @@ Providing a specifier that is invalid for the associated argument will result in
 debug builds and unspecified behavior in release builds (for builtin and provided types).
 
 For more details on string formatting, see the documentation for the `CnxFormat` Trait,
-`Cnx_format(format_string, ...)`, and the [CnxFormat](@ref format) module.
+`cnx_format(format_string, ...)`, and the [CnxFormat](@ref format) module.
 
 ### Performance
 
@@ -150,7 +150,7 @@ example
 the facilities currently provided by the library. So, lets look at a benchmark comparing the
 relative speed of `println` to `printf`.
 
-This benchmark consisted of printing out N strings to `Cnxout` consisting of:
+This benchmark consisted of printing out N strings to `stdout` consisting of:
 
 - the Mth multiple of 1024, unsigned
 - the Mth multiple of negative 1024
@@ -177,7 +177,7 @@ All numbers are relative performance compared to `printf`
 | 100000                   |                     1.0156 |           1.0133 |                 0.9000 |         0.8972 |
 | average                  |                     1.2269 |           1.1231 |                 1.3862 |         1.1777 |
 
-For the code used for the benchmark and more detailed results (Cnx. Dev., Median, individual runs),
+For the code used for the benchmark and more detailed results (Std. Dev., Median, individual runs),
 see the project/code in the "benchmark" subfolder.
 
 So, on __average__ (at least on linux, benchmark on your specific platform for platform specific
