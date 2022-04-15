@@ -32,7 +32,7 @@ DOXYFILE_ENCODING      = UTF-8
 # title of most generated pages and in a few other places.
 # The default value is: My Project.
 
-PROJECT_NAME           = "C2nxt"
+PROJECT_NAME           = "Cnx"
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number. This
 # could be handy for archiving the generated documentation or if some version
@@ -346,11 +346,11 @@ OPTIMIZE_OUTPUT_FOR_C  = YES
 
 						  AUTOLINK_SUPPORT       = YES
 
-# If you use STL classes (i.e. std::string, std::vector, etc.) but do not want
+# If you use STL classes (i.e. Cnx::string, Cnx::vector, etc.) but do not want
 # to include (a tag file for) the STL sources as input, then you should set this
 # tag to YES in order to let doxygen match functions declarations and
-# definitions whose arguments contain STL classes (e.g. func(std::string);
-# versus func(std::string) {}). This also make the inheritance and collaboration
+# definitions whose arguments contain STL classes (e.g. func(Cnx::string);
+# versus func(Cnx::string) {}). This also make the inheritance and collaboration
 # diagrams that involve STL classes more complete and accurate.
 # The default value is: NO.
 
@@ -759,7 +759,7 @@ OPTIMIZE_OUTPUT_FOR_C  = YES
 						  QUIET                  = NO
 
 # The WARNINGS tag can be used to turn on/off the warning messages that are
-# generated to standard error (stderr) by doxygen. If WARNINGS is set to YES
+# generated to standard error (Cnxerr) by doxygen. If WARNINGS is set to YES
 # this implies that the warnings are on.
 #
 # Tip: Turn warnings on while writing the documentation.
@@ -809,7 +809,7 @@ OPTIMIZE_OUTPUT_FOR_C  = YES
 
 # The WARN_LOGFILE tag can be used to specify a file to which warning and error
 # messages should be written. If left blank the output is written to standard
-# error (stderr).
+# error (Cnxerr).
 
 						  WARN_LOGFILE           =
 

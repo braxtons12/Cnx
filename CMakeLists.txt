@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 include(FetchContent)
 
-project(C2nxt VERSION 0.1.0 LANGUAGES C)
+project(Cnx VERSION 0.1.0 LANGUAGES C)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS YES)
 
@@ -18,90 +18,90 @@ find_package(Criterion REQUIRED)
 
 ###### We add headers to sources sets because it helps with `#include` lookup for some tooling #####
 set(EXPORTS
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/C2nxt.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdAllocators.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdArray.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdAssert.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdAtomic.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdBasicTypes.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdCollectionData.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdDef.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdEnum.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdError.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdFormat.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdIO.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdIterator.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdLambda.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdMath.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdOption.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdPlatform.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdRange.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdRatio.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdResult.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdString.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdStringExt.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdTrait.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdTypeTraits.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdVector.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/mpl/StdArgLists.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/mpl/StdPPMath.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/mpl/StdPPStrings.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/mpl/detail/ArgLists.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/time/StdClock.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/time/StdDuration.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/time/StdTimePoint.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdTime.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_array/StdArrayDef.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_array/StdArrayDecl.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_array/StdArrayImpl.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_vector/StdVectorDef.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_vector/StdVectorDecl.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_vector/StdVectorImpl.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_option/StdOptionDef.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_option/StdOptionDecl.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_option/StdOptionImpl.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_result/StdResultDef.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_result/StdResultDecl.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_result/StdResultImpl.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_smart_ptrs/StdSmartPtrDef.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_unique_ptr/StdUniquePtrDef.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_unique_ptr/StdUniquePtrDecl.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/std_unique_ptr/StdUniquePtrImpl.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdEnum.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt/StdTuple.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Cnx.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Allocators.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Array.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Assert.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Atomic.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/BasicTypes.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/CollectionData.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Def.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Enum.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Error.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Format.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/IO.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Iterator.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Lambda.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Math.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Option.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Platform.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Range.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Ratio.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Result.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/String.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/StringExt.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Trait.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/TypeTraits.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Vector.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/mpl/ArgLists.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/mpl/PPMath.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/mpl/PPStrings.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/mpl/detail/ArgLists.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/time/Clock.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/time/Duration.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/time/TimePoint.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Time.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/array/ArrayDef.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/array/ArrayDecl.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/array/ArrayImpl.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/vector/VectorDef.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/vector/VectorDecl.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/vector/VectorImpl.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/option/OptionDef.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/option/OptionDecl.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/option/OptionImpl.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/result/ResultDef.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/result/ResultDecl.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/result/ResultImpl.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/smart_ptrs/SmartPtrDef.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/unique_ptr/UniquePtrDef.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/unique_ptr/UniquePtrDecl.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/unique_ptr/UniquePtrImpl.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Enum.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Tuple.h"
 	)
 set(IMPLEMENTATIONS
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdAllocators.c"
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdAssert.c"
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdAtomicImpl.c"
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdError.c"
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdFormat.c"
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdIO.c"
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdMath.c"
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdOption.c"
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdRange.c"
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdRatio.c"
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdResult.c"
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdString.c"
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdStringExt.c"
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdThread.c"
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/StdVector.c"
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/time/StdClock.c"
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/time/StdDuration.c"
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/time/StdTimePoint.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/Allocators.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/Assert.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/AtomicImpl.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/Error.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/Format.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/IO.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/Math.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/Option.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/Range.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/Ratio.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/Result.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/String.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/StringExt.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/Thread.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/Vector.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/time/Clock.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/time/Duration.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/time/TimePoint.c"
 	)
 
-add_library(C2nxt STATIC
+add_library(Cnx STATIC
 	${EXPORTS} ${IMPLEMENTATIONS})
 add_executable(FormatBenchmark "${CMAKE_CURRENT_SOURCE_DIR}/src/benchmark/benchmark.c")
 add_executable(Test "${CMAKE_CURRENT_SOURCE_DIR}/src/test/Test.c"
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/test/StdArrayi32_10.c")
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/test/Arrayi32_10.c")
 
 if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang" OR APPLE)
 	if(NOT DEFINED CMAKE_C_CLANG_TIDY)
 		SET(CMAKE_C_CLANG_TIDY clang-tidy)
 	endif()
-	set_target_properties(C2nxt PROPERTIES C_CLANG_TIDY ${CMAKE_C_CLANG_TIDY})
+	set_target_properties(Cnx PROPERTIES C_CLANG_TIDY ${CMAKE_C_CLANG_TIDY})
 	set_target_properties(FormatBenchmark PROPERTIES C_CLANG_TIDY ${CMAKE_C_CLANG_TIDY})
 	set_target_properties(Test PROPERTIES C_CLANG_TIDY ${CMAKE_C_CLANG_TIDY})
 endif ()
@@ -129,14 +129,14 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
 		-Wno-missing-variable-declarations
 		-Wno-unknown-warning-option
 		)
-	target_compile_options(C2nxt PRIVATE
+	target_compile_options(Cnx PRIVATE
 		-std=gnu2x
 		-Wall
 		-Wextra
 		-Weverything
 		-Werror
 		)
-	target_compile_options(C2nxt PUBLIC
+	target_compile_options(Cnx PUBLIC
 		-fdebug-macro
 		-Wnonnull
 		-Wno-unused-value
@@ -172,7 +172,7 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
 		-Wno-unknown-warning-option
 		)
 	if (WIN32)
-		target_compile_options(C2nxt PUBLIC
+		target_compile_options(Cnx PUBLIC
 			-D_CRT_SECURE_NO_WARNINGS
 			)
 	endif ()
@@ -191,13 +191,13 @@ else ()
 		-Werror
 		-Wno-unknown-warning
 		)
-	target_compile_options(C2nxt PRIVATE
+	target_compile_options(Cnx PRIVATE
 		-std=gnu2x
 		-Wall
 		-Wextra
 		-Werror
 		)
-	target_compile_options(C2nxt PUBLIC
+	target_compile_options(Cnx PUBLIC
 		-Wnonnull
 		-Wno-unused-value
 		-Wno-unused-function
@@ -210,30 +210,30 @@ else ()
 endif ()
 
 if (APPLE)
-	target_include_directories(C2nxt BEFORE PUBLIC
+	target_include_directories(Cnx BEFORE PUBLIC
 		"${CMAKE_CURRENT_SOURCE_DIR}/include"
 		)
-	target_include_directories(C2nxt BEFORE INTERFACE
+	target_include_directories(Cnx BEFORE INTERFACE
 		"/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc"
 		)
 else ()
-	target_include_directories(C2nxt BEFORE PUBLIC
+	target_include_directories(Cnx BEFORE PUBLIC
 		"${CMAKE_CURRENT_SOURCE_DIR}/include"
 		)
 endif ()
 
 if (APPLE)
-	target_link_libraries(C2nxt PUBLIC m c)
+	target_link_libraries(Cnx PUBLIC m c)
 elseif (NOT WIN32)
-	target_link_libraries(C2nxt PUBLIC m)
+	target_link_libraries(Cnx PUBLIC m)
 endif ()
 
 if(NOT WIN32)
-	target_link_libraries(C2nxt PUBLIC pthread)
+	target_link_libraries(Cnx PUBLIC pthread)
 endif()
 
-target_link_libraries(FormatBenchmark PRIVATE C2nxt)
-target_link_libraries(Test PRIVATE C2nxt ${CRITERION_LIBRARIES})
+target_link_libraries(FormatBenchmark PRIVATE Cnx)
+target_link_libraries(Test PRIVATE Cnx ${CRITERION_LIBRARIES})
 target_include_directories(Test PRIVATE ${CRITERION_INCLUDE_DIRS})
 
 find_package(Doxygen REQUIRED)
@@ -241,7 +241,7 @@ set(MCSS_DOXYFILE_IN "${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile-mcss.in")
 set(MCSS_DOXYFILE_OUT "${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile-mcss")
 set(MCSS_CONF_PY "${CMAKE_CURRENT_SOURCE_DIR}/conf.py")
 set(MCSS_TEMPLATES "${CMAKE_CURRENT_SOURCE_DIR}/templates")
-set(DOXYGEN_INPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/C2nxt")
+set(DOXYGEN_INPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx")
 set(DOXYGEN_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/docs")
 set(DOXYGEN_INDEX_FILE "${DOXYGEN_OUTPUT_DIR}/xml/index.xml")
 set(DOXYFILE_IN "${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in")

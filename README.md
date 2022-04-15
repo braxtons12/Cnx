@@ -1,27 +1,27 @@
-# C2nxt
+# Cnx
 
-C2nxt is a GNU C23 library providing type-safe collections and ergonomic features typical in
+Cnx is a GNU C23 library providing type-safe collections and ergonomic features typical in
 higher-level languages, to C. It aims to be a proof-of-concept view of what a more modern standard
 (or at least widely used base) library could look like in the future if it only had to support C23,
 with much more modern abstractions and ergonomics over the standard C library. It is currently under
 active development and has not yet hit a __stable__ release point.
 
-Some features of C2nxt include:
+Some features of Cnx include:
 
 - Type-Safe collections implemented (mostly) as manually instantiated templates. Currently
-  implemented collections include `StdString`, `StdVector(T)`, and `StdArray(T, N)`
+  implemented collections include `CnxString`, `CnxVector(T)`, and `CnxArray(T, N)`
 - Error handling facilities similar to Rust and `boost::outcome` with equivalent semantics and
-  similar API to Rust, via `StdError` and `StdResult(T)`
-- Optional value type, `StdOption(T)` based on Rust's `std::option::Option` with equivalent
+  similar API to Rust, via `CnxError` and `CnxResult(T)`
+- Optional value type, `CnxOption(T)` based on Rust's `std::option::Option` with equivalent
   semantics and similar API to Rust
 - Facilities for defining, implementing, and using polymorphic interfaces via Traits
 - Iterators, Ranges, and `foreach` loops (equivalent to C++'s `for(elem : collection)`)
 - Human-readable (no more having to remember which character combination corresonds to which type
-  in `printf`), type-safe string formatting and formatted I/O via the `StdFormat` Trait
+  in `printf`), type-safe string formatting and formatted I/O via the `CnxFormat` Trait
 
 ##### Why not standard C?
 
-C2nxt makes heavy use of `__auto_type` and some of its features are only possible with it. It also
+Cnx makes heavy use of `__auto_type` and some of its features are only possible with it. It also
 uses statement-expressions for several features and `__attribute__(cleanup)` for scoped destruction.
 It could be refactored to be Standard C in C23 or a subsequent standard, if C gets `auto`, `typeof`,
 `__VA_OPT__`, lamdas, and defer.
@@ -34,40 +34,40 @@ ensure reliability in production.
 
 ## Documentation
 
-You can view the documentation [here](https://braxtons12.github.io/C2nxt/)
+You can view the documentation [here](https://braxtons12.github.io/Cnx/)
 
 ## Getting Started
 
-C2nxt uses CMake, and incorporating it into your project is easy!
+Cnx uses CMake, and incorporating it into your project is easy!
 
 First, set up your CMake project. In `CMakeLists.txt`:
 
 ```cmake
 
-FetchContent_Declare(C2nxt
-        GIT_REPOSITORY "https://github.com/braxtons12/C2nxt"
+FetchContent_Declare(Cnx
+        GIT_REPOSITORY "https://github.com/braxtons12/Cnx"
         GIT_TAG "0.1.0"
         )
 
-FetchContent_MakeAvailable(C2nxt)
+FetchContent_MakeAvailable(Cnx)
 
 ### Setup your target......
 
-target_link_libraries(your_target C2nxt)
+target_link_libraries(your_target Cnx)
 
 ```
 
-Then, include your desired headers, either the main header, `C2nxt/C2nxt.h`, for everything, or
+Then, include your desired headers, either the main header, `Cnx/Cnx.h`, for everything, or
 individual ones for granular imports.
 
 ### Example
 
 ```c
 
-#include <C2nxt/StdDef.h>
+#include <Cnx/CnxDef.h>
 #define VECTOR_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
 #define RANGE_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
-#include <C2nxt/C2nxt.h>
+#include <Cnx/Cnx.h>
 
 void transform(i32* restrict elem) {
 	*elem *= 3;
@@ -75,30 +75,30 @@ void transform(i32* restrict elem) {
 
 i32 main(i32 argc, const_cstring* argv) {
 
-	// vector is already instantiated for builtins like `i32` and some provided types like `StdString`,
+	// vector is already instantiated for builtins like `i32` and some provided types like `CnxString`,
 	// so, we can just use it directly here
-	let_mut vec = std_vector_new_with_capacity(i32, 10);
+	let_mut vec = Cnx_vector_new_with_capacity(i32, 10);
 
 	// insert 10 elements, 0 through 9, into the vector
 	ranged_for(i, 0, 10) {
-		std_vector_push_back(vec, i);
+		Cnx_vector_push_back(vec, i);
 	}
 
 	// print information about the vector (size, capacity, whether it is currently in
-	// small-size-optimization mode) to stdout, followed by a newline.
-	println("{}", as_format_t(StdVector(i32), vec));
+	// small-size-optimization mode) to Cnxout, followed by a newline.
+	println("{}", as_format_t(CnxVector(i32), vec));
 
-	// print each element, followed by a newline, to stdout
+	// print each element, followed by a newline, to Cnxout
 	// prints 0 through 9
 	foreach(elem, vec) {
 		println("{}", elem);	
 	}
 
 	// transform the elements in the vector with the above-defined `transform` function
-	// and returns a view of the vector as a `StdRange(i32)` (that we ignore)
-	std_transform(i32, vec, transform);
+	// and returns a view of the vector as a `CnxRange(i32)` (that we ignore)
+	Cnx_transform(i32, vec, transform);
 
-	// print each element, followed by a newline, to stdout
+	// print each element, followed by a newline, to Cnxout
 	// prints multiples of 3 from 0 through 27
 	foreach(elem, vec) {
 		println("{}", elem);	
@@ -109,7 +109,7 @@ i32 main(i32 argc, const_cstring* argv) {
 
 ### Collections
 
-C2nxt collections provide type-safety, iterators, the ability to use user-provided default and copy
+Cnx collections provide type-safety, iterators, the ability to use user-provided default and copy
 constructors, and destructors, for stored types, and, where applicable, are allocator aware. For
 more details on collections, see the documentation on the specific collection.
 
@@ -134,8 +134,8 @@ to specify the way the argument should be formatted. Currently supported specifi
 Providing a specifier that is invalid for the associated argument will result in a runtime assert in
 debug builds and unspecified behavior in release builds (for builtin and provided types).
 
-For more details on string formatting, see the documentation for the `StdFormat` Trait,
-`std_format(format_string, ...)`, and the [StdFormat](@ref format) module.
+For more details on string formatting, see the documentation for the `CnxFormat` Trait,
+`Cnx_format(format_string, ...)`, and the [CnxFormat](@ref format) module.
 
 ### Performance
 
@@ -146,16 +146,16 @@ gained from using the library's features.
 
 The implementation of `println` makes heavy use of most of the functionality presented in the
 example
-(except for `StdRange(T)`), as well as the `Result(T)` type, which means it's using most of
+(except for `CnxRange(T)`), as well as the `Result(T)` type, which means it's using most of
 the facilities currently provided by the library. So, lets look at a benchmark comparing the
 relative speed of `println` to `printf`.
 
-This benchmark consisted of printing out N strings to `stdout` consisting of:
+This benchmark consisted of printing out N strings to `Cnxout` consisting of:
 
 - the Mth multiple of 1024, unsigned
 - the Mth multiple of negative 1024
 - the Mth multiple of negative 1024.1024
-- a `StdString` pre-initialized to "This is a string"
+- a `CnxString` pre-initialized to "This is a string"
 
 where M is in [0, N)
 
@@ -177,7 +177,7 @@ All numbers are relative performance compared to `printf`
 | 100000                   |                     1.0156 |           1.0133 |                 0.9000 |         0.8972 |
 | average                  |                     1.2269 |           1.1231 |                 1.3862 |         1.1777 |
 
-For the code used for the benchmark and more detailed results (Std. Dev., Median, individual runs),
+For the code used for the benchmark and more detailed results (Cnx. Dev., Median, individual runs),
 see the project/code in the "benchmark" subfolder.
 
 So, on __average__ (at least on linux, benchmark on your specific platform for platform specific
@@ -190,7 +190,7 @@ insensitive with clang (less so with GCC, particularly at small workloads), and 
 jemalloc pairing is the most __consistently__ fast option to use.
 
 This was the performance for formatting builtin types (u32, i32, f32, cstring), but it would be
-reasonable to expect this to translate to custom types as well (`StdString`'s `StdFormat`
+reasonable to expect this to translate to custom types as well (`CnxString`'s `CnxFormat`
 implementation simply forwards itself, so it's nearly the same as passing a `const char*` to
 `printf` in terms of cost).
 
@@ -204,7 +204,7 @@ To run the tests, simply configure and build the test target, then run the resul
 executable.<br>
 Please feel free to submit new tests!
 
-Inside the C2nxt main directory:
+Inside the Cnx main directory:
 
 ```sh
 
@@ -223,7 +223,7 @@ explicit typing (where possible), and prefer simplicity and correctness over per
 
 ### License
 
-C2nxt uses the MIT license.
+Cnx uses the MIT license.
 
 ### Special Thanks
 

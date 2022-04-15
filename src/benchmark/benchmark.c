@@ -1,7 +1,7 @@
-#include <C2nxt/StdIO.h>
-#include <C2nxt/StdPlatform.h>
-#include <C2nxt/StdVector.h>
-#include <C2nxt/time/StdClock.h>
+#include <Cnx/IO.h>
+#include <Cnx/Platform.h>
+#include <Cnx/Vector.h>
+#include <Cnx/time/Clock.h>
 #include <time.h>
 
 i32 main(i32 argc, char** argv) {
@@ -13,7 +13,7 @@ i32 main(i32 argc, char** argv) {
 	let unum = 1024U;
 	let snum = -1024;
 	let fnum = -1024.1024;
-	std_string_scoped string = std_string_from("This is a string");
+	cnx_string_scoped string = cnx_string_from("This is a string");
 
 	let_mut average_println = 0.0;
 	let_mut average_printf = 0.0;
@@ -25,11 +25,11 @@ i32 main(i32 argc, char** argv) {
 		let s = snum * i;
 		// NOLINTNEXTLINE(readability-identifier-length)
 		let f = fnum * i;
-		let start = std_clock_now(&std_steady_clock);
+		let start = cnx_clock_now(&cnx_steady_clock);
 		println("{}, {}, {d3}, {}", u, s, f, string);
-		let end = std_clock_now(&std_steady_clock);
+		let end = cnx_clock_now(&cnx_steady_clock);
 		average_println += static_cast(f64)(
-			std_duration_subtract(end.time_since_epoch, start.time_since_epoch).count);
+			cnx_duration_subtract(end.time_since_epoch, start.time_since_epoch).count);
 	}
 	average_println = average_println / static_cast(f64)(num_runs);
 
@@ -40,11 +40,11 @@ i32 main(i32 argc, char** argv) {
 		let s = snum * i;
 		// NOLINTNEXTLINE(readability-identifier-length)
 		let f = fnum * i;
-		let start = std_clock_now(&std_steady_clock);
-		printf("%u, %d, %.3f, %s\n", u, s, f, std_string_into_cstring(string));
-		let end = std_clock_now(&std_steady_clock);
+		let start = cnx_clock_now(&cnx_steady_clock);
+		printf("%u, %d, %.3f, %s\n", u, s, f, cnx_string_into_cstring(string));
+		let end = cnx_clock_now(&cnx_steady_clock);
 		average_printf += static_cast(f64)(
-			std_duration_subtract(end.time_since_epoch, start.time_since_epoch).count);
+			cnx_duration_subtract(end.time_since_epoch, start.time_since_epoch).count);
 	}
 	average_printf = average_printf / static_cast(f64)(num_runs);
 

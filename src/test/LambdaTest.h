@@ -1,45 +1,45 @@
 
-#ifndef STD_LAMBDA_TEST
-#define STD_LAMBDA_TEST
+#ifndef CNX_LAMBDA_TEST
+#define CNX_LAMBDA_TEST
 
-#include <C2nxt/StdLambda.h>
-#include <C2nxt/StdString.h>
+#include <Cnx/Lambda.h>
+#include <Cnx/String.h>
 
 #include "Criterion.h"
 
-typedef Lambda(StdCompare, const StdString*) LambdaCmpStr;
+typedef Lambda(CnxCompare, const CnxString*) LambdaCmpStr;
 
-StdCompare LambdaFunction(lambda_function, const StdString* restrict string) {
-	let binding = lambda_binding(const StdString*);
-	return std_string_equal(*binding._1, string) ? STD_EQUAL : STD_LESS_THAN;
+CnxCompare LambdaFunction(lambda_function, const CnxString* restrict string) {
+	let binding = lambda_binding(const CnxString*);
+	return cnx_string_equal(*binding._1, string) ? CNX_EQUAL : CNX_LESS_THAN;
 }
 
-StdCompare lambda_receiver(LambdaCmpStr lambda) {
-	std_string_scoped string = std_string_from("Test2");
+CnxCompare lambda_receiver(LambdaCmpStr lambda) {
+	cnx_string_scoped string = cnx_string_from("Test2");
 
 	let ret = lambda_call(lambda, &string);
 	lambda_free(&lambda);
 	return ret;
 }
 
-StdCompare lambda_caller1(void) {
-	std_string_scoped string = std_string_from("Test1");
+CnxCompare lambda_caller1(void) {
+	cnx_string_scoped string = cnx_string_from("Test1");
 	lambda_scoped lambda = lambda(lambda_function, &string);
 	return lambda_receiver(lambda_cast(lambda_clone(lambda), LambdaCmpStr));
 }
 
-StdCompare lambda_caller2(void) {
-	std_string_scoped string = std_string_from("Test2");
+CnxCompare lambda_caller2(void) {
+	cnx_string_scoped string = cnx_string_from("Test2");
 	lambda_scoped lambda = lambda(lambda_function, &string);
 	return lambda_receiver(lambda_cast(lambda_clone(lambda), LambdaCmpStr));
 }
 
-TEST(StdLambda, case1) {
-	TEST_ASSERT_EQUAL(STD_LESS_THAN, lambda_caller1());
+TEST(CnxLambda, case1) {
+	TEST_ASSERT_EQUAL(CNX_LESS_THAN, lambda_caller1());
 }
 
-TEST(StdLambda, case2) {
-	TEST_ASSERT_EQUAL(STD_EQUAL, lambda_caller2());
+TEST(CnxLambda, case2) {
+	TEST_ASSERT_EQUAL(CNX_EQUAL, lambda_caller2());
 }
 
-#endif // STD_LAMBDA_TEST
+#endif // CNX_LAMBDA_TEST

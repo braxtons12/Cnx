@@ -1,8 +1,8 @@
 #ifndef CRITERION_WRAP
 #define CRITERION_WRAP
 
-#include <C2nxt/StdDef.h>
-#include <C2nxt/StdMath.h>
+#include <Cnx/Def.h>
+#include <Cnx/Math.h>
 #include <criterion/criterion.h>
 
 #define TEST(...)                                                                                                        \
