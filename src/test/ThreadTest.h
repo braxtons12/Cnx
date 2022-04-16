@@ -206,7 +206,7 @@ TEST(CnxJThread, test_stop_token) {
 
 	cnx_stop_token_request_stop(thread.stop_token);
 
-	cnx_thread_join(&(thread.handle));
+	ignore(cnx_thread_join(&(thread.handle)));
 
 	TEST_ASSERT_GREATER_THAN_OR_EQUAL(val, 5);
 }
