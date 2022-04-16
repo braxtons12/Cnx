@@ -103,6 +103,7 @@ TEST(CnxSharedPtr, clone) {
 	TEST_ASSERT_EQUAL(*ptr(cloned), 4);
 	TEST_ASSERT_EQUAL(atomic_load(cloned.m_ref_count), 2);
 	TEST_ASSERT_EQUAL(atomic_load(cloned.m_ref_count), atomic_load(ptr.m_ref_count));
+	TEST_ASSERT_EQUAL(cloned.m_ref_count, ptr.m_ref_count);
 }
 
 TEST(CnxSharedPtr, from) {
