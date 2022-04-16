@@ -66,7 +66,7 @@
             <dt>
               struct <a href="structCnxJThread.html" class="m-doc">CnxJThread</a>
             </dt>
-            <dd>A <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code> is the handle type for OS-level threads which are automatically joined when their handle goes out of scope and use a dedicated stop token to signal to the thread when its execution should halt.</dd>
+            <dd>A <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code> is the handle type for OS-level threads which are automatically joined when their handle goes out of scope and use a dedicated stop token to signal to the thread when its execution should end.</dd>
           </dl>
         </section>
         <section id="typedef-members">
@@ -93,7 +93,7 @@
             </dt>
             <dd>A <code>CnxThread</code> is the handle type for basic OS-level threads provided by Cnx&#x27;s threading and synchronization API. <code>CnxThread</code> provides the facilities for creating multiple threads and ending their execution, enabling concurrent tasks and operations to be performed.</dd>
             <dt>
-              using <a href="group__cnx__thread.html#ga70f963bba7da28c62bab21a8b09ea6c0" class="m-doc">CnxStopToken</a> = atomic_bool*
+              using <a href="group__cnx__thread.html#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a> = atomic_bool
             </dt>
             <dd>A <code>CnxStopToken</code> is associated with a <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code> and is used to signal to it when it should end its execution.</dd>
             <dt>
@@ -269,6 +269,36 @@
             </dt>
             <dd>Returns the ID of the current thread.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__thread.html#ga03d41fb534abcbf8d7b1819495da3767" class="m-doc">cnx_stop_token_request_stop</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a>*restrict token)</span>
+            </dt>
+            <dd>Requests the thread associated with the given stop token to end execution.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__thread.html#ga71a36a29ecdcb9c481ef836846877a3c" class="m-doc">cnx_stop_token_stop_requested</a>(</span><span class="m-doc-wrap">const <a href="group__cnx__thread.html#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a>*restrict token)</span>
+            </dt>
+            <dd>Returns whether the thread associated with the given stop token has been requested to end execution.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">typedef <a href="group__cnx__thread.html#ga8eadbd9e20ee4703102361fe32252819" class="m-doc">Lambda</a>(</span><span class="m-doc-wrap">void,
+              const <a href="group__cnx__thread.html#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a>*) CnxJThreadLambda</span>
+            </dt>
+            <dd>When spawning a new <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, a <code><a href="group__cnx__thread.html#ga8eadbd9e20ee4703102361fe32252819" class="m-doc">Lambda(void, const CnxStopToken*)</a></code> is used as its startup routine. This typedef allows for receiving that startup routine as a function parameter.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"> <a href="group__cnx__thread.html#ga7ac0be34d2e51534c1688537e9377d90" class="m-doc">CnxResult</a>(</span><span class="m-doc-wrap"><a href="structCnxJThread.html" class="m-doc">CnxJThread</a>)</span>
+            </dt>
+            <dd>Spawns a new <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, with the given <code>CnxJThreadLambda</code> as its startup routine.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga6c93f8534a9296769aba9c481ca416f6" class="m-doc">cnx_jthread_init</a>(</span><span class="m-doc-wrap"><a href="structCnxJThread.html" class="m-doc">CnxJThread</a>*restrict thread,
+              CnxJThreadLambda lambda)</span>
+            </dt>
+            <dd>Spawns a new <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, with the given <code>CnxJThreadLambda</code> as its startup routine.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#gacedc83bdc308bc4201c01254c4c890f6" class="m-doc">cnx_jthread_join</a>(</span><span class="m-doc-wrap"><a href="structCnxJThread.html" class="m-doc">CnxJThread</a>*restrict thread)</span>
+            </dt>
+            <dd>Joins the given <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, blocking until its execution has completed.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__thread.html#gac175e5c3ee12f5b78c62f5d878518794" class="m-doc">cnx_jthread_free</a>(</span><span class="m-doc-wrap">void* thread)</span>
+            </dt>
+            <dd>Frees the given <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, blocking until it&#x27;s joined or joining fails.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper"> <a href="group__cnx__thread.html#ga9cc953a1b0c6349efa957bfd32720984" class="m-doc">CnxResult</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c0e7bcf640c8205c50186c5a1c6be95" class="m-doc">CnxTLSKey</a>) cnx_tls_new(void *data</span>
             </dt>
             <dd>Creates a new thread-local storage.</dd>
@@ -296,6 +326,18 @@
               <span class="m-doc-wrap-bumper">#define <a href="group__cnx__thread.html#gad4d9b405bcbffaf0d4dae6166c18aa1e" class="m-doc">thread_local</a></span>
             </dt>
             <dd>A variable declared as <code>thread_local</code> is local to the current thread and guaranteed to not be accessible by other threads.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__thread.html#gafd1f14b31d55d0e6cf304a66c07090e5" class="m-doc">cnx_jthread_is_null</a>(</span><span class="m-doc-wrap">thread)</span>
+            </dt>
+            <dd>Checks if the given thread handle is null (if it has been initialized)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__thread.html#gab012bc313b0605fe2218c95b2d4df70d" class="m-doc">cnx_jthread_get_id</a>(</span><span class="m-doc-wrap">thread)</span>
+            </dt>
+            <dd>Gets the ID of the current thread.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__thread.html#ga42ed343811b49bddf98e6faf15727d29" class="m-doc">cnx_jthread_detach</a>(</span><span class="m-doc-wrap">thread)</span>
+            </dt>
+            <dd>Separates execution of the thread associated with the <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code> thread handle from the handle.</dd>
           </dl>
         </section>
       </div>

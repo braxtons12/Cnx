@@ -45,7 +45,31 @@
           CnxJThread <span class="m-thin">struct</span>
           <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
         </h1>
-        <p>A <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code> is the handle type for OS-level threads which are automatically joined when their handle goes out of scope and use a dedicated stop token to signal to the thread when its execution should halt.</p>
+        <p>A <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code> is the handle type for OS-level threads which are automatically joined when their handle goes out of scope and use a dedicated stop token to signal to the thread when its execution should end.</p>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-attribs">Public variables</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <section id="pub-attribs">
+          <h2><a href="#pub-attribs">Public variables</a></h2>
+          <dl class="m-doc">
+            <dt id="a3e658814d2da83e51039a5be963748ff">
+              <a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a> <a href="#a3e658814d2da83e51039a5be963748ff" class="m-doc-self">handle</a>
+            </dt>
+            <dd>The handle to the OS-level thread the <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code> manages.</dd>
+            <dt id="a768d54b384866260c4ee35117829b425">
+              <a href="group__cnx__thread.html#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a>* <a href="#a768d54b384866260c4ee35117829b425" class="m-doc-self">stop_token</a>
+            </dt>
+            <dd>The stop token used to signal to the thread to end execution.</dd>
+          </dl>
+        </section>
       </div>
     </div>
   </div>

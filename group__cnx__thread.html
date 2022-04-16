@@ -150,7 +150,7 @@
             <dt>
               struct <a href="structCnxJThread.html" class="m-doc">CnxJThread</a>
             </dt>
-            <dd>A <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code> is the handle type for OS-level threads which are automatically joined when their handle goes out of scope and use a dedicated stop token to signal to the thread when its execution should halt.</dd>
+            <dd>A <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code> is the handle type for OS-level threads which are automatically joined when their handle goes out of scope and use a dedicated stop token to signal to the thread when its execution should end.</dd>
           </dl>
         </section>
         <section id="typedef-members">
@@ -177,7 +177,7 @@
             </dt>
             <dd>A <code>CnxThread</code> is the handle type for basic OS-level threads provided by Cnx&#x27;s threading and synchronization API. <code>CnxThread</code> provides the facilities for creating multiple threads and ending their execution, enabling concurrent tasks and operations to be performed.</dd>
             <dt>
-              using <a href="#ga70f963bba7da28c62bab21a8b09ea6c0" class="m-doc">CnxStopToken</a> = atomic_bool*
+              using <a href="#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a> = atomic_bool
             </dt>
             <dd>A <code>CnxStopToken</code> is associated with a <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code> and is used to signal to it when it should end its execution.</dd>
             <dt>
@@ -353,6 +353,36 @@
             </dt>
             <dd>Returns the ID of the current thread.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga03d41fb534abcbf8d7b1819495da3767" class="m-doc">cnx_stop_token_request_stop</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a>*restrict token)</span>
+            </dt>
+            <dd>Requests the thread associated with the given stop token to end execution.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#ga71a36a29ecdcb9c481ef836846877a3c" class="m-doc">cnx_stop_token_stop_requested</a>(</span><span class="m-doc-wrap">const <a href="group__cnx__thread.html#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a>*restrict token)</span>
+            </dt>
+            <dd>Returns whether the thread associated with the given stop token has been requested to end execution.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">typedef <a href="#ga8eadbd9e20ee4703102361fe32252819" class="m-doc">Lambda</a>(</span><span class="m-doc-wrap">void,
+              const <a href="group__cnx__thread.html#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a>*) CnxJThreadLambda</span>
+            </dt>
+            <dd>When spawning a new <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, a <code><a href="group__cnx__thread.html#ga8eadbd9e20ee4703102361fe32252819" class="m-doc">Lambda(void, const CnxStopToken*)</a></code> is used as its startup routine. This typedef allows for receiving that startup routine as a function parameter.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"> <a href="#ga7ac0be34d2e51534c1688537e9377d90" class="m-doc">CnxResult</a>(</span><span class="m-doc-wrap"><a href="structCnxJThread.html" class="m-doc">CnxJThread</a>)</span>
+            </dt>
+            <dd>Spawns a new <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, with the given <code>CnxJThreadLambda</code> as its startup routine.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#ga6c93f8534a9296769aba9c481ca416f6" class="m-doc">cnx_jthread_init</a>(</span><span class="m-doc-wrap"><a href="structCnxJThread.html" class="m-doc">CnxJThread</a>*restrict thread,
+              CnxJThreadLambda lambda)</span>
+            </dt>
+            <dd>Spawns a new <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, with the given <code>CnxJThreadLambda</code> as its startup routine.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#gacedc83bdc308bc4201c01254c4c890f6" class="m-doc">cnx_jthread_join</a>(</span><span class="m-doc-wrap"><a href="structCnxJThread.html" class="m-doc">CnxJThread</a>*restrict thread)</span>
+            </dt>
+            <dd>Joins the given <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, blocking until its execution has completed.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#gac175e5c3ee12f5b78c62f5d878518794" class="m-doc">cnx_jthread_free</a>(</span><span class="m-doc-wrap">void* thread)</span>
+            </dt>
+            <dd>Frees the given <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, blocking until it&#x27;s joined or joining fails.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper"> <a href="#ga9cc953a1b0c6349efa957bfd32720984" class="m-doc">CnxResult</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c0e7bcf640c8205c50186c5a1c6be95" class="m-doc">CnxTLSKey</a>) cnx_tls_new(void *data</span>
             </dt>
             <dd>Creates a new thread-local storage.</dd>
@@ -380,6 +410,18 @@
               <span class="m-doc-wrap-bumper">#define <a href="#gad4d9b405bcbffaf0d4dae6166c18aa1e" class="m-doc">thread_local</a></span>
             </dt>
             <dd>A variable declared as <code>thread_local</code> is local to the current thread and guaranteed to not be accessible by other threads.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gafd1f14b31d55d0e6cf304a66c07090e5" class="m-doc">cnx_jthread_is_null</a>(</span><span class="m-doc-wrap">thread)</span>
+            </dt>
+            <dd>Checks if the given thread handle is null (if it has been initialized)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab012bc313b0605fe2218c95b2d4df70d" class="m-doc">cnx_jthread_get_id</a>(</span><span class="m-doc-wrap">thread)</span>
+            </dt>
+            <dd>Gets the ID of the current thread.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga42ed343811b49bddf98e6faf15727d29" class="m-doc">cnx_jthread_detach</a>(</span><span class="m-doc-wrap">thread)</span>
+            </dt>
+            <dd>Separates execution of the thread associated with the <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code> thread handle from the handle.</dd>
           </dl>
         </section>
         <section>
@@ -419,9 +461,9 @@
             </h3>
             <p>A <code>CnxThread</code> is the handle type for basic OS-level threads provided by Cnx&#x27;s threading and synchronization API. <code>CnxThread</code> provides the facilities for creating multiple threads and ending their execution, enabling concurrent tasks and operations to be performed.</p>
           </div></section>
-          <section class="m-doc-details" id="ga70f963bba7da28c62bab21a8b09ea6c0"><div>
+          <section class="m-doc-details" id="ga997e2a15d76ae50edae242c3d011b35d"><div>
             <h3>
-              typedef atomic_bool* <a href="#ga70f963bba7da28c62bab21a8b09ea6c0" class="m-doc-self">CnxStopToken</a>
+              typedef atomic_bool <a href="#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc-self">CnxStopToken</a>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
             </h3>
             <p>A <code>CnxStopToken</code> is associated with a <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code> and is used to signal to it when it should end its execution.</p>
@@ -1150,6 +1192,145 @@
               </tfoot>
             </table>
           </div></section>
+          <section class="m-doc-details" id="ga03d41fb534abcbf8d7b1819495da3767"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga03d41fb534abcbf8d7b1819495da3767" class="m-doc-self">cnx_stop_token_request_stop</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a>*restrict token)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
+            </h3>
+            <p>Requests the thread associated with the given stop token to end execution.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">token</td>
+                  <td>- The token associated with the thread to end</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga71a36a29ecdcb9c481ef836846877a3c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga71a36a29ecdcb9c481ef836846877a3c" class="m-doc-self">cnx_stop_token_stop_requested</a>(</span><span class="m-doc-wrap">const <a href="group__cnx__thread.html#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a>*restrict token)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
+            </h3>
+            <p>Returns whether the thread associated with the given stop token has been requested to end execution.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">token</td>
+                  <td>- The token associated with the thread to end</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>whether the thread has been requested to end</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga8eadbd9e20ee4703102361fe32252819"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">typedef </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga8eadbd9e20ee4703102361fe32252819" class="m-doc-self">Lambda</a>(</span><span class="m-doc-wrap">void,
+              const <a href="group__cnx__thread.html#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a>*) CnxJThreadLambda</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
+            </h3>
+            <p>When spawning a new <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, a <code><a href="group__cnx__thread.html#ga8eadbd9e20ee4703102361fe32252819" class="m-doc">Lambda(void, const CnxStopToken*)</a></code> is used as its startup routine. This typedef allows for receiving that startup routine as a function parameter.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga7ac0be34d2e51534c1688537e9377d90"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga7ac0be34d2e51534c1688537e9377d90" class="m-doc-self">CnxResult</a>(</span><span class="m-doc-wrap"><a href="structCnxJThread.html" class="m-doc">CnxJThread</a>)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
+            </h3>
+            <p>Spawns a new <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, with the given <code>CnxJThreadLambda</code> as its startup routine.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>A <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code> on success</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Spawns a new thread, with the given <code>CnxJThreadLambda</code> as its startup routine. The given lambda will be automatically freed after the thread&#x27;s execution completes.</p><p>Spawning a thread can fail due to memory or operating system level constraints. If spawning the thread is successful, returns a handle to the spawned thread. Otherwise, returns an error.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga6c93f8534a9296769aba9c481ca416f6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga6c93f8534a9296769aba9c481ca416f6" class="m-doc-self">cnx_jthread_init</a>(</span><span class="m-doc-wrap"><a href="structCnxJThread.html" class="m-doc">CnxJThread</a>*restrict thread,
+              CnxJThreadLambda lambda)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
+            </h3>
+            <p>Spawns a new <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, with the given <code>CnxJThreadLambda</code> as its startup routine.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">thread</td>
+                  <td>- The pointer to thread handle to set as the handle to the spawned thread</td>
+                </tr>
+                <tr>
+                  <td>lambda</td>
+                  <td>- The lambda to invoke as the spawned thread&#x27;s startup routine</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>Ok</code> on success</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Spawns a new thread, with the given <code>CnxJThreadLambda</code> as its startup routine. The given lambda will be automatically freed after the thread&#x27;s execution completes.</p><p>Spawning a thread can fail due to memory or operating system level constraints. If spawning the thread is successful, the <code>CnxThread</code> pointed to by <code>thread</code> will be initialized with the handle to the spawned thread, and <code>Ok</code> will be returned. Otherwise, returns an error.</p>
+          </div></section>
+          <section class="m-doc-details" id="gacedc83bdc308bc4201c01254c4c890f6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gacedc83bdc308bc4201c01254c4c890f6" class="m-doc-self">cnx_jthread_join</a>(</span><span class="m-doc-wrap"><a href="structCnxJThread.html" class="m-doc">CnxJThread</a>*restrict thread)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
+            </h3>
+            <p>Joins the given <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, blocking until its execution has completed.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">thread</td>
+                  <td>- The thread to join</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>Ok</code> if successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Joining a thread can fail. Returns <code>Ok</code> if joining the thread is successful. Otherwise, returns an error.</p>
+          </div></section>
+          <section class="m-doc-details" id="gac175e5c3ee12f5b78c62f5d878518794"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gac175e5c3ee12f5b78c62f5d878518794" class="m-doc-self">cnx_jthread_free</a>(</span><span class="m-doc-wrap">void* thread)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
+            </h3>
+            <p>Frees the given <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, blocking until it&#x27;s joined or joining fails.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">thread</td>
+                  <td>- The thread to free</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
           <section class="m-doc-details" id="ga9cc953a1b0c6349efa957bfd32720984"><div>
             <h3>
               <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga9cc953a1b0c6349efa957bfd32720984" class="m-doc-self">CnxResult</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c0e7bcf640c8205c50186c5a1c6be95" class="m-doc">CnxTLSKey</a>) cnx_tls_new(void *data</span></span>
@@ -1261,6 +1442,79 @@
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
             </h3>
             <p>A variable declared as <code>thread_local</code> is local to the current thread and guaranteed to not be accessible by other threads.</p>
+          </div></section>
+          <section class="m-doc-details" id="gafd1f14b31d55d0e6cf304a66c07090e5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gafd1f14b31d55d0e6cf304a66c07090e5" class="m-doc-self">cnx_jthread_is_null</a>(</span><span class="m-doc-wrap">thread)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
+            </h3>
+            <p>Checks if the given thread handle is null (if it has been initialized)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">thread</td>
+                  <td>- The thread to check if is null</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>whether the thread is null</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gab012bc313b0605fe2218c95b2d4df70d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab012bc313b0605fe2218c95b2d4df70d" class="m-doc-self">cnx_jthread_get_id</a>(</span><span class="m-doc-wrap">thread)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
+            </h3>
+            <p>Gets the ID of the current thread.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">thread</td>
+                  <td>- The thread to get the ID of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The ID of the given thread</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga42ed343811b49bddf98e6faf15727d29"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga42ed343811b49bddf98e6faf15727d29" class="m-doc-self">cnx_jthread_detach</a>(</span><span class="m-doc-wrap">thread)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
+            </h3>
+            <p>Separates execution of the thread associated with the <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code> thread handle from the handle.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">thread</td>
+                  <td>- The thread to detach</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>Ok</code> if successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Separates execution of the thread associated with the given handle from that handle. When successfully detached, the associated thread will continue execution independently and will no longer be associated with any handle.</p><p>Detaching a thread can fail. Returns <code>Ok</code> if detaching the thread is successful. Otherwise, returns an error.</p>
           </div></section>
         </section>
       </div>
