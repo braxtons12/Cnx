@@ -1315,6 +1315,220 @@
 	#define __APPEND_TO_LIST_11(what, x, ...) x what, __APPEND_TO_LIST_10(what, __VA_ARGS__)
 	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
 	#define __APPEND_TO_LIST_12(what, x, ...) x what, __APPEND_TO_LIST_11(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_13(what, x, ...) x what, __APPEND_TO_LIST_12(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_14(what, x, ...) x what, __APPEND_TO_LIST_13(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_15(what, x, ...) x what, __APPEND_TO_LIST_14(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_16(what, x, ...) x what, __APPEND_TO_LIST_15(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_17(what, x, ...) x what, __APPEND_TO_LIST_16(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_18(what, x, ...) x what, __APPEND_TO_LIST_17(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_19(what, x, ...) x what, __APPEND_TO_LIST_18(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_20(what, x, ...) x what, __APPEND_TO_LIST_19(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_21(what, x, ...) x what, __APPEND_TO_LIST_20(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_22(what, x, ...) x what, __APPEND_TO_LIST_21(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_23(what, x, ...) x what, __APPEND_TO_LIST_22(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_24(what, x, ...) x what, __APPEND_TO_LIST_23(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_25(what, x, ...) x what, __APPEND_TO_LIST_24(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_26(what, x, ...) x what, __APPEND_TO_LIST_25(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_27(what, x, ...) x what, __APPEND_TO_LIST_26(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_28(what, x, ...) x what, __APPEND_TO_LIST_27(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_29(what, x, ...) x what, __APPEND_TO_LIST_28(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_30(what, x, ...) x what, __APPEND_TO_LIST_29(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_31(what, x, ...) x what, __APPEND_TO_LIST_30(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_32(what, x, ...) x what, __APPEND_TO_LIST_31(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_33(what, x, ...) x what, __APPEND_TO_LIST_32(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_34(what, x, ...) x what, __APPEND_TO_LIST_33(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_35(what, x, ...) x what, __APPEND_TO_LIST_34(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_36(what, x, ...) x what, __APPEND_TO_LIST_36(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_37(what, x, ...) x what, __APPEND_TO_LIST_37(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_38(what, x, ...) x what, __APPEND_TO_LIST_38(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_39(what, x, ...) x what, __APPEND_TO_LIST_39(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_40(what, x, ...) x what, __APPEND_TO_LIST_40(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_41(what, x, ...) x what, __APPEND_TO_LIST_41(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_42(what, x, ...) x what, __APPEND_TO_LIST_42(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_43(what, x, ...) x what, __APPEND_TO_LIST_43(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_44(what, x, ...) x what, __APPEND_TO_LIST_44(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_45(what, x, ...) x what, __APPEND_TO_LIST_45(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_46(what, x, ...) x what, __APPEND_TO_LIST_46(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_47(what, x, ...) x what, __APPEND_TO_LIST_47(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_48(what, x, ...) x what, __APPEND_TO_LIST_48(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_49(what, x, ...) x what, __APPEND_TO_LIST_49(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_50(what, x, ...) x what, __APPEND_TO_LIST_50(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_51(what, x, ...) x what, __APPEND_TO_LIST_51(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_52(what, x, ...) x what, __APPEND_TO_LIST_52(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_53(what, x, ...) x what, __APPEND_TO_LIST_53(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_54(what, x, ...) x what, __APPEND_TO_LIST_54(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_55(what, x, ...) x what, __APPEND_TO_LIST_55(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_56(what, x, ...) x what, __APPEND_TO_LIST_56(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_57(what, x, ...) x what, __APPEND_TO_LIST_57(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_58(what, x, ...) x what, __APPEND_TO_LIST_58(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_59(what, x, ...) x what, __APPEND_TO_LIST_59(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_60(what, x, ...) x what, __APPEND_TO_LIST_60(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_61(what, x, ...) x what, __APPEND_TO_LIST_61(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_62(what, x, ...) x what, __APPEND_TO_LIST_62(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_63(what, x, ...) x what, __APPEND_TO_LIST_63(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_64(what, x, ...) x what, __APPEND_TO_LIST_64(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_65(what, x, ...) x what, __APPEND_TO_LIST_65(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_66(what, x, ...) x what, __APPEND_TO_LIST_66(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_67(what, x, ...) x what, __APPEND_TO_LIST_67(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_68(what, x, ...) x what, __APPEND_TO_LIST_68(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_69(what, x, ...) x what, __APPEND_TO_LIST_69(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_70(what, x, ...) x what, __APPEND_TO_LIST_70(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_71(what, x, ...) x what, __APPEND_TO_LIST_71(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_72(what, x, ...) x what, __APPEND_TO_LIST_72(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_73(what, x, ...) x what, __APPEND_TO_LIST_73(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_74(what, x, ...) x what, __APPEND_TO_LIST_74(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_75(what, x, ...) x what, __APPEND_TO_LIST_75(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_76(what, x, ...) x what, __APPEND_TO_LIST_76(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_78(what, x, ...) x what, __APPEND_TO_LIST_77(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_79(what, x, ...) x what, __APPEND_TO_LIST_78(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_80(what, x, ...) x what, __APPEND_TO_LIST_79(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_81(what, x, ...) x what, __APPEND_TO_LIST_80(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_82(what, x, ...) x what, __APPEND_TO_LIST_81(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_83(what, x, ...) x what, __APPEND_TO_LIST_82(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_84(what, x, ...) x what, __APPEND_TO_LIST_83(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_85(what, x, ...) x what, __APPEND_TO_LIST_84(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_86(what, x, ...) x what, __APPEND_TO_LIST_85(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_87(what, x, ...) x what, __APPEND_TO_LIST_86(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_88(what, x, ...) x what, __APPEND_TO_LIST_87(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_89(what, x, ...) x what, __APPEND_TO_LIST_88(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_90(what, x, ...) x what, __APPEND_TO_LIST_89(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_91(what, x, ...) x what, __APPEND_TO_LIST_90(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_92(what, x, ...) x what, __APPEND_TO_LIST_91(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_93(what, x, ...) x what, __APPEND_TO_LIST_92(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_94(what, x, ...) x what, __APPEND_TO_LIST_93(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_95(what, x, ...) x what, __APPEND_TO_LIST_94(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_96(what, x, ...) x what, __APPEND_TO_LIST_95(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_97(what, x, ...) x what, __APPEND_TO_LIST_96(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_98(what, x, ...) x what, __APPEND_TO_LIST_97(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_99(what, x, ...) x what, __APPEND_TO_LIST_98(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_100(what, x, ...) x what, __APPEND_TO_LIST_99(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_101(what, x, ...) x what, __APPEND_TO_LIST_100(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_102(what, x, ...) x what, __APPEND_TO_LIST_101(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_103(what, x, ...) x what, __APPEND_TO_LIST_102(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_104(what, x, ...) x what, __APPEND_TO_LIST_103(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_105(what, x, ...) x what, __APPEND_TO_LIST_104(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_106(what, x, ...) x what, __APPEND_TO_LIST_105(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_107(what, x, ...) x what, __APPEND_TO_LIST_106(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_108(what, x, ...) x what, __APPEND_TO_LIST_107(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_109(what, x, ...) x what, __APPEND_TO_LIST_108(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_110(what, x, ...) x what, __APPEND_TO_LIST_109(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_111(what, x, ...) x what, __APPEND_TO_LIST_110(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_112(what, x, ...) x what, __APPEND_TO_LIST_111(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_113(what, x, ...) x what, __APPEND_TO_LIST_112(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_114(what, x, ...) x what, __APPEND_TO_LIST_113(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_115(what, x, ...) x what, __APPEND_TO_LIST_114(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_116(what, x, ...) x what, __APPEND_TO_LIST_115(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_117(what, x, ...) x what, __APPEND_TO_LIST_116(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_118(what, x, ...) x what, __APPEND_TO_LIST_117(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_119(what, x, ...) x what, __APPEND_TO_LIST_118(what, __VA_ARGS__)
+	/// @brief Appends `what` to `x` in the `__VA_ARGS__` pack
+	#define __APPEND_TO_LIST_120(what, x, ...) x what, __APPEND_TO_LIST_119(what, __VA_ARGS__)
 
 /// @brief Appends `what` to each element in the `__VA_ARGS__` pack
 	#define __APPEND_TO_LIST(N, what, ...) CONCAT2_DEFERRED(__APPEND_TO_LIST_, N)(what, __VA_ARGS__)
@@ -1343,6 +1557,222 @@
 	#define __DELIMIT_LIST_11(what, x, ...) x what __DELIMIT_LIST_10(what, __VA_ARGS__)
 /// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
 	#define __DELIMIT_LIST_12(what, x, ...) x what __DELIMIT_LIST_11(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_13(what, x, ...) x what __DELIMIT_LIST_12(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_14(what, x, ...) x what __DELIMIT_LIST_13(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_15(what, x, ...) x what __DELIMIT_LIST_14(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_16(what, x, ...) x what __DELIMIT_LIST_15(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_17(what, x, ...) x what __DELIMIT_LIST_16(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_18(what, x, ...) x what __DELIMIT_LIST_17(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_19(what, x, ...) x what __DELIMIT_LIST_18(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_20(what, x, ...) x what __DELIMIT_LIST_19(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_21(what, x, ...) x what __DELIMIT_LIST_20(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_22(what, x, ...) x what __DELIMIT_LIST_21(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_23(what, x, ...) x what __DELIMIT_LIST_22(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_24(what, x, ...) x what __DELIMIT_LIST_23(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_25(what, x, ...) x what __DELIMIT_LIST_24(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_26(what, x, ...) x what __DELIMIT_LIST_25(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_27(what, x, ...) x what __DELIMIT_LIST_26(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_28(what, x, ...) x what __DELIMIT_LIST_27(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_29(what, x, ...) x what __DELIMIT_LIST_28(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_30(what, x, ...) x what __DELIMIT_LIST_29(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_31(what, x, ...) x what __DELIMIT_LIST_30(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_32(what, x, ...) x what __DELIMIT_LIST_31(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_33(what, x, ...) x what __DELIMIT_LIST_32(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_34(what, x, ...) x what __DELIMIT_LIST_33(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_35(what, x, ...) x what __DELIMIT_LIST_34(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_36(what, x, ...) x what __DELIMIT_LIST_35(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_37(what, x, ...) x what __DELIMIT_LIST_36(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_38(what, x, ...) x what __DELIMIT_LIST_37(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_39(what, x, ...) x what __DELIMIT_LIST_38(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_40(what, x, ...) x what __DELIMIT_LIST_39(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_41(what, x, ...) x what __DELIMIT_LIST_40(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_42(what, x, ...) x what __DELIMIT_LIST_41(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_43(what, x, ...) x what __DELIMIT_LIST_42(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_44(what, x, ...) x what __DELIMIT_LIST_43(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_45(what, x, ...) x what __DELIMIT_LIST_44(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_46(what, x, ...) x what __DELIMIT_LIST_45(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_47(what, x, ...) x what __DELIMIT_LIST_46(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_48(what, x, ...) x what __DELIMIT_LIST_47(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_49(what, x, ...) x what __DELIMIT_LIST_48(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_50(what, x, ...) x what __DELIMIT_LIST_49(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_51(what, x, ...) x what __DELIMIT_LIST_50(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_52(what, x, ...) x what __DELIMIT_LIST_51(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_53(what, x, ...) x what __DELIMIT_LIST_52(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_54(what, x, ...) x what __DELIMIT_LIST_53(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_55(what, x, ...) x what __DELIMIT_LIST_54(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_56(what, x, ...) x what __DELIMIT_LIST_55(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_57(what, x, ...) x what __DELIMIT_LIST_56(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_58(what, x, ...) x what __DELIMIT_LIST_57(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_59(what, x, ...) x what __DELIMIT_LIST_58(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_60(what, x, ...) x what __DELIMIT_LIST_59(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_61(what, x, ...) x what __DELIMIT_LIST_60(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_62(what, x, ...) x what __DELIMIT_LIST_61(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_63(what, x, ...) x what __DELIMIT_LIST_62(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_64(what, x, ...) x what __DELIMIT_LIST_63(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_65(what, x, ...) x what __DELIMIT_LIST_64(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_66(what, x, ...) x what __DELIMIT_LIST_65(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_67(what, x, ...) x what __DELIMIT_LIST_66(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_68(what, x, ...) x what __DELIMIT_LIST_67(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_69(what, x, ...) x what __DELIMIT_LIST_68(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_70(what, x, ...) x what __DELIMIT_LIST_69(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_71(what, x, ...) x what __DELIMIT_LIST_70(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_72(what, x, ...) x what __DELIMIT_LIST_71(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_73(what, x, ...) x what __DELIMIT_LIST_72(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_74(what, x, ...) x what __DELIMIT_LIST_73(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_75(what, x, ...) x what __DELIMIT_LIST_74(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_76(what, x, ...) x what __DELIMIT_LIST_75(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_77(what, x, ...) x what __DELIMIT_LIST_76(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_78(what, x, ...) x what __DELIMIT_LIST_77(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_79(what, x, ...) x what __DELIMIT_LIST_78(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_80(what, x, ...) x what __DELIMIT_LIST_79(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_81(what, x, ...) x what __DELIMIT_LIST_80(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_82(what, x, ...) x what __DELIMIT_LIST_81(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_83(what, x, ...) x what __DELIMIT_LIST_82(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_84(what, x, ...) x what __DELIMIT_LIST_83(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_85(what, x, ...) x what __DELIMIT_LIST_84(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_86(what, x, ...) x what __DELIMIT_LIST_85(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_87(what, x, ...) x what __DELIMIT_LIST_86(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_88(what, x, ...) x what __DELIMIT_LIST_87(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_89(what, x, ...) x what __DELIMIT_LIST_88(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_90(what, x, ...) x what __DELIMIT_LIST_89(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_91(what, x, ...) x what __DELIMIT_LIST_90(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_92(what, x, ...) x what __DELIMIT_LIST_91(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_93(what, x, ...) x what __DELIMIT_LIST_92(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_94(what, x, ...) x what __DELIMIT_LIST_93(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_95(what, x, ...) x what __DELIMIT_LIST_94(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_96(what, x, ...) x what __DELIMIT_LIST_95(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_97(what, x, ...) x what __DELIMIT_LIST_96(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_98(what, x, ...) x what __DELIMIT_LIST_97(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_99(what, x, ...) x what __DELIMIT_LIST_98(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_100(what, x, ...) x what __DELIMIT_LIST_99(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_101(what, x, ...) x what __DELIMIT_LIST_100(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_102(what, x, ...) x what __DELIMIT_LIST_101(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_103(what, x, ...) x what __DELIMIT_LIST_102(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_104(what, x, ...) x what __DELIMIT_LIST_103(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_105(what, x, ...) x what __DELIMIT_LIST_104(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_106(what, x, ...) x what __DELIMIT_LIST_105(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_107(what, x, ...) x what __DELIMIT_LIST_106(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_108(what, x, ...) x what __DELIMIT_LIST_107(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_109(what, x, ...) x what __DELIMIT_LIST_108(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_110(what, x, ...) x what __DELIMIT_LIST_109(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_111(what, x, ...) x what __DELIMIT_LIST_110(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_112(what, x, ...) x what __DELIMIT_LIST_111(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_113(what, x, ...) x what __DELIMIT_LIST_112(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_114(what, x, ...) x what __DELIMIT_LIST_113(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_115(what, x, ...) x what __DELIMIT_LIST_114(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_116(what, x, ...) x what __DELIMIT_LIST_115(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_117(what, x, ...) x what __DELIMIT_LIST_116(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_118(what, x, ...) x what __DELIMIT_LIST_117(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_119(what, x, ...) x what __DELIMIT_LIST_118(what, __VA_ARGS__)
+/// @brief Replaces the comma delimiter for `x` in the `__VA_ARGS__` pack with `what`
+	#define __DELIMIT_LIST_120(what, x, ...) x what __DELIMIT_LIST_119(what, __VA_ARGS__)
 
 /// @brief Replaces the comma delimiters in the `__VA_ARGS__` pack with `what`
 	#define __DELIMIT_LIST(N, what, ...) CONCAT2_DEFERRED(__DELIMIT_LIST_, N)(what, __VA_ARGS__)
@@ -1384,6 +1814,330 @@
 	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
 	#define ___APPLY_TO_LIST_12(what, x, ...) \
 		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_11(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_13(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_12(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_14(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_13(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_15(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_14(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_16(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_15(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_17(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_16(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_18(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_17(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_19(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_18(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_20(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_19(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_21(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_20(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_22(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_21(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_23(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_22(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_24(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_23(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_25(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_24(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_26(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_25(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_27(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_26(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_28(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_27(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_29(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_28(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_30(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_29(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_31(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_30(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_32(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_31(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_33(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_32(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_34(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_33(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_35(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_34(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_36(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_35(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_37(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_36(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_38(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_37(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_39(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_38(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_40(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_39(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_41(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_40(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_42(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_41(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_43(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_42(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_44(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_43(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_45(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_44(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_46(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_45(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_47(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_46(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_48(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_47(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_49(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_48(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_50(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_49(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_51(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_50(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_52(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_51(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_53(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_52(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_54(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_53(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_55(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_54(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_56(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_55(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_57(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_56(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_58(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_57(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_59(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_58(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_60(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_59(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_61(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_60(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_62(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_61(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_63(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_62(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_64(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_63(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_65(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_64(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_66(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_65(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_67(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_66(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_68(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_67(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_69(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_68(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_70(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_69(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_71(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_70(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_72(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_71(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_73(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_72(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_74(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_73(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_75(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_74(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_76(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_75(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_77(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_76(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_78(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_77(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_79(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_78(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_80(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_79(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_81(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_80(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_82(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_81(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_83(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_82(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_84(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_83(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_85(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_84(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_86(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_85(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_87(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_86(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_88(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_87(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_89(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_88(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_90(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_89(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_91(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_90(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_92(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_91(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_93(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_92(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_94(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_93(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_95(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_94(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_96(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_95(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_97(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_96(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_98(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_97(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_99(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_98(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_100(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_99(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_101(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_100(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_102(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_101(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_103(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_102(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_104(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_103(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_105(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_104(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_106(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_105(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_107(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_106(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_108(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_107(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_109(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_108(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_110(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_109(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_111(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_110(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_112(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_111(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_113(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_112(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_114(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_113(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_115(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_114(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_116(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_115(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_117(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_116(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_118(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_117(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_119(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_118(what, __VA_ARGS__))
+	/// @brief applies `what` to `x` and the `__VA_ARGS__` parameter pack
+	#define ___APPLY_TO_LIST_120(what, x, ...) \
+		REMOVE_REDUNDANT_COMMA(what(x), ___APPLY_TO_LIST_119(what, __VA_ARGS__))
 
 	/// @brief Applies `what` to the arguments in the `__VA_ARGS__` parameter pack
 	#define ___APPLY_TO_LIST(N, what, ...) CONCAT2_DEFERRED(___APPLY_TO_LIST_, N)(what, __VA_ARGS__)
@@ -1423,6 +2177,330 @@
 	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
 	#define ___APPEND_EACH_TO_LIST_12(N, what, x, ...) \
 		x what(N), ___APPEND_EACH_TO_LIST_11(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_13(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_12(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_14(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_13(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_15(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_14(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_16(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_15(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_17(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_16(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_18(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_17(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_19(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_18(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_20(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_19(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_21(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_20(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_22(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_21(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_23(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_22(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_24(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_23(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_25(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_24(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_26(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_25(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_27(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_26(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_28(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_27(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_29(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_28(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_30(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_29(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_31(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_30(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_32(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_31(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_33(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_32(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_34(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_33(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_35(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_34(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_36(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_35(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_37(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_36(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_38(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_37(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_39(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_38(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_40(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_39(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_41(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_40(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_42(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_41(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_43(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_42(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_44(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_43(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_45(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_44(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_46(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_45(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_47(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_46(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_48(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_47(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_49(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_48(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_50(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_49(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_51(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_50(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_52(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_51(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_53(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_52(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_54(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_53(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_55(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_54(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_56(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_55(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_57(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_56(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_58(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_57(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_59(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_58(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_60(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_59(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_61(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_60(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_62(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_61(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_63(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_62(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_64(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_63(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_65(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_64(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_66(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_65(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_67(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_66(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_68(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_67(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_69(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_68(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_70(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_69(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_71(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_70(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_72(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_71(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_73(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_72(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_74(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_73(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_75(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_74(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_76(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_75(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_77(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_76(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_78(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_77(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_79(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_78(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_80(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_79(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_81(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_80(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_82(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_81(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_83(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_82(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_84(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_83(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_85(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_84(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_86(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_85(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_87(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_86(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_88(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_87(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_89(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_88(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_90(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_89(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_91(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_90(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_92(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_91(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_93(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_92(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_94(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_93(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_95(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_94(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_96(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_95(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_97(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_96(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_98(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_97(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_99(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_98(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_100(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_99(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_101(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_100(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_102(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_101(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_103(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_102(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_104(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_103(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_105(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_104(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_106(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_105(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_107(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_106(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_108(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_107(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_109(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_108(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_110(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_109(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_111(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_110(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_112(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_111(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_113(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_112(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_114(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_113(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_115(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_114(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_116(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_115(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_117(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_116(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_118(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_117(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_119(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_118(ADD1(N), what, __VA_ARGS__)
+	/// @brief Append the numerical selection in `what` to `x` in the `__VA_ARGS__` parameter pack
+	#define ___APPEND_EACH_TO_LIST_120(N, what, x, ...) \
+		x what(N), ___APPEND_EACH_TO_LIST_119(ADD1(N), what, __VA_ARGS__)
 
 	/// @brief For each element in the `__VA_ARGS__` parameter pack, appends the Ith numerical
 	/// selection in `what` to that element in the `__VA_ARGS__` parameter pack
@@ -1451,7 +2529,221 @@
 	#define __SELECTOR_LIST_10 _10
 	/// @brief 11 prefixed with `_` to create a valid identifier
 	#define __SELECTOR_LIST_11 _11
-	/// @brief 12 prefixed with `_` to create a valid identifier
-	#define __SELECTOR_LIST_12 _12
+	/// @brief 13 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_13 _13
+	/// @brief 14 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_14 _14
+	/// @brief 15 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_15 _15
+	/// @brief 16 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_16 _16
+	/// @brief 17 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_17 _17
+	/// @brief 18 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_18 _18
+	/// @brief 19 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_19 _19
+	/// @brief 20 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_20 _20
+	/// @brief 21 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_21 _21
+	/// @brief 22 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_22 _22
+	/// @brief 23 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_23 _23
+	/// @brief 24 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_24 _24
+	/// @brief 25 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_25 _25
+	/// @brief 26 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_26 _26
+	/// @brief 27 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_27 _27
+	/// @brief 28 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_28 _28
+	/// @brief 29 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_29 _29
+	/// @brief 30 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_30 _30
+	/// @brief 31 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_31 _31
+	/// @brief 32 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_32 _32
+	/// @brief 33 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_33 _33
+	/// @brief 34 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_34 _34
+	/// @brief 35 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_35 _35
+	/// @brief 36 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_36 _36
+	/// @brief 37 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_37 _37
+	/// @brief 38 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_38 _38
+	/// @brief 39 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_39 _39
+	/// @brief 40 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_40 _40
+	/// @brief 41 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_41 _41
+	/// @brief 42 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_42 _42
+	/// @brief 43 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_43 _43
+	/// @brief 44 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_44 _44
+	/// @brief 45 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_45 _45
+	/// @brief 46 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_46 _46
+	/// @brief 47 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_47 _47
+	/// @brief 48 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_48 _48
+	/// @brief 49 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_49 _49
+	/// @brief 50 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_50 _50
+	/// @brief 51 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_51 _51
+	/// @brief 52 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_52 _52
+	/// @brief 53 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_53 _53
+	/// @brief 54 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_54 _54
+	/// @brief 55 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_55 _55
+	/// @brief 56 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_56 _56
+	/// @brief 57 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_57 _57
+	/// @brief 58 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_58 _58
+	/// @brief 59 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_59 _59
+	/// @brief 60 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_60 _60
+	/// @brief 61 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_61 _61
+	/// @brief 62 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_62 _62
+	/// @brief 63 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_63 _63
+	/// @brief 64 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_64 _64
+	/// @brief 65 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_65 _65
+	/// @brief 66 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_66 _66
+	/// @brief 67 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_67 _67
+	/// @brief 68 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_68 _68
+	/// @brief 69 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_69 _69
+	/// @brief 70 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_70 _70
+	/// @brief 71 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_71 _71
+	/// @brief 72 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_72 _72
+	/// @brief 73 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_73 _73
+	/// @brief 74 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_74 _74
+	/// @brief 75 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_75 _75
+	/// @brief 76 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_76 _76
+	/// @brief 77 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_77 _77
+	/// @brief 78 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_78 _78
+	/// @brief 79 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_79 _79
+	/// @brief 80 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_80 _80
+	/// @brief 81 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_81 _81
+	/// @brief 82 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_82 _82
+	/// @brief 83 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_83 _83
+	/// @brief 84 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_84 _84
+	/// @brief 85 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_85 _85
+	/// @brief 86 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_86 _86
+	/// @brief 87 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_87 _87
+	/// @brief 88 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_88 _88
+	/// @brief 89 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_89 _89
+	/// @brief 90 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_90 _90
+	/// @brief 91 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_91 _91
+	/// @brief 92 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_92 _92
+	/// @brief 93 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_93 _93
+	/// @brief 94 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_94 _94
+	/// @brief 95 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_95 _95
+	/// @brief 96 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_96 _96
+	/// @brief 97 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_97 _97
+	/// @brief 98 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_98 _98
+	/// @brief 99 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_99 _99
+	/// @brief 100 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_100 _100
+	/// @brief 101 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_101 _101
+	/// @brief 102 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_102 _102
+	/// @brief 103 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_103 _103
+	/// @brief 104 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_104 _104
+	/// @brief 105 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_105 _105
+	/// @brief 106 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_106 _106
+	/// @brief 107 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_107 _107
+	/// @brief 108 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_108 _108
+	/// @brief 109 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_109 _109
+	/// @brief 110 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_110 _110
+	/// @brief 111 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_111 _111
+	/// @brief 112 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_112 _112
+	/// @brief 113 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_113 _113
+	/// @brief 114 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_114 _114
+	/// @brief 115 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_115 _115
+	/// @brief 116 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_116 _116
+	/// @brief 117 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_117 _117
+	/// @brief 118 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_118 _118
+	/// @brief 119 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_119 _119
+	/// @brief 120 prefixed with `_` to create a valid identifier
+	#define __SELECTOR_LIST_120 _120
 
 #endif // ARG_LISTS_DETAIL
