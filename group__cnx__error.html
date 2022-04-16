@@ -102,7 +102,7 @@
               <span class="m-doc-wrap-bumper"> <a href="#ga848f1b523d4ffc9337651309ebcb41ae" class="m-doc">Trait</a>(</span><span class="m-doc-wrap">CnxErrorCategory,
               <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a>(*)(const CnxErrorCategory*restrict self, <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> code) message;<a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a>(*)(const CnxErrorCategory*restrict self) get_last_error;)</span>
             </dt>
-            <dd><code>CnxErrorCategory</code> provides the mechanism to convert an arbitrary error code into a corresponding message associated with a specific class of errors</dd>
+            <dd><code>CnxErrorCategory</code> is a <code>Trait</code> that provides the mechanism to convert an arbitrary error code into a corresponding message associated with a specific class of errors, and to get the last error that occurred in a particular category (if supported by the category. For example, global categories like <code>CNX_WIN32_ERROR_CATEGORY</code> and <code>CNX_POSIX_ERROR_CATEGORY</code> support this, but categories local to specific modules probably won&#x27;t).</dd>
             <dt>
               <span class="m-doc-wrap-bumper"><a href="structCnxError.html" class="m-doc">CnxError</a> <a href="#ga8c0c6cffe2fa15d45b1c9f51069a3239" class="m-doc">cnx_error_new</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> error_code,
               CnxErrorCategory error_category)</span>
@@ -193,7 +193,7 @@
               <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a>(*)(const CnxErrorCategory*restrict self, <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> code) message;<a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a>(*)(const CnxErrorCategory*restrict self) get_last_error;)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Error_8h.html">&lt;include/Cnx/Error.h&gt;</a></div>
             </h3>
-            <p><code>CnxErrorCategory</code> provides the mechanism to convert an arbitrary error code into a corresponding message associated with a specific class of errors</p>
+            <p><code>CnxErrorCategory</code> is a <code>Trait</code> that provides the mechanism to convert an arbitrary error code into a corresponding message associated with a specific class of errors, and to get the last error that occurred in a particular category (if supported by the category. For example, global categories like <code>CNX_WIN32_ERROR_CATEGORY</code> and <code>CNX_POSIX_ERROR_CATEGORY</code> support this, but categories local to specific modules probably won&#x27;t).</p>
 <p><code>CnxErrorCategory</code> is what allows a <code><a href="structCnxError.html" class="m-doc">CnxError</a></code> to communicate error messages unique to the module the error originated from.</p>
           </div></section>
           <section class="m-doc-details" id="ga8c0c6cffe2fa15d45b1c9f51069a3239"><div>
