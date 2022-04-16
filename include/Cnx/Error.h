@@ -175,19 +175,27 @@ cnx_error_category_get_message(CnxErrorCategory self, i64 error_code);
 /// @ingroup cnx_error
 [[nodiscard]] i64 cnx_error_category_get_last_error(CnxErrorCategory self);
 
+	#undef ___DISABLE_IF_NULL
+
+	#define ___DISABLE_IF_NULL(self) \
+		cnx_disable_if(!(self),      \
+					   "Can't perform an operation with a CnxErrorCategory that is a nullptr")
+
 /// @brief Returns the POSIX error message associated with the given error code, as a `cstring`
 ///
 /// @param error_code - The error code to get the message for
 ///
 /// @return the message associated with the error code
 /// @ingroup cnx_error
-[[nodiscard]] [[returns_not_null]] const_cstring
-cnx_posix_category_get_message(const CnxErrorCategory* restrict self, i64 error_code);
+[[nodiscard]] [[not_null(1)]] [[returns_not_null]] const_cstring
+cnx_posix_category_get_message(const CnxErrorCategory* restrict self, i64 error_code)
+	___DISABLE_IF_NULL(self);
 /// @brief Returns the error code for the last reported POSIX error
 ///
 /// @return the error code for the last POSIX error
 /// @ingroup cnx_error
-[[nodiscard]] i64 cnx_posix_category_get_last_error(const CnxErrorCategory* restrict self);
+[[nodiscard]] [[not_null(1)]] i64
+cnx_posix_category_get_last_error(const CnxErrorCategory* restrict self) ___DISABLE_IF_NULL(self);
 
 	#if CNX_PLATFORM_WINDOWS
 /// @brief Returns the Win32 error message associated with the given error code, as a `cstring`
@@ -196,13 +204,15 @@ cnx_posix_category_get_message(const CnxErrorCategory* restrict self, i64 error_
 ///
 /// @return the message associated with the error code
 /// @ingroup cnx_error
-[[nodiscard]] [[returns_not_null]] const_cstring
-cnx_win32_category_get_message(const CnxErrorCategory* restrict self, i64 error_code);
+[[nodiscard]] [[not_null(1)]] [[returns_not_null]] const_cstring
+cnx_win32_category_get_message(const CnxErrorCategory* restrict self, i64 error_code)
+	___DISABLE_IF_NULL(self);
 /// @brief Returns the error code for the last reported Win32 error
 ///
 /// @return the error code for the last Win32 error
 /// @ingroup cnx_error
-[[nodiscard]] i64 cnx_win32_category_get_last_error(const CnxErrorCategory* restrict self);
+[[nodiscard]] [[not_null(1)]] i64
+cnx_win32_category_get_last_error(const CnxErrorCategory* restrict self) ___DISABLE_IF_NULL(self);
 	#endif // CNX_PLATFORM_WINDOWS
 
 /// @brief Implementation of `CnxFormat.format` for `CnxError`
