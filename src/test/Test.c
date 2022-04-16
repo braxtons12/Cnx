@@ -6,6 +6,7 @@
 #include "LambdaTest.h"
 #include "RangeTest.h"
 #include "RatioTest.h"
+#include "SharedPtrTest.h"
 #include "StringTest.h"
 #include "ThreadTest.h"
 #include "TimePointTest.h"
