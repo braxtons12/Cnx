@@ -199,8 +199,8 @@ composability.
 
 ### Testing
 
-Tests are set up as a separate "Test" target in the CMake project.<br>
-To run the tests, simply configure and build the test target, then run the resulting "Test"
+Tests are set up as a separate "Cnx-Test" target in the CMake project.<br>
+To run the tests, simply configure and build the test target, then run the resulting "Cnx-Test"
 executable.<br>
 Please feel free to submit new tests!
 
@@ -209,8 +209,8 @@ Inside the Cnx main directory:
 ```sh
 
 cmake -B build -G "Ninja"
-cmake --build build --target Test
-./build/Test
+cmake --build build --target Cnx-Test
+./build/Cnx-Test
 
 ```
 
