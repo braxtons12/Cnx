@@ -20,4 +20,12 @@
 	cr_assert_float_eq(actual, expected, delta __VA_OPT__(, ) __VA_ARGS__)
 #define TEST_ASSERT_EQUAL_FLOAT(actual, expected, ...) \
 	TEST_ASSERT_APPROXIMATE((actual), (expected), 0.001F __VA_OPT__(, ) __VA_ARGS__)
+#define TEST_ASSERT_LESS_THAN(actual, expected, ...) \
+	cr_assert_lt(actual, expected __VA_OPT__(, ) __VA_ARGS__)
+#define TEST_ASSERT_LESS_THAN_OR_EQUAL(actual, expected, ...) \
+	cr_assert_leq(actual, expected __VA_OPT__(, ) __VA_ARGS__)
+#define TEST_ASSERT_GREATER_THAN(actual, expected, ...) \
+	cr_assert_gt(actual, expected __VA_OPT__(, ) __VA_ARGS__)
+#define TEST_ASSERT_GREATER_THAN_OR_EQUAL(actual, expected, ...) \
+	cr_assert_geq(actual, expected __VA_OPT__(, ) __VA_ARGS__)
 #endif // CRITERION_WRAP

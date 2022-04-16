@@ -26,6 +26,7 @@
 /// SOFTWARE.
 
 #include <Cnx/Assert.h>
+#include <Cnx/Atomic.h>
 #include <Cnx/Thread.h>
 #include <Cnx/time/Clock.h>
 #include <Cnx/time/TimePoint.h>
@@ -52,6 +53,13 @@
 #undef RESULT_IMPL
 
 #define RESULT_T	CnxThread
+#define RESULT_IMPL TRUE
+// NOLINTNEXTLINE(readability-duplicate-include)
+#include <Cnx/Result.h>
+#undef RESULT_T
+#undef RESULT_IMPL
+
+#define RESULT_T	CnxJThread
 #define RESULT_IMPL TRUE
 // NOLINTNEXTLINE(readability-duplicate-include)
 #include <Cnx/Result.h>
@@ -830,3 +838,60 @@ CnxResult cnx_tls_set(CnxTLSKey key, void* data) {
 }
 
 #endif // ___CNX_HAS_C11_THREADS
+
+void cnx_stop_token_request_stop(CnxStopToken* restrict token) {
+	atomic_store(token, true);
+}
+
+bool cnx_stop_token_stop_requested(const CnxStopToken* restrict token) {
+	return atomic_load(token);
+}
+
+void LambdaFunction(jthread_invoke) {
+	let_mut binding = lambda_binding(CnxJThreadLambda, CnxStopToken*);
+	lambda_scoped lambda = binding._1;
+	let token_ptr = binding._2;
+	lambda_call(lambda, token_ptr);
+	cnx_allocator_deallocate(DEFAULT_ALLOCATOR, token_ptr);
+}
+
+CnxResult(CnxJThread) cnx_jthread_new(CnxJThreadLambda lambda) {
+	CnxJThread thread = {0};
+	let_mut res = cnx_jthread_init(&thread, lambda);
+	return cnx_result_and(res, Ok(CnxJThread, thread));
+}
+
+CnxResult cnx_jthread_init(CnxJThread* restrict thread, CnxJThreadLambda lambda) {
+	let_mut token_ptr = cnx_allocator_allocate_t(CnxStopToken, DEFAULT_ALLOCATOR);
+	if(token_ptr == nullptr) {
+		return Err(i32, cnx_error_new(ENOMEM, CNX_POSIX_ERROR_CATEGORY));
+	}
+
+	atomic_store(token_ptr, false);
+
+	let_mut res
+		= cnx_thread_init(&(thread->handle),
+						  lambda_cast(lambda(jthread_invoke, lambda, token_ptr), CnxThreadLambda));
+	match(res) {
+		variant(Ok) {
+			thread->stop_token = token_ptr;
+			return Ok(i32, 0);
+		}
+		variant(Err, err) {
+			cnx_allocator_deallocate(DEFAULT_ALLOCATOR, token_ptr);
+			return Err(i32, err);
+		}
+	}
+
+	unreachable();
+}
+
+CnxResult cnx_jthread_join(CnxJThread* restrict thread) {
+	cnx_stop_token_request_stop(thread->stop_token);
+	return cnx_thread_join(&(thread->handle));
+}
+
+void cnx_jthread_free(void* thread) {
+	let_mut _thread = static_cast(CnxJThread*)(thread);
+	ignore(cnx_jthread_join(_thread));
+}

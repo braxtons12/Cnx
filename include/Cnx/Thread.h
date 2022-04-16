@@ -162,14 +162,16 @@ typedef __cnx_thread CnxThread;
 /// @brief A `CnxStopToken` is associated with a `CnxJThread` and is used to signal to it when it
 /// should end its execution.
 /// @ingroup cnx_thread
-typedef atomic_bool* CnxStopToken;
+typedef atomic_bool CnxStopToken;
 /// @brief A `CnxJThread` is the handle type for OS-level threads which are automatically joined
 /// when their handle goes out of scope and use a dedicated stop token to signal to the thread when
-/// its execution should halt.
+/// its execution should end.
 /// @ingroup cnx_thread
 typedef struct {
-	CnxThread m_handle;
-	CnxStopToken stop_token;
+	/// @brief The handle to the OS-level thread the `CnxJThread` manages
+	CnxThread handle;
+	/// @brief The stop token used to signal to the thread to end execution
+	CnxStopToken* stop_token;
 } CnxJThread;
 /// @brief A `CnxTLSKey` is the key type for creating, accessing, and modifying a thread-local
 /// storage object
@@ -210,6 +212,13 @@ typedef __cnx_exec_once_flag CnxOnceFlag;
 #undef RESULT_DECL
 
 #define RESULT_T	CnxThread
+#define RESULT_DECL TRUE
+// NOLINTNEXTLINE(readability-duplicate-include)
+#include <Cnx/Result.h>
+#undef RESULT_T
+#undef RESULT_DECL
+
+#define RESULT_T	CnxJThread
 #define RESULT_DECL TRUE
 // NOLINTNEXTLINE(readability-duplicate-include)
 #include <Cnx/Result.h>
@@ -585,7 +594,7 @@ cnx_thread_detach(CnxThread* restrict thread) ___DISABLE_IF_NULL(thread); // NOL
 /// @ingroup cnx_thread
 [[not_null(1)]] void cnx_thread_free(void* thread) ___DISABLE_IF_NULL(thread); // NOLINT
 
-#define CnxJThread scoped(cnx_thread_free)
+#define cnx_thread_scoped scoped(cnx_thread_free)
 
 /// @brief Yields execution of the current thread, allowing the operating system to execute other
 /// threads until it decides to return execution to this one.
@@ -602,6 +611,116 @@ void cnx_this_thread_sleep_for(CnxDuration duration);
 /// @return The ID of the current thread
 /// @ingroup cnx_thread
 [[nodiscard]] CnxThreadID cnx_this_thread_get_id(void);
+
+#undef ___DISABLE_IF_NULL
+
+#define ___DISABLE_IF_NULL(token) \
+	cnx_disable_if(!(token), "Can't perform a CnxStopToken operation operation on a nullptr")
+
+/// @brief Requests the thread associated with the given stop token to end execution
+///
+/// @param token - The token associated with the thread to end
+/// @ingroup cnx_thread
+[[not_null(1)]] void
+cnx_stop_token_request_stop(CnxStopToken* restrict token) ___DISABLE_IF_NULL(token);
+/// @brief Returns whether the thread associated with the given stop token has been requested to end
+/// execution
+///
+/// @param token - The token associated with the thread to end
+///
+/// @return whether the thread has been requested to end
+/// @ingroup cnx_thread
+[[nodiscard]] [[not_null(1)]] bool
+cnx_stop_token_stop_requested(const CnxStopToken* restrict token) ___DISABLE_IF_NULL(token);
+
+/// @brief When spawning a new `CnxJThread`, a `Lambda(void, const CnxStopToken*)` is used as its
+/// startup routine. This typedef allows for receiving that startup routine as a function parameter.
+/// @ingroup cnx_thread
+typedef Lambda(void, const CnxStopToken*) CnxJThreadLambda;
+
+#undef ___DISABLE_IF_NULL
+
+#define ___DISABLE_IF_NULL(thread) \
+	cnx_disable_if(!(thread), "Can't perform a CnxJThread operation operation on a nullptr")
+
+/// @brief Spawns a new `CnxJThread`, with the given `CnxJThreadLambda` as its startup routine.
+///
+/// Spawns a new thread, with the given `CnxJThreadLambda` as its startup routine. The given
+/// lambda will be automatically freed after the thread's execution completes.
+///
+/// Spawning a thread can fail due to memory or operating system level constraints.
+/// If spawning the thread is successful, returns a handle to the spawned thread.
+/// Otherwise, returns an error.
+///
+/// @param lambda - The lambda to invoke as the spawned thread's startup routine
+///
+/// @return A `CnxJThread` on success
+/// @ingroup cnx_thread
+[[nodiscard]] CnxResult(CnxJThread) cnx_jthread_new(CnxJThreadLambda lambda);
+/// @brief Spawns a new `CnxJThread`, with the given `CnxJThreadLambda` as its startup routine.
+///
+/// Spawns a new thread, with the given `CnxJThreadLambda` as its startup routine. The given
+/// lambda will be automatically freed after the thread's execution completes.
+///
+/// Spawning a thread can fail due to memory or operating system level constraints.
+/// If spawning the thread is successful, the `CnxThread` pointed to by `thread` will be initialized
+/// with the handle to the spawned thread, and `Ok` will be returned. Otherwise, returns an error.
+///
+/// @param thread - The pointer to thread handle to set as the handle to the spawned thread
+/// @param lambda - The lambda to invoke as the spawned thread's startup routine
+///
+/// @return `Ok` on success
+/// @ingroup cnx_thread
+[[nodiscard]] [[not_null(1)]] CnxResult
+cnx_jthread_init(CnxJThread* restrict thread, CnxJThreadLambda lambda) // NOLINT
+	___DISABLE_IF_NULL(thread);
+/// @brief Checks if the given thread handle is null (if it has been initialized)
+///
+/// @param thread - The thread to check if is null
+///
+/// @return whether the thread is null
+/// @ingroup cnx_thread
+#define cnx_jthread_is_null(thread) (cnx_thread_is_null(&((thread)->handle)))
+/// @brief Gets the ID of the current thread
+///
+/// @param thread - The thread to get the ID of
+///
+/// @return The ID of the given thread
+/// @ingroup cnx_thread
+#define cnx_jthread_get_id(thread) (cnx_thread_get_id(&((thread)->handle)))
+/// @brief Joins the given `CnxJThread`, blocking until its execution has completed
+///
+/// Joining a thread can fail.
+/// Returns `Ok` if joining the thread is successful. Otherwise, returns an error.
+///
+/// @param thread - The thread to join
+///
+/// @return `Ok` if successful
+/// @ingroup cnx_thread
+[[nodiscard]] [[not_null(1)]] CnxResult
+cnx_jthread_join(CnxJThread* restrict thread) ___DISABLE_IF_NULL(thread);
+/// @brief Separates execution of the thread associated with the `CnxJThread` thread handle from the
+/// handle
+///
+/// Separates execution of the thread associated with the given handle from that handle. When
+/// successfully detached, the associated thread will continue execution independently and will no
+/// longer be associated with any handle.
+///
+/// Detaching a thread can fail.
+/// Returns `Ok` if detaching the thread is successful. Otherwise, returns an error.
+///
+/// @param thread - The thread to detach
+///
+/// @return `Ok` if successful
+/// @ingroup cnx_thread
+#define cnx_jthread_detach(thread) (cnx_thread_detach(&((thread)->handle)))
+/// @brief Frees the given `CnxJThread`, blocking until it's joined or joining fails.
+///
+/// @param thread - The thread to free
+/// @ingroup cnx_thread
+[[not_null(1)]] void cnx_jthread_free(void* thread) ___DISABLE_IF_NULL(thread);
+
+#define cnx_jthread scoped(cnx_jthread_free)
 
 #undef ___DISABLE_IF_NULL
 
