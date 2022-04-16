@@ -68,15 +68,21 @@
 	/// @brief Declarations and definitions related to `CnxError`
 	#define CNX_ERROR
 
-/// @brief `CnxErrorCategory` provides the mechanism to convert an arbitrary error code into a
-/// corresponding message associated with a specific class of errors
+/// @brief `CnxErrorCategory` is a `Trait` that provides the mechanism to convert an arbitrary error
+/// code into a corresponding message associated with a specific class of errors, and to get the
+/// last error that occurred in a particular category (if supported by the category. For example,
+/// global categories like `CNX_WIN32_ERROR_CATEGORY` and `CNX_POSIX_ERROR_CATEGORY` support this,
+/// but categories local to specific modules probably won't).
 ///
 /// `CnxErrorCategory` is what allows a `CnxError` to communicate error messages unique to the
 /// module the error originated from.
 /// @ingroup cnx_error
 Trait(
-	/// @brief `CnxErrorCategory` provides the mechanism to convert an arbitrary error code into a
-	/// corresponding message associated with a specific class of errors
+	/// @brief `CnxErrorCategory` is a `Trait` that provides the mechanism to convert an arbitrary
+	/// error code into a corresponding message associated with a specific class of errors, and to
+	/// get the last error that occurred in a particular category (if supported by the category. For
+	/// example, global categories like `CNX_WIN32_ERROR_CATEGORY` and `CNX_POSIX_ERROR_CATEGORY`
+	/// support this, but categories local to specific modules probably won't).
 	///
 	/// `CnxErrorCategory` is what allows a `CnxError` to communicate error messages unique to the
 	/// module the error originated from.
