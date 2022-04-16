@@ -672,9 +672,8 @@ CnxResult cnx_condvar_wait_for(CnxCondvar* restrict condvar,
 														   0,
 								  0))
 	{
-		let error = GetLastError();
-		// TODO(braxtons12) Implement CNX_WIN32_ERROR_CATEGORY
-		return Err(i32, cnx_error_new(error, CNX_POSIX_ERROR_CATEGORY));
+		let error = cnx_error_category_get_last_error(CNX_WIN32_ERROR_CATEGORY);
+		return Err(i32, cnx_error_new(error, CNX_WIN32_ERROR_CATEGORY));
 	}
 
 	return Ok(i32, 0);
@@ -697,9 +696,8 @@ CnxResult cnx_condvar_free(CnxCondvar* restrict condvar) {
 
 CnxResult cnx_execute_once(CnxOnceFlag* flag, void (*function)(void)) {
 	if(!InitOnceExecuteOnce(flag, execute_once_thunk, static_cast(void*)(function), nullptr)) {
-		let error = GetLastError();
-		// TODO(braxtons12) Implement CNX_WIN32_ERROR_CATEGORY
-		return Err(i32, cnx_error_new(error, CNX_POSIX_ERROR_CATEGORY));
+		let error = cnx_error_category_get_last_error(CNX_WIN32_ERROR_CATEGORY);
+		return Err(i32, cnx_error_new(error, CNX_WIN32_ERROR_CATEGORY));
 	}
 
 	return Ok(i32, 0);
@@ -744,9 +742,8 @@ CnxResult(CnxThread) cnx_thread_new(CnxThreadLambda lambda) {
 CnxResult cnx_thread_init(CnxThread* restrict thread, CnxThreadLambda lambda) {
 	*thread = CreateThread(nullptr, 0, thread_invoke, lambda, 0, nullptr);
 	if(*thread == nullptr) {
-		let error = GetLastError();
-		// TODO(braxtons12) Implement CNX_WIN32_ERROR_CATEGORY
-		return Err(i32, cnx_error_new(error, CNX_POSIX_ERROR_CATEGORY));
+		let error = cnx_error_category_get_last_error(CNX_WIN32_ERROR_CATEGORY);
+		return Err(i32, cnx_error_new(error, CNX_WIN32_ERROR_CATEGORY));
 	}
 
 	return Ok(i32, 0);
@@ -762,15 +759,13 @@ CnxThreadID cnx_thread_get_id(const CnxThread* restrict thread) {
 
 CnxResult cnx_thread_join(CnxThread* restrict thread) {
 	if(WaitForSingleObjectEx(*thread, INFINITE, false) == WAIT_FAILED) {
-		let error = GetLastError();
-		// TODO(braxtons12) Implement CNX_WIN32_ERROR_CATEGORY
-		return Err(i32, cnx_error_new(error, CNX_POSIX_ERROR_CATEGORY));
+		let error = cnx_error_category_get_last_error(CNX_WIN32_ERROR_CATEGORY);
+		return Err(i32, cnx_error_new(error, CNX_WIN32_ERROR_CATEGORY));
 	}
 
 	if(!CloseHandle(*thread)) {
-		let error = GetLastError();
-		// TODO(braxtons12) Implement CNX_WIN32_ERROR_CATEGORY
-		return Err(i32, cnx_error_new(error, CNX_POSIX_ERROR_CATEGORY));
+		let error = cnx_error_category_get_last_error(CNX_WIN32_ERROR_CATEGORY);
+		return Err(i32, cnx_error_new(error, CNX_WIN32_ERROR_CATEGORY));
 	}
 
 	return Ok(i32, 0);
@@ -778,9 +773,8 @@ CnxResult cnx_thread_join(CnxThread* restrict thread) {
 
 CnxResult cnx_thread_detach(CnxThread* restrict thread) {
 	if(!CloseHandle(*thread)) {
-		let error = GetLastError();
-		// TODO(braxtons12) Implement CNX_WIN32_ERROR_CATEGORY
-		return Err(i32, cnx_error_new(error, CNX_POSIX_ERROR_CATEGORY));
+		let error = cnx_error_category_get_last_error(CNX_WIN32_ERROR_CATEGORY);
+		return Err(i32, cnx_error_new(error, CNX_WIN32_ERROR_CATEGORY));
 	}
 
 	return Ok(i32, 0);
@@ -813,9 +807,8 @@ CnxResult
 cnx_tls_init(CnxTLSKey* key, void* data, void(__CNX_TLS_DESTRUCTOR_TAG* destructor)(void*)) {
 	DWORD index = FlsAlloc(destructor);
 	if(index == FLS_OUT_OF_INDEXES) {
-		let error = GetLastError();
-		// TODO(braxtons12) Implement CNX_WIN32_ERROR_CATEGORY
-		return Err(i32, cnx_error_new(error, CNX_POSIX_ERROR_CATEGORY));
+		let error = cnx_error_category_get_last_error(CNX_WIN32_ERROR_CATEGORY);
+		return Err(i32, cnx_error_new(error, CNX_WIN32_ERROR_CATEGORY));
 	}
 
 	*key = index;
@@ -829,9 +822,8 @@ void* cnx_tls_get(CnxTLSKey key) {
 
 CnxResult cnx_tls_set(CnxTLSKey key, void* data) {
 	if(!FlsSetValue(key, data)) {
-		let error = GetLastError();
-		// TODO(braxtons12) Implement CNX_WIN32_ERROR_CATEGORY
-		return Err(i32, cnx_error_new(error, CNX_POSIX_ERROR_CATEGORY));
+		let error = cnx_error_category_get_last_error(CNX_WIN32_ERROR_CATEGORY);
+		return Err(i32, cnx_error_new(error, CNX_WIN32_ERROR_CATEGORY));
 	}
 
 	return Ok(i32, 0);

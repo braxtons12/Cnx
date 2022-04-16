@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides an extensible type for communicating errors via both error codes and
 /// message strings.
-/// @version 0.2.2
-/// @date 2022-04-06
+/// @version 0.2.3
+/// @date 2022-04-15
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -61,16 +61,12 @@
 
 #include <Cnx/BasicTypes.h>
 #include <Cnx/Format.h>
+#include <Cnx/Trait.h>
 #include <errno.h>
 
 #ifndef CNX_ERROR
 	/// @brief Declarations and definitions related to `CnxError`
 	#define CNX_ERROR
-
-/// @brief A `cnx_error_category_message_function` is a function that converts an `i64` error code
-/// into its corresponding message string, for the error category the function is associated with.
-/// @ingroup cnx_error
-typedef const_cstring (*cnx_error_category_message_function)(i64 error_code);
 
 /// @brief `CnxErrorCategory` provides the mechanism to convert an arbitrary error code into a
 /// corresponding message associated with a specific class of errors
@@ -78,10 +74,18 @@ typedef const_cstring (*cnx_error_category_message_function)(i64 error_code);
 /// `CnxErrorCategory` is what allows a `CnxError` to communicate error messages unique to the
 /// module the error originated from.
 /// @ingroup cnx_error
-typedef struct CnxErrorCategory {
-	/// @brief converts a given `i64` error code into a `cstring`
-	cnx_error_category_message_function m_message_function;
-} CnxErrorCategory;
+Trait(
+	/// @brief `CnxErrorCategory` provides the mechanism to convert an arbitrary error code into a
+	/// corresponding message associated with a specific class of errors
+	///
+	/// `CnxErrorCategory` is what allows a `CnxError` to communicate error messages unique to the
+	/// module the error originated from.
+	/// @ingroup cnx_error
+	CnxErrorCategory,
+	/// @brief Retrieves the error message as `const_cstring` for the given `i64` error `code`
+	const_cstring (*message)(const CnxErrorCategory* restrict self, i64 code);
+	/// @brief Retrieves the `i64` code for the last reported error
+	i64(*get_last_error)(const CnxErrorCategory* restrict self););
 
 /// @brief `CnxError` provides an extensible, configurable type for communicating recoverable errors
 /// via error codes and error message strings
@@ -157,6 +161,14 @@ cnx_error_message(const CnxError* restrict self) ___DISABLE_IF_NULL(self);
 /// @ingroup cnx_error
 [[nodiscard]] [[returns_not_null]] const_cstring
 cnx_error_category_get_message(CnxErrorCategory self, i64 error_code);
+/// @brief Returns the error code for the last reported error
+///
+/// @param self - The error category to get the last error from
+///
+/// @return the `i64` error code representing the last reported error
+/// @ingroup cnx_error
+[[nodiscard]] i64 cnx_error_category_get_last_error(CnxErrorCategory self);
+
 /// @brief Returns the POSIX error message associated with the given error code, as a `cstring`
 ///
 /// @param error_code - The error code to get the message for
@@ -164,7 +176,28 @@ cnx_error_category_get_message(CnxErrorCategory self, i64 error_code);
 /// @return the message associated with the error code
 /// @ingroup cnx_error
 [[nodiscard]] [[returns_not_null]] const_cstring
-cnx_error_category_get_posix_message(i64 error_code);
+cnx_posix_category_get_message(const CnxErrorCategory* restrict self, i64 error_code);
+/// @brief Returns the error code for the last reported POSIX error
+///
+/// @return the error code for the last POSIX error
+/// @ingroup cnx_error
+[[nodiscard]] i64 cnx_posix_category_get_last_error(const CnxErrorCategory* restrict self);
+
+	#if CNX_PLATFORM_WINDOWS
+/// @brief Returns the Win32 error message associated with the given error code, as a `cstring`
+///
+/// @param error_code - The error code to get the message for
+///
+/// @return the message associated with the error code
+/// @ingroup cnx_error
+[[nodiscard]] [[returns_not_null]] const_cstring
+cnx_win32_category_get_message(const CnxErrorCategory* restrict self, i64 error_code);
+/// @brief Returns the error code for the last reported Win32 error
+///
+/// @return the error code for the last Win32 error
+/// @ingroup cnx_error
+[[nodiscard]] i64 cnx_win32_category_get_last_error(const CnxErrorCategory* restrict self);
+	#endif // CNX_PLATFORM_WINDOWS
 
 /// @brief Implementation of `CnxFormat.format` for `CnxError`
 ///
@@ -195,12 +228,53 @@ cnx_error_format_with_allocator(const CnxFormat* restrict self,
 									 cnx_error_format,
 									 cnx_error_format_with_allocator);
 
+typedef struct CnxPosixErrorCategory {
+} CnxPosixErrorCategory;
+
+[[maybe_unused]] static ImplTraitFor(CnxErrorCategory,
+									 CnxPosixErrorCategory,
+									 cnx_posix_category_get_message,
+									 cnx_posix_category_get_last_error);
+
+IGNORE_RESERVED_IDENTIFIER_WARNING_START
+[[maybe_unused]] static const CnxPosixErrorCategory __cnx_posix_error_category = {};
+[[maybe_unused]] static const CnxErrorCategory __cnx_posix_category
+	= as_trait(CnxErrorCategory, CnxPosixErrorCategory, __cnx_posix_error_category);
+IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
+
 	/// @brief The `CnxErrorCategory` to map POSIX error codes
 	///
 	/// `CNX_POSIX_ERROR_CATEGORY` is the error category to map POSIX error codes to their
 	/// associated error messages. It will produce equivalent results to `strerror` in standard C
 	/// @ingroup cnx_error
-	#define CNX_POSIX_ERROR_CATEGORY ((CnxErrorCategory){cnx_error_category_get_posix_message})
+	#define CNX_POSIX_ERROR_CATEGORY __cnx_posix_category
+
+	#if CNX_PLATFORM_WINDOWS
+
+typedef struct CnxWin32ErrorCategory {
+} CnxWin32ErrorCategory;
+
+[[maybe_unused]] static ImplTraitFor(CnxErrorCategory,
+									 CnxWin32ErrorCategory,
+									 cnx_win32_category_get_message,
+									 cnx_win32_category_get_last_error);
+
+IGNORE_RESERVED_IDENTIFIER_WARNING_START
+[[maybe_unused]] static const CnxWin32ErrorCategory __cnx_win32_error_category = {};
+[[maybe_unused]] static const CnxErrorCategory __cnx_win32_category
+	= as_trait(CnxErrorCategory, CnxWin32ErrorCategory, __cnx_win32_error_category);
+
+		/// @brief The `CnxErrorCategory` to map Win32 error codes
+		///
+		/// `CNX_WIN32_ERROR_CATEGORY` is the error category to map Win32 error codes to their
+		/// associated error messages. It will produce equivalent results to `FormatMessageW` in
+		/// the Win32 API
+		/// @ingroup cnx_error
+		#define CNX_WIN32_ERROR_CATEGORY __cnx_win32_category
+IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
+
+	#endif // CNX_PLATFORM_WINDOWS
+
 	#ifndef CNX_DEFAULT_ERROR_CATEGORY
 		/// @brief the default `CnxErrorCategory`. By default, this is `CNX_POSIX_ERROR_CATEGORY`
 		///

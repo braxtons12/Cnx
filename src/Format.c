@@ -753,7 +753,8 @@ cnx_format_variant_clone(const CnxFormatVariant* restrict elem,
 		const CnxStringView* 			: cnx_format_pair_from_stringview)(x)
 //clang-format on
 
-[[nodiscard]] [[returns_not_null]] const_cstring cnx_format_error_message_function(i64 error_code) {
+[[nodiscard]] [[returns_not_null]] const_cstring cnx_format_category_get_message(
+		[[maybe_unused]] const CnxErrorCategory* restrict self, i64 error_code) {
 	if(error_code == CNX_FORMAT_SUCCESS) {
 		return "No error: Formatting successful";
 	}
@@ -775,8 +776,23 @@ cnx_format_variant_clone(const CnxFormatVariant* restrict elem,
 	unreachable();
 }
 
-[[maybe_unused]] static const CnxErrorCategory cnx_format_error_category
-	= {.m_message_function = cnx_format_error_message_function};
+[[nodiscard]] i64 cnx_format_category_get_last_error(
+		[[maybe_unused]] const CnxErrorCategory* restrict self) {
+	return 0;
+}
+
+typedef struct CnxFormatErrorCategory {} CnxFormatErrorCategory;
+
+[[maybe_unused]] static ImplTraitFor(CnxErrorCategory,
+									 CnxFormatErrorCategory,
+									 cnx_format_category_get_message,
+									 cnx_format_category_get_last_error);
+
+[[maybe_unused]] static const CnxFormatErrorCategory cnx_format_error_category = {};
+
+[[maybe_unused]] static let cnx_format_category = as_trait(CnxErrorCategory,
+														   CnxFormatErrorCategory,
+														   cnx_format_error_category);
 
 [[nodiscard]] [[not_null(1)]] [[always_inline]]
 static inline usize cnx_format_get_num_sig_figs_from_substring(
@@ -851,7 +867,7 @@ static let format_variant_data = (CnxCollectionData(CnxVector(CnxFormatVariant))
 			if(in_specifier) {
 				return Err(CnxVector(CnxFormatVariant),
 						   cnx_error_new(CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER,
-										 cnx_format_error_category));
+										 cnx_format_category));
 			}
 			else
 #endif // CNX_PLATFORM_DEBUG
@@ -875,12 +891,12 @@ static let format_variant_data = (CnxCollectionData(CnxVector(CnxFormatVariant))
 			if(!in_specifier) {
 				return Err(CnxVector(CnxFormatVariant),
 						   cnx_error_new(CNX_FORMAT_INVALID_CLOSING_BRACE_LOCATION,
-										 cnx_format_error_category));
+										 cnx_format_category));
 			}
 			else if(format_string[i - 1] == '\\') {
 				return Err(CnxVector(CnxFormatVariant),
 						   cnx_error_new(CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER,
-										 cnx_format_error_category));
+										 cnx_format_category));
 			}
 			else {
 				if(!pushed_specifier) {
@@ -910,7 +926,7 @@ static let format_variant_data = (CnxCollectionData(CnxVector(CnxFormatVariant))
 			if(!cnx_format_is_char_valid_in_specifier(format_string[i])) {
 				return Err(CnxVector(CnxFormatVariant),
 						   cnx_error_new(CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER,
-										 cnx_format_error_category));
+										 cnx_format_category));
 			}
 #endif // CNX_PLATFORM_DEBUG
 
@@ -969,16 +985,16 @@ static let format_variant_data = (CnxCollectionData(CnxVector(CnxFormatVariant))
 #if CNX_PLATFORM_DEBUG
 	if(num_open != num_close) {
 		return Err(CnxVector(CnxFormatVariant),
-				   cnx_error_new(CNX_FORMAT_UNCLOSED_SPECIFIER, cnx_format_error_category));
+				   cnx_error_new(CNX_FORMAT_UNCLOSED_SPECIFIER, cnx_format_category));
 	}
 	else if(num_open > num_args) {
 		return Err(CnxVector(CnxFormatVariant),
-				   cnx_error_new(CNX_FORMAT_MORE_SPECIFIERS_THAN_ARGS, cnx_format_error_category));
+				   cnx_error_new(CNX_FORMAT_MORE_SPECIFIERS_THAN_ARGS, cnx_format_category));
 	}
 	// we can't reliably check for 0 args, so make an exception for that
 	else if(num_open < num_args && num_args != 1) {
 		return Err(CnxVector(CnxFormatVariant),
-				   cnx_error_new(CNX_FORMAT_FEWER_SPECIFIERS_THAN_ARGS, cnx_format_error_category));
+				   cnx_error_new(CNX_FORMAT_FEWER_SPECIFIERS_THAN_ARGS, cnx_format_category));
 	}
 #endif // CNX_PLATFORM_DEBUG
 
