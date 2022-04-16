@@ -81,10 +81,6 @@
           <h2><a href="#nested-classes">Classes</a></h2>
           <dl class="m-doc">
             <dt>
-              struct <a href="structCnxErrorCategory.html" class="m-doc">CnxErrorCategory</a>
-            </dt>
-            <dd><code><a href="structCnxErrorCategory.html" class="m-doc">CnxErrorCategory</a></code> provides the mechanism to convert an arbitrary error code into a corresponding message associated with a specific class of errors</dd>
-            <dt>
               struct <a href="structCnxError.html" class="m-doc">CnxError</a>
             </dt>
             <dd><code><a href="structCnxError.html" class="m-doc">CnxError</a></code> provides an extensible, configurable type for communicating recoverable errors via error codes and error message strings</dd>
@@ -93,14 +89,6 @@
         <section id="typedef-members">
           <h2><a href="#typedef-members">Typedefs</a></h2>
           <dl class="m-doc">
-            <dt>
-              using <a href="#gaf6a553369669e0e4016fcee68a5ca71e" class="m-doc">cnx_error_category_message_function</a> = <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a>(*)(i64 error_code)
-            </dt>
-            <dd>A <code>cnx_error_category_message_function</code> is a function that converts an <code>i64</code> error code into its corresponding message string, for the error category the function is associated with.</dd>
-            <dt>
-              using <a href="#ga1fc023c846188d404727ad2daaa2c75d" class="m-doc">CnxErrorCategory</a> = struct <a href="structCnxErrorCategory.html" class="m-doc">CnxErrorCategory</a>
-            </dt>
-            <dd><code><a href="structCnxErrorCategory.html" class="m-doc">CnxErrorCategory</a></code> provides the mechanism to convert an arbitrary error code into a corresponding message associated with a specific class of errors</dd>
             <dt>
               using <a href="#gaa5139761f60937519aabe5d2c2d2af2d" class="m-doc">CnxError</a> = struct <a href="structCnxError.html" class="m-doc">CnxError</a>
             </dt>
@@ -111,8 +99,13 @@
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
             <dt>
+              <span class="m-doc-wrap-bumper"> <a href="#ga848f1b523d4ffc9337651309ebcb41ae" class="m-doc">Trait</a>(</span><span class="m-doc-wrap">CnxErrorCategory,
+              <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a>(*)(const CnxErrorCategory*restrict self, <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> code) message;<a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a>(*)(const CnxErrorCategory*restrict self) get_last_error;)</span>
+            </dt>
+            <dd><code>CnxErrorCategory</code> provides the mechanism to convert an arbitrary error code into a corresponding message associated with a specific class of errors</dd>
+            <dt>
               <span class="m-doc-wrap-bumper"><a href="structCnxError.html" class="m-doc">CnxError</a> <a href="#ga8c0c6cffe2fa15d45b1c9f51069a3239" class="m-doc">cnx_error_new</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> error_code,
-              <a href="structCnxErrorCategory.html" class="m-doc">CnxErrorCategory</a> error_category)</span>
+              CnxErrorCategory error_category)</span>
             </dt>
             <dd>Creates a <code><a href="structCnxError.html" class="m-doc">CnxError</a></code> with the given error code and category.</dd>
             <dt>
@@ -124,14 +117,23 @@
             </dt>
             <dd>Returns the error message associated with the given error, as a <code>cstring</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> <a href="#ga2a83739c4cf5bd47e896005828bf818b" class="m-doc">cnx_error_category_get_message</a>(</span><span class="m-doc-wrap"><a href="structCnxErrorCategory.html" class="m-doc">CnxErrorCategory</a> self,
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> <a href="#ga2a83739c4cf5bd47e896005828bf818b" class="m-doc">cnx_error_category_get_message</a>(</span><span class="m-doc-wrap">CnxErrorCategory self,
               <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> error_code)</span>
             </dt>
             <dd>Returns the error message associated with the given error code, as a <code>cstring</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> <a href="#ga8ad896728fa1f98b246f32ce704946f4" class="m-doc">cnx_error_category_get_posix_message</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> error_code)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> <a href="#ga09734ad21d6677e22b9de5fa39c20bd2" class="m-doc">cnx_error_category_get_last_error</a>(</span><span class="m-doc-wrap">CnxErrorCategory self)</span>
+            </dt>
+            <dd>Returns the error code for the last reported error.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> <a href="#gabbb0d2e8121f4d20824d00736b4dc2bf" class="m-doc">cnx_posix_category_get_message</a>(</span><span class="m-doc-wrap">const CnxErrorCategory*restrict self,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> error_code)</span>
             </dt>
             <dd>Returns the POSIX error message associated with the given error code, as a <code>cstring</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> <a href="#ga485454ed98ae8cf34d7b61b5666fd803" class="m-doc">cnx_posix_category_get_last_error</a>(</span><span class="m-doc-wrap">const CnxErrorCategory*restrict self)</span>
+            </dt>
+            <dd>Returns the error code for the last reported POSIX error.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">static  <a href="#gaafecaa1b546f4d421b737c405a2e4e13" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
               <a href="structCnxError.html" class="m-doc">CnxError</a>,
@@ -147,30 +149,15 @@
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga7fd1f8d1f94d6b1093b7dae7a1b6203e" class="m-doc">CNX_POSIX_ERROR_CATEGORY</a></span>
             </dt>
-            <dd>The <code><a href="structCnxErrorCategory.html" class="m-doc">CnxErrorCategory</a></code> to map POSIX error codes.</dd>
+            <dd>The <code>CnxErrorCategory</code> to map POSIX error codes.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga471c913e6e0ae596a9cb9ee03f2b93aa" class="m-doc">CNX_DEFAULT_ERROR_CATEGORY</a></span>
             </dt>
-            <dd>the default <code><a href="structCnxErrorCategory.html" class="m-doc">CnxErrorCategory</a></code>. By default, this is <code>CNX_POSIX_ERROR_CATEGORY</code></dd>
+            <dd>the default <code>CnxErrorCategory</code>. By default, this is <code>CNX_POSIX_ERROR_CATEGORY</code></dd>
           </dl>
         </section>
         <section>
           <h2>Typedef documentation</h2>
-          <section class="m-doc-details" id="gaf6a553369669e0e4016fcee68a5ca71e"><div>
-            <h3>
-              typedef <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a>(*<a href="#gaf6a553369669e0e4016fcee68a5ca71e" class="m-doc-self">cnx_error_category_message_function</a>)(i64 error_code)
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Error_8h.html">&lt;include/Cnx/Error.h&gt;</a></div>
-            </h3>
-            <p>A <code>cnx_error_category_message_function</code> is a function that converts an <code>i64</code> error code into its corresponding message string, for the error category the function is associated with.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga1fc023c846188d404727ad2daaa2c75d"><div>
-            <h3>
-              typedef struct <a href="structCnxErrorCategory.html" class="m-doc">CnxErrorCategory</a> <a href="#ga1fc023c846188d404727ad2daaa2c75d" class="m-doc-self">CnxErrorCategory</a>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Error_8h.html">&lt;include/Cnx/Error.h&gt;</a></div>
-            </h3>
-            <p><code><a href="structCnxErrorCategory.html" class="m-doc">CnxErrorCategory</a></code> provides the mechanism to convert an arbitrary error code into a corresponding message associated with a specific class of errors</p>
-<p><code><a href="structCnxErrorCategory.html" class="m-doc">CnxErrorCategory</a></code> is what allows a <code><a href="structCnxError.html" class="m-doc">CnxError</a></code> to communicate error messages unique to the module the error originated from.</p>
-          </div></section>
           <section class="m-doc-details" id="gaa5139761f60937519aabe5d2c2d2af2d"><div>
             <h3>
               typedef struct <a href="structCnxError.html" class="m-doc">CnxError</a> <a href="#gaa5139761f60937519aabe5d2c2d2af2d" class="m-doc-self">CnxError</a>
@@ -200,10 +187,19 @@
         </section>
         <section>
           <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ga848f1b523d4ffc9337651309ebcb41ae"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga848f1b523d4ffc9337651309ebcb41ae" class="m-doc-self">Trait</a>(</span><span class="m-doc-wrap">CnxErrorCategory,
+              <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a>(*)(const CnxErrorCategory*restrict self, <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> code) message;<a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a>(*)(const CnxErrorCategory*restrict self) get_last_error;)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Error_8h.html">&lt;include/Cnx/Error.h&gt;</a></div>
+            </h3>
+            <p><code>CnxErrorCategory</code> provides the mechanism to convert an arbitrary error code into a corresponding message associated with a specific class of errors</p>
+<p><code>CnxErrorCategory</code> is what allows a <code><a href="structCnxError.html" class="m-doc">CnxError</a></code> to communicate error messages unique to the module the error originated from.</p>
+          </div></section>
           <section class="m-doc-details" id="ga8c0c6cffe2fa15d45b1c9f51069a3239"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structCnxError.html" class="m-doc">CnxError</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga8c0c6cffe2fa15d45b1c9f51069a3239" class="m-doc-self">cnx_error_new</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> error_code,
-              <a href="structCnxErrorCategory.html" class="m-doc">CnxErrorCategory</a> error_category)</span></span>
+              CnxErrorCategory error_category)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Error_8h.html">&lt;include/Cnx/Error.h&gt;</a></div>
             </h3>
             <p>Creates a <code><a href="structCnxError.html" class="m-doc">CnxError</a></code> with the given error code and category.</p>
@@ -218,7 +214,7 @@
                 </tr>
                 <tr>
                   <td>error_category</td>
-                  <td>- The <code><a href="structCnxErrorCategory.html" class="m-doc">CnxErrorCategory</a></code> that will generate the message associated with the error code</td>
+                  <td>- The <code>CnxErrorCategory</code> that will generate the message associated with the error code</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -279,7 +275,7 @@
           </div></section>
           <section class="m-doc-details" id="ga2a83739c4cf5bd47e896005828bf818b"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga2a83739c4cf5bd47e896005828bf818b" class="m-doc-self">cnx_error_category_get_message</a>(</span><span class="m-doc-wrap"><a href="structCnxErrorCategory.html" class="m-doc">CnxErrorCategory</a> self,
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga2a83739c4cf5bd47e896005828bf818b" class="m-doc-self">cnx_error_category_get_message</a>(</span><span class="m-doc-wrap">CnxErrorCategory self,
               <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> error_code)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Error_8h.html">&lt;include/Cnx/Error.h&gt;</a></div>
             </h3>
@@ -306,9 +302,34 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga8ad896728fa1f98b246f32ce704946f4"><div>
+          <section class="m-doc-details" id="ga09734ad21d6677e22b9de5fa39c20bd2"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga8ad896728fa1f98b246f32ce704946f4" class="m-doc-self">cnx_error_category_get_posix_message</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> error_code)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga09734ad21d6677e22b9de5fa39c20bd2" class="m-doc-self">cnx_error_category_get_last_error</a>(</span><span class="m-doc-wrap">CnxErrorCategory self)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Error_8h.html">&lt;include/Cnx/Error.h&gt;</a></div>
+            </h3>
+            <p>Returns the error code for the last reported error.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The error category to get the last error from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the <code>i64</code> error code representing the last reported error</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gabbb0d2e8121f4d20824d00736b4dc2bf"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gabbb0d2e8121f4d20824d00736b4dc2bf" class="m-doc-self">cnx_posix_category_get_message</a>(</span><span class="m-doc-wrap">const CnxErrorCategory*restrict self,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> error_code)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Error_8h.html">&lt;include/Cnx/Error.h&gt;</a></div>
             </h3>
             <p>Returns the POSIX error message associated with the given error code, as a <code>cstring</code></p>
@@ -318,7 +339,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">error_code</td>
+                  <td style="width: 1%">self</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>error_code</td>
                   <td>- The error code to get the message for</td>
                 </tr>
               </tbody>
@@ -326,6 +351,21 @@
                 <tr>
                   <th>Returns</th>
                   <td>the message associated with the error code</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga485454ed98ae8cf34d7b61b5666fd803"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga485454ed98ae8cf34d7b61b5666fd803" class="m-doc-self">cnx_posix_category_get_last_error</a>(</span><span class="m-doc-wrap">const CnxErrorCategory*restrict self)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Error_8h.html">&lt;include/Cnx/Error.h&gt;</a></div>
+            </h3>
+            <p>Returns the error code for the last reported POSIX error.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>the error code for the last POSIX error</td>
                 </tr>
               </tfoot>
             </table>
@@ -356,7 +396,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga7fd1f8d1f94d6b1093b7dae7a1b6203e" class="m-doc-self">CNX_POSIX_ERROR_CATEGORY</a></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Error_8h.html">&lt;include/Cnx/Error.h&gt;</a></div>
             </h3>
-            <p>The <code><a href="structCnxErrorCategory.html" class="m-doc">CnxErrorCategory</a></code> to map POSIX error codes.</p>
+            <p>The <code>CnxErrorCategory</code> to map POSIX error codes.</p>
 <p><code>CNX_POSIX_ERROR_CATEGORY</code> is the error category to map POSIX error codes to their associated error messages. It will produce equivalent results to <code>strerror</code> in standard C</p>
           </div></section>
           <section class="m-doc-details" id="ga471c913e6e0ae596a9cb9ee03f2b93aa"><div>
@@ -364,8 +404,8 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga471c913e6e0ae596a9cb9ee03f2b93aa" class="m-doc-self">CNX_DEFAULT_ERROR_CATEGORY</a></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Error_8h.html">&lt;include/Cnx/Error.h&gt;</a></div>
             </h3>
-            <p>the default <code><a href="structCnxErrorCategory.html" class="m-doc">CnxErrorCategory</a></code>. By default, this is <code>CNX_POSIX_ERROR_CATEGORY</code></p>
-<p>This can be overridden by defining <code>CNX_DEFAULT_ERROR_CATEGORY</code> to a compound literal of your chosen <code><a href="structCnxErrorCategory.html" class="m-doc">CnxErrorCategory</a></code> prior to including &lt;C2nxt/Error.h&gt;</p>
+            <p>the default <code>CnxErrorCategory</code>. By default, this is <code>CNX_POSIX_ERROR_CATEGORY</code></p>
+<p>This can be overridden by defining <code>CNX_DEFAULT_ERROR_CATEGORY</code> to a compound literal of your chosen <code>CnxErrorCategory</code> prior to including &lt;C2nxt/Error.h&gt;</p>
           </div></section>
         </section>
       </div>
