@@ -58,7 +58,7 @@ jobs:
       env:
         CC: clang-14
       # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target Doxygen
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target Cnx-Doxygen
 
     - name: Push Docs
       # Execute tests defined by the CMake configuration.  
