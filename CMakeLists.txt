@@ -94,7 +94,7 @@ set(IMPLEMENTATIONS
 add_library(Cnx STATIC
 	${EXPORTS} ${IMPLEMENTATIONS})
 add_executable(FormatBenchmark "${CMAKE_CURRENT_SOURCE_DIR}/src/benchmark/benchmark.c")
-add_executable(Test "${CMAKE_CURRENT_SOURCE_DIR}/src/test/Test.c"
+add_executable(Cnx-Test "${CMAKE_CURRENT_SOURCE_DIR}/src/test/Test.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/test/Arrayi32_10.c")
 
 if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang" OR APPLE)
@@ -103,7 +103,7 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
 	endif()
 	set_target_properties(Cnx PROPERTIES C_CLANG_TIDY ${CMAKE_C_CLANG_TIDY})
 	set_target_properties(FormatBenchmark PROPERTIES C_CLANG_TIDY ${CMAKE_C_CLANG_TIDY})
-	set_target_properties(Test PROPERTIES C_CLANG_TIDY ${CMAKE_C_CLANG_TIDY})
+	set_target_properties(Cnx-Test PROPERTIES C_CLANG_TIDY ${CMAKE_C_CLANG_TIDY})
 endif ()
 
 if (NOT (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang" OR APPLE))
@@ -120,7 +120,7 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
 		-Werror
 		-Wno-unknown-warning-option
 		)
-	target_compile_options(Test PRIVATE
+	target_compile_options(Cnx-Test PRIVATE
 		-std=gnu2x
 		-Wall
 		-Wextra
@@ -177,7 +177,7 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
 			)
 	endif ()
 else ()
-	target_compile_options(Test PRIVATE
+	target_compile_options(Cnx-Test PRIVATE
 		-std=gnu2x
 		-Wall
 		-Wextra
@@ -233,8 +233,8 @@ if(NOT WIN32)
 endif()
 
 target_link_libraries(FormatBenchmark PRIVATE Cnx)
-target_link_libraries(Test PRIVATE Cnx ${CRITERION_LIBRARIES})
-target_include_directories(Test PRIVATE ${CRITERION_INCLUDE_DIRS})
+target_link_libraries(Cnx-Test PRIVATE Cnx ${CRITERION_LIBRARIES})
+target_include_directories(Cnx-Test PRIVATE ${CRITERION_INCLUDE_DIRS})
 
 find_package(Doxygen REQUIRED)
 set(MCSS_DOXYFILE_IN "${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile-mcss.in")
@@ -274,4 +274,4 @@ install(DIRECTORY ${DOXYGEN_OUTPUT_DIR} DESTINATION ${CMAKE_INSTALL_DOCDIR})
 
 enable_testing()
 
-add_test(test Test)
+add_test(test Cnx-Test)

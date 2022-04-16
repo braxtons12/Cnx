@@ -42,7 +42,7 @@ jobs:
       env:
         CC: ${{ matrix.compiler }}
       # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target Test
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target Cnx-Test
 
     - name: Test
       env:
@@ -85,7 +85,7 @@ jobs:
       env:
         CC: ${{ matrix.compiler }}
       # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target Test
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target Cnx-Test
 
     - name: Test
       env:
