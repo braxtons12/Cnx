@@ -112,7 +112,7 @@
 ///
 /// @param T - The type managed by the `CnxSharedPtr(T)`
 /// @param Identifier - The identifier
-#define CnxSharedPtrIdentifier(T, Identifier) CONCAT2(cnx_shared_ptr, CONCAT3(T, _, Identifier))
+#define CnxSharedPtrIdentifier(T, Identifier) CONCAT4(cnx_shared_ptr_, T, _, Identifier)
 
 /// @brief Creates a new sharedly, owned zero-initialized `T`
 ///

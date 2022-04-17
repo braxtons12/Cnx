@@ -112,7 +112,7 @@
 ///
 /// @param T - The type managed by the `CnxUniquePtr(T)`
 /// @param Identifier - The identifier
-#define CnxUniquePtrIdentifier(T, Identifier) CONCAT2(cnx_unique_ptr, CONCAT3(T, _, Identifier))
+#define CnxUniquePtrIdentifier(T, Identifier) CONCAT4(cnx_unique_ptr_, T, _, Identifier)
 
 /// @brief Creates a new uniquely, owned zero-initialized `T`
 ///
