@@ -28,7 +28,7 @@
 
 #include <Cnx/Def.h>
 
-#if defined(SHARED_T) && SHARED_DECL
+#if defined(SHARED_T) && SHARED_IMPL
 
 IGNORE_MISSING_FIELD_INITIALIZERS_WARNING_START
 
@@ -273,4 +273,4 @@ void CnxSharedPtrIdentifier(SHARED_T, free)(void* self) {
 
 IGNORE_MISSING_FIELD_INITIALIZERS_WARNING_STOP
 
-#endif // defined(SHARED_T) && SHARED_DECL
+#endif // defined(SHARED_T) && SHARED_IMPL

@@ -28,7 +28,7 @@
 
 #include <Cnx/Def.h>
 
-#if defined(UNIQUE_T) && UNIQUE_DECL
+#if defined(UNIQUE_T) && UNIQUE_IMPL
 
 IGNORE_MISSING_FIELD_INITIALIZERS_WARNING_START
 
@@ -237,4 +237,4 @@ void CnxUniquePtrIdentifier(UNIQUE_T, free)(void* self) {
 
 IGNORE_MISSING_FIELD_INITIALIZERS_WARNING_STOP
 
-#endif // defined(UNIQUE_T) && UNIQUE_DECL
+#endif // defined(UNIQUE_T) && UNIQUE_IMPL
