@@ -3,7 +3,7 @@
 /// @brief This module provides an extensible type for communicating errors via both error codes and
 /// message strings.
 /// @version 0.2.0
-/// @date 2022-04-15
+/// @date 2022-04-17
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -75,7 +75,7 @@ const_cstring cnx_win32_category_get_message([[maybe_unused]] const CnxErrorCate
 		= FormatMessageW(0x00001000 /**FORMAT_MESSAGE_FROM_SYSTEM**/		   // NOLINT
 							 | 0x00000200 /**FORMAT_MESSAGE_IGNORE_INSERTS**/, // NOLINT
 						 nullptr,
-						 code,
+						 static_cast(DWORD)(error_code),
 						 0,
 						 buffer, // NOLINT
 						 1024,	 // NOLINT
@@ -86,14 +86,14 @@ const_cstring cnx_win32_category_get_message([[maybe_unused]] const CnxErrorCate
 		return "failed to get message from system";
 	}
 
-	let_mut alloc_size = wide_length * 2_usize;
+	let_mut alloc_size = wide_length * static_cast(usize)(2);
 	DWORD error = 0;
 	// try to convert the "wide" error message string (UTF16, or UCS-2) to "narrow/normal"
 	// UTF8
 	do {
-		let_mut p = cnx_allocator_allocate_array_t(char, DEFAULT_ALLOCATOR, alloc_size);
+		let_mut as_utf8 = cnx_allocator_allocate_array_t(char, DEFAULT_ALLOCATOR, alloc_size);
 		// if memory allocation fails, bail
-		if(p == nullptr) {
+		if(as_utf8 == nullptr) {
 			return "failed to get message from system";
 		}
 
@@ -103,25 +103,29 @@ const_cstring cnx_win32_category_get_message([[maybe_unused]] const CnxErrorCate
 															   0,
 															   buffer, // NOLINT
 															   static_cast(int)(wide_length + 1),
-															   p,
+															   as_utf8,
 															   static_cast(int)(alloc_size),
 															   nullptr,
 															   nullptr));
 		// if conversion succeeded, trim the string and return it
 		if(bytes != 0) {
-			char* end = strchr(p, 0); // NOLINT
+			let_mut end = as_utf8 + strlen(as_utf8);
 			// We just want the primary error message, so trim all but the first line
 			while(end[-1] == '\n' || end[-1] == '\r') { // NOLINT
 				--end;									// NOLINT
 			}
 			*end = '\0';
-			let view = cnx_stringview_from(p, 0, (end - p));
-			let_mut str = cnx_string_from(&view);
-			free(p); // NOLINT
-			return cnx_string_into_cstring(str);
+			let_mut reallocated
+				= cnx_allocator_reallocate_array_t(char,
+												   DEFAULT_ALLOCATOR,
+												   as_utf8,
+												   alloc_size,
+												   static_cast(usize)(end - as_utf8));
+			cnx_allocator_deallocate(DEFAULT_ALLOCATOR, as_utf8);
+			return reallocated;
 		}
 
-		free(p); // NOLINT
+		cnx_allocator_deallocate(DEFAULT_ALLOCATOR, as_utf8);
 
 		// increase the allocation size and try again on the next iteration
 		alloc_size += alloc_size >> 2U;
