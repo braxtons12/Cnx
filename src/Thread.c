@@ -836,7 +836,7 @@ void cnx_stop_token_request_stop(CnxStopToken* restrict token) {
 }
 
 bool cnx_stop_token_stop_requested(const CnxStopToken* restrict token) {
-	return atomic_load(token);
+	return atomic_load(const_cast(CnxStopToken*)(token));
 }
 
 void LambdaFunction(jthread_invoke) {
@@ -844,7 +844,7 @@ void LambdaFunction(jthread_invoke) {
 	lambda_scoped lambda = binding._1;
 	let token_ptr = binding._2;
 	lambda_call(lambda, token_ptr);
-	cnx_allocator_deallocate(DEFAULT_ALLOCATOR, token_ptr);
+	cnx_allocator_deallocate(DEFAULT_ALLOCATOR, static_cast(void*)(token_ptr));
 }
 
 CnxResult(CnxJThread) cnx_jthread_new(CnxJThreadLambda lambda) {
@@ -870,7 +870,7 @@ CnxResult cnx_jthread_init(CnxJThread* restrict thread, CnxJThreadLambda lambda)
 			return Ok(i32, 0);
 		}
 		variant(Err, err) {
-			cnx_allocator_deallocate(DEFAULT_ALLOCATOR, token_ptr);
+			cnx_allocator_deallocate(DEFAULT_ALLOCATOR, static_cast(void*)(token_ptr));
 			return Err(i32, err);
 		}
 	}
