@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module macro defines for identifying the platform being compiled for (operating
 /// system, compiler, etc)
-/// @version 0.1
-/// @date 2021-12-08
+/// @version 0.1.1
+/// @date 2022-04-20
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -25,7 +25,6 @@
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
-#include <stdbool.h>
 
 /// @ingroup utils
 /// @{
@@ -37,6 +36,13 @@
 /// @}
 
 #ifndef CNX_PLATFORM
+
+#ifndef _GNU_SOURCE
+	#define _GNU_SOURCE 1
+#endif // _GNU_SOURCE
+
+#include <stdbool.h>
+
 	/// @brief Declarations and definitions related to detecting the compiled-for platform
 	#define CNX_PLATFORM
 

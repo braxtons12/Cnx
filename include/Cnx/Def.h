@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Def provides various `#define`s for performing basic tasks and macro-related
 /// functions.
-/// @version 0.2.1
-/// @date 2022-03-29
+/// @version 0.2.2
+/// @date 2022-04-20
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -33,6 +33,10 @@
 #ifndef CNX_DEF
 /// @brief definitions related to Standard Defines
 #define CNX_DEF
+
+#ifndef _GNU_SOURCE
+	#define _GNU_SOURCE 1
+#endif // _GNU_SOURCE
 
 #include <Cnx/Platform.h>
 #include <Cnx/mpl/ArgLists.h>
