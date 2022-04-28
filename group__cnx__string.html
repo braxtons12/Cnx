@@ -691,6 +691,10 @@
             </dt>
             <dd>Returns a reference to the character at the end of the string.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5d26d9cf154ecd1ffdfe3468de506a3b" class="m-doc">cnx_string_data</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the raw character array of the string.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#gaf494ba3ba8340c7735a3adae21017ba5" class="m-doc">cnx_string_is_empty</a>(</span><span class="m-doc-wrap">self)</span>
             </dt>
             <dd>Returns whether the given <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> is empty or not.</dd>
@@ -4041,6 +4045,30 @@
                 <tr>
                   <th>Returns</th>
                   <td>The last character</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga5d26d9cf154ecd1ffdfe3468de506a3b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5d26d9cf154ecd1ffdfe3468de506a3b" class="m-doc-self">cnx_string_data</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="String_8h.html">&lt;include/Cnx/String.h&gt;</a></div>
+            </h3>
+            <p>Returns the raw character array of the string.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> to retrieve the raw array from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The raw character array</td>
                 </tr>
               </tfoot>
             </table>
