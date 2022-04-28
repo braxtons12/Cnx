@@ -4,6 +4,7 @@
 #include "DurationTest.h"
 #include "GcdAndLcmTest.h"
 #include "LambdaTest.h"
+#include "PathTest.h"
 #include "RangeTest.h"
 #include "RatioTest.h"
 #include "SharedPtrTest.h"

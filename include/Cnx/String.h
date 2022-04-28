@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides string and stringview types comparable to C++ for Cnx
 /// @version 0.2.2
-/// @date 2022-03-31
+/// @date 2022-04-27
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -1875,6 +1875,17 @@ cnx_stringview_rend(const CnxStringView* restrict self) ___DISABLE_IF_NULL(self)
 #define cnx_string_back(self) *(_Generic((&(self)), 		\
 	CnxString* 			: cnx_string_back_mut, 				\
 	const CnxString* 	: cnx_string_back_const)(&(self)))
+// clang-format on
+// clang-format off
+/// @brief Returns the raw character array of the string
+///
+/// @param self - The `CnxString` to retrieve the raw array from
+///
+/// @return The raw character array
+/// @ingroup cnx_string
+#define cnx_string_data(self) (_Generic((&(self)), 				\
+	CnxString*  		: cnx_string_front_mut, 				\
+	const CnxString* 	: cnx_string_front_const)(&(self)))
 // clang-format on
 
 /// @brief Returns whether the given `CnxString` is empty or not

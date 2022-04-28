@@ -1,9 +1,8 @@
-
 /// @file Path.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Path provides various functions for working with filesystem paths
 /// @version 0.2.0
-/// @date 2022-04-20
+/// @date 2022-04-27
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -93,20 +92,60 @@ cnx_path_get_file_name_without_extension(const CnxPath* restrict path) __DISABLE
 cnx_path_append(CnxPath* restrict path, const CnxString* restrict entry_name)
 	__DISABLE_IF_NULL(path) __DISABLE_IF_NULL(entry_name);
 
+IGNORE_RESERVED_IDENTIFIER_WARNING_START
+[[nodiscard]] [[not_null(1)]] CnxResult
+cnx_path_create_file(const CnxPath* restrict file_path, bool overwrite_existing)
+	__DISABLE_IF_NULL(file_path);
+[[nodiscard]] [[not_null(1)]] CnxResult
+cnx_path_create_directory(const CnxPath* restrict dir_path, bool overwrite_existing)
+	__DISABLE_IF_NULL(dir_path);
+
+#define __cnx_path_create_file_2(...) cnx_path_create_file(__VA_ARGS__)
+#define __cnx_path_create_file_1(...) cnx_path_create_file(__VA_ARGS__, false)
+#define cnx_path_create_file(...) \
+	CONCAT2_DEFERRED(__cnx_path_create_file_, PP_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+#define cnx_path_create_file_overwriting(file_path) cnx_path_create_file(file_path, true)
+
+#define __cnx_path_create_directory_2(...) cnx_path_create_directory(__VA_ARGS__)
+#define __cnx_path_create_directory_1(...) cnx_path_create_directory(__VA_ARGS__, false)
+#define cnx_path_create_directory(...) \
+	CONCAT2_DEFERRED(__cnx_path_create_directory_, PP_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+#define cnx_path_create_directory_overwriting(dir_path) cnx_path_create_directory(dir_path, true)
+IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
+
+[[nodiscard]] [[not_null(1)]] CnxResult
+cnx_path_remove_file(const CnxPath* restrict file_path) __DISABLE_IF_NULL(file_path);
+[[nodiscard]] [[not_null(1)]] CnxResult
+cnx_path_remove_directory(const CnxPath* restrict dir_path, bool recursive)
+	__DISABLE_IF_NULL(dir_path);
+
+IGNORE_RESERVED_IDENTIFIER_WARNING_START
+#define __cnx_path_remove_directory_2(...) cnx_path_remove_directory(__VA_ARGS__)
+#define __cnx_path_remove_directory_1(...) cnx_path_remove_directory(__VA_ARGS__, false)
+IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
+#define cnx_path_remove_directory(...) \
+	CONCAT2_DEFERRED(__cnx_path_remove_directory_, PP_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+#define cnx_path_remove_directory_recursive(dir_path) cnx_path_remove_directory(dir_path, true)
+
+#define path_scoped cnx_string_scoped
+
+IGNORE_RESERVED_IDENTIFIER_WARNING_START
+
 [[nodiscard]] [[not_null(1, 2)]] CnxResult
 cnx_path_create_symlink(const CnxPath* restrict link_to_create,
 						const CnxPath* restrict link_target,
 						bool overwrite_existing) __DISABLE_IF_NULL(link_to_create)
 	__DISABLE_IF_NULL(link_target);
 
-#define path_scoped cnx_string_scoped
+[[nodiscard]] [[not_null(1)]] CnxResult cnx_path_remove_symlink(const CnxPath* restrict link_path);
 
-#define ___cnx_path_create_symlink_3(...) cnx_path_create_symlink(__VA_ARGS__)
-#define ___cnx_path_create_symlink_2(...) cnx_path_create_symlink(__VA_ARGS__, false)
+#define __cnx_path_create_symlink_3(...) cnx_path_create_symlink(__VA_ARGS__)
+#define __cnx_path_create_symlink_2(...) cnx_path_create_symlink(__VA_ARGS__, false)
+IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 #define cnx_path_create_symlink(...) \
-	CONCAT2_DEFERRED(___cnx_path_create_symlink_, PP_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+	CONCAT2_DEFERRED(__cnx_path_create_symlink_, PP_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 #define cnx_path_create_symlink_overwriting(link_name, target_name) \
-	cnx_path_create_symlink(link_name, target_name, false)
+	cnx_path_create_symlink(link_name, target_name, true)
 
 #if CNX_PLATFORM_WINDOWS
 	#define CNX_PATHS_CASE_SENSITIVE FALSE
@@ -120,4 +159,5 @@ cnx_path_create_symlink(const CnxPath* restrict link_to_create,
 
 #endif // CNX_PLATFORM_WINDOWS
 
+#undef __DISABLE_IF_NULL
 #endif // CNX_PATH

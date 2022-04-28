@@ -3,7 +3,7 @@
 /// @brief This module provides the macro definitions for a struct template for representing a
 /// uniquely owned pointer
 /// @version 0.2.0
-/// @date 2022-03-29
+/// @date 2022-04-27
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -448,12 +448,13 @@
 /// @note This is only available if `T` __IS__ an array type. To create a uniquely owned single
 /// object, use `cnx_make_unique` or `cnx_unique_ptr_new`.
 /// @ingroup cnx_unique_ptr
-#define cnx_make_unique_array(T, capacity)                                                        \
-	({                                                                                            \
-		cnx_static_assert(__UNIQUE_PTR_IS_ARRAY_GENERIC(T),                                       \
-						  "cnx_make_unique_array is only available for Ts that are array types"); \
-		let_mut UNIQUE_VAR(ptr) = cnx_allocator_allocate_array_t(T, DEFAULT_ALLOCATOR, capacity); \
-		cnx_unique_ptr_from(T, UNIQUE_VAR(ptr));                                                  \
+#define cnx_make_unique_array(T, capacity)                                                         \
+	({                                                                                             \
+		cnx_static_assert(__UNIQUE_PTR_IS_ARRAY_GENERIC(T),                                        \
+						  "cnx_make_unique_array is only available for Ts that are array types");  \
+		let_mut UNIQUE_VAR(ptr)                                                                    \
+			= cnx_allocator_allocate_array_t(__SMART_PTR_ELEMENT(T), DEFAULT_ALLOCATOR, capacity); \
+		cnx_unique_ptr_from(T, UNIQUE_VAR(ptr));                                                   \
 	})
 /// @brief Creates a `CnxUniquePtr(T)` managing the array type `T` with the given initial capacity,
 /// allocated with the given allocator
@@ -473,7 +474,8 @@
 		cnx_static_assert(__UNIQUE_PTR_IS_ARRAY_GENERIC(T),                                     \
 						  "cnx_make_unique_array_with_allocator is only available for Ts that " \
 						  "are array types");                                                   \
-		let_mut UNIQUE_VAR(ptr) = cnx_allocator_allocate_array_t(T, allocator, capacity);       \
+		let_mut UNIQUE_VAR(ptr)                                                                 \
+			= cnx_allocator_allocate_array_t(__SMART_PTR_ELEMENT(T), allocator, capacity);      \
 		cnx_unique_ptr_from_with_allocator(T, UNIQUE_VAR(ptr), allocator);                      \
 	})
 
