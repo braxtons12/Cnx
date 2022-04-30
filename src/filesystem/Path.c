@@ -156,22 +156,22 @@ bool cnx_path_is_valid_cstring(const_cstring restrict path, usize path_length) {
 
 #endif // CNX_PLATFORM_WINDOWS
 
-CnxPath cnx_path_new_string(const CnxString* restrict path) {
-	if(cnx_path_is_valid(path)) {
-		return cnx_string_clone(*path);
-	}
+CnxPath cnx_path_new_string_was_invalid(CnxString path) {
 
-	CnxScopedString cloned = cnx_string_clone(*path);
+	CnxScopedString cloned = path;
+
 #if CNX_PLATFORM_WINDOWS
 	if(cnx_string_occurrences_of_char(*path, CNX_PATH_SEPARATOR_UNIX) != 0) {
-		CnxScopedVector(usize) occurrences = cnx_string_find_occurrences_of_char(*path, CNX_PATH_SEPARATOR_WINDOWS);
+		CnxScopedVector(usize) occurrences
+			= cnx_string_find_occurrences_of_char(*path, CNX_PATH_SEPARATOR_WINDOWS);
 		foreach(index, occurrences) {
 			cnx_string_at(cloned, index) = CNX_PATH_SEPARATOR;
 		}
 	}
 #else
-	if(cnx_string_occurrences_of_char(*path, CNX_PATH_SEPARATOR_WINDOWS) != 0) {
-		CnxScopedVector(usize) occurrences = cnx_string_find_occurrences_of_char(*path, CNX_PATH_SEPARATOR_WINDOWS);
+	if(cnx_string_occurrences_of_char(cloned, CNX_PATH_SEPARATOR_WINDOWS) != 0) {
+		CnxScopedVector(usize) occurrences
+			= cnx_string_find_occurrences_of_char(cloned, CNX_PATH_SEPARATOR_WINDOWS);
 		foreach(index, occurrences) {
 			cnx_string_at(cloned, index) = CNX_PATH_SEPARATOR;
 		}
@@ -179,16 +179,18 @@ CnxPath cnx_path_new_string(const CnxString* restrict path) {
 #endif
 
 	CnxScopedVector(CnxString) split
-		= cnx_string_split_on_with_allocator(cloned, CNX_PATH_SEPARATOR, path->m_allocator);
+		= cnx_string_split_on_with_allocator(cloned, CNX_PATH_SEPARATOR, cloned.m_allocator);
 
-	CnxScopedString new_path = cnx_string_new_with_capacity_with_allocator(cnx_string_capacity(*path), path->m_allocator);
+	CnxScopedString new_path
+		= cnx_string_new_with_capacity_with_allocator(
+				cnx_string_capacity(cloned), cloned.m_allocator);
 
 	// if running on NOT Windows and path is absolute, make sure to append the root first
 	// (on Windows, the root could be a drive other than "C:",
 	// and we will pick it up through the string splitting and recombining anyway,
 	// so we only need to special case for absolute paths on other platforms)
 #if !CNX_PLATFORM_WINDOWS
-	if(cnx_path_is_absolute(path)) {
+	if(cnx_path_is_absolute(&cloned)) {
 			cnx_string_append(new_path, CNX_SYSTEM_ROOT);
 	}
 #endif // !CNX_PLATFORM_WINDOWS
@@ -200,16 +202,38 @@ CnxPath cnx_path_new_string(const CnxString* restrict path) {
 
 	cnx_assert(cnx_path_is_valid(&new_path), "Created path is not valid!");
 	return move(new_path);
+
+}
+
+CnxPath cnx_path_new_string(const CnxString* restrict path) {
+	CnxScopedString clone = cnx_string_clone(*path);
+	if(cnx_path_is_valid(path)) {
+		return move(clone);
+	}
+	
+	// `cnx_path_new_string_was_invalid` will only be using `path` as const since we're marking
+	// `should_clone` as true, so it's safe to cast away const here
+	return cnx_path_new_string_was_invalid(move(clone));
 }
 
 CnxPath cnx_path_new_stringview(const CnxStringView* restrict path) {
 	CnxScopedString path_str = cnx_string_from(path);
-	return cnx_path_new_string(&path_str);
+
+	if(cnx_path_is_valid(path)) {
+		return move(path_str);
+	}
+
+	return cnx_path_new_string_was_invalid(move(path_str));
 }
 
 CnxPath cnx_path_new_cstring(const_cstring restrict path, usize path_length) {
 	CnxScopedString path_str = cnx_string_from_cstring(path, path_length);
-	return cnx_path_new_string(&path_str);
+	
+	if(cnx_path_is_valid(path)) {
+		return move(path_str);
+	}
+
+	return cnx_path_new_string_was_invalid(move(path_str));
 }
 
 CnxPath cnx_user_home_directory(void) {
