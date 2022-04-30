@@ -103,6 +103,15 @@ typedef CnxString CnxPath;
 #define __DISABLE_IF_NULL(path) \
 	cnx_disable_if(!(path), "Can't perform a path operation on a nullptr")
 
+[[nodiscard]] [[not_null(1)]] bool
+cnx_path_is_valid_string(const CnxString* restrict path) __DISABLE_IF_NULL(path);
+[[nodiscard]] [[not_null(1)]] bool
+cnx_path_is_valid_stringview(const CnxStringView* restrict path) __DISABLE_IF_NULL(path);
+[[nodiscard]] [[not_null(1)]] bool
+cnx_path_is_valid_cstring(restrict const_cstring path, usize path_length) __DISABLE_IF_NULL(path);
+
+// clang-format off
+
 /// @brief Checks if the given string would be a valid path on the host
 /// platform's filesystem
 ///
@@ -113,8 +122,39 @@ typedef CnxString CnxPath;
 ///
 /// @return whether the path is valid
 /// @ingroup cnx_path
-[[nodiscard]] [[not_null(1)]] bool
-cnx_path_is_valid(const CnxString* restrict path) __DISABLE_IF_NULL(path);
+#define cnx_path_is_valid(path) _Generic((path), 								   				   \
+			const CnxString* 			: cnx_path_is_valid_string( 						  	   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			CnxString* 					: cnx_path_is_valid_string( 						  	   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			const CnxStringView* 		: cnx_path_is_valid_stringview( 					  	   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			CnxStringView* 				: cnx_path_is_valid_stringview( 					  	   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			const_cstring 				: cnx_path_is_valid_cstring( 						  	   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			cstring 					: cnx_path_is_valid_cstring( 						  	   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			const char[sizeof(path)] 	: cnx_path_is_valid_cstring( 				/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)), 							/** NOLINT **/ \
+			char[sizeof(path)] 			: cnx_path_is_valid_cstring( 				/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)) 							/** NOLINT **/ )
+
+// clang-format on
+
+[[nodiscard]] [[not_null(1)]] CnxPath
+cnx_path_new_string(const CnxString* restrict path) __DISABLE_IF_NULL(path);
+[[nodiscard]] [[not_null(1)]] CnxPath
+cnx_path_new_stringview(const CnxStringView* restrict path) __DISABLE_IF_NULL(path);
+[[nodiscard]] [[not_null(1)]] CnxPath
+cnx_path_new_cstring(restrict const_cstring path, usize path_length) __DISABLE_IF_NULL(path);
+
+// clang-format off
+
 /// @brief Creates a new path from the given string, potentially modified so as
 /// to be valid on the host platform.
 ///
@@ -138,8 +178,30 @@ cnx_path_is_valid(const CnxString* restrict path) __DISABLE_IF_NULL(path);
 ///
 /// @return `path` converted to a valid filesystem path
 /// @ingroup cnx_path
-[[nodiscard]] [[not_null(1)]] CnxPath
-cnx_path_new(const CnxString* restrict path) __DISABLE_IF_NULL(path);
+#define cnx_path_new(path) _Generic((path), 								   					   \
+			const CnxString* 			: cnx_path_new_string( 						  		   	   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			CnxString* 					: cnx_path_new_string( 						  		   	   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			const CnxStringView* 		: cnx_path_new_stringview( 					  		   	   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			CnxStringView* 				: cnx_path_new_stringview( 					  		   	   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			const_cstring 				: cnx_path_new_cstring( 						  		   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			cstring 					: cnx_path_new_cstring( 						  		   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			const char[sizeof(path)] 	: cnx_path_new_cstring( 					/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)), 							/** NOLINT **/ \
+			char[sizeof(path)] 			: cnx_path_new_cstring( 					/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)) 							/** NOLINT **/ )
+
+// clang-format on
+
 /// @brief Returns the path to the home directory of the user running this
 /// Program
 ///
@@ -194,28 +256,27 @@ cnx_path_append_stringview(CnxPath* restrict path, const CnxStringView* restrict
 
 // clang-format off
 
-
 #define cnx_path_append(path, entry_name) _Generic((entry_name), 								   \
-				const CnxString* 		: cnx_path_append_string((path), 						   \
-											static_cast(const CnxString*)(entry_name)), 		   \
-				CnxString* 				: cnx_path_append_string((path), 						   \
-											static_cast(const CnxString*)(entry_name)), 		   \
-				const CnxStringView* 	: cnx_path_append_stringview((path), 					   \
-											static_cast(const CnxStringView*)(entry_name)), 	   \
-				CnxStringView* 			: cnx_path_append_stringview((path), 					   \
-											static_cast(const CnxStringView*)(entry_name)), 	   \
-				const_cstring 			: cnx_path_append_cstring((path), 						   \
-											static_cast(const_cstring)(entry_name), 			   \
-											sizeof(entry_name)), 								   \
-				cstring 				: cnx_path_append_cstring((path), 						   \
-											static_cast(const_cstring)(entry_name), 			   \
-											sizeof(entry_name)), 								   \
-	const char[sizeof(entry_name)] 		: cnx_path_append_cstring((path), 			/** NOLINT **/ \
-											static_cast(const_cstring)(entry_name), 			   \
-											sizeof(entry_name)), 					/** NOLINT **/ \
-	char[sizeof(entry_name)] 			: cnx_path_append_cstring((path), 			/** NOLINT **/ \
-											static_cast(const_cstring)(entry_name), 			   \
-											sizeof(entry_name)) 					/** NOLINT **/)
+	const CnxString* 				: cnx_path_append_string((path), 						  	   \
+										static_cast(const CnxString*)(entry_name)), 		  	   \
+	CnxString* 						: cnx_path_append_string((path), 						  	   \
+										static_cast(const CnxString*)(entry_name)), 		  	   \
+	const CnxStringView* 			: cnx_path_append_stringview((path), 					  	   \
+										static_cast(const CnxStringView*)(entry_name)), 	  	   \
+	CnxStringView* 					: cnx_path_append_stringview((path), 					  	   \
+										static_cast(const CnxStringView*)(entry_name)), 	  	   \
+	const_cstring 					: cnx_path_append_cstring((path), 						  	   \
+										static_cast(const_cstring)(entry_name), 			  	   \
+										strlen(static_cast(const_cstring)(entry_name))), 		   \
+	cstring 						: cnx_path_append_cstring((path), 						  	   \
+										static_cast(const_cstring)(entry_name), 			  	   \
+										strlen(static_cast(const_cstring)(entry_name))), 		   \
+	const char[sizeof(entry_name)] 	: cnx_path_append_cstring((path), 				/** NOLINT **/ \
+										static_cast(const_cstring)(entry_name), 			   	   \
+										sizeof(entry_name)), 						/** NOLINT **/ \
+	char[sizeof(entry_name)] 		: cnx_path_append_cstring((path), 				/** NOLINT **/ \
+										static_cast(const_cstring)(entry_name), 			   	   \
+										sizeof(entry_name)) 					/** NOLINT **/     )
 
 // clang-format on
 

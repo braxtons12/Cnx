@@ -97,7 +97,7 @@ win32_wchar_to_char(WCHAR* wstring, usize wstring_size) {
 #undef RESULT_T
 #undef RESULT_IMPL
 
-bool cnx_path_is_valid(const CnxPath* restrict path) {
+bool cnx_path_is_valid_string(const CnxPath* restrict path) {
 	CnxScopedVector(usize) occurrences = cnx_string_find_occurrences_of_char_with_allocator(*path,
 																		 CNX_PATH_SEPARATOR,
 																		 path->m_allocator);
@@ -125,6 +125,16 @@ bool cnx_path_is_valid(const CnxPath* restrict path) {
 #endif // CNX_PLATFORM_WINDOWS
 }
 
+bool cnx_path_is_valid_stringview(const CnxStringView* restrict path) {
+	CnxScopedString path_str = cnx_string_from(path);
+	return cnx_path_is_valid_string(&path_str);
+}
+
+bool cnx_path_is_valid_cstring(const_cstring restrict path, usize path_length) {
+	CnxScopedString path_str = cnx_string_from_cstring(path, path_length);
+	return cnx_path_is_valid_string(&path_str);
+}
+
 #if CNX_PLATFORM_WINDOWS
 
 [[always_inline]] [[nodiscard]] static inline const_cstring get_user_name(void) {
@@ -146,7 +156,7 @@ bool cnx_path_is_valid(const CnxPath* restrict path) {
 
 #endif // CNX_PLATFORM_WINDOWS
 
-CnxPath (cnx_path_new)(const CnxString* restrict path) {
+CnxPath cnx_path_new_string(const CnxString* restrict path) {
 	if(cnx_path_is_valid(path)) {
 		return cnx_string_clone(*path);
 	}
@@ -190,6 +200,16 @@ CnxPath (cnx_path_new)(const CnxString* restrict path) {
 
 	cnx_assert(cnx_path_is_valid(&new_path), "Created path is not valid!");
 	return move(new_path);
+}
+
+CnxPath cnx_path_new_stringview(const CnxStringView* restrict path) {
+	CnxScopedString path_str = cnx_string_from(path);
+	return cnx_path_new_string(&path_str);
+}
+
+CnxPath cnx_path_new_cstring(const_cstring restrict path, usize path_length) {
+	CnxScopedString path_str = cnx_string_from_cstring(path, path_length);
+	return cnx_path_new_string(&path_str);
 }
 
 CnxPath cnx_user_home_directory(void) {
