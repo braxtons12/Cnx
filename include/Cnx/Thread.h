@@ -1,8 +1,8 @@
 /// @file Thread.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Type definitions and function declarations for threading functionality
-/// @version 0.2.0
-/// @date 2022-04-13
+/// @version 0.2.1
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -594,7 +594,7 @@ cnx_thread_detach(CnxThread* restrict thread) ___DISABLE_IF_NULL(thread); // NOL
 /// @ingroup cnx_thread
 [[not_null(1)]] void cnx_thread_free(void* thread) ___DISABLE_IF_NULL(thread); // NOLINT
 
-#define cnx_thread_scoped scoped(cnx_thread_free)
+#define CnxScopedThread scoped(cnx_thread_free)
 
 /// @brief Yields execution of the current thread, allowing the operating system to execute other
 /// threads until it decides to return execution to this one.
@@ -720,7 +720,7 @@ cnx_jthread_join(CnxJThread* restrict thread) ___DISABLE_IF_NULL(thread);
 /// @ingroup cnx_thread
 [[not_null(1)]] void cnx_jthread_free(void* thread) ___DISABLE_IF_NULL(thread);
 
-#define cnx_jthread scoped(cnx_jthread_free)
+#define CnxScopedJThread scoped(cnx_jthread_free)
 
 #undef ___DISABLE_IF_NULL
 

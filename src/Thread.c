@@ -251,6 +251,10 @@ CnxThreadID cnx_thread_get_id(const CnxThread* restrict thread) {
 
 // NOLINTNEXTLINE(readability-non-const-parameter)
 CnxResult cnx_thread_join(CnxThread* restrict thread) {
+	if(cnx_thread_is_null(thread)) {
+		return Err(i32, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
+	}
+
 	i32 res = 0;
 	let result = thrd_join(*thread, &res);
 	if(result != 0) {
@@ -262,6 +266,10 @@ CnxResult cnx_thread_join(CnxThread* restrict thread) {
 
 // NOLINTNEXTLINE(readability-non-const-parameter)
 CnxResult cnx_thread_detach(CnxThread* restrict thread) {
+	if(cnx_thread_is_null(thread)) {
+		return Err(i32, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
+	}
+
 	let res = thrd_detach(*thread);
 	CHECK_ERROR_POSIX(res);
 }
@@ -516,12 +524,20 @@ CnxThreadID cnx_thread_get_id(const CnxThread* restrict thread) {
 
 // NOLINTNEXTLINE(readability-non-const-parameter)
 CnxResult cnx_thread_join(CnxThread* restrict thread) {
+	if(cnx_thread_is_null(thread)) {
+		return Err(i32, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
+	}
+
 	let res = pthread_join(*thread, nullptr);
 	CHECK_ERROR_POSIX(res);
 }
 
 // NOLINTNEXTLINE(readability-non-const-parameter)
 CnxResult cnx_thread_detach(CnxThread* restrict thread) {
+	if(cnx_thread_is_null(thread)) {
+		return Err(i32, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
+	}
+
 	let res = pthread_detach(*thread);
 	CHECK_ERROR_POSIX(res);
 }
@@ -758,6 +774,10 @@ CnxThreadID cnx_thread_get_id(const CnxThread* restrict thread) {
 }
 
 CnxResult cnx_thread_join(CnxThread* restrict thread) {
+	if(cnx_thread_is_null(thread)) {
+		return Err(i32, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
+	}
+
 	if(WaitForSingleObjectEx(*thread, INFINITE, false) == WAIT_FAILED) {
 		let error = cnx_error_category_get_last_error(CNX_WIN32_ERROR_CATEGORY);
 		return Err(i32, cnx_error_new(error, CNX_WIN32_ERROR_CATEGORY));
@@ -772,6 +792,10 @@ CnxResult cnx_thread_join(CnxThread* restrict thread) {
 }
 
 CnxResult cnx_thread_detach(CnxThread* restrict thread) {
+	if(cnx_thread_is_null(thread)) {
+		return Err(i32, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
+	}
+
 	if(!CloseHandle(*thread)) {
 		let error = cnx_error_category_get_last_error(CNX_WIN32_ERROR_CATEGORY);
 		return Err(i32, cnx_error_new(error, CNX_WIN32_ERROR_CATEGORY));
@@ -879,6 +903,10 @@ CnxResult cnx_jthread_init(CnxJThread* restrict thread, CnxJThreadLambda lambda)
 }
 
 CnxResult cnx_jthread_join(CnxJThread* restrict thread) {
+	if(cnx_thread_is_null(&(thread->handle))) {
+		return Err(i32, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
+	}
+
 	cnx_stop_token_request_stop(thread->stop_token);
 	return cnx_thread_join(&(thread->handle));
 }
