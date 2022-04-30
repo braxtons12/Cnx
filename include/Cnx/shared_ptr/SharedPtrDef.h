@@ -3,7 +3,7 @@
 /// @brief This module provides the macro definitions for a struct template for representing a
 /// sharedly owned pointer
 /// @version 0.2.0
-/// @date 2022-04-27
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -37,7 +37,7 @@
 /// `CnxSharedPtr(T)` is a template for a "smart" pointer type that maintains (when used correctly)
 /// shared ownership of and manages an object through a contained pointer. The contained object is
 /// disposed of ("freed") when the `CnxSharedPtr(T)` is explicitly freed, when it goes out of scope
-/// when declared with the `shared_scoped(T)` tagged declaration, or when `reset`
+/// when declared with the `SharedPtr(T)` tagged declaration, or when `reset`
 /// (`Cnx_shared_ptr_reset`) is called on the `CnxSharedPtr(T)`.
 ///
 /// `CnxSharedPtr(T)` is allocator aware and stores its associated allocator in itself.
@@ -81,7 +81,7 @@
 ///
 /// void example(void) {
 /// 	// create a sharedly owned `MyStruct`
-/// 	shared_scoped(MyStruct) my_ptr = cnx_make_shared(MyStruct, .one = 2, .two = 4, .three = 1);
+/// 	SharedPtr(MyStruct) my_ptr = cnx_make_shared(MyStruct, .one = 2, .two = 4, .three = 1);
 ///
 /// 	// transfer ownership of the `MyStruct` object managed by `my_ptr` to `takes_ownership`
 /// 	// `my_ptr` now contains `nullptr`
@@ -220,7 +220,7 @@
 /// @brief Frees the given `CnxSharedPtr(T)`, calling the associated deleter on the managed object
 ///
 /// This should generally only need to be called explicitly in particularly rare circumstances.
-/// In typical usage, `CnxSharedPtr(T)`s should be declared with the `shared_scoped(T)` tag,
+/// In typical usage, `CnxSharedPtr(T)`s should be declared with the `SharedPtr(T)` tag,
 /// so cleanup is performed automatically when the associated `CnxSharedPtr(T)` goes out of scope
 ///
 /// @param T - The type managed in the given `CnxSharedPtr(T)`
@@ -491,7 +491,7 @@
 ///
 /// @param T - The type managed by the `CnxSharedPtr(T)`
 /// @ingroup cnx_shared_ptr
-#define shared_scoped(T) scoped(CnxSharedPtrIdentifier(T, free))
+#define SharedPtr(T) scoped(CnxSharedPtrIdentifier(T, free))
 
 #include <Cnx/smart_ptrs/SmartPtrDef.h>
 

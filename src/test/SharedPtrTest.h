@@ -75,14 +75,14 @@ TEST(CnxSharedPtr, new_with_capacity_at_and_delete) {
 }
 
 TEST(CnxSharedPtr, move) {
-	shared_scoped(i32) ptr = cnx_shared_ptr_new(i32);
+	SharedPtr(i32) ptr = cnx_shared_ptr_new(i32);
 
 	*ptr(ptr) = 4;
 
 	TEST_ASSERT_NOT_EQUAL(ptr(ptr), nullptr);
 	TEST_ASSERT_EQUAL(*ptr(ptr), 4);
 
-	shared_scoped(i32) moved = ptr_move(ptr);
+	SharedPtr(i32) moved = ptr_move(ptr);
 
 	TEST_ASSERT_NOT_EQUAL(ptr(moved), nullptr);
 	TEST_ASSERT_EQUAL(ptr(ptr), nullptr);
@@ -90,14 +90,14 @@ TEST(CnxSharedPtr, move) {
 }
 
 TEST(CnxSharedPtr, clone) {
-	shared_scoped(i32) ptr = cnx_shared_ptr_new(i32);
+	SharedPtr(i32) ptr = cnx_shared_ptr_new(i32);
 
 	*ptr(ptr) = 4;
 
 	TEST_ASSERT_NOT_EQUAL(ptr(ptr), nullptr);
 	TEST_ASSERT_EQUAL(*ptr(ptr), 4);
 
-	shared_scoped(i32) cloned = cnx_shared_ptr_clone(ptr);
+	SharedPtr(i32) cloned = cnx_shared_ptr_clone(ptr);
 
 	TEST_ASSERT_EQUAL(ptr(cloned), ptr(ptr));
 	TEST_ASSERT_EQUAL(*ptr(cloned), 4);
@@ -109,7 +109,7 @@ TEST(CnxSharedPtr, clone) {
 TEST(CnxSharedPtr, from) {
 	let_mut ptr = cnx_allocator_allocate_t(i32, DEFAULT_ALLOCATOR);
 	*ptr = 4;
-	shared_scoped(i32) shared_ptr = cnx_shared_ptr_from(i32, ptr);
+	SharedPtr(i32) shared_ptr = cnx_shared_ptr_from(i32, ptr);
 
 	TEST_ASSERT_NOT_EQUAL(ptr(shared_ptr), nullptr);
 	// ptr should not be used after its ownership is transferred to shared_ptr,
@@ -119,7 +119,7 @@ TEST(CnxSharedPtr, from) {
 }
 
 TEST(CnxSharedPtr, release) {
-	shared_scoped(i32) ptr = cnx_shared_ptr_new(i32);
+	SharedPtr(i32) ptr = cnx_shared_ptr_new(i32);
 
 	*ptr(ptr) = 4;
 
@@ -133,7 +133,7 @@ TEST(CnxSharedPtr, release) {
 }
 
 TEST(CnxSharedPtr, reset) {
-	shared_scoped(i32) ptr = cnx_shared_ptr_new(i32);
+	SharedPtr(i32) ptr = cnx_shared_ptr_new(i32);
 	*ptr(ptr) = 4;
 
 	let_mut ptr2 = cnx_allocator_allocate_t(i32, DEFAULT_ALLOCATOR);
@@ -147,9 +147,9 @@ TEST(CnxSharedPtr, reset) {
 }
 
 TEST(CnxSharedPtr, swap) {
-	shared_scoped(i32) ptr1 = cnx_shared_ptr_new(i32);
+	SharedPtr(i32) ptr1 = cnx_shared_ptr_new(i32);
 	*ptr(ptr1) = 4;
-	shared_scoped(i32) ptr2 = cnx_shared_ptr_new(i32);
+	SharedPtr(i32) ptr2 = cnx_shared_ptr_new(i32);
 	*ptr(ptr2) = 2;
 
 	cnx_shared_ptr_swap(ptr1, &ptr2);
@@ -159,12 +159,12 @@ TEST(CnxSharedPtr, swap) {
 }
 
 TEST(CnxSharedPtr, get_deleter) {
-	shared_scoped(i32) ptr = cnx_shared_ptr_new(i32);
+	SharedPtr(i32) ptr = cnx_shared_ptr_new(i32);
 	TEST_ASSERT_EQUAL(cnx_shared_ptr_get_deleter(ptr), i32_shared_deleter);
 }
 
 TEST(CnxSharedPtr, make_shared) {
-	shared_scoped(i32) ptr = cnx_make_shared(i32, 4);
+	SharedPtr(i32) ptr = cnx_make_shared(i32, 4);
 
 	TEST_ASSERT_NOT_EQUAL(ptr(ptr), nullptr);
 	TEST_ASSERT_EQUAL(*ptr(ptr), 4);
@@ -184,7 +184,7 @@ typedef struct {
 #undef SHARED_UNDEF_PARAMS
 
 TEST(CnxSharedPtr, make_shared_struct) {
-	shared_scoped(SharedPtrTestStruct) ptr
+	SharedPtr(SharedPtrTestStruct) ptr
 		= cnx_make_shared(SharedPtrTestStruct, .first = 3, .second = 4, .third = 1);
 
 	TEST_ASSERT_NOT_EQUAL(ptr(ptr), nullptr);
