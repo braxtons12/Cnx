@@ -320,22 +320,106 @@ cnx_path_append_stringview(CnxPath* restrict path, const CnxStringView* restrict
 // clang-format on
 
 IGNORE_RESERVED_IDENTIFIER_WARNING_START
+
 [[nodiscard]] [[not_null(1)]] CnxResult
-cnx_path_create_file(const CnxPath* restrict file_path, bool overwrite_existing)
+cnx_path_create_file_string(const CnxPath* restrict file_path, bool overwrite_existing)
 	__DISABLE_IF_NULL(file_path);
 [[nodiscard]] [[not_null(1)]] CnxResult
-cnx_path_create_directory(const CnxPath* restrict dir_path, bool overwrite_existing)
-	__DISABLE_IF_NULL(dir_path);
+cnx_path_create_file_stringview(const CnxStringView* restrict file_path, bool overwrite_existing)
+	__DISABLE_IF_NULL(file_path);
+[[nodiscard]] [[not_null(1)]] CnxResult
+cnx_path_create_file_cstring(restrict const_cstring file_path,
+							 usize file_path_length,
+							 bool overwrite_existing) __DISABLE_IF_NULL(file_path);
 
-#define __cnx_path_create_file_2(...) cnx_path_create_file(__VA_ARGS__)
-#define __cnx_path_create_file_1(...) cnx_path_create_file(__VA_ARGS__, false)
+// clang-format off
+
+#define __cnx_path_create_file(file_path, overwrite_existing) _Generic((file_path), 			   \
+	const CnxString* 				: cnx_path_create_file_string( 								   \
+										static_cast(const CnxString*)(file_path), 				   \
+										overwrite_existing), 									   \
+	CnxString* 						: cnx_path_create_file_string( 								   \
+										static_cast(const CnxString*)(file_path), 				   \
+										overwrite_existing), 									   \
+	const CnxStringView* 			: cnx_path_create_file_stringview( 							   \
+										static_cast(const CnxStringView*)(file_path), 			   \
+										overwrite_existing), 									   \
+	CnxStringView* 					: cnx_path_create_file_stringview( 							   \
+										static_cast(const CnxStringView*)(file_path), 			   \
+										overwrite_existing), 									   \
+	const_cstring 					: cnx_path_create_file_cstring( 							   \
+										static_cast(const_cstring)(file_path), 					   \
+										strlen(static_cast(const_cstring)(file_path)), 		   	   \
+										overwrite_existing), 									   \
+	cstring 						: cnx_path_create_file_cstring( 							   \
+										static_cast(const_cstring)(file_path), 					   \
+										strlen(static_cast(const_cstring)(file_path)), 		   	   \
+										overwrite_existing), 									   \
+	const char[sizeof(file_path)] 	: cnx_path_create_file_cstring( 				/** NOLINT **/ \
+										static_cast(const_cstring)(file_path), 		/** NOLINT **/ \
+										sizeof(file_path), 			   	   			/** NOLINT **/ \
+										overwrite_existing), 									   \
+	char[sizeof(file_path)] 		: cnx_path_create_file_cstring( 				/** NOLINT **/ \
+										static_cast(const_cstring)(file_path), 		/** NOLINT **/ \
+										sizeof(file_path), 			   	   			/** NOLINT **/ \
+										overwrite_existing))
+
+// clang-format on
+
+#define __cnx_path_create_file_2(...) __cnx_path_create_file(__VA_ARGS__)
+#define __cnx_path_create_file_1(...) __cnx_path_create_file(__VA_ARGS__, false)
 #define cnx_path_create_file(...)                                       \
 	CONCAT2_DEFERRED(__cnx_path_create_file_, PP_NUM_ARGS(__VA_ARGS__)) \
 	(__VA_ARGS__)
 #define cnx_path_create_file_overwriting(file_path) cnx_path_create_file(file_path, true)
 
-#define __cnx_path_create_directory_2(...) cnx_path_create_directory(__VA_ARGS__)
-#define __cnx_path_create_directory_1(...) cnx_path_create_directory(__VA_ARGS__, false)
+[[nodiscard]] [[not_null(1)]] CnxResult
+cnx_path_create_directory_string(const CnxPath* restrict dir_path, bool overwrite_existing)
+	__DISABLE_IF_NULL(dir_path);
+[[nodiscard]] [[not_null(1)]] CnxResult
+cnx_path_create_directory_stringview(const CnxStringView* restrict dir_path,
+									 bool overwrite_existing) __DISABLE_IF_NULL(dir_path);
+[[nodiscard]] [[not_null(1)]] CnxResult
+cnx_path_create_directory_cstring(restrict const_cstring dir_path,
+								  usize dir_path_length,
+								  bool overwrite_existing) __DISABLE_IF_NULL(dir_path);
+
+// clang-format off
+
+#define __cnx_path_create_directory(dir_path, overwrite_existing) _Generic((dir_path), 			   \
+	const CnxString* 				: cnx_path_create_directory_string( 						   \
+										static_cast(const CnxString*)(dir_path), 				   \
+										overwrite_existing), 									   \
+	CnxString* 						: cnx_path_create_directory_string( 						   \
+										static_cast(const CnxString*)(dir_path), 				   \
+										overwrite_existing), 									   \
+	const CnxStringView* 			: cnx_path_create_directory_stringview( 					   \
+										static_cast(const CnxStringView*)(dir_path), 			   \
+										overwrite_existing), 									   \
+	CnxStringView* 					: cnx_path_create_directory_stringview( 					   \
+										static_cast(const CnxStringView*)(dir_path), 			   \
+										overwrite_existing), 									   \
+	const_cstring 					: cnx_path_create_directory_cstring( 						   \
+										static_cast(const_cstring)(dir_path), 					   \
+										strlen(static_cast(const_cstring)(dir_path)), 		   	   \
+										overwrite_existing), 									   \
+	cstring 						: cnx_path_create_directory_cstring( 						   \
+										static_cast(const_cstring)(dir_path), 					   \
+										strlen(static_cast(const_cstring)(dir_path)), 		   	   \
+										overwrite_existing), 									   \
+	const char[sizeof(dir_path)] 	: cnx_path_create_directory_cstring( 			/** NOLINT **/ \
+										static_cast(const_cstring)(dir_path), 		/** NOLINT **/ \
+										sizeof(dir_path), 			   	   			/** NOLINT **/ \
+										overwrite_existing), 									   \
+	char[sizeof(dir_path)] 			: cnx_path_create_directory_cstring( 			/** NOLINT **/ \
+										static_cast(const_cstring)(dir_path), 		/** NOLINT **/ \
+										sizeof(dir_path), 			   	   			/** NOLINT **/ \
+										overwrite_existing))
+
+// clang-format on
+
+#define __cnx_path_create_directory_2(...) __cnx_path_create_directory(__VA_ARGS__)
+#define __cnx_path_create_directory_1(...) __cnx_path_create_directory(__VA_ARGS__, false)
 #define cnx_path_create_directory(...)                                       \
 	CONCAT2_DEFERRED(__cnx_path_create_directory_, PP_NUM_ARGS(__VA_ARGS__)) \
 	(__VA_ARGS__)
