@@ -630,12 +630,9 @@ bool cnx_path_exists(const CnxPath* restrict path) {
 	return cnx_path_exists_cstring(cnx_string_into_cstring(*path));
 }
 
-bool cnx_path_is_file(const CnxPath* restrict path) {
-	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_is_file is invalid");
-
+bool cnx_path_is_file_cstring(const_cstring restrict path) {
 	struct stat info;
-	let str = cnx_string_into_cstring(*path);
-	if(stat(str, &info) == 0) {
+	if(stat(path, &info) == 0) {
 		// NOLINTNEXTLINE(hicpp-signed-bitwise)
 		if(S_ISREG(info.st_mode)) {
 			return true;
@@ -643,6 +640,12 @@ bool cnx_path_is_file(const CnxPath* restrict path) {
 	}
 
 	return false;
+}
+
+bool cnx_path_is_file(const CnxPath* restrict path) {
+	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_is_file is invalid");
+
+	return cnx_path_is_file_cstring(cnx_string_into_cstring(*path));
 }
 
 bool cnx_path_is_directory(const CnxPath* restrict path) {
@@ -793,8 +796,7 @@ bool cnx_path_has_file_extension_string(const CnxPath* restrict path,
 										const CnxString* restrict extension) {
 	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_has_file_extension is invalid");
 
-	let is_file = cnx_path_is_file(path);
-	if(!is_file) {
+	if(!cnx_path_is_file(path)) {
 		return false;
 	}
 
@@ -805,8 +807,7 @@ bool cnx_path_has_file_extension_stringview(const CnxPath* restrict path,
 											const CnxStringView* restrict extension) {
 	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_has_file_extension is invalid");
 
-	let is_file = cnx_path_is_file(path);
-	if(!is_file) {
+	if(!cnx_path_is_file(path)) {
 		return false;
 	}
 
@@ -818,8 +819,7 @@ bool cnx_path_has_file_extension_cstring(const CnxPath* restrict path,
 										 usize extension_length) {
 	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_has_file_extension is invalid");
 
-	let is_file = cnx_path_is_file(path);
-	if(!is_file) {
+	if(!cnx_path_is_file(path)) {
 		return false;
 	}
 
@@ -831,8 +831,7 @@ bool cnx_path_has_file_extension_cstring(const CnxPath* restrict path,
 CnxString cnx_path_get_file_extension(const CnxPath* restrict path) {
 	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_get_file_extension is invalid");
 
-	let is_file = cnx_path_is_file(path);
-	if(!is_file) {
+	if(!cnx_path_is_file(path)) {
 		return cnx_string_from("");
 	}
 
@@ -938,7 +937,7 @@ CnxResult cnx_path_append_cstring(CnxPath* restrict path,
 	return Ok(i32, 0);
 }
 
-CnxResult cnx_path_create_file_string(const CnxPath* restrict file_path, bool overwrite_existing) {
+CnxResult cnx_path_create_file_string(const CnxString* restrict file_path, bool overwrite_existing) {
 	cnx_assert(cnx_path_is_valid(file_path), "Path given to cnx_path_create_file is invalid");
 
 	if(cnx_path_exists(file_path) && !overwrite_existing) {
@@ -1002,33 +1001,50 @@ int nftw_remove_path(const_cstring path,
 
 #endif // !CNX_PLATFORM_WINDOWS
 
-CnxResult cnx_path_remove_file(const CnxPath* restrict path) {
-	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_remove_file is invalid");
-
-	let pathname = cnx_string_into_cstring(*path);
+CnxResult cnx_path_remove_file_impl(const_cstring restrict file_path,
+									[[maybe_unused]] usize file_path_length) {
+	cnx_assert(cnx_path_is_valid_cstring(file_path, file_path_length),
+			   "Path given to cnx_path_remove_file is invalid");
 
 #if CNX_PLATFORM_WINDOWS
 
-	if(cnx_path_is_file(path)) {
-		TCHAR tpathname[MAX_PATH];
-		_tcscpy(tpathname, pathname);
+	TCHAR tpathname[MAX_PATH];
+	_tcscpy(tpathname, file_path);
 
-		if(DeleteFile(tpathname) == 0) {
-			return Err(i32, cnx_error_new(GetLastError(), CNX_WIN32_ERROR_CATEGORY));
-		}
-
-		return Ok(i32, 0);
+	if(DeleteFile(tpathname) == 0) {
+		return Err(i32, cnx_error_new(GetLastError(), CNX_WIN32_ERROR_CATEGORY));
 	}
 
-	return Err(i32, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
+	return Ok(i32, 0);
 #else
 
-	if(remove(pathname) != 0) {
+	if(remove(file_path) != 0) {
 		return Err(i32, cnx_error_new(errno, CNX_POSIX_ERROR_CATEGORY));
 	}
 
 	return Ok(i32, 0);
 #endif // CNX_PLATFORM_WINDOWS
+}
+
+CnxResult cnx_path_remove_file_string(const CnxString* restrict file_path) {
+	if(!cnx_path_is_file(file_path)) {
+		return Err(i32, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
+	}
+
+	return cnx_path_remove_file_impl(cnx_string_into_cstring(*file_path), cnx_string_length(*file_path));
+}
+
+CnxResult cnx_path_remove_file_stringview(const CnxStringView* restrict file_path) {
+	CnxScopedString path = cnx_string_from(file_path);
+	return cnx_path_remove_file_string(&path);
+}
+
+CnxResult cnx_path_remove_file_cstring(const_cstring restrict file_path, usize file_path_length) {
+	if(!cnx_path_is_file_cstring(file_path)) {
+		return Err(i32, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
+	}
+
+	return cnx_path_remove_file_impl(file_path, file_path_length);
 }
 
 #if CNX_PLATFORM_WINDOWS
@@ -1222,7 +1238,7 @@ CnxResult cnx_path_remove_symlink(const CnxPath* restrict link_path) {
 }
 
 CnxResult
-cnx_path_create_directory_string(const CnxPath* restrict dir_path, bool overwrite_existing) {
+cnx_path_create_directory_string(const CnxString* restrict dir_path, bool overwrite_existing) {
 	cnx_assert(cnx_path_is_valid(dir_path), "Path given to cnx_create_directory is invalid");
 
 	let exists = cnx_path_exists(dir_path);

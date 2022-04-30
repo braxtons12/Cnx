@@ -322,7 +322,7 @@ cnx_path_append_stringview(CnxPath* restrict path, const CnxStringView* restrict
 IGNORE_RESERVED_IDENTIFIER_WARNING_START
 
 [[nodiscard]] [[not_null(1)]] CnxResult
-cnx_path_create_file_string(const CnxPath* restrict file_path, bool overwrite_existing)
+cnx_path_create_file_string(const CnxString* restrict file_path, bool overwrite_existing)
 	__DISABLE_IF_NULL(file_path);
 [[nodiscard]] [[not_null(1)]] CnxResult
 cnx_path_create_file_stringview(const CnxStringView* restrict file_path, bool overwrite_existing)
@@ -374,7 +374,7 @@ cnx_path_create_file_cstring(restrict const_cstring file_path,
 #define cnx_path_create_file_overwriting(file_path) cnx_path_create_file(file_path, true)
 
 [[nodiscard]] [[not_null(1)]] CnxResult
-cnx_path_create_directory_string(const CnxPath* restrict dir_path, bool overwrite_existing)
+cnx_path_create_directory_string(const CnxString* restrict dir_path, bool overwrite_existing)
 	__DISABLE_IF_NULL(dir_path);
 [[nodiscard]] [[not_null(1)]] CnxResult
 cnx_path_create_directory_stringview(const CnxStringView* restrict dir_path,
@@ -427,7 +427,40 @@ cnx_path_create_directory_cstring(restrict const_cstring dir_path,
 IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 
 [[nodiscard]] [[not_null(1)]] CnxResult
-cnx_path_remove_file(const CnxPath* restrict file_path) __DISABLE_IF_NULL(file_path);
+cnx_path_remove_file_string(const CnxString* restrict file_path) __DISABLE_IF_NULL(file_path);
+[[nodiscard]] [[not_null(1)]] CnxResult
+cnx_path_remove_file_stringview(const CnxStringView* restrict file_path)
+	__DISABLE_IF_NULL(file_path);
+[[nodiscard]] [[not_null(1)]] CnxResult
+cnx_path_remove_file_cstring(restrict const_cstring file_path, usize file_path_length)
+	__DISABLE_IF_NULL(file_path);
+
+// clang-format off
+
+#define cnx_path_remove_file(file_path) _Generic((file_path), 			   \
+	const CnxString* 				: cnx_path_remove_file_string( 								   \
+										static_cast(const CnxString*)(file_path)), 									   \
+	CnxString* 						: cnx_path_remove_file_string( 								   \
+										static_cast(const CnxString*)(file_path)), 									   \
+	const CnxStringView* 			: cnx_path_remove_file_stringview( 							   \
+										static_cast(const CnxStringView*)(file_path)), 									   \
+	CnxStringView* 					: cnx_path_remove_file_stringview( 							   \
+										static_cast(const CnxStringView*)(file_path)), 									   \
+	const_cstring 					: cnx_path_remove_file_cstring( 							   \
+										static_cast(const_cstring)(file_path), 					   \
+										strlen(static_cast(const_cstring)(file_path))), 									   \
+	cstring 						: cnx_path_remove_file_cstring( 							   \
+										static_cast(const_cstring)(file_path), 					   \
+										strlen(static_cast(const_cstring)(file_path))), 									   \
+	const char[sizeof(file_path)] 	: cnx_path_remove_file_cstring( 				/** NOLINT **/ \
+										static_cast(const_cstring)(file_path), 		/** NOLINT **/ \
+										sizeof(file_path)), 			   	   		/** NOLINT **/ \
+	char[sizeof(file_path)] 		: cnx_path_remove_file_cstring( 				/** NOLINT **/ \
+										static_cast(const_cstring)(file_path), 		/** NOLINT **/ \
+										sizeof(file_path)) 			   	   			/** NOLINT **/ )
+
+// clang-format on
+
 [[nodiscard]] [[not_null(1)]] CnxResult
 cnx_path_remove_directory(const CnxPath* restrict dir_path, bool recursive)
 	__DISABLE_IF_NULL(dir_path);
