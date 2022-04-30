@@ -75,14 +75,14 @@ TEST(CnxUniquePtr, new_with_capacity_at_and_delete) {
 }
 
 TEST(CnxUniquePtr, move) {
-	unique_scoped(i32) ptr = cnx_unique_ptr_new(i32);
+	UniquePtr(i32) ptr = cnx_unique_ptr_new(i32);
 
 	*ptr(ptr) = 4;
 
 	TEST_ASSERT_NOT_EQUAL(ptr(ptr), nullptr);
 	TEST_ASSERT_EQUAL(*ptr(ptr), 4);
 
-	unique_scoped(i32) moved = ptr_move(ptr);
+	UniquePtr(i32) moved = ptr_move(ptr);
 
 	TEST_ASSERT_NOT_EQUAL(ptr(moved), nullptr);
 	TEST_ASSERT_EQUAL(ptr(ptr), nullptr);
@@ -92,7 +92,7 @@ TEST(CnxUniquePtr, move) {
 TEST(CnxUniquePtr, from) {
 	let_mut ptr = cnx_allocator_allocate_t(i32, DEFAULT_ALLOCATOR);
 	*ptr = 4;
-	unique_scoped(i32) unique_ptr = cnx_unique_ptr_from(i32, ptr);
+	UniquePtr(i32) unique_ptr = cnx_unique_ptr_from(i32, ptr);
 
 	TEST_ASSERT_NOT_EQUAL(ptr(unique_ptr), nullptr);
 	// ptr should not be used after its ownership is transferred to unique_ptr,
@@ -102,7 +102,7 @@ TEST(CnxUniquePtr, from) {
 }
 
 TEST(CnxUniquePtr, release) {
-	unique_scoped(i32) ptr = cnx_unique_ptr_new(i32);
+	UniquePtr(i32) ptr = cnx_unique_ptr_new(i32);
 
 	*ptr(ptr) = 4;
 
@@ -116,7 +116,7 @@ TEST(CnxUniquePtr, release) {
 }
 
 TEST(CnxUniquePtr, reset) {
-	unique_scoped(i32) ptr = cnx_unique_ptr_new(i32);
+	UniquePtr(i32) ptr = cnx_unique_ptr_new(i32);
 	*ptr(ptr) = 4;
 
 	let_mut ptr2 = cnx_allocator_allocate_t(i32, DEFAULT_ALLOCATOR);
@@ -130,9 +130,9 @@ TEST(CnxUniquePtr, reset) {
 }
 
 TEST(CnxUniquePtr, swap) {
-	unique_scoped(i32) ptr1 = cnx_unique_ptr_new(i32);
+	UniquePtr(i32) ptr1 = cnx_unique_ptr_new(i32);
 	*ptr(ptr1) = 4;
-	unique_scoped(i32) ptr2 = cnx_unique_ptr_new(i32);
+	UniquePtr(i32) ptr2 = cnx_unique_ptr_new(i32);
 	*ptr(ptr2) = 2;
 
 	cnx_unique_ptr_swap(ptr1, &ptr2);
@@ -142,12 +142,12 @@ TEST(CnxUniquePtr, swap) {
 }
 
 TEST(CnxUniquePtr, get_deleter) {
-	unique_scoped(i32) ptr = cnx_unique_ptr_new(i32);
+	UniquePtr(i32) ptr = cnx_unique_ptr_new(i32);
 	TEST_ASSERT_EQUAL(cnx_unique_ptr_get_deleter(ptr), i32_deleter);
 }
 
 TEST(CnxUniquePtr, make_unique) {
-	unique_scoped(i32) ptr = cnx_make_unique(i32, 4);
+	UniquePtr(i32) ptr = cnx_make_unique(i32, 4);
 
 	TEST_ASSERT_NOT_EQUAL(ptr(ptr), nullptr);
 	TEST_ASSERT_EQUAL(*ptr(ptr), 4);
@@ -167,7 +167,7 @@ typedef struct {
 #undef UNIQUE_UNDEF_PARAMS
 
 TEST(CnxUniquePtr, make_unique_struct) {
-	unique_scoped(UniquePtrTestStruct) ptr
+	UniquePtr(UniquePtrTestStruct) ptr
 		= cnx_make_unique(UniquePtrTestStruct, .first = 3, .second = 4, .third = 1);
 
 	TEST_ASSERT_NOT_EQUAL(ptr(ptr), nullptr);

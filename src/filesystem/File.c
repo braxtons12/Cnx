@@ -142,7 +142,7 @@ CnxResult(CnxFile) cnx_file_open_with_allocator(const CnxPath* restrict path,
 
 	let_mut file = fopen(cnx_string_into_cstring(*path), cnx_result_unwrap(res));
 	if(file != nullptr) {
-		unique_scoped(FileBuffer) buffer
+		UniquePtr(FileBuffer) buffer
 			= cnx_make_unique_array_with_allocator(FileBuffer, buffer_size, allocator);
 		if(setvbuf(file, cnx_unique_ptr_get(buffer), _IOFBF, buffer_size) != 0) {
 			println("Failed to associate buffer");
