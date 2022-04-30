@@ -72,11 +72,11 @@ win32_wchar_to_char(WCHAR* wstring, usize wstring_size) {
 							   nullptr,
 							   nullptr));
 
-	let str = cnx_string_from(alloc);
+	cnx_string_scoped str = cnx_string_from(alloc);
 
 	cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
 
-	return str;
+	return move(str);
 }
 
 #else
@@ -309,16 +309,16 @@ CnxPath cnx_current_executable_file(void) {
 	// if TCHAR is WCHAR, we need to convert from widechars (likely UTF16/UCS-2) to char/utf8
 	let types_equal = cnx_types_equal(TCHAR, WCHAR);
 	if(types_equal) {
-		let str = win32_tchar_to_char(alloc, actual_size);
+		cnx_string_scoped str = win32_tchar_to_char(alloc, actual_size);
 		cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
-		return str;
+		return move(str);
 	}
 	else {
-		let str = cnx_string_from(alloc);
+		cnx_string_scoped str = cnx_string_from(alloc);
 
 		cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
 
-		return str;
+		return move(str);
 	}
 }
 
@@ -349,11 +349,11 @@ CnxPath cnx_current_executable_file(void) {
 	let ign = readlink(CNX_PROC_EXE_PATH, alloc, static_cast(usize)(size + 1));
 	ignore(ign);
 
-	let str = cnx_string_from(alloc);
+	cnx_string_scoped str = cnx_string_from(alloc);
 
 	cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
 
-	return str;
+	return move(str);
 }
 
 #elif CNX_PLATFORM_APPLE
@@ -369,11 +369,11 @@ CnxPath cnx_current_executable_file(void) {
 
 	ignore(_NSGetExecutablePath(alloc, size));
 
-	let str = cnx_string_from(alloc);
+	cnx_string_scoped str = cnx_string_from(alloc);
 
 	cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
 
-	return str;
+	return move(str);
 }
 
 #else
@@ -445,11 +445,11 @@ CnxPath cnx_current_working_directory(void) {
 		cwd = getcwd(alloc, size);
 	}
 
-	let str = cnx_string_from(alloc);
+	cnx_string_scoped str = cnx_string_from(alloc);
 
 	cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
 
-	return str;
+	return move(str);
 #elif CNX_PLATFORM_WINDOWS
 
 	let_mut size = static_cast(usize)(64); // NOLINT
@@ -465,16 +465,16 @@ CnxPath cnx_current_working_directory(void) {
 
 	// if TCHAR is WCHAR, we need to convert from widechars (likely UTF16/UCS-2) to char/utf8
 	if(cnx_types_equal(TCHAR, WCHAR)) {
-		let str = win32_tchar_to_char(alloc, actual_size);
+		cnx_string_scoped str = win32_tchar_to_char(alloc, actual_size);
 		cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
-		return str;
+		return move(str);
 	}
 	else {
-		let str = cnx_string_from(alloc);
+		cnx_string_scoped str = cnx_string_from(alloc);
 
 		cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
 
-		return str;
+		return move(str);
 	}
 #else
 
@@ -642,10 +642,10 @@ CnxResult(CnxPath) cnx_path_get_symlink_target(const CnxPath* restrict path) {
 		return Err(CnxPath, cnx_error_new(GetLastError(), CNX_WIN32_ERROR_CATEGORY));
 	}
 
-	let str = win32_tchar_to_char(alloc, static_cast(usize)(size + 1));
+	cnx_string_scoped str = win32_tchar_to_char(alloc, static_cast(usize)(size + 1));
 	cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
 
-	return Ok(CnxPath, str);
+	return Ok(CnxPath, move(str));
 
 #else
 	let_mut size = static_cast(usize)(64); // NOLINT
@@ -669,10 +669,10 @@ CnxResult(CnxPath) cnx_path_get_symlink_target(const CnxPath* restrict path) {
 		alloc[size_actual] = '\0';
 	}
 
-	let string = cnx_string_from(alloc);
+	cnx_string_scoped string = cnx_string_from(alloc);
 	cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
 
-	return Ok(CnxPath, string);
+	return Ok(CnxPath, move(string));
 #endif
 }
 
