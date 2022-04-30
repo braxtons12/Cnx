@@ -343,7 +343,8 @@ CnxPath cnx_current_executable_file(void) {
 	let_mut alloc
 		= cnx_allocator_allocate_array_t(char, DEFAULT_ALLOCATOR, static_cast(usize)(size + 1));
 
-	ignore(readlink(CNX_PROC_EXE_PATH, alloc, static_cast(usize)(size + 1)));
+	let ign = readlink(CNX_PROC_EXE_PATH, alloc, static_cast(usize)(size + 1));
+	ignore(ign);
 
 	let str = cnx_string_from(alloc);
 
