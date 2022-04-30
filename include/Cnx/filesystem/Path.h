@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Path provides various functions for working with filesystem paths
 /// @version 0.2.0
-/// @date 2022-04-27
+/// @date 2022-04-29
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -24,6 +24,57 @@
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
+
+/// @ingroup filesystem
+/// @{
+/// @defgroup cnx_path CnxPath
+/// `CnxPath` provides utilities for working with filesystem paths and perfoming basic file system
+/// operations, such as checking the current status (or lack thereof) of a path on the filesystem,
+/// querying attributes of an existing path on the file system, creating and removing files,
+/// directories, and symbolic links, and retrieving semantically correct paths for certain special
+/// filesystem paths, such as the user home directory.
+///
+/// Example:
+/// @code {.c}
+/// #include <Cnx/filesystem/Path.h>
+///
+/// void example(void) {
+/// 	let path = cnx_string_from("/home/my_user/test.txt");
+/// 	let create_res = cnx_path_create_file(&path);
+/// 	cnx_assert(cnx_result_is_ok(create_res), "Failed to create test path");
+///
+/// 	cnx_assert(cnx_path_is_valid(&path),
+/// 			   "Path is not a valid filesystem path on this platform");
+/// 	cnx_assert(cnx_path_exists(&path), "Path does not exist!");
+/// 	cnx_assert(cnx_path_is_file(&path), "Path is not a file!");
+/// 	cnx_assert(!cnx_path_is_directory(&path), "Path is a directory !?");
+/// 	cnx_assert(!cnx_path_is_symlink(&path), "Path is a symlink !?");
+/// 	cnx_assert(cnx_path_is_absolute(&path), "Path is not absolute!");
+///
+/// 	let name = cnx_string_from("test.txt");
+/// 	let name_without_extension = cnx_string_from("test");
+/// 	let extension = cnx_string_from("test");
+///
+/// 	let name_actual = cnx_path_get_file_name(&path);
+/// 	cnx_assert(cnx_string_equal(name_actual, &name), "path name is not test.txt!");
+///
+/// 	let name_without_extension_actual = cnx_path_get_file_name_without_extension(&path);
+/// 	cnx_assert(cnx_string_equal(name_without_extension_actual, &name_without_extension),
+/// 			   "path name without extension is not test!");
+///
+/// 	cnx_assert(cnx_path_has_file_extension(&path, &extension),
+/// 			   "path name does not have .txt file extension");
+///
+/// 	let parent = cnx_string_from("/home/my_user");
+///
+/// 	let parent_actual = cnx_path_get_parent_directory(&path);
+/// 	cnx_assert(cnx_string_equal(parent_actual, &parent), "Path's parent is not /home/my_user!");
+///
+/// 	let remove_res = cnx_path_remove_file(&path);
+/// 	cnx_assert(cnx_result_is_ok(remove_res), "Failed to remove test file!");
+/// }
+/// @endcode
+/// @}
 
 #ifndef CNX_PATH
 #define CNX_PATH
@@ -48,10 +99,43 @@ typedef CnxString CnxPath;
 #define __DISABLE_IF_NULL(path) \
 	cnx_disable_if(!(path), "Can't perform a path operation on a nullptr")
 
+/// @brief Checks if the given string would be a valid path on the host platform's filesystem
+///
+/// Checks if the given path is syntactically valid on the host platform's filesystem.
+/// Does not check if the path exists or is semantically logical.
+///
+/// @param path - The path to check for validity
+///
+/// @return whether the path is valid
+/// @ingroup cnx_path
 [[nodiscard]] [[not_null(1)]] bool
-cnx_path_is_valid(const CnxPath* restrict path) __DISABLE_IF_NULL(path);
+cnx_path_is_valid(const CnxString* restrict path) __DISABLE_IF_NULL(path);
+/// @brief Creates a new path from the given string, potentially modified so as to be valid on the
+/// host platform.
+///
+/// If the given string would be a valid path on the host platform's filesystem, this simply returns
+/// a clone of the string. Otherwise, this will return a modified version of the given string,
+/// converted to be a valid filesystem path.
+///
+/// For example, if `path` is "/home\\user_name//file.txt" on *NIX, path separators will be
+/// converted to all be *NIX style separators and redundant separators will be removed.
+/// As a result, the returned path would be "/home/user_name/file.txt"
+///
+/// Coincidentally, this means that all paths created through this function can use a consistent
+/// path separator for all platforms, and separators will automatically be converted to the correct
+/// one for the platform at runtime. IE: all paths can be declared with *NIX style separators, but
+/// will be correctly converted to '\\' on Windows
+///
+/// @param path - The string to create a path from
+///
+/// @return `path` converted to a valid filesystem path
+/// @ingroup cnx_path
 [[nodiscard]] [[not_null(1)]] CnxPath
 cnx_path_new(const CnxString* restrict path) __DISABLE_IF_NULL(path);
+/// @brief Returns the path to the home directory of the user running this Program
+///
+/// @return The current user's home directory
+/// @ingroup cnx_path
 [[nodiscard]] CnxPath cnx_user_home_directory(void);
 [[nodiscard]] CnxPath cnx_user_application_data_directory(void);
 [[nodiscard]] CnxPath cnx_user_documents_directory(void);

@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Path provides various functions for working with filesystem paths
 /// @version 0.2.0
-/// @date 2022-04-27
+/// @date 2022-04-29
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -30,11 +30,20 @@
 #include <stdio.h>
 #include <sys/stat.h>
 
+#define CNX_PATH_SEPARATOR_UNIX '/'
+#define CNX_PATH_SEPARATOR_AS_STRING_UNIX "/"
+
+#define CNX_PATH_SEPARATOR_WINDOWS '\\'
+#define CNX_PATH_SEPARATOR_AS_STRING_WINDOWS "\\"
+
+#define CNX_SYSTEM_ROOT_UNIX "/"
+#define CNX_SYSTEM_ROOT_WINDOWS "C:\\"
+
 #if CNX_PLATFORM_WINDOWS
 
-	#define CNX_PATH_SEPARATOR			 '\\'
-	#define CNX_PATH_SEPARATOR_AS_STRING "\\"
-	#define CNX_SYSTEM_ROOT				 "C:\""
+	#define CNX_PATH_SEPARATOR			 CNX_PATH_SEPARATOR_WINDOWS
+	#define CNX_PATH_SEPARATOR_AS_STRING CNX_PATH_SEPARATOR_AS_STRING_WINDOWS
+	#define CNX_SYSTEM_ROOT				 CNX_SYSTEM_ROOT_WINDOWS
 
 	#include <Cnx/TypeTraits.h>
 	#include <Windows.h>
@@ -72,9 +81,9 @@ win32_wchar_to_char(WCHAR* wstring, usize wstring_size) {
 
 #else
 
-	#define CNX_PATH_SEPARATOR			 '/'
-	#define CNX_PATH_SEPARATOR_AS_STRING "/"
-	#define CNX_SYSTEM_ROOT				 '/'
+	#define CNX_PATH_SEPARATOR			 CNX_PATH_SEPARATOR_UNIX
+	#define CNX_PATH_SEPARATOR_AS_STRING CNX_PATH_SEPARATOR_AS_STRING_UNIX
+	#define CNX_SYSTEM_ROOT				 CNX_SYSTEM_ROOT_UNIX
 
 	#include <pwd.h>
 	#include <unistd.h>
@@ -89,49 +98,30 @@ win32_wchar_to_char(WCHAR* wstring, usize wstring_size) {
 #undef RESULT_IMPL
 
 bool cnx_path_is_valid(const CnxPath* restrict path) {
-	let occurrences = cnx_string_find_occurrences_of_char_with_allocator(*path,
+	cnx_vector_scoped(usize) occurrences = cnx_string_find_occurrences_of_char_with_allocator(*path,
 																		 CNX_PATH_SEPARATOR,
 																		 path->m_allocator);
 #if CNX_PLATFORM_WINDOWS
 	let_mut previous = static_cast(usize)(0);
-	let_mut started = false;
-	foreach(elem, occurrences) {
-		if(!started) {
-			if(elem != 2) {
-				return false;
-			}
 
-			started = true;
-		}
-		else {
-			if(elem - previous < 2) {
-				return false;
-			}
+	foreach(elem, occurrences) {
+		if(elem - previous < 2) {
+			return false;
 		}
 		previous = elem;
 	}
 
-	return true;
+	return cnx_string_occurrences_of_char(*path, CNX_PATH_SEPARATOR_UNIX) == 0;
 #else
 	let_mut previous = static_cast(usize)(0);
-	let_mut started = false;
 	foreach(elem, occurrences) {
-		if(!started) {
-			if(elem != 0) {
-				return false;
-			}
-
-			started = true;
-		}
-		else {
-			if(elem - previous < 2) {
-				return false;
-			}
+		if(elem - previous < 2 && previous != 0) {
+			return false;
 		}
 		previous = elem;
 	}
 
-	return true;
+	return cnx_string_occurrences_of_char(*path, CNX_PATH_SEPARATOR_WINDOWS) == 0;
 #endif // CNX_PLATFORM_WINDOWS
 }
 
@@ -156,36 +146,56 @@ bool cnx_path_is_valid(const CnxPath* restrict path) {
 
 #endif // CNX_PLATFORM_WINDOWS
 
-CnxPath cnx_path_new(const CnxString* restrict path) {
+CnxPath (cnx_path_new)(const CnxString* restrict path) {
 	if(cnx_path_is_valid(path)) {
 		return cnx_string_clone(*path);
 	}
 
-	let capacity = cnx_string_capacity(*path);
-	let_mut split
-		= cnx_string_split_on_with_allocator(*path, CNX_PATH_SEPARATOR, path->m_allocator);
-
-	let_mut new_path = cnx_string_new_with_capacity_with_allocator(capacity, path->m_allocator);
-
+	cnx_string_scoped cloned = cnx_string_clone(*path);
 #if CNX_PLATFORM_WINDOWS
-	foreach_ref(string, split) {
-		cnx_string_append(new_path, string);
-		cnx_string_push_back(new_path, CNX_PATH_SEPARATOR);
+	if(cnx_string_occurrences_of_char(*path, CNX_PATH_SEPARATOR_UNIX) != 0) {
+		cnx_vector_scoped(usize) occurrences = cnx_string_find_occurrences_of_char(*path, CNX_PATH_SEPARATOR_WINDOWS);
+		foreach(index, occurrences) {
+			cnx_string_at(cloned, index) = CNX_PATH_SEPARATOR;
+		}
 	}
 #else
-	foreach_ref(string, split) {
-		cnx_string_push_back(new_path, CNX_PATH_SEPARATOR);
-		cnx_string_append(new_path, string);
+	if(cnx_string_occurrences_of_char(*path, CNX_PATH_SEPARATOR_WINDOWS) != 0) {
+		cnx_vector_scoped(usize) occurrences = cnx_string_find_occurrences_of_char(*path, CNX_PATH_SEPARATOR_WINDOWS);
+		foreach(index, occurrences) {
+			cnx_string_at(cloned, index) = CNX_PATH_SEPARATOR;
+		}
 	}
-#endif // CNX_PLATFORM_WINDOWS
+#endif
 
-	return new_path;
+	cnx_vector_scoped(CnxString) split
+		= cnx_string_split_on_with_allocator(cloned, CNX_PATH_SEPARATOR, path->m_allocator);
+
+	cnx_string_scoped new_path = cnx_string_new_with_capacity_with_allocator(cnx_string_capacity(*path), path->m_allocator);
+
+	// if running on NOT Windows and path is absolute, make sure to append the root first
+	// (on Windows, the root could be a drive other than "C:",
+	// and we will pick it up through the string splitting and recombining anyway,
+	// so we only need to special case for absolute paths on other platforms)
+#if !CNX_PLATFORM_WINDOWS
+	if(cnx_path_is_absolute(path)) {
+			cnx_string_append(new_path, CNX_SYSTEM_ROOT);
+	}
+#endif // !CNX_PLATFORM_WINDOWS
+
+	foreach_ref(string, split) {
+		cnx_string_append(new_path, string);
+		cnx_string_push_back(new_path, CNX_PATH_SEPARATOR);
+	}
+
+	cnx_assert(cnx_path_is_valid(&new_path), "Created path is not valid!");
+	return move(new_path);
 }
 
 CnxPath cnx_user_home_directory(void) {
 	let user_name = get_user_name();
 
-	let_mut path = cnx_string_new_with_allocator(DEFAULT_ALLOCATOR);
+	cnx_string_scoped path = cnx_string_new_with_allocator(DEFAULT_ALLOCATOR);
 
 #if CNX_PLATFORM_WINDOWS
 
@@ -199,11 +209,11 @@ CnxPath cnx_user_home_directory(void) {
 
 #endif // CNX_PLATFORM_WINDOWS
 
-	return path;
+	return move(path);
 }
 
 CnxPath cnx_user_application_data_directory(void) {
-	let_mut path = cnx_user_home_directory();
+	path_scoped path = cnx_user_home_directory();
 
 #if CNX_PLATFORM_WINDOWS
 
@@ -219,16 +229,16 @@ CnxPath cnx_user_application_data_directory(void) {
 
 #endif // CNX_PLATFORM_WINDOWS
 
-	return path;
+	return move(path);
 }
 
 CnxPath cnx_user_documents_directory(void) {
-	let_mut path = cnx_user_home_directory();
+	path_scoped path = cnx_user_home_directory();
 
 	cnx_string_push_back(path, CNX_PATH_SEPARATOR);
 	cnx_string_append(path, "Documents");
 
-	return path;
+	return move(path);
 }
 
 CnxPath cnx_common_application_data_directory(void) {
@@ -268,9 +278,9 @@ CnxPath cnx_common_documents_directory(void) {
 CnxPath cnx_temp_directory(void) {
 #if CNX_PLATFORM_WINDOWS
 
-	let_mut path = cnx_user_application_data_directory();
+	cnx_string_scoped path = cnx_user_application_data_directory();
 	cnx_string_append(path, "\\Local\\Temp");
-	return path;
+	return move(path);
 
 #else
 
