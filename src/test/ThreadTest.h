@@ -14,7 +14,7 @@ void LambdaFunction(add_one) {
 
 void LambdaFunction(add_loop) {
 	let binding = lambda_binding(CnxThreadLambda);
-	lambda_scoped lambda = binding._1;
+	ScopedLambda lambda = binding._1;
 
 	ranged_for(i, 0, 5) {
 		lambda_call(lambda);
@@ -24,7 +24,7 @@ void LambdaFunction(add_loop) {
 TEST(CnxThread, test_one) {
 	i32 val = 0;
 
-	lambda_scoped add_one_lambda = lambda(add_one, &val);
+	ScopedLambda add_one_lambda = lambda(add_one, &val);
 
 	// add a new scope so the thread gets joined before our final assert
 	// (because it's tagged as `cnx_thread_scoped` so it's joined when it goes out of scope)
@@ -45,7 +45,7 @@ TEST(CnxThread, test_one) {
 TEST(CnxThread, test_multiple) {
 	i32 val = 0;
 
-	lambda_scoped add_one_lambda = lambda(add_one, &val);
+	ScopedLambda add_one_lambda = lambda(add_one, &val);
 
 	// add a new scope so the threads get joined before our final assert
 	// (because they're tagged as `cnx_thread_scoped` so they join when they go out of scope)
@@ -78,7 +78,7 @@ void LambdaFunction(add_one_synchronized) {
 TEST(CnxThread, test_synchronized) {
 	atomic_i32 val = 0;
 
-	lambda_scoped add_one_lambda = lambda(add_one_synchronized, &val);
+	ScopedLambda add_one_lambda = lambda(add_one_synchronized, &val);
 
 	// add a new scope so the threads get joined before our final assert
 	// (because they're tagged as `cnx_thread_scoped` so they join when they go out of scope)
@@ -105,7 +105,7 @@ TEST(CnxThread, test_synchronized) {
 
 void LambdaFunction(add_loop_jthread, const CnxStopToken* token) {
 	let binding = lambda_binding(CnxThreadLambda);
-	lambda_scoped lambda = binding._1;
+	ScopedLambda lambda = binding._1;
 
 	let_mut index = 0;
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
@@ -118,7 +118,7 @@ void LambdaFunction(add_loop_jthread, const CnxStopToken* token) {
 TEST(CnxJThread, test_one) {
 	i32 val = 0;
 
-	lambda_scoped add_one_lambda = lambda(add_one, &val);
+	ScopedLambda add_one_lambda = lambda(add_one, &val);
 
 	{
 		let_mut res = cnx_jthread_new(
@@ -137,7 +137,7 @@ TEST(CnxJThread, test_one) {
 TEST(CnxJThread, test_multiple) {
 	i32 val = 0;
 
-	lambda_scoped add_one_lambda = lambda(add_one, &val);
+	ScopedLambda add_one_lambda = lambda(add_one, &val);
 
 	// add a new scope so the threads get joined before our final assert
 	// (because they're tagged as `cnx_thread_scoped` so they join when they go out of scope)
@@ -165,7 +165,7 @@ TEST(CnxJThread, test_multiple) {
 TEST(CnxJThread, test_synchronized) {
 	atomic_i32 val = 0;
 
-	lambda_scoped add_one_lambda = lambda(add_one_synchronized, &val);
+	ScopedLambda add_one_lambda = lambda(add_one_synchronized, &val);
 
 	// add a new scope so the threads get joined before our final assert
 	// (because they're tagged as `cnx_thread_scoped` so they join when they go out of scope)
@@ -193,7 +193,7 @@ TEST(CnxJThread, test_synchronized) {
 TEST(CnxJThread, test_stop_token) {
 	i32 val = 0;
 
-	lambda_scoped add_one_lambda = lambda(add_one, &val);
+	ScopedLambda add_one_lambda = lambda(add_one, &val);
 
 	let_mut res = cnx_jthread_new(
 		lambda_cast(lambda(add_loop_jthread, lambda_clone(add_one_lambda)), CnxJThreadLambda));

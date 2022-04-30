@@ -24,13 +24,13 @@ CnxCompare lambda_receiver(LambdaCmpStr lambda) {
 
 CnxCompare lambda_caller1(void) {
 	CnxScopedString string = cnx_string_from("Test1");
-	lambda_scoped lambda = lambda(lambda_function, &string);
+	ScopedLambda lambda = lambda(lambda_function, &string);
 	return lambda_receiver(lambda_cast(lambda_clone(lambda), LambdaCmpStr));
 }
 
 CnxCompare lambda_caller2(void) {
 	CnxScopedString string = cnx_string_from("Test2");
-	lambda_scoped lambda = lambda(lambda_function, &string);
+	ScopedLambda lambda = lambda(lambda_function, &string);
 	return lambda_receiver(lambda_cast(lambda_clone(lambda), LambdaCmpStr));
 }
 

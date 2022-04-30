@@ -1,8 +1,8 @@
 /// @file Thread.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Function implementations for threading functionality
-/// @version 0.2.0
-/// @date 2022-04-10
+/// @version 0.2.1
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -225,7 +225,7 @@ bool cnx_thread_id_greater_than_or_equal(CnxThreadID lhs, CnxThreadID rhs) {
 }
 
 [[always_inline]] [[not_null(1)]] static inline int thread_invoke(void* lambda) {
-	lambda_scoped _lambda = static_cast(CnxThreadLambda)(lambda);
+	ScopedLambda _lambda = static_cast(CnxThreadLambda)(lambda);
 	lambda_call(_lambda);
 	return 0;
 }
@@ -490,7 +490,7 @@ bool cnx_thread_id_greater_than_or_equal(CnxThreadID lhs, CnxThreadID rhs) {
 }
 
 [[always_inline]] [[not_null(1)]] static inline void* thread_invoke(void* lambda) {
-	lambda_scoped _lambda = static_cast(CnxThreadLambda)(lambda);
+	ScopedLambda _lambda = static_cast(CnxThreadLambda)(lambda);
 	lambda_call(_lambda);
 	return 0;
 }
@@ -728,7 +728,7 @@ bool cnx_thread_id_greater_than_or_equal(CnxThreadID lhs, CnxThreadID rhs) {
 }
 
 [[always_inline]] [[not_null(1)]] static inline unsigned long WINAPI thread_invoke(void* lambda) {
-	lambda_scoped _lambda = static_cast(CnxThreadLambda)(lambda);
+	ScopedLambda _lambda = static_cast(CnxThreadLambda)(lambda);
 	lambda_call(_lambda);
 	return 0;
 }
@@ -841,7 +841,7 @@ bool cnx_stop_token_stop_requested(const CnxStopToken* restrict token) {
 
 void LambdaFunction(jthread_invoke) {
 	let_mut binding = lambda_binding(CnxJThreadLambda, CnxStopToken*);
-	lambda_scoped lambda = binding._1;
+	ScopedLambda lambda = binding._1;
 	let token_ptr = binding._2;
 	lambda_call(lambda, token_ptr);
 	cnx_allocator_deallocate(DEFAULT_ALLOCATOR, static_cast(void*)(token_ptr));

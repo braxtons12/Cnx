@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Basic lambda/closure implementation for C.
 /// @version 0.1.3
-/// @date 2022-04-12
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -230,7 +230,7 @@ typedef void* CnxLambdaCaptures;
 /// @brief Declaration tag to scope a lambda, ensuring it is freed when it goes out of scoped and
 /// associated resources are cleaned up
 /// @ingroup cnx_lambda
-#define lambda_scoped scoped(lambda_free)
+#define ScopedLambda scoped(lambda_free)
 
 /// @brief Casts the given `CnxLambdaCaptures` to the given `BindingType`
 /// @param captures - The `CnxLambdaCaptures` to cast
