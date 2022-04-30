@@ -62,8 +62,8 @@
     <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_result_is_ok</span><span class="p">(</span><span class="n">create_res</span><span class="p">),</span> <span class="s">&quot;Failed to create test path&quot;</span><span class="p">);</span>
 
     <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_path_is_valid</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">),</span>
-               <span class="s">&quot;Path is not a valid filesystem path on this platform&quot;</span><span class="p">);</span>
-    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_path_exists</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">),</span> <span class="s">&quot;Path does not exist!&quot;</span><span class="p">);</span>
+               <span class="s">&quot;Path is not a valid filesystem path on this</span>
+<span class="n">platform</span><span class="s">&quot;);     cnx_assert(cnx_path_exists(&amp;path), &quot;</span><span class="n">Path</span> <span class="n">does</span> <span class="n">not</span> <span class="n">exist</span><span class="o">!</span><span class="s">&quot;);</span>
     <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_path_is_file</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">),</span> <span class="s">&quot;Path is not a file!&quot;</span><span class="p">);</span>
     <span class="n">cnx_assert</span><span class="p">(</span><span class="o">!</span><span class="n">cnx_path_is_directory</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">),</span> <span class="s">&quot;Path is a directory !?&quot;</span><span class="p">);</span>
     <span class="n">cnx_assert</span><span class="p">(</span><span class="o">!</span><span class="n">cnx_path_is_symlink</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">),</span> <span class="s">&quot;Path is a symlink !?&quot;</span><span class="p">);</span>
@@ -74,11 +74,13 @@
     <span class="n">let</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">cnx_string_from</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">);</span>
 
     <span class="n">let</span> <span class="n">name_actual</span> <span class="o">=</span> <span class="n">cnx_path_get_file_name</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">);</span>
-    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_string_equal</span><span class="p">(</span><span class="n">name_actual</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">),</span> <span class="s">&quot;path name is not test.txt!&quot;</span><span class="p">);</span>
+    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_string_equal</span><span class="p">(</span><span class="n">name_actual</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">),</span> <span class="s">&quot;path name is not</span>
+<span class="n">test</span><span class="p">.</span><span class="n">txt</span><span class="o">!</span><span class="s">&quot;);</span>
 
-    <span class="n">let</span> <span class="n">name_without_extension_actual</span> <span class="o">=</span> <span class="n">cnx_path_get_file_name_without_extension</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">);</span>
-    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_string_equal</span><span class="p">(</span><span class="n">name_without_extension_actual</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">name_without_extension</span><span class="p">),</span>
-               <span class="s">&quot;path name without extension is not test!&quot;</span><span class="p">);</span>
+    <span class="n">let</span> <span class="n">name_without_extension_actual</span> <span class="o">=</span>
+<span class="n">cnx_path_get_file_name_without_extension</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">);</span>
+    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_string_equal</span><span class="p">(</span><span class="n">name_without_extension_actual</span><span class="p">,</span>
+<span class="o">&amp;</span><span class="n">name_without_extension</span><span class="p">),</span>              <span class="s">&quot;path name without extension is not test!&quot;</span><span class="p">);</span>
 
     <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_path_has_file_extension</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">extension</span><span class="p">),</span>
                <span class="s">&quot;path name does not have .txt file extension&quot;</span><span class="p">);</span>
@@ -86,7 +88,8 @@
     <span class="n">let</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">cnx_string_from</span><span class="p">(</span><span class="s">&quot;/home/my_user&quot;</span><span class="p">);</span>
 
     <span class="n">let</span> <span class="n">parent_actual</span> <span class="o">=</span> <span class="n">cnx_path_get_parent_directory</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">);</span>
-    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_string_equal</span><span class="p">(</span><span class="n">parent_actual</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">parent</span><span class="p">),</span> <span class="s">&quot;Path&#39;s parent is not /home/my_user!&quot;</span><span class="p">);</span>
+    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_string_equal</span><span class="p">(</span><span class="n">parent_actual</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">parent</span><span class="p">),</span> <span class="s">&quot;Path&#39;s parent is</span>
+<span class="n">not</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">my_user</span><span class="o">!</span><span class="s">&quot;);</span>
 
     <span class="n">let</span> <span class="n">remove_res</span> <span class="o">=</span> <span class="n">cnx_path_remove_file</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">);</span>
     <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_result_is_ok</span><span class="p">(</span><span class="n">remove_res</span><span class="p">),</span> <span class="s">&quot;Failed to remove test file!&quot;</span><span class="p">);</span>
@@ -174,7 +177,6 @@
                 </tr>
               </tfoot>
             </table>
-<p>On</p>
           </div></section>
         </section>
       </div>
