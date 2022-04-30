@@ -381,7 +381,7 @@
             </dt>
             <dd>Returns whether the given pair of const iterators are equal (they belong to the same collection and point to the same element), IE: if <code>first == second</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga62efe732d707ad26fa0e62b2376d9040" class="m-doc">cnx_vector_scoped</a>(</span><span class="m-doc-wrap">T)</span>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga638a6974959ccfd09007161cf9b939e2" class="m-doc">CnxScopedVector</a>(</span><span class="m-doc-wrap">T)</span>
             </dt>
             <dd>declare a <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> variable with this attribute to have <code>Cnx_vector_free</code> automatically called on it at scope end</dd>
           </dl>
@@ -419,7 +419,7 @@
 <span class="p">}</span>
 
 <span class="p">{</span>
-    <span class="n">let_mut</span> <span class="n">cnx_vector_scoped</span><span class="p">(</span><span class="n">i32</span><span class="p">)</span> <span class="n">vec2</span> <span class="o">=</span> <span class="n">cnx_vector_new</span><span class="p">(</span><span class="n">i32</span><span class="p">);</span>
+    <span class="n">let_mut</span> <span class="n">CnxScopedVector</span><span class="p">(</span><span class="n">i32</span><span class="p">)</span> <span class="n">vec2</span> <span class="o">=</span> <span class="n">cnx_vector_new</span><span class="p">(</span><span class="n">i32</span><span class="p">);</span>
     <span class="n">foreach</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">cnx_vector_push_back</span><span class="p">(</span><span class="n">vec2</span><span class="p">,</span> <span class="n">elem</span><span class="p">);</span>
     <span class="p">}</span>
@@ -1519,9 +1519,9 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga62efe732d707ad26fa0e62b2376d9040"><div>
+          <section class="m-doc-details" id="ga638a6974959ccfd09007161cf9b939e2"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga62efe732d707ad26fa0e62b2376d9040" class="m-doc-self">cnx_vector_scoped</a>(</span><span class="m-doc-wrap">T)</span>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga638a6974959ccfd09007161cf9b939e2" class="m-doc-self">CnxScopedVector</a>(</span><span class="m-doc-wrap">T)</span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
             </h3>
             <p>declare a <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> variable with this attribute to have <code>Cnx_vector_free</code> automatically called on it at scope end</p>
