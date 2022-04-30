@@ -160,7 +160,7 @@
             </dt>
             <dd>Returns a clone of the given lambda, ensuring that (by-value) captures stay valid for the lifetime of the clone.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#gadb2bcac0a860ac20b013f8d91a99da0b" class="m-doc">lambda_scoped</a></span>
+              <span class="m-doc-wrap-bumper">#define <a href="#gabe4195bee6af1173675bb1273be77999" class="m-doc">ScopedLambda</a></span>
             </dt>
             <dd>Declaration tag to scope a lambda, ensuring it is freed when it goes out of scoped and associated resources are cleaned up.</dd>
             <dt>
@@ -390,9 +390,9 @@
             </table>
 <aside class="m-note m-info"><h4>Note</h4><p>Only the lifetime of by-value captures can be extended to match a clone. By-reference captures must still outlive all clones of the lambda, otherwise undefined behavior (likely resulting in segmentation faults from accessing invalid memory) will occur</p></aside>
           </div></section>
-          <section class="m-doc-details" id="gadb2bcac0a860ac20b013f8d91a99da0b"><div>
+          <section class="m-doc-details" id="gabe4195bee6af1173675bb1273be77999"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#gadb2bcac0a860ac20b013f8d91a99da0b" class="m-doc-self">lambda_scoped</a></span>
+              <span class="m-doc-wrap-bumper">#define <a href="#gabe4195bee6af1173675bb1273be77999" class="m-doc-self">ScopedLambda</a></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Lambda_8h.html">&lt;include/Cnx/Lambda.h&gt;</a></div>
             </h3>
             <p>Declaration tag to scope a lambda, ensuring it is freed when it goes out of scoped and associated resources are cleaned up.</p>
