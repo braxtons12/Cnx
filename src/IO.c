@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Cnx I/O brings human readable formatted I/O, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
-/// @version 0.1
-/// @date 2021-08-15
+/// @version 0.1.1
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -42,7 +42,7 @@
 void print_(const_cstring restrict format_string, CnxAllocator allocator, usize num_args, ...) {
 	va_list list = {0};
 	va_start(list, num_args);
-	cnx_string_scoped string
+	CnxScopedString string
 		= cnx_vformat_with_allocator(format_string, allocator, num_args, list);
 	puts(cnx_string_into_cstring(string));
 	va_end(list);
@@ -53,7 +53,7 @@ void print_(const_cstring restrict format_string, CnxAllocator allocator, usize 
 void eprint_(restrict const_cstring format_string, CnxAllocator allocator, usize num_args, ...) {
 	va_list list = {0};
 	va_start(list, num_args);
-	cnx_string_scoped string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
+	CnxScopedString string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
 	ignore(fputs(cnx_string_into_cstring(string), stderr));
 	va_end(list);
 }
@@ -65,7 +65,7 @@ void fprint_(FILE* file,
 			 ...) {
 	va_list list = {0};
 	va_start(list, num_args);
-	cnx_string_scoped string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
+	CnxScopedString string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
 	ignore(fputs(cnx_string_into_cstring(string), file));
 	va_end(list);
 }
@@ -73,7 +73,7 @@ void fprint_(FILE* file,
 void println_(restrict const_cstring format_string, CnxAllocator allocator, usize num_args, ...) {
 	va_list list = {0};
 	va_start(list, num_args);
-	cnx_string_scoped string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
+	CnxScopedString string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
 	puts(cnx_string_into_cstring(string));
 	va_end(list);
 }
@@ -81,7 +81,7 @@ void println_(restrict const_cstring format_string, CnxAllocator allocator, usiz
 void eprintln_(restrict const_cstring format_string, CnxAllocator allocator, usize num_args, ...) {
 	va_list list = {0};
 	va_start(list, num_args);
-	cnx_string_scoped string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
+	CnxScopedString string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
 	ignore(fputs(cnx_string_into_cstring(string), stderr));
 	ignore(putc('\n', stderr));
 	va_end(list);
@@ -94,7 +94,7 @@ void fprintln_(FILE* file,
 			   ...) {
 	va_list list = {0};
 	va_start(list, num_args);
-	cnx_string_scoped string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
+	CnxScopedString string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
 	ignore(fputs(cnx_string_into_cstring(string), file));
 	ignore(putc('\n', file));
 #ifdef CNX_FPRINTLN_FLUSHES

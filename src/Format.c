@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief CnxFormat brings human readable string formatting, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
-/// @version 0.2.2
-/// @date 2022-03-21
+/// @version 0.2.3
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -1059,7 +1059,7 @@ CnxString(cnx_vformat_with_allocator)(restrict const_cstring format_string,
 			}
 			variant(Specifier, specifier) {
 				let format = va_arg(list, CnxFormat); // NOLINT(clang-analyzer-valist.Uninitialized)
-				cnx_string_scoped formatted
+				CnxScopedString formatted
 						   = trait_call(format_with_allocator, format, specifier, allocator);
 				cnx_string_append(string, &formatted);
 			}

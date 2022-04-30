@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Path provides various functions for working with filesystem paths
 /// @version 0.2.0
-/// @date 2022-04-29
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -72,7 +72,7 @@ win32_wchar_to_char(WCHAR* wstring, usize wstring_size) {
 							   nullptr,
 							   nullptr));
 
-	cnx_string_scoped str = cnx_string_from(alloc);
+	CnxScopedString str = cnx_string_from(alloc);
 
 	cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
 
@@ -151,7 +151,7 @@ CnxPath (cnx_path_new)(const CnxString* restrict path) {
 		return cnx_string_clone(*path);
 	}
 
-	cnx_string_scoped cloned = cnx_string_clone(*path);
+	CnxScopedString cloned = cnx_string_clone(*path);
 #if CNX_PLATFORM_WINDOWS
 	if(cnx_string_occurrences_of_char(*path, CNX_PATH_SEPARATOR_UNIX) != 0) {
 		cnx_vector_scoped(usize) occurrences = cnx_string_find_occurrences_of_char(*path, CNX_PATH_SEPARATOR_WINDOWS);
@@ -171,7 +171,7 @@ CnxPath (cnx_path_new)(const CnxString* restrict path) {
 	cnx_vector_scoped(CnxString) split
 		= cnx_string_split_on_with_allocator(cloned, CNX_PATH_SEPARATOR, path->m_allocator);
 
-	cnx_string_scoped new_path = cnx_string_new_with_capacity_with_allocator(cnx_string_capacity(*path), path->m_allocator);
+	CnxScopedString new_path = cnx_string_new_with_capacity_with_allocator(cnx_string_capacity(*path), path->m_allocator);
 
 	// if running on NOT Windows and path is absolute, make sure to append the root first
 	// (on Windows, the root could be a drive other than "C:",
@@ -193,23 +193,23 @@ CnxPath (cnx_path_new)(const CnxString* restrict path) {
 }
 
 CnxPath cnx_user_home_directory(void) {
-	cnx_string_scoped path = cnx_string_new_with_allocator(DEFAULT_ALLOCATOR);
+	CnxScopedString path = cnx_string_new_with_allocator(DEFAULT_ALLOCATOR);
 
 	cnx_string_append(path, CNX_SYSTEM_ROOT);
 
 #if CNX_PLATFORM_WINDOWS || CNX_PLATFORM_APPLE
 
-	cnx_string_scoped users_directory = cnx_string_from("Users");
+	CnxScopedString users_directory = cnx_string_from("Users");
 
 #else 
 
-	cnx_string_scoped users_directory = cnx_string_from("home");
+	CnxScopedString users_directory = cnx_string_from("home");
 	
 #endif // CNX_PLATFORM_WINDOWS || CNX_PLATFORM_APPLE
 	
 	cnx_path_append(&path, &users_directory);
 
-	cnx_string_scoped user_name = cnx_string_from(get_user_name());
+	CnxScopedString user_name = cnx_string_from(get_user_name());
 	cnx_path_append(&path, &user_name);
 
 	return move(path);
@@ -281,7 +281,7 @@ CnxPath cnx_common_documents_directory(void) {
 CnxPath cnx_temp_directory(void) {
 #if CNX_PLATFORM_WINDOWS
 
-	cnx_string_scoped path = cnx_user_application_data_directory();
+	CnxScopedString path = cnx_user_application_data_directory();
 	cnx_string_append(path, "\\Local\\Temp");
 	return move(path);
 
@@ -309,12 +309,12 @@ CnxPath cnx_current_executable_file(void) {
 	// if TCHAR is WCHAR, we need to convert from widechars (likely UTF16/UCS-2) to char/utf8
 	let types_equal = cnx_types_equal(TCHAR, WCHAR);
 	if(types_equal) {
-		cnx_string_scoped str = win32_tchar_to_char(alloc, actual_size);
+		CnxScopedString str = win32_tchar_to_char(alloc, actual_size);
 		cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
 		return move(str);
 	}
 	else {
-		cnx_string_scoped str = cnx_string_from(alloc);
+		CnxScopedString str = cnx_string_from(alloc);
 
 		cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
 
@@ -349,7 +349,7 @@ CnxPath cnx_current_executable_file(void) {
 	let ign = readlink(CNX_PROC_EXE_PATH, alloc, static_cast(usize)(size + 1));
 	ignore(ign);
 
-	cnx_string_scoped str = cnx_string_from(alloc);
+	CnxScopedString str = cnx_string_from(alloc);
 
 	cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
 
@@ -369,7 +369,7 @@ CnxPath cnx_current_executable_file(void) {
 
 	ignore(_NSGetExecutablePath(alloc, size));
 
-	cnx_string_scoped str = cnx_string_from(alloc);
+	CnxScopedString str = cnx_string_from(alloc);
 
 	cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
 
@@ -445,7 +445,7 @@ CnxPath cnx_current_working_directory(void) {
 		cwd = getcwd(alloc, size);
 	}
 
-	cnx_string_scoped str = cnx_string_from(alloc);
+	CnxScopedString str = cnx_string_from(alloc);
 
 	cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
 
@@ -465,12 +465,12 @@ CnxPath cnx_current_working_directory(void) {
 
 	// if TCHAR is WCHAR, we need to convert from widechars (likely UTF16/UCS-2) to char/utf8
 	if(cnx_types_equal(TCHAR, WCHAR)) {
-		cnx_string_scoped str = win32_tchar_to_char(alloc, actual_size);
+		CnxScopedString str = win32_tchar_to_char(alloc, actual_size);
 		cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
 		return move(str);
 	}
 	else {
-		cnx_string_scoped str = cnx_string_from(alloc);
+		CnxScopedString str = cnx_string_from(alloc);
 
 		cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
 
@@ -642,7 +642,7 @@ CnxResult(CnxPath) cnx_path_get_symlink_target(const CnxPath* restrict path) {
 		return Err(CnxPath, cnx_error_new(GetLastError(), CNX_WIN32_ERROR_CATEGORY));
 	}
 
-	cnx_string_scoped str = win32_tchar_to_char(alloc, static_cast(usize)(size + 1));
+	CnxScopedString str = win32_tchar_to_char(alloc, static_cast(usize)(size + 1));
 	cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
 
 	return Ok(CnxPath, move(str));
@@ -669,7 +669,7 @@ CnxResult(CnxPath) cnx_path_get_symlink_target(const CnxPath* restrict path) {
 		alloc[size_actual] = '\0';
 	}
 
-	cnx_string_scoped string = cnx_string_from(alloc);
+	CnxScopedString string = cnx_string_from(alloc);
 	cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
 
 	return Ok(CnxPath, move(string));
@@ -684,7 +684,7 @@ bool cnx_path_has_file_extension(const CnxPath* restrict path,
 		return false;
 	}
 
-	cnx_string_scoped str = cnx_string_clone(*extension);
+	CnxScopedString str = cnx_string_clone(*extension);
 
 	cnx_string_prepend(str, ".");
 

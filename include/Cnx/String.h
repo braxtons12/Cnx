@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides string and stringview types comparable to C++ for Cnx
 /// @version 0.2.2
-/// @date 2022-04-27
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -494,7 +494,7 @@ cnx_string_clone_with_allocator(const CnxString* restrict self, CnxAllocator all
 [[not_null(1)]] void cnx_string_free(void* restrict self) ___DISABLE_IF_NULL(self);
 /// @brief declare a `CnxString` variable with this attribute to have `cnx_string_free`
 /// automatically called on it at scope end
-#define cnx_string_scoped scoped(cnx_string_free)
+#define CnxScopedString scoped(cnx_string_free)
 
 /// @brief Returns a pointer to the character at the given index.
 ///

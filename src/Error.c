@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides an extensible type for communicating errors via both error codes and
 /// message strings.
-/// @version 0.2.0
-/// @date 2022-04-17
+/// @version 0.2.1
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -153,7 +153,7 @@ CnxString cnx_error_format_with_allocator(const CnxFormat* restrict self,
 			   "Can only format CnxError with default or debug format specifier");
 
 	let _self = static_cast(const CnxError*)(self->m_self);
-	cnx_string_scoped message = cnx_string_from_with_allocator(
+	CnxScopedString message = cnx_string_from_with_allocator(
 		trait_call(message, _self->m_error_category, _self->m_error_code),
 		allocator);
 	if(specifier.m_type == CNX_FORMAT_TYPE_DEBUG) {

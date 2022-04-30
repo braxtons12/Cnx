@@ -1,8 +1,8 @@
 /// @file TimePoint.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief CnxTimePoint provides functionality for working with specific points in time
-/// @version 0.1.2
-/// @date 2022-03-20
+/// @version 0.1.3
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -238,7 +238,7 @@ CnxString cnx_time_point_human_readable_format(CnxTimePoint self, CnxAllocator a
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
 		[[maybe_unused]] usize utc_written = strftime(utc, 6, "%z", parsed);
 		cnx_assert(utc_written == 5, "Failed to format time point");
-		cnx_string_scoped utc_string
+		CnxScopedString utc_string
 			// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
 			= cnx_string_new_with_capacity_with_allocator(6, allocator);
 		let hours = cnx_stringview_from(utc, 0, 3);
@@ -255,9 +255,9 @@ CnxString cnx_time_point_human_readable_format(CnxTimePoint self, CnxAllocator a
 		[[maybe_unused]] let written = strftime(memory, 20, "%Y-%m-%d|%H:%M:%S", parsed);
 #endif // CNX_PLATFORM_COMPILER_CLANG
 		cnx_assert(written == 19, "Failed to format time point");
-		let_mut str = cnx_string_from_with_allocator(memory, allocator);
+		CnxScopedString str = cnx_string_from_with_allocator(memory, allocator);
 		cnx_string_append(str, &utc_string);
-		return str;
+		return move(str);
 	}
 	else {
 #if CNX_PLATFORM_COMPILER_CLANG

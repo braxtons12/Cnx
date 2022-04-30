@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief CnxFile provides various functions for working with type safe, uniquely owned files
 /// @version 0.2.0
-/// @date 2022-04-27
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -176,7 +176,7 @@ CnxResult(i32) __cnx_file_print(CnxFile* file,
 
 	va_list list = {0};
 	va_start(list, num_args);
-	cnx_string_scoped string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
+	CnxScopedString string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
 	let res = fputs(cnx_string_into_cstring(string), cnx_unique_ptr_get(file->file));
 	va_end(list);
 
@@ -199,7 +199,7 @@ CnxResult(i32) __cnx_file_println(CnxFile* file,
 
 	va_list list = {0};
 	va_start(list, num_args);
-	cnx_string_scoped string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
+	CnxScopedString string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
 	cnx_string_append(string, "\n");
 	let res = fputs(cnx_string_into_cstring(string), cnx_unique_ptr_get(file->file));
 	va_end(list);
@@ -233,7 +233,7 @@ CnxResult(CnxString)
 		return Err(CnxString, cnx_error_new(EPERM, CNX_POSIX_ERROR_CATEGORY));
 	}
 
-	cnx_string_scoped str = cnx_string_new_with_capacity_with_allocator(num_chars, allocator);
+	CnxScopedString str = cnx_string_new_with_capacity_with_allocator(num_chars, allocator);
 	let res = fread(cnx_string_data(str), sizeof(char), num_chars, cnx_unique_ptr_get(file->file));
 	if(res < num_chars && ferror(cnx_unique_ptr_get(file->file)) != 0) {
 		return Err(CnxString, cnx_error_new(errno, CNX_POSIX_ERROR_CATEGORY));
@@ -254,7 +254,7 @@ CnxResult(CnxString)
 		return Err(CnxString, cnx_error_new(EPERM, CNX_POSIX_ERROR_CATEGORY));
 	}
 
-	cnx_string_scoped str = cnx_string_new_with_allocator(allocator);
+	CnxScopedString str = cnx_string_new_with_allocator(allocator);
 	let _file = cnx_unique_ptr_get(file->file);
 	let_mut c = static_cast(char)(fgetc(_file)); // NOLINT(readability-identifier-length)
 	while(c != '\n') {

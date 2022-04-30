@@ -13,7 +13,7 @@ i32 main(i32 argc, char** argv) {
 	let unum = 1024U;
 	let snum = -1024;
 	let fnum = -1024.1024;
-	cnx_string_scoped string = cnx_string_from("This is a string");
+	CnxScopedString string = cnx_string_from("This is a string");
 
 	let_mut average_println = 0.0;
 	let_mut average_printf = 0.0;

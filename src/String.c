@@ -1,8 +1,8 @@
 /// @file String.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides string and stringview types comparable to C++ for Cnx
-/// @version 0.1.4
-/// @date 2022-03-31
+/// @version 0.1.5
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -1108,12 +1108,12 @@ void(cnx_string_insert)(CnxString* restrict self,
 			   "cnx_string_insert called with index > self->m_length (index out of bounds)");
 
 	if(index != 0) {
-		cnx_string_scoped first = cnx_string_first(*self, index);
+		CnxScopedString first = cnx_string_first(*self, index);
 
 		let_mut left = cnx_string_concatenate(&first, to_insert);
 		let_mut old = *self;
 		if(index < length) {
-			cnx_string_scoped second = cnx_string_last(*self, length - index);
+			CnxScopedString second = cnx_string_last(*self, length - index);
 			*self = cnx_string_concatenate(&left, &second);
 			cnx_string_free(left);
 		}
@@ -1140,12 +1140,12 @@ void cnx_string_insert_cstring(CnxString* restrict self,
 			   "cnx_string_insert called with index > self->m_length (index out of bounds)");
 
 	if(index != 0) {
-		cnx_string_scoped first = cnx_string_first(*self, index);
+		CnxScopedString first = cnx_string_first(*self, index);
 
 		let_mut left = cnx_string_concatenate_cstring(&first, to_insert, to_insert_length);
 		let_mut old = *self;
 		if(index < length) {
-			cnx_string_scoped second = cnx_string_last(*self, length - index);
+			CnxScopedString second = cnx_string_last(*self, length - index);
 			*self = cnx_string_concatenate(&left, &second);
 			cnx_string_free(left);
 		}
@@ -1155,9 +1155,9 @@ void cnx_string_insert_cstring(CnxString* restrict self,
 		cnx_string_free(old);
 	}
 	else {
-		cnx_string_scoped left = cnx_string_from_cstring_with_allocator(to_insert,
-																		to_insert_length,
-																		self->m_allocator);
+		CnxScopedString left = cnx_string_from_cstring_with_allocator(to_insert,
+																	  to_insert_length,
+																	  self->m_allocator);
 		let new = cnx_string_concatenate(&left, self);
 		let_mut old = *self;
 		*self = new;

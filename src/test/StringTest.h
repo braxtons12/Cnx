@@ -462,7 +462,7 @@ TEST(CnxString, iterator) {
 }
 
 TEST(CnxString, split_on) {
-	cnx_string_scoped string = cnx_string_from("This=is=a=test=string");
+	CnxScopedString string = cnx_string_from("This=is=a=test=string");
 
 	cnx_vector_scoped(CnxString) split = cnx_string_split_on(string, '=');
 
@@ -475,7 +475,7 @@ TEST(CnxString, split_on) {
 }
 
 TEST(CnxString, view_split_on) {
-	cnx_string_scoped string = cnx_string_from("This=is=a=test=string");
+	CnxScopedString string = cnx_string_from("This=is=a=test=string");
 
 	cnx_vector_scoped(CnxStringView) split = cnx_string_view_split_on(string, '=');
 
@@ -488,7 +488,7 @@ TEST(CnxString, view_split_on) {
 }
 
 TEST(CnxString, occurences_of_char) {
-	cnx_string_scoped string = cnx_string_from("A=test=test=test=string");
+	CnxScopedString string = cnx_string_from("A=test=test=test=string");
 
 	let occurrences = cnx_string_occurrences_of_char(string, '=');
 
@@ -496,7 +496,7 @@ TEST(CnxString, occurences_of_char) {
 }
 
 TEST(CnxString, occurrences_of) {
-	cnx_string_scoped string = cnx_string_from("A=test=test=test=string");
+	CnxScopedString string = cnx_string_from("A=test=test=test=string");
 
 	let occurrences = cnx_string_occurrences_of(string, "test");
 
@@ -504,7 +504,7 @@ TEST(CnxString, occurrences_of) {
 }
 
 TEST(CnxString, find_occurrences_of_char) {
-	cnx_string_scoped string = cnx_string_from("A=test=test=test=string");
+	CnxScopedString string = cnx_string_from("A=test=test=test=string");
 
 	cnx_vector_scoped(usize) occurrences = cnx_string_find_occurrences_of_char(string, '=');
 
@@ -516,7 +516,7 @@ TEST(CnxString, find_occurrences_of_char) {
 }
 
 TEST(CnxString, find_occurrences_of) {
-	cnx_string_scoped string = cnx_string_from("A=test=test=test=string");
+	CnxScopedString string = cnx_string_from("A=test=test=test=string");
 
 	cnx_vector_scoped(usize) occurrences = cnx_string_find_occurrences_of(string, "test");
 

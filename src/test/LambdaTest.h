@@ -15,7 +15,7 @@ CnxCompare LambdaFunction(lambda_function, const CnxString* restrict string) {
 }
 
 CnxCompare lambda_receiver(LambdaCmpStr lambda) {
-	cnx_string_scoped string = cnx_string_from("Test2");
+	CnxScopedString string = cnx_string_from("Test2");
 
 	let ret = lambda_call(lambda, &string);
 	lambda_free(&lambda);
@@ -23,21 +23,23 @@ CnxCompare lambda_receiver(LambdaCmpStr lambda) {
 }
 
 CnxCompare lambda_caller1(void) {
-	cnx_string_scoped string = cnx_string_from("Test1");
+	CnxScopedString string = cnx_string_from("Test1");
 	lambda_scoped lambda = lambda(lambda_function, &string);
 	return lambda_receiver(lambda_cast(lambda_clone(lambda), LambdaCmpStr));
 }
 
 CnxCompare lambda_caller2(void) {
-	cnx_string_scoped string = cnx_string_from("Test2");
+	CnxScopedString string = cnx_string_from("Test2");
 	lambda_scoped lambda = lambda(lambda_function, &string);
 	return lambda_receiver(lambda_cast(lambda_clone(lambda), LambdaCmpStr));
 }
 
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables)
 TEST(CnxLambda, case1) {
 	TEST_ASSERT_EQUAL(CNX_LESS_THAN, lambda_caller1());
 }
 
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables)
 TEST(CnxLambda, case2) {
 	TEST_ASSERT_EQUAL(CNX_EQUAL, lambda_caller2());
 }
