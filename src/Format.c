@@ -92,7 +92,7 @@ static const f64 powers_of_10[NUM_POWERS_OF_10] = {
 }
 
 #if CNX_PLATFORM_APPLE
-	// clang-format off
+// clang-format off
 #define cnx_get_digit(num, digit) _Generic((num), 		\
 		char  	: 	cnx_get_digit_u64, 					\
 		u8  	: 	cnx_get_digit_u64, 					\
@@ -107,7 +107,7 @@ static const f64 powers_of_10[NUM_POWERS_OF_10] = {
 		isize 	: 	cnx_get_digit_i64)(num, digit)
 // clang-format on
 #else
-	// clang-format off
+// clang-format off
 #define cnx_get_digit(num, digit) _Generic((num), 		\
 		char  	: 	cnx_get_digit_u64, 					\
 		u8  	: 	cnx_get_digit_u64, 					\
@@ -1035,7 +1035,7 @@ CnxString(cnx_vformat_with_allocator)(restrict const_cstring format_string,
 	}
 #endif // CNX_PLATFORM_DEBUG
 
-	cnx_vector_scoped(CnxFormatVariant) format_variants
+	CnxScopedVector(CnxFormatVariant) format_variants
 		= cnx_result_expect(maybe_format_variants, "Invalid format string");
 	let_mut initial_size = static_cast(usize)(0);
 	foreach_ref(elem, format_variants) {

@@ -464,7 +464,7 @@ TEST(CnxString, iterator) {
 TEST(CnxString, split_on) {
 	CnxScopedString string = cnx_string_from("This=is=a=test=string");
 
-	cnx_vector_scoped(CnxString) split = cnx_string_split_on(string, '=');
+	CnxScopedVector(CnxString) split = cnx_string_split_on(string, '=');
 
 	TEST_ASSERT_EQUAL(cnx_vector_size(split), 5); // NOLINT
 	TEST_ASSERT(cnx_string_equal(cnx_vector_at(split, 0), "This"));
@@ -477,7 +477,7 @@ TEST(CnxString, split_on) {
 TEST(CnxString, view_split_on) {
 	CnxScopedString string = cnx_string_from("This=is=a=test=string");
 
-	cnx_vector_scoped(CnxStringView) split = cnx_string_view_split_on(string, '=');
+	CnxScopedVector(CnxStringView) split = cnx_string_view_split_on(string, '=');
 
 	TEST_ASSERT_EQUAL(cnx_vector_size(split), 5); // NOLINT
 	TEST_ASSERT(cnx_stringview_equal(cnx_vector_at(split, 0), "This"));
@@ -506,7 +506,7 @@ TEST(CnxString, occurrences_of) {
 TEST(CnxString, find_occurrences_of_char) {
 	CnxScopedString string = cnx_string_from("A=test=test=test=string");
 
-	cnx_vector_scoped(usize) occurrences = cnx_string_find_occurrences_of_char(string, '=');
+	CnxScopedVector(usize) occurrences = cnx_string_find_occurrences_of_char(string, '=');
 
 	TEST_ASSERT_EQUAL(cnx_vector_size(occurrences), 4);
 	TEST_ASSERT_EQUAL(cnx_vector_at(occurrences, 0), 1);
@@ -518,7 +518,7 @@ TEST(CnxString, find_occurrences_of_char) {
 TEST(CnxString, find_occurrences_of) {
 	CnxScopedString string = cnx_string_from("A=test=test=test=string");
 
-	cnx_vector_scoped(usize) occurrences = cnx_string_find_occurrences_of(string, "test");
+	CnxScopedVector(usize) occurrences = cnx_string_find_occurrences_of(string, "test");
 
 	TEST_ASSERT_EQUAL(cnx_vector_size(occurrences), 3);
 	TEST_ASSERT_EQUAL(cnx_vector_at(occurrences, 0), 2);

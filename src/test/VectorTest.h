@@ -224,7 +224,7 @@ static let scoped_data
 /// should print "running element destructor" to Cnxout
 /// SHORT_OPT_CAPACITY * 2 times
 TEST(CnxVector, scoped) {
-	cnx_vector_scoped(u32) vec = cnx_vector_new_with_collection_data(u32, &scoped_data);
+	CnxScopedVector(u32) vec = cnx_vector_new_with_collection_data(u32, &scoped_data);
 	cnx_vector_resize(vec, SHORT_OPT_CAPACITY * 2);
 	for(let_mut i = 0U; i < cnx_vector_capacity(vec); ++i) {
 		cnx_vector_at_mut(vec, i) = i;

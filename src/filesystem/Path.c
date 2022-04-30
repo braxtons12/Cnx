@@ -98,7 +98,7 @@ win32_wchar_to_char(WCHAR* wstring, usize wstring_size) {
 #undef RESULT_IMPL
 
 bool cnx_path_is_valid(const CnxPath* restrict path) {
-	cnx_vector_scoped(usize) occurrences = cnx_string_find_occurrences_of_char_with_allocator(*path,
+	CnxScopedVector(usize) occurrences = cnx_string_find_occurrences_of_char_with_allocator(*path,
 																		 CNX_PATH_SEPARATOR,
 																		 path->m_allocator);
 #if CNX_PLATFORM_WINDOWS
@@ -154,21 +154,21 @@ CnxPath (cnx_path_new)(const CnxString* restrict path) {
 	CnxScopedString cloned = cnx_string_clone(*path);
 #if CNX_PLATFORM_WINDOWS
 	if(cnx_string_occurrences_of_char(*path, CNX_PATH_SEPARATOR_UNIX) != 0) {
-		cnx_vector_scoped(usize) occurrences = cnx_string_find_occurrences_of_char(*path, CNX_PATH_SEPARATOR_WINDOWS);
+		CnxScopedVector(usize) occurrences = cnx_string_find_occurrences_of_char(*path, CNX_PATH_SEPARATOR_WINDOWS);
 		foreach(index, occurrences) {
 			cnx_string_at(cloned, index) = CNX_PATH_SEPARATOR;
 		}
 	}
 #else
 	if(cnx_string_occurrences_of_char(*path, CNX_PATH_SEPARATOR_WINDOWS) != 0) {
-		cnx_vector_scoped(usize) occurrences = cnx_string_find_occurrences_of_char(*path, CNX_PATH_SEPARATOR_WINDOWS);
+		CnxScopedVector(usize) occurrences = cnx_string_find_occurrences_of_char(*path, CNX_PATH_SEPARATOR_WINDOWS);
 		foreach(index, occurrences) {
 			cnx_string_at(cloned, index) = CNX_PATH_SEPARATOR;
 		}
 	}
 #endif
 
-	cnx_vector_scoped(CnxString) split
+	CnxScopedVector(CnxString) split
 		= cnx_string_split_on_with_allocator(cloned, CNX_PATH_SEPARATOR, path->m_allocator);
 
 	CnxScopedString new_path = cnx_string_new_with_capacity_with_allocator(cnx_string_capacity(*path), path->m_allocator);

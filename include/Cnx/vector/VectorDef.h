@@ -65,7 +65,7 @@
 	/// }
 	///
 	/// {
-	/// 	let_mut cnx_vector_scoped(i32) vec2 = cnx_vector_new(i32);
+	/// 	let_mut CnxScopedVector(i32) vec2 = cnx_vector_new(i32);
 	/// 	foreach(elem, vec) {
 	///			cnx_vector_push_back(vec2, elem);
 	/// 	}
@@ -569,6 +569,6 @@
 	///
 	/// @param T - The element type of the `CnxVector(T)` instantiation
 	/// @ingroup cnx_vector
-	#define cnx_vector_scoped(T) scoped(CnxVectorIdentifier(T, free))
+	#define CnxScopedVector(T) scoped(CnxVectorIdentifier(T, free))
 
 #endif // CNX_VECTOR_DEF
