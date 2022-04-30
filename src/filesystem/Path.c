@@ -765,19 +765,46 @@ CnxResult(CnxPath) cnx_path_get_symlink_target(const CnxPath* restrict path) {
 #endif
 }
 
+bool cnx_path_has_file_extension_string_impl(const CnxPath* restrict path,
+								 CnxString extension) {
+
+	if(cnx_string_front(extension) != '.') {
+		cnx_string_push_front(extension, '.');
+	}
+
+	return cnx_string_ends_with(*path, &extension);
+}
+
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-bool cnx_path_has_file_extension(const CnxPath* restrict path,
+bool cnx_path_has_file_extension_string(const CnxPath* restrict path,
 								 const CnxString* restrict extension) {
 	let is_file = cnx_path_is_file(path);
 	if(!is_file) {
 		return false;
 	}
+	
+	return cnx_path_has_file_extension_string_impl(path, cnx_string_clone(*extension));
+}
 
-	CnxScopedString str = cnx_string_clone(*extension);
+bool cnx_path_has_file_extension_stringview(const CnxPath* restrict path,
+								 const CnxStringView* restrict extension) {
+	let is_file = cnx_path_is_file(path);
+	if(!is_file) {
+		return false;
+	}
+	
+	return cnx_path_has_file_extension_string_impl(path, cnx_string_from(extension));
+}
 
-	cnx_string_prepend(str, ".");
-
-	return cnx_string_ends_with(*path, &str);
+bool cnx_path_has_file_extension_cstring(const CnxPath* restrict path,
+								 const_cstring restrict extension, usize extension_length) {
+	let is_file = cnx_path_is_file(path);
+	if(!is_file) {
+		return false;
+	}
+	
+	return cnx_path_has_file_extension_string_impl(path,
+			cnx_string_from_cstring_with_allocator(extension, extension_length, path->m_allocator));
 }
 
 CnxString cnx_path_get_file_extension(const CnxPath* restrict path) {

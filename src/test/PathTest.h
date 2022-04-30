@@ -23,8 +23,7 @@ TEST(CnxPath, create_and_remove_file) {
 	TEST_ASSERT_TRUE(cnx_path_is_file(&path));
 	TEST_ASSERT_FALSE(cnx_path_is_directory(&path));
 
-	CnxScopedString extension = cnx_string_from("txt");
-	TEST_ASSERT_TRUE(cnx_path_has_file_extension(&path, &extension));
+	TEST_ASSERT_TRUE(cnx_path_has_file_extension(&path, "txt"));
 	CnxScopedString name_actual = cnx_path_get_file_name_without_extension(&path);
 	CnxScopedString name = cnx_string_from("CnxPathTest");
 	TEST_ASSERT_TRUE(cnx_string_equal(name, &name_actual));
@@ -52,8 +51,7 @@ TEST(CnxPath, create_and_remove_directory) {
 	TEST_ASSERT_FALSE(cnx_path_is_file(&path));
 	TEST_ASSERT_TRUE(cnx_path_is_directory(&path));
 
-	CnxScopedString extension = cnx_string_from("txt");
-	TEST_ASSERT_FALSE(cnx_path_has_file_extension(&path, &extension));
+	TEST_ASSERT_FALSE(cnx_path_has_file_extension(&path, "txt"));
 	CnxScopedString name_actual = cnx_path_get_file_name(&path);
 	CnxScopedString name = cnx_string_from("CnxPathTest");
 	TEST_ASSERT_TRUE(cnx_string_equal(name, &name_actual));
@@ -89,8 +87,7 @@ TEST(CnxPath, create_and_remove_symlink) {
 	CnxScopedString target_name = cnx_path_get_file_name(&target);
 	TEST_ASSERT_TRUE(cnx_string_equal(path, &target_name));
 
-	CnxScopedString extension = cnx_string_from("txt");
-	TEST_ASSERT_FALSE(cnx_path_has_file_extension(&symlink, &extension));
+	TEST_ASSERT_FALSE(cnx_path_has_file_extension(&symlink, "txt"));
 	CnxScopedString name_actual = cnx_path_get_file_name_without_extension(&symlink);
 	CnxScopedString name = cnx_string_from("TestSymlink");
 	TEST_ASSERT_TRUE(cnx_string_equal(name, &name_actual));

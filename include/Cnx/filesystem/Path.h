@@ -232,9 +232,47 @@ cnx_path_is_fs_root(const CnxPath* restrict path) __DISABLE_IF_NULL(path);
 cnx_path_is_symlink(const CnxPath* restrict path) __DISABLE_IF_NULL(path);
 [[nodiscard]] [[not_null(1)]] CnxResult(CnxPath)
 	cnx_path_get_symlink_target(const CnxPath* restrict path) __DISABLE_IF_NULL(path);
+
 [[nodiscard]] [[not_null(1, 2)]] bool
-cnx_path_has_file_extension(const CnxPath* restrict path, const CnxString* restrict extension)
+cnx_path_has_file_extension_string(const CnxPath* restrict path,
+								   const CnxString* restrict extension) __DISABLE_IF_NULL(path)
+	__DISABLE_IF_NULL(extension);
+[[nodiscard]] [[not_null(1, 2)]] bool
+cnx_path_has_file_extension_stringview(const CnxPath* restrict path,
+									   const CnxStringView* restrict extension)
 	__DISABLE_IF_NULL(path) __DISABLE_IF_NULL(extension);
+[[nodiscard]] [[not_null(1, 2)]] bool
+cnx_path_has_file_extension_cstring(const CnxPath* restrict path,
+									restrict const_cstring extension,
+									usize extension_length) __DISABLE_IF_NULL(path)
+	__DISABLE_IF_NULL(extension);
+
+// clang-format off
+
+#define cnx_path_has_file_extension(path, extension) _Generic((extension), 						   \
+	const CnxString* 				: cnx_path_has_file_extension_string((path), 				   \
+										static_cast(const CnxString*)(extension)), 		  	   	   \
+	CnxString* 						: cnx_path_has_file_extension_string((path), 				   \
+										static_cast(const CnxString*)(extension)), 		  	   	   \
+	const CnxStringView* 			: cnx_path_has_file_extension_stringview((path), 			   \
+										static_cast(const CnxStringView*)(extension)), 	  	   	   \
+	CnxStringView* 					: cnx_path_has_file_extension_stringview((path), 			   \
+										static_cast(const CnxStringView*)(extension)), 	  	   	   \
+	const_cstring 					: cnx_path_has_file_extension_cstring((path), 				   \
+										static_cast(const_cstring)(extension), 			  	   	   \
+										strlen(static_cast(const_cstring)(extension))), 		   \
+	cstring 						: cnx_path_has_file_extension_cstring((path), 				   \
+										static_cast(const_cstring)(extension), 			  	   	   \
+										strlen(static_cast(const_cstring)(extension))), 		   \
+	const char[sizeof(extension)] 	: cnx_path_has_file_extension_cstring((path), 	/** NOLINT **/ \
+										static_cast(const_cstring)(extension), 			   	   	   \
+										sizeof(extension)), 						/** NOLINT **/ \
+	char[sizeof(extension)] 		: cnx_path_has_file_extension_cstring((path), 	/** NOLINT **/ \
+										static_cast(const_cstring)(extension), 			   	   	   \
+										sizeof(extension)) 							/** NOLINT **/ )
+
+// clang-format on
+
 [[nodiscard]] [[not_null(1)]] CnxString
 cnx_path_get_file_extension(const CnxPath* restrict path) __DISABLE_IF_NULL(path);
 [[nodiscard]] [[not_null(1)]] CnxString
@@ -243,6 +281,7 @@ cnx_path_get_file_name(const CnxPath* restrict path) __DISABLE_IF_NULL(path);
 cnx_path_get_file_name_without_extension(const CnxPath* restrict path) __DISABLE_IF_NULL(path);
 [[nodiscard]] [[not_null(1)]] CnxResult(CnxPath)
 	cnx_path_get_parent_directory(const CnxPath* restrict path) __DISABLE_IF_NULL(path);
+
 [[not_null(1, 2)]] CnxResult
 cnx_path_append_string(CnxPath* restrict path, const CnxString* restrict entry_name)
 	__DISABLE_IF_NULL(path) __DISABLE_IF_NULL(entry_name);
@@ -276,7 +315,7 @@ cnx_path_append_stringview(CnxPath* restrict path, const CnxStringView* restrict
 										sizeof(entry_name)), 						/** NOLINT **/ \
 	char[sizeof(entry_name)] 		: cnx_path_append_cstring((path), 				/** NOLINT **/ \
 										static_cast(const_cstring)(entry_name), 			   	   \
-										sizeof(entry_name)) 					/** NOLINT **/     )
+										sizeof(entry_name)) 						/** NOLINT **/ )
 
 // clang-format on
 
