@@ -134,6 +134,8 @@ cnx_path_is_valid(const CnxString* restrict path) __DISABLE_IF_NULL(path);
 cnx_path_new(const CnxString* restrict path) __DISABLE_IF_NULL(path);
 /// @brief Returns the path to the home directory of the user running this Program
 ///
+/// On
+///
 /// @return The current user's home directory
 /// @ingroup cnx_path
 [[nodiscard]] CnxPath cnx_user_home_directory(void);
@@ -211,7 +213,7 @@ IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 	CONCAT2_DEFERRED(__cnx_path_remove_directory_, PP_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 #define cnx_path_remove_directory_recursive(dir_path) cnx_path_remove_directory(dir_path, true)
 
-#define path_scoped cnx_string_scoped
+#define CnxScopedPath cnx_string_scoped
 
 IGNORE_RESERVED_IDENTIFIER_WARNING_START
 

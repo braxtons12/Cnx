@@ -193,27 +193,30 @@ CnxPath (cnx_path_new)(const CnxString* restrict path) {
 }
 
 CnxPath cnx_user_home_directory(void) {
-	let user_name = get_user_name();
-
 	cnx_string_scoped path = cnx_string_new_with_allocator(DEFAULT_ALLOCATOR);
 
-#if CNX_PLATFORM_WINDOWS
+	cnx_string_append(path, CNX_SYSTEM_ROOT);
 
-	cnx_string_append(path, "C:\\Users\\");
-	cnx_string_append(path, user_name);
+#if CNX_PLATFORM_WINDOWS || CNX_PLATFORM_APPLE
 
-#else
+	cnx_string_scoped users_directory = cnx_string_from("Users");
 
-	cnx_string_append(path, "/home/");
-	cnx_string_append(path, user_name);
+#else 
 
-#endif // CNX_PLATFORM_WINDOWS
+	cnx_string_scoped users_directory = cnx_string_from("home");
+	
+#endif // CNX_PLATFORM_WINDOWS || CNX_PLATFORM_APPLE
+	
+	cnx_path_append(&path, &users_directory);
+
+	cnx_string_scoped user_name = cnx_string_from(get_user_name());
+	cnx_path_append(&path, &user_name);
 
 	return move(path);
 }
 
 CnxPath cnx_user_application_data_directory(void) {
-	path_scoped path = cnx_user_home_directory();
+	CnxScopedPath path = cnx_user_home_directory();
 
 #if CNX_PLATFORM_WINDOWS
 
@@ -233,7 +236,7 @@ CnxPath cnx_user_application_data_directory(void) {
 }
 
 CnxPath cnx_user_documents_directory(void) {
-	path_scoped path = cnx_user_home_directory();
+	CnxScopedPath path = cnx_user_home_directory();
 
 	cnx_string_push_back(path, CNX_PATH_SEPARATOR);
 	cnx_string_append(path, "Documents");
@@ -382,7 +385,7 @@ CnxPath cnx_current_executable_file(void) {
 #if CNX_PLATFORM_APPLE
 
 CnxPath cnx_current_application_file(void) {
-	path_scoped executable = cnx_current_executable_file();
+	CnxScopedPath executable = cnx_current_executable_file();
 
 	let_mut parent = cnx_path_get_parent_directory(&executable);
 
@@ -752,7 +755,9 @@ CnxResult cnx_path_append(CnxPath* restrict path, const CnxString* restrict entr
 		return Err(i32, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
 	}
 
-	cnx_string_push_back(*path, CNX_PATH_SEPARATOR);
+	if(cnx_string_at(*path, cnx_string_length(*path) - 1) != CNX_PATH_SEPARATOR) {
+		cnx_string_push_back(*path, CNX_PATH_SEPARATOR);
+	}
 	cnx_string_append(*path, entry_name);
 
 	return Ok(i32, 0);
