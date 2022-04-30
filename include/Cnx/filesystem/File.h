@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief CnxFile provides various functions for working with type safe, uniquely owned files
 /// @version 0.2.0
-/// @date 2022-04-27
+/// @date 2022-04-29
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -33,12 +33,27 @@
 #include <Cnx/String.h>
 #include <Cnx/filesystem/Path.h>
 
+#if CNX_PLATFORM_COMPILER_GCC
+	#define __IGNORE_NONNULL_COMPARE_WARNING_START \
+		_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wnonnull-compare\"")
+	#define __IGNORE_NONNULL_COMPARE_WARNING_STOP _Pragma("GCC diagnostic pop")
+#else
+	#define __IGNORE_NONNULL_COMPARE_WARNING_START
+	#define __IGNORE_NONNULL_COMPARE_WARNING_STOP
+#endif // CNX_PLATFORM_COMPILER_GCC
+
 [[always_inline]] [[not_null(1)]] static inline void
 file_deleter(FILE* restrict file, [[maybe_unused]] CnxAllocator allocator) {
+
+	__IGNORE_NONNULL_COMPARE_WARNING_START
 	if(file != stdout && file != stderr && file != nullptr) {
 		ignore(fclose(file));
 	}
+	__IGNORE_NONNULL_COMPARE_WARNING_STOP
 }
+
+#undef __IGNORE_NONNULL_COMPARE_WARNING_START
+#undef __IGNORE_NONNULL_COMPARE_WARNING_STOP
 
 typedef char FileBuffer[];
 
