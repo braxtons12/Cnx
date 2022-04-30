@@ -50,6 +50,7 @@
               Reference
               <ul>
                 <li><a href="#func-members">Functions</a></li>
+                <li><a href="#define-members">Defines</a></li>
               </ul>
             </li>
           </ul>
@@ -98,24 +99,47 @@
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="#ga0980b8df9eb375bc6c1635f7b2adafd5" class="m-doc">cnx_path_is_valid</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict path)</span>
-            </dt>
-            <dd>Checks if the given string would be a valid path on the host platform&#x27;s filesystem.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxPath</a> <a href="#ga773da93ad9865f549b549ac4ade9c905" class="m-doc">cnx_path_new</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict path)</span>
-            </dt>
-            <dd>Creates a new path from the given string, potentially modified so as to be valid on the host platform.</dd>
-            <dt>
               <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxPath</a> <a href="#ga2a7c14467b702fccf2268d2c98f1694a" class="m-doc">cnx_user_home_directory</a>(</span><span class="m-doc-wrap">void)</span>
             </dt>
             <dd>Returns the path to the home directory of the user running this Program.</dd>
           </dl>
         </section>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadd820584c4e9d4c59e4120adfa0d0a56" class="m-doc">cnx_path_is_valid</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Checks if the given string would be a valid path on the host platform&#x27;s filesystem.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5674ba18309c75bdd8f51922f3a3bc70" class="m-doc">cnx_path_new</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Creates a new path from the given string, potentially modified so as to be valid on the host platform.</dd>
+          </dl>
+        </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="ga0980b8df9eb375bc6c1635f7b2adafd5"><div>
+          <section class="m-doc-details" id="ga2a7c14467b702fccf2268d2c98f1694a"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga0980b8df9eb375bc6c1635f7b2adafd5" class="m-doc-self">cnx_path_is_valid</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict path)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxPath</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga2a7c14467b702fccf2268d2c98f1694a" class="m-doc-self">cnx_user_home_directory</a>(</span><span class="m-doc-wrap">void)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Returns the path to the home directory of the user running this Program.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The current user&#x27;s home directory</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+        <section>
+          <h2>Define documentation</h2>
+          <section class="m-doc-details" id="gadd820584c4e9d4c59e4120adfa0d0a56"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadd820584c4e9d4c59e4120adfa0d0a56" class="m-doc-self">cnx_path_is_valid</a>(</span><span class="m-doc-wrap">path)</span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
             </h3>
             <p>Checks if the given string would be a valid path on the host platform&#x27;s filesystem.</p>
@@ -138,9 +162,9 @@
             </table>
 <p>Checks if the given path is syntactically valid on the host platform&#x27;s filesystem. Does not check if the path exists or is semantically logical.</p>
           </div></section>
-          <section class="m-doc-details" id="ga773da93ad9865f549b549ac4ade9c905"><div>
+          <section class="m-doc-details" id="ga5674ba18309c75bdd8f51922f3a3bc70"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxPath</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga773da93ad9865f549b549ac4ade9c905" class="m-doc-self">cnx_path_new</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict path)</span></span>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga5674ba18309c75bdd8f51922f3a3bc70" class="m-doc-self">cnx_path_new</a>(</span><span class="m-doc-wrap">path)</span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
             </h3>
             <p>Creates a new path from the given string, potentially modified so as to be valid on the host platform.</p>
@@ -162,21 +186,6 @@
               </tfoot>
             </table>
 <p>If the given string would be a valid path on the host platform&#x27;s filesystem, this simply returns a clone of the string. Otherwise, this will return a modified version of the given string, converted to be a valid filesystem path.</p><p>For example, if <code>path</code> is &quot;/home\\user_name//file.txt&quot; on *NIX, path separators will be converted to all be *NIX style separators and redundant separators will be removed. As a result, the returned path would be &quot;/home/user_name/file.txt&quot;</p><p>Coincidentally, this means that all paths created through this function can use a consistent path separator for all platforms, and separators will automatically be converted to the correct one for the platform at runtime. IE: all paths can be declared with *NIX style separators, but will be correctly converted to &#x27;\&#x27; on Windows</p>
-          </div></section>
-          <section class="m-doc-details" id="ga2a7c14467b702fccf2268d2c98f1694a"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxPath</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga2a7c14467b702fccf2268d2c98f1694a" class="m-doc-self">cnx_user_home_directory</a>(</span><span class="m-doc-wrap">void)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
-            </h3>
-            <p>Returns the path to the home directory of the user running this Program.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td>The current user&#x27;s home directory</td>
-                </tr>
-              </tfoot>
-            </table>
           </div></section>
         </section>
       </div>

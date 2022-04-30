@@ -52,6 +52,7 @@
               Reference
               <ul>
                 <li><a href="#func-members">Functions</a></li>
+                <li><a href="#define-members">Defines</a></li>
               </ul>
             </li>
           </ul>
@@ -61,17 +62,22 @@
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__path.html#ga0980b8df9eb375bc6c1635f7b2adafd5" class="m-doc">cnx_path_is_valid</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict path)</span>
-            </dt>
-            <dd>Checks if the given string would be a valid path on the host platform&#x27;s filesystem.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxPath</a> <a href="group__cnx__path.html#ga773da93ad9865f549b549ac4ade9c905" class="m-doc">cnx_path_new</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict path)</span>
-            </dt>
-            <dd>Creates a new path from the given string, potentially modified so as to be valid on the host platform.</dd>
-            <dt>
               <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxPath</a> <a href="group__cnx__path.html#ga2a7c14467b702fccf2268d2c98f1694a" class="m-doc">cnx_user_home_directory</a>(</span><span class="m-doc-wrap">void)</span>
             </dt>
             <dd>Returns the path to the home directory of the user running this Program.</dd>
+          </dl>
+        </section>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#gadd820584c4e9d4c59e4120adfa0d0a56" class="m-doc">cnx_path_is_valid</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Checks if the given string would be a valid path on the host platform&#x27;s filesystem.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#ga5674ba18309c75bdd8f51922f3a3bc70" class="m-doc">cnx_path_new</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Creates a new path from the given string, potentially modified so as to be valid on the host platform.</dd>
           </dl>
         </section>
       </div>
