@@ -1,8 +1,8 @@
 /// @file VectorDef.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides macro definitions for implementing and working with `CnxVector(T)`
-/// @version 0.1.0
-/// @date 2022-04-11
+/// @version 0.1.1
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>

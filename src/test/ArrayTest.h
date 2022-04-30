@@ -157,7 +157,7 @@ TEST(CnxArray, scoped) {
 	let data = (CnxCollectionData(CnxArray(i32, 10))){.m_constructor = array_test_constructor,
 													  .m_destructor = array_test_scoped_destructor};
 
-	cnx_array_scoped(i32, 10) array = cnx_array_new_with_collection_data(i32, 10, &data);
+	CnxScopedArray(i32, 10) array = cnx_array_new_with_collection_data(i32, 10, &data);
 	cnx_array_resize(array, cnx_array_capacity(array));
 	TEST_ASSERT_EQUAL(cnx_array_size(array), cnx_array_capacity(array));
 }

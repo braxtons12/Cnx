@@ -1,8 +1,8 @@
 /// @file ArrayDef.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides macro definitions for implementing and working with `CnxArray(T, N)`
-/// @version 0.2.0
-/// @date 2022-03-21
+/// @version 0.2.1
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -66,7 +66,7 @@
 /// }
 ///
 /// {
-/// 	let_mut cnx_array_scoped(i32, 10) array2 = cnx_array_new(i32, 10);
+/// 	let_mut CnxScopedArray(i32, 10) array2 = cnx_array_new(i32, 10);
 /// 	foreach(elem, array) {
 /// 		cnx_array_push_back(array2, elem);
 /// 	}
@@ -474,6 +474,6 @@
 /// @param T - The element type of the `CnxArray(T, N)` instantiation
 /// @param N - The capacity of the `CnxArray(T, N)` instantiation
 /// @ingroup cnx_array
-#define cnx_array_scoped(T, N) scoped(CnxArrayIdentifier(T, N, free))
+#define CnxScopedArray(T, N) scoped(CnxArrayIdentifier(T, N, free))
 
 #endif // CNX_ARRAY_DEF
