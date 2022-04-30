@@ -193,24 +193,22 @@ CnxPath (cnx_path_new)(const CnxString* restrict path) {
 }
 
 CnxPath cnx_user_home_directory(void) {
-	CnxScopedString path = cnx_string_new_with_allocator(DEFAULT_ALLOCATOR);
-
-	cnx_string_append(path, CNX_SYSTEM_ROOT);
+	CnxScopedString path = cnx_string_from_with_allocator(CNX_SYSTEM_ROOT, DEFAULT_ALLOCATOR);
 
 #if CNX_PLATFORM_WINDOWS || CNX_PLATFORM_APPLE
 
-	CnxScopedString users_directory = cnx_string_from("Users");
+	let users_directory = "Users";
 
 #else 
 
-	CnxScopedString users_directory = cnx_string_from("home");
+	let users_directory = "home";
 	
 #endif // CNX_PLATFORM_WINDOWS || CNX_PLATFORM_APPLE
 	
-	cnx_path_append(&path, &users_directory);
+	cnx_path_append(&path, users_directory);
 
-	CnxScopedString user_name = cnx_string_from(get_user_name());
-	cnx_path_append(&path, &user_name);
+	let user_name = get_user_name();
+	cnx_path_append(&path, user_name);
 
 	return move(path);
 }
@@ -220,26 +218,26 @@ CnxPath cnx_user_application_data_directory(void) {
 
 #if CNX_PLATFORM_WINDOWS
 
-	cnx_string_append(path, "\\AppData");
+	let user_data_dir = "AppData";
 
 #elif CNX_PLATFORM_APPLE
 
-	cnx_string_append(path, "/Library/Preferences");
+	let user_data_dir = "Library/Preferences";
 
 #else // CNX_PLATFORM_APPLE
 
-	cnx_string_append(path, "/.local/share");
+	let user_data_dir = ".local/share";
 
 #endif // CNX_PLATFORM_WINDOWS
-
+	
+	cnx_path_append(&path, user_data_dir);
 	return move(path);
 }
 
 CnxPath cnx_user_documents_directory(void) {
 	CnxScopedPath path = cnx_user_home_directory();
 
-	cnx_string_push_back(path, CNX_PATH_SEPARATOR);
-	cnx_string_append(path, "Documents");
+	cnx_path_append(&path, "Documents");
 
 	return move(path);
 }
@@ -282,7 +280,7 @@ CnxPath cnx_temp_directory(void) {
 #if CNX_PLATFORM_WINDOWS
 
 	CnxScopedString path = cnx_user_application_data_directory();
-	cnx_string_append(path, "\\Local\\Temp");
+	cnx_path_append(&path, "Local\\Temp");
 	return move(path);
 
 #else
@@ -487,26 +485,73 @@ char cnx_path_separator_char(void) {
 	return CNX_PATH_SEPARATOR;
 }
 
+bool cnx_path_is_absolute_stringview(const CnxStringView* restrict path) {
+	#if CNX_PLATFORM_WINDOWS
+	if(cnx_stringview_lenght(*path) >= 2) {
+		let first = cnx_stringview_at(*path, 0);
+		let second = cnx_stringview_at(*path, 1);
+
+		if(!((first >= 'a' && first <= 'z') || (first >= 'A' && first <= 'Z')
+			 || (first >= '0' && first <= '9')))
+		{
+			return false;
+		}
+
+		if(second != ':') {
+			return false;
+		}
+
+		return true;
+	}
+	else {
+		return false;
+	}
+
+#else
+	if(cnx_stringview_length(*path) > 0) {
+		return *cnx_stringview_at(*path, 0) == CNX_PATH_SEPARATOR;
+	}
+	else {
+		return false;
+	}
+#endif
+}
+
+#define cnx_path_is_absolute_cstring(path, path_length) 										   \
+		({ 																						   \
+			let UNIQUE_VAR(view) = cnx_stringview_from(path, 0, path_length); 					   \
+			cnx_path_is_absolute_stringview(&UNIQUE_VAR(view)); 								   \
+		})
+
 bool cnx_path_is_absolute(const CnxPath* restrict path) {
 #if CNX_PLATFORM_WINDOWS
-	let first = cnx_string_front(*path);
-	let second = cnx_string_at(*path, 1);
+	if(cnx_string_length(*path) >= 2) {
+		let first = cnx_string_front(*path);
+		let second = cnx_string_at(*path, 1);
 
-	if(!((first >= 'a' && first <= 'z') || (first >= 'A' && first <= 'Z')
-		 || (first >= '0' && first <= '9')))
-	{
+		if(!((first >= 'a' && first <= 'z') || (first >= 'A' && first <= 'Z')
+			 || (first >= '0' && first <= '9')))
+		{
+			return false;
+		}
+
+		if(second != ':') {
+			return false;
+		}
+
+		return true;
+	}
+	else {
 		return false;
 	}
-
-	if(second != ':') {
-		return false;
-	}
-
-	return true;
 #else
 
-	return cnx_string_front(*path) == CNX_PATH_SEPARATOR;
-
+	if(cnx_string_length(*path) > 0) {
+		return cnx_string_front(*path) == CNX_PATH_SEPARATOR;
+	}
+	else {
+		return false;
+	}
 #endif
 }
 
@@ -750,8 +795,34 @@ CnxResult(CnxPath) cnx_path_get_parent_directory(const CnxPath* restrict path) {
 	return Err(CnxPath, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
 }
 
-CnxResult cnx_path_append(CnxPath* restrict path, const CnxString* restrict entry_name) {
+CnxResult cnx_path_append_string(CnxPath* restrict path, const CnxString* restrict entry_name) {
 	if(cnx_path_is_absolute(entry_name)) {
+		return Err(i32, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
+	}
+
+	if(cnx_string_at(*path, cnx_string_length(*path) - 1) != CNX_PATH_SEPARATOR) {
+		cnx_string_push_back(*path, CNX_PATH_SEPARATOR);
+	}
+	cnx_string_append(*path, entry_name);
+
+	return Ok(i32, 0);
+}
+
+CnxResult cnx_path_append_stringview(CnxPath* restrict path, const CnxStringView* restrict entry_name) {
+	if(cnx_path_is_absolute_stringview(entry_name)) {
+		return Err(i32, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
+	}
+
+	if(cnx_string_at(*path, cnx_string_length(*path) - 1) != CNX_PATH_SEPARATOR) {
+		cnx_string_push_back(*path, CNX_PATH_SEPARATOR);
+	}
+	cnx_string_append(*path, entry_name);
+
+	return Ok(i32, 0);
+}
+
+CnxResult cnx_path_append_cstring(CnxPath* restrict path, const_cstring restrict entry_name, usize entry_name_length) {
+	if(cnx_path_is_absolute_cstring(entry_name, entry_name_length)) {
 		return Err(i32, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
 	}
 
