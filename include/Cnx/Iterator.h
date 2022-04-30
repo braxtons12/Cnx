@@ -3,7 +3,7 @@
 /// @brief This module provides iterator Trait templates similar to the different categories of
 /// iterators in C++ for Cnx.
 /// @version 0.1
-/// @date 2022-01-02
+/// @date 2022-04-29
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -954,7 +954,7 @@
 	#define cnx_iterator_into_bidirectional_iterator(iterator) \
 		trait_call(into_bidirectional_iterator, iterator)
 
-	#if CNX_PLATFORM_COMPILER_CLANG
+	#if CNX_PLATFORM_COMPILER_GCC
 	// clang-format off
 
 	/// @brief Loops over each element in the iteration of the given collection
@@ -964,32 +964,44 @@
 	/// @param element - The name to use to reference the current element in the iteration
 	/// @param collection - The collection to iterate over
 	/// @ingroup iterators
-	#define foreach(element, collection)                                                            \
-		let_mut UNIQUE_VAR(begin) = (collection).m_vtable->cbegin(&(collection));                     \
-		let UNIQUE_VAR(end) = (collection).m_vtable->cend(&(collection));                             \
-		for(let_mut element = cnx_iterator_current(UNIQUE_VAR(begin)); 							   \
-			!cnx_iterator_equals(UNIQUE_VAR(begin), UNIQUE_VAR(end));  							   \
-			element = cnx_iterator_next(UNIQUE_VAR(begin)))
-#else
-	// clang-format off
-
-	/// @brief Loops over each element in the iteration of the given collection
-	///
-	/// This category of foreach loop iterates by value (`element` will be a copy)
-	///
-	/// @param element - The name to use to reference the current element in the iteration
-	/// @param collection - The collection to iterate over
-	/// @ingroup iterators
-	#define foreach(element, collection)                                                            \
+	#define foreach(element, collection)                                                           \
 		_Pragma("GCC diagnostic push")                                                             \
-		_Pragma("GCC diagnostic ignored \"-Wdiscarded-qualifiers\"")                       	   \
-		let_mut UNIQUE_VAR(begin) = (collection).m_vtable->begin(&(collection));                     \
-		let UNIQUE_VAR(end) = (collection).m_vtable->end(&(collection));                             \
+		_Pragma("GCC diagnostic ignored \"-Wdiscarded-qualifiers\"")                       	   	   \
+		let_mut UNIQUE_VAR(begin) = (collection).m_vtable->begin(&(collection));                   \
+		let UNIQUE_VAR(end) = (collection).m_vtable->end(&(collection));                           \
 		_Pragma("GCC diagnostic pop") 															   \
-		for(let_mut element = cnx_iterator_current(UNIQUE_VAR(begin)); 							   \
+		for(let_mut element = static_cast(typeof(cnx_iterator_current(UNIQUE_VAR(begin))))( 	   \
+								!cnx_iterator_equals(UNIQUE_VAR(begin), UNIQUE_VAR(end)) ? 		   \
+							  	cnx_iterator_current(UNIQUE_VAR(begin)) 						   \
+							  	: (typeof(cnx_iterator_current(UNIQUE_VAR(begin)))){0}); 		   \
 			!cnx_iterator_equals(UNIQUE_VAR(begin), UNIQUE_VAR(end));  							   \
 			element = cnx_iterator_next(UNIQUE_VAR(begin)))
-#endif
+
+	// clang-format on
+	#else
+	// clang-format off
+
+	/// @brief Loops over each element in the iteration of the given collection
+	///
+	/// This category of foreach loop iterates by value (`element` will be a copy)
+	///
+	/// @param element - The name to use to reference the current element in the iteration
+	/// @param collection - The collection to iterate over
+	/// @ingroup iterators
+	#define foreach(element, collection)                                                           \
+		let_mut UNIQUE_VAR(begin) = (collection).m_vtable->cbegin(&(collection));                  \
+		let UNIQUE_VAR(end) = (collection).m_vtable->cend(&(collection));                          \
+		for(let_mut element = static_cast(typeof(cnx_iterator_current(UNIQUE_VAR(begin))))( 	   \
+								!cnx_iterator_equals(UNIQUE_VAR(begin), UNIQUE_VAR(end)) ? 		   \
+							  	cnx_iterator_current(UNIQUE_VAR(begin)) 						   \
+							  	: (typeof(cnx_iterator_current(UNIQUE_VAR(begin)))){0}); 		   \
+			!cnx_iterator_equals(UNIQUE_VAR(begin), UNIQUE_VAR(end));  							   \
+			element = cnx_iterator_next(UNIQUE_VAR(begin)))
+
+	// clang-format on
+	#endif
+
+	// clang-format off
 
 	/// @brief Loops over each element in the iteration of the given collection
 	///
@@ -998,12 +1010,20 @@
 	/// @param element - The name to use to reference the current element in the iteration
 	/// @param collection - The collection to iterate over
 	/// @ingroup iterators
-	#define foreach_ref(element, collection)                                     \
-		let_mut UNIQUE_VAR(begin) = (collection).m_vtable->cbegin(&(collection)); \
-		let UNIQUE_VAR(end) = (collection).m_vtable->cend(&(collection));         \
-		for(let_mut element = &cnx_iterator_current(UNIQUE_VAR(begin));         \
-			!cnx_iterator_equals(UNIQUE_VAR(begin), UNIQUE_VAR(end));           \
+	#define foreach_ref(element, collection)                                     				   \
+		let_mut UNIQUE_VAR(begin) = (collection).m_vtable->cbegin(&(collection)); 				   \
+		let UNIQUE_VAR(end) = (collection).m_vtable->cend(&(collection));         				   \
+		for(let_mut element = static_cast(typeof(cnx_iterator_current(UNIQUE_VAR(begin)))*)( 	   \
+								!cnx_iterator_equals(UNIQUE_VAR(begin), UNIQUE_VAR(end)) ? 		   \
+							  	&cnx_iterator_current(UNIQUE_VAR(begin)) 						   \
+							  	: &(typeof(cnx_iterator_current(UNIQUE_VAR(begin)))){0}); 		   \
+			!cnx_iterator_equals(UNIQUE_VAR(begin), UNIQUE_VAR(end));           				   \
 			element = &cnx_iterator_next(UNIQUE_VAR(begin)))
+
+// clang-format on
+
+	#if CNX_PLATFORM_COMPILER_GCC
+	// clang-format off
 
 	/// @brief Loops over each element in the iteration of the given collection
 	///
@@ -1012,12 +1032,44 @@
 	/// @param element - The name to use to reference the current element in the iteration
 	/// @param collection - The collection to iterate over
 	/// @ingroup iterators
-	#define foreach_ref_mut(element, collection)                                     \
-		let_mut UNIQUE_VAR(begin) = (collection).m_vtable->begin(&(collection)); \
-		let UNIQUE_VAR(end) = (collection).m_vtable->end(&(collection));         \
-		for(let_mut element = &cnx_iterator_current(UNIQUE_VAR(begin));         \
-			!cnx_iterator_equals(UNIQUE_VAR(begin), UNIQUE_VAR(end));           \
+	#define foreach_ref_mut(element, collection)                                     			   \
+		_Pragma("GCC diagnostic push")                                                             \
+		_Pragma("GCC diagnostic ignored \"-Wdiscarded-qualifiers\"")                       	   	   \
+		let_mut UNIQUE_VAR(begin) = (collection).m_vtable->begin(&(collection)); 				   \
+		let UNIQUE_VAR(end) = (collection).m_vtable->end(&(collection));         				   \
+		_Pragma("GCC diagnostic pop") 															   \
+		for(let_mut element = static_cast(typeof(cnx_iterator_current(UNIQUE_VAR(begin)))*)( 	   \
+								!cnx_iterator_equals(UNIQUE_VAR(begin), UNIQUE_VAR(end)) ? 		   \
+							  	&cnx_iterator_current(UNIQUE_VAR(begin)) 						   \
+							  	: &(typeof(cnx_iterator_current(UNIQUE_VAR(begin)))){0}); 		   \
+			!cnx_iterator_equals(UNIQUE_VAR(begin), UNIQUE_VAR(end));           				   \
 			element = &cnx_iterator_next(UNIQUE_VAR(begin)))
+
+	// clang-format on
+
+	#else
+	// clang-format off
+
+	/// @brief Loops over each element in the iteration of the given collection
+	///
+	/// This category of foreach loop iterates by pointer (`element` will be a pointer)
+	///
+	/// @param element - The name to use to reference the current element in the iteration
+	/// @param collection - The collection to iterate over
+	/// @ingroup iterators
+	#define foreach_ref_mut(element, collection)                                     			   \
+		let_mut UNIQUE_VAR(begin) = (collection).m_vtable->begin(&(collection)); 				   \
+		let UNIQUE_VAR(end) = (collection).m_vtable->end(&(collection));         				   \
+		for(let_mut element = static_cast(typeof(cnx_iterator_current(UNIQUE_VAR(begin)))*)( 	   \
+								!cnx_iterator_equals(UNIQUE_VAR(begin), UNIQUE_VAR(end)) ? 		   \
+							  	&cnx_iterator_current(UNIQUE_VAR(begin)) 						   \
+							  	: &(typeof(cnx_iterator_current(UNIQUE_VAR(begin)))){0}); 		   \
+			!cnx_iterator_equals(UNIQUE_VAR(begin), UNIQUE_VAR(end));           				   \
+			element = &cnx_iterator_next(UNIQUE_VAR(begin)))
+
+	// clang-format on
+
+	#endif // CNX_PLATFORM_COMPILER_GCC
 
 	/// @brief Instantiates each iterator category for the type T
 	///
