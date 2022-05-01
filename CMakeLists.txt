@@ -214,6 +214,11 @@ else ()
 		)
 endif ()
 
+target_compile_options(FormatBenchmark PRIVATE
+	-march=native
+	-mtune=native
+	)
+
 if (APPLE)
 	target_include_directories(Cnx BEFORE PUBLIC
 		"${CMAKE_CURRENT_SOURCE_DIR}/include"
