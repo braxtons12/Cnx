@@ -972,7 +972,7 @@ cnx_path_create_file_stringview(const CnxStringView* restrict file_path, bool ov
 }
 
 CnxResult cnx_path_create_file_cstring(restrict const_cstring file_path,
-									   usize file_path_length,
+									   [[maybe_unused]] usize file_path_length,
 									   bool overwrite_existing) {
 	cnx_assert(cnx_path_is_valid_cstring(file_path, file_path_length),
 			   "Path given to cnx_path_create_file is invalid");
