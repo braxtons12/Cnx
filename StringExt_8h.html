@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>include/Cnx/StringExt.h file | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C23</title>
+  <title>include/Cnx/StringExt.h file | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -13,7 +13,7 @@
 <header><nav id="navigation">
   <div class="m-container">
     <div class="m-row">
-      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C23</span></a>
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</span></a>
       <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
         <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
           <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
@@ -57,43 +57,14 @@
             </li>
           </ul>
         </nav>
-<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.2.0</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-04-11</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.2.1</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-04-30</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
         <section id="func-members">
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"> <a href="group__cnx__string.html#ga7c4ffe2b7acfd6159d35eef2a77a8017" class="m-doc">CnxVector</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>) cnx_string_split_on(const CnxString *restrict self</span>
+              <span class="m-doc-wrap-bumper"> <a href="group__cnx__string.html#ga954408e428f5b5125f7b3696c75f7a38" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#gafe19720a962dabdfb36a17b7ca5e76a9" class="m-doc">nodiscard</a>)</span>
             </dt>
-            <dd>Splits the given string at each instance of the given <code>delimiter</code> character, returning a <code>CnxVector</code> of the resulting substrings.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"> <a href="group__cnx__string.html#ga724cf39e4ab589a64082123512f614a6" class="m-doc">CnxVector</a>(</span><span class="m-doc-wrap"><a href="structCnxStringView.html" class="m-doc">CnxStringView</a>) cnx_string_view_split_on(const CnxString *restrict self</span>
-            </dt>
-            <dd>Splits the given string into a set of stringviews at each instance of the given <code>delimiter</code> character, returning them in a <code>CnxVector</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="group__cnx__string.html#gaec10e45762852c280d5b483bd14b146d" class="m-doc">cnx_string_occurrences_of_char</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
-              char to_find)</span>
-            </dt>
-            <dd>Determines the total number of times the character <code>to_find</code> occurs in <code>self</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="group__cnx__string.html#ga30a7a4b52acb6813f9827e08dde4636d" class="m-doc">cnx_string_occurrences_of</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
-              const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict to_find)</span>
-            </dt>
-            <dd>Determines the total number of times the string <code>to_find</code> occurs in <code>self</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="group__cnx__string.html#ga2c1f1132bb846aca28f4f153dd274f5f" class="m-doc">cnx_string_occurrences_of_stringview</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
-              const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict to_find)</span>
-            </dt>
-            <dd>Determines the total number of times the stringview <code>to_find</code> occurs in <code>self</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="group__cnx__string.html#ga16772908efc096d9d36f08cbbccac7cf" class="m-doc">cnx_string_occurrences_of_cstring</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
-              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> to_find,
-              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> to_find_length)</span>
-            </dt>
-            <dd>Determines the total number of times the <code>cstring</code> <code>to_find</code> occurs in <code>self</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"> <a href="group__cnx__string.html#gae5104aa67000504001379fdb7799f41b" class="m-doc">CnxVector</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a>) cnx_string_find_occurrences_of_char(const CnxString *restrict self</span>
-            </dt>
-            <dd>Finds the indices at which the character <code>to_find</code> occurs in <code>self</code>, and returns them in a <code>CnxVector</code></dd>
+            <dd>Creates a new, empty <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
           </dl>
         </section>
         <section id="define-members">
@@ -199,7 +170,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C23. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+). Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

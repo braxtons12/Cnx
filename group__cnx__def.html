@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Standard Defines module | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C23</title>
+  <title>Standard Defines module | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -13,7 +13,7 @@
 <header><nav id="navigation">
   <div class="m-container">
     <div class="m-row">
-      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C23</span></a>
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</span></a>
       <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
         <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
           <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
@@ -125,6 +125,10 @@
               <span class="m-doc-wrap-bumper">#define <a href="#gafe19720a962dabdfb36a17b7ca5e76a9" class="m-doc">nodiscard</a></span>
             </dt>
             <dd>Attribute to specify that the return value of the tagged function should not be discarded.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_unused</a></span>
+            </dt>
+            <dd>Attribute to specify that a value may be unused or discarded.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga9e8a4c821458ed2ce3db426d54fe2bec" class="m-doc">scoped</a>(</span><span class="m-doc-wrap">scope_end_func)</span>
             </dt>
@@ -430,7 +434,15 @@
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Def_8h.html">&lt;include/Cnx/Def.h&gt;</a></div>
             </h3>
             <p>Attribute to specify that the return value of the tagged function should not be discarded.</p>
-<p>Example <code class="m-code"><span class="p">[[</span><span class="n">nodiscard</span><span class="p">]]</span> <span class="n">my_important_return_type</span> <span class="n">my_important_function</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span></code></p>
+<p>Example <code class="m-code"><span class="n">__attr</span><span class="p">(</span><span class="n">nodiscard</span><span class="p">)</span> <span class="n">my_important_return_type</span> <span class="n">my_important_function</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span></code></p>
+          </div></section>
+          <section class="m-doc-details" id="ga209f2e04922e102ff5e0cb60206201dc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc-self">maybe_unused</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Def_8h.html">&lt;include/Cnx/Def.h&gt;</a></div>
+            </h3>
+            <p>Attribute to specify that a value may be unused or discarded.</p>
+<p>Example <code class="m-code"><span class="kt">void</span> <span class="nf">my_important_function</span><span class="p">(</span><span class="n">__attr</span><span class="p">(</span><span class="n">maybe_unused</span><span class="p">)</span> <span class="n">i32</span> <span class="n">my_int</span><span class="p">);</span></code></p>
           </div></section>
           <section class="m-doc-details" id="ga9e8a4c821458ed2ce3db426d54fe2bec"><div>
             <h3>
@@ -718,7 +730,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C23. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+). Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

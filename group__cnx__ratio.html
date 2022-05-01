@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>CnxRatio module | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C23</title>
+  <title>CnxRatio module | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -13,7 +13,7 @@
 <header><nav id="navigation">
   <div class="m-container">
     <div class="m-row">
-      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C23</span></a>
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</span></a>
       <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
         <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
           <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
@@ -78,7 +78,7 @@
           <h2><a href="#typedef-members">Typedefs</a></h2>
           <dl class="m-doc">
             <dt>
-              using <a href="#ga5f32024a85a0721caa787716e4018326" class="m-doc">CnxRatio</a> = struct <a href="structCnxRatio.html" class="m-doc">CnxRatio</a>
+              using <a href="#ga6d378b31f3c55e3606d25677b9015108" class="m-doc">CnxRatio</a> = struct <a href="structCnxRatio.html" class="m-doc">CnxRatio</a>
             </dt>
             <dd><code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> is a representation of an exact fraction</dd>
           </dl>
@@ -87,98 +87,11 @@
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="#gabf74ad2c5f4451cba77799f3293bb43a" class="m-doc">cnx_ratio_new</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> num,
-              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> den)</span>
+              <span class="m-doc-wrap-bumper"> <a href="#ga5253ee84097db1bc9d1242f275235e64" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#gafe19720a962dabdfb36a17b7ca5e76a9" class="m-doc">nodiscard</a>) CnxRatio cnx_ratio_new(i64 num</span>
             </dt>
             <dd>Constructs a <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="#gac8b8196b25d2f12c2c4f012626bee6b4" class="m-doc">cnx_ratio_add</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span>
-            </dt>
-            <dd>Adds the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="#ga022901fdeadd8039e56aa20418285a43" class="m-doc">cnx_ratio_subtract</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span>
-            </dt>
-            <dd>Subtracts the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="#gae128b084492749f983da51c16230ab46" class="m-doc">cnx_ratio_multiply</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span>
-            </dt>
-            <dd>Multiplies the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="#ga6fb470d2003af1faa748da05e171aeb9" class="m-doc">cnx_ratio_divide</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span>
-            </dt>
-            <dd>Divides the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="#gafe2dd187b0b07f06a3f9c429d61581e0" class="m-doc">cnx_ratio_equal</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span>
-            </dt>
-            <dd>Returns whether the two <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s are equal.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="#ga4603614010ac0d28f509232d316f82ea" class="m-doc">cnx_ratio_not_equal</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span>
-            </dt>
-            <dd>Returns whether the two <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s are <strong>not</strong> equal.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="#ga9e56b811720db1e96b8854f00ee0cc0f" class="m-doc">cnx_ratio_less_than</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span>
-            </dt>
-            <dd>Returns whether the left-hand <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> is less than the other.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="#ga85753f379619adae7dedd65ddd27fee6" class="m-doc">cnx_ratio_less_than_or_equal</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span>
-            </dt>
-            <dd>Returns whether the left-hand <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> is less than or equal to the other.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="#ga5528f686b0de33c05bd868b6e4ce954a" class="m-doc">cnx_ratio_greater_than</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span>
-            </dt>
-            <dd>Returns whether the left-hand <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> is greater than the other.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="#ga8f65262fdd13a7e765b9e7dac08c0011" class="m-doc">cnx_ratio_greater_than_or_equal</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span>
-            </dt>
-            <dd>Returns whether the left-hand <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> is greater than or equal to the other.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="BasicTypes_8h.html#ac0f09b727f79ee723c399162a0f8e8b2" class="m-doc">CnxCompare</a> <a href="#ga6126b88bd2db35463e78ee3e16711b6d" class="m-doc">cnx_ratio_compare</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span>
-            </dt>
-            <dd>Returns the comparison of the left-hand <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> to the other.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"> <a href="#ga1483d1def0aa492eb06c26eddb8b3960" class="m-doc">CnxOption</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a>)</span>
-            </dt>
-            <dd>Returns the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> as a scalar value.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga94dab5770726ccbef8c7d026cfbdf8e5" class="m-doc">f64</a> <a href="#ga6c771d6ec95f1edb6aecdaebbfd81bfd" class="m-doc">cnx_ratio_as_scalar</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> ratio)</span>
-            </dt>
-            <dd>Returns the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> as a scalar value.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="#ga8368bae667e7c749b5e58a67bffb4f9a" class="m-doc">cnx_ratio_add_scalar</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> ratio,
-              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> scalar)</span>
-            </dt>
-            <dd>Adds the given ratio and scalar value.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="#ga51b3ab2d1fe539d4b1b92ede93f204c3" class="m-doc">cnx_ratio_subtract_scalar</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> ratio,
-              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> scalar)</span>
-            </dt>
-            <dd>Subtracts the given scalar value from the given ratio.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="#ga629cfa5a314863b114bf5cc5e481e788" class="m-doc">cnx_ratio_multiply_scalar</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> ratio,
-              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> scalar)</span>
-            </dt>
-            <dd>Multiplies the given ratio and scalar value.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="#ga2a691408b93e569a27c162550122728b" class="m-doc">cnx_ratio_divide_scalar</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> ratio,
-              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> scalar)</span>
-            </dt>
-            <dd>Divides the given ratio by the given scalar value.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">static  <a href="#ga577e5fe1a7f0645be7014b2f4e789af4" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a>,
-              <a href="Ratio_8h.html#ac434ccbba6d2017d8b72fb590d74158c" class="m-doc">cnx_<wbr />ratio_<wbr />format</a>,
-              <a href="Ratio_8h.html#a2a4b66f26b94b6b9ce1c34bb9343377d" class="m-doc">cnx_<wbr />ratio_<wbr />format_<wbr />with_<wbr />allocator</a>)</span>
+              <span class="m-doc-wrap-bumper"> <a href="#ga783e2d55d77a5b3fd07d8bd836ec230c" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a>) static ImplTraitFor(CnxFormat</span>
             </dt>
             <dd>Implement <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code></dd>
           </dl>
@@ -259,9 +172,9 @@
         </section>
         <section>
           <h2>Typedef documentation</h2>
-          <section class="m-doc-details" id="ga5f32024a85a0721caa787716e4018326"><div>
+          <section class="m-doc-details" id="ga6d378b31f3c55e3606d25677b9015108"><div>
             <h3>
-              typedef struct <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="#ga5f32024a85a0721caa787716e4018326" class="m-doc-self">CnxRatio</a>
+              typedef struct <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="#ga6d378b31f3c55e3606d25677b9015108" class="m-doc-self">CnxRatio</a>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Ratio_8h.html">&lt;include/Cnx/Ratio.h&gt;</a></div>
             </h3>
             <p><code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> is a representation of an exact fraction</p>
@@ -269,528 +182,34 @@
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="gabf74ad2c5f4451cba77799f3293bb43a"><div>
+          <section class="m-doc-details" id="ga5253ee84097db1bc9d1242f275235e64"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gabf74ad2c5f4451cba77799f3293bb43a" class="m-doc-self">cnx_ratio_new</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> num,
-              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> den)</span></span>
+              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga5253ee84097db1bc9d1242f275235e64" class="m-doc-self">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#gafe19720a962dabdfb36a17b7ca5e76a9" class="m-doc">nodiscard</a>) CnxRatio cnx_ratio_new(i64 num</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Ratio_8h.html">&lt;include/Cnx/Ratio.h&gt;</a></div>
             </h3>
             <p>Constructs a <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code></p>
             <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">num</td>
-                  <td>- The numerator of the ratio</td>
-                </tr>
-                <tr>
-                  <td>den</td>
-                  <td>- The denominator of the ratio</td>
-                </tr>
-              </tbody>
               <tfoot>
                 <tr>
-                  <th>Returns</th>
+                  <th style="width: 1%">Returns</th>
                   <td>A <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> as the simplified fraction of <code>numerator / denominator</code></td>
                 </tr>
               </tfoot>
             </table>
-<p>Constructs a <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> from the given numerator and denominator, as a simplified fraction</p>
+<p>Implement <code>CnxFormat.format_with_allocator</code> for <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code></p><p>Implement <code>CnxFormat.format</code> for <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code></p><p>Divides the given ratio by the given scalar value.</p><p>Multiplies the given ratio and scalar value.</p><p>Subtracts the given scalar value from the given ratio.</p><p>Adds the given ratio and scalar value.</p><p>Returns the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> as a scalar value.</p><p>Returns the comparison of the left-hand <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> to the other.</p><p>Returns whether the left-hand <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> is greater than or equal to the other.</p><p>Returns whether the left-hand <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> is greater than the other.</p><p>Returns whether the left-hand <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> is less than or equal to the other.</p><p>Returns whether the left-hand <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> is less than the other.</p><p>Returns whether the two <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s are <strong>not</strong> equal.</p><p>Returns whether the two <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s are equal.</p><p>Divides the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s.</p><p>Multiplies the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s.</p><p>Subtracts the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s.</p><p>Adds the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s.</p><p>Constructs a <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> from the given numerator and denominator, as a simplified fraction</p><p>Adds the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s, returning the result as a new <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> in simplest form</p><p>Subtracts <code>rhs</code> from <code>lhs</code>, returning the result as a new <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> in simplest form</p><p>Multiplies the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s, returning the result as a new <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> in simplest form</p><p>Divides <code>lhs</code> by <code>rhs</code>, returning the result as a new <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> in simplest form</p><aside class="m-note m-info"><h4>Note</h4><p>This assumes that the given ratios are in simplest form. It does not check if either ratio has not been reduced.</p></aside><aside class="m-note m-info"><h4>Note</h4><p>This assumes that the given ratios are in simplest form. It does not check if either ratio has not been reduced.</p></aside>
+
+
+
+
+
+
+
+
+<p>Returns the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> as a scalar value (<code><a href="group__cnx__option.html#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some(i64, value)</a></code>), if it can be exactly represented as one, otherwise returns <code><a href="group__cnx__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(i64)</a></code></p><aside class="m-note m-info"><h4>Note</h4><p>The resulting scalar may not be an exact match to the ratio represented by <code>ratio</code> due to loss due to floating-point precision</p></aside><p>Adds the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> and scalar value and returns the result as a <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code></p><p>Subtracts the scalar value from the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> and returns the result as a <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code></p><p>Multiplies the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> and scalar value and returns the result as a <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code></p><p>Divides the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> by the given scalar value and returns the result as a <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code></p>
           </div></section>
-          <section class="m-doc-details" id="gac8b8196b25d2f12c2c4f012626bee6b4"><div>
+          <section class="m-doc-details" id="ga783e2d55d77a5b3fd07d8bd836ec230c"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gac8b8196b25d2f12c2c4f012626bee6b4" class="m-doc-self">cnx_ratio_add</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Ratio_8h.html">&lt;include/Cnx/Ratio.h&gt;</a></div>
-            </h3>
-            <p>Adds the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">lhs</td>
-                  <td>- The left-hand ratio to add</td>
-                </tr>
-                <tr>
-                  <td>rhs</td>
-                  <td>- The right-hand ratio to add</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>The sum of <code>lhs</code> and <code>rhs</code> as a <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> in simplest form</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Adds the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s, returning the result as a new <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> in simplest form</p>
-          </div></section>
-          <section class="m-doc-details" id="ga022901fdeadd8039e56aa20418285a43"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga022901fdeadd8039e56aa20418285a43" class="m-doc-self">cnx_ratio_subtract</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Ratio_8h.html">&lt;include/Cnx/Ratio.h&gt;</a></div>
-            </h3>
-            <p>Subtracts the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">lhs</td>
-                  <td>- The left-hand ratio to subtract from</td>
-                </tr>
-                <tr>
-                  <td>rhs</td>
-                  <td>- The right-hand ratio to subtract</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>The difference of <code>lhs</code> and <code>rhs</code> as a <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> in simplest form</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Subtracts <code>rhs</code> from <code>lhs</code>, returning the result as a new <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> in simplest form</p>
-          </div></section>
-          <section class="m-doc-details" id="gae128b084492749f983da51c16230ab46"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gae128b084492749f983da51c16230ab46" class="m-doc-self">cnx_ratio_multiply</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Ratio_8h.html">&lt;include/Cnx/Ratio.h&gt;</a></div>
-            </h3>
-            <p>Multiplies the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">lhs</td>
-                  <td>- The left-hand ratio to multiply</td>
-                </tr>
-                <tr>
-                  <td>rhs</td>
-                  <td>- The right-hand ratio to multiply</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>The product of <code>lhs</code> and <code>rhs</code> as a <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> in simplest form</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Multiplies the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s, returning the result as a new <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> in simplest form</p>
-          </div></section>
-          <section class="m-doc-details" id="ga6fb470d2003af1faa748da05e171aeb9"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga6fb470d2003af1faa748da05e171aeb9" class="m-doc-self">cnx_ratio_divide</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Ratio_8h.html">&lt;include/Cnx/Ratio.h&gt;</a></div>
-            </h3>
-            <p>Divides the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">lhs</td>
-                  <td>- The <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> dividend</td>
-                </tr>
-                <tr>
-                  <td>rhs</td>
-                  <td>- The <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> divisor</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>The quotient of <code>lhs</code> and <code>rhs</code> as a <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> in simplest form</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Divides <code>lhs</code> by <code>rhs</code>, returning the result as a new <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> in simplest form</p>
-          </div></section>
-          <section class="m-doc-details" id="gafe2dd187b0b07f06a3f9c429d61581e0"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gafe2dd187b0b07f06a3f9c429d61581e0" class="m-doc-self">cnx_ratio_equal</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Ratio_8h.html">&lt;include/Cnx/Ratio.h&gt;</a></div>
-            </h3>
-            <p>Returns whether the two <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s are equal.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">lhs</td>
-                  <td>- The left-hand ratio to check for equality</td>
-                </tr>
-                <tr>
-                  <td>rhs</td>
-                  <td>- The right-hand ratio to check for equality</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>Whether the given ratios are equal</td>
-                </tr>
-              </tfoot>
-            </table>
-<aside class="m-note m-info"><h4>Note</h4><p>This assumes that the given ratios are in simplest form. It does not check if either ratio has not been reduced.</p></aside>
-          </div></section>
-          <section class="m-doc-details" id="ga4603614010ac0d28f509232d316f82ea"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga4603614010ac0d28f509232d316f82ea" class="m-doc-self">cnx_ratio_not_equal</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Ratio_8h.html">&lt;include/Cnx/Ratio.h&gt;</a></div>
-            </h3>
-            <p>Returns whether the two <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code>s are <strong>not</strong> equal.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">lhs</td>
-                  <td>- The left-hand ratio to check for inequality</td>
-                </tr>
-                <tr>
-                  <td>rhs</td>
-                  <td>- The right-hand ratio to check for inequality</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>Whether the given ratios are <strong>not</strong> equal</td>
-                </tr>
-              </tfoot>
-            </table>
-<aside class="m-note m-info"><h4>Note</h4><p>This assumes that the given ratios are in simplest form. It does not check if either ratio has not been reduced.</p></aside>
-          </div></section>
-          <section class="m-doc-details" id="ga9e56b811720db1e96b8854f00ee0cc0f"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga9e56b811720db1e96b8854f00ee0cc0f" class="m-doc-self">cnx_ratio_less_than</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Ratio_8h.html">&lt;include/Cnx/Ratio.h&gt;</a></div>
-            </h3>
-            <p>Returns whether the left-hand <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> is less than the other.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">lhs</td>
-                  <td>- The ratio to compare</td>
-                </tr>
-                <tr>
-                  <td>rhs</td>
-                  <td>- The ratio to compare against</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>Whether <code>lhs</code> is less than <code>rhs</code></td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="ga85753f379619adae7dedd65ddd27fee6"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga85753f379619adae7dedd65ddd27fee6" class="m-doc-self">cnx_ratio_less_than_or_equal</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Ratio_8h.html">&lt;include/Cnx/Ratio.h&gt;</a></div>
-            </h3>
-            <p>Returns whether the left-hand <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> is less than or equal to the other.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">lhs</td>
-                  <td>- The ratio to compare</td>
-                </tr>
-                <tr>
-                  <td>rhs</td>
-                  <td>- The ratio to compare against</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>Whether <code>lhs</code> is less than or equal to <code>rhs</code></td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="ga5528f686b0de33c05bd868b6e4ce954a"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga5528f686b0de33c05bd868b6e4ce954a" class="m-doc-self">cnx_ratio_greater_than</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Ratio_8h.html">&lt;include/Cnx/Ratio.h&gt;</a></div>
-            </h3>
-            <p>Returns whether the left-hand <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> is greater than the other.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">lhs</td>
-                  <td>- The ratio to compare</td>
-                </tr>
-                <tr>
-                  <td>rhs</td>
-                  <td>- The ratio to compare against</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>Whether <code>lhs</code> is greater than <code>rhs</code></td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="ga8f65262fdd13a7e765b9e7dac08c0011"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga8f65262fdd13a7e765b9e7dac08c0011" class="m-doc-self">cnx_ratio_greater_than_or_equal</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Ratio_8h.html">&lt;include/Cnx/Ratio.h&gt;</a></div>
-            </h3>
-            <p>Returns whether the left-hand <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> is greater than or equal to the other.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">lhs</td>
-                  <td>- The ratio to compare</td>
-                </tr>
-                <tr>
-                  <td>rhs</td>
-                  <td>- The ratio to compare against</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>Whether <code>lhs</code> is greater than or equal to <code>rhs</code></td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="ga6126b88bd2db35463e78ee3e16711b6d"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="BasicTypes_8h.html#ac0f09b727f79ee723c399162a0f8e8b2" class="m-doc">CnxCompare</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga6126b88bd2db35463e78ee3e16711b6d" class="m-doc-self">cnx_ratio_compare</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> lhs,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a> rhs)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Ratio_8h.html">&lt;include/Cnx/Ratio.h&gt;</a></div>
-            </h3>
-            <p>Returns the comparison of the left-hand <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> to the other.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">lhs</td>
-                  <td>- The ratio to compare</td>
-                </tr>
-                <tr>
-                  <td>rhs</td>
-                  <td>- The ratio to compare against</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>the comparison of <code>lhs</code> to <code>rhs</code></td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="ga1483d1def0aa492eb06c26eddb8b3960"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga1483d1def0aa492eb06c26eddb8b3960" class="m-doc-self">CnxOption</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a>)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Ratio_8h.html">&lt;include/Cnx/Ratio.h&gt;</a></div>
-            </h3>
-            <p>Returns the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> as a scalar value.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td><code><a href="group__cnx__option.html#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some(i64, value)</a></code> if <code>ratio</code> can be represented as a scalar, <code><a href="group__cnx__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(i64)</a></code> otherwise</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Returns the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> as a scalar value (<code><a href="group__cnx__option.html#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some(i64, value)</a></code>), if it can be exactly represented as one, otherwise returns <code><a href="group__cnx__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(i64)</a></code></p><p>Returns the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> as a scalar value.</p><p>Performs the checked division of <code>left</code> and <code>right</code></p><p>Performs the checked multiplication of <code>left</code> and <code>right</code></p><p>Performs the checked subtraction of <code>right</code> from <code>left</code></p><p>Performs the checked addition of <code>left</code> and <code>right</code>, returning <code><a href="group__cnx__option.html#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some(i64, result)</a></code> if overflow did <strong>not</strong> occur or <code><a href="group__cnx__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(i64)</a></code> if overflow occurred</p><p>Performs the checked subtraction of <code>right</code> from <code>left</code>, returning <code><a href="group__cnx__option.html#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some(i64, result)</a></code> if overflow did <strong>not</strong> occur or <code><a href="group__cnx__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(i64)</a></code> if overflow occurred</p><p>Performs the checked multiplication of <code>left</code> and <code>right</code>, returning <code><a href="group__cnx__option.html#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some(i64, result)</a></code> if overflow did <strong>not</strong> occur or <code><a href="group__cnx__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(i64)</a></code> if overflow occurred</p><p>Performs the checked division of <code>left</code> and <code>right</code>, returning <code><a href="group__cnx__option.html#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some(i64, result)</a></code> if overflow did <strong>not</strong> occur or <code><a href="group__cnx__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(i64)</a></code> if overflow occurred</p>
-          </div></section>
-          <section class="m-doc-details" id="ga6c771d6ec95f1edb6aecdaebbfd81bfd"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga94dab5770726ccbef8c7d026cfbdf8e5" class="m-doc">f64</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga6c771d6ec95f1edb6aecdaebbfd81bfd" class="m-doc-self">cnx_ratio_as_scalar</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> ratio)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Ratio_8h.html">&lt;include/Cnx/Ratio.h&gt;</a></div>
-            </h3>
-            <p>Returns the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> as a scalar value.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">ratio</td>
-                  <td>- The <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> to convert to a scalar</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><code>ratio</code> as a scalar value</td>
-                </tr>
-              </tfoot>
-            </table>
-<aside class="m-note m-info"><h4>Note</h4><p>The resulting scalar may not be an exact match to the ratio represented by <code>ratio</code> due to loss due to floating-point precision</p></aside>
-          </div></section>
-          <section class="m-doc-details" id="ga8368bae667e7c749b5e58a67bffb4f9a"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga8368bae667e7c749b5e58a67bffb4f9a" class="m-doc-self">cnx_ratio_add_scalar</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> ratio,
-              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> scalar)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Ratio_8h.html">&lt;include/Cnx/Ratio.h&gt;</a></div>
-            </h3>
-            <p>Adds the given ratio and scalar value.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">ratio</td>
-                  <td>- The <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> to add to</td>
-                </tr>
-                <tr>
-                  <td>scalar</td>
-                  <td>- The scalar value to add</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>the <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> resulting from the addition</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Adds the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> and scalar value and returns the result as a <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code></p>
-          </div></section>
-          <section class="m-doc-details" id="ga51b3ab2d1fe539d4b1b92ede93f204c3"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga51b3ab2d1fe539d4b1b92ede93f204c3" class="m-doc-self">cnx_ratio_subtract_scalar</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> ratio,
-              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> scalar)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Ratio_8h.html">&lt;include/Cnx/Ratio.h&gt;</a></div>
-            </h3>
-            <p>Subtracts the given scalar value from the given ratio.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">ratio</td>
-                  <td>- The <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> to subtract from</td>
-                </tr>
-                <tr>
-                  <td>scalar</td>
-                  <td>- The scalar value to subtract</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>the <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> resulting from the subtraction</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Subtracts the scalar value from the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> and returns the result as a <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code></p>
-          </div></section>
-          <section class="m-doc-details" id="ga629cfa5a314863b114bf5cc5e481e788"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga629cfa5a314863b114bf5cc5e481e788" class="m-doc-self">cnx_ratio_multiply_scalar</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> ratio,
-              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> scalar)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Ratio_8h.html">&lt;include/Cnx/Ratio.h&gt;</a></div>
-            </h3>
-            <p>Multiplies the given ratio and scalar value.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">ratio</td>
-                  <td>- The <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> to multiply with</td>
-                </tr>
-                <tr>
-                  <td>scalar</td>
-                  <td>- The scalar value to multiply with</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>the <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> resulting from the multiplication</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Multiplies the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> and scalar value and returns the result as a <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code></p>
-          </div></section>
-          <section class="m-doc-details" id="ga2a691408b93e569a27c162550122728b"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga2a691408b93e569a27c162550122728b" class="m-doc-self">cnx_ratio_divide_scalar</a>(</span><span class="m-doc-wrap"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> ratio,
-              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> scalar)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Ratio_8h.html">&lt;include/Cnx/Ratio.h&gt;</a></div>
-            </h3>
-            <p>Divides the given ratio by the given scalar value.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">ratio</td>
-                  <td>- The <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> dividend</td>
-                </tr>
-                <tr>
-                  <td>scalar</td>
-                  <td>- The scalar value divisor</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>the <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> resulting from the division</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Divides the given <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> by the given scalar value and returns the result as a <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code></p>
-          </div></section>
-          <section class="m-doc-details" id="ga577e5fe1a7f0645be7014b2f4e789af4"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga577e5fe1a7f0645be7014b2f4e789af4" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
-              <a href="structCnxRatio.html" class="m-doc">CnxRatio</a>,
-              <a href="Ratio_8h.html#ac434ccbba6d2017d8b72fb590d74158c" class="m-doc">cnx_<wbr />ratio_<wbr />format</a>,
-              <a href="Ratio_8h.html#a2a4b66f26b94b6b9ce1c34bb9343377d" class="m-doc">cnx_<wbr />ratio_<wbr />format_<wbr />with_<wbr />allocator</a>)</span></span>
+              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga783e2d55d77a5b3fd07d8bd836ec230c" class="m-doc-self">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a>) static ImplTraitFor(CnxFormat</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Ratio_8h.html">&lt;include/Cnx/Ratio.h&gt;</a></div>
             </h3>
             <p>Implement <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code></p>
@@ -985,7 +404,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C23. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+). Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

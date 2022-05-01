@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Threading and Synchronization module | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C23</title>
+  <title>Threading and Synchronization module | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -13,7 +13,7 @@
 <header><nav id="navigation">
   <div class="m-container">
     <div class="m-row">
-      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C23</span></a>
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</span></a>
       <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
         <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
           <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
@@ -194,152 +194,21 @@
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"> <a href="#ga54e3ad635869d24a5ec6fcdcab68bba7" class="m-doc">CnxResult</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>)</span>
+              <span class="m-doc-wrap-bumper"> <a href="#ga7a15853736ad8bc5a9a0227104bd011c" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#gafe19720a962dabdfb36a17b7ca5e76a9" class="m-doc">nodiscard</a>)</span>
             </dt>
             <dd>Creates a new mutex.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#ga9f2e961411cc904758218920bd230e33" class="m-doc">cnx_basic_mutex_init</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span>
-            </dt>
-            <dd>Initializes the mutex pointed to by <code>mutex</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#ga737eaf1efd0b5a006464ecbc80400b6e" class="m-doc">cnx_basic_mutex_lock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span>
-            </dt>
-            <dd>Unconditionally locks the mutex pointed to by <code>mutex</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="#ga67eb8baadeb17c8c95af7619d556d0d6" class="m-doc">cnx_basic_mutex_try_lock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span>
-            </dt>
-            <dd>Attempts to lock the mutex pointed to by <code>mutex</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#ga1f866719154fdc67b62e3480d5daecc3" class="m-doc">cnx_basic_mutex_unlock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span>
-            </dt>
-            <dd>Unlocks the mutex pointed to by <code>mutex</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#gacb95e384e4610c53a1e7306762d60d18" class="m-doc">cnx_basic_mutex_free</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span>
-            </dt>
-            <dd>Destroys the mutex pointed to by <code>mutex</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"> <a href="#ga1c64da2cd106a9834711edcb78795d8e" class="m-doc">CnxResult</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>)</span>
-            </dt>
-            <dd>Creates a new recursive mutex.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#ga111e22346f31efee2991b0177dc669ff" class="m-doc">cnx_recursive_basic_mutex_init</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>*restrict mutex)</span>
-            </dt>
-            <dd>Initializes the recursive mutex pointed to by <code>mutex</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#ga54fec93d33fd504bd5e5a2f48e21698b" class="m-doc">cnx_recursive_basic_mutex_lock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>*restrict mutex)</span>
-            </dt>
-            <dd>Unconditionally locks the recursive mutex pointed to by <code>mutex</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="#ga2ee4629a90d284f3632a733d44543b72" class="m-doc">cnx_recursive_basic_mutex_try_lock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>*restrict mutex)</span>
-            </dt>
-            <dd>Attempts to lock the recursive mutex pointed to by <code>mutex</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#gad511770dd62cea2d3568c3e3e237f2d3" class="m-doc">cnx_recursive_basic_mutex_unlock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>*restrict mutex)</span>
-            </dt>
-            <dd>Unlocks the recursive mutex pointed to by <code>mutex</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#gad96f610552732378098b68410f55168f" class="m-doc">cnx_recursive_basic_mutex_free</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>*restrict mutex)</span>
-            </dt>
-            <dd>Destroys the recursive mutex pointed to by <code>mutex</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"> <a href="#ga49e5e647bec4b0c8e74a6e3de9b341af" class="m-doc">CnxResult</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>)</span>
-            </dt>
-            <dd>Creates a new condition variable, returning the result in a <code>CnxResult</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#gada5da787c81d51e6e51fe764569648f6" class="m-doc">cnx_condvar_init</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>*restrict condvar)</span>
+              <span class="m-doc-wrap-bumper"> <a href="#ga455795303ea1f8fab8eb205a0eb1bf4d" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#ga48b8fada710e243661bafc9037e90eb5" class="m-doc">not_<wbr />null</a>(1))</span>
             </dt>
             <dd>Initializes the condition variable pointed to by <code>condvar</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#gafe90488d53e90489cf200adae969f8f7" class="m-doc">cnx_condvar_signal</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>*restrict condvar)</span>
-            </dt>
-            <dd>Signals to the first thread waiting on the condition variable pointed to by <code>condvar</code> to wake and continue execution.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#ga6904f5ff9c4cdc6666ae306409435856" class="m-doc">cnx_condvar_broadcast</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>*restrict condvar)</span>
-            </dt>
-            <dd>Signals to every thread waiting on the condition variable pointed to by <code>condvar</code> to wake and continue execution.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#ga1b3487351e4a43e4335f143e00af789b" class="m-doc">cnx_condvar_wait</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>*restrict condvar,
-              <a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span>
-            </dt>
-            <dd>Blocks on the condition variable pointed to by <code>condvar</code> until the thread is signalled by it.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#ga37ec9ea1dd0c390286646a53d0c443db" class="m-doc">cnx_condvar_wait_for</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>*restrict condvar,
-              <a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex,
-              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> to_wait) cnx_disable_if(!mutex</span>
-            </dt>
-            <dd>Blocks on the condition variable pointed to by <code>condvar</code> until the thread is signalled by it, or <code>to_wait</code> time has elapsed.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#ga1b8781c46dc590e4a8022d0c5eaff07e" class="m-doc">cnx_condvar_free</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>*restrict condvar)</span>
-            </dt>
-            <dd>Destroys the condition variable pointed to by <code>condvar</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#ga21b3fa91915327966f4106965a3ee6aa" class="m-doc">cnx_execute_once</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga1cfcfc8c9dc05f7b3749b4b4723fcbf6" class="m-doc">CnxOnceFlag</a>*restrict flag,
-              void(*)(void) function) cnx_disable_if(!flag</span>
+              <span class="m-doc-wrap-bumper"> <a href="#gac6451e0d1bc8ab7a65a8f3aab3f6850e" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#ga48b8fada710e243661bafc9037e90eb5" class="m-doc">not_<wbr />null</a>(1, 2)) CnxResult cnx_execute_once(CnxOnceFlag *restrict flag</span>
             </dt>
             <dd>Executes the given function exactly once.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="BasicTypes_8h.html#ac0f09b727f79ee723c399162a0f8e8b2" class="m-doc">CnxCompare</a> <a href="#gae28135ada625c230b44c279e58ee2d00" class="m-doc">cnx_thread_id_compare</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> lhs,
-              <a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> rhs)</span>
-            </dt>
-            <dd>Compares the two <code>CnxThreadID</code>s.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="#ga7f8624cd0b866c8e5524268192fca3d2" class="m-doc">cnx_thread_id_equal</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> lhs,
-              <a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> rhs)</span>
-            </dt>
-            <dd>Returns whether the two <code>CnxThreadID</code>s are equal.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="#ga30fed92c0c18e2d8af1ad5eda9452f21" class="m-doc">cnx_thread_id_less_than</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> lhs,
-              <a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> rhs)</span>
-            </dt>
-            <dd>Returns whether the first <code>CnxThreadID</code> is less than the second.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="#ga41d174890bbaf5c5e0d893f12759ef96" class="m-doc">cnx_thread_id_less_than_or_equal</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> lhs,
-              <a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> rhs)</span>
-            </dt>
-            <dd>Returns whether the first <code>CnxThreadID</code> is less than or equal to the second.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="#ga3ca7a4e4e85a4911f1481d85850a8cdc" class="m-doc">cnx_thread_id_greater_than</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> lhs,
-              <a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> rhs)</span>
-            </dt>
-            <dd>Returns whether the first <code>CnxThreadID</code> is greater than the second.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="#gacfacc33052f20eacadfac05407019693" class="m-doc">cnx_thread_id_greater_than_or_equal</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> lhs,
-              <a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> rhs)</span>
-            </dt>
-            <dd>Returns whether the first <code>CnxThreadID</code> is greater than or equal to the second.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">typedef <a href="#ga936f6cfd4790cc5b6494ff85f828a176" class="m-doc">Lambda</a>(</span><span class="m-doc-wrap">void) CnxThreadLambda</span>
             </dt>
             <dd>When spawning a new thread, a <code><a href="group__cnx__thread.html#ga936f6cfd4790cc5b6494ff85f828a176" class="m-doc">Lambda(void)</a></code> is used as its startup routine. This typedef allows for receiving that startup routine as a function parameter.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"> <a href="#ga71a412974f017dff1437eabecba2f349" class="m-doc">CnxResult</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>)</span>
-            </dt>
-            <dd>Spawns a new thread, with the given <code>CnxThreadLambda</code> as its startup routine.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#gad4e64d064923b06b7bc960b7ee62748d" class="m-doc">cnx_thread_init</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>*restrict thread,
-              CnxThreadLambda lambda)</span>
-            </dt>
-            <dd>Spawns a new thread, with the given <code>CnxThreadLambda</code> as its startup routine.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="#ga53e9371a6d1a508cef4db81ff2c0c9e6" class="m-doc">cnx_thread_is_null</a>(</span><span class="m-doc-wrap">const <a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>*restrict thread)</span>
-            </dt>
-            <dd>Checks if the given thread handle is null (if it has been initialized)</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> <a href="#ga2795e7062779da1014cdaaaeb683ece8" class="m-doc">cnx_thread_get_id</a>(</span><span class="m-doc-wrap">const <a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>*restrict thread)</span>
-            </dt>
-            <dd>Gets the ID of the current thread.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#ga0d338b16082b0ab1c7ef4cf305d63e15" class="m-doc">cnx_thread_join</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>*restrict thread)</span>
-            </dt>
-            <dd>Joins the given thread, blocking until its execution has completed.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#ga296a55c679791c6d709a0f4807f02a72" class="m-doc">cnx_thread_detach</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>*restrict thread)</span>
-            </dt>
-            <dd>Separates execution of the thread associated with the given thread handle from the handle.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#ga3992587aed2a44de27059dea97581aa7" class="m-doc">cnx_thread_free</a>(</span><span class="m-doc-wrap">void* thread)</span>
-            </dt>
-            <dd>Frees the given thread, blocking until it&#x27;s joined or joining fails.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#gad30116a03d4c7058de559830de31f08e" class="m-doc">cnx_this_thread_yield</a>(</span><span class="m-doc-wrap">void)</span>
             </dt>
@@ -349,58 +218,10 @@
             </dt>
             <dd>Yields execution of the current thread until at least the given <code>duration</code> of time has passed.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> <a href="#ga776d207d4d7e5365e101c4037e428ef8" class="m-doc">cnx_this_thread_get_id</a>(</span><span class="m-doc-wrap">void)</span>
-            </dt>
-            <dd>Returns the ID of the current thread.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#ga03d41fb534abcbf8d7b1819495da3767" class="m-doc">cnx_stop_token_request_stop</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a>*restrict token)</span>
-            </dt>
-            <dd>Requests the thread associated with the given stop token to end execution.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="#ga71a36a29ecdcb9c481ef836846877a3c" class="m-doc">cnx_stop_token_stop_requested</a>(</span><span class="m-doc-wrap">const <a href="group__cnx__thread.html#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a>*restrict token)</span>
-            </dt>
-            <dd>Returns whether the thread associated with the given stop token has been requested to end execution.</dd>
-            <dt>
               <span class="m-doc-wrap-bumper">typedef <a href="#ga8eadbd9e20ee4703102361fe32252819" class="m-doc">Lambda</a>(</span><span class="m-doc-wrap">void,
               const <a href="group__cnx__thread.html#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a>*) CnxJThreadLambda</span>
             </dt>
             <dd>When spawning a new <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, a <code><a href="group__cnx__thread.html#ga8eadbd9e20ee4703102361fe32252819" class="m-doc">Lambda(void, const CnxStopToken*)</a></code> is used as its startup routine. This typedef allows for receiving that startup routine as a function parameter.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"> <a href="#ga7ac0be34d2e51534c1688537e9377d90" class="m-doc">CnxResult</a>(</span><span class="m-doc-wrap"><a href="structCnxJThread.html" class="m-doc">CnxJThread</a>)</span>
-            </dt>
-            <dd>Spawns a new <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, with the given <code>CnxJThreadLambda</code> as its startup routine.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#ga6c93f8534a9296769aba9c481ca416f6" class="m-doc">cnx_jthread_init</a>(</span><span class="m-doc-wrap"><a href="structCnxJThread.html" class="m-doc">CnxJThread</a>*restrict thread,
-              CnxJThreadLambda lambda)</span>
-            </dt>
-            <dd>Spawns a new <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, with the given <code>CnxJThreadLambda</code> as its startup routine.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#gacedc83bdc308bc4201c01254c4c890f6" class="m-doc">cnx_jthread_join</a>(</span><span class="m-doc-wrap"><a href="structCnxJThread.html" class="m-doc">CnxJThread</a>*restrict thread)</span>
-            </dt>
-            <dd>Joins the given <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, blocking until its execution has completed.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#gac175e5c3ee12f5b78c62f5d878518794" class="m-doc">cnx_jthread_free</a>(</span><span class="m-doc-wrap">void* thread)</span>
-            </dt>
-            <dd>Frees the given <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, blocking until it&#x27;s joined or joining fails.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"> <a href="#ga9cc953a1b0c6349efa957bfd32720984" class="m-doc">CnxResult</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c0e7bcf640c8205c50186c5a1c6be95" class="m-doc">CnxTLSKey</a>) cnx_tls_new(void *data</span>
-            </dt>
-            <dd>Creates a new thread-local storage.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#gab5d58163eaefda62ca1c40e82c991ddc" class="m-doc">cnx_tls_init</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c0e7bcf640c8205c50186c5a1c6be95" class="m-doc">CnxTLSKey</a>*restrict key,
-              void* data,
-              void(__CNX_TLS_DESTRUCTOR_TAG*destructor)(void*))</span>
-            </dt>
-            <dd>Initializes a thread-local storage and associates it with the key pointed to by <code>key</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">void* <a href="#ga4a27ebe62718f7cef560c4320fffbd3e" class="m-doc">cnx_tls_get</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c0e7bcf640c8205c50186c5a1c6be95" class="m-doc">CnxTLSKey</a> key)</span>
-            </dt>
-            <dd>Retrieves the current value of the thread-local storage associated with <code>key</code></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#gadb8a3ed6de58bca8b48385f27caf24ec" class="m-doc">cnx_tls_set</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c0e7bcf640c8205c50186c5a1c6be95" class="m-doc">CnxTLSKey</a> key,
-              void* data)</span>
-            </dt>
-            <dd>Sets the value of the thread-local storage associated with <code>key</code> to <code>data</code></dd>
           </dl>
         </section>
         <section id="define-members">
@@ -485,9 +306,9 @@
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="ga54e3ad635869d24a5ec6fcdcab68bba7"><div>
+          <section class="m-doc-details" id="ga7a15853736ad8bc5a9a0227104bd011c"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga54e3ad635869d24a5ec6fcdcab68bba7" class="m-doc-self">CnxResult</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>)</span></span>
+              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga7a15853736ad8bc5a9a0227104bd011c" class="m-doc-self">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#gafe19720a962dabdfb36a17b7ca5e76a9" class="m-doc">nodiscard</a>)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
             </h3>
             <p>Creates a new mutex.</p>
@@ -499,203 +320,14 @@
                 </tr>
               </tfoot>
             </table>
-<p>Creating a mutex can fail, depending on memory and operating system level constraints. If creating the mutex is successful, returns a <code>CnxBascicMutex</code>, otherwise returns an error.</p>
+<p>Sets the value of the thread-local storage associated with <code>key</code> to <code>data</code></p><p>Retrieves the current value of the thread-local storage associated with <code>key</code></p><p>Initializes a thread-local storage and associates it with the key pointed to by <code>key</code></p><p>Creates a new thread-local storage.</p><p>Joins the given <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, blocking until its execution has completed.</p><p>Spawns a new <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, with the given <code>CnxJThreadLambda</code> as its startup routine.</p><p>Returns whether the thread associated with the given stop token has been requested to end execution.</p><p>Returns the ID of the current thread.</p><p>Separates execution of the thread associated with the given thread handle from the handle.</p><p>Joins the given thread, blocking until its execution has completed.</p><p>Gets the ID of the current thread.</p><p>Checks if the given thread handle is null (if it has been initialized)</p><p>Spawns a new thread, with the given <code>CnxThreadLambda</code> as its startup routine.</p><p>Returns whether the first <code>CnxThreadID</code> is greater than or equal to the second.</p><p>Returns whether the first <code>CnxThreadID</code> is greater than the second.</p><p>Returns whether the first <code>CnxThreadID</code> is less than or equal to the second.</p><p>Returns whether the first <code>CnxThreadID</code> is less than the second.</p><p>Returns whether the two <code>CnxThreadID</code>s are equal.</p><p>Compares the two <code>CnxThreadID</code>s.</p><p>Destroys the condition variable pointed to by <code>condvar</code></p><p>Blocks on the condition variable pointed to by <code>condvar</code> until the thread is signalled by it, or <code>to_wait</code> time has elapsed.</p><p>Blocks on the condition variable pointed to by <code>condvar</code> until the thread is signalled by it.</p><p>Signals to every thread waiting on the condition variable pointed to by <code>condvar</code> to wake and continue execution.</p><p>Signals to the first thread waiting on the condition variable pointed to by <code>condvar</code> to wake and continue execution.</p><p>Creates a new condition variable, returning the result in a <code>CnxResult</code></p><p>Destroys the recursive mutex pointed to by <code>mutex</code></p><p>Unlocks the recursive mutex pointed to by <code>mutex</code></p><p>Attempts to lock the recursive mutex pointed to by <code>mutex</code></p><p>Unconditionally locks the recursive mutex pointed to by <code>mutex</code></p><p>Initializes the recursive mutex pointed to by <code>mutex</code></p><p>Creates a new recursive mutex.</p><p>Destroys the mutex pointed to by <code>mutex</code></p><p>Unlocks the mutex pointed to by <code>mutex</code></p><p>Attempts to lock the mutex pointed to by <code>mutex</code></p><p>Unconditionally locks the mutex pointed to by <code>mutex</code></p><p>Initializes the mutex pointed to by <code>mutex</code></p><p>Creating a mutex can fail, depending on memory and operating system level constraints. If creating the mutex is successful, returns a <code>CnxBascicMutex</code>, otherwise returns an error.</p><p>Initializing a mutex can fail, depending on memory and operating system level constraints. If initializing the mutex is successful, returns <code>Ok</code>, otherwise returns an error.</p><p>Locking a mutex can fail (for example, if it&#x27;s already locked on the calling thread). If locking the mutex is successful, returns <code>Ok</code>, otherwise returns an error.</p><p>If locking the mutex is successful, return <code>true</code>. 
+Unlocking a mutex can fail (for example, if it&#x27;s already unlocked). If unlocking the mutex is successful, returns <code>Ok</code>, otherwise returns an error.</p><p>Destroying a mutex can fail (for example, it it&#x27;s still in use by other threads). If destroying the mutex is successful, returns <code>Ok</code>, otherwise returns an error.</p><p>Creating a mutex can fail, depending on memory and operating system level constraints. If creating the recursive mutex is successful, returns a <code>CnxRecursiveBascicMutex</code>, otherwise returns an error. 
+Locking a mutex can fail. If locking the recursive mutex is successful, returns <code>Ok</code>, otherwise returns an error.</p><p>If locking the recursive mutex is successful, return <code>true</code>.</p><p>Unlocking a mutex can fail (for example, if it&#x27;s already unlocked). If unlocking the recursive mutex is successful, returns <code>Ok</code>, otherwise returns an error. 
+Destroying a mutex can fail (for example, it it&#x27;s still in use by other threads). If destroying the recursive mutex is successful, returns <code>Ok</code>, otherwise returns an error.</p><p>Creating a condition variable can fail, depending on memory and operating system level constraints. If creating the condition variable is successful, returns a <code>CnxCondvar</code>, otherwise returns an error</p><p>Signalling with a condition variable can fail. If signalling with the condition variable is successful, returns <code>Ok</code>, otherwise returns an error.</p><p>Unlocks the mutex pointed to by <code>mutex</code> and blocks on the condition variable pointed to by <code>condvar</code> until the thread is signalled by it. The mutex is re-locked again before the function returns. The mutex must be locked by the calling thread prior to calling this.</p><p>Waiting on a condition variable can fail. If waiting on the condition variable is successful, returns <code>Ok</code>, otherwise returns an error.</p><p>Unlocks the mutex pointed to by <code>mutex</code> and blocks on the condition variable pointed to by <code>condvar</code> until the thread is signalled by it, or <code>to_wait</code> time has elapsed. The mutex is re-locked again before the function returns. The mutex must be locked by the calling thread prior to calling this.</p><p>Waiting on a condition variable can fail. Returns <code>Ok</code> if a signal is received from the condition variable before <code>to_wait</code> has elapsed, otherwise returns an error.</p><p>Destroying a condition variable can fail (for example, if its still in use by another thread). If destroying the condition variable is successful, returns <code>Ok</code>, otherwise, returns an error.</p><p>Spawns a new thread, with the given <code>CnxThreadLambda</code> as its startup routine. The given lambda will be automatically freed after the thread&#x27;s execution completes.</p><p>Spawning a thread can fail due to memory or operating system level constraints. If spawning the thread is successful, returns a handle to the spawned thread. Otherwise, returns an error.</p><p>Spawns a new thread, with the given <code>CnxThreadLambda</code> as its startup routine. The given lambda will be automatically freed after the thread&#x27;s execution completes.</p><p>Spawning a thread can fail due to memory or operating system level constraints. If spawning the thread is successful, the <code>CnxThread</code> pointed to by <code>thread</code> will be initialized with the handle to the spawned thread, and <code>Ok</code> will be returned. Otherwise, returns an error.</p><p>Joining a thread can fail. Returns <code>Ok</code> if joining the thread is successful. Otherwise, returns an error.</p><p>Separates execution of the thread associated with the given handle from that handle. When successfully detached, the associated thread will continue execution independently and will no longer be associated with any handle.</p><p>Detaching a thread can fail. Returns <code>Ok</code> if detaching the thread is successful. Otherwise, returns an error.</p><p>Spawns a new thread, with the given <code>CnxJThreadLambda</code> as its startup routine. The given lambda will be automatically freed after the thread&#x27;s execution completes.</p><p>Spawning a thread can fail due to memory or operating system level constraints. If spawning the thread is successful, returns a handle to the spawned thread. Otherwise, returns an error.</p><p>Spawns a new thread, with the given <code>CnxJThreadLambda</code> as its startup routine. The given lambda will be automatically freed after the thread&#x27;s execution completes.</p><p>Spawning a thread can fail due to memory or operating system level constraints. If spawning the thread is successful, the <code>CnxThread</code> pointed to by <code>thread</code> will be initialized with the handle to the spawned thread, and <code>Ok</code> will be returned. Otherwise, returns an error.</p><p>Creates a new thread-local storage that will be destroyed by the given <code>destructor</code> function at thread exit.</p><p>Creating a thread-local storage can fail. If creation is successful, the storage will be set to <code>data</code> and the <code>CnxTLSKey</code> associated with the storage will be returned. Otherwise, an error will be returned.</p><p>Initializes a new thread-local storage that will be destroyed by the given <code>destructor</code> function at thread exit, and associates the thread-local storage with the key pointed to by <code>key</code>.</p><p>Creating a thread-local storage can fail. If creation is successful, the storage will be set to <code>data</code> and the <code>CnxTLSKey</code> associated with the storage will be returned. Otherwise, an error will be returned.</p><p>If key is a key to a valid TLS, returns the current value of the TLS, otherwise returns a <code>nullptr</code></p><p>Setting the value of a thread-local storage can fail. If setting the thread-local storage is successful, returns <code>Ok</code>. Otherwise, an error is returned</p>
           </div></section>
-          <section class="m-doc-details" id="ga9f2e961411cc904758218920bd230e33"><div>
+          <section class="m-doc-details" id="ga455795303ea1f8fab8eb205a0eb1bf4d"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga9f2e961411cc904758218920bd230e33" class="m-doc-self">cnx_basic_mutex_init</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Initializes the mutex pointed to by <code>mutex</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td><code>Ok</code> if successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Initializing a mutex can fail, depending on memory and operating system level constraints. If initializing the mutex is successful, returns <code>Ok</code>, otherwise returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga737eaf1efd0b5a006464ecbc80400b6e"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga737eaf1efd0b5a006464ecbc80400b6e" class="m-doc-self">cnx_basic_mutex_lock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Unconditionally locks the mutex pointed to by <code>mutex</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td><code>Ok</code> if successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Locking a mutex can fail (for example, if it&#x27;s already locked on the calling thread). If locking the mutex is successful, returns <code>Ok</code>, otherwise returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga67eb8baadeb17c8c95af7619d556d0d6"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga67eb8baadeb17c8c95af7619d556d0d6" class="m-doc-self">cnx_basic_mutex_try_lock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Attempts to lock the mutex pointed to by <code>mutex</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td><code>true</code> if successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>If locking the mutex is successful, return <code>true</code>.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga1f866719154fdc67b62e3480d5daecc3"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga1f866719154fdc67b62e3480d5daecc3" class="m-doc-self">cnx_basic_mutex_unlock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Unlocks the mutex pointed to by <code>mutex</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td><code>Ok</code> if successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Unlocking a mutex can fail (for example, if it&#x27;s already unlocked). If unlocking the mutex is successful, returns <code>Ok</code>, otherwise returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="gacb95e384e4610c53a1e7306762d60d18"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gacb95e384e4610c53a1e7306762d60d18" class="m-doc-self">cnx_basic_mutex_free</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Destroys the mutex pointed to by <code>mutex</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td><code>Ok</code> if successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Destroying a mutex can fail (for example, it it&#x27;s still in use by other threads). If destroying the mutex is successful, returns <code>Ok</code>, otherwise returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga1c64da2cd106a9834711edcb78795d8e"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga1c64da2cd106a9834711edcb78795d8e" class="m-doc-self">CnxResult</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Creates a new recursive mutex.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td>A <code>CnxRecursiveBasicMutex</code> if successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Creating a mutex can fail, depending on memory and operating system level constraints. If creating the recursive mutex is successful, returns a <code>CnxRecursiveBascicMutex</code>, otherwise returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga111e22346f31efee2991b0177dc669ff"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga111e22346f31efee2991b0177dc669ff" class="m-doc-self">cnx_recursive_basic_mutex_init</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>*restrict mutex)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Initializes the recursive mutex pointed to by <code>mutex</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td><code>Ok</code> if successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Initializing a mutex can fail, depending on memory and operating system level constraints. If initializing the mutex is successful, returns <code>Ok</code>, otherwise returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga54fec93d33fd504bd5e5a2f48e21698b"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga54fec93d33fd504bd5e5a2f48e21698b" class="m-doc-self">cnx_recursive_basic_mutex_lock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>*restrict mutex)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Unconditionally locks the recursive mutex pointed to by <code>mutex</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td><code>Ok</code> if successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Locking a mutex can fail. If locking the recursive mutex is successful, returns <code>Ok</code>, otherwise returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga2ee4629a90d284f3632a733d44543b72"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga2ee4629a90d284f3632a733d44543b72" class="m-doc-self">cnx_recursive_basic_mutex_try_lock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>*restrict mutex)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Attempts to lock the recursive mutex pointed to by <code>mutex</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td><code>true</code> if successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>If locking the recursive mutex is successful, return <code>true</code>.</p>
-          </div></section>
-          <section class="m-doc-details" id="gad511770dd62cea2d3568c3e3e237f2d3"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gad511770dd62cea2d3568c3e3e237f2d3" class="m-doc-self">cnx_recursive_basic_mutex_unlock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>*restrict mutex)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Unlocks the recursive mutex pointed to by <code>mutex</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td><code>Ok</code> if successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Unlocking a mutex can fail (for example, if it&#x27;s already unlocked). If unlocking the recursive mutex is successful, returns <code>Ok</code>, otherwise returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="gad96f610552732378098b68410f55168f"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gad96f610552732378098b68410f55168f" class="m-doc-self">cnx_recursive_basic_mutex_free</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>*restrict mutex)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Destroys the recursive mutex pointed to by <code>mutex</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td><code>Ok</code> if successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Destroying a mutex can fail (for example, it it&#x27;s still in use by other threads). If destroying the recursive mutex is successful, returns <code>Ok</code>, otherwise returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga49e5e647bec4b0c8e74a6e3de9b341af"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga49e5e647bec4b0c8e74a6e3de9b341af" class="m-doc-self">CnxResult</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Creates a new condition variable, returning the result in a <code>CnxResult</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td>A <code>CnxRecursiveBasicMutex</code> if successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Creating a condition variable can fail, depending on memory and operating system level constraints. If creating the condition variable is successful, returns a <code>CnxCondvar</code>, otherwise returns an error</p>
-          </div></section>
-          <section class="m-doc-details" id="gada5da787c81d51e6e51fe764569648f6"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gada5da787c81d51e6e51fe764569648f6" class="m-doc-self">cnx_condvar_init</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>*restrict condvar)</span></span>
+              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga455795303ea1f8fab8eb205a0eb1bf4d" class="m-doc-self">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#ga48b8fada710e243661bafc9037e90eb5" class="m-doc">not_<wbr />null</a>(1))</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
             </h3>
             <p>Initializes the condition variable pointed to by <code>condvar</code></p>
@@ -707,95 +339,11 @@
                 </tr>
               </tfoot>
             </table>
-<p>Initializing a condition variable can fail, depending on memory and operating system level constraints. If initializing the condition variable is successful, returns <code>Ok</code>, otherwise returns an error</p>
+<p>Frees the given <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, blocking until it&#x27;s joined or joining fails.</p><p>Requests the thread associated with the given stop token to end execution.</p><p>Frees the given thread, blocking until it&#x27;s joined or joining fails.</p><p>Initializing a condition variable can fail, depending on memory and operating system level constraints. If initializing the condition variable is successful, returns <code>Ok</code>, otherwise returns an error</p><p>Initializes the condition variable pointed to by <code>condvar</code></p><p>Frees the given <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, blocking until it&#x27;s joined or joining fails.</p><p>Requests the thread associated with the given stop token to end execution.</p><p>Frees the given thread, blocking until it&#x27;s joined or joining fails.</p><p>Prepends the given character to the beginning of the string.</p><p>Appends the given character to the end of the string.</p><p>Reserves additional capacity in the string This will allocate enough memory to store <strong>at least</strong> <code>new_capacity</code> number of characters,.</p><p>Resizes the string to the new size, null padding or truncating if necessary.</p><p>Erases <code>num_character</code> characters from the string, starting at the given index.</p><p>Erases the character at the given index from the string.</p><p>Shrinks the string so its capacity equals its size.</p><p>Clears the string, filling it with null.</p><p>Fills the string with the given character.</p><p>Formats the given arguments into the specified format string then prints it to <code>stderr</code>, followed by a newline.</p><p>Formats the given arguments into the specified format string then prints it to <code>stdout</code>, followed by a newline.</p><aside class="m-note m-info"><h4>Note</h4><p>this fills to capacity, not size</p></aside><aside class="m-note m-info"><h4>Note</h4><p>this will fill to capacity with null, thus size might increase</p></aside><aside class="m-note m-info"><h4>Note</h4><p>if <code>index + num_characters</code> is out of bounds, this will erase &#x27;size - index&#x27; characters</p></aside><aside class="m-note m-info"><h4>Note</h4><p>if <code>new_capacity &lt; capacity</code> then this will do nothing</p></aside><p>Initializes the condition variable pointed to by <code>condvar</code></p><p>Prepends the given character to the beginning of the string.</p><p>Appends the given character to the end of the string.</p><p>Reserves additional capacity in the string This will allocate enough memory to store <strong>at least</strong> <code>new_capacity</code> number of characters,.</p><p>Resizes the string to the new size, null padding or truncating if necessary.</p><p>Erases <code>num_character</code> characters from the string, starting at the given index.</p><p>Erases the character at the given index from the string.</p><p>Shrinks the string so its capacity equals its size.</p><p>Clears the string, filling it with null.</p><p>Fills the string with the given character.</p><aside class="m-note m-info"><h4>Note</h4><p>this fills to capacity, not size</p></aside><aside class="m-note m-info"><h4>Note</h4><p>this will fill to capacity with null, thus size might increase</p></aside><aside class="m-note m-info"><h4>Note</h4><p>if <code>index + num_characters</code> is out of bounds, this will erase &#x27;size - index&#x27; characters</p></aside><aside class="m-note m-info"><h4>Note</h4><p>if <code>new_capacity &lt; capacity</code> then this will do nothing</p></aside>
           </div></section>
-          <section class="m-doc-details" id="gafe90488d53e90489cf200adae969f8f7"><div>
+          <section class="m-doc-details" id="gac6451e0d1bc8ab7a65a8f3aab3f6850e"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gafe90488d53e90489cf200adae969f8f7" class="m-doc-self">cnx_condvar_signal</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>*restrict condvar)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Signals to the first thread waiting on the condition variable pointed to by <code>condvar</code> to wake and continue execution.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td><code>Ok</code> if successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Signalling with a condition variable can fail. If signalling with the condition variable is successful, returns <code>Ok</code>, otherwise returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga6904f5ff9c4cdc6666ae306409435856"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga6904f5ff9c4cdc6666ae306409435856" class="m-doc-self">cnx_condvar_broadcast</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>*restrict condvar)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Signals to every thread waiting on the condition variable pointed to by <code>condvar</code> to wake and continue execution.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td><code>Ok</code> if successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Signalling with a condition variable can fail. If signalling with the condition variable is successful, returns <code>Ok</code>, otherwise returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga1b3487351e4a43e4335f143e00af789b"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga1b3487351e4a43e4335f143e00af789b" class="m-doc-self">cnx_condvar_wait</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>*restrict condvar,
-              <a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Blocks on the condition variable pointed to by <code>condvar</code> until the thread is signalled by it.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td><code>Ok</code> if successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Unlocks the mutex pointed to by <code>mutex</code> and blocks on the condition variable pointed to by <code>condvar</code> until the thread is signalled by it. The mutex is re-locked again before the function returns. The mutex must be locked by the calling thread prior to calling this.</p><p>Waiting on a condition variable can fail. If waiting on the condition variable is successful, returns <code>Ok</code>, otherwise returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga37ec9ea1dd0c390286646a53d0c443db"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga37ec9ea1dd0c390286646a53d0c443db" class="m-doc-self">cnx_condvar_wait_for</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>*restrict condvar,
-              <a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex,
-              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> to_wait) cnx_disable_if(!mutex</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Blocks on the condition variable pointed to by <code>condvar</code> until the thread is signalled by it, or <code>to_wait</code> time has elapsed.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td><code>Ok</code> if successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Unlocks the mutex pointed to by <code>mutex</code> and blocks on the condition variable pointed to by <code>condvar</code> until the thread is signalled by it, or <code>to_wait</code> time has elapsed. The mutex is re-locked again before the function returns. The mutex must be locked by the calling thread prior to calling this.</p><p>Waiting on a condition variable can fail. Returns <code>Ok</code> if a signal is received from the condition variable before <code>to_wait</code> has elapsed, otherwise returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga1b8781c46dc590e4a8022d0c5eaff07e"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga1b8781c46dc590e4a8022d0c5eaff07e" class="m-doc-self">cnx_condvar_free</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>*restrict condvar)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Destroys the condition variable pointed to by <code>condvar</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td><code>Ok</code> if successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Destroying a condition variable can fail (for example, if its still in use by another thread). If destroying the condition variable is successful, returns <code>Ok</code>, otherwise, returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga21b3fa91915327966f4106965a3ee6aa"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga21b3fa91915327966f4106965a3ee6aa" class="m-doc-self">cnx_execute_once</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga1cfcfc8c9dc05f7b3749b4b4723fcbf6" class="m-doc">CnxOnceFlag</a>*restrict flag,
-              void(*)(void) function) cnx_disable_if(!flag</span></span>
+              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gac6451e0d1bc8ab7a65a8f3aab3f6850e" class="m-doc-self">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#ga48b8fada710e243661bafc9037e90eb5" class="m-doc">not_<wbr />null</a>(1, 2)) CnxResult cnx_execute_once(CnxOnceFlag *restrict flag</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
             </h3>
             <p>Executes the given function exactly once.</p>
@@ -809,348 +357,12 @@
             </table>
 <p>Executes the given function exactly once, regardless how many threads attempt to execute it, or if they attempt to execute it multiple times, as long as all attempts to call it go through <code>cnx_execute_once</code> using the same <code>CnxOnceFlag</code></p><p>Executing the function can fail (for example, on Windows). If execution is successful, return <code>Ok</code>, otherwise returns an error.</p>
           </div></section>
-          <section class="m-doc-details" id="gae28135ada625c230b44c279e58ee2d00"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="BasicTypes_8h.html#ac0f09b727f79ee723c399162a0f8e8b2" class="m-doc">CnxCompare</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gae28135ada625c230b44c279e58ee2d00" class="m-doc-self">cnx_thread_id_compare</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> lhs,
-              <a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> rhs)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Compares the two <code>CnxThreadID</code>s.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">lhs</td>
-                  <td>- The id to compare</td>
-                </tr>
-                <tr>
-                  <td>rhs</td>
-                  <td>- The id to compare <code>lhs</code> to</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>A <code>CnxCompare</code> indicating how <code>lhs</code> compares to <code>rhs</code></td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="ga7f8624cd0b866c8e5524268192fca3d2"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga7f8624cd0b866c8e5524268192fca3d2" class="m-doc-self">cnx_thread_id_equal</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> lhs,
-              <a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> rhs)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Returns whether the two <code>CnxThreadID</code>s are equal.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">lhs</td>
-                  <td>- The id to compare</td>
-                </tr>
-                <tr>
-                  <td>rhs</td>
-                  <td>- The id to compare <code>lhs</code> to</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>whether the two IDs are equal</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="ga30fed92c0c18e2d8af1ad5eda9452f21"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga30fed92c0c18e2d8af1ad5eda9452f21" class="m-doc-self">cnx_thread_id_less_than</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> lhs,
-              <a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> rhs)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Returns whether the first <code>CnxThreadID</code> is less than the second.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">lhs</td>
-                  <td>- The id to compare</td>
-                </tr>
-                <tr>
-                  <td>rhs</td>
-                  <td>- The id to compare <code>lhs</code> to</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>whether <code>lhs</code> is less than <code>rhs</code></td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="ga41d174890bbaf5c5e0d893f12759ef96"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga41d174890bbaf5c5e0d893f12759ef96" class="m-doc-self">cnx_thread_id_less_than_or_equal</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> lhs,
-              <a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> rhs)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Returns whether the first <code>CnxThreadID</code> is less than or equal to the second.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">lhs</td>
-                  <td>- The id to compare</td>
-                </tr>
-                <tr>
-                  <td>rhs</td>
-                  <td>- The id to compare <code>lhs</code> to</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>whether <code>lhs</code> is less than or equal to <code>rhs</code></td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="ga3ca7a4e4e85a4911f1481d85850a8cdc"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3ca7a4e4e85a4911f1481d85850a8cdc" class="m-doc-self">cnx_thread_id_greater_than</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> lhs,
-              <a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> rhs)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Returns whether the first <code>CnxThreadID</code> is greater than the second.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">lhs</td>
-                  <td>- The id to compare</td>
-                </tr>
-                <tr>
-                  <td>rhs</td>
-                  <td>- The id to compare <code>lhs</code> to</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>whether <code>lhs</code> is greater than <code>rhs</code></td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="gacfacc33052f20eacadfac05407019693"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gacfacc33052f20eacadfac05407019693" class="m-doc-self">cnx_thread_id_greater_than_or_equal</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> lhs,
-              <a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> rhs)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Returns whether the first <code>CnxThreadID</code> is greater than or equal to the second.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">lhs</td>
-                  <td>- The id to compare</td>
-                </tr>
-                <tr>
-                  <td>rhs</td>
-                  <td>- The id to compare <code>lhs</code> to</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>whether <code>lhs</code> is greater than or equal to <code>rhs</code></td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
           <section class="m-doc-details" id="ga936f6cfd4790cc5b6494ff85f828a176"><div>
             <h3>
               <span class="m-doc-wrap-bumper">typedef </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga936f6cfd4790cc5b6494ff85f828a176" class="m-doc-self">Lambda</a>(</span><span class="m-doc-wrap">void) CnxThreadLambda</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
             </h3>
             <p>When spawning a new thread, a <code><a href="group__cnx__thread.html#ga936f6cfd4790cc5b6494ff85f828a176" class="m-doc">Lambda(void)</a></code> is used as its startup routine. This typedef allows for receiving that startup routine as a function parameter.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga71a412974f017dff1437eabecba2f349"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga71a412974f017dff1437eabecba2f349" class="m-doc-self">CnxResult</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Spawns a new thread, with the given <code>CnxThreadLambda</code> as its startup routine.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td>A <code>CnxThread</code> on success</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Spawns a new thread, with the given <code>CnxThreadLambda</code> as its startup routine. The given lambda will be automatically freed after the thread&#x27;s execution completes.</p><p>Spawning a thread can fail due to memory or operating system level constraints. If spawning the thread is successful, returns a handle to the spawned thread. Otherwise, returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="gad4e64d064923b06b7bc960b7ee62748d"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gad4e64d064923b06b7bc960b7ee62748d" class="m-doc-self">cnx_thread_init</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>*restrict thread,
-              CnxThreadLambda lambda)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Spawns a new thread, with the given <code>CnxThreadLambda</code> as its startup routine.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">thread</td>
-                  <td>- The pointer to thread handle to set as the handle to the spawned thread</td>
-                </tr>
-                <tr>
-                  <td>lambda</td>
-                  <td>- The lambda to invoke as the spawned thread&#x27;s startup routine</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><code>Ok</code> on success</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Spawns a new thread, with the given <code>CnxThreadLambda</code> as its startup routine. The given lambda will be automatically freed after the thread&#x27;s execution completes.</p><p>Spawning a thread can fail due to memory or operating system level constraints. If spawning the thread is successful, the <code>CnxThread</code> pointed to by <code>thread</code> will be initialized with the handle to the spawned thread, and <code>Ok</code> will be returned. Otherwise, returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga53e9371a6d1a508cef4db81ff2c0c9e6"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga53e9371a6d1a508cef4db81ff2c0c9e6" class="m-doc-self">cnx_thread_is_null</a>(</span><span class="m-doc-wrap">const <a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>*restrict thread)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Checks if the given thread handle is null (if it has been initialized)</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">thread</td>
-                  <td>- The thread to check if is null</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>whether the thread is null</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="ga2795e7062779da1014cdaaaeb683ece8"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga2795e7062779da1014cdaaaeb683ece8" class="m-doc-self">cnx_thread_get_id</a>(</span><span class="m-doc-wrap">const <a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>*restrict thread)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Gets the ID of the current thread.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">thread</td>
-                  <td>- The thread to get the ID of</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>The ID of the given thread</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="ga0d338b16082b0ab1c7ef4cf305d63e15"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga0d338b16082b0ab1c7ef4cf305d63e15" class="m-doc-self">cnx_thread_join</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>*restrict thread)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Joins the given thread, blocking until its execution has completed.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">thread</td>
-                  <td>- The thread to join</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><code>Ok</code> if successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Joining a thread can fail. Returns <code>Ok</code> if joining the thread is successful. Otherwise, returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga296a55c679791c6d709a0f4807f02a72"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga296a55c679791c6d709a0f4807f02a72" class="m-doc-self">cnx_thread_detach</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>*restrict thread)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Separates execution of the thread associated with the given thread handle from the handle.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">thread</td>
-                  <td>- The thread to detach</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><code>Ok</code> if successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Separates execution of the thread associated with the given handle from that handle. When successfully detached, the associated thread will continue execution independently and will no longer be associated with any handle.</p><p>Detaching a thread can fail. Returns <code>Ok</code> if detaching the thread is successful. Otherwise, returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga3992587aed2a44de27059dea97581aa7"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3992587aed2a44de27059dea97581aa7" class="m-doc-self">cnx_thread_free</a>(</span><span class="m-doc-wrap">void* thread)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Frees the given thread, blocking until it&#x27;s joined or joining fails.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">thread</td>
-                  <td>- The thread to free</td>
-                </tr>
-              </tbody>
-            </table>
           </div></section>
           <section class="m-doc-details" id="gad30116a03d4c7058de559830de31f08e"><div>
             <h3>
@@ -1177,63 +389,6 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga776d207d4d7e5365e101c4037e428ef8"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga776d207d4d7e5365e101c4037e428ef8" class="m-doc-self">cnx_this_thread_get_id</a>(</span><span class="m-doc-wrap">void)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Returns the ID of the current thread.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td>The ID of the current thread</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="ga03d41fb534abcbf8d7b1819495da3767"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga03d41fb534abcbf8d7b1819495da3767" class="m-doc-self">cnx_stop_token_request_stop</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a>*restrict token)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Requests the thread associated with the given stop token to end execution.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">token</td>
-                  <td>- The token associated with the thread to end</td>
-                </tr>
-              </tbody>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="ga71a36a29ecdcb9c481ef836846877a3c"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga71a36a29ecdcb9c481ef836846877a3c" class="m-doc-self">cnx_stop_token_stop_requested</a>(</span><span class="m-doc-wrap">const <a href="group__cnx__thread.html#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a>*restrict token)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Returns whether the thread associated with the given stop token has been requested to end execution.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">token</td>
-                  <td>- The token associated with the thread to end</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>whether the thread has been requested to end</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
           <section class="m-doc-details" id="ga8eadbd9e20ee4703102361fe32252819"><div>
             <h3>
               <span class="m-doc-wrap-bumper">typedef </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga8eadbd9e20ee4703102361fe32252819" class="m-doc-self">Lambda</a>(</span><span class="m-doc-wrap">void,
@@ -1241,197 +396,6 @@
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
             </h3>
             <p>When spawning a new <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, a <code><a href="group__cnx__thread.html#ga8eadbd9e20ee4703102361fe32252819" class="m-doc">Lambda(void, const CnxStopToken*)</a></code> is used as its startup routine. This typedef allows for receiving that startup routine as a function parameter.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga7ac0be34d2e51534c1688537e9377d90"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga7ac0be34d2e51534c1688537e9377d90" class="m-doc-self">CnxResult</a>(</span><span class="m-doc-wrap"><a href="structCnxJThread.html" class="m-doc">CnxJThread</a>)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Spawns a new <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, with the given <code>CnxJThreadLambda</code> as its startup routine.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td>A <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code> on success</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Spawns a new thread, with the given <code>CnxJThreadLambda</code> as its startup routine. The given lambda will be automatically freed after the thread&#x27;s execution completes.</p><p>Spawning a thread can fail due to memory or operating system level constraints. If spawning the thread is successful, returns a handle to the spawned thread. Otherwise, returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga6c93f8534a9296769aba9c481ca416f6"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga6c93f8534a9296769aba9c481ca416f6" class="m-doc-self">cnx_jthread_init</a>(</span><span class="m-doc-wrap"><a href="structCnxJThread.html" class="m-doc">CnxJThread</a>*restrict thread,
-              CnxJThreadLambda lambda)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Spawns a new <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, with the given <code>CnxJThreadLambda</code> as its startup routine.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">thread</td>
-                  <td>- The pointer to thread handle to set as the handle to the spawned thread</td>
-                </tr>
-                <tr>
-                  <td>lambda</td>
-                  <td>- The lambda to invoke as the spawned thread&#x27;s startup routine</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><code>Ok</code> on success</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Spawns a new thread, with the given <code>CnxJThreadLambda</code> as its startup routine. The given lambda will be automatically freed after the thread&#x27;s execution completes.</p><p>Spawning a thread can fail due to memory or operating system level constraints. If spawning the thread is successful, the <code>CnxThread</code> pointed to by <code>thread</code> will be initialized with the handle to the spawned thread, and <code>Ok</code> will be returned. Otherwise, returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="gacedc83bdc308bc4201c01254c4c890f6"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gacedc83bdc308bc4201c01254c4c890f6" class="m-doc-self">cnx_jthread_join</a>(</span><span class="m-doc-wrap"><a href="structCnxJThread.html" class="m-doc">CnxJThread</a>*restrict thread)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Joins the given <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, blocking until its execution has completed.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">thread</td>
-                  <td>- The thread to join</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><code>Ok</code> if successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Joining a thread can fail. Returns <code>Ok</code> if joining the thread is successful. Otherwise, returns an error.</p>
-          </div></section>
-          <section class="m-doc-details" id="gac175e5c3ee12f5b78c62f5d878518794"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gac175e5c3ee12f5b78c62f5d878518794" class="m-doc-self">cnx_jthread_free</a>(</span><span class="m-doc-wrap">void* thread)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Frees the given <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, blocking until it&#x27;s joined or joining fails.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">thread</td>
-                  <td>- The thread to free</td>
-                </tr>
-              </tbody>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="ga9cc953a1b0c6349efa957bfd32720984"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga9cc953a1b0c6349efa957bfd32720984" class="m-doc-self">CnxResult</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c0e7bcf640c8205c50186c5a1c6be95" class="m-doc">CnxTLSKey</a>) cnx_tls_new(void *data</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Creates a new thread-local storage.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td>A <code>CnxTLSKey</code> on success</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Creates a new thread-local storage that will be destroyed by the given <code>destructor</code> function at thread exit.</p><p>Creating a thread-local storage can fail. If creation is successful, the storage will be set to <code>data</code> and the <code>CnxTLSKey</code> associated with the storage will be returned. Otherwise, an error will be returned.</p>
-          </div></section>
-          <section class="m-doc-details" id="gab5d58163eaefda62ca1c40e82c991ddc"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gab5d58163eaefda62ca1c40e82c991ddc" class="m-doc-self">cnx_tls_init</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c0e7bcf640c8205c50186c5a1c6be95" class="m-doc">CnxTLSKey</a>*restrict key,
-              void* data,
-              void(__CNX_TLS_DESTRUCTOR_TAG*destructor)(void*))</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Initializes a thread-local storage and associates it with the key pointed to by <code>key</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">key</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>data</td>
-                  <td>- The value to initialize the TLS to</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>A <code>CnxTLSKey</code> on success</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Initializes a new thread-local storage that will be destroyed by the given <code>destructor</code> function at thread exit, and associates the thread-local storage with the key pointed to by <code>key</code>.</p><p>Creating a thread-local storage can fail. If creation is successful, the storage will be set to <code>data</code> and the <code>CnxTLSKey</code> associated with the storage will be returned. Otherwise, an error will be returned.</p>
-          </div></section>
-          <section class="m-doc-details" id="ga4a27ebe62718f7cef560c4320fffbd3e"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">void* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga4a27ebe62718f7cef560c4320fffbd3e" class="m-doc-self">cnx_tls_get</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c0e7bcf640c8205c50186c5a1c6be95" class="m-doc">CnxTLSKey</a> key)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Retrieves the current value of the thread-local storage associated with <code>key</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">key</td>
-                  <td>- The thread-local storage key to get the currently associated value of</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>The current value of the TLS, or <code>nullptr</code></td>
-                </tr>
-              </tfoot>
-            </table>
-<p>If key is a key to a valid TLS, returns the current value of the TLS, otherwise returns a <code>nullptr</code></p>
-          </div></section>
-          <section class="m-doc-details" id="gadb8a3ed6de58bca8b48385f27caf24ec"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gadb8a3ed6de58bca8b48385f27caf24ec" class="m-doc-self">cnx_tls_set</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c0e7bcf640c8205c50186c5a1c6be95" class="m-doc">CnxTLSKey</a> key,
-              void* data)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
-            </h3>
-            <p>Sets the value of the thread-local storage associated with <code>key</code> to <code>data</code></p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">key</td>
-                  <td>- The thread-local storage key to set the associated value of</td>
-                </tr>
-                <tr>
-                  <td>data</td>
-                  <td>- The value to set the TLS to</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><code>Ok</code> on successful</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Setting the value of a thread-local storage can fail. If setting the thread-local storage is successful, returns <code>Ok</code>. Otherwise, an error is returned</p>
           </div></section>
         </section>
         <section>
@@ -1561,7 +525,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C23. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+). Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>
