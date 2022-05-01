@@ -1109,6 +1109,7 @@ void(cnx_string_shrink_to_fit)(CnxString* restrict self) {
 void(cnx_string_insert)(CnxString* restrict self,
 						const CnxString* restrict to_insert,
 						usize index) {
+	// TODO(braxtons12): Optimize this so it's not allocating so needlessly
 	let length = cnx_string_length(*self);
 	cnx_assert(index <= length,
 			   "cnx_string_insert called with index > self->m_length (index out of bounds)");
@@ -1320,13 +1321,26 @@ CnxOption(char)(cnx_string_pop_front)(CnxString* restrict self) {
 }
 
 void(cnx_string_append)(CnxString* restrict self, const CnxString* restrict to_append) {
-	cnx_string_insert(*self, to_append, cnx_string_length(*self));
+	let capacity = cnx_string_capacity(*self);
+	let len = cnx_string_length(*self);
+	let append_len = cnx_string_length(*to_append);
+	if(capacity < len + append_len) {
+		cnx_string_reserve(*self, capacity + append_len);
+	}
+	cnx_string_set_length(self, len + append_len);
+	cnx_memcpy(char, &cnx_string_at(*self, len), &cnx_string_at(*to_append, 0), append_len);
 }
 
 void cnx_string_append_cstring(CnxString* restrict self,
 							   restrict const_cstring to_append,
 							   usize to_append_length) {
-	cnx_string_insert_cstring(self, to_append, to_append_length, cnx_string_length(*self));
+	let capacity = cnx_string_capacity(*self);
+	let len = cnx_string_length(*self);
+	if(capacity < len + to_append_length) {
+		cnx_string_reserve(*self, capacity + to_append_length);
+	}
+	cnx_string_set_length(self, len + to_append_length);
+	cnx_memcpy(char, &cnx_string_at(*self, len), to_append, to_append_length);
 }
 
 void cnx_string_append_stringview(CnxString* restrict self,

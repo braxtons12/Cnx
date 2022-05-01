@@ -127,16 +127,18 @@ __attr(always_inline) static inline VECTOR_T
 	return (VECTOR_T){0};
 }
 
-__attr(always_inline) static inline VECTOR_T
+__attr(always_inline) __attr(not_null(1)) static inline VECTOR_T
 	CnxVectorIdentifier(VECTOR_T, default_copy_constructor)(const VECTOR_T* restrict elem,
 															__attr(maybe_unused)
 																CnxAllocator allocator) {
 	return *elem;
 }
 
-__attr(always_inline) static inline void CnxVectorIdentifier(VECTOR_T, default_destructor)(
-	__attr(maybe_unused) VECTOR_T* restrict element, /** NOLINT(readability-non-const-parameter)**/
-	__attr(maybe_unused) CnxAllocator allocator) {
+__attr(always_inline)
+	__attr(not_null(1)) static inline void CnxVectorIdentifier(VECTOR_T, default_destructor)(
+		__attr(maybe_unused)
+			VECTOR_T* restrict element, /** NOLINT(readability-non-const-parameter)**/
+		__attr(maybe_unused) CnxAllocator allocator) {
 }
 
 static const struct CnxVectorIdentifier(VECTOR_T, vtable) CnxVectorIdentifier(VECTOR_T, vtable_impl)
@@ -361,32 +363,48 @@ usize CnxVectorIdentifier(VECTOR_T, capacity)(const CnxVector(VECTOR_T) * restri
 void CnxVectorIdentifier(VECTOR_T, resize_internal)(CnxVector(VECTOR_T) * restrict self,
 													usize new_size) {
 	let size = cnx_vector_size(*self);
-	if(new_size < size) {
+	if(self->m_data->m_destructor != CnxVectorIdentifier(VECTOR_T, default_destructor)
+	   && new_size < size)
+	{
 		let num_to_destroy = size - new_size;
 		for(let_mut i = new_size; i < new_size + num_to_destroy; ++i) {
 			self->m_data->m_destructor(&cnx_vector_at_mut(*self, i), self->m_allocator);
 		}
 	}
+
 	if(new_size > VECTOR_SMALL_OPT_CAPACITY) {
-		let_mut array = cnx_allocator_allocate_array_t(VECTOR_T, self->m_allocator, new_size);
-		let num_to_copy = size < new_size ? size : new_size;
-		cnx_memcpy(VECTOR_T, array, &cnx_vector_at_mut(*self, 0), num_to_copy);
 		if(!CnxVectorIdentifier(VECTOR_T, is_short)(self)) {
-			let_mut ptr = self->m_long;
-			self->m_long = nullptr;
-			cnx_allocator_deallocate(self->m_allocator, ptr);
+			let_mut array = cnx_allocator_reallocate_array_t(VECTOR_T,
+															 self->m_allocator,
+															 &cnx_vector_at_mut(*self, 0),
+															 size,
+															 new_size);
+			let resized_size = size < new_size ? size : new_size;
+			self->m_capacity = new_size;
+			self->m_size = resized_size;
+			self->m_long = array;
 		}
-		self->m_capacity = new_size;
-		self->m_size = num_to_copy;
-		self->m_long = array;
+		else {
+			let_mut array = cnx_allocator_allocate_array_t(VECTOR_T, self->m_allocator, new_size);
+			let num_to_copy = size < new_size ? size : new_size;
+			cnx_memcpy(VECTOR_T, array, self->m_short, num_to_copy);
+			self->m_capacity = new_size;
+			self->m_size = num_to_copy;
+			self->m_long = array;
+		}
 	}
 	else if(self->m_capacity != VECTOR_SMALL_OPT_CAPACITY && VECTOR_SMALL_OPT_CAPACITY != 0) {
 		let capacity = VECTOR_SMALL_OPT_CAPACITY;
-		let_mut array = cnx_allocator_allocate_array_t(VECTOR_T, self->m_allocator, capacity);
-		cnx_memcpy(VECTOR_T, array, self->m_long, capacity);
-		cnx_allocator_deallocate(self->m_allocator, self->m_long);
-		cnx_memcpy(VECTOR_T, self->m_short, array, capacity);
-		cnx_allocator_deallocate(self->m_allocator, array);
+		// we may end up going back to this method of shuffling things around,
+		// but memmove seems to be __just__ faster here
+		// let_mut array = cnx_allocator_allocate_array_t(VECTOR_T, self->m_allocator, capacity);
+		// cnx_memcpy(VECTOR_T, array, self->m_long, capacity);
+		// cnx_allocator_deallocate(self->m_allocator, self->m_long);
+		// cnx_memcpy(VECTOR_T, self->m_short, array, capacity);
+		// cnx_allocator_deallocate(self->m_allocator, array);
+		let old = self->m_long;
+		cnx_memmove(VECTOR_T, self->m_short, self->m_long, capacity);
+		cnx_allocator_deallocate(self->m_allocator, old);
 		self->m_size = capacity;
 		self->m_capacity = capacity;
 	}
@@ -432,7 +450,7 @@ void CnxVectorIdentifier(VECTOR_T, clear)(CnxVector(VECTOR_T) * restrict self) {
 void CnxVectorIdentifier(VECTOR_T, push_back)(
 	CnxVector(VECTOR_T) * restrict self,
 	VECTOR_T element /** NOLINT(readability-non-const-parameter) **/) {
-	if(self->m_size + 1 > self->m_capacity) {
+	if(self->m_size == self->m_capacity) {
 		let new_capacity
 			= CnxVectorIdentifier(VECTOR_T, get_expanded_capacity)(self->m_capacity, 1);
 		CnxVectorIdentifier(VECTOR_T, resize_internal)(self, new_capacity);

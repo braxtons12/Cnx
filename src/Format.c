@@ -92,7 +92,7 @@ __attr(nodiscard) __attr(always_inline) static inline u8 cnx_get_digit_i64(i64 n
 }
 
 #if CNX_PLATFORM_APPLE
-// clang-format off
+	// clang-format off
 #define cnx_get_digit(num, digit) _Generic((num), 		\
 		char  	: 	cnx_get_digit_u64, 					\
 		u8  	: 	cnx_get_digit_u64, 					\
@@ -107,7 +107,7 @@ __attr(nodiscard) __attr(always_inline) static inline u8 cnx_get_digit_i64(i64 n
 		isize 	: 	cnx_get_digit_i64)(num, digit)
 // clang-format on
 #else
-// clang-format off
+	// clang-format off
 #define cnx_get_digit(num, digit) _Generic((num), 		\
 		char  	: 	cnx_get_digit_u64, 					\
 		u8  	: 	cnx_get_digit_u64, 					\
@@ -1039,20 +1039,13 @@ CnxString(cnx_vformat_with_allocator)(restrict const_cstring format_string,
 
 	CnxScopedVector(CnxFormatVariant) format_variants
 		= cnx_result_expect(maybe_format_variants, "Invalid format string");
-	let_mut initial_size = static_cast(usize)(0);
-	foreach_ref(elem, format_variants) {
-		match(*elem) {
-			variant(Substring, view) {
-				initial_size += cnx_stringview_length(view);
-			}
-			wildcard() {
-				// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
-				initial_size += 10U;
-			}
-		}
-	}
 
-	let_mut string = cnx_string_new_with_capacity_with_allocator(initial_size, allocator);
+	// 10 chars per formatted string element is a reasonable first guess
+	// tradeof between performance and memory usage
+	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
+	let initial_size = static_cast(usize)(cnx_vector_size(format_variants) * 10U);
+
+	CnxScopedString string = cnx_string_new_with_capacity_with_allocator(initial_size, allocator);
 
 	foreach(elem, format_variants) {
 		match(elem) {
@@ -1068,5 +1061,5 @@ CnxString(cnx_vformat_with_allocator)(restrict const_cstring format_string,
 		}
 	}
 
-	return string;
+	return move(string);
 }

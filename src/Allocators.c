@@ -105,7 +105,7 @@ void* cnx_allocator_reallocate(CnxAllocator allocator,
 					   new_size_bytes));
 		abort();
 #else
-		return memory;
+		return nullptr;
 #endif // CNX_ALLOCATOR_ABORT_ON_ALLOCATION_FAILURE
 	}
 }

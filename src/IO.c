@@ -44,7 +44,9 @@ void print_(const_cstring restrict format_string, CnxAllocator allocator, usize 
 	va_start(list, num_args);
 	CnxScopedString string
 		= cnx_vformat_with_allocator(format_string, allocator, num_args, list);
-	puts(cnx_string_into_cstring(string));
+	let cstr = cnx_string_into_cstring(string);
+	let len = cnx_string_length(string);
+	ignore(fwrite(cstr, sizeof(char), len, stdout));
 	va_end(list);
 }
 
@@ -54,7 +56,9 @@ void eprint_(restrict const_cstring format_string, CnxAllocator allocator, usize
 	va_list list = {0};
 	va_start(list, num_args);
 	CnxScopedString string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
-	ignore(fputs(cnx_string_into_cstring(string), stderr));
+	let cstr = cnx_string_into_cstring(string);
+	let len = cnx_string_length(string);
+	ignore(fwrite(cstr, sizeof(char), len, stderr));
 	va_end(list);
 }
 
@@ -66,7 +70,9 @@ void fprint_(FILE* file,
 	va_list list = {0};
 	va_start(list, num_args);
 	CnxScopedString string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
-	ignore(fputs(cnx_string_into_cstring(string), file));
+	let cstr = cnx_string_into_cstring(string);
+	let len = cnx_string_length(string);
+	ignore(fwrite(cstr, sizeof(char), len, file));
 	va_end(list);
 }
 
@@ -74,7 +80,10 @@ void println_(restrict const_cstring format_string, CnxAllocator allocator, usiz
 	va_list list = {0};
 	va_start(list, num_args);
 	CnxScopedString string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
-	puts(cnx_string_into_cstring(string));
+	let cstr = cnx_string_into_cstring(string);
+	let len = cnx_string_length(string);
+	ignore(fwrite(cstr, sizeof(char), len, stdout));
+	ignore(putc('\n', stdout));
 	va_end(list);
 }
 
@@ -82,7 +91,9 @@ void eprintln_(restrict const_cstring format_string, CnxAllocator allocator, usi
 	va_list list = {0};
 	va_start(list, num_args);
 	CnxScopedString string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
-	ignore(fputs(cnx_string_into_cstring(string), stderr));
+	let cstr = cnx_string_into_cstring(string);
+	let len = cnx_string_length(string);
+	ignore(fwrite(cstr, sizeof(char), len, stderr));
 	ignore(putc('\n', stderr));
 	va_end(list);
 }
@@ -95,7 +106,9 @@ void fprintln_(FILE* file,
 	va_list list = {0};
 	va_start(list, num_args);
 	CnxScopedString string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
-	ignore(fputs(cnx_string_into_cstring(string), file));
+	let cstr = cnx_string_into_cstring(string);
+	let len = cnx_string_length(string);
+	ignore(fwrite(cstr, sizeof(char), len, file));
 	ignore(putc('\n', file));
 #ifdef CNX_FPRINTLN_FLUSHES
 	fflush(file);
