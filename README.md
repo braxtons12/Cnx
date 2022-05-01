@@ -160,42 +160,41 @@ This benchmark consisted of printing out N strings to `stdout` consisting of:
 where M is in [0, N)
 
 It was run 10 times for each N, with the average of the 10 runs taken. The benchmark was performed
-with builds from both Clang 12.0.1 and GCC 10.3.0, and with both the default system allocator and
+with builds from both Clang 14.0.0 and GCC 11.2.0, and with both the default system allocator and
 jemalloc.<br>
-All benchmarks were run on an Intel Core i7-8750H with 16GB RAM running Ubuntu 21.04.<br>
+All benchmarks were run on an Intel Core i7-8750H with 16GB RAM running EndeavorOS (Arch Linux) with the Zen Kernel 5.17.5-zen1-1-zen.<br>
 Clang builds were compiled with "-flto -Ofast -ffast-math -DNDEBUG".<br>
-GCC builds were compiled with "-flto -Ofast -DNDEBUG"
+GCC builds were compiled with "-flto -ffat-lto-objects -Ofast -DNDEBUG"
 All numbers are relative performance compared to `printf`
 
 | N                        |   Clang + System Allocator | Clang + jemalloc | GCC + System Allocator | GCC + jemalloc |
 | :----------------------- |--------------------------: | ---------------: | ---------------------: | -------------: |
-| 1                        |                     1.9247 |           1.6224 |                 3.0393 |         1.4195 |
-| 10                       |                     1.4561 |           1.0620 |                 1.6721 |         2.0558 |
-| 100                      |                     0.9669 |           0.9617 |                 0.9007 |         0.8877 |
-| 1000                     |                     1.0008 |           1.0048 |                 0.9044 |         0.9094 |
-| 10000                    |                     0.9971 |           1.0094 |                 0.9009 |         0.8968 |
-| 100000                   |                     1.0156 |           1.0133 |                 0.9000 |         0.8972 |
-| average                  |                     1.2269 |           1.1231 |                 1.3862 |         1.1777 |
+| 1                        |                     1.6316 |           1.9758 |                 2.9815 |         2.1675 |
+| 10                       |                     1.8762 |           1.4501 |                 1.7318 |         1.6026 |
+| 100                      |                     1.2305 |           1.2312 |                 1.0868 |         1.0535 |
+| 1000                     |                     1.1330 |           1.1666 |                 1.0652 |         1.0045 |
+| 10000                    |                     1.3016 |           1.0991 |                 1.0266 |         1.0610 |
+| 100000                   |                     1.1154 |           1.1374 |                 1.0509 |         1.0517 |
+| average                  |                     1.3814 |           1.3434 |                 1.4905 |         1.3235 |
 
 For the code used for the benchmark and more detailed results (Std. Dev., Median, individual runs),
 see the project/code in the "benchmark" subfolder.
 
 So, on __average__ (at least on linux, benchmark on your specific platform for platform specific
 numbers)
-you can expect around a 23% performance __boost__ compared to `printf`, for infrequent I/O you can
-expect up to a 200% performance __boost__, and for high frequency I/O you can expect anywhere from a
-1.5% performance __boost__ to a 10% performance hit (on average, a 4.4% performance hit). If you dig
-into the benchmark results, you'll see that in general you can expect it to be fairly allocator
-insensitive with clang (less so with GCC, particularly at small workloads), and that the clang +
-jemalloc pairing is the most __consistently__ fast option to use.
+you can expect around a 38% performance __boost__ compared to `printf`, for infrequent I/O you can
+expect up to a 200% performance __boost__, and for high frequency I/O you can expect around a 10%
+performance __boost__. If you dig into the benchmark results, you'll see that in general you can
+expect it to be fairly allocator insensitive with clang, and that building with clang and using the
+default system allocator is the most __consistently__ fast option to use.
 
-This was the performance for formatting builtin types (u32, i32, f32, cstring), but it would be
-reasonable to expect this to translate to custom types as well (`CnxString`'s `CnxFormat`
-implementation simply forwards itself, so it's nearly the same as passing a `const char*` to
-`printf` in terms of cost).
+This was the performance for formatting builtin types (u32, i32, f32, cstring.
+`CnxString`'s `CnxFormat` implementation simply forwards itself, so it's about as expensive as
+passing a cstring to `printf`), but it would be reasonable to expect this to translate to custom
+types as well.
 
-In our opinion, this is often a reasonable tradeoff for the greatly improved ergonomics and
-composability.
+So not only does using Cnx for string formatting and I/O give greatly improved ergonomics and
+composability over traditional methods, you also get a performance increase too!
 
 ### Testing
 
