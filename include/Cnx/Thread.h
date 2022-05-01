@@ -1,7 +1,7 @@
 /// @file Thread.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Type definitions and function declarations for threading functionality
-/// @version 0.2.1
+/// @version 0.2.2
 /// @date 2022-04-30
 ///
 /// MIT License
@@ -242,7 +242,7 @@ typedef __cnx_exec_once_flag CnxOnceFlag;
 ///
 /// @return A `CnxBasicMutex` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] CnxResult(CnxBasicMutex) cnx_basic_mutex_new(void);
+__attr(nodiscard) CnxResult(CnxBasicMutex) cnx_basic_mutex_new(void);
 /// @brief Initializes the mutex pointed to by `mutex`
 ///
 /// Initializing a mutex can fail, depending on memory and operating system level constraints.
@@ -250,8 +250,8 @@ typedef __cnx_exec_once_flag CnxOnceFlag;
 ///
 /// @return `Ok` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] CnxResult
-cnx_basic_mutex_init(CnxBasicMutex* restrict mutex) ___DISABLE_IF_NULL(mutex); // NOLINT
+__attr(nodiscard) __attr(not_null(1)) CnxResult cnx_basic_mutex_init(CnxBasicMutex* restrict mutex)
+	___DISABLE_IF_NULL(mutex); // NOLINT
 /// @brief Unconditionally locks the mutex pointed to by `mutex`
 ///
 /// Locking a mutex can fail (for example, if it's already locked on the calling thread).
@@ -259,16 +259,16 @@ cnx_basic_mutex_init(CnxBasicMutex* restrict mutex) ___DISABLE_IF_NULL(mutex); /
 ///
 /// @return `Ok` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] CnxResult
-cnx_basic_mutex_lock(CnxBasicMutex* restrict mutex) ___DISABLE_IF_NULL(mutex); // NOLINT
+__attr(nodiscard) __attr(not_null(1)) CnxResult cnx_basic_mutex_lock(CnxBasicMutex* restrict mutex)
+	___DISABLE_IF_NULL(mutex); // NOLINT
 /// @brief Attempts to lock the mutex pointed to by `mutex`
 ///
 /// If locking the mutex is successful, return `true`.
 //
 /// @return `true` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] bool
-cnx_basic_mutex_try_lock(CnxBasicMutex* restrict mutex) ___DISABLE_IF_NULL(mutex); // NOLINT
+__attr(nodiscard) __attr(not_null(1)) bool cnx_basic_mutex_try_lock(CnxBasicMutex* restrict mutex)
+	___DISABLE_IF_NULL(mutex); // NOLINT
 /// @brief Unlocks the mutex pointed to by `mutex`
 ///
 /// Unlocking a mutex can fail (for example, if it's already unlocked).
@@ -276,8 +276,8 @@ cnx_basic_mutex_try_lock(CnxBasicMutex* restrict mutex) ___DISABLE_IF_NULL(mutex
 ///
 /// @return `Ok` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] CnxResult
-cnx_basic_mutex_unlock(CnxBasicMutex* restrict mutex) ___DISABLE_IF_NULL(mutex); // NOLINT
+__attr(nodiscard) __attr(not_null(1)) CnxResult
+	cnx_basic_mutex_unlock(CnxBasicMutex* restrict mutex) ___DISABLE_IF_NULL(mutex); // NOLINT
 /// @brief Destroys the mutex pointed to by `mutex`
 ///
 /// Destroying a mutex can fail (for example, it it's still in use by other threads).
@@ -285,8 +285,8 @@ cnx_basic_mutex_unlock(CnxBasicMutex* restrict mutex) ___DISABLE_IF_NULL(mutex);
 ///
 /// @return `Ok` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] CnxResult
-cnx_basic_mutex_free(CnxBasicMutex* restrict mutex) ___DISABLE_IF_NULL(mutex); // NOLINT
+__attr(nodiscard) __attr(not_null(1)) CnxResult cnx_basic_mutex_free(CnxBasicMutex* restrict mutex)
+	___DISABLE_IF_NULL(mutex); // NOLINT
 
 /// @brief Creates a new recursive mutex
 ///
@@ -296,7 +296,7 @@ cnx_basic_mutex_free(CnxBasicMutex* restrict mutex) ___DISABLE_IF_NULL(mutex); /
 //
 /// @return A `CnxRecursiveBasicMutex` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] CnxResult(CnxRecursiveBasicMutex) cnx_recursive_basic_mutex_new(void);
+__attr(nodiscard) CnxResult(CnxRecursiveBasicMutex) cnx_recursive_basic_mutex_new(void);
 /// @brief Initializes the recursive mutex pointed to by `mutex`
 ///
 /// Initializing a mutex can fail, depending on memory and operating system level constraints.
@@ -304,8 +304,8 @@ cnx_basic_mutex_free(CnxBasicMutex* restrict mutex) ___DISABLE_IF_NULL(mutex); /
 ///
 /// @return `Ok` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] CnxResult
-cnx_recursive_basic_mutex_init(CnxRecursiveBasicMutex* restrict mutex) // NOLINT
+__attr(nodiscard) __attr(not_null(1)) CnxResult
+	cnx_recursive_basic_mutex_init(CnxRecursiveBasicMutex* restrict mutex) // NOLINT
 	___DISABLE_IF_NULL(mutex);
 /// @brief Unconditionally locks the recursive mutex pointed to by `mutex`
 ///
@@ -314,8 +314,8 @@ cnx_recursive_basic_mutex_init(CnxRecursiveBasicMutex* restrict mutex) // NOLINT
 ///
 /// @return `Ok` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] CnxResult
-cnx_recursive_basic_mutex_lock(CnxRecursiveBasicMutex* restrict mutex) // NOLINT
+__attr(nodiscard) __attr(not_null(1)) CnxResult
+	cnx_recursive_basic_mutex_lock(CnxRecursiveBasicMutex* restrict mutex) // NOLINT
 	___DISABLE_IF_NULL(mutex);
 /// @brief Attempts to lock the recursive mutex pointed to by `mutex`
 ///
@@ -323,8 +323,8 @@ cnx_recursive_basic_mutex_lock(CnxRecursiveBasicMutex* restrict mutex) // NOLINT
 ///
 /// @return `true` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] bool
-cnx_recursive_basic_mutex_try_lock(CnxRecursiveBasicMutex* restrict mutex) // NOLINT
+__attr(nodiscard) __attr(not_null(1)) bool cnx_recursive_basic_mutex_try_lock(
+	CnxRecursiveBasicMutex* restrict mutex) // NOLINT
 	___DISABLE_IF_NULL(mutex);
 /// @brief Unlocks the recursive mutex pointed to by `mutex`
 ///
@@ -333,8 +333,8 @@ cnx_recursive_basic_mutex_try_lock(CnxRecursiveBasicMutex* restrict mutex) // NO
 //
 /// @return `Ok` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] CnxResult
-cnx_recursive_basic_mutex_unlock(CnxRecursiveBasicMutex* restrict mutex) // NOLINT
+__attr(nodiscard) __attr(not_null(1)) CnxResult
+	cnx_recursive_basic_mutex_unlock(CnxRecursiveBasicMutex* restrict mutex) // NOLINT
 	___DISABLE_IF_NULL(mutex);
 /// @brief Destroys the recursive mutex pointed to by `mutex`
 ///
@@ -343,8 +343,8 @@ cnx_recursive_basic_mutex_unlock(CnxRecursiveBasicMutex* restrict mutex) // NOLI
 ///
 /// @return `Ok` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] CnxResult
-cnx_recursive_basic_mutex_free(CnxRecursiveBasicMutex* restrict mutex) // NOLINT
+__attr(nodiscard) __attr(not_null(1)) CnxResult
+	cnx_recursive_basic_mutex_free(CnxRecursiveBasicMutex* restrict mutex) // NOLINT
 	___DISABLE_IF_NULL(mutex);
 
 #undef ___DISABLE_IF_NULL
@@ -361,7 +361,7 @@ cnx_recursive_basic_mutex_free(CnxRecursiveBasicMutex* restrict mutex) // NOLINT
 ///
 /// @return A `CnxRecursiveBasicMutex` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] CnxResult(CnxCondvar) cnx_condvar_new(void);
+__attr(nodiscard) CnxResult(CnxCondvar) cnx_condvar_new(void);
 /// @brief Initializes the condition variable pointed to by `condvar`
 ///
 /// Initializing a condition variable can fail, depending on memory and operating system level
@@ -370,8 +370,8 @@ cnx_recursive_basic_mutex_free(CnxRecursiveBasicMutex* restrict mutex) // NOLINT
 ///
 /// @return `Ok` if successful
 /// @ingroup cnx_thread
-[[not_null(1)]] CnxResult
-cnx_condvar_init(CnxCondvar* restrict condvar) ___DISABLE_IF_NULL(condvar); // NOLINT
+__attr(not_null(1)) CnxResult cnx_condvar_init(CnxCondvar* restrict condvar)
+	___DISABLE_IF_NULL(condvar); // NOLINT
 /// @brief Signals to the first thread waiting on the condition variable pointed to by `condvar` to
 /// wake and continue execution.
 ///
@@ -381,8 +381,8 @@ cnx_condvar_init(CnxCondvar* restrict condvar) ___DISABLE_IF_NULL(condvar); // N
 ///
 /// @return `Ok` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] CnxResult
-cnx_condvar_signal(CnxCondvar* restrict condvar) ___DISABLE_IF_NULL(condvar); // NOLINT
+__attr(nodiscard) __attr(not_null(1)) CnxResult cnx_condvar_signal(CnxCondvar* restrict condvar)
+	___DISABLE_IF_NULL(condvar); // NOLINT
 /// @brief Signals to every thread waiting on the condition variable pointed to by `condvar` to
 /// wake and continue execution.
 ///
@@ -392,8 +392,8 @@ cnx_condvar_signal(CnxCondvar* restrict condvar) ___DISABLE_IF_NULL(condvar); //
 ///
 /// @return `Ok` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] CnxResult
-cnx_condvar_broadcast(CnxCondvar* restrict condvar) ___DISABLE_IF_NULL(condvar); // NOLINT
+__attr(nodiscard) __attr(not_null(1)) CnxResult cnx_condvar_broadcast(CnxCondvar* restrict condvar)
+	___DISABLE_IF_NULL(condvar); // NOLINT
 /// @brief Blocks on the condition variable pointed to by `condvar` until the thread is signalled
 /// by it.
 ///
@@ -407,8 +407,8 @@ cnx_condvar_broadcast(CnxCondvar* restrict condvar) ___DISABLE_IF_NULL(condvar);
 ///
 /// @return `Ok` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] CnxResult
-cnx_condvar_wait(CnxCondvar* restrict condvar, CnxBasicMutex* restrict mutex) // NOLINT
+__attr(nodiscard) __attr(not_null(1)) CnxResult
+	cnx_condvar_wait(CnxCondvar* restrict condvar, CnxBasicMutex* restrict mutex) // NOLINT
 	___DISABLE_IF_NULL(condvar);
 /// @brief Blocks on the condition variable pointed to by `condvar` until the thread is signalled
 /// by it, or `to_wait` time has elapsed.
@@ -424,12 +424,12 @@ cnx_condvar_wait(CnxCondvar* restrict condvar, CnxBasicMutex* restrict mutex) //
 ///
 /// @return `Ok` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1, 2)]] CnxResult
-cnx_condvar_wait_for(CnxCondvar* restrict condvar,
-					 // NOLINTNEXTLINE(readability-non-const-parameter)
-					 CnxBasicMutex* restrict mutex,
-					 CnxDuration to_wait) ___DISABLE_IF_NULL(condvar)
-	cnx_disable_if(!mutex, "Can't do a timed wait with a null mutex");
+__attr(nodiscard) __attr(not_null(1, 2)) CnxResult
+	cnx_condvar_wait_for(CnxCondvar* restrict condvar,
+						 // NOLINTNEXTLINE(readability-non-const-parameter)
+						 CnxBasicMutex* restrict mutex,
+						 CnxDuration to_wait) ___DISABLE_IF_NULL(condvar)
+		cnx_disable_if(!mutex, "Can't do a timed wait with a null mutex");
 /// @brief Destroys the condition variable pointed to by `condvar`
 ///
 /// Destroying a condition variable can fail (for example, if its still in use by another thread).
@@ -437,8 +437,8 @@ cnx_condvar_wait_for(CnxCondvar* restrict condvar,
 ///
 /// @return `Ok` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] CnxResult
-cnx_condvar_free(CnxCondvar* restrict condvar) ___DISABLE_IF_NULL(condvar); // NOLINT
+__attr(nodiscard) __attr(not_null(1)) CnxResult cnx_condvar_free(CnxCondvar* restrict condvar)
+	___DISABLE_IF_NULL(condvar); // NOLINT
 
 /// @brief Executes the given function exactly once.
 ///
@@ -451,8 +451,8 @@ cnx_condvar_free(CnxCondvar* restrict condvar) ___DISABLE_IF_NULL(condvar); // N
 ///
 /// @return `Ok` if successful
 /// @ingroup cnx_thread
-[[not_null(1, 2)]] CnxResult
-cnx_execute_once(CnxOnceFlag* restrict flag, void (*function)(void)) // NOLINT
+__attr(not_null(1, 2)) CnxResult
+	cnx_execute_once(CnxOnceFlag* restrict flag, void (*function)(void)) // NOLINT
 	cnx_disable_if(!flag, "Can't perform an execute once with a null `CnxOnceFlag`")
 		cnx_disable_if(!function, "Can't execute a nullptr");
 
@@ -463,7 +463,7 @@ cnx_execute_once(CnxOnceFlag* restrict flag, void (*function)(void)) // NOLINT
 ///
 /// @return A `CnxCompare` indicating how `lhs` compares to `rhs`
 /// @ingroup cnx_thread
-[[nodiscard]] CnxCompare cnx_thread_id_compare(CnxThreadID lhs, CnxThreadID rhs);
+__attr(nodiscard) CnxCompare cnx_thread_id_compare(CnxThreadID lhs, CnxThreadID rhs);
 /// @brief Returns whether the two `CnxThreadID`s are equal
 ///
 /// @param lhs - The id to compare
@@ -471,7 +471,7 @@ cnx_execute_once(CnxOnceFlag* restrict flag, void (*function)(void)) // NOLINT
 ///
 /// @return whether the two IDs are equal
 /// @ingroup cnx_thread
-[[nodiscard]] bool cnx_thread_id_equal(CnxThreadID lhs, CnxThreadID rhs);
+__attr(nodiscard) bool cnx_thread_id_equal(CnxThreadID lhs, CnxThreadID rhs);
 /// @brief Returns whether the first `CnxThreadID` is less than the second
 ///
 /// @param lhs - The id to compare
@@ -479,7 +479,7 @@ cnx_execute_once(CnxOnceFlag* restrict flag, void (*function)(void)) // NOLINT
 ///
 /// @return whether `lhs` is less than `rhs`
 /// @ingroup cnx_thread
-[[nodiscard]] bool cnx_thread_id_less_than(CnxThreadID lhs, CnxThreadID rhs);
+__attr(nodiscard) bool cnx_thread_id_less_than(CnxThreadID lhs, CnxThreadID rhs);
 /// @brief Returns whether the first `CnxThreadID` is less than or equal to the second
 ///
 /// @param lhs - The id to compare
@@ -487,7 +487,7 @@ cnx_execute_once(CnxOnceFlag* restrict flag, void (*function)(void)) // NOLINT
 ///
 /// @return whether `lhs` is less than or equal to `rhs`
 /// @ingroup cnx_thread
-[[nodiscard]] bool cnx_thread_id_less_than_or_equal(CnxThreadID lhs, CnxThreadID rhs);
+__attr(nodiscard) bool cnx_thread_id_less_than_or_equal(CnxThreadID lhs, CnxThreadID rhs);
 /// @brief Returns whether the first `CnxThreadID` is greater than the second
 ///
 /// @param lhs - The id to compare
@@ -495,7 +495,7 @@ cnx_execute_once(CnxOnceFlag* restrict flag, void (*function)(void)) // NOLINT
 ///
 /// @return whether `lhs` is greater than `rhs`
 /// @ingroup cnx_thread
-[[nodiscard]] bool cnx_thread_id_greater_than(CnxThreadID lhs, CnxThreadID rhs);
+__attr(nodiscard) bool cnx_thread_id_greater_than(CnxThreadID lhs, CnxThreadID rhs);
 /// @brief Returns whether the first `CnxThreadID` is greater than or equal to the second
 ///
 /// @param lhs - The id to compare
@@ -503,7 +503,7 @@ cnx_execute_once(CnxOnceFlag* restrict flag, void (*function)(void)) // NOLINT
 ///
 /// @return whether `lhs` is greater than or equal to `rhs`
 /// @ingroup cnx_thread
-[[nodiscard]] bool cnx_thread_id_greater_than_or_equal(CnxThreadID lhs, CnxThreadID rhs);
+__attr(nodiscard) bool cnx_thread_id_greater_than_or_equal(CnxThreadID lhs, CnxThreadID rhs);
 
 /// @brief When spawning a new thread, a `Lambda(void)` is used as its startup routine. This typedef
 /// allows for receiving that startup routine as a function parameter.
@@ -528,7 +528,7 @@ typedef Lambda(void) CnxThreadLambda;
 ///
 /// @return A `CnxThread` on success
 /// @ingroup cnx_thread
-[[nodiscard]] CnxResult(CnxThread) cnx_thread_new(CnxThreadLambda lambda);
+__attr(nodiscard) CnxResult(CnxThread) cnx_thread_new(CnxThreadLambda lambda);
 /// @brief Spawns a new thread, with the given `CnxThreadLambda` as its startup routine.
 ///
 /// Spawns a new thread, with the given `CnxThreadLambda` as its startup routine. The given
@@ -543,8 +543,8 @@ typedef Lambda(void) CnxThreadLambda;
 ///
 /// @return `Ok` on success
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] CnxResult
-cnx_thread_init(CnxThread* restrict thread, CnxThreadLambda lambda) // NOLINT
+__attr(nodiscard) __attr(not_null(1)) CnxResult
+	cnx_thread_init(CnxThread* restrict thread, CnxThreadLambda lambda) // NOLINT
 	___DISABLE_IF_NULL(thread);
 /// @brief Checks if the given thread handle is null (if it has been initialized)
 ///
@@ -552,16 +552,16 @@ cnx_thread_init(CnxThread* restrict thread, CnxThreadLambda lambda) // NOLINT
 ///
 /// @return whether the thread is null
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] bool
-cnx_thread_is_null(const CnxThread* restrict thread) ___DISABLE_IF_NULL(thread);
+__attr(nodiscard) __attr(not_null(1)) bool cnx_thread_is_null(const CnxThread* restrict thread)
+	___DISABLE_IF_NULL(thread);
 /// @brief Gets the ID of the current thread
 ///
 /// @param thread - The thread to get the ID of
 ///
 /// @return The ID of the given thread
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] CnxThreadID
-cnx_thread_get_id(const CnxThread* restrict thread) ___DISABLE_IF_NULL(thread);
+__attr(nodiscard) __attr(not_null(1)) CnxThreadID
+	cnx_thread_get_id(const CnxThread* restrict thread) ___DISABLE_IF_NULL(thread);
 /// @brief Joins the given thread, blocking until its execution has completed
 ///
 /// Joining a thread can fail.
@@ -571,7 +571,8 @@ cnx_thread_get_id(const CnxThread* restrict thread) ___DISABLE_IF_NULL(thread);
 ///
 /// @return `Ok` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] CnxResult cnx_thread_join(CnxThread* restrict thread) // NOLINT
+__attr(nodiscard) __attr(not_null(1)) CnxResult
+	cnx_thread_join(CnxThread* restrict thread) // NOLINT
 	___DISABLE_IF_NULL(thread);
 /// @brief Separates execution of the thread associated with the given thread handle from the handle
 ///
@@ -586,13 +587,14 @@ cnx_thread_get_id(const CnxThread* restrict thread) ___DISABLE_IF_NULL(thread);
 ///
 /// @return `Ok` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] CnxResult
-cnx_thread_detach(CnxThread* restrict thread) ___DISABLE_IF_NULL(thread); // NOLINT
+__attr(nodiscard) __attr(not_null(1)) CnxResult
+	cnx_thread_detach(CnxThread* restrict thread) // NOLINT(readability-non-const-parameter)
+	___DISABLE_IF_NULL(thread);
 /// @brief Frees the given thread, blocking until it's joined or joining fails.
 ///
 /// @param thread - The thread to free
 /// @ingroup cnx_thread
-[[not_null(1)]] void cnx_thread_free(void* thread) ___DISABLE_IF_NULL(thread); // NOLINT
+__attr(not_null(1)) void cnx_thread_free(void* thread) ___DISABLE_IF_NULL(thread); // NOLINT
 
 #define CnxScopedThread scoped(cnx_thread_free)
 
@@ -610,7 +612,7 @@ void cnx_this_thread_sleep_for(CnxDuration duration);
 ///
 /// @return The ID of the current thread
 /// @ingroup cnx_thread
-[[nodiscard]] CnxThreadID cnx_this_thread_get_id(void);
+__attr(nodiscard) CnxThreadID cnx_this_thread_get_id(void);
 
 #undef ___DISABLE_IF_NULL
 
@@ -621,8 +623,8 @@ void cnx_this_thread_sleep_for(CnxDuration duration);
 ///
 /// @param token - The token associated with the thread to end
 /// @ingroup cnx_thread
-[[not_null(1)]] void
-cnx_stop_token_request_stop(CnxStopToken* restrict token) ___DISABLE_IF_NULL(token);
+__attr(not_null(1)) void cnx_stop_token_request_stop(CnxStopToken* restrict token)
+	___DISABLE_IF_NULL(token);
 /// @brief Returns whether the thread associated with the given stop token has been requested to end
 /// execution
 ///
@@ -630,8 +632,9 @@ cnx_stop_token_request_stop(CnxStopToken* restrict token) ___DISABLE_IF_NULL(tok
 ///
 /// @return whether the thread has been requested to end
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] bool
-cnx_stop_token_stop_requested(const CnxStopToken* restrict token) ___DISABLE_IF_NULL(token);
+__attr(nodiscard)
+	__attr(not_null(1)) bool cnx_stop_token_stop_requested(const CnxStopToken* restrict token)
+		___DISABLE_IF_NULL(token);
 
 /// @brief When spawning a new `CnxJThread`, a `Lambda(void, const CnxStopToken*)` is used as its
 /// startup routine. This typedef allows for receiving that startup routine as a function parameter.
@@ -656,7 +659,7 @@ typedef Lambda(void, const CnxStopToken*) CnxJThreadLambda;
 ///
 /// @return A `CnxJThread` on success
 /// @ingroup cnx_thread
-[[nodiscard]] CnxResult(CnxJThread) cnx_jthread_new(CnxJThreadLambda lambda);
+__attr(nodiscard) CnxResult(CnxJThread) cnx_jthread_new(CnxJThreadLambda lambda);
 /// @brief Spawns a new `CnxJThread`, with the given `CnxJThreadLambda` as its startup routine.
 ///
 /// Spawns a new thread, with the given `CnxJThreadLambda` as its startup routine. The given
@@ -671,8 +674,8 @@ typedef Lambda(void, const CnxStopToken*) CnxJThreadLambda;
 ///
 /// @return `Ok` on success
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] CnxResult
-cnx_jthread_init(CnxJThread* restrict thread, CnxJThreadLambda lambda) // NOLINT
+__attr(nodiscard) __attr(not_null(1)) CnxResult
+	cnx_jthread_init(CnxJThread* restrict thread, CnxJThreadLambda lambda) // NOLINT
 	___DISABLE_IF_NULL(thread);
 /// @brief Checks if the given thread handle is null (if it has been initialized)
 ///
@@ -697,8 +700,8 @@ cnx_jthread_init(CnxJThread* restrict thread, CnxJThreadLambda lambda) // NOLINT
 ///
 /// @return `Ok` if successful
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] CnxResult
-cnx_jthread_join(CnxJThread* restrict thread) ___DISABLE_IF_NULL(thread);
+__attr(nodiscard) __attr(not_null(1)) CnxResult cnx_jthread_join(CnxJThread* restrict thread)
+	___DISABLE_IF_NULL(thread);
 /// @brief Separates execution of the thread associated with the `CnxJThread` thread handle from the
 /// handle
 ///
@@ -718,7 +721,7 @@ cnx_jthread_join(CnxJThread* restrict thread) ___DISABLE_IF_NULL(thread);
 ///
 /// @param thread - The thread to free
 /// @ingroup cnx_thread
-[[not_null(1)]] void cnx_jthread_free(void* thread) ___DISABLE_IF_NULL(thread);
+__attr(not_null(1)) void cnx_jthread_free(void* thread) ___DISABLE_IF_NULL(thread);
 
 #define CnxScopedJThread scoped(cnx_jthread_free)
 
@@ -741,7 +744,7 @@ cnx_jthread_join(CnxJThread* restrict thread) ___DISABLE_IF_NULL(thread);
 ///
 /// @return A `CnxTLSKey` on success
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1)]] CnxResult(CnxTLSKey)
+__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxTLSKey)
 	cnx_tls_new(void* data, void(__CNX_TLS_DESTRUCTOR_TAG* destructor)(void*))
 		___DISABLE_IF_NULL(data);
 /// @brief Initializes a thread-local storage and associates it with the key pointed to by `key`
@@ -758,11 +761,11 @@ cnx_jthread_join(CnxJThread* restrict thread) ___DISABLE_IF_NULL(thread);
 ///
 /// @return A `CnxTLSKey` on success
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(1, 2)]] CnxResult
-cnx_tls_init(CnxTLSKey* restrict key, // NOLINT
-			 void* data,
-			 void(__CNX_TLS_DESTRUCTOR_TAG* destructor)(void*)) ___DISABLE_IF_NULL(key)
-	___DISABLE_IF_NULL(data);
+__attr(nodiscard) __attr(not_null(1, 2)) CnxResult
+	cnx_tls_init(CnxTLSKey* restrict key, // NOLINT
+				 void* data,
+				 void(__CNX_TLS_DESTRUCTOR_TAG* destructor)(void*)) ___DISABLE_IF_NULL(key)
+		___DISABLE_IF_NULL(data);
 /// @brief Retrieves the current value of the thread-local storage associated with `key`
 ///
 /// If key is a key to a valid TLS, returns the current value of the  TLS, otherwise returns a
@@ -772,7 +775,7 @@ cnx_tls_init(CnxTLSKey* restrict key, // NOLINT
 ///
 /// @return The current value of the TLS, or `nullptr`
 /// @ingroup cnx_thread
-[[nodiscard]] [[returns_not_null]] void* cnx_tls_get(CnxTLSKey key);
+__attr(nodiscard) __attr(returns_not_null) void* cnx_tls_get(CnxTLSKey key);
 /// @brief Sets the value of the thread-local storage associated with `key` to `data`
 ///
 /// Setting the value of a thread-local storage can fail.
@@ -783,8 +786,8 @@ cnx_tls_init(CnxTLSKey* restrict key, // NOLINT
 ///
 /// @return `Ok` on successful
 /// @ingroup cnx_thread
-[[nodiscard]] [[not_null(2)]] CnxResult
-cnx_tls_set(CnxTLSKey key, void* data) ___DISABLE_IF_NULL(data);
+__attr(nodiscard) __attr(not_null(2)) CnxResult cnx_tls_set(CnxTLSKey key, void* data)
+	___DISABLE_IF_NULL(data);
 
 #undef ___DISABLE_IF_NULL
 

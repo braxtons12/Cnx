@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides the function definitions for a template instantiation of
 /// `CnxRange(T)`
-/// @version 0.2.0
-/// @date 2022-03-22
+/// @version 0.2.1
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -35,7 +35,7 @@
 	#include <Cnx/Iterator.h>
 	#include <Cnx/BasicTypes.h>
 
-[[maybe_unused]] static const CnxRangeIdentifier(RANGE_T, vtable)
+__attr(maybe_unused) static const CnxRangeIdentifier(RANGE_T, vtable)
 	CnxRangeIdentifier(RANGE_T, vtable_impl)
 	= {
 		.begin = CnxRangeIdentifier(RANGE_T, begin),
@@ -48,21 +48,20 @@
 	#define ___DISABLE_IF_NULL(self) \
 		cnx_disable_if(!(self), "Can't perform an operation on a null range")
 
-[[nodiscard]] [[not_null(1)]] CnxRangeIdentifier(RANGE_T, Iterator)
+__attr(nodiscard) __attr(not_null(1)) CnxRangeIdentifier(RANGE_T, Iterator)
 	CnxRangeIdentifier(RANGE_T, iterator_new)(const CnxRange(RANGE_T) * restrict self)
 		___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] Ref(RANGE_T)
+__attr(nodiscard) __attr(not_null(1)) Ref(RANGE_T)
 	CnxRangeIdentifier(RANGE_T, iterator_next)(CnxForwardIterator(Ref(RANGE_T)) * restrict self)
 		___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] Ref(RANGE_T)
+__attr(nodiscard) __attr(not_null(1)) Ref(RANGE_T)
 	CnxRangeIdentifier(RANGE_T,
 					   iterator_current)(const CnxForwardIterator(Ref(RANGE_T)) * restrict self)
 		___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1, 2)]] bool
-	CnxRangeIdentifier(RANGE_T,
-					   iterator_equals)(const CnxForwardIterator(Ref(RANGE_T)) * restrict self,
-										const CnxForwardIterator(Ref(RANGE_T)) * restrict rhs)
-		___DISABLE_IF_NULL(self) cnx_disable_if(!rhs, "Can't compare a CnxRange to a nullptr");
+__attr(nodiscard) __attr(not_null(1, 2)) bool CnxRangeIdentifier(RANGE_T, iterator_equals)(
+	const CnxForwardIterator(Ref(RANGE_T)) * restrict self,
+	const CnxForwardIterator(Ref(RANGE_T)) * restrict rhs) ___DISABLE_IF_NULL(self)
+	cnx_disable_if(!rhs, "Can't compare a CnxRange to a nullptr");
 
 ImplIntoCnxForwardIterator(CnxRange(RANGE_T),
 						   Ref(RANGE_T),
@@ -152,7 +151,7 @@ CnxRange(RANGE_T) CnxRangeIdentifier(RANGE_T, from)(CnxForwardIterator(Ref(RANGE
 							   .m_vtable = &CnxRangeIdentifier(RANGE_T, vtable_impl)};
 }
 
-bool CnxRangeIdentifier(RANGE_T, default_filter)([[maybe_unused]] const RANGE_T* elem) {
+bool CnxRangeIdentifier(RANGE_T, default_filter)(__attr(maybe_unused) const RANGE_T* elem) {
 	return true;
 }
 

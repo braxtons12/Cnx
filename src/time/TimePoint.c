@@ -236,7 +236,7 @@ CnxString cnx_time_point_human_readable_format(CnxTimePoint self, CnxAllocator a
 		char utc[6] = {0};
 
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
-		[[maybe_unused]] usize utc_written = strftime(utc, 6, "%z", parsed);
+		__attr(maybe_unused) usize utc_written = strftime(utc, 6, "%z", parsed);
 		cnx_assert(utc_written == 5, "Failed to format time point");
 		CnxScopedString utc_string
 			// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
@@ -249,10 +249,10 @@ CnxString cnx_time_point_human_readable_format(CnxTimePoint self, CnxAllocator a
 
 #if CNX_PLATFORM_COMPILER_CLANG
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
-		[[maybe_unused]] let written = strftime(memory, 20, "%F|%T", parsed);
+		__attr(maybe_unused) let written = strftime(memory, 20, "%F|%T", parsed);
 #else
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
-		[[maybe_unused]] let written = strftime(memory, 20, "%Y-%m-%d|%H:%M:%S", parsed);
+		__attr(maybe_unused) let written = strftime(memory, 20, "%Y-%m-%d|%H:%M:%S", parsed);
 #endif // CNX_PLATFORM_COMPILER_CLANG
 		cnx_assert(written == 19, "Failed to format time point");
 		CnxScopedString str = cnx_string_from_with_allocator(memory, allocator);
@@ -262,10 +262,10 @@ CnxString cnx_time_point_human_readable_format(CnxTimePoint self, CnxAllocator a
 	else {
 #if CNX_PLATFORM_COMPILER_CLANG
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
-		[[maybe_unused]] let written = strftime(memory, 20, "%F|%T", parsed);
+		__attr(maybe_unused) let written = strftime(memory, 20, "%F|%T", parsed);
 #else
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
-		[[maybe_unused]] let written = strftime(memory, 20, "%Y-%m-%d|%H:%M:%S", parsed);
+		__attr(maybe_unused) let written = strftime(memory, 20, "%Y-%m-%d|%H:%M:%S", parsed);
 #endif // CNX_PLATFORM_COMPILER_CLANG
 		cnx_assert(written == 19, "Failed to format time point");
 		return cnx_string_from_with_allocator(memory, allocator);
@@ -277,7 +277,7 @@ CnxString cnx_time_point_format(const CnxFormat* restrict self, CnxFormatSpecifi
 }
 
 CnxString cnx_time_point_format_with_allocator(const CnxFormat* restrict self,
-											   [[maybe_unused]] CnxFormatSpecifier specifier,
+											   __attr(maybe_unused) CnxFormatSpecifier specifier,
 											   CnxAllocator allocator) {
 	cnx_assert(specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
 				   || specifier.m_type == CNX_FORMAT_TYPE_DEBUG,

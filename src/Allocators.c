@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief CnxAllocators provides an abstraction to modularize custom memory allocators to make
 /// custom allocator use simple and configurable
-/// @version 0.2.1
-/// @date 2022-03-28
+/// @version 0.2.2
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -32,19 +32,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void* cnx_allocate([[maybe_unused]] CnxAllocator* restrict self, usize size_bytes) {
+void* cnx_allocate(__attr(maybe_unused) CnxAllocator* restrict self, usize size_bytes) {
 	return malloc(size_bytes);
 }
 
 void*
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-cnx_reallocate([[maybe_unused]] CnxAllocator* restrict self, void* memory, usize new_size_bytes) {
+cnx_reallocate(__attr(maybe_unused) CnxAllocator* restrict self,
+			   void* memory,
+			   usize new_size_bytes) {
 	return realloc(memory, new_size_bytes);
 }
 
 void
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-cnx_deallocate([[maybe_unused]] CnxAllocator* restrict self, void* memory) {
+cnx_deallocate(__attr(maybe_unused) CnxAllocator* restrict self, void* memory) {
 	free(memory);
 }
 

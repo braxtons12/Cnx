@@ -10,8 +10,8 @@
 /// 4. Instantiations for Cnx iterators for the typedefs provided in (2) and (3)
 /// 5. Instantiation of `CnxOption(YourType)`, via provided macros (See `CnxOption(T)`)
 ///
-/// @version 0.2.0
-/// @date 2022-03-21
+/// @version 0.2.1
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -76,16 +76,16 @@ typedef struct CnxArrayConstIterator(ARRAY_T, ARRAY_N) {
 }
 CnxArrayConstIterator(ARRAY_T, ARRAY_N);
 
-[[nodiscard]] CnxArray(ARRAY_T, ARRAY_N) CnxArrayIdentifier(ARRAY_T, ARRAY_N, new)(void);
-[[nodiscard]] CnxArray(ARRAY_T, ARRAY_N)
+__attr(nodiscard) CnxArray(ARRAY_T, ARRAY_N) CnxArrayIdentifier(ARRAY_T, ARRAY_N, new)(void);
+__attr(nodiscard) CnxArray(ARRAY_T, ARRAY_N)
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, new_with_allocator)(CnxAllocator allocator);
-[[nodiscard]] [[not_null(1)]] CnxArray(ARRAY_T, ARRAY_N)
+__attr(nodiscard) __attr(not_null(1)) CnxArray(ARRAY_T, ARRAY_N)
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, new_with_collection_data)(
 		const CnxCollectionData(CnxArray(ARRAY_T, ARRAY_N)) * restrict data)
 		cnx_disable_if(!data,
 					   "Can't create a CnxArray(T, N) with null CnxCollectionData. To create a "
 					   "CnxArray(T, N) with defaulted CnxCollectionData, use cnx_array_new()");
-[[nodiscard]] [[not_null(2)]] CnxArray(ARRAY_T, ARRAY_N)
+__attr(nodiscard) __attr(not_null(2)) CnxArray(ARRAY_T, ARRAY_N)
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, new_with_allocator_and_collection_data)(
 		CnxAllocator allocator,
 		const CnxCollectionData(CnxArray(ARRAY_T, ARRAY_N)) * restrict data)
@@ -97,91 +97,96 @@ CnxArrayConstIterator(ARRAY_T, ARRAY_N);
 	#define ___DISABLE_IF_NULL(self) \
 		cnx_disable_if(!self, "Can't perform an operator on a null array")
 
-[[nodiscard]] [[not_null(1)]] CnxArray(ARRAY_T, ARRAY_N)
+__attr(nodiscard) __attr(not_null(1)) CnxArray(ARRAY_T, ARRAY_N)
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, clone)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self)
 		___DISABLE_IF_NULL(self) cnx_disable_if(
 			!(self->m_data->m_copy_constructor),
 			"Can't clone a CnxArray(ARRAY_T, ARRAY_N) with elements that aren't copyable (no "
 			"element copy constructor defined)");
-[[nodiscard]] [[not_null(1)]] [[returns_not_null]] const ARRAY_T*
-	CnxArrayIdentifier(ARRAY_T, ARRAY_N, at_const)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self,
-												   usize index) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] [[returns_not_null]] ARRAY_T*
-	CnxArrayIdentifier(ARRAY_T, ARRAY_N, at_mut)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
-												 usize index) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] [[returns_not_null]] const ARRAY_T*
-	CnxArrayIdentifier(ARRAY_T, ARRAY_N, front_const)(const CnxArray(ARRAY_T,
-																	 ARRAY_N) * restrict self)
-		___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] [[returns_not_null]] ARRAY_T*
-	CnxArrayIdentifier(ARRAY_T, ARRAY_N, front_mut)(CnxArray(ARRAY_T, ARRAY_N) * restrict self)
-		___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] [[returns_not_null]] const ARRAY_T*
-	CnxArrayIdentifier(ARRAY_T, ARRAY_N, back_const)(const CnxArray(ARRAY_T,
-																	ARRAY_N) * restrict self)
-		___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] [[returns_not_null]] ARRAY_T*
-	CnxArrayIdentifier(ARRAY_T, ARRAY_N, back_mut)(CnxArray(ARRAY_T, ARRAY_N) * restrict self)
-		___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] [[returns_not_null]] const ARRAY_T*
-	CnxArrayIdentifier(ARRAY_T, ARRAY_N, data_const)(const CnxArray(ARRAY_T,
-																	ARRAY_N) * restrict self)
-		___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] [[returns_not_null]] ARRAY_T*
-	CnxArrayIdentifier(ARRAY_T, ARRAY_N, data_mut)(CnxArray(ARRAY_T, ARRAY_N) * restrict self)
-		___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] bool
-	CnxArrayIdentifier(ARRAY_T, ARRAY_N, is_empty)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self)
-		___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] bool
-	CnxArrayIdentifier(ARRAY_T, ARRAY_N, is_full)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self)
-		___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] usize
+__attr(nodiscard) __attr(not_null(1))
+	__attr(returns_not_null) const ARRAY_T* CnxArrayIdentifier(ARRAY_T, ARRAY_N, at_const)(
+		const CnxArray(ARRAY_T, ARRAY_N) * restrict self,
+		usize index) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1))
+	__attr(returns_not_null) ARRAY_T* CnxArrayIdentifier(ARRAY_T, ARRAY_N, at_mut)(
+		CnxArray(ARRAY_T, ARRAY_N) * restrict self,
+		usize index) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1))
+	__attr(returns_not_null) const ARRAY_T* CnxArrayIdentifier(ARRAY_T, ARRAY_N, front_const)(
+		const CnxArray(ARRAY_T, ARRAY_N) * restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1))
+	__attr(returns_not_null) ARRAY_T* CnxArrayIdentifier(ARRAY_T, ARRAY_N, front_mut)(
+		CnxArray(ARRAY_T, ARRAY_N) * restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1))
+	__attr(returns_not_null) const ARRAY_T* CnxArrayIdentifier(ARRAY_T, ARRAY_N, back_const)(
+		const CnxArray(ARRAY_T, ARRAY_N) * restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1))
+	__attr(returns_not_null) ARRAY_T* CnxArrayIdentifier(ARRAY_T, ARRAY_N, back_mut)(
+		CnxArray(ARRAY_T, ARRAY_N) * restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1))
+	__attr(returns_not_null) const ARRAY_T* CnxArrayIdentifier(ARRAY_T, ARRAY_N, data_const)(
+		const CnxArray(ARRAY_T, ARRAY_N) * restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1))
+	__attr(returns_not_null) ARRAY_T* CnxArrayIdentifier(ARRAY_T, ARRAY_N, data_mut)(
+		CnxArray(ARRAY_T, ARRAY_N) * restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) bool CnxArrayIdentifier(ARRAY_T, ARRAY_N, is_empty)(
+	const CnxArray(ARRAY_T, ARRAY_N) * restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) bool CnxArrayIdentifier(ARRAY_T, ARRAY_N, is_full)(
+	const CnxArray(ARRAY_T, ARRAY_N) * restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) usize
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, size)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self)
 		___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] usize
+__attr(nodiscard) __attr(not_null(1)) usize
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, capacity)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self)
 		___DISABLE_IF_NULL(self);
-[[not_null(1)]] void
-	CnxArrayIdentifier(ARRAY_T, ARRAY_N, resize)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
-												 usize new_size) ___DISABLE_IF_NULL(self);
-[[not_null(1)]] void
-	CnxArrayIdentifier(ARRAY_T, ARRAY_N, clear)(CnxArray(ARRAY_T, ARRAY_N) * restrict self)
-		___DISABLE_IF_NULL(self);
-[[not_null(1)]] void
-	CnxArrayIdentifier(ARRAY_T, ARRAY_N, push_back)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
-													ARRAY_T element) ___DISABLE_IF_NULL(self);
-[[not_null(1)]] CnxOption(ARRAY_T)
+__attr(not_null(1)) void CnxArrayIdentifier(ARRAY_T,
+											ARRAY_N,
+											resize)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
+													usize new_size) ___DISABLE_IF_NULL(self);
+__attr(not_null(1)) void CnxArrayIdentifier(ARRAY_T,
+											ARRAY_N,
+											clear)(CnxArray(ARRAY_T, ARRAY_N) * restrict self)
+	___DISABLE_IF_NULL(self);
+__attr(not_null(1)) void CnxArrayIdentifier(ARRAY_T,
+											ARRAY_N,
+											push_back)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
+													   ARRAY_T element) ___DISABLE_IF_NULL(self);
+__attr(not_null(1)) CnxOption(ARRAY_T)
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, pop_back)(CnxArray(ARRAY_T, ARRAY_N) * restrict self)
 		___DISABLE_IF_NULL(self);
-[[not_null(1)]] void
-	CnxArrayIdentifier(ARRAY_T, ARRAY_N, insert)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
-												 ARRAY_T element,
-												 usize index) ___DISABLE_IF_NULL(self);
-[[not_null(1)]] void
-	CnxArrayIdentifier(ARRAY_T, ARRAY_N, erase)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
-												usize index) ___DISABLE_IF_NULL(self);
-[[not_null(1)]] void
-	CnxArrayIdentifier(ARRAY_T, ARRAY_N, erase_n)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
-												  usize index,
-												  usize length) ___DISABLE_IF_NULL(self);
-[[not_null(1)]] void
-	CnxArrayIdentifier(ARRAY_T, ARRAY_N, free)(void* restrict self) ___DISABLE_IF_NULL(self);
+__attr(not_null(1)) void CnxArrayIdentifier(ARRAY_T,
+											ARRAY_N,
+											insert)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
+													ARRAY_T element,
+													usize index) ___DISABLE_IF_NULL(self);
+__attr(not_null(1)) void CnxArrayIdentifier(ARRAY_T,
+											ARRAY_N,
+											erase)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
+												   usize index) ___DISABLE_IF_NULL(self);
+__attr(not_null(1)) void CnxArrayIdentifier(ARRAY_T,
+											ARRAY_N,
+											erase_n)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
+													 usize index,
+													 usize length) ___DISABLE_IF_NULL(self);
+__attr(not_null(1)) void CnxArrayIdentifier(ARRAY_T, ARRAY_N, free)(void* restrict self)
+	___DISABLE_IF_NULL(self);
 
-[[nodiscard]] [[not_null(1)]] CnxString
+__attr(nodiscard) __attr(not_null(1)) CnxString
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, format)(const CnxFormat* restrict self,
 												 CnxFormatSpecifier specifier)
 		___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxString
+__attr(nodiscard) __attr(not_null(1)) CnxString
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, format_with_allocator)(const CnxFormat* restrict self,
 																CnxFormatSpecifier specifier,
 																CnxAllocator allocator)
 		___DISABLE_IF_NULL(self);
 
-[[maybe_unused]] static ImplTraitFor(CnxFormat,
-									 CnxArray(ARRAY_T, ARRAY_N),
-									 CnxArrayIdentifier(ARRAY_T, ARRAY_N, format),
-									 CnxArrayIdentifier(ARRAY_T, ARRAY_N, format_with_allocator));
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 CnxArray(ARRAY_T, ARRAY_N),
+										 CnxArrayIdentifier(ARRAY_T, ARRAY_N, format),
+										 CnxArrayIdentifier(ARRAY_T,
+															ARRAY_N,
+															format_with_allocator));
 
 DeclIntoCnxRandomAccessIterator(CnxArray(ARRAY_T, ARRAY_N),
 								Ref(ARRAY_T),
@@ -200,29 +205,29 @@ DeclIntoCnxRandomAccessIterator(CnxArray(ARRAY_T, ARRAY_N),
 								CnxArrayIdentifier(ARRAY_T, ARRAY_N, into_reverse_const_iter),
 								into_reverse);
 
-[[nodiscard]] [[not_null(1)]] CnxRandomAccessIterator(Ref(ARRAY_T))
+__attr(nodiscard) __attr(not_null(1)) CnxRandomAccessIterator(Ref(ARRAY_T))
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, begin)(CnxArray(ARRAY_T, ARRAY_N) * restrict self)
 		___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxRandomAccessIterator(Ref(ARRAY_T))
+__attr(nodiscard) __attr(not_null(1)) CnxRandomAccessIterator(Ref(ARRAY_T))
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, end)(CnxArray(ARRAY_T, ARRAY_N) * restrict self)
 		___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxRandomAccessIterator(Ref(ARRAY_T))
+__attr(nodiscard) __attr(not_null(1)) CnxRandomAccessIterator(Ref(ARRAY_T))
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, rbegin)(CnxArray(ARRAY_T, ARRAY_N) * restrict self)
 		___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxRandomAccessIterator(Ref(ARRAY_T))
+__attr(nodiscard) __attr(not_null(1)) CnxRandomAccessIterator(Ref(ARRAY_T))
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, rend)(CnxArray(ARRAY_T, ARRAY_N) * restrict self)
 		___DISABLE_IF_NULL(self);
 
-[[nodiscard]] [[not_null(1)]] CnxRandomAccessIterator(ConstRef(ARRAY_T))
+__attr(nodiscard) __attr(not_null(1)) CnxRandomAccessIterator(ConstRef(ARRAY_T))
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, cbegin)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self)
 		___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxRandomAccessIterator(ConstRef(ARRAY_T))
+__attr(nodiscard) __attr(not_null(1)) CnxRandomAccessIterator(ConstRef(ARRAY_T))
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, cend)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self)
 		___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxRandomAccessIterator(ConstRef(ARRAY_T))
+__attr(nodiscard) __attr(not_null(1)) CnxRandomAccessIterator(ConstRef(ARRAY_T))
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, crbegin)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self)
 		___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxRandomAccessIterator(ConstRef(ARRAY_T))
+__attr(nodiscard) __attr(not_null(1)) CnxRandomAccessIterator(ConstRef(ARRAY_T))
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, crend)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self)
 		___DISABLE_IF_NULL(self);
 

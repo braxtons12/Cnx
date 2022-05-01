@@ -1,8 +1,8 @@
 /// @file Clock.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides methods for operating with system clocks
-/// @version 0.1.2
-/// @date 2022-03-26
+/// @version 0.1.3
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -66,7 +66,7 @@ IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 	#if _WIN32_WINNT < _WIN32_WINNT_WIN8
 typedef void(WINAPI* GetSystemTimeAsFileTimePtr)(LPFILETIME);
 
-[[always_inline]] static inline GetSystemTimeAsFileTimePtr get_win_system_time_function(void) {
+__attr(always_inline) static inline GetSystemTimeAsFileTimePtr get_win_system_time_function(void) {
 	IGNORE_CAST_FUNCTION_TYPE_WARNING_START
 	let_mut func_ptr = static_cast(GetSystemTimeAsFileTimePtr)(
 		GetProcAddress(GetModuleHandleW(L"kernel32.dll"), "GetSystemTimePreciseAsFileTime"));
@@ -145,19 +145,19 @@ CnxTimePoint __cnx_system_clock_max_time_point(const CnxClock* restrict self) {
 		self);
 }
 
-CnxClockResolution __cnx_system_clock_resolution([[maybe_unused]] const CnxClock* restrict self) {
+CnxClockResolution __cnx_system_clock_resolution(__attr(maybe_unused) const CnxClock* restrict self) {
 	return CNX_CLOCK_MICROSECONDS;
 }
 
-CnxRatio __cnx_system_clock_resolution_as_ratio([[maybe_unused]] const CnxClock* restrict self) {
+CnxRatio __cnx_system_clock_resolution_as_ratio(__attr(maybe_unused) const CnxClock* restrict self) {
 	return cnx_microseconds_period;
 }
 
-CnxTimePointLocale __cnx_system_clock_locale([[maybe_unused]] const CnxClock* restrict self) {
+CnxTimePointLocale __cnx_system_clock_locale(__attr(maybe_unused) const CnxClock* restrict self) {
 	return CNX_LOCAL_TIME;
 }
 
-CnxString __cnx_system_clock_format_with_allocator([[maybe_unused]] const CnxClock* restrict self,
+CnxString __cnx_system_clock_format_with_allocator(__attr(maybe_unused) const CnxClock* restrict self,
 												   CnxAllocator allocator) {
 	return cnx_string_from_with_allocator("CnxClock: cnx_system_clock", allocator);
 }
@@ -203,7 +203,7 @@ CnxTimePoint __cnx_steady_clock_now(const CnxClock* restrict self) {
 		CNX_UNKNOWN_TIME);
 }
 	#elif CNX_PLATFORM_WINDOWS
-[[always_inline]] static inline LARGE_INTEGER query_performance_frequency(void) {
+__attr(always_inline) static inline LARGE_INTEGER query_performance_frequency(void) {
 	LARGE_INTEGER val;
 	ignore(QueryPerformanceFrequency(&val));
 	return val;
@@ -261,19 +261,19 @@ CnxTimePoint __cnx_steady_clock_max_time_point(const CnxClock* restrict self) {
 		CNX_UNKNOWN_TIME);
 }
 
-CnxClockResolution __cnx_steady_clock_resolution([[maybe_unused]] const CnxClock* restrict self) {
+CnxClockResolution __cnx_steady_clock_resolution(__attr(maybe_unused) const CnxClock* restrict self) {
 	return CNX_CLOCK_NANOSECONDS;
 }
 
-CnxRatio __cnx_steady_clock_resolution_as_ratio([[maybe_unused]] const CnxClock* restrict self) {
+CnxRatio __cnx_steady_clock_resolution_as_ratio(__attr(maybe_unused) const CnxClock* restrict self) {
 	return cnx_nanoseconds_period;
 }
 
-CnxTimePointLocale __cnx_steady_clock_locale([[maybe_unused]] const CnxClock* restrict self) {
+CnxTimePointLocale __cnx_steady_clock_locale(__attr(maybe_unused) const CnxClock* restrict self) {
 	return CNX_UNKNOWN_TIME;
 }
 
-CnxString __cnx_steady_clock_format_with_allocator([[maybe_unused]] const CnxClock* restrict self,
+CnxString __cnx_steady_clock_format_with_allocator(__attr(maybe_unused) const CnxClock* restrict self,
 												   CnxAllocator allocator) {
 	return cnx_string_from_with_allocator("CnxClock: cnx_steady_clock", allocator);
 }
@@ -346,7 +346,7 @@ CnxDuration local_time_gmt_offset(void) {
 	return cnx_microseconds(seconds * cnx_microseconds_period.den + microseconds);
 }
 
-CnxTimePoint __cnx_utc_clock_now([[maybe_unused]] const CnxClock* restrict self) {
+CnxTimePoint __cnx_utc_clock_now(__attr(maybe_unused) const CnxClock* restrict self) {
 #if CNX_PLATFORM_WINDOWS
 	return cnx_convert_local_time_to_utc(trait_call(now, cnx_system_clock));
 #else
@@ -356,7 +356,7 @@ CnxTimePoint __cnx_utc_clock_now([[maybe_unused]] const CnxClock* restrict self)
 #endif
 }
 
-CnxTimePoint __cnx_utc_clock_min_time_point([[maybe_unused]] const CnxClock* restrict self) {
+CnxTimePoint __cnx_utc_clock_min_time_point(__attr(maybe_unused) const CnxClock* restrict self) {
 #if CNX_PLATFORM_WINDOWS
 	return cnx_convert_local_time_to_utc(trait_call(min_time_point, cnx_system_clock));
 #else
@@ -366,7 +366,7 @@ CnxTimePoint __cnx_utc_clock_min_time_point([[maybe_unused]] const CnxClock* res
 #endif
 }
 
-CnxTimePoint __cnx_utc_clock_max_time_point([[maybe_unused]] const CnxClock* restrict self) {
+CnxTimePoint __cnx_utc_clock_max_time_point(__attr(maybe_unused) const CnxClock* restrict self) {
 #if CNX_PLATFORM_WINDOWS
 	return cnx_convert_local_time_to_utc(trait_call(max_time_point, cnx_system_clock));
 #else
@@ -376,15 +376,15 @@ CnxTimePoint __cnx_utc_clock_max_time_point([[maybe_unused]] const CnxClock* res
 #endif
 }
 
-CnxClockResolution __cnx_utc_clock_resolution([[maybe_unused]] const CnxClock* restrict self) {
+CnxClockResolution __cnx_utc_clock_resolution(__attr(maybe_unused) const CnxClock* restrict self) {
 	return trait_call(resolution, cnx_system_clock);
 }
 
-CnxRatio __cnx_utc_clock_resolution_as_ratio([[maybe_unused]] const CnxClock* restrict self) {
+CnxRatio __cnx_utc_clock_resolution_as_ratio(__attr(maybe_unused) const CnxClock* restrict self) {
 	return trait_call(resolution_as_ratio, cnx_system_clock);
 }
 
-CnxTimePointLocale __cnx_utc_clock_locale([[maybe_unused]] const CnxClock* restrict self) {
+CnxTimePointLocale __cnx_utc_clock_locale(__attr(maybe_unused) const CnxClock* restrict self) {
 	return CNX_UTC_TIME;
 }
 
@@ -392,7 +392,7 @@ CnxString __cnx_utc_clock_format(const CnxClock* restrict self) {
 	return __cnx_utc_clock_format_with_allocator(self, DEFAULT_ALLOCATOR);
 }
 
-CnxString __cnx_utc_clock_format_with_allocator([[maybe_unused]] const CnxClock* restrict self,
+CnxString __cnx_utc_clock_format_with_allocator(__attr(maybe_unused) const CnxClock* restrict self,
 												CnxAllocator allocator) {
 	return cnx_string_from_with_allocator("CnxClock: cnx_utc_clock", allocator);
 }
@@ -463,7 +463,7 @@ CnxTimePoint cnx_convert_local_time_to_utc(CnxTimePoint local_time) {
 	}
 }
 
-CnxTimePoint __cnx_local_clock_now([[maybe_unused]] const CnxClock* restrict self) {
+CnxTimePoint __cnx_local_clock_now(__attr(maybe_unused) const CnxClock* restrict self) {
 #if CNX_PLATFORM_WINDOWS
 	let_mut time = trait_call(now, cnx_system_clock);
 	time.clock = self;
@@ -473,7 +473,7 @@ CnxTimePoint __cnx_local_clock_now([[maybe_unused]] const CnxClock* restrict sel
 #endif
 }
 
-CnxTimePoint __cnx_local_clock_min_time_point([[maybe_unused]] const CnxClock* restrict self) {
+CnxTimePoint __cnx_local_clock_min_time_point(__attr(maybe_unused) const CnxClock* restrict self) {
 #if CNX_PLATFORM_WINDOWS
 	let_mut time = trait_call(min_time_point, cnx_system_clock);
 	time.clock = self;
@@ -483,7 +483,7 @@ CnxTimePoint __cnx_local_clock_min_time_point([[maybe_unused]] const CnxClock* r
 #endif
 }
 
-CnxTimePoint __cnx_local_clock_max_time_point([[maybe_unused]] const CnxClock* restrict self) {
+CnxTimePoint __cnx_local_clock_max_time_point(__attr(maybe_unused) const CnxClock* restrict self) {
 #if CNX_PLATFORM_WINDOWS
 	let_mut time = trait_call(max_time_point, cnx_system_clock);
 	time.clock = self;
@@ -493,15 +493,15 @@ CnxTimePoint __cnx_local_clock_max_time_point([[maybe_unused]] const CnxClock* r
 #endif
 }
 
-CnxClockResolution __cnx_local_clock_resolution([[maybe_unused]] const CnxClock* restrict self) {
+CnxClockResolution __cnx_local_clock_resolution(__attr(maybe_unused) const CnxClock* restrict self) {
 	return trait_call(resolution, cnx_system_clock);
 }
 
-CnxRatio __cnx_local_clock_resolution_as_ratio([[maybe_unused]] const CnxClock* restrict self) {
+CnxRatio __cnx_local_clock_resolution_as_ratio(__attr(maybe_unused) const CnxClock* restrict self) {
 	return trait_call(resolution_as_ratio, cnx_system_clock);
 }
 
-CnxTimePointLocale __cnx_local_clock_locale([[maybe_unused]] const CnxClock* restrict self) {
+CnxTimePointLocale __cnx_local_clock_locale(__attr(maybe_unused) const CnxClock* restrict self) {
 	return CNX_LOCAL_TIME;
 }
 
@@ -509,7 +509,7 @@ CnxString __cnx_local_clock_format(const CnxClock* restrict self) {
 	return __cnx_local_clock_format_with_allocator(self, DEFAULT_ALLOCATOR);
 }
 
-CnxString __cnx_local_clock_format_with_allocator([[maybe_unused]] const CnxClock* restrict self,
+CnxString __cnx_local_clock_format_with_allocator(__attr(maybe_unused) const CnxClock* restrict self,
 												  CnxAllocator allocator) {
 	return cnx_string_from_with_allocator("CnxClock: cnx_local_clock", allocator);
 }
@@ -567,7 +567,7 @@ CnxString cnx_clock_format(const CnxFormat* restrict self, CnxFormatSpecifier sp
 }
 
 CnxString cnx_clock_format_with_allocator(const CnxFormat* restrict self,
-										  [[maybe_unused]] CnxFormatSpecifier specifier,
+										  __attr(maybe_unused) CnxFormatSpecifier specifier,
 										  CnxAllocator allocator) {
 	cnx_assert(specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
 				   || specifier.m_type == CNX_FORMAT_TYPE_DEBUG,

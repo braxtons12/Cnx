@@ -343,29 +343,31 @@ static const usize cnx_string_capacity_mode_shift
 	= cnx_string_is_little_endian ? (sizeof(usize) - 1) * 8U : 0U;
 static const usize cnx_string_len_cap_shift = cnx_string_is_little_endian ? 0U : 1U;
 
-[[always_inline]] [[nodiscard]] [[not_null(1)]] [[returns_not_null]] static inline u8*
-cnx_string_length_remaining(const CnxString* restrict self) {
+__attr(always_inline) __attr(nodiscard) __attr(not_null(1))
+	__attr(returns_not_null) static inline u8* cnx_string_length_remaining(
+		const CnxString* restrict self) {
 	return static_cast(u8*)(&(self->m_short[CNX_STRING_SHORT_OPTIMIZATION_CAPACITY]));
 }
 
-[[always_inline]] [[nodiscard]] [[not_null(1)]] static inline bool
-cnx_string_is_short(const CnxString* restrict self) {
+__attr(always_inline) __attr(nodiscard)
+	__attr(not_null(1)) static inline bool cnx_string_is_short(const CnxString* restrict self) {
 	return !((self->m_capacity >> cnx_string_capacity_mode_shift) // NOLINT
 			 & cnx_string_long_mask);
 }
 
-[[always_inline]] [[not_null(1)]] static inline void cnx_string_set_long(CnxString* restrict self) {
+__attr(always_inline)
+	__attr(not_null(1)) static inline void cnx_string_set_long(CnxString* restrict self) {
 	self->m_capacity |= (cnx_string_long_mask << cnx_string_capacity_mode_shift);
 }
 
-[[always_inline]] [[not_null(1)]] static inline void
-cnx_string_set_short(CnxString* restrict self) {
+__attr(always_inline)
+	__attr(not_null(1)) static inline void cnx_string_set_short(CnxString* restrict self) {
 	self->m_capacity
 		&= ~(static_cast(usize)(cnx_string_long_mask << cnx_string_capacity_mode_shift));
 }
 
-[[always_inline]] [[nodiscard]] [[not_null(1)]] static inline usize
-cnx_string_get_capacity(const CnxString* restrict self) {
+__attr(always_inline) __attr(nodiscard) __attr(not_null(1)) static inline usize
+	cnx_string_get_capacity(const CnxString* restrict self) {
 	return cnx_string_is_short(self) ?
 			   CNX_STRING_SHORT_OPTIMIZATION_CAPACITY :
 			   (self->m_capacity
@@ -373,22 +375,24 @@ cnx_string_get_capacity(const CnxString* restrict self) {
 					  >> cnx_string_len_cap_shift);
 }
 
-[[always_inline]] [[not_null(1)]] static inline void
-cnx_string_set_capacity(CnxString* restrict self, usize new_capacity) {
+__attr(always_inline)
+	__attr(not_null(1)) static inline void cnx_string_set_capacity(CnxString* restrict self,
+																   usize new_capacity) {
 	cnx_assert(!cnx_string_is_short(self), "Can't set capacity on a short optimized string");
 	self->m_capacity = (new_capacity << cnx_string_len_cap_shift)
 					   | (cnx_string_long_mask << cnx_string_capacity_mode_shift);
 }
 
-[[always_inline]] [[nodiscard]] [[not_null(1)]] static inline usize
-cnx_string_get_short_length(const CnxString* restrict self) {
+__attr(always_inline) __attr(nodiscard) __attr(not_null(1)) static inline usize
+	cnx_string_get_short_length(const CnxString* restrict self) {
 	cnx_assert(cnx_string_is_short(self), "Can't get short length of a long string");
 	return CNX_STRING_SHORT_OPTIMIZATION_CAPACITY
 		   - (static_cast(usize)(*(cnx_string_length_remaining(self))) >> cnx_string_len_cap_shift);
 }
 
-[[always_inline]] [[not_null(1)]] static inline void
-cnx_string_set_length(CnxString* restrict self, usize new_length) {
+__attr(always_inline)
+	__attr(not_null(1)) static inline void cnx_string_set_length(CnxString* restrict self,
+																 usize new_length) {
 	cnx_assert(new_length <= cnx_string_capacity(*self),
 			   "Can't set string length longer than capacity");
 	if(cnx_string_is_short(self)) {
@@ -400,13 +404,15 @@ cnx_string_set_length(CnxString* restrict self, usize new_length) {
 	}
 }
 
-[[always_inline]] [[not_null(1)]] static inline void
-cnx_string_increase_length(CnxString* restrict self, usize amount_to_increase) {
+__attr(always_inline)
+	__attr(not_null(1)) static inline void cnx_string_increase_length(CnxString* restrict self,
+																	  usize amount_to_increase) {
 	cnx_string_set_length(self, cnx_string_length(*self) + amount_to_increase);
 }
 
-[[always_inline]] [[not_null(1)]] static inline void
-cnx_string_decrease_length(CnxString* restrict self, usize amount_to_decrease) {
+__attr(always_inline)
+	__attr(not_null(1)) static inline void cnx_string_decrease_length(CnxString* restrict self,
+																	  usize amount_to_decrease) {
 	cnx_assert(amount_to_decrease <= cnx_string_length(*self),
 			   "Can't decrease string length by more than length");
 	cnx_string_set_length(self, cnx_string_length(*self) - amount_to_decrease);
@@ -675,7 +681,7 @@ bool cnx_string_equal_stringview(const CnxString* restrict self,
 
 /// @brief Determines if the substring of `self` beginning at `index` is the same as the given
 /// `substring`
-[[always_inline]] [[nodiscard]] [[not_null(1, 2)]] static inline CnxOption(usize)
+__attr(always_inline) __attr(nodiscard) __attr(not_null(1, 2)) static inline CnxOption(usize)
 	cnx_string_contains_from_left(const CnxString* restrict self,
 								  const CnxString* restrict substring,
 								  usize index) {
@@ -694,7 +700,7 @@ bool cnx_string_equal_stringview(const CnxString* restrict self,
 
 /// @brief Determines if the substring of `self` ending with `index` (inclusive)is the same as
 /// the given `substring`
-[[always_inline]] [[nodiscard]] [[not_null(1, 2)]] static inline CnxOption(usize)
+__attr(always_inline) __attr(nodiscard) __attr(not_null(1, 2)) static inline CnxOption(usize)
 	cnx_string_contains_from_right(const CnxString* restrict self,
 								   const CnxString* restrict substring,
 								   usize index) {
@@ -741,7 +747,7 @@ bool(cnx_string_contains)(const CnxString* restrict self, const CnxString* restr
 
 /// @brief Determines if the substring of `self` beginning at `index` is the same as the given
 /// `substring`
-[[always_inline]] [[nodiscard]] [[not_null(1, 2)]] static inline CnxOption(usize)
+__attr(always_inline) __attr(nodiscard) __attr(not_null(1, 2)) static inline CnxOption(usize)
 	cnx_string_contains_cstring_from_left(const CnxString* restrict self,
 										  restrict const_cstring substring,
 										  usize substring_length,
@@ -760,7 +766,7 @@ bool(cnx_string_contains)(const CnxString* restrict self, const CnxString* restr
 
 /// @brief Determines if the substring of `self` ending with `index` (inclusive)is the same as
 /// the given `substring`
-[[always_inline]] [[nodiscard]] [[not_null(1, 2)]] static inline CnxOption(usize)
+__attr(always_inline) __attr(nodiscard) __attr(not_null(1, 2)) static inline CnxOption(usize)
 	cnx_string_contains_cstring_from_right(const CnxString* restrict self,
 										   restrict const_cstring substring,
 										   usize substring_length,
@@ -943,7 +949,7 @@ CnxString(cnx_string_substring_with_allocator)(const CnxString* restrict self,
 											   usize index,
 											   usize length,
 											   CnxAllocator allocator) {
-	[[maybe_unused]] let self_length = cnx_string_length(*self);
+	__attr(maybe_unused) let self_length = cnx_string_length(*self);
 	cnx_assert(index < self_length,
 			   "cnx_string_substring called with index >= self->m_length (index out of bounds)");
 	cnx_assert(index + length <= self_length,
@@ -959,7 +965,7 @@ CnxString(cnx_string_substring_with_allocator)(const CnxString* restrict self,
 }
 
 CnxStringView(cnx_string_stringview_of)(const CnxString* restrict self, usize index, usize length) {
-	[[maybe_unused]] let self_length = cnx_string_length(*self);
+	__attr(maybe_unused) let self_length = cnx_string_length(*self);
 	cnx_assert(index < self_length,
 			   "cnx_stringview_of called with index >= self->m_length (index out of bounds)");
 	cnx_assert(
@@ -1240,8 +1246,8 @@ void cnx_string_resize_internal(CnxString* restrict self, usize new_size) {
 	}
 }
 
-[[always_inline]] [[nodiscard]] static inline usize
-cnx_string_get_expanded_capacity(usize old_capacity, usize num_increments) {
+__attr(always_inline) __attr(nodiscard) static inline usize
+	cnx_string_get_expanded_capacity(usize old_capacity, usize num_increments) {
 	return num_increments * ((old_capacity * 3) / 2);
 }
 

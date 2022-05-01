@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Def provides various `#define`s for performing basic tasks and macro-related
 /// functions.
-/// @version 0.2.2
-/// @date 2022-04-20
+/// @version 0.2.3
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -112,9 +112,9 @@
 		/// @brief Disables the preceding/following function at compile-time, based on the given
 		/// `condition`
 		///
-		/// Forces a compiler error with the given message if the associated function is called and
-		/// `condition` evaluates to `true`. `condition` can include parameters to the function if
-		/// this is applied as a postfix, thus enabling things like:
+		/// Forces a compiler error with the given message if the associated function is called
+		/// and `condition` evaluates to `true`. `condition` can include parameters to the
+		/// function if this is applied as a postfix, thus enabling things like:
 		/// @code {.c}
 		/// int func(int a, int b) cnx_disable_if(a < b, "a must be greater than b") {
 		/// 	// do things here...
@@ -132,9 +132,9 @@
 		/// @brief Enables the preceding/following function at compile-time, based on the given
 		/// `condition`
 		///
-		/// Forces a compiler error with the given message if the associated function is called and
-		/// `condition` evaluates to `false`. `condition` can include parameters to the function if
-		/// this is applied as a postfix, thus enabling things like:
+		/// Forces a compiler error with the given message if the associated function is called
+		/// and `condition` evaluates to `false`. `condition` can include parameters to the
+		/// function if this is applied as a postfix, thus enabling things like:
 		/// @code {.c}
 		/// int func(int a, int b) cnx_enable_if(a > b, "a must be greater than b") {
 		/// 	// do things here...
@@ -148,20 +148,20 @@
 		///
 		/// @ingroup cnx_def
 		#define cnx_enable_if(condition, message) cnx_disable_if(!(condition), (message))
-		/// @brief Emits a warning for using the preceding/following function at compile-time, based
-		/// on the given `condition`
+		/// @brief Emits a warning for using the preceding/following function at compile-time,
+		/// based on the given `condition`
 		///
-		/// Forces a compiler warning with the given message if the associated function is called
-		/// and `condition` evaluates to `true`. `condition` can include parameters to the function
-		/// if this is applied as a postfix, thus enabling things like:
+		/// Forces a compiler warning with the given message if the associated function is
+		/// called and `condition` evaluates to `true`. `condition` can include parameters to
+		/// the function if this is applied as a postfix, thus enabling things like:
 		/// @code {.c}
 		/// int func(int a, int b) cnx_warn_if(a < b, "a must be greater than b") {
 		/// 	// do things here...
 		/// }
 		/// @endcode
 		///
-		/// @param condition - The condition indicating whether using the function should cause a
-		/// warning
+		/// @param condition - The condition indicating whether using the function should cause
+		/// a warning
 		/// @param message - The error message for the compiler to show the user
 		///
 		/// @note This is only available when compiling with Clang
@@ -375,10 +375,36 @@
 /// @brief Specify that the given scope is unreachable
 /// @ingroup cnx_def
 #define unreachable() __builtin_unreachable()
+
+#if CNX_PLATFORM_COMPILER_CLANG
+	#define IGNORE_RESERVED_IDENTIFIER_WARNING_START \
+		_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wreserved-identifier\"")
+	#define IGNORE_RESERVED_IDENTIFIER_WARNING_STOP _Pragma("GCC diagnostic pop")
+#else
+	#define IGNORE_RESERVED_IDENTIFIER_WARNING_START
+	#define IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
+#endif
+
+/// @def attr
+/// @brief Wrapper around attributes to support both GNU syntax pre C23 (ie `__attribute__(())`)
+/// and ISO C syntax post C23 (ie `[[]]`)
+/// @ingroup cnx_def
+#if CNX_C_STD_23
+	#define __attr(...) [[__VA_ARGS__]]
+#else
+	#define __attr(...) __attribute__((__VA_ARGS__))
+#endif // CNX_C_STD_23
+
+/// @def always_inline
 /// @brief Specify that the following function should always be inlined
 /// @ingroup cnx_def
-#define always_inline gnu::always_inline
+#if CNX_C_STD_23
+	#define always_inline gnu::always_inline
+#else
+	#define always_inline always_inline
+#endif // CNX_C_STD_23
 
+/// @def not_null
 /// @brief Attribute to specify that the function arguments in the indicated positions
 /// (1-based indices) should not be nullptr
 ///
@@ -387,8 +413,13 @@
 /// [[not_null(1, 2)]] int func(void* data, void* res, int value);
 /// @endcode
 /// @ingroup cnx_def
-#define not_null(...) gnu::nonnull(__VA_ARGS__)
+#if CNX_C_STD_23
+	#define not_null(...) gnu::nonnull(__VA_ARGS__)
+#else
+	#define not_null(...) nonnull(__VA_ARGS__)
+#endif // CNX_C_STD_23
 
+/// @def returns_not_null
 /// @brief Attribute to specify that the pointer the function returns will never be nullptr
 ///
 /// Example
@@ -396,29 +427,67 @@
 ///	[[returns_not_null]] void* func(void* data, int value);
 /// @endcode
 /// @ingroup cnx_def
-#define returns_not_null gnu::returns_nonnull
+#if CNX_C_STD_23
+	#define returns_not_null gnu::returns_nonnull
+#else
+	#define returns_not_null returns_nonnull
+#endif // CNX_C_STD_23
 
 /// @def nodiscard
 /// @brief Attribute to specify that the return value of the tagged function should not be discarded
 ///
 /// Example
 /// @code {.c}
-/// [[nodiscard]] my_important_return_type my_important_function(void);
+/// __attr(nodiscard) my_important_return_type my_important_function(void);
 /// @endcode
 /// @ingroup cnx_def
 
-#if defined(__has_c_attribute)
-	#if __has_c_attribute(nodiscard)
-		#define nodiscard nodiscard
-	#elif __has_c_attribute(gnu::nodiscard)
-		#define nodiscard gnu::nodiscard
-	#else
+#if CNX_C_STD_23
+	#if defined(__has_c_attribute)
+		#if __has_c_attribute(nodiscard)
+			#define nodiscard nodiscard
+		#elif __has_c_attribute(gnu::nodiscard)
+			#define nodiscard gnu::nodiscard
+		#else // __has_c_attribute(nodiscard)
+			#define nodiscard
+		#endif // __has_c_attribute(nodiscard)
+	#else // defined(__has_c_attribute)
 		#define nodiscard
-	#endif // __has_c_attribute(nodiscard)
-#else
-	#define nodiscard
-#endif // defined(__has_c_attribute)
+	#endif // defined(__has_c_attribute)
+#else //  ^ CNX_C_STD_23 v CNX_C_STD_11 || CNX_C_STD_17
+			#define nodiscard warn_unused_result
+#endif // CNX_C_STD_23
 
+/// @def maybe_unused
+/// @brief Attribute to specify that a value may be unused or discarded
+///
+/// Example
+/// @code {.c}
+/// void my_important_function(__attr(maybe_unused) i32 my_int);
+/// @endcode
+/// @ingroup cnx_def
+
+#if CNX_C_STD_23
+	#if defined(__has_c_attribute)
+		#if __has_c_attribute(maybe_unused)
+			#define maybe_unused maybe_unused
+		#elif __has_c_attribute(gnu::maybe_unused)
+			#define maybe_unused gnu::maybe_unused
+		#elif __has_c_attribute(unused)
+			#define maybe_unused unused
+		#elif __has_c_attribute(gnu::unused)
+			#define mayeb_unused gnu::unused
+		#else // __has_c_attribute(maybe_unused)
+			#define maybe_unused
+		#endif // __has_c_attribute(maybe_unused)
+	#else // defined(__has_c_attribute)
+		#define maybe_unused
+	#endif // defined(__has_c_attribute)
+#else //  ^ CNX_C_STD_23 v CNX_C_STD_11 || CNX_C_STD_17
+		#define maybe_unused unused
+#endif // CNX_C_STD_23
+
+/// @def scoped
 /// @brief Use this macro to declare a variable that will have a cleanup function called on it
 /// at scope end.
 ///
@@ -428,7 +497,11 @@
 /// @param scope_end_func - The function to call on the declared variable when it goes out of
 /// scope
 /// @ingroup cnx_def
-#define scoped(scope_end_func) [[gnu::cleanup(scope_end_func)]] let_mut
+#if CNX_C_STD_23
+	#define scoped(scope_end_func) [[gnu::cleanup(scope_end_func)]] let_mut
+#else
+	#define scoped(scope_end_func) __attr(cleanup(scope_end_func)) let_mut 
+#endif
 
 /// @brief Moves `self` into the assigned-to or bound-to variable/parameter/etc.
 ///
@@ -506,12 +579,25 @@
 /// @ingroup cnx_def
 #define ranged_for(var, begin, end) for(let_mut var = (begin); (var) < (end); ++(var))
 
+#if CNX_PLATFORM_COMPILER_GCC
+	#define IGNORE_UNUSED_RESULT_WARNING_START \
+		_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wunused-result\"")
+	#define IGNORE_UNUSED_RESULT_WARNING_STOP _Pragma("GCC diagnostic pop")
+#else
+	#define IGNORE_UNUSED_RESULT_WARNING_START
+	#define IGNORE_UNUSED_RESULT_WARNING_STOP
+#endif // CNX_PLATFORM_COMPILER_GCC
+
 /// @brief Ignores the given parameters.
 ///
 /// Use to ignore the passed parameters, preventing compiler warnings for parameters that are
 /// intentionally unused
 /// @ingroup cnx_def
-#define ignore(...) (void)(__VA_ARGS__)
+#define ignore(...) 						\
+	({IGNORE_UNUSED_RESULT_WARNING_START 	\
+	__attr(maybe_unused) let UNIQUE_VAR(ign) = (__VA_ARGS__);					\
+	0; 										\
+	IGNORE_UNUSED_RESULT_WARNING_STOP})
 
 /// @brief Casts to the type `Type`.
 ///
@@ -599,10 +685,6 @@
 #define IGNORE_MISSING_FIELD_INITIALIZERS_WARNING_STOP _Pragma("GCC diagnostic pop")
 
 #if CNX_PLATFORM_COMPILER_CLANG
-	#define IGNORE_RESERVED_IDENTIFIER_WARNING_START \
-		_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wreserved-identifier\"")
-	#define IGNORE_RESERVED_IDENTIFIER_WARNING_STOP _Pragma("GCC diagnostic pop")
-
 	#define IGNORE_SHADOW_WARNING_START \
 		_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wshadow\"")
 	#define IGNORE_SHADOW_WARNING_STOP _Pragma("GCC diagnostic pop")
@@ -615,8 +697,6 @@
 			_Pragma("GCC diagnostic ignored \"-Wincompatible-pointer-types-discards-qualifiers\"")
 	#define IGNORE_DISCARDED_QUALIFIERS_STOP _Pragma("GCC diagnostic pop")
 #else
-	#define IGNORE_RESERVED_IDENTIFIER_WARNING_START
-	#define IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 	#define IGNORE_SHADOW_WARNING_START
 	#define IGNORE_SHADOW_WARNING_STOP
 	#define IGNORE_SWITCH_ENUM_WARNING_START
@@ -627,6 +707,6 @@
 		_Pragma("GCC diagnostic push")                                   \
 			_Pragma("GCC diagnostic ignored \"-Wdiscarded-qualifiers\"")
 	#define IGNORE_DISCARDED_QUALIFIERS_STOP _Pragma("GCC diagnostic pop")
-	// clang-format on
+// clang-format on
 #endif // CNX_PLATFORM_COMPILER_CLANG
 #endif // CNX_DEF

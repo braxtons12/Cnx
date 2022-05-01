@@ -1,8 +1,8 @@
 /// @file TimePoint.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief CnxTimePoint provides functionality for working with specific points in time
-/// @version 0.1.2
-/// @date 2022-03-20
+/// @version 0.1.3
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -74,7 +74,7 @@ typedef struct CnxTimePoint {
 /// @note if `time_since_epoch` has a different period than the precision of `cnx_system_clock`, it
 /// will be converted to the precision of `cnx_system_clock`
 /// @ingroup cnx_time_point
-[[nodiscard]] CnxTimePoint cnx_time_point_new(CnxDuration time_since_epoch);
+__attr(nodiscard) CnxTimePoint cnx_time_point_new(CnxDuration time_since_epoch);
 
 /// @brief Constructs a new `CnxTimePoint` representing the given time since the UNIX epoch,
 /// with the same precision of the given `CnxClock`
@@ -87,9 +87,9 @@ typedef struct CnxTimePoint {
 /// @note if `time_since_epoch` has a different period than the precision of `clock`, it will be
 /// converted to the precision of `clock`
 /// @ingroup cnx_time_point
-[[nodiscard]] [[not_null(2)]] CnxTimePoint
-cnx_time_point_new_with_clock(CnxDuration time_since_epoch, const CnxClock* restrict clock)
-	cnx_disable_if(!clock, "Can't create a CnxTimePoint with a nullptr for clock");
+__attr(nodiscard) __attr(not_null(2)) CnxTimePoint
+	cnx_time_point_new_with_clock(CnxDuration time_since_epoch, const CnxClock* restrict clock)
+		cnx_disable_if(!clock, "Can't create a CnxTimePoint with a nullptr for clock");
 
 /// @brief Constructs a new `CnxTimePoint` representing the given time since the UNIX epoch,
 /// with the same precision of the given `CnxClock`
@@ -103,11 +103,11 @@ cnx_time_point_new_with_clock(CnxDuration time_since_epoch, const CnxClock* rest
 /// @note if `time_since_epoch` has a different period than the precision of `clock`, it will be
 /// converted to the precision of `clock`
 /// @ingroup cnx_time_point
-[[nodiscard]] [[not_null(2)]] CnxTimePoint
-cnx_time_point_new_with_clock_and_locale(CnxDuration time_since_epoch,
-										 const CnxClock* restrict clock,
-										 CnxTimePointLocale locale)
-	cnx_disable_if(!clock, "Can't create a CnxTimePoint with a nullptr for clock");
+__attr(nodiscard) __attr(not_null(2)) CnxTimePoint
+	cnx_time_point_new_with_clock_and_locale(CnxDuration time_since_epoch,
+											 const CnxClock* restrict clock,
+											 CnxTimePointLocale locale)
+		cnx_disable_if(!clock, "Can't create a CnxTimePoint with a nullptr for clock");
 
 /// @brief Returns the time since the UNIX epoch of the given `CnxTimePoint`
 ///
@@ -115,7 +115,7 @@ cnx_time_point_new_with_clock_and_locale(CnxDuration time_since_epoch,
 ///
 /// @return The time since the epoch represented by `self`, as a `CnxDuration`
 /// @ingroup cnx_time_point
-[[nodiscard]] CnxDuration cnx_time_point_time_since_epoch(CnxTimePoint self);
+__attr(nodiscard) CnxDuration cnx_time_point_time_since_epoch(CnxTimePoint self);
 
 /// @brief Returns the minimum possible `CnxTimePoint` with the same precision as the given one
 ///
@@ -123,7 +123,7 @@ cnx_time_point_new_with_clock_and_locale(CnxDuration time_since_epoch,
 ///
 /// @return The minimum possible `CnxTimePoint` with the same precision as the given one
 /// @ingroup cnx_time_point
-[[nodiscard]] CnxTimePoint cnx_time_point_min(CnxTimePoint self);
+__attr(nodiscard) CnxTimePoint cnx_time_point_min(CnxTimePoint self);
 
 /// @brief Returns the maximum possible `CnxTimePoint` with the same precision as the given one
 ///
@@ -131,7 +131,7 @@ cnx_time_point_new_with_clock_and_locale(CnxDuration time_since_epoch,
 ///
 /// @return The maximum possible `CnxTimePoint` with the same precision as the given one
 /// @ingroup cnx_time_point
-[[nodiscard]] CnxTimePoint cnx_time_point_max(CnxTimePoint self);
+__attr(nodiscard) CnxTimePoint cnx_time_point_max(CnxTimePoint self);
 
 /// @brief Converts the first `CnxTimePoint` to the same precision as the second one
 ///
@@ -142,7 +142,8 @@ cnx_time_point_new_with_clock_and_locale(CnxDuration time_since_epoch,
 /// @note The returned value is also associated with the `CnxClock` from `new_precision`, not the
 /// one from `to_cast`
 /// @ingroup cnx_time_point
-[[nodiscard]] CnxTimePoint cnx_time_point_cast(CnxTimePoint to_cast, CnxTimePoint new_precision);
+__attr(nodiscard) CnxTimePoint
+	cnx_time_point_cast(CnxTimePoint to_cast, CnxTimePoint new_precision);
 
 /// @brief Converts the first `CnxTimePoint` to the same precision as the second one, taking the
 /// ceiling of any fractional part in the result
@@ -154,7 +155,8 @@ cnx_time_point_new_with_clock_and_locale(CnxDuration time_since_epoch,
 /// @note The returned value is also associated with the `CnxClock` from `new_precision`, not the
 /// one from `to_cast`
 /// @ingroup cnx_time_point
-[[nodiscard]] CnxTimePoint cnx_time_point_ceil(CnxTimePoint to_cast, CnxTimePoint new_precision);
+__attr(nodiscard) CnxTimePoint
+	cnx_time_point_ceil(CnxTimePoint to_cast, CnxTimePoint new_precision);
 
 /// @brief Converts the first `CnxTimePoint` to the same precision as the second one, taking the
 /// floor of any fractional part in the result
@@ -166,7 +168,8 @@ cnx_time_point_new_with_clock_and_locale(CnxDuration time_since_epoch,
 /// @note The returned value is also associated with the `CnxClock` from `new_precision`, not the
 /// one from `to_cast`
 /// @ingroup cnx_time_point
-[[nodiscard]] CnxTimePoint cnx_time_point_floor(CnxTimePoint to_cast, CnxTimePoint new_precision);
+__attr(nodiscard) CnxTimePoint
+	cnx_time_point_floor(CnxTimePoint to_cast, CnxTimePoint new_precision);
 
 /// @brief Converts the first `CnxTimePoint` to the same precision as the second one, rounding any
 /// fractional part in the result
@@ -178,7 +181,8 @@ cnx_time_point_new_with_clock_and_locale(CnxDuration time_since_epoch,
 /// @note The returned value is also associated with the `CnxClock` from `new_precision`, not the
 /// one from `to_cast`
 /// @ingroup cnx_time_point
-[[nodiscard]] CnxTimePoint cnx_time_point_round(CnxTimePoint to_cast, CnxTimePoint new_precision);
+__attr(nodiscard) CnxTimePoint
+	cnx_time_point_round(CnxTimePoint to_cast, CnxTimePoint new_precision);
 
 /// @brief Converts the given `CnxTimePoint` to `time_t`
 ///
@@ -186,7 +190,7 @@ cnx_time_point_new_with_clock_and_locale(CnxDuration time_since_epoch,
 ///
 /// @return `to_cast` converted to `time_t`
 /// @ingroup cnx_time_point
-[[nodiscard]] time_t cnx_time_point_as_time_t(CnxTimePoint to_cast);
+__attr(nodiscard) time_t cnx_time_point_as_time_t(CnxTimePoint to_cast);
 
 	#define RESULT_DECL TRUE
 	#define RESULT_T	tm
@@ -356,8 +360,8 @@ CnxString cnx_time_point_format_with_allocator(const CnxFormat* restrict self,
 
 /// @brief Implements the `CnxFormat` trait for `CnxTimePoint`
 /// @ingroup cnx_time_point
-[[maybe_unused]] static ImplTraitFor(CnxFormat,
-									 CnxTimePoint,
-									 cnx_time_point_format,
-									 cnx_time_point_format_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 CnxTimePoint,
+										 cnx_time_point_format,
+										 cnx_time_point_format_with_allocator);
 #endif // CNX_TIME_POINT

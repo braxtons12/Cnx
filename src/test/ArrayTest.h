@@ -7,15 +7,16 @@
 #include "Arrayi32_10.h"
 #include "Criterion.h"
 
-i32 array_test_constructor([[maybe_unused]] CnxAllocator allocator) {
+i32 array_test_constructor(__attr(maybe_unused) CnxAllocator allocator) {
 	return 0;
 }
 
-void array_test_destructor(i32* elem, [[maybe_unused]] CnxAllocator allocator) { // NOLINT
+void array_test_destructor(i32* elem, __attr(maybe_unused) CnxAllocator allocator) { // NOLINT
 	*elem = 0;
 }
 
-void array_test_scoped_destructor(i32* elem, [[maybe_unused]] CnxAllocator allocator) { // NOLINT
+void array_test_scoped_destructor(i32* elem,
+								  __attr(maybe_unused) CnxAllocator allocator) { // NOLINT
 	*elem = 0;
 	println("{}", "running element destructor");
 }

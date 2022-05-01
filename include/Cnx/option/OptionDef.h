@@ -1,8 +1,8 @@
 /// @file OptionDef.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides macro definitions for implementing and working with `CnxOption(T)`
-/// @version 0.2.1
-/// @date 2022-04-07
+/// @version 0.2.2
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>

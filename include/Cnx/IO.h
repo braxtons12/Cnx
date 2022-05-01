@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Cnx I/O brings human readable formatted I/O, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
-/// @version 0.1.2
-/// @date 2022-03-09
+/// @version 0.1.3
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -74,18 +74,20 @@
 /// @param allocator - The allocator to allocate the formatted string with
 /// @param num_args - The number of args in the parameter pack
 /// @param ... - The parameter pack of arguments to format
-[[not_null(1)]] void
-print_(restrict const_cstring format_string, CnxAllocator allocator, usize num_args, ...)
-	___DISABLE_IF_NULL(format_string);
+__attr(not_null(1)) void print_(restrict const_cstring format_string,
+								CnxAllocator allocator,
+								usize num_args,
+								...) ___DISABLE_IF_NULL(format_string);
 /// @brief Formats the given arguments into the specified format string then prints it to `Cnxerr`
 ///
 /// @param format_string - The format string specifying how text and arguments should be formatted
 /// @param allocator - The allocator to allocate the formatted string with
 /// @param num_args - The number of args in the parameter pack
 /// @param ... - The parameter pack of arguments to format
-[[not_null(1)]] void
-eprint_(restrict const_cstring format_string, CnxAllocator allocator, usize num_args, ...)
-	___DISABLE_IF_NULL(format_string);
+__attr(not_null(1)) void eprint_(restrict const_cstring format_string,
+								 CnxAllocator allocator,
+								 usize num_args,
+								 ...) ___DISABLE_IF_NULL(format_string);
 /// @brief Formats the given arguments into the specified format string then prints it to the given
 /// file
 ///
@@ -94,11 +96,11 @@ eprint_(restrict const_cstring format_string, CnxAllocator allocator, usize num_
 /// @param allocator - The allocator to allocate the formatted string with
 /// @param num_args - The number of args in the parameter pack
 /// @param ... - The parameter pack of arguments to format
-[[not_null(1, 2)]] void fprint_(FILE* file,
-								restrict const_cstring format_string,
-								CnxAllocator allocator,
-								usize num_args,
-								...) ___DISABLE_IF_NULL(format_string)
+__attr(not_null(1, 2)) void fprint_(FILE* file,
+									restrict const_cstring format_string,
+									CnxAllocator allocator,
+									usize num_args,
+									...) ___DISABLE_IF_NULL(format_string)
 	cnx_disable_if(!file, "Can't print to a file that is nullptr");
 /// @brief Formats the given arguments into the specified format string then prints it to `stdout`,
 /// followed by a newline
@@ -107,9 +109,10 @@ eprint_(restrict const_cstring format_string, CnxAllocator allocator, usize num_
 /// @param allocator - The allocator to allocate the formatted string with
 /// @param num_args - The number of args in the parameter pack
 /// @param ... - The parameter pack of arguments to format
-[[not_null(1)]] void
-println_(restrict const_cstring format_string, CnxAllocator allocator, usize num_args, ...)
-	___DISABLE_IF_NULL(format_string);
+__attr(not_null(1)) void println_(restrict const_cstring format_string,
+								  CnxAllocator allocator,
+								  usize num_args,
+								  ...) ___DISABLE_IF_NULL(format_string);
 /// @brief Formats the given arguments into the specified format string then prints it to `stderr`,
 /// followed by a newline
 ///
@@ -117,9 +120,10 @@ println_(restrict const_cstring format_string, CnxAllocator allocator, usize num
 /// @param allocator - The allocator to allocate the formatted string with
 /// @param num_args - The number of args in the parameter pack
 /// @param ... - The parameter pack of arguments to format
-[[not_null(1)]] void
-eprintln_(restrict const_cstring format_string, CnxAllocator allocator, usize num_args, ...)
-	___DISABLE_IF_NULL(format_string);
+__attr(not_null(1)) void eprintln_(restrict const_cstring format_string,
+								   CnxAllocator allocator,
+								   usize num_args,
+								   ...) ___DISABLE_IF_NULL(format_string);
 /// @brief Formats the given arguments into the specified format string then prints it to the given
 /// file, followed by a newline
 ///
@@ -128,11 +132,11 @@ eprintln_(restrict const_cstring format_string, CnxAllocator allocator, usize nu
 /// @param allocator - The allocator to allocate the formatted string with
 /// @param num_args - The number of args in the parameter pack
 /// @param ... - The parameter pack of arguments to format
-[[not_null(1, 2)]] void fprintln_(FILE* file,
-								  restrict const_cstring format_string,
-								  CnxAllocator allocator,
-								  usize num_args,
-								  ...) ___DISABLE_IF_NULL(format_string)
+__attr(not_null(1, 2)) void fprintln_(FILE* file,
+									  restrict const_cstring format_string,
+									  CnxAllocator allocator,
+									  usize num_args,
+									  ...) ___DISABLE_IF_NULL(format_string)
 	cnx_disable_if(!file, "Can't print to a file that is nullptr");
 
 	/// @brief Formats the given arguments into the specified format string then prints it to the

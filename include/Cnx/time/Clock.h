@@ -1,8 +1,8 @@
 /// @file Clock.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides methods for operating with system clocks
-/// @version 0.1.1
-/// @date 2022-02-24
+/// @version 0.1.2
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -207,8 +207,8 @@ Trait(CnxClock,
 ///
 /// @return The current time on `self`
 /// @ingroup cnx_clock
-[[nodiscard]] [[not_null(1)]] CnxTimePoint
-cnx_clock_now(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxTimePoint cnx_clock_now(const CnxClock* restrict self)
+	___DISABLE_IF_NULL(self);
 /// @brief Returns the minimum possible `CnxTimePoint` able to be associated with the given
 /// clock
 ///
@@ -216,8 +216,8 @@ cnx_clock_now(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
 ///
 /// @return The minimum `CnxTimePoint` associatable with `self`
 /// @ingroup cnx_clock
-[[nodiscard]] [[not_null(1)]] CnxTimePoint
-cnx_clock_min_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxTimePoint
+	cnx_clock_min_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
 /// @brief Returns the maximum possible `CnxTimePoint` able to be associated with the given
 /// clock
 ///
@@ -225,32 +225,32 @@ cnx_clock_min_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self)
 ///
 /// @return The minimum `CnxTimePoint` associatable with `self`
 /// @ingroup cnx_clock
-[[nodiscard]] [[not_null(1)]] CnxTimePoint
-cnx_clock_max_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxTimePoint
+	cnx_clock_max_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
 /// @brief Returns the resolution of the given clock
 ///
 /// @param self - The `CnxClock` to get the resolution of
 ///
 /// @return The resolution of `self` as a `CnxClockResolution`
 /// @ingroup cnx_clock
-[[nodiscard]] [[not_null(1)]] CnxClockResolution
-cnx_clock_resolution(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxClockResolution
+	cnx_clock_resolution(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
 /// @brief Returns the resolution of the given clock
 ///
 /// @param self - The `CnxClock` to get the resolution of
 ///
 /// @return The resolution of `self` as a `CnxRatio` relative to seconds
 /// @ingroup cnx_clock
-[[nodiscard]] [[not_null(1)]] CnxRatio
-cnx_clock_resolution_as_ratio(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxRatio
+	cnx_clock_resolution_as_ratio(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
 /// @brief Returns the locale associated with the given clock
 ///
 /// @param self - The `CnxClock` to get the locale of
 ///
 /// @return The locale of `self`
 /// @ingroup cnx_clock
-[[nodiscard]] [[not_null(1)]] CnxTimePointLocale
-cnx_clock_locale(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxTimePointLocale
+	cnx_clock_locale(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
 
 /// @brief Implements the allocator un-aware portion of the `CnxFormat` trait for all `CnxClock`s
 ///
@@ -259,9 +259,9 @@ cnx_clock_locale(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
 ///
 /// @return The text representation of `self` as a `CnxString`
 /// @ingroup cnx_clock
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_clock_format(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_clock_format(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief Implements the allocator aware portion of the `CnxFormat` trait for all `CnxClock`s
 ///
 /// @param self - The `CnxFormat` implementor to get the text representation of
@@ -270,184 +270,184 @@ cnx_clock_format(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
 ///
 /// @return The text representation of `self` as a `CnxString`
 /// @ingroup cnx_clock
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_clock_format_with_allocator(const CnxFormat* restrict self,
-								CnxFormatSpecifier specifier,
-								CnxAllocator allocator) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_clock_format_with_allocator(const CnxFormat* restrict self,
+									CnxFormatSpecifier specifier,
+									CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 
 /// @brief Implements the `CnxFormat` trait for `CnxClock`
 /// @ingroup cnx_clock
-[[maybe_unused]] static ImplTraitFor(CnxFormat,
-									 CnxClock,
-									 cnx_clock_format,
-									 cnx_clock_format_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 CnxClock,
+										 cnx_clock_format,
+										 cnx_clock_format_with_allocator);
 
 /// @brief Returns a `CnxTimePoint` corresponding to the current time on the system clock
 ///
 /// @return The current time on the system clock
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePoint cnx_system_clock_now(void);
+__attr(nodiscard) CnxTimePoint cnx_system_clock_now(void);
 /// @brief Returns the minimum possible `CnxTimePoint` able to be associated with the system
 /// clock
 ///
 /// @return The minimum `CnxTimePoint` associatable with the system clock
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePoint cnx_system_clock_min_time_point(void);
+__attr(nodiscard) CnxTimePoint cnx_system_clock_min_time_point(void);
 /// @brief Returns the maximum possible `CnxTimePoint` able to be associated with the system
 /// clock
 ///
 /// @return The maximum `CnxTimePoint` associatable with the system clock
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePoint cnx_system_clock_max_time_point(void);
+__attr(nodiscard) CnxTimePoint cnx_system_clock_max_time_point(void);
 /// @brief Returns the resolution of the system clock
 ///
 /// @return The resolution of the system clock as a `CnxClockResolution`
 /// @ingroup cnx_clock
-[[nodiscard]] CnxClockResolution cnx_system_clock_resolution(void);
+__attr(nodiscard) CnxClockResolution cnx_system_clock_resolution(void);
 /// @brief Returns the resolution of the system clock
 ///
 /// @return The resolution of the system clock as a `CnxRatio` relative to seconds
 /// @ingroup cnx_clock
-[[nodiscard]] CnxRatio cnx_system_clock_resolution_as_ratio(void);
+__attr(nodiscard) CnxRatio cnx_system_clock_resolution_as_ratio(void);
 /// @brief Returns the locale of the system clock
 ///
 /// @return The locale of the system clock
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePointLocale cnx_system_clock_locale(void);
+__attr(nodiscard) CnxTimePointLocale cnx_system_clock_locale(void);
 
 	#if !CNX_NO_MONOTONIC_CLOCK
 /// @brief Returns a `CnxTimePoint` corresponding to the current time on the steady clock
 ///
 /// @return The current time on the steady clock
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePoint cnx_steady_clock_now(void);
+__attr(nodiscard) CnxTimePoint cnx_steady_clock_now(void);
 /// @brief Returns the minimum possible `CnxTimePoint` able to be associated with the steady
 /// clock
 ///
 /// @return The minimum `CnxTimePoint` associatable with the steady clock
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePoint cnx_steady_clock_min_time_point(void);
+__attr(nodiscard) CnxTimePoint cnx_steady_clock_min_time_point(void);
 /// @brief Returns the maximum possible `CnxTimePoint` able to be associated with the steady
 /// clock
 ///
 /// @return The maximum `CnxTimePoint` associatable with the steady clock
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePoint cnx_steady_clock_max_time_point(void);
+__attr(nodiscard) CnxTimePoint cnx_steady_clock_max_time_point(void);
 /// @brief Returns the resolution of the steady clock
 ///
 /// @return The resolution of the steady clock as a `CnxClockResolution`
 /// @ingroup cnx_clock
-[[nodiscard]] CnxClockResolution cnx_steady_clock_resolution(void);
+__attr(nodiscard) CnxClockResolution cnx_steady_clock_resolution(void);
 /// @brief Returns the resolution of the steady clock
 ///
 /// @return The resolution of the steady clock as a `CnxRatio` relative to seconds
 /// @ingroup cnx_clock
-[[nodiscard]] CnxRatio cnx_steady_clock_resolution_as_ratio(void);
+__attr(nodiscard) CnxRatio cnx_steady_clock_resolution_as_ratio(void);
 /// @brief Returns the locale of the steady clock
 ///
 /// @return The locale of the steady clock
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePointLocale cnx_steady_clock_locale(void);
+__attr(nodiscard) CnxTimePointLocale cnx_steady_clock_locale(void);
 	#endif // !CNX_NO_MONOTONIC_CLOCK
 
 /// @brief Returns a `CnxTimePoint` corresponding to the current time on the high resolution clock
 ///
 /// @return The current time on the high resolution clock
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePoint cnx_high_resolution_clock_now(void);
+__attr(nodiscard) CnxTimePoint cnx_high_resolution_clock_now(void);
 /// @brief Returns the minimum possible `CnxTimePoint` able to be associated with the high
 /// resolution clock
 ///
 /// @return The minimum `CnxTimePoint` associatable with the high resolution clock
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePoint cnx_high_resolution_clock_min_time_point(void);
+__attr(nodiscard) CnxTimePoint cnx_high_resolution_clock_min_time_point(void);
 /// @brief Returns the maximum possible `CnxTimePoint` able to be associated with the high
 /// resolution clock
 ///
 /// @return The maximum `CnxTimePoint` associatable with the high resolution clock
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePoint cnx_high_resolution_clock_max_time_point(void);
+__attr(nodiscard) CnxTimePoint cnx_high_resolution_clock_max_time_point(void);
 /// @brief Returns the resolution of the high resolution clock
 ///
 /// @return The resolution of the high resolution clock as a `CnxClockResolution`
 /// @ingroup cnx_clock
-[[nodiscard]] CnxClockResolution cnx_high_resolution_clock_resolution(void);
+__attr(nodiscard) CnxClockResolution cnx_high_resolution_clock_resolution(void);
 /// @brief Returns the resolution of the high resolution clock
 ///
 /// @return The resolution of the high resolution clock as a `CnxRatio` relative to seconds
 /// @ingroup cnx_clock
-[[nodiscard]] CnxRatio cnx_high_resolution_clock_resolution_as_ratio(void);
+__attr(nodiscard) CnxRatio cnx_high_resolution_clock_resolution_as_ratio(void);
 /// @brief Returns the locale of the high resolution clock
 ///
 /// @return The locale of the high resolution clock
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePointLocale cnx_high_resolution_clock_locale(void);
+__attr(nodiscard) CnxTimePointLocale cnx_high_resolution_clock_locale(void);
 
 /// @brief Returns a `CnxTimePoint` corresponding to the current time on the UTC clock
 ///
 /// @return The current time on the UTC clock
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePoint cnx_utc_clock_now(void);
+__attr(nodiscard) CnxTimePoint cnx_utc_clock_now(void);
 /// @brief Returns the minimum possible `CnxTimePoint` able to be associated with the UTC
 /// clock
 ///
 /// @return The minimum `CnxTimePoint` associatable with the UTC clock
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePoint cnx_utc_clock_min_time_point(void);
+__attr(nodiscard) CnxTimePoint cnx_utc_clock_min_time_point(void);
 /// @brief Returns the maximum possible `CnxTimePoint` able to be associated with the UTC
 /// clock
 ///
 /// @return The maximum `CnxTimePoint` associatable with the UTC clock
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePoint cnx_utc_clock_max_time_point(void);
+__attr(nodiscard) CnxTimePoint cnx_utc_clock_max_time_point(void);
 /// @brief Returns the resolution of the UTC clock
 ///
 /// @return The resolution of the UTC clock as a `CnxClockResolution`
 /// @ingroup cnx_clock
-[[nodiscard]] CnxClockResolution cnx_utc_clock_resolution(void);
+__attr(nodiscard) CnxClockResolution cnx_utc_clock_resolution(void);
 /// @brief Returns the resolution of the UTC clock
 ///
 /// @return The resolution of the UTC clock as a `CnxRatio` relative to seconds
 /// @ingroup cnx_clock
-[[nodiscard]] CnxRatio cnx_utc_clock_resolution_as_ratio(void);
+__attr(nodiscard) CnxRatio cnx_utc_clock_resolution_as_ratio(void);
 /// @brief Returns the locale of the UTC clock
 ///
 /// @return The locale of the UTC clock
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePointLocale cnx_utc_clock_locale(void);
+__attr(nodiscard) CnxTimePointLocale cnx_utc_clock_locale(void);
 
 /// @brief Returns a `CnxTimePoint` corresponding to the current time on the local clock
 ///
 /// @return The current time on the local clock
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePoint cnx_local_clock_now(void);
+__attr(nodiscard) CnxTimePoint cnx_local_clock_now(void);
 /// @brief Returns the minimum possible `CnxTimePoint` able to be associated with the local
 /// clock
 ///
 /// @return The minimum `CnxTimePoint` associatable with the local clock
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePoint cnx_local_clock_min_time_point(void);
+__attr(nodiscard) CnxTimePoint cnx_local_clock_min_time_point(void);
 /// @brief Returns the maximum possible `CnxTimePoint` able to be associated with the local
 /// clock
 ///
 /// @return The maximum `CnxTimePoint` associatable with the local clock
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePoint cnx_local_clock_max_time_point(void);
+__attr(nodiscard) CnxTimePoint cnx_local_clock_max_time_point(void);
 /// @brief Returns the resolution of the local clock
 ///
 /// @return The resolution of the local clock as a `CnxClockResolution`
 /// @ingroup cnx_clock
-[[nodiscard]] CnxClockResolution cnx_local_clock_resolution(void);
+__attr(nodiscard) CnxClockResolution cnx_local_clock_resolution(void);
 /// @brief Returns the resolution of the local clock
 ///
 /// @return The resolution of the local clock as a `CnxRatio` relative to seconds
 /// @ingroup cnx_clock
-[[nodiscard]] CnxRatio cnx_local_clock_resolution_as_ratio(void);
+__attr(nodiscard) CnxRatio cnx_local_clock_resolution_as_ratio(void);
 /// @brief Returns the locale of the local clock
 ///
 /// @return The locale of the local clock
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePointLocale cnx_local_clock_locale(void);
+__attr(nodiscard) CnxTimePointLocale cnx_local_clock_locale(void);
 
 /// @brief Converts the given `CnxTimePoint` in UTC time to a `CnxTimePoint` in local time
 ///
@@ -455,160 +455,160 @@ cnx_clock_format_with_allocator(const CnxFormat* restrict self,
 ///
 /// @return `utc` converted to local time
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePoint cnx_convert_utc_to_local_time(CnxTimePoint utc);
+__attr(nodiscard) CnxTimePoint cnx_convert_utc_to_local_time(CnxTimePoint utc);
 /// @brief Converts the given `CnxTimePoint` in local time to a `CnxTimePoint` in UTC time
 ///
 /// @param local_time - The time point to convert to UTC time
 ///
 /// @return `local_time` converted to UTC time
 /// @ingroup cnx_clock
-[[nodiscard]] CnxTimePoint cnx_convert_local_time_to_utc(CnxTimePoint local_time);
+__attr(nodiscard) CnxTimePoint cnx_convert_local_time_to_utc(CnxTimePoint local_time);
 
 IGNORE_RESERVED_IDENTIFIER_WARNING_START
 
-[[nodiscard]] [[not_null(1)]] CnxTimePoint
-__cnx_system_clock_now(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxTimePoint
-__cnx_system_clock_min_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxTimePoint
-__cnx_system_clock_max_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxClockResolution
-__cnx_system_clock_resolution(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxRatio
-__cnx_system_clock_resolution_as_ratio(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxTimePointLocale
-__cnx_system_clock_locale(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxString
-__cnx_system_clock_format(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxString
-__cnx_system_clock_format_with_allocator(const CnxClock* restrict self, CnxAllocator allocator)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxTimePoint
+	__cnx_system_clock_now(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxTimePoint
+	__cnx_system_clock_min_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxTimePoint
+	__cnx_system_clock_max_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxClockResolution
+	__cnx_system_clock_resolution(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxRatio
+	__cnx_system_clock_resolution_as_ratio(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxTimePointLocale
+	__cnx_system_clock_locale(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	__cnx_system_clock_format(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	__cnx_system_clock_format_with_allocator(const CnxClock* restrict self, CnxAllocator allocator)
+		___DISABLE_IF_NULL(self);
 
 	#if !CNX_NO_MONOTONIC_CLOCK
-[[nodiscard]] [[not_null(1)]] CnxTimePoint
-__cnx_steady_clock_now(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxTimePoint
-__cnx_steady_clock_min_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxTimePoint
-__cnx_steady_clock_max_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxClockResolution
-__cnx_steady_clock_resolution(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxRatio
-__cnx_steady_clock_resolution_as_ratio(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxTimePointLocale
-__cnx_steady_clock_locale(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxString
-__cnx_steady_clock_format(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxString
-__cnx_steady_clock_format_with_allocator(const CnxClock* restrict self, CnxAllocator allocator)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxTimePoint
+	__cnx_steady_clock_now(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxTimePoint
+	__cnx_steady_clock_min_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxTimePoint
+	__cnx_steady_clock_max_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxClockResolution
+	__cnx_steady_clock_resolution(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxRatio
+	__cnx_steady_clock_resolution_as_ratio(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxTimePointLocale
+	__cnx_steady_clock_locale(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	__cnx_steady_clock_format(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	__cnx_steady_clock_format_with_allocator(const CnxClock* restrict self, CnxAllocator allocator)
+		___DISABLE_IF_NULL(self);
 	#endif // !CNX_NO_MONOTONIC_CLOCK
 
-[[nodiscard]] [[not_null(1)]] CnxTimePoint
-__cnx_utc_clock_now(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxTimePoint
-__cnx_utc_clock_min_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxTimePoint
-__cnx_utc_clock_max_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxClockResolution
-__cnx_utc_clock_resolution(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxRatio
-__cnx_utc_clock_resolution_as_ratio(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxTimePointLocale
-__cnx_utc_clock_locale(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxString
-__cnx_utc_clock_format(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxString
-__cnx_utc_clock_format_with_allocator(const CnxClock* restrict self, CnxAllocator allocator)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxTimePoint
+	__cnx_utc_clock_now(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxTimePoint
+	__cnx_utc_clock_min_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxTimePoint
+	__cnx_utc_clock_max_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxClockResolution
+	__cnx_utc_clock_resolution(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxRatio
+	__cnx_utc_clock_resolution_as_ratio(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxTimePointLocale
+	__cnx_utc_clock_locale(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	__cnx_utc_clock_format(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	__cnx_utc_clock_format_with_allocator(const CnxClock* restrict self, CnxAllocator allocator)
+		___DISABLE_IF_NULL(self);
 
-[[nodiscard]] [[not_null(1)]] CnxTimePoint
-__cnx_local_clock_now(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxTimePoint
-__cnx_local_clock_min_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxTimePoint
-__cnx_local_clock_max_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxClockResolution
-__cnx_local_clock_resolution(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxRatio
-__cnx_local_clock_resolution_as_ratio(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxTimePointLocale
-__cnx_local_clock_locale(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxString
-__cnx_local_clock_format(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
-[[nodiscard]] [[not_null(1)]] CnxString
-__cnx_local_clock_format_with_allocator(const CnxClock* restrict self, CnxAllocator allocator)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxTimePoint
+	__cnx_local_clock_now(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxTimePoint
+	__cnx_local_clock_min_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxTimePoint
+	__cnx_local_clock_max_time_point(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxClockResolution
+	__cnx_local_clock_resolution(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxRatio
+	__cnx_local_clock_resolution_as_ratio(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxTimePointLocale
+	__cnx_local_clock_locale(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	__cnx_local_clock_format(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	__cnx_local_clock_format_with_allocator(const CnxClock* restrict self, CnxAllocator allocator)
+		___DISABLE_IF_NULL(self);
 
-[[maybe_unused]] static ImplTraitFor(CnxClock,
-									 __CnxSystemClock,
-									 __cnx_system_clock_now,
-									 __cnx_system_clock_min_time_point,
-									 __cnx_system_clock_max_time_point,
-									 __cnx_system_clock_resolution,
-									 __cnx_system_clock_resolution_as_ratio,
-									 __cnx_system_clock_locale,
-									 __cnx_system_clock_format,
-									 __cnx_system_clock_format_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxClock,
+										 __CnxSystemClock,
+										 __cnx_system_clock_now,
+										 __cnx_system_clock_min_time_point,
+										 __cnx_system_clock_max_time_point,
+										 __cnx_system_clock_resolution,
+										 __cnx_system_clock_resolution_as_ratio,
+										 __cnx_system_clock_locale,
+										 __cnx_system_clock_format,
+										 __cnx_system_clock_format_with_allocator);
 
 	#if !CNX_NO_MONOTONIC_CLOCK
-[[maybe_unused]] static ImplTraitFor(CnxClock,
-									 __CnxSteadyClock,
-									 __cnx_steady_clock_now,
-									 __cnx_steady_clock_min_time_point,
-									 __cnx_steady_clock_max_time_point,
-									 __cnx_steady_clock_resolution,
-									 __cnx_steady_clock_resolution_as_ratio,
-									 __cnx_steady_clock_locale,
-									 __cnx_steady_clock_format,
-									 __cnx_steady_clock_format_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxClock,
+										 __CnxSteadyClock,
+										 __cnx_steady_clock_now,
+										 __cnx_steady_clock_min_time_point,
+										 __cnx_steady_clock_max_time_point,
+										 __cnx_steady_clock_resolution,
+										 __cnx_steady_clock_resolution_as_ratio,
+										 __cnx_steady_clock_locale,
+										 __cnx_steady_clock_format,
+										 __cnx_steady_clock_format_with_allocator);
 	#endif // !CNX_NO_MONOTONIC_CLOCK
 
 	#if !CNX_NO_MONOTONIC_CLOCK
-[[maybe_unused]] static ImplTraitFor(CnxClock,
-									 __CnxHighResolutionClock,
-									 __cnx_steady_clock_now,
-									 __cnx_steady_clock_min_time_point,
-									 __cnx_steady_clock_max_time_point,
-									 __cnx_steady_clock_resolution,
-									 __cnx_steady_clock_resolution_as_ratio,
-									 __cnx_steady_clock_locale,
-									 __cnx_steady_clock_format,
-									 __cnx_steady_clock_format_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxClock,
+										 __CnxHighResolutionClock,
+										 __cnx_steady_clock_now,
+										 __cnx_steady_clock_min_time_point,
+										 __cnx_steady_clock_max_time_point,
+										 __cnx_steady_clock_resolution,
+										 __cnx_steady_clock_resolution_as_ratio,
+										 __cnx_steady_clock_locale,
+										 __cnx_steady_clock_format,
+										 __cnx_steady_clock_format_with_allocator);
 	#else
-[[maybe_unused]] static ImplTraitFor(CnxClock,
-									 __cnxHighResolutionClock,
-									 __cnx_system_clock_now,
-									 __cnx_system_clock_min_time_point,
-									 __cnx_system_clock_max_time_point,
-									 __cnx_system_clock_resolution,
-									 __cnx_system_clock_resolution_as_ratio,
-									 __cnx_system_clock_locale,
-									 __cnx_system_clock_format,
-									 __cnx_system_clock_format_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxClock,
+										 __cnxHighResolutionClock,
+										 __cnx_system_clock_now,
+										 __cnx_system_clock_min_time_point,
+										 __cnx_system_clock_max_time_point,
+										 __cnx_system_clock_resolution,
+										 __cnx_system_clock_resolution_as_ratio,
+										 __cnx_system_clock_locale,
+										 __cnx_system_clock_format,
+										 __cnx_system_clock_format_with_allocator);
 	#endif // !CNX_NO_MONOTONIC_CLOCK
 
-[[maybe_unused]] static ImplTraitFor(CnxClock,
-									 __CnxUTCClock,
-									 __cnx_utc_clock_now,
-									 __cnx_utc_clock_min_time_point,
-									 __cnx_utc_clock_max_time_point,
-									 __cnx_utc_clock_resolution,
-									 __cnx_utc_clock_resolution_as_ratio,
-									 __cnx_utc_clock_locale,
-									 __cnx_utc_clock_format,
-									 __cnx_utc_clock_format_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxClock,
+										 __CnxUTCClock,
+										 __cnx_utc_clock_now,
+										 __cnx_utc_clock_min_time_point,
+										 __cnx_utc_clock_max_time_point,
+										 __cnx_utc_clock_resolution,
+										 __cnx_utc_clock_resolution_as_ratio,
+										 __cnx_utc_clock_locale,
+										 __cnx_utc_clock_format,
+										 __cnx_utc_clock_format_with_allocator);
 
-[[maybe_unused]] static ImplTraitFor(CnxClock,
-									 __CnxLocalClock,
-									 __cnx_local_clock_now,
-									 __cnx_local_clock_min_time_point,
-									 __cnx_local_clock_max_time_point,
-									 __cnx_local_clock_resolution,
-									 __cnx_local_clock_resolution_as_ratio,
-									 __cnx_local_clock_locale,
-									 __cnx_local_clock_format,
-									 __cnx_local_clock_format_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxClock,
+										 __CnxLocalClock,
+										 __cnx_local_clock_now,
+										 __cnx_local_clock_min_time_point,
+										 __cnx_local_clock_max_time_point,
+										 __cnx_local_clock_resolution,
+										 __cnx_local_clock_resolution_as_ratio,
+										 __cnx_local_clock_locale,
+										 __cnx_local_clock_format,
+										 __cnx_local_clock_format_with_allocator);
 
 typedef struct __CnxSystemClock {
 } __CnxSystemClock;

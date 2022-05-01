@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides the function definitions for a template instantiation of
 /// `CnxVector(VECTOR_T)`
-/// @version 0.2.3
-/// @date 2022-03-28
+/// @version 0.2.4
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -121,20 +121,22 @@ ImplIntoCnxRandomAccessIterator(CnxVector(VECTOR_T),
 								CnxVectorIdentifier(VECTOR_T, iterator_ccurrent),
 								CnxVectorIdentifier(VECTOR_T, iterator_cequals));
 
-[[always_inline]] static inline VECTOR_T
-CnxVectorIdentifier(VECTOR_T, default_constructor)([[maybe_unused]] CnxAllocator allocator) {
+__attr(always_inline) static inline VECTOR_T
+	CnxVectorIdentifier(VECTOR_T,
+						default_constructor)(__attr(maybe_unused) CnxAllocator allocator) {
 	return (VECTOR_T){0};
 }
 
-[[always_inline]] static inline VECTOR_T
-CnxVectorIdentifier(VECTOR_T, default_copy_constructor)(const VECTOR_T* restrict elem,
-														[[maybe_unused]] CnxAllocator allocator) {
+__attr(always_inline) static inline VECTOR_T
+	CnxVectorIdentifier(VECTOR_T, default_copy_constructor)(const VECTOR_T* restrict elem,
+															__attr(maybe_unused)
+																CnxAllocator allocator) {
 	return *elem;
 }
 
-[[always_inline]] static inline void CnxVectorIdentifier(VECTOR_T, default_destructor)(
-	[[maybe_unused]] VECTOR_T* restrict element, /** NOLINT(readability-non-const-parameter)**/
-	[[maybe_unused]] CnxAllocator allocator) {
+__attr(always_inline) static inline void CnxVectorIdentifier(VECTOR_T, default_destructor)(
+	__attr(maybe_unused) VECTOR_T* restrict element, /** NOLINT(readability-non-const-parameter)**/
+	__attr(maybe_unused) CnxAllocator allocator) {
 }
 
 static const struct CnxVectorIdentifier(VECTOR_T, vtable) CnxVectorIdentifier(VECTOR_T, vtable_impl)
@@ -182,8 +184,8 @@ static const struct CnxCollectionData(CnxVector(VECTOR_T))
 	   .m_copy_constructor = CnxVectorIdentifier(VECTOR_T, default_copy_constructor),
 	   .m_destructor = CnxVectorIdentifier(VECTOR_T, default_destructor)};
 
-[[always_inline]] static inline bool
-CnxVectorIdentifier(VECTOR_T, is_short)(const CnxVector(VECTOR_T) * restrict self) {
+__attr(always_inline) static inline bool CnxVectorIdentifier(VECTOR_T, is_short)(
+	const CnxVector(VECTOR_T) * restrict self) {
 	return self->m_capacity <= VECTOR_SMALL_OPT_CAPACITY;
 }
 
@@ -390,8 +392,8 @@ void CnxVectorIdentifier(VECTOR_T, resize_internal)(CnxVector(VECTOR_T) * restri
 	}
 }
 
-[[always_inline]] static inline usize
-CnxVectorIdentifier(VECTOR_T, get_expanded_capacity)(usize old_capacity, usize num_increments) {
+__attr(always_inline) static inline usize
+	CnxVectorIdentifier(VECTOR_T, get_expanded_capacity)(usize old_capacity, usize num_increments) {
 	return num_increments * ((old_capacity * 3) / 2);
 }
 
@@ -794,10 +796,10 @@ CnxString CnxVectorIdentifier(VECTOR_T, format)(const CnxFormat* restrict self,
 	return CnxVectorIdentifier(VECTOR_T, format_with_allocator)(self, specifier, DEFAULT_ALLOCATOR);
 }
 
-CnxString
-CnxVectorIdentifier(VECTOR_T, format_with_allocator)(const CnxFormat* restrict self,
-													 [[maybe_unused]] CnxFormatSpecifier specifier,
-													 CnxAllocator allocator) {
+CnxString CnxVectorIdentifier(VECTOR_T, format_with_allocator)(const CnxFormat* restrict self,
+															   __attr(maybe_unused)
+																   CnxFormatSpecifier specifier,
+															   CnxAllocator allocator) {
 	cnx_assert(specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
 				   || specifier.m_type == CNX_FORMAT_TYPE_DEBUG,
 			   "Can only format CnxVector with default or debug format specifier");

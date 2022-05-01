@@ -72,7 +72,7 @@ IGNORE_RESERVED_IDENTIFIER_WARNING_START
 	#define _InterlockedExchange32(...)		   _InterlockedExchange(__VA_ARGS__)
 	#define _InterlockedCompareExchange32(...) _InterlockedCompareExchange(__VA_ARGS__)
 
-[[always_inline]] static inline void __load_barrier(const memory_order order) {
+__attr(always_inline) static inline void __load_barrier(const memory_order order) {
 	if((order) != memory_order_relaxed) {
 		__compiler_or_memory_barrier();
 	}
@@ -92,7 +92,7 @@ IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 void __atomic_store_explicit8(volatile atomic_i8* object,
 							  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 							  i8 value,
-							  [[maybe_unused]] memory_order order) {
+							  __attr(maybe_unused) memory_order order) {
 	let_mut mem = static_cast(volatile char*)(object);
 	switch(order) { // NOLINT(hicpp-multiway-paths-covered)
 		case memory_order_relaxed: __iso_volatile_store8(mem, value); return;
@@ -110,7 +110,7 @@ void __atomic_store_explicit8(volatile atomic_i8* object,
 void __atomic_store_explicit16(volatile atomic_i16* object,
 							   // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 							   i16 value,
-							   [[maybe_unused]] memory_order order) {
+							   __attr(maybe_unused) memory_order order) {
 	switch(order) { // NOLINT(hicpp-multiway-paths-covered)
 		case memory_order_relaxed: __iso_volatile_store16(object, value); return;
 		case memory_order_release:
@@ -127,7 +127,7 @@ void __atomic_store_explicit16(volatile atomic_i16* object,
 void __atomic_store_explicit32(volatile atomic_i32* object,
 							   // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 							   i32 value,
-							   [[maybe_unused]] memory_order order) {
+							   __attr(maybe_unused) memory_order order) {
 	switch(order) { // NOLINT(hicpp-multiway-paths-covered)
 		case memory_order_relaxed: __iso_volatile_store32(object, value); return;
 		case memory_order_release:
@@ -144,7 +144,7 @@ void __atomic_store_explicit32(volatile atomic_i32* object,
 void __atomic_store_explicit64(volatile atomic_i64* object,
 							   // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 							   i64 value,
-							   [[maybe_unused]] memory_order order) {
+							   __attr(maybe_unused) memory_order order) {
 	switch(order) { // NOLINT(hicpp-multiway-paths-covered)
 		case memory_order_relaxed: __iso_volatile_store64(object, value); return;
 		case memory_order_release:
@@ -202,25 +202,25 @@ void __atomic_store64(volatile atomic_i64* object, i64 value) {
 	#endif // __IS_X86 && !IS_CNX_PLATFORM_ARCHITECTURE(CNX_PLATFORM_X86_64)
 }
 
-i8 __atomic_load_explicit8(volatile atomic_i8* object, [[maybe_unused]] memory_order order) {
+i8 __atomic_load_explicit8(volatile atomic_i8* object, __attr(maybe_unused) memory_order order) {
 	let ret = __iso_volatile_load8(static_cast(volatile char*)(object));
 	__load_barrier(order);
 	return (static_cast(i8)(ret));
 }
 
-i16 __atomic_load_explicit16(volatile atomic_i16* object, [[maybe_unused]] memory_order order) {
+i16 __atomic_load_explicit16(volatile atomic_i16* object, __attr(maybe_unused) memory_order order) {
 	let ret = __iso_volatile_load16(object);
 	__load_barrier(order);
 	return (static_cast(i16)(ret));
 }
 
-i32 __atomic_load_explicit32(volatile atomic_i32* object, [[maybe_unused]] memory_order order) {
+i32 __atomic_load_explicit32(volatile atomic_i32* object, __attr(maybe_unused) memory_order order) {
 	let ret = __iso_volatile_load32(object);
 	__load_barrier(order);
 	return (static_cast(i32)(ret));
 }
 
-i64 __atomic_load_explicit64(volatile atomic_i64* object, [[maybe_unused]] memory_order order) {
+i64 __atomic_load_explicit64(volatile atomic_i64* object, __attr(maybe_unused) memory_order order) {
 	#if __IS_X86
 	let ret = __iso_volatile_load64(object);
 	#else
@@ -262,7 +262,7 @@ i64 __atomic_load64(volatile atomic_i64* object) {
 i8 __atomic_fetch_add_explicit8(volatile atomic_i8* addend,
 								// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 								i8 value,
-								[[maybe_unused]] memory_order order) {
+								__attr(maybe_unused) memory_order order) {
 	ignore(order);
 	i8 res = 0;
 	return __CHOOSE_INTRINSIC(order,
@@ -275,7 +275,7 @@ i8 __atomic_fetch_add_explicit8(volatile atomic_i8* addend,
 i16 __atomic_fetch_add_explicit16(volatile atomic_i16* addend,
 								  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 								  i16 value,
-								  [[maybe_unused]] memory_order order) {
+								  __attr(maybe_unused) memory_order order) {
 	ignore(order);
 	i16 res = 0;
 	return __CHOOSE_INTRINSIC(order, res, _InterlockedExchangeAdd16, addend, value);
@@ -284,7 +284,7 @@ i16 __atomic_fetch_add_explicit16(volatile atomic_i16* addend,
 i32 __atomic_fetch_add_explicit32(volatile atomic_i32* addend,
 								  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 								  i32 value,
-								  [[maybe_unused]] memory_order order) {
+								  __attr(maybe_unused) memory_order order) {
 	ignore(order);
 	i32 res = 0;
 	return __CHOOSE_INTRINSIC(order,
@@ -297,7 +297,7 @@ i32 __atomic_fetch_add_explicit32(volatile atomic_i32* addend,
 i64 __atomic_fetch_add_explicit64(volatile atomic_i64* addend,
 								  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 								  i64 value,
-								  [[maybe_unused]] memory_order order) {
+								  __attr(maybe_unused) memory_order order) {
 
 	#if __IS_X86
 	ignore(order);
@@ -317,7 +317,7 @@ i64 __atomic_fetch_add_explicit64(volatile atomic_i64* addend,
 i8 __atomic_fetch_or_explicit8(volatile atomic_i8* object,
 							   // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 							   i8 operand,
-							   [[maybe_unused]] memory_order order) {
+							   __attr(maybe_unused) memory_order order) {
 	ignore(order);
 	i8 res = 0;
 	return __CHOOSE_INTRINSIC(order,
@@ -330,7 +330,7 @@ i8 __atomic_fetch_or_explicit8(volatile atomic_i8* object,
 i16 __atomic_fetch_or_explicit16(volatile atomic_i16* object,
 								 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 								 i16 operand,
-								 [[maybe_unused]] memory_order order) {
+								 __attr(maybe_unused) memory_order order) {
 	ignore(order);
 	i16 res = 0;
 	return __CHOOSE_INTRINSIC(order, res, _InterlockedOr16, object, operand);
@@ -339,7 +339,7 @@ i16 __atomic_fetch_or_explicit16(volatile atomic_i16* object,
 i32 __atomic_fetch_or_explicit32(volatile atomic_i32* object,
 								 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 								 i32 operand,
-								 [[maybe_unused]] memory_order order) {
+								 __attr(maybe_unused) memory_order order) {
 	ignore(order);
 	i32 res = 0;
 	return __CHOOSE_INTRINSIC(order,
@@ -352,7 +352,7 @@ i32 __atomic_fetch_or_explicit32(volatile atomic_i32* object,
 i64 __atomic_fetch_or_explicit64(volatile atomic_i64* object,
 								 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 								 i64 operand,
-								 [[maybe_unused]] memory_order order) {
+								 __attr(maybe_unused) memory_order order) {
 
 	#if __IS_X86
 	ignore(order);
@@ -373,7 +373,7 @@ i64 __atomic_fetch_or_explicit64(volatile atomic_i64* object,
 i8 __atomic_fetch_xor_explicit8(volatile atomic_i8* object,
 								// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 								i8 operand,
-								[[maybe_unused]] memory_order order) {
+								__attr(maybe_unused) memory_order order) {
 	ignore(order);
 	i8 res = 0;
 	return __CHOOSE_INTRINSIC(order,
@@ -386,7 +386,7 @@ i8 __atomic_fetch_xor_explicit8(volatile atomic_i8* object,
 i16 __atomic_fetch_xor_explicit16(volatile atomic_i16* object,
 								  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 								  i16 operand,
-								  [[maybe_unused]] memory_order order) {
+								  __attr(maybe_unused) memory_order order) {
 	ignore(order);
 	i16 res = 0;
 	return __CHOOSE_INTRINSIC(order, res, _InterlockedXor16, object, operand);
@@ -395,7 +395,7 @@ i16 __atomic_fetch_xor_explicit16(volatile atomic_i16* object,
 i32 __atomic_fetch_xor_explicit32(volatile atomic_i32* object,
 								  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 								  i32 operand,
-								  [[maybe_unused]] memory_order order) {
+								  __attr(maybe_unused) memory_order order) {
 	ignore(order);
 	i32 res = 0;
 	return __CHOOSE_INTRINSIC(order,
@@ -408,7 +408,7 @@ i32 __atomic_fetch_xor_explicit32(volatile atomic_i32* object,
 i64 __atomic_fetch_xor_explicit64(volatile atomic_i64* object,
 								  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 								  i64 operand,
-								  [[maybe_unused]] memory_order order) {
+								  __attr(maybe_unused) memory_order order) {
 
 	#if __IS_X86
 	ignore(order);
@@ -429,7 +429,7 @@ i64 __atomic_fetch_xor_explicit64(volatile atomic_i64* object,
 i8 __atomic_fetch_and_explicit8(volatile atomic_i8* object,
 								// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 								i8 operand,
-								[[maybe_unused]] memory_order order) {
+								__attr(maybe_unused) memory_order order) {
 	ignore(order);
 	i8 res = 0;
 	return __CHOOSE_INTRINSIC(order,
@@ -442,7 +442,7 @@ i8 __atomic_fetch_and_explicit8(volatile atomic_i8* object,
 i16 __atomic_fetch_and_explicit16(volatile atomic_i16* object,
 								  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 								  i16 operand,
-								  [[maybe_unused]] memory_order order) {
+								  __attr(maybe_unused) memory_order order) {
 	ignore(order);
 	i16 res = 0;
 	return __CHOOSE_INTRINSIC(order, res, _InterlockedAnd16, object, operand);
@@ -451,7 +451,7 @@ i16 __atomic_fetch_and_explicit16(volatile atomic_i16* object,
 i32 __atomic_fetch_and_explicit32(volatile atomic_i32* object,
 								  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 								  i32 operand,
-								  [[maybe_unused]] memory_order order) {
+								  __attr(maybe_unused) memory_order order) {
 	ignore(order);
 	i32 res = 0;
 	return __CHOOSE_INTRINSIC(order,
@@ -464,7 +464,7 @@ i32 __atomic_fetch_and_explicit32(volatile atomic_i32* object,
 i64 __atomic_fetch_and_explicit64(volatile atomic_i64* object,
 								  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 								  i64 operand,
-								  [[maybe_unused]] memory_order order) {
+								  __attr(maybe_unused) memory_order order) {
 	#if __IS_X86
 	ignore(order);
 	IGNORE_SEQ_CST_WARNING_START
@@ -484,7 +484,7 @@ i64 __atomic_fetch_and_explicit64(volatile atomic_i64* object,
 i8 __atomic_exchange_explicit8(volatile atomic_i8* object,
 							   // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 							   i8 desired,
-							   [[maybe_unused]] memory_order order) {
+							   __attr(maybe_unused) memory_order order) {
 	ignore(order);
 	i8 res = 0;
 	return __CHOOSE_INTRINSIC(order,
@@ -497,7 +497,7 @@ i8 __atomic_exchange_explicit8(volatile atomic_i8* object,
 i16 __atomic_exchange_explicit16(volatile atomic_i16* object,
 								 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 								 i16 desired,
-								 [[maybe_unused]] memory_order order) {
+								 __attr(maybe_unused) memory_order order) {
 	ignore(order);
 	i16 res = 0;
 	return __CHOOSE_INTRINSIC(order, res, _InterlockedExchange16, object, desired);
@@ -506,7 +506,7 @@ i16 __atomic_exchange_explicit16(volatile atomic_i16* object,
 i32 __atomic_exchange_explicit32(volatile atomic_i32* object,
 								 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 								 i32 desired,
-								 [[maybe_unused]] memory_order order) {
+								 __attr(maybe_unused) memory_order order) {
 	ignore(order);
 	i32 res = 0;
 	return __CHOOSE_INTRINSIC(order,
@@ -519,7 +519,7 @@ i32 __atomic_exchange_explicit32(volatile atomic_i32* object,
 i64 __atomic_exchange_explicit64(volatile atomic_i64* object,
 								 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 								 i64 desired,
-								 [[maybe_unused]] memory_order order) {
+								 __attr(maybe_unused) memory_order order) {
 	#if __IS_X86 && !IS_CNX_PLATFORM_ARCHITECTURE(CNX_PLATFORM_X86_64) // 32bit x86
 	i64 val = __atomic_load64(object);
 	while(!__atomic_compare_exchange_strong_explicit64(object, &val, desired, order)) {
@@ -538,7 +538,7 @@ bool __atomic_compare_exchange_strong_explicit8(
 	i8* restrict expected,
 	// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 	i8 desired,
-	[[maybe_unused]] memory_order order) {
+	__attr(maybe_unused) memory_order order) {
 	ignore(order);
 	i8 res = 0;
 	res = __CHOOSE_INTRINSIC(order,
@@ -561,7 +561,7 @@ bool __atomic_compare_exchange_strong_explicit16(
 	i16* restrict expected,
 	// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 	i16 desired,
-	[[maybe_unused]] memory_order order) {
+	__attr(maybe_unused) memory_order order) {
 	ignore(order);
 	i16 res = 0;
 	res = __CHOOSE_INTRINSIC(order, res, _InterlockedCompareExchange16, object, desired, *expected);
@@ -579,7 +579,7 @@ bool __atomic_compare_exchange_strong_explicit32(
 	i32* restrict expected,
 	// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 	i32 desired,
-	[[maybe_unused]] memory_order order) {
+	__attr(maybe_unused) memory_order order) {
 	ignore(order);
 	i32 res = 0;
 	res = __CHOOSE_INTRINSIC(order,
@@ -602,7 +602,7 @@ bool __atomic_compare_exchange_strong_explicit64(
 	i64* restrict expected,
 	// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 	i64 desired,
-	[[maybe_unused]] memory_order order) {
+	__attr(maybe_unused) memory_order order) {
 	ignore(order);
 	i64 res = 0;
 	res = __CHOOSE_INTRINSIC(order, res, _InterlockedCompareExchange64, object, desired, *expected);

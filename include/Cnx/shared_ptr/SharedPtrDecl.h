@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides the type definitions and function declarations for a struct template
 /// for representing a sharedly owned pointer
-/// @version 0.2.0
-/// @date 2022-04-15
+/// @version 0.2.1
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -60,90 +60,90 @@ CnxSharedPtr(SHARED_T);
 	#define ___DISABLE_IF_NULL(self) \
 		cnx_disable_if(!(self), "Can't perform an operator on a null shared_ptr")
 
-[[nodiscard]] CnxSharedPtr(SHARED_T) CnxSharedPtrIdentifier(SHARED_T, default)(void);
+__attr(nodiscard) CnxSharedPtr(SHARED_T) CnxSharedPtrIdentifier(SHARED_T, default)(void);
 
-[[nodiscard]] CnxSharedPtr(SHARED_T)
+__attr(nodiscard) CnxSharedPtr(SHARED_T)
 	CnxSharedPtrIdentifier(SHARED_T, default_with_allocator)(CnxAllocator allocator);
 
-[[nodiscard]] CnxSharedPtr(SHARED_T) CnxSharedPtrIdentifier(SHARED_T, new)(void)
+__attr(nodiscard) CnxSharedPtr(SHARED_T) CnxSharedPtrIdentifier(SHARED_T, new)(void)
 	cnx_disable_if(__SHARED_PTR_IS_ARRAY,
 				   "cnx_shared_ptr_new is only available if "
 				   "SHARED_T is NOT an array type");
 
-[[nodiscard]] CnxSharedPtr(SHARED_T)
+__attr(nodiscard) CnxSharedPtr(SHARED_T)
 	CnxSharedPtrIdentifier(SHARED_T, new_with_allocator)(CnxAllocator allocator)
 		cnx_disable_if(__SHARED_PTR_IS_ARRAY,
 					   "cnx_shared_ptr_new_with_allocator is only available if "
 					   "SHARED_T is NOT an array type");
 
-[[nodiscard]] CnxSharedPtr(SHARED_T)
+__attr(nodiscard) CnxSharedPtr(SHARED_T)
 	CnxSharedPtrIdentifier(SHARED_T, new_with_capacity)(usize capacity)
 		cnx_disable_if(!__SHARED_PTR_IS_ARRAY,
 					   "cnx_shared_ptr_new_with_capacity is only available if "
 					   "SHARED_T is an array type");
 
-[[nodiscard]] CnxSharedPtr(SHARED_T)
+__attr(nodiscard) CnxSharedPtr(SHARED_T)
 	CnxSharedPtrIdentifier(SHARED_T, new_with_capacity_and_allocator)(usize capacity,
 																	  CnxAllocator allocator)
 		cnx_disable_if(!__SHARED_PTR_IS_ARRAY,
 					   "cnx_shared_ptr_new_with_capacity_and_allocator is only available if "
 					   "SHARED_T is an array type");
 
-[[nodiscard]] CnxSharedPtr(SHARED_T)
+__attr(nodiscard) CnxSharedPtr(SHARED_T)
 	CnxSharedPtrIdentifier(SHARED_T, from)(__SHARED_PTR_ELEMENT_PTR restrict ptr);
 
-[[nodiscard]] CnxSharedPtr(SHARED_T)
+__attr(nodiscard) CnxSharedPtr(SHARED_T)
 	CnxSharedPtrIdentifier(SHARED_T, from_with_allocator)(__SHARED_PTR_ELEMENT_PTR restrict ptr,
 														  CnxAllocator allocator);
 
-[[nodiscard]] [[not_null(1)]] __SHARED_PTR_ELEMENT_PTR
+__attr(nodiscard) __attr(not_null(1)) __SHARED_PTR_ELEMENT_PTR
 	CnxSharedPtrIdentifier(SHARED_T, release)(CnxSharedPtr(SHARED_T) * restrict self)
 		___DISABLE_IF_NULL(self);
 
-[[not_null(1)]] void
-	CnxSharedPtrIdentifier(SHARED_T, reset)(CnxSharedPtr(SHARED_T) * restrict self,
-											__SHARED_PTR_ELEMENT_PTR restrict new_ptr)
-		___DISABLE_IF_NULL(self);
+__attr(not_null(1)) void CnxSharedPtrIdentifier(SHARED_T,
+												reset)(CnxSharedPtr(SHARED_T) * restrict self,
+													   __SHARED_PTR_ELEMENT_PTR restrict new_ptr)
+	___DISABLE_IF_NULL(self);
 
-[[nodiscard]] [[not_null(1)]] CnxSharedPtr(SHARED_T)
+__attr(nodiscard) __attr(not_null(1)) CnxSharedPtr(SHARED_T)
 	CnxSharedPtrIdentifier(SHARED_T, clone)(const CnxSharedPtr(SHARED_T) * restrict self)
 		___DISABLE_IF_NULL(self);
 
-[[not_null(1, 2)]] void
-	CnxSharedPtrIdentifier(SHARED_T, swap)(CnxSharedPtr(SHARED_T) * restrict self,
-										   CnxSharedPtr(SHARED_T) * restrict other)
-		___DISABLE_IF_NULL(self) ___DISABLE_IF_NULL(other);
+__attr(not_null(1, 2)) void CnxSharedPtrIdentifier(SHARED_T,
+												   swap)(CnxSharedPtr(SHARED_T) * restrict self,
+														 CnxSharedPtr(SHARED_T) * restrict other)
+	___DISABLE_IF_NULL(self) ___DISABLE_IF_NULL(other);
 
-[[nodiscard]] [[not_null(1)]] __SHARED_PTR_CONST_ELEMENT_PTR
+__attr(nodiscard) __attr(not_null(1)) __SHARED_PTR_CONST_ELEMENT_PTR
 	CnxSharedPtrIdentifier(SHARED_T, get_const)(const CnxSharedPtr(SHARED_T) * restrict self)
 		___DISABLE_IF_NULL(self);
 
-[[nodiscard]] [[not_null(1)]] __SHARED_PTR_ELEMENT_PTR
+__attr(nodiscard) __attr(not_null(1)) __SHARED_PTR_ELEMENT_PTR
 	CnxSharedPtrIdentifier(SHARED_T, get)(CnxSharedPtr(SHARED_T) * restrict self)
 		___DISABLE_IF_NULL(self);
 
-[[nodiscard]] [[not_null(1)]] [[returns_not_null]] CnxSharedPtrIdentifier(SHARED_T, Deleter)
-	CnxSharedPtrIdentifier(SHARED_T, get_deleter)(const CnxSharedPtr(SHARED_T) * restrict self)
-		___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) __attr(returns_not_null)
+	CnxSharedPtrIdentifier(SHARED_T, Deleter)
+		CnxSharedPtrIdentifier(SHARED_T, get_deleter)(const CnxSharedPtr(SHARED_T) * restrict self)
+			___DISABLE_IF_NULL(self);
 
-[[nodiscard]] [[not_null(1)]] bool
-	CnxSharedPtrIdentifier(SHARED_T, as_bool)(const CnxSharedPtr(SHARED_T) * restrict self)
-		___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) bool CnxSharedPtrIdentifier(SHARED_T, as_bool)(
+	const CnxSharedPtr(SHARED_T) * restrict self) ___DISABLE_IF_NULL(self);
 
-[[nodiscard]] [[not_null(1)]] __SHARED_PTR_CONST_ELEMENT_PTR
+__attr(nodiscard) __attr(not_null(1)) __SHARED_PTR_CONST_ELEMENT_PTR
 	CnxSharedPtrIdentifier(SHARED_T, at_const)(const CnxSharedPtr(SHARED_T) * restrict self,
 											   usize index) ___DISABLE_IF_NULL(self)
 		cnx_disable_if(!__SHARED_PTR_IS_ARRAY,
 					   "cnx_shared_ptr_at_const is only available if "
 					   "SHARED_T is an array type");
 
-[[nodiscard]] [[not_null(1)]] __SHARED_PTR_ELEMENT_PTR
+__attr(nodiscard) __attr(not_null(1)) __SHARED_PTR_ELEMENT_PTR
 	CnxSharedPtrIdentifier(SHARED_T, at)(CnxSharedPtr(SHARED_T) * restrict self, usize index)
 		___DISABLE_IF_NULL(self) cnx_disable_if(!__SHARED_PTR_IS_ARRAY,
 												"cnx_shared_ptr_at is only available if "
 												"SHARED_T is an array type");
 
-[[not_null(1)]] void CnxSharedPtrIdentifier(SHARED_T, free)(void* self);
+__attr(not_null(1)) void CnxSharedPtrIdentifier(SHARED_T, free)(void* self);
 
 typedef struct CnxSharedPtrIdentifier(SHARED_T, vtable) {
 	__SHARED_PTR_ELEMENT_PTR(*const release)
@@ -162,7 +162,7 @@ typedef struct CnxSharedPtrIdentifier(SHARED_T, vtable) {
 }
 CnxSharedPtrIdentifier(SHARED_T, vtable);
 
-[[maybe_unused]] static let CnxSharedPtrIdentifier(SHARED_T, vtable_impl)
+__attr(maybe_unused) static let CnxSharedPtrIdentifier(SHARED_T, vtable_impl)
 	= (CnxSharedPtrIdentifier(SHARED_T, vtable)){
 		.release = CnxSharedPtrIdentifier(SHARED_T, release),
 		.reset = CnxSharedPtrIdentifier(SHARED_T, reset),

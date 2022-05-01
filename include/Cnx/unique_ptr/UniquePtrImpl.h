@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides the function definitions for a struct template
 /// for representing a uniquely owned pointer
-/// @version 0.2.0
-/// @date 2022-03-29
+/// @version 0.2.1
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -40,9 +40,9 @@ IGNORE_MISSING_FIELD_INITIALIZERS_WARNING_START
 	#include <Cnx/TypeTraits.h>
 	#include <Cnx/unique_ptr/UniquePtrDef.h>
 
-[[always_inline]] static inline void
-CnxUniquePtrIdentifier(UNIQUE_T, default_deleter)(__UNIQUE_PTR_ELEMENT_PTR restrict ptr,
-												  CnxAllocator allocator) {
+__attr(always_inline) static inline void CnxUniquePtrIdentifier(UNIQUE_T, default_deleter)(
+	__UNIQUE_PTR_ELEMENT_PTR restrict ptr,
+	CnxAllocator allocator) {
 	cnx_allocator_deallocate(allocator, ptr);
 }
 
@@ -180,8 +180,10 @@ CnxUniquePtrIdentifier(UNIQUE_T, get)(CnxUniquePtr(UNIQUE_T) * restrict self) {
 	return self->m_ptr;
 }
 
-CnxUniquePtrIdentifier(UNIQUE_T, Deleter) CnxUniquePtrIdentifier(UNIQUE_T, get_deleter)(
-	[[maybe_unused]] const CnxUniquePtr(UNIQUE_T) * restrict self) {
+CnxUniquePtrIdentifier(UNIQUE_T, Deleter)
+	CnxUniquePtrIdentifier(UNIQUE_T,
+						   get_deleter)(__attr(maybe_unused)
+											const CnxUniquePtr(UNIQUE_T) * restrict self) {
 	return UNIQUE_DELETER;
 }
 

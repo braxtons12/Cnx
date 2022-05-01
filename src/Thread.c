@@ -1,7 +1,7 @@
 /// @file Thread.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Function implementations for threading functionality
-/// @version 0.2.1
+/// @version 0.2.2
 /// @date 2022-04-30
 ///
 /// MIT License
@@ -224,7 +224,7 @@ bool cnx_thread_id_greater_than_or_equal(CnxThreadID lhs, CnxThreadID rhs) {
 	return cnx_thread_id_equal(lhs, rhs) || cnx_thread_id_greater_than(lhs, rhs);
 }
 
-[[always_inline]] [[not_null(1)]] static inline int thread_invoke(void* lambda) {
+__attr(always_inline) __attr(not_null(1)) static inline int thread_invoke(void* lambda) {
 	ScopedLambda _lambda = static_cast(CnxThreadLambda)(lambda);
 	lambda_call(_lambda);
 	return 0;
@@ -497,7 +497,7 @@ bool cnx_thread_id_greater_than_or_equal(CnxThreadID lhs, CnxThreadID rhs) {
 	return cnx_thread_id_equal(lhs, rhs) || cnx_thread_id_greater_than(lhs, rhs);
 }
 
-[[always_inline]] [[not_null(1)]] static inline void* thread_invoke(void* lambda) {
+__attr(always_inline) __attr(not_null(1)) static inline void* thread_invoke(void* lambda) {
 	ScopedLambda _lambda = static_cast(CnxThreadLambda)(lambda);
 	lambda_call(_lambda);
 	return 0;
@@ -700,9 +700,8 @@ CnxResult cnx_condvar_free(CnxCondvar* restrict condvar) {
 	return Ok(i32, 0);
 }
 
-[[always_inline]] [[nodiscard]] static inline BOOL CALLBACK execute_once_thunk(CnxOnceFlag* flag,
-																			   void* function,
-																			   void** context) {
+__attr(always_inline) __attr(nodiscard) static inline BOOL CALLBACK
+	execute_once_thunk(CnxOnceFlag* flag, void* function, void** context) {
 	ignore(flag, context);
 
 	void (*to_exec)(void) = static_cast(void (*)(void))(function);
@@ -743,7 +742,8 @@ bool cnx_thread_id_greater_than_or_equal(CnxThreadID lhs, CnxThreadID rhs) {
 	return cnx_thread_id_equal(lhs, rhs) || cnx_thread_id_greater_than(lhs, rhs);
 }
 
-[[always_inline]] [[not_null(1)]] static inline unsigned long WINAPI thread_invoke(void* lambda) {
+__attr(always_inline) __attr(not_null(1)) static inline unsigned long WINAPI
+	thread_invoke(void* lambda) {
 	ScopedLambda _lambda = static_cast(CnxThreadLambda)(lambda);
 	lambda_call(_lambda);
 	return 0;

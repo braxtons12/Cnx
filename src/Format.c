@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief CnxFormat brings human readable string formatting, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
-/// @version 0.2.3
+/// @version 0.2.4
 /// @date 2022-04-30
 ///
 /// MIT License
@@ -79,12 +79,12 @@ static const f64 powers_of_10[NUM_POWERS_OF_10] = {
 	1000000000000000000000000000000000000000.0,
 };
 
-[[nodiscard]] [[always_inline]] static inline u8 cnx_get_digit_u64(u64 num, usize digit) {
+__attr(nodiscard) __attr(always_inline) static inline u8 cnx_get_digit_u64(u64 num, usize digit) {
 	return (digit != 0 ? (num / static_cast(u64)(powers_of_10[digit])) % 10 : // NOLINT
 						 num % 10);													  // NOLINT
 }
 
-[[nodiscard]] [[always_inline]] static inline u8 cnx_get_digit_i64(i64 num, usize digit) {
+__attr(nodiscard) __attr(always_inline) static inline u8 cnx_get_digit_i64(i64 num, usize digit) {
 	num = abs(num);
 	return static_cast(u8)(digit != 0 ?
 							   (num / static_cast(i64)(powers_of_10[digit])) % 10 : // NOLINT
@@ -121,15 +121,15 @@ static const f64 powers_of_10[NUM_POWERS_OF_10] = {
 // clang-format on
 #endif
 
-[[nodiscard]] [[always_inline]] static inline char cnx_num_to_char(u8 num) {
+__attr(nodiscard) __attr(always_inline) static inline char cnx_num_to_char(u8 num) {
 	return static_cast(char)(num) + '0';
 }
 
-[[nodiscard]] [[always_inline]] static inline u8 cnx_get_hex(usize num, usize digit) {
+__attr(nodiscard) __attr(always_inline) static inline u8 cnx_get_hex(usize num, usize digit) {
 	return (num >> (digit * 4U)) & 0xFU; // NOLINT
 }
 
-[[nodiscard]] [[always_inline]] static inline char cnx_num_to_hex_lower(u8 num) {
+__attr(nodiscard) __attr(always_inline) static inline char cnx_num_to_hex_lower(u8 num) {
 	switch(num) {
 		case 0 ... 9: return static_cast(char)(num) + '0';		  // NOLINT
 		case 10 ... 15: return 'a' + static_cast(char)(num) - 10; // NOLINT
@@ -137,7 +137,7 @@ static const f64 powers_of_10[NUM_POWERS_OF_10] = {
 	}
 }
 
-[[nodiscard]] [[always_inline]] static inline char cnx_num_to_hex_upper(u8 num) {
+__attr(nodiscard) __attr(always_inline) static inline char cnx_num_to_hex_upper(u8 num) {
 	switch(num) {
 		case 0 ... 9: return static_cast(char)(num) + '0';			// NOLINT
 		case 10 ... 15: return 'A' + (static_cast(char)(num) - 10); // NOLINT
@@ -145,22 +145,22 @@ static const f64 powers_of_10[NUM_POWERS_OF_10] = {
 	}
 }
 
-[[nodiscard]] [[always_inline]] static inline u8
-// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-cnx_get_digit_before_decimal(f64 num, usize digit) {
+__attr(nodiscard) __attr(always_inline) static inline u8
+	// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
+	cnx_get_digit_before_decimal(f64 num, usize digit) {
 	let num_ = static_cast(i64)(num);
 	return cnx_get_digit(num_, digit);
 }
 
-[[nodiscard]] [[always_inline]] static inline u8
-// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-cnx_get_digit_after_decimal(f64 num, usize digit, usize num_sig_figs) {
+__attr(nodiscard) __attr(always_inline) static inline u8
+	// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
+	cnx_get_digit_after_decimal(f64 num, usize digit, usize num_sig_figs) {
 	let num_ = static_cast(isize)(num * powers_of_10[num_sig_figs]);
 	return cnx_get_digit(num_, (num_sig_figs - 1) - digit);
 }
 
-[[nodiscard]] [[always_inline]] static inline usize
-cnx_get_num_digits_before_decimal(f64 num, i64 exponent) {
+__attr(nodiscard) __attr(always_inline) static inline usize
+	cnx_get_num_digits_before_decimal(f64 num, i64 exponent) {
 	return narrow_cast(usize)(abs(num) < 10.0 ? // NOLINT
 								  1 :
 								  exponent);
@@ -192,8 +192,8 @@ typedef enum CnxTypesNumHexTextDigits {
 	NUM_HEX_DIGITS_PTR = sizeof(nullptr_t) == sizeof(u32) ? NUM_HEX_DIGITS_U32 : NUM_HEX_DIGITS_U64
 } CnxTypesNumHexTextDigits;
 
-[[nodiscard]] [[always_inline]] static inline CnxString
-cnx_format_decimal_u64(u64 num, usize num_digits, CnxAllocator allocator) {
+__attr(nodiscard) __attr(always_inline) static inline CnxString
+	cnx_format_decimal_u64(u64 num, usize num_digits, CnxAllocator allocator) {
 	let_mut string = cnx_string_new_with_capacity_with_allocator(num_digits, allocator);
 	let_mut gotten_non_zero = false;
 	ranged_for(i, 0U, num_digits) {
@@ -209,8 +209,8 @@ cnx_format_decimal_u64(u64 num, usize num_digits, CnxAllocator allocator) {
 	});
 }
 
-[[nodiscard]] [[always_inline]] static inline CnxString
-cnx_format_decimal_i64(i64 num, usize num_digits, CnxAllocator allocator) {
+__attr(nodiscard) __attr(always_inline) static inline CnxString
+	cnx_format_decimal_i64(i64 num, usize num_digits, CnxAllocator allocator) {
 	let_mut string = cnx_string_new_with_capacity_with_allocator(num_digits + 1, allocator);
 	let_mut gotten_non_zero = false;
 	if(num < 0) {
@@ -243,9 +243,9 @@ cnx_format_decimal_i64(i64 num, usize num_digits, CnxAllocator allocator) {
 		i64 		: 	cnx_format_decimal_i64)(num, num_digits, allocator)
 // clang-format on
 
-[[nodiscard]] CnxString
-// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-cnx_format_hex(u64 num, usize num_digits, CnxFormatTypes type, CnxAllocator allocator) {
+__attr(nodiscard) CnxString
+	// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
+	cnx_format_hex(u64 num, usize num_digits, CnxFormatTypes type, CnxAllocator allocator) {
 	let_mut string = cnx_string_new_with_capacity_with_allocator(num_digits + 2, allocator);
 	let_mut gotten_non_zero = false;
 
@@ -281,7 +281,7 @@ CnxString cnx_format_bool(const CnxFormat* restrict self, CnxFormatSpecifier spe
 }
 
 CnxString cnx_format_bool_with_allocator(const CnxFormat* restrict self,
-										 [[maybe_unused]] CnxFormatSpecifier specifier,
+										 __attr(maybe_unused) CnxFormatSpecifier specifier,
 										 CnxAllocator allocator) {
 	cnx_assert(specifier.m_type == CNX_FORMAT_TYPE_DEFAULT,
 			   "Can't format bool with custom specifier");
@@ -477,10 +477,10 @@ CnxString cnx_format_i64_with_allocator(const CnxFormat* restrict self,
 }
 
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-[[nodiscard]] CnxString cnx_format_f64_scientific(f64 shifted_to_scientific,
-												  i64 exponent,
-												  usize num_sig_figs,
-												  CnxAllocator allocator) {
+__attr(nodiscard) CnxString cnx_format_f64_scientific(f64 shifted_to_scientific,
+													  i64 exponent,
+													  usize num_sig_figs,
+													  CnxAllocator allocator) {
 	// possible -, first digit, point, Exxx, num sig figs
 	let num_chars_in_float = 1 + 1 + 1 + 4 + num_sig_figs;
 	let_mut string = cnx_string_new_with_capacity_with_allocator(num_chars_in_float, allocator);
@@ -512,9 +512,9 @@ CnxString cnx_format_i64_with_allocator(const CnxFormat* restrict self,
 	});
 }
 
-[[nodiscard]] CnxString
-// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-cnx_format_f64_decimal(f64 num, i64 exponent, usize num_sig_figs, CnxAllocator allocator) {
+__attr(nodiscard) CnxString
+	// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
+	cnx_format_f64_decimal(f64 num, i64 exponent, usize num_sig_figs, CnxAllocator allocator) {
 	let num_chars_before_decimal = cnx_get_num_digits_before_decimal(num, exponent);
 	// possible -, num digits before point, point, num sig figs after point
 	let num_chars_in_float = 1 + num_chars_before_decimal + 1 + num_sig_figs;
@@ -546,8 +546,8 @@ cnx_format_f64_decimal(f64 num, i64 exponent, usize num_sig_figs, CnxAllocator a
 	return string;
 }
 
-[[nodiscard]] [[always_inline]] static inline CnxString
-cnx_format_f64_with_allocator__(f64 num, CnxFormatSpecifier specifier, CnxAllocator allocator) {
+__attr(nodiscard) __attr(always_inline) static inline CnxString
+	cnx_format_f64_with_allocator__(f64 num, CnxFormatSpecifier specifier, CnxAllocator allocator) {
 	let_mut exponent_base_2 = 0;
 	ignore(frexp(num, &exponent_base_2));
 	let exponent = static_cast(i64)(static_cast(f32)(exponent_base_2) * LN_2 / LN_10);
@@ -729,19 +729,21 @@ DeclCnxIterators(ConstRef(CnxFormatVariant));
 		.tag = Specifier, .variant_identifier(Specifier) = { specifier } \
 	}
 
-[[nodiscard]] [[always_inline]] static inline CnxFormatVariant
-cnx_format_variant_new([[maybe_unused]] CnxAllocator allocator) {
+__attr(nodiscard) __attr(always_inline) static inline CnxFormatVariant
+	cnx_format_variant_new(__attr(maybe_unused) CnxAllocator allocator) {
 	return (CnxFormatVariant){0};
 }
 
-[[not_null(1)]] [[always_inline]] static inline void
-cnx_format_variant_free([[maybe_unused]] CnxFormatVariant* elem,
-						[[maybe_unused]] CnxAllocator allocator) {
+__attr(not_null(1))
+	__attr(always_inline) static inline void cnx_format_variant_free(__attr(maybe_unused)
+																		 CnxFormatVariant* elem,
+																	 __attr(maybe_unused)
+																		 CnxAllocator allocator) {
 }
 
-[[nodiscard]] [[not_null(1)]] [[always_inline]] static inline CnxFormatVariant
-cnx_format_variant_clone(const CnxFormatVariant* restrict elem,
-						 [[maybe_unused]] CnxAllocator allocator) {
+__attr(nodiscard) __attr(not_null(1)) __attr(always_inline) static inline CnxFormatVariant
+	cnx_format_variant_clone(const CnxFormatVariant* restrict elem,
+							 __attr(maybe_unused) CnxAllocator allocator) {
 	return *elem;
 }
 
@@ -753,8 +755,8 @@ cnx_format_variant_clone(const CnxFormatVariant* restrict elem,
 		const CnxStringView* 			: cnx_format_pair_from_stringview)(x)
 //clang-format on
 
-[[nodiscard]] [[returns_not_null]] const_cstring cnx_format_category_get_message(
-		[[maybe_unused]] const CnxErrorCategory* restrict self, i64 error_code) {
+__attr(nodiscard) __attr(returns_not_null) const_cstring cnx_format_category_get_message(
+		__attr(maybe_unused) const CnxErrorCategory* restrict self, i64 error_code) {
 	if(error_code == CNX_FORMAT_SUCCESS) {
 		return "No error: Formatting successful";
 	}
@@ -776,25 +778,25 @@ cnx_format_variant_clone(const CnxFormatVariant* restrict elem,
 	unreachable();
 }
 
-[[nodiscard]] i64 cnx_format_category_get_last_error(
-		[[maybe_unused]] const CnxErrorCategory* restrict self) {
+__attr(nodiscard) i64 cnx_format_category_get_last_error(
+		__attr(maybe_unused) const CnxErrorCategory* restrict self) {
 	return 0;
 }
 
 typedef struct CnxFormatErrorCategory {} CnxFormatErrorCategory;
 
-[[maybe_unused]] static ImplTraitFor(CnxErrorCategory,
+__attr(maybe_unused) static ImplTraitFor(CnxErrorCategory,
 									 CnxFormatErrorCategory,
 									 cnx_format_category_get_message,
 									 cnx_format_category_get_last_error);
 
-[[maybe_unused]] static const CnxFormatErrorCategory cnx_format_error_category = {};
+__attr(maybe_unused) static const CnxFormatErrorCategory cnx_format_error_category = {};
 
-[[maybe_unused]] static let cnx_format_category = as_trait(CnxErrorCategory,
+__attr(maybe_unused) static let cnx_format_category = as_trait(CnxErrorCategory,
 														   CnxFormatErrorCategory,
 														   cnx_format_error_category);
 
-[[nodiscard]] [[not_null(1)]] [[always_inline]]
+__attr(nodiscard) __attr(not_null(1)) __attr(always_inline)
 static inline usize cnx_format_get_num_sig_figs_from_substring(
 									restrict const_cstring format_string,
 									// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
@@ -834,7 +836,7 @@ static inline usize cnx_format_get_num_sig_figs_from_substring(
 	return num_figs;
 }
 
-[[nodiscard]] bool cnx_format_is_char_valid_in_specifier(char character) {
+__attr(nodiscard) bool cnx_format_is_char_valid_in_specifier(char character) {
 	return character == CNX_FORMAT_TYPE_DECIMAL || character == CNX_FORMAT_TYPE_HEX_LOWER
 		   || character == CNX_FORMAT_TYPE_HEX_UPPER || character == CNX_FORMAT_TYPE_SCIENTIFIC
 		   || character == CNX_FORMAT_TYPE_DEBUG || (character >= '0' && character <= '9');
@@ -846,11 +848,11 @@ static let format_variant_data = (CnxCollectionData(CnxVector(CnxFormatVariant))
 .m_destructor = cnx_format_variant_free,
 .m_copy_constructor = cnx_format_variant_clone};
 
-[[nodiscard]] [[not_null(1)]] CnxResult(CnxVector(CnxFormatVariant))
+__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxVector(CnxFormatVariant))
 	cnx_format_parse_and_validate_format_string(restrict const_cstring format_string, // NOLINT
 											// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 											usize length,
-											[[maybe_unused]] usize num_args,
+											__attr(maybe_unused) usize num_args,
 											CnxAllocator allocator)
 {
 	let_mut vec = cnx_vector_new_with_capacity_allocator_and_collection_data(CnxFormatVariant,

@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides the function definitions for a template instantiation of
 /// `CnxArray(ARRAY_T, ARRAY_N)`
-/// @version 0.2.0
-/// @date 2022-03-21
+/// @version 0.2.1
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -131,22 +131,22 @@ ImplIntoCnxRandomAccessIterator(CnxArray(ARRAY_T, ARRAY_N),
 								CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_ccurrent),
 								CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_cequals));
 
-[[always_inline]] static inline ARRAY_T
-CnxArrayIdentifier(ARRAY_T, ARRAY_N, default_constructor)([[maybe_unused]] CnxAllocator allocator) {
+__attr(always_inline) static inline ARRAY_T
+	CnxArrayIdentifier(ARRAY_T, ARRAY_N, default_constructor)(__attr(maybe_unused)
+																  CnxAllocator allocator) {
 	return (ARRAY_T){0};
 }
 
-[[always_inline]] static inline ARRAY_T
-CnxArrayIdentifier(ARRAY_T,
-				   ARRAY_N,
-				   default_copy_constructor)(const ARRAY_T* restrict element,
-											 [[maybe_unused]] CnxAllocator allocator) {
+__attr(always_inline) static inline ARRAY_T
+	CnxArrayIdentifier(ARRAY_T, ARRAY_N, default_copy_constructor)(const ARRAY_T* restrict element,
+																   __attr(maybe_unused)
+																	   CnxAllocator allocator) {
 	return *element;
 }
 
-[[always_inline]] static inline void CnxArrayIdentifier(ARRAY_T, ARRAY_N, default_destructor)(
-	[[maybe_unused]] ARRAY_T* restrict element, /** NOLINT(readability-non-const-parameter) **/
-	[[maybe_unused]] CnxAllocator allocator) {
+__attr(always_inline) static inline void CnxArrayIdentifier(ARRAY_T, ARRAY_N, default_destructor)(
+	__attr(maybe_unused) ARRAY_T* restrict element, /** NOLINT(readability-non-const-parameter) **/
+	__attr(maybe_unused) CnxAllocator allocator) {
 }
 
 static const struct CnxArrayIdentifier(ARRAY_T, ARRAY_N, vtable)
@@ -691,11 +691,11 @@ CnxString CnxArrayIdentifier(ARRAY_T, ARRAY_N, format)(const CnxFormat* restrict
 																	   DEFAULT_ALLOCATOR);
 }
 
-CnxString CnxArrayIdentifier(ARRAY_T,
-							 ARRAY_N,
-							 format_with_allocator)(const CnxFormat* restrict self,
-													[[maybe_unused]] CnxFormatSpecifier specifier,
-													CnxAllocator allocator) {
+CnxString
+CnxArrayIdentifier(ARRAY_T, ARRAY_N, format_with_allocator)(const CnxFormat* restrict self,
+															__attr(maybe_unused)
+																CnxFormatSpecifier specifier,
+															CnxAllocator allocator) {
 	cnx_assert(specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
 				   || specifier.m_type == CNX_FORMAT_TYPE_DEBUG,
 			   "Can only format CnxArray with default or debug format specifier");

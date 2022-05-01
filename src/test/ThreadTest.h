@@ -54,7 +54,7 @@ TEST(CnxThread, test_multiple) {
 			lambda_cast(lambda(add_loop, lambda_clone(add_one_lambda)), CnxThreadLambda));
 
 		TEST_ASSERT_TRUE(cnx_result_is_ok(res));
-		[[maybe_unused]] CnxScopedThread thread = cnx_result_unwrap(res);
+		__attr(maybe_unused) CnxScopedThread thread = cnx_result_unwrap(res);
 
 		let_mut res2 = cnx_thread_new(
 			lambda_cast(lambda(add_loop, lambda_clone(add_one_lambda)), CnxThreadLambda));
@@ -87,13 +87,13 @@ TEST(CnxThread, test_synchronized) {
 			lambda_cast(lambda(add_loop, lambda_clone(add_one_lambda)), CnxThreadLambda));
 
 		TEST_ASSERT_TRUE(cnx_result_is_ok(res));
-		[[maybe_unused]] CnxScopedThread thread = cnx_result_unwrap(res);
+		__attr(maybe_unused) CnxScopedThread thread = cnx_result_unwrap(res);
 
 		let_mut res2 = cnx_thread_new(
 			lambda_cast(lambda(add_loop, lambda_clone(add_one_lambda)), CnxThreadLambda));
 
 		TEST_ASSERT_TRUE(cnx_result_is_ok(res2));
-		[[maybe_unused]] CnxScopedThread thread2 = cnx_result_unwrap(res2);
+		__attr(maybe_unused) CnxScopedThread thread2 = cnx_result_unwrap(res2);
 
 		TEST_ASSERT_NOT_EQUAL(cnx_this_thread_get_id(), cnx_thread_get_id(&thread));
 		TEST_ASSERT_NOT_EQUAL(cnx_this_thread_get_id(), cnx_thread_get_id(&thread2));
@@ -146,7 +146,7 @@ TEST(CnxJThread, test_multiple) {
 			lambda_cast(lambda(add_loop_jthread, lambda_clone(add_one_lambda)), CnxJThreadLambda));
 
 		TEST_ASSERT_TRUE(cnx_result_is_ok(res));
-		[[maybe_unused]] CnxScopedJThread thread = cnx_result_unwrap(res);
+		__attr(maybe_unused) CnxScopedJThread thread = cnx_result_unwrap(res);
 
 		let_mut res2 = cnx_jthread_new(
 			lambda_cast(lambda(add_loop_jthread, lambda_clone(add_one_lambda)), CnxJThreadLambda));
@@ -174,7 +174,7 @@ TEST(CnxJThread, test_synchronized) {
 			lambda_cast(lambda(add_loop_jthread, lambda_clone(add_one_lambda)), CnxJThreadLambda));
 
 		TEST_ASSERT_TRUE(cnx_result_is_ok(res));
-		[[maybe_unused]] CnxScopedJThread thread = cnx_result_unwrap(res);
+		__attr(maybe_unused) CnxScopedJThread thread = cnx_result_unwrap(res);
 
 		let_mut res2 = cnx_jthread_new(
 			lambda_cast(lambda(add_loop_jthread, lambda_clone(add_one_lambda)), CnxJThreadLambda));

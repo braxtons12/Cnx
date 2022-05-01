@@ -3,7 +3,7 @@
 /// @brief Allocators provides an abstraction to modularize custom memory allocators to make
 /// custom allocator use simple and configurable
 /// @version 0.2.2
-/// @date 2022-04-11
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -79,9 +79,10 @@ typedef void (*deallocate_function)(CnxAllocator* restrict self, void* memory);
 ///
 /// @return the allocated memory
 /// @ingroup memory
-[[nodiscard]] [[not_null(1)]] void*
-cnx_allocate([[maybe_unused]] CnxAllocator* restrict self, usize size_bytes)
-	cnx_disable_if(!self, "Can't allocate memory with a null allocator");
+__attr(nodiscard)
+	__attr(not_null(1)) void* cnx_allocate(__attr(maybe_unused) CnxAllocator* restrict self,
+										   usize size_bytes)
+		cnx_disable_if(!self, "Can't allocate memory with a null allocator");
 
 /// @brief Wrapper for `realloc` so it can be used in `CnxAllocator`s
 /// Behavior matches that of `realloc`
@@ -92,11 +93,13 @@ cnx_allocate([[maybe_unused]] CnxAllocator* restrict self, usize size_bytes)
 ///
 /// @return the allocated memory
 /// @ingroup memory
-[[nodiscard]] [[not_null(1)]] void*
-// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-cnx_reallocate([[maybe_unused]] CnxAllocator* restrict self, void* memory, usize new_size_bytes)
-	cnx_disable_if(!self, "Can't reallocate with a null allocator")
-		cnx_disable_if(!memory, "Can't reallocate a nullptr");
+__attr(nodiscard) __attr(not_null(1)) void*
+	// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
+	cnx_reallocate(__attr(maybe_unused) CnxAllocator* restrict self,
+				   void* memory,
+				   usize new_size_bytes)
+		cnx_disable_if(!self, "Can't reallocate with a null allocator")
+			cnx_disable_if(!memory, "Can't reallocate a nullptr");
 
 /// @brief Wrapper for `free` so it can be used in `CnxAllocator`s
 /// Behavior matches that of `free`
@@ -104,11 +107,11 @@ cnx_reallocate([[maybe_unused]] CnxAllocator* restrict self, void* memory, usize
 /// @param self - The state of the allocator (unused)
 /// @param memory - The memory allocation to deallocate
 /// @ingroup memory
-[[not_null(1, 2)]] void
-// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-cnx_deallocate([[maybe_unused]] CnxAllocator* restrict self, void* memory)
-	cnx_disable_if(!self, "Can't deallocate with a null allocator")
-		cnx_disable_if(!memory, "Can't free a nullptr");
+__attr(not_null(1, 2)) void
+	// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
+	cnx_deallocate(__attr(maybe_unused) CnxAllocator* restrict self, void* memory)
+		cnx_disable_if(!self, "Can't deallocate with a null allocator")
+			cnx_disable_if(!memory, "Can't free a nullptr");
 
 	#ifndef CNX_DEFAULT_ALLOCATOR_FUNCTION
 		/// @brief The default `CnxAllocator` allocation function
@@ -145,7 +148,7 @@ typedef struct CnxStatelessAllocator {
 ///
 /// @return  a default `CnxAllocator`
 /// @ingroup memory
-[[nodiscard]] CnxAllocator cnx_allocator_new(void);
+__attr(nodiscard) CnxAllocator cnx_allocator_new(void);
 
 	/// @brief Implements `CnxAllocator` for the given custom allocator type
 	///
@@ -210,7 +213,7 @@ extern const CnxAllocator DEFAULT_ALLOCATOR;
 ///
 /// @return  newly allocated memory
 /// @ingroup memory
-[[nodiscard]] void* cnx_allocator_allocate(CnxAllocator allocator, usize size_bytes);
+__attr(nodiscard) void* cnx_allocator_allocate(CnxAllocator allocator, usize size_bytes);
 /// @brief Allocates new memory for an array of the given size with the given `CnxAllocator`
 ///
 /// @param allocator - The allocator to allocate with
@@ -219,8 +222,9 @@ extern const CnxAllocator DEFAULT_ALLOCATOR;
 ///
 /// @return newly allocated memory
 /// @ingroup memory
-[[nodiscard]] void*
-cnx_allocator_allocate_array(CnxAllocator allocator, usize num_elements, usize element_size_bytes);
+__attr(nodiscard) void* cnx_allocator_allocate_array(CnxAllocator allocator,
+													 usize num_elements,
+													 usize element_size_bytes);
 /// @brief Allocates new memory large enough to store `new_size_bytes` bytes of data, and copies the
 /// old contents over.
 ///
@@ -232,10 +236,10 @@ cnx_allocator_allocate_array(CnxAllocator allocator, usize num_elements, usize e
 /// @return reallocated memory
 /// @note If reallocation fails, the original memory will be returned unchanged
 /// @ingroup memory
-[[nodiscard]] void* cnx_allocator_reallocate(CnxAllocator allocator,
-											 void* memory,
-											 usize old_size_bytes,
-											 usize new_size_bytes);
+__attr(nodiscard) void* cnx_allocator_reallocate(CnxAllocator allocator,
+												 void* memory,
+												 usize old_size_bytes,
+												 usize new_size_bytes);
 /// @brief Allocates new memory large enough to store `new_num_elements` elements of size
 /// `element_size_bytes`, and copies the old contents over
 ///
@@ -248,11 +252,11 @@ cnx_allocator_allocate_array(CnxAllocator allocator, usize num_elements, usize e
 /// @return reallocated memory
 /// @note If reallocation fails, the original memory will be returned unchanged
 /// @ingroup memory
-[[nodiscard]] void* cnx_allocator_reallocate_array(CnxAllocator allocator,
-												   void* memory,
-												   usize old_num_elements,
-												   usize new_num_elements,
-												   usize element_size_bytes);
+__attr(nodiscard) void* cnx_allocator_reallocate_array(CnxAllocator allocator,
+													   void* memory,
+													   usize old_num_elements,
+													   usize new_num_elements,
+													   usize element_size_bytes);
 /// @brief Deallocates (aka frees) the given memory with the given `CnxAllocator`
 ///
 /// @param allocator - The allocator to deallocate with

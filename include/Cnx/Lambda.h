@@ -1,7 +1,7 @@
 /// @file Lambda.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Basic lambda/closure implementation for C.
-/// @version 0.1.3
+/// @version 0.1.4
 /// @date 2022-04-30
 ///
 /// MIT License
@@ -213,7 +213,7 @@ typedef void* CnxLambdaCaptures;
 ///
 /// @param lambda - The lambda to free
 /// @ingroup cnx_lambda
-[[always_inline]] [[not_null(1)]] static inline void lambda_free(void* lambda) {
+__attr(always_inline) __attr(not_null(1)) static inline void lambda_free(void* lambda) {
 	let _lambda = *static_cast(struct {
 		void* func;
 		CnxLambdaCaptures captures;

@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides methods for dealing with durations of time
 /// @version 0.1.2
-/// @date 2022-01-11
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -202,7 +202,7 @@ CnxString cnx_duration_format(const CnxFormat* restrict self, CnxFormatSpecifier
 }
 
 CnxString cnx_duration_format_with_allocator(const CnxFormat* restrict self,
-											 [[maybe_unused]] CnxFormatSpecifier specifier,
+											 __attr(maybe_unused) CnxFormatSpecifier specifier,
 											 CnxAllocator allocator) {
 	cnx_assert(specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
 				   || specifier.m_type == CNX_FORMAT_TYPE_DEBUG,

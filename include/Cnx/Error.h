@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides an extensible type for communicating errors via both error codes and
 /// message strings.
-/// @version 0.2.3
-/// @date 2022-04-15
+/// @version 0.2.4
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -140,23 +140,23 @@ typedef struct CnxError {
 ///
 /// @return a `CnxError`
 /// @ingroup cnx_error
-[[nodiscard]] CnxError cnx_error_new(i64 error_code, CnxErrorCategory error_category);
+__attr(nodiscard) CnxError cnx_error_new(i64 error_code, CnxErrorCategory error_category);
 /// @brief Returns the error code associated with the given error
 ///
 /// @param self - The error
 ///
 /// @return the associated error code
 /// @ingroup cnx_error
-[[nodiscard]] [[not_null(1)]] i64
-cnx_error_code(const CnxError* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) i64 cnx_error_code(const CnxError* restrict self)
+	___DISABLE_IF_NULL(self);
 /// @brief Returns the error message associated with the given error, as a `cstring`
 ///
 /// @param self - The error
 ///
 /// @return the associated error message
 /// @ingroup cnx_error
-[[nodiscard]] [[not_null(1)]] [[returns_not_null]] const_cstring
-cnx_error_message(const CnxError* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) __attr(returns_not_null) const_cstring
+	cnx_error_message(const CnxError* restrict self) ___DISABLE_IF_NULL(self);
 
 /// @brief Returns the error message associated with the given error code, as a `cstring`
 ///
@@ -165,15 +165,15 @@ cnx_error_message(const CnxError* restrict self) ___DISABLE_IF_NULL(self);
 ///
 /// @return the message associated with the error code
 /// @ingroup cnx_error
-[[nodiscard]] [[returns_not_null]] const_cstring
-cnx_error_category_get_message(CnxErrorCategory self, i64 error_code);
+__attr(nodiscard) __attr(returns_not_null) const_cstring
+	cnx_error_category_get_message(CnxErrorCategory self, i64 error_code);
 /// @brief Returns the error code for the last reported error
 ///
 /// @param self - The error category to get the last error from
 ///
 /// @return the `i64` error code representing the last reported error
 /// @ingroup cnx_error
-[[nodiscard]] i64 cnx_error_category_get_last_error(CnxErrorCategory self);
+__attr(nodiscard) i64 cnx_error_category_get_last_error(CnxErrorCategory self);
 
 	#undef ___DISABLE_IF_NULL
 
@@ -187,15 +187,16 @@ cnx_error_category_get_message(CnxErrorCategory self, i64 error_code);
 ///
 /// @return the message associated with the error code
 /// @ingroup cnx_error
-[[nodiscard]] [[not_null(1)]] [[returns_not_null]] const_cstring
-cnx_posix_category_get_message(const CnxErrorCategory* restrict self, i64 error_code)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) __attr(returns_not_null) const_cstring
+	cnx_posix_category_get_message(const CnxErrorCategory* restrict self, i64 error_code)
+		___DISABLE_IF_NULL(self);
 /// @brief Returns the error code for the last reported POSIX error
 ///
 /// @return the error code for the last POSIX error
 /// @ingroup cnx_error
-[[nodiscard]] [[not_null(1)]] i64
-cnx_posix_category_get_last_error(const CnxErrorCategory* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) i64
+	cnx_posix_category_get_last_error(const CnxErrorCategory* restrict self)
+		___DISABLE_IF_NULL(self);
 
 	#if CNX_PLATFORM_WINDOWS
 /// @brief Returns the Win32 error message associated with the given error code, as a `cstring`
@@ -204,15 +205,16 @@ cnx_posix_category_get_last_error(const CnxErrorCategory* restrict self) ___DISA
 ///
 /// @return the message associated with the error code
 /// @ingroup cnx_error
-[[nodiscard]] [[not_null(1)]] [[returns_not_null]] const_cstring
-cnx_win32_category_get_message(const CnxErrorCategory* restrict self, i64 error_code)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) __attr(returns_not_null) const_cstring
+	cnx_win32_category_get_message(const CnxErrorCategory* restrict self, i64 error_code)
+		___DISABLE_IF_NULL(self);
 /// @brief Returns the error code for the last reported Win32 error
 ///
 /// @return the error code for the last Win32 error
 /// @ingroup cnx_error
-[[nodiscard]] [[not_null(1)]] i64
-cnx_win32_category_get_last_error(const CnxErrorCategory* restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) i64
+	cnx_win32_category_get_last_error(const CnxErrorCategory* restrict self)
+		___DISABLE_IF_NULL(self);
 	#endif // CNX_PLATFORM_WINDOWS
 
 /// @brief Implementation of `CnxFormat.format` for `CnxError`
@@ -221,9 +223,9 @@ cnx_win32_category_get_last_error(const CnxErrorCategory* restrict self) ___DISA
 /// @param specifier - The `CnxFormatSpecifier` in the format string. Unused
 ///
 /// @return `self` formatted as a `CnxString`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_error_format(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_error_format(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief Implementation of `CnxFormat.format_with_allocator` for `CnxError`
 ///
 /// @param self - The `CnxError` to format as a `CnxFormat` trait object
@@ -231,31 +233,33 @@ cnx_error_format(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
 /// @param allocator - The `CnxAllocator` to allocate the formatted string with
 ///
 /// @return `self` formatted as a `CnxString`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_error_format_with_allocator(const CnxFormat* restrict self,
-								CnxFormatSpecifier specifier,
-								CnxAllocator allocator) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_error_format_with_allocator(const CnxFormat* restrict self,
+									CnxFormatSpecifier specifier,
+									CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 
 /// @brief Implement `CnxFormat` for `CnxError`
 /// @return The `CnxFormat` trait implementation for `CnxError`
 /// @ingroup cnx_error
-[[maybe_unused]] static ImplTraitFor(CnxFormat,
-									 CnxError,
-									 cnx_error_format,
-									 cnx_error_format_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 CnxError,
+										 cnx_error_format,
+										 cnx_error_format_with_allocator);
 
 typedef struct CnxPosixErrorCategory {
 } CnxPosixErrorCategory;
 
-[[maybe_unused]] static ImplTraitFor(CnxErrorCategory,
-									 CnxPosixErrorCategory,
-									 cnx_posix_category_get_message,
-									 cnx_posix_category_get_last_error);
+__attr(maybe_unused) static ImplTraitFor(CnxErrorCategory,
+										 CnxPosixErrorCategory,
+										 cnx_posix_category_get_message,
+										 cnx_posix_category_get_last_error);
 
 IGNORE_RESERVED_IDENTIFIER_WARNING_START
-[[maybe_unused]] static const CnxPosixErrorCategory __cnx_posix_error_category = {};
-[[maybe_unused]] static const CnxErrorCategory __cnx_posix_category
-	= as_trait(CnxErrorCategory, CnxPosixErrorCategory, __cnx_posix_error_category);
+__attr(maybe_unused) static const CnxPosixErrorCategory __cnx_posix_error_category = {};
+__attr(maybe_unused) static const CnxErrorCategory __cnx_posix_category = as_trait(
+	CnxErrorCategory,
+	CnxPosixErrorCategory,
+	__cnx_posix_error_category);
 IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 
 	/// @brief The `CnxErrorCategory` to map POSIX error codes
@@ -270,15 +274,17 @@ IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 typedef struct CnxWin32ErrorCategory {
 } CnxWin32ErrorCategory;
 
-[[maybe_unused]] static ImplTraitFor(CnxErrorCategory,
-									 CnxWin32ErrorCategory,
-									 cnx_win32_category_get_message,
-									 cnx_win32_category_get_last_error);
+__attr(maybe_unused) static ImplTraitFor(CnxErrorCategory,
+										 CnxWin32ErrorCategory,
+										 cnx_win32_category_get_message,
+										 cnx_win32_category_get_last_error);
 
 IGNORE_RESERVED_IDENTIFIER_WARNING_START
-[[maybe_unused]] static const CnxWin32ErrorCategory __cnx_win32_error_category = {};
-[[maybe_unused]] static const CnxErrorCategory __cnx_win32_category
-	= as_trait(CnxErrorCategory, CnxWin32ErrorCategory, __cnx_win32_error_category);
+__attr(maybe_unused) static const CnxWin32ErrorCategory __cnx_win32_error_category = {};
+__attr(maybe_unused) static const CnxErrorCategory __cnx_win32_category = as_trait(
+	CnxErrorCategory,
+	CnxWin32ErrorCategory,
+	__cnx_win32_error_category);
 
 		/// @brief The `CnxErrorCategory` to map Win32 error codes
 		///

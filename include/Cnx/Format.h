@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief CnxFormat brings human readable string formatting, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
-/// @version 0.2.0
-/// @date 2022-03-09
+/// @version 0.2.1
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -79,10 +79,10 @@
 /// @endcode
 ///
 /// In practice, you will probably be providing this Trait implementation in a header file, so
-/// you'll also probably want to mark it as `static` and `[[maybe_unused]]`:
+/// you'll also probably want to mark it as `static` and `__attr(maybe_unused)
 ///
 /// @code {.c}
-/// [[maybe_unused]] static ImplTraitFor(CnxFormat, your_type, your_format,
+/// __attr(maybe_unused) static ImplTraitFor(CnxFormat, your_type, your_format,
 /// your_format_with_allocator);
 /// @endcode
 ///
@@ -137,7 +137,7 @@
 ///		return point2d_format_with_allocator(self, specifier, cnx_allocator_new());
 /// }
 ///
-/// [[maybe_unused]] static
+/// __attr(maybe_unused) static
 /// ImplTraitFor(CnxFormat, Point2D, point2d_format, point2d_format_with_allocator);
 ///
 /// void point2d_print_legacy(const Point2D* restrict self) {
@@ -211,12 +211,12 @@ typedef struct CnxFormatSpecifier {
 /// @param ... - The parameter pack of arguments to be formatted
 ///
 /// @return The formatted output string
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_with_allocator(restrict const_cstring format_string,
-						  CnxAllocator allocator,
-						  usize num_args,
-						  ...)
-	cnx_disable_if(!format_string, "Can't format arguments with a null format_string");
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_with_allocator(restrict const_cstring format_string,
+							  CnxAllocator allocator,
+							  usize num_args,
+							  ...)
+		cnx_disable_if(!format_string, "Can't format arguments with a null format_string");
 
 /// @brief Formats the various parameter pack arguments into their associated place in the given
 /// format string, using the provided allocator
@@ -228,12 +228,12 @@ cnx_format_with_allocator(restrict const_cstring format_string,
 /// @param list - The parameter pack of arguments to be formatted
 ///
 /// @return The formatted output string
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_vformat_with_allocator(restrict const_cstring format_string,
-						   CnxAllocator allocator,
-						   usize num_args,
-						   va_list list)
-	cnx_disable_if(!format_string, "Can't format arguments with a null format_string");
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_vformat_with_allocator(restrict const_cstring format_string,
+							   CnxAllocator allocator,
+							   usize num_args,
+							   va_list list)
+		cnx_disable_if(!format_string, "Can't format arguments with a null format_string");
 
 	/// @brief Converts the given variable into its associated `CnxFormat` Trait implementation
 	///
@@ -558,10 +558,10 @@ cnx_vformat_with_allocator(restrict const_cstring format_string,
 /// @endcode
 ///
 /// In practice, you will probably be providing this Trait implementation in a header file,
-/// so you'll also probably want to mark it as `static` and `[[maybe_unused]]`:
+/// so you'll also probably want to mark it as `static` and `__attr(maybe_unused)
 ///
 /// @code {.c}
-/// [[maybe_unused]] static ImplTraitFor(CnxFormat, your_type, your_format, your_format_with_allocator);
+/// __attr(maybe_unused) static ImplTraitFor(CnxFormat, your_type, your_format, your_format_with_allocator);
 /// @endcode
 ///
 /// @ingroup format
@@ -591,10 +591,10 @@ Trait(
 /// @endcode
 ///
 /// In practice, you will probably be providing this Trait implementation in a header file,
-/// so you'll also probably want to mark it as `static` and `[[maybe_unused]]`:
+/// so you'll also probably want to mark it as `static` and `__attr(maybe_unused)
 ///
 /// @code {.c}
-/// [[maybe_unused]] static ImplTraitFor(CnxFormat, your_type, your_format, your_format_with_allocator);
+/// __attr(maybe_unused) static ImplTraitFor(CnxFormat, your_type, your_format, your_format_with_allocator);
 /// @endcode
 ///
 /// @ingroup format
@@ -626,144 +626,144 @@ Trait(
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_cstring(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_cstring(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format` for the builtin `bool`
 ///
 /// @param self - The `CnxFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_bool(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_bool(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format` for the builtin `char`
 ///
 /// @param self - The `CnxFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_char(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_char(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format` for the builtin `u8`
 ///
 /// @param self - The `CnxFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_u8(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_u8(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format` for the builtin `u16`
 ///
 /// @param self - The `CnxFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_u16(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_u16(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format` for the builtin `u32`
 ///
 /// @param self - The `CnxFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_u32(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_u32(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format` for the builtin `u64`
 ///
 /// @param self - The `CnxFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_u64(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_u64(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format` for the builtin `i8`
 ///
 /// @param self - The `CnxFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_i8(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_i8(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format` for the builtin `i16`
 ///
 /// @param self - The `CnxFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_i16(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_i16(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format` for the builtin `i32`
 ///
 /// @param self - The `CnxFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_i32(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_i32(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format` for the builtin `i64`
 ///
 /// @param self - The `CnxFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_i64(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_i64(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format` for the builtin `f32`
 ///
 /// @param self - The `CnxFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_f32(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_f32(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format` for the builtin `f64`
 ///
 /// @param self - The `CnxFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_f64(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_f64(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format` for pointers
 ///
 /// @param self - The `CnxFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_ptr(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_ptr(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format` for `CnxString`
 ///
 /// @param self - The `CnxFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_cnx_string(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_cnx_string(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format` for `CnxStringView`
 ///
 /// @param self - The `CnxFormat` object to format
 /// @param specifier - The format specifier to follow
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_cnx_stringview(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_cnx_stringview(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format_with_allocator` for the builtin `cstring`
 ///
 /// @param self - The `CnxFormat` object to format
@@ -771,10 +771,10 @@ cnx_format_cnx_stringview(const CnxFormat* restrict self, CnxFormatSpecifier spe
 /// @param allocator - The `CnxAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_cstring_with_allocator(const CnxFormat* restrict self,
-								  CnxFormatSpecifier specifier,
-								  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_cstring_with_allocator(const CnxFormat* restrict self,
+									  CnxFormatSpecifier specifier,
+									  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format_with_allocator` for the builtin `bool`
 ///
 /// @param self - The `CnxFormat` object to format
@@ -782,10 +782,10 @@ cnx_format_cstring_with_allocator(const CnxFormat* restrict self,
 /// @param allocator - The `CnxAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_bool_with_allocator(const CnxFormat* restrict self,
-							   CnxFormatSpecifier specifier,
-							   CnxAllocator allocator) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_bool_with_allocator(const CnxFormat* restrict self,
+								   CnxFormatSpecifier specifier,
+								   CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format_with_allocator` for the builtin `char`
 ///
 /// @param self - The `CnxFormat` object to format
@@ -793,10 +793,10 @@ cnx_format_bool_with_allocator(const CnxFormat* restrict self,
 /// @param allocator - The `CnxAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_char_with_allocator(const CnxFormat* restrict self,
-							   CnxFormatSpecifier specifier,
-							   CnxAllocator allocator) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_char_with_allocator(const CnxFormat* restrict self,
+								   CnxFormatSpecifier specifier,
+								   CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format_with_allocator` for the builtin `u8`
 ///
 /// @param self - The `CnxFormat` object to format
@@ -804,10 +804,10 @@ cnx_format_char_with_allocator(const CnxFormat* restrict self,
 /// @param allocator - The `CnxAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_u8_with_allocator(const CnxFormat* restrict self,
-							 CnxFormatSpecifier specifier,
-							 CnxAllocator allocator) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_u8_with_allocator(const CnxFormat* restrict self,
+								 CnxFormatSpecifier specifier,
+								 CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format_with_allocator` for the builtin `u16`
 ///
 /// @param self - The `CnxFormat` object to format
@@ -815,10 +815,10 @@ cnx_format_u8_with_allocator(const CnxFormat* restrict self,
 /// @param allocator - The `CnxAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_u16_with_allocator(const CnxFormat* restrict self,
-							  CnxFormatSpecifier specifier,
-							  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_u16_with_allocator(const CnxFormat* restrict self,
+								  CnxFormatSpecifier specifier,
+								  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format_with_allocator` for the builtin `u32`
 ///
 /// @param self - The `CnxFormat` object to format
@@ -826,10 +826,10 @@ cnx_format_u16_with_allocator(const CnxFormat* restrict self,
 /// @param allocator - The `CnxAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_u32_with_allocator(const CnxFormat* restrict self,
-							  CnxFormatSpecifier specifier,
-							  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_u32_with_allocator(const CnxFormat* restrict self,
+								  CnxFormatSpecifier specifier,
+								  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format_with_allocator` for the builtin `u64`
 ///
 /// @param self - The `CnxFormat` object to format
@@ -837,10 +837,10 @@ cnx_format_u32_with_allocator(const CnxFormat* restrict self,
 /// @param allocator - The `CnxAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_u64_with_allocator(const CnxFormat* restrict self,
-							  CnxFormatSpecifier specifier,
-							  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_u64_with_allocator(const CnxFormat* restrict self,
+								  CnxFormatSpecifier specifier,
+								  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format_with_allocator` for the builtin `i8`
 ///
 /// @param self - The `CnxFormat` object to format
@@ -848,10 +848,10 @@ cnx_format_u64_with_allocator(const CnxFormat* restrict self,
 /// @param allocator - The `CnxAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_i8_with_allocator(const CnxFormat* restrict self,
-							 CnxFormatSpecifier specifier,
-							 CnxAllocator allocator) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_i8_with_allocator(const CnxFormat* restrict self,
+								 CnxFormatSpecifier specifier,
+								 CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format_with_allocator` for the builtin `i16`
 ///
 /// @param self - The `CnxFormat` object to format
@@ -859,10 +859,10 @@ cnx_format_i8_with_allocator(const CnxFormat* restrict self,
 /// @param allocator - The `CnxAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_i16_with_allocator(const CnxFormat* restrict self,
-							  CnxFormatSpecifier specifier,
-							  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_i16_with_allocator(const CnxFormat* restrict self,
+								  CnxFormatSpecifier specifier,
+								  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format_with_allocator` for the builtin `i32`
 ///
 /// @param self - The `CnxFormat` object to format
@@ -870,10 +870,10 @@ cnx_format_i16_with_allocator(const CnxFormat* restrict self,
 /// @param allocator - The `CnxAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_i32_with_allocator(const CnxFormat* restrict self,
-							  CnxFormatSpecifier specifier,
-							  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_i32_with_allocator(const CnxFormat* restrict self,
+								  CnxFormatSpecifier specifier,
+								  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format_with_allocator` for the builtin `i64`
 ///
 /// @param self - The `CnxFormat` object to format
@@ -881,10 +881,10 @@ cnx_format_i32_with_allocator(const CnxFormat* restrict self,
 /// @param allocator - The `CnxAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_i64_with_allocator(const CnxFormat* restrict self,
-							  CnxFormatSpecifier specifier,
-							  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_i64_with_allocator(const CnxFormat* restrict self,
+								  CnxFormatSpecifier specifier,
+								  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format_with_allocator` for the builtin `f32`
 ///
 /// @param self - The `CnxFormat` object to format
@@ -892,10 +892,10 @@ cnx_format_i64_with_allocator(const CnxFormat* restrict self,
 /// @param allocator - The `CnxAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_f32_with_allocator(const CnxFormat* restrict self,
-							  CnxFormatSpecifier specifier,
-							  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_f32_with_allocator(const CnxFormat* restrict self,
+								  CnxFormatSpecifier specifier,
+								  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format_with_allocator` for the builtin `f64`
 ///
 /// @param self - The `CnxFormat` object to format
@@ -903,10 +903,10 @@ cnx_format_f32_with_allocator(const CnxFormat* restrict self,
 /// @param allocator - The `CnxAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_f64_with_allocator(const CnxFormat* restrict self,
-							  CnxFormatSpecifier specifier,
-							  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_f64_with_allocator(const CnxFormat* restrict self,
+								  CnxFormatSpecifier specifier,
+								  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format_with_allocator` for pointers
 ///
 /// @param self - The `CnxFormat` object to format
@@ -914,10 +914,10 @@ cnx_format_f64_with_allocator(const CnxFormat* restrict self,
 /// @param allocator - The `CnxAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_ptr_with_allocator(const CnxFormat* restrict self,
-							  CnxFormatSpecifier specifier,
-							  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_ptr_with_allocator(const CnxFormat* restrict self,
+								  CnxFormatSpecifier specifier,
+								  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format_with_allocator` for `CnxString`
 ///
 /// @param self - The `CnxFormat` object to format
@@ -925,10 +925,10 @@ cnx_format_ptr_with_allocator(const CnxFormat* restrict self,
 /// @param allocator - The `CnxAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_cnx_string_with_allocator(const CnxFormat* restrict self,
-									 CnxFormatSpecifier specifier,
-									 CnxAllocator allocator) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_cnx_string_with_allocator(const CnxFormat* restrict self,
+										 CnxFormatSpecifier specifier,
+										 CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format_with_allocator` for `CnxStringView`
 ///
 /// @param self - The `CnxFormat` object to format
@@ -936,76 +936,106 @@ cnx_format_cnx_string_with_allocator(const CnxFormat* restrict self,
 /// @param allocator - The `CnxAllocator` to allocate the format string with
 ///
 /// @return a formatted string associated with `self`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_format_cnx_stringview_with_allocator(const CnxFormat* restrict self,
-										 CnxFormatSpecifier specifier,
-										 CnxAllocator allocator) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_format_cnx_stringview_with_allocator(const CnxFormat* restrict self,
+											 CnxFormatSpecifier specifier,
+											 CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 
 /// @brief implementation of `CnxFormat` for the builtin `cstring`
 /// @return The `CnxFormat` implementation
-[[maybe_unused]] static ImplTraitFor(CnxFormat,
-									 cstring,
-									 cnx_format_cstring,
-									 cnx_format_cstring_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 cstring,
+										 cnx_format_cstring,
+										 cnx_format_cstring_with_allocator);
 /// @brief implementation of `CnxFormat` for the builtin `bool`
 /// @return The `CnxFormat` implementation
-[[maybe_unused]] static ImplTraitFor(CnxFormat,
-									 bool,
-									 cnx_format_bool,
-									 cnx_format_bool_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 bool,
+										 cnx_format_bool,
+										 cnx_format_bool_with_allocator);
 /// @brief implementation of `CnxFormat` for the builtin `char`
 /// @return The `CnxFormat` implementation
-[[maybe_unused]] static ImplTraitFor(CnxFormat,
-									 char,
-									 cnx_format_char,
-									 cnx_format_char_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 char,
+										 cnx_format_char,
+										 cnx_format_char_with_allocator);
 /// @brief implementation of `CnxFormat` for the builtin `u8`
 /// @return The `CnxFormat` implementation
-[[maybe_unused]] static ImplTraitFor(CnxFormat, u8, cnx_format_u8, cnx_format_u8_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 u8,
+										 cnx_format_u8,
+										 cnx_format_u8_with_allocator);
 /// @brief implementation of `CnxFormat` for the builtin `u16`
 /// @return The `CnxFormat` implementation
-[[maybe_unused]] static ImplTraitFor(CnxFormat, u16, cnx_format_u16, cnx_format_u16_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 u16,
+										 cnx_format_u16,
+										 cnx_format_u16_with_allocator);
 /// @brief implementation of `CnxFormat` for the builtin `u32`
 /// @return The `CnxFormat` implementation
-[[maybe_unused]] static ImplTraitFor(CnxFormat, u32, cnx_format_u32, cnx_format_u32_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 u32,
+										 cnx_format_u32,
+										 cnx_format_u32_with_allocator);
 /// @brief implementation of `CnxFormat` for the builtin `u64`
 /// @return The `CnxFormat` implementation
-[[maybe_unused]] static ImplTraitFor(CnxFormat, u64, cnx_format_u64, cnx_format_u64_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 u64,
+										 cnx_format_u64,
+										 cnx_format_u64_with_allocator);
 /// @brief implementation of `CnxFormat` for the builtin `i8`
 /// @return The `CnxFormat` implementation
-[[maybe_unused]] static ImplTraitFor(CnxFormat, i8, cnx_format_i8, cnx_format_i8_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 i8,
+										 cnx_format_i8,
+										 cnx_format_i8_with_allocator);
 /// @brief implementation of `CnxFormat` for the builtin `i16`
 /// @return The `CnxFormat` implementation
-[[maybe_unused]] static ImplTraitFor(CnxFormat, i16, cnx_format_i16, cnx_format_i16_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 i16,
+										 cnx_format_i16,
+										 cnx_format_i16_with_allocator);
 /// @brief implementation of `CnxFormat` for the builtin `i32`
 /// @return The `CnxFormat` implementation
-[[maybe_unused]] static ImplTraitFor(CnxFormat, i32, cnx_format_i32, cnx_format_i32_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 i32,
+										 cnx_format_i32,
+										 cnx_format_i32_with_allocator);
 /// @brief implementation of `CnxFormat` for the builtin `i64`
 /// @return The `CnxFormat` implementation
-[[maybe_unused]] static ImplTraitFor(CnxFormat, i64, cnx_format_i64, cnx_format_i64_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 i64,
+										 cnx_format_i64,
+										 cnx_format_i64_with_allocator);
 /// @brief implementation of `CnxFormat` for the builtin `f32`
 /// @return The `CnxFormat` implementation
-[[maybe_unused]] static ImplTraitFor(CnxFormat, f32, cnx_format_f32, cnx_format_f32_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 f32,
+										 cnx_format_f32,
+										 cnx_format_f32_with_allocator);
 /// @brief implementation of `CnxFormat` for the builtin `f64`
 /// @return The `CnxFormat` implementation
-[[maybe_unused]] static ImplTraitFor(CnxFormat, f64, cnx_format_f64, cnx_format_f64_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 f64,
+										 cnx_format_f64,
+										 cnx_format_f64_with_allocator);
 /// @brief implementation of `CnxFormat` for pointers
 /// @return The `CnxFormat` implementation
-[[maybe_unused]] static ImplTraitFor(CnxFormat,
-									 nullptr_t,
-									 cnx_format_ptr,
-									 cnx_format_ptr_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 nullptr_t,
+										 cnx_format_ptr,
+										 cnx_format_ptr_with_allocator);
 /// @brief implementation of `CnxFormat` for `CnxString`
 /// @return The `CnxFormat` implementation
-[[maybe_unused]] static ImplTraitFor(CnxFormat,
-									 CnxString,
-									 cnx_format_cnx_string,
-									 cnx_format_cnx_string_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 CnxString,
+										 cnx_format_cnx_string,
+										 cnx_format_cnx_string_with_allocator);
 /// @brief implementation of `CnxFormat` for `CnxStringView`
 /// @return The `CnxFormat` implementation
-[[maybe_unused]] static ImplTraitFor(CnxFormat,
-									 CnxStringView,
-									 cnx_format_cnx_stringview,
-									 cnx_format_cnx_stringview_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 CnxStringView,
+										 cnx_format_cnx_stringview,
+										 cnx_format_cnx_stringview_with_allocator);
 	#undef ___DISABLE_IF_NULL
 #endif

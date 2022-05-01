@@ -1,8 +1,8 @@
 /// @file Math.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module extends `<tgmath.h>` and provides some alternative math functions.
-/// @version 0.2.1
-/// @date 2022-04-11
+/// @version 0.2.2
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -157,7 +157,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 	///
 	/// @return The gcd of the pair of numbers
 	/// @ingroup math
-	[[nodiscard]] i64 cnx_gcd_i64(i64 left, i64 right);
+	__attr(nodiscard) i64 cnx_gcd_i64(i64 left, i64 right);
 
 /// @brief Calculate the gcd of the two inputs
 ///
@@ -166,7 +166,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 ///
 /// @return The gcd of the pair of numbers
 /// @ingroup math
-[[nodiscard]] u64 cnx_gcd_u64(u64 left, u64 right);
+__attr(nodiscard) u64 cnx_gcd_u64(u64 left, u64 right);
 
 /// @def cnx_gcd(left, right)
 /// @brief Calculate the gcd of the two inputs
@@ -227,7 +227,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 ///
 /// @return The lcm of the pair of numbers
 /// @ingroup math
-[[nodiscard]] i64 cnx_lcm_i64(i64 left, i64 right);
+__attr(nodiscard) i64 cnx_lcm_i64(i64 left, i64 right);
 /// @brief Calculate the lcm of the two inputs
 ///
 /// @param left - One of the pair of numbers to get the lcm of
@@ -235,7 +235,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 ///
 /// @return The lcm of the pair of numbers
 /// @ingroup math
-[[nodiscard]] u64 cnx_lcm_u64(u64 left, u64 right);
+__attr(nodiscard) u64 cnx_lcm_u64(u64 left, u64 right);
 
 /// @def cnx_lcm(left, right)
 /// @brief Calculate the lcm of the two inputs
@@ -300,7 +300,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(u8, result)` if the addition was successful (no overflow occurred), `None(u8)`
 /// otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(u8) cnx_checked_add_u8(u8 left, u8 right);
+__attr(nodiscard) CnxOption(u8) cnx_checked_add_u8(u8 left, u8 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(u16, result)`
@@ -312,7 +312,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(u16, result)` if the addition was successful (no overflow occurred), `None(u16)`
 /// otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(u16) cnx_checked_add_u16(u16 left, u16 right);
+__attr(nodiscard) CnxOption(u16) cnx_checked_add_u16(u16 left, u16 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(u32, result)`
@@ -324,7 +324,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(u32, result)` if the addition was successful (no overflow occurred), `None(u32)`
 /// otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(u32) cnx_checked_add_u32(u32 left, u32 right);
+__attr(nodiscard) CnxOption(u32) cnx_checked_add_u32(u32 left, u32 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(u64, result)`
@@ -336,7 +336,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(u64, result)` if the addition was successful (no overflow occurred), `None(u64)`
 /// otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(u64) cnx_checked_add_u64(u64 left, u64 right);
+__attr(nodiscard) CnxOption(u64) cnx_checked_add_u64(u64 left, u64 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(i8, result)`
@@ -348,7 +348,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(i8, result)` if the addition was successful (no overflow occurred), `None(i8)`
 /// otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(i8) cnx_checked_add_i8(i8 left, i8 right);
+__attr(nodiscard) CnxOption(i8) cnx_checked_add_i8(i8 left, i8 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(i16, result)`
@@ -360,7 +360,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(i16, result)` if the addition was successful (no overflow occurred), `None(i16)`
 /// otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(i16) cnx_checked_add_i16(i16 left, i16 right);
+__attr(nodiscard) CnxOption(i16) cnx_checked_add_i16(i16 left, i16 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(i32, result)`
@@ -372,7 +372,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(i32, result)` if the addition was successful (no overflow occurred), `None(i32)`
 /// otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(i32) cnx_checked_add_i32(i32 left, i32 right);
+__attr(nodiscard) CnxOption(i32) cnx_checked_add_i32(i32 left, i32 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(i64, result)`
@@ -384,7 +384,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(i64, result)` if the addition was successful (no overflow occurred), `None(i64)`
 /// otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(i64) cnx_checked_add_i64(i64 left, i64 right);
+__attr(nodiscard) CnxOption(i64) cnx_checked_add_i64(i64 left, i64 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(f32, result)`
@@ -396,7 +396,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(f32, result)` if the addition was successful (no overflow occurred), `None(f32)`
 /// otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(f32) cnx_checked_add_f32(f32 left, f32 right);
+__attr(nodiscard) CnxOption(f32) cnx_checked_add_f32(f32 left, f32 right);
 /// @brief Performs the checked addition of `left` and `right`
 ///
 /// Performs the checked addition of `left` and `right`, returning `Some(f64, result)`
@@ -408,7 +408,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(f64, result)` if the addition was successful (no overflow occurred), `None(f64)`
 /// otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(f64) cnx_checked_add_f64(f64 left, f64 right);
+__attr(nodiscard) CnxOption(f64) cnx_checked_add_f64(f64 left, f64 right);
 
 /// @def Cnx_checked_add(left, right)
 /// @brief Performs the checked addition of `left` and `right`
@@ -479,7 +479,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(u8, result)` if the subtraction was successful (no overflow occurred), `None(u8)`
 /// otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(u8) cnx_checked_sub_u8(u8 left, u8 right);
+__attr(nodiscard) CnxOption(u8) cnx_checked_sub_u8(u8 left, u8 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(u16, result)`
@@ -491,7 +491,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(u16, result)` if the subtraction was successful (no overflow occurred),
 /// `None(u16)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(u16) cnx_checked_sub_u16(u16 left, u16 right);
+__attr(nodiscard) CnxOption(u16) cnx_checked_sub_u16(u16 left, u16 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(u32, result)`
@@ -503,7 +503,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(u32, result)` if the subtraction was successful (no overflow occurred),
 /// `None(u32)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(u32) cnx_checked_sub_u32(u32 left, u32 right);
+__attr(nodiscard) CnxOption(u32) cnx_checked_sub_u32(u32 left, u32 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(u64, result)`
@@ -515,7 +515,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(u64, result)` if the subtraction was successful (no overflow occurred),
 /// `None(u64)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(u64) cnx_checked_sub_u64(u64 left, u64 right);
+__attr(nodiscard) CnxOption(u64) cnx_checked_sub_u64(u64 left, u64 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(i8, result)`
@@ -527,7 +527,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(i8, result)` if the subtraction was successful (no overflow occurred), `None(i8)`
 /// otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(i8) cnx_checked_sub_i8(i8 left, i8 right);
+__attr(nodiscard) CnxOption(i8) cnx_checked_sub_i8(i8 left, i8 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(i16, result)`
@@ -539,7 +539,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(i16, result)` if the subtraction was successful (no overflow occurred),
 /// `None(i16)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(i16) cnx_checked_sub_i16(i16 left, i16 right);
+__attr(nodiscard) CnxOption(i16) cnx_checked_sub_i16(i16 left, i16 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(i32, result)`
@@ -551,7 +551,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(i32, result)` if the subtraction was successful (no overflow occurred),
 /// `None(i32)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(i32) cnx_checked_sub_i32(i32 left, i32 right);
+__attr(nodiscard) CnxOption(i32) cnx_checked_sub_i32(i32 left, i32 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(i64, result)`
@@ -563,7 +563,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(i64, result)` if the subtraction was successful (no overflow occurred),
 /// `None(i64)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(i64) cnx_checked_sub_i64(i64 left, i64 right);
+__attr(nodiscard) CnxOption(i64) cnx_checked_sub_i64(i64 left, i64 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(f32, result)`
@@ -575,7 +575,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(f32, result)` if the subtraction was successful (no overflow occurred),
 /// `None(f32)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(f32) cnx_checked_sub_f32(f32 left, f32 right);
+__attr(nodiscard) CnxOption(f32) cnx_checked_sub_f32(f32 left, f32 right);
 /// @brief Performs the checked subtraction of `right` from `left`
 ///
 /// Performs the checked subtraction of `right` from `left`, returning `Some(f64, result)`
@@ -587,7 +587,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(f64, result)` if the subtraction was successful (no overflow occurred),
 /// `None(f64)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(f64) cnx_checked_sub_f64(f64 left, f64 right);
+__attr(nodiscard) CnxOption(f64) cnx_checked_sub_f64(f64 left, f64 right);
 
 /// @def cnx_checked_sub(left, right)
 /// @brief Performs the checked subtraction of `right` from `left`
@@ -659,7 +659,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(u8, result)` if the multiplication was successful (no overflow occurred),
 /// `None(u8)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(u8) cnx_checked_mul_u8(u8 left, u8 right);
+__attr(nodiscard) CnxOption(u8) cnx_checked_mul_u8(u8 left, u8 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(u16, result)`
@@ -671,7 +671,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(u16, result)` if the multiplication was successful (no overflow occurred),
 /// `None(u16)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(u16) cnx_checked_mul_u16(u16 left, u16 right);
+__attr(nodiscard) CnxOption(u16) cnx_checked_mul_u16(u16 left, u16 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(u32, result)`
@@ -683,7 +683,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(u32, result)` if the multiplication was successful (no overflow occurred),
 /// `None(u32)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(u32) cnx_checked_mul_u32(u32 left, u32 right);
+__attr(nodiscard) CnxOption(u32) cnx_checked_mul_u32(u32 left, u32 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(u64, result)`
@@ -695,7 +695,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(u64, result)` if the multiplication was successful (no overflow occurred),
 /// `None(u64)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(u64) cnx_checked_mul_u64(u64 left, u64 right);
+__attr(nodiscard) CnxOption(u64) cnx_checked_mul_u64(u64 left, u64 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(i8, result)`
@@ -707,7 +707,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(i8, result)` if the multiplication was successful (no overflow occurred),
 /// `None(i8)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(i8) cnx_checked_mul_i8(i8 left, i8 right);
+__attr(nodiscard) CnxOption(i8) cnx_checked_mul_i8(i8 left, i8 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(i16, result)`
@@ -719,7 +719,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(i16, result)` if the multiplication was successful (no overflow occurred),
 /// `None(i16)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(i16) cnx_checked_mul_i16(i16 left, i16 right);
+__attr(nodiscard) CnxOption(i16) cnx_checked_mul_i16(i16 left, i16 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(i32, result)`
@@ -731,7 +731,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(i32, result)` if the multiplication was successful (no overflow occurred),
 /// `None(i32)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(i32) cnx_checked_mul_i32(i32 left, i32 right);
+__attr(nodiscard) CnxOption(i32) cnx_checked_mul_i32(i32 left, i32 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(i64, result)`
@@ -743,7 +743,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(i64, result)` if the multiplication was successful (no overflow occurred),
 /// `None(i64)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(i64) cnx_checked_mul_i64(i64 left, i64 right);
+__attr(nodiscard) CnxOption(i64) cnx_checked_mul_i64(i64 left, i64 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(f32, result)`
@@ -755,7 +755,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(f32, result)` if the multiplication was successful (no overflow occurred),
 /// `None(f32)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(f32) cnx_checked_mul_f32(f32 left, f32 right);
+__attr(nodiscard) CnxOption(f32) cnx_checked_mul_f32(f32 left, f32 right);
 /// @brief Performs the checked multiplication of `left` and `right`
 ///
 /// Performs the checked multiplication of `left` and `right`, returning `Some(f64, result)`
@@ -767,7 +767,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(f64, result)` if the multiplication was successful (no overflow occurred),
 /// `None(f64)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(f64) cnx_checked_mul_f64(f64 left, f64 right);
+__attr(nodiscard) CnxOption(f64) cnx_checked_mul_f64(f64 left, f64 right);
 
 /// @def cnx_checked_mul(left, right)
 /// @brief Performs the checked multiplication of `left` and `right`
@@ -836,7 +836,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(u8, result)` if the division was successful (no overflow occurred),
 /// `None(u8)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(u8) cnx_checked_div_u8(u8 left, u8 right);
+__attr(nodiscard) CnxOption(u8) cnx_checked_div_u8(u8 left, u8 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(u16, result)`
@@ -848,7 +848,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(u16, result)` if the division was successful (no overflow occurred),
 /// `None(u16)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(u16) cnx_checked_div_u16(u16 left, u16 right);
+__attr(nodiscard) CnxOption(u16) cnx_checked_div_u16(u16 left, u16 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(u32, result)`
@@ -860,7 +860,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(u32, result)` if the division was successful (no overflow occurred),
 /// `None(u32)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(u32) cnx_checked_div_u32(u32 left, u32 right);
+__attr(nodiscard) CnxOption(u32) cnx_checked_div_u32(u32 left, u32 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(u64, result)`
@@ -872,7 +872,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(u64, result)` if the division was successful (no overflow occurred),
 /// `None(u64)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(u64) cnx_checked_div_u64(u64 left, u64 right);
+__attr(nodiscard) CnxOption(u64) cnx_checked_div_u64(u64 left, u64 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(i8, result)`
@@ -884,7 +884,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(i8, result)` if the division was successful (no overflow occurred),
 /// `None(i8)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(i8) cnx_checked_div_i8(i8 left, i8 right);
+__attr(nodiscard) CnxOption(i8) cnx_checked_div_i8(i8 left, i8 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(i16, result)`
@@ -896,7 +896,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(i16, result)` if the division was successful (no overflow occurred),
 /// `None(i16)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(i16) cnx_checked_div_i16(i16 left, i16 right);
+__attr(nodiscard) CnxOption(i16) cnx_checked_div_i16(i16 left, i16 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(i32, result)`
@@ -908,7 +908,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(i32, result)` if the division was successful (no overflow occurred),
 /// `None(i32)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(i32) cnx_checked_div_i32(i32 left, i32 right);
+__attr(nodiscard) CnxOption(i32) cnx_checked_div_i32(i32 left, i32 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(i64, result)`
@@ -920,7 +920,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(i64, result)` if the division was successful (no overflow occurred),
 /// `None(i64)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(i64) cnx_checked_div_i64(i64 left, i64 right);
+__attr(nodiscard) CnxOption(i64) cnx_checked_div_i64(i64 left, i64 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(f32, result)`
@@ -932,7 +932,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(f32, result)` if the division was successful (no overflow occurred),
 /// `None(f32)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(f32) cnx_checked_div_f32(f32 left, f32 right);
+__attr(nodiscard) CnxOption(f32) cnx_checked_div_f32(f32 left, f32 right);
 /// @brief Performs the checked division of `left` and `right`
 ///
 /// Performs the checked division of `left` and `right`, returning `Some(f64, result)`
@@ -944,7 +944,7 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wmacro-redefin
 /// @return `Some(f64, result)` if the division was successful (no overflow occurred),
 /// `None(f64)` otherwise
 /// @ingroup math
-[[nodiscard]] CnxOption(f64) cnx_checked_div_f64(f64 left, f64 right);
+__attr(nodiscard) CnxOption(f64) cnx_checked_div_f64(f64 left, f64 right);
 
 /// @def cnx_checked_div(left, right)
 /// @brief Performs the checked division of `left` and `right`

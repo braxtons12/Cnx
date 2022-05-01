@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief CnxFile provides various functions for working with type safe, uniquely owned files
 /// @version 0.2.0
-/// @date 2022-04-29
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -42,8 +42,10 @@
 	#define __IGNORE_NONNULL_COMPARE_WARNING_STOP
 #endif // CNX_PLATFORM_COMPILER_GCC
 
-[[always_inline]] [[not_null(1)]] static inline void
-file_deleter(FILE* restrict file, [[maybe_unused]] CnxAllocator allocator) {
+__attr(always_inline)
+	__attr(not_null(1)) static inline void file_deleter(FILE* restrict file,
+														__attr(maybe_unused)
+															CnxAllocator allocator) {
 
 	__IGNORE_NONNULL_COMPARE_WARNING_START
 	if(file != stdout && file != stderr && file != nullptr) {
@@ -125,10 +127,10 @@ typedef struct CnxFile {
 #define __DISABLE_IF_NULL(file) \
 	cnx_disable_if(!(file), "Can't perform a file operation with a nullptr")
 
-[[nodiscard]] [[not_null(1)]] CnxResult(CnxFile)
+__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxFile)
 	cnx_file_open(const CnxPath* restrict path, CnxFileOptions options, usize buffer_size)
 		__DISABLE_IF_NULL(path);
-[[nodiscard]] [[not_null(1)]] CnxResult(CnxFile)
+__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxFile)
 	cnx_file_open_with_allocator(const CnxPath* restrict path,
 								 CnxFileOptions options,
 								 usize buffer_size,
@@ -141,17 +143,17 @@ IGNORE_RESERVED_IDENTIFIER_WARNING_START
 	cnx_file_open(__VA_ARGS__, CNX_FILE_DEFAULT_OPTIONS, CNX_FILE_DEFAULT_BUFFER_SIZE)
 #define cnx_file_open(...) CONCAT2_DEFERRED(__cnx_file_open_, PP_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
-[[not_null(1, 2)]] CnxResult(i32) __cnx_file_print(CnxFile* file,
-												   restrict const_cstring format_string,
-												   CnxAllocator allocator,
-												   usize num_args,
-												   ...) __DISABLE_IF_NULL(file)
+__attr(not_null(1, 2)) CnxResult(i32) __cnx_file_print(CnxFile* file,
+													   restrict const_cstring format_string,
+													   CnxAllocator allocator,
+													   usize num_args,
+													   ...) __DISABLE_IF_NULL(file)
 	__DISABLE_IF_NULL(format_string);
-[[not_null(1, 2)]] CnxResult(i32) __cnx_file_println(CnxFile* file,
-													 restrict const_cstring format_string,
-													 CnxAllocator allocator,
-													 usize num_args,
-													 ...) __DISABLE_IF_NULL(file)
+__attr(not_null(1, 2)) CnxResult(i32) __cnx_file_println(CnxFile* file,
+														 restrict const_cstring format_string,
+														 CnxAllocator allocator,
+														 usize num_args,
+														 ...) __DISABLE_IF_NULL(file)
 	__DISABLE_IF_NULL(format_string);
 IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 
@@ -178,25 +180,25 @@ IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 					   PP_NUM_ARGS(__VA_ARGS__)                              \
 						   __VA_OPT__(, APPLY_TO_LIST(as_format, __VA_ARGS__)))
 
-[[not_null(1, 2)]] CnxResult(i32)
+__attr(not_null(1, 2)) CnxResult(i32)
 	cnx_file_write_bytes(CnxFile* restrict file, const u8* restrict bytes, usize num_bytes)
 		__DISABLE_IF_NULL(file);
 
-[[nodiscard]] [[not_null(1)]] CnxResult(CnxString)
+__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxString)
 	cnx_file_read(CnxFile* restrict file, usize num_chars) __DISABLE_IF_NULL(file);
-[[nodiscard]] [[not_null(1)]] CnxResult(CnxString)
+__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxString)
 	cnx_file_read_with_allocator(CnxFile* restrict file, usize num_chars, CnxAllocator allocator)
 		__DISABLE_IF_NULL(file);
-[[nodiscard]] [[not_null(1)]] CnxResult(CnxString) cnx_file_read_line(CnxFile* restrict file)
-	__DISABLE_IF_NULL(file);
-[[nodiscard]] [[not_null(1)]] CnxResult(CnxString)
+__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxString)
+	cnx_file_read_line(CnxFile* restrict file) __DISABLE_IF_NULL(file);
+__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxString)
 	cnx_file_read_line_with_allocator(CnxFile* restrict file, CnxAllocator allocator)
 		__DISABLE_IF_NULL(file);
-[[nodiscard]] [[not_null(1, 2)]] CnxResult(usize)
+__attr(nodiscard) __attr(not_null(1, 2)) CnxResult(usize)
 	cnx_file_read_bytes(CnxFile* restrict file, u8* restrict bytes, usize max_num_bytes)
 		__DISABLE_IF_NULL(file);
 
-[[not_null(1)]] CnxResult cnx_file_flush(CnxFile* restrict file) __DISABLE_IF_NULL(file);
+__attr(not_null(1)) CnxResult cnx_file_flush(CnxFile* restrict file) __DISABLE_IF_NULL(file);
 
 typedef enum CnxFileSeekOrigin {
 	CnxFileSeekBegin = SEEK_SET,
@@ -204,9 +206,10 @@ typedef enum CnxFileSeekOrigin {
 	CnxFileSeekEnd = SEEK_END
 } CnxFileSeekOrigin;
 
-[[not_null(1)]] CnxResult
-cnx_file_seek(CnxFile* restrict file, i64 offset, CnxFileSeekOrigin origin) __DISABLE_IF_NULL(file);
-[[nodiscard]] [[not_null(1)]] CnxResult(i64) cnx_file_tell(CnxFile* restrict file)
+__attr(not_null(1)) CnxResult
+	cnx_file_seek(CnxFile* restrict file, i64 offset, CnxFileSeekOrigin origin)
+		__DISABLE_IF_NULL(file);
+__attr(nodiscard) __attr(not_null(1)) CnxResult(i64) cnx_file_tell(CnxFile* restrict file)
 	__DISABLE_IF_NULL(file);
 
 #define cnx_file_is_symlink(file) cnx_path_is_symlink(&((file)->path))
@@ -218,9 +221,9 @@ cnx_file_seek(CnxFile* restrict file, i64 offset, CnxFileSeekOrigin origin) __DI
 	cnx_path_get_file_name_without_extension(&((file)->path))
 #define cnx_file_get_parent_directory(file) cnx_path_get_parent_directory(&((file)->path))
 
-[[not_null(1)]] void cnx_file_close(CnxFile* restrict file) __DISABLE_IF_NULL(file);
+__attr(not_null(1)) void cnx_file_close(CnxFile* restrict file) __DISABLE_IF_NULL(file);
 
-[[not_null(1)]] void cnx_file_free(void* file) __DISABLE_IF_NULL(file);
+__attr(not_null(1)) void cnx_file_free(void* file) __DISABLE_IF_NULL(file);
 
 #define CnxScopedFile scoped(cnx_file_free)
 

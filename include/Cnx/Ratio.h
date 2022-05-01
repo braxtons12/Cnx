@@ -1,8 +1,8 @@
 /// @file Ratio.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides lossless methods for dealing with exact fractions
-/// @version 0.1.1
-/// @date 2022-03-09
+/// @version 0.1.2
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -180,7 +180,7 @@ typedef struct CnxRatio {
 ///
 /// @return A `CnxRatio` as the simplified fraction of `numerator / denominator`
 /// @ingroup cnx_ratio
-[[nodiscard]] CnxRatio cnx_ratio_new(i64 num, i64 den);
+__attr(nodiscard) CnxRatio cnx_ratio_new(i64 num, i64 den);
 
 /// @brief Adds the given `CnxRatio`s
 ///
@@ -191,7 +191,7 @@ typedef struct CnxRatio {
 ///
 /// @return The sum of `lhs` and `rhs` as a `CnxRatio` in simplest form
 /// @ingroup cnx_ratio
-[[nodiscard]] CnxRatio cnx_ratio_add(CnxRatio lhs, CnxRatio rhs);
+__attr(nodiscard) CnxRatio cnx_ratio_add(CnxRatio lhs, CnxRatio rhs);
 /// @brief Subtracts the given `CnxRatio`s
 ///
 /// Subtracts `rhs` from `lhs`, returning the result as a new `CnxRatio` in simplest form
@@ -201,7 +201,7 @@ typedef struct CnxRatio {
 ///
 /// @return The difference of `lhs` and `rhs` as a `CnxRatio` in simplest form
 /// @ingroup cnx_ratio
-[[nodiscard]] CnxRatio cnx_ratio_subtract(CnxRatio lhs, CnxRatio rhs);
+__attr(nodiscard) CnxRatio cnx_ratio_subtract(CnxRatio lhs, CnxRatio rhs);
 /// @brief Multiplies the given `CnxRatio`s
 ///
 /// Multiplies the given `CnxRatio`s, returning the result as a new `CnxRatio` in simplest form
@@ -211,7 +211,7 @@ typedef struct CnxRatio {
 ///
 /// @return The product of `lhs` and `rhs` as a `CnxRatio` in simplest form
 /// @ingroup cnx_ratio
-[[nodiscard]] CnxRatio cnx_ratio_multiply(CnxRatio lhs, CnxRatio rhs);
+__attr(nodiscard) CnxRatio cnx_ratio_multiply(CnxRatio lhs, CnxRatio rhs);
 /// @brief Divides the given `CnxRatio`s
 ///
 /// Divides `lhs` by `rhs`, returning the result as a new `CnxRatio` in simplest form
@@ -221,7 +221,7 @@ typedef struct CnxRatio {
 ///
 /// @return The quotient of `lhs` and `rhs` as a `CnxRatio` in simplest form
 /// @ingroup cnx_ratio
-[[nodiscard]] CnxRatio cnx_ratio_divide(CnxRatio lhs, CnxRatio rhs);
+__attr(nodiscard) CnxRatio cnx_ratio_divide(CnxRatio lhs, CnxRatio rhs);
 /// @brief Returns whether the two `CnxRatio`s are equal
 ///
 /// @param lhs - The left-hand ratio to check for equality
@@ -231,7 +231,7 @@ typedef struct CnxRatio {
 /// @note This assumes that the given ratios are in simplest form. It does not check if either
 /// ratio has not been reduced.
 /// @ingroup cnx_ratio
-[[nodiscard]] bool cnx_ratio_equal(CnxRatio lhs, CnxRatio rhs);
+__attr(nodiscard) bool cnx_ratio_equal(CnxRatio lhs, CnxRatio rhs);
 /// @brief Returns whether the two `CnxRatio`s are __not__ equal
 ///
 /// @param lhs - The left-hand ratio to check for inequality
@@ -241,7 +241,7 @@ typedef struct CnxRatio {
 /// @note This assumes that the given ratios are in simplest form. It does not check if either
 /// ratio has not been reduced.
 /// @ingroup cnx_ratio
-[[nodiscard]] bool cnx_ratio_not_equal(CnxRatio lhs, CnxRatio rhs);
+__attr(nodiscard) bool cnx_ratio_not_equal(CnxRatio lhs, CnxRatio rhs);
 /// @brief Returns whether the left-hand `CnxRatio` is less than the other
 ///
 /// @param lhs - The ratio to compare
@@ -249,7 +249,7 @@ typedef struct CnxRatio {
 ///
 /// @return Whether `lhs` is less than `rhs`
 /// @ingroup cnx_ratio
-[[nodiscard]] bool cnx_ratio_less_than(CnxRatio lhs, CnxRatio rhs);
+__attr(nodiscard) bool cnx_ratio_less_than(CnxRatio lhs, CnxRatio rhs);
 /// @brief Returns whether the left-hand `CnxRatio` is less than or equal to the other
 ///
 /// @param lhs - The ratio to compare
@@ -257,7 +257,7 @@ typedef struct CnxRatio {
 ///
 /// @return Whether `lhs` is less than or equal to `rhs`
 /// @ingroup cnx_ratio
-[[nodiscard]] bool cnx_ratio_less_than_or_equal(CnxRatio lhs, CnxRatio rhs);
+__attr(nodiscard) bool cnx_ratio_less_than_or_equal(CnxRatio lhs, CnxRatio rhs);
 /// @brief Returns whether the left-hand `CnxRatio` is greater than the other
 ///
 /// @param lhs - The ratio to compare
@@ -265,7 +265,7 @@ typedef struct CnxRatio {
 ///
 /// @return Whether `lhs` is greater than `rhs`
 /// @ingroup cnx_ratio
-[[nodiscard]] bool cnx_ratio_greater_than(CnxRatio lhs, CnxRatio rhs);
+__attr(nodiscard) bool cnx_ratio_greater_than(CnxRatio lhs, CnxRatio rhs);
 /// @brief Returns whether the left-hand `CnxRatio` is greater than or equal to the other
 ///
 /// @param lhs - The ratio to compare
@@ -273,7 +273,7 @@ typedef struct CnxRatio {
 ///
 /// @return Whether `lhs` is greater than or equal to `rhs`
 /// @ingroup cnx_ratio
-[[nodiscard]] bool cnx_ratio_greater_than_or_equal(CnxRatio lhs, CnxRatio rhs);
+__attr(nodiscard) bool cnx_ratio_greater_than_or_equal(CnxRatio lhs, CnxRatio rhs);
 /// @brief Returns the comparison of the left-hand `CnxRatio` to the other
 ///
 /// @param lhs - The ratio to compare
@@ -281,7 +281,7 @@ typedef struct CnxRatio {
 ///
 /// @return the comparison of `lhs` to `rhs`
 /// @ingroup cnx_ratio
-[[nodiscard]] CnxCompare cnx_ratio_compare(CnxRatio lhs, CnxRatio rhs);
+__attr(nodiscard) CnxCompare cnx_ratio_compare(CnxRatio lhs, CnxRatio rhs);
 /// @brief Returns the given `CnxRatio` as a scalar value
 ///
 /// Returns the given `CnxRatio` as a scalar value (`Some(i64, value)`), if it can be exactly
@@ -291,7 +291,7 @@ typedef struct CnxRatio {
 ///
 /// @return `Some(i64, value)` if `ratio` can be represented as a scalar, `None(i64)` otherwise
 /// @ingroup cnx_ratio
-[[nodiscard]] CnxOption(i64) cnx_ratio_as_scalar_exact(CnxRatio ratio);
+__attr(nodiscard) CnxOption(i64) cnx_ratio_as_scalar_exact(CnxRatio ratio);
 /// @brief Returns the given `CnxRatio` as a scalar value
 ///
 /// @param ratio - The `CnxRatio` to convert to a scalar
@@ -300,7 +300,7 @@ typedef struct CnxRatio {
 /// @note The resulting scalar may not be an exact match to the ratio represented by `ratio` due to
 /// loss due to floating-point precision
 /// @ingroup cnx_ratio
-[[nodiscard]] f64 cnx_ratio_as_scalar(CnxRatio ratio);
+__attr(nodiscard) f64 cnx_ratio_as_scalar(CnxRatio ratio);
 /// @brief Adds the given ratio and scalar value
 ///
 /// Adds the given `CnxRatio` and scalar value and returns the result as a `CnxRatio`
@@ -310,7 +310,7 @@ typedef struct CnxRatio {
 ///
 /// @return the `CnxRatio` resulting from the addition
 /// @ingroup cnx_ratio
-[[nodiscard]] CnxRatio cnx_ratio_add_scalar(CnxRatio ratio, i64 scalar);
+__attr(nodiscard) CnxRatio cnx_ratio_add_scalar(CnxRatio ratio, i64 scalar);
 /// @brief Subtracts the given scalar value from the given ratio
 ///
 /// Subtracts the scalar value from the given `CnxRatio` and returns the result as a `CnxRatio`
@@ -320,7 +320,7 @@ typedef struct CnxRatio {
 ///
 /// @return the `CnxRatio` resulting from the subtraction
 /// @ingroup cnx_ratio
-[[nodiscard]] CnxRatio cnx_ratio_subtract_scalar(CnxRatio ratio, i64 scalar);
+__attr(nodiscard) CnxRatio cnx_ratio_subtract_scalar(CnxRatio ratio, i64 scalar);
 /// @brief Multiplies the given ratio and scalar value
 ///
 /// Multiplies the given `CnxRatio` and scalar value and returns the result as a `CnxRatio`
@@ -330,7 +330,7 @@ typedef struct CnxRatio {
 ///
 /// @return the `CnxRatio` resulting from the multiplication
 /// @ingroup cnx_ratio
-[[nodiscard]] CnxRatio cnx_ratio_multiply_scalar(CnxRatio ratio, i64 scalar);
+__attr(nodiscard) CnxRatio cnx_ratio_multiply_scalar(CnxRatio ratio, i64 scalar);
 /// @brief Divides the given ratio by the given scalar value
 ///
 /// Divides the given `CnxRatio` by the given scalar value and returns the result as a `CnxRatio`
@@ -340,7 +340,7 @@ typedef struct CnxRatio {
 ///
 /// @return the `CnxRatio` resulting from the division
 /// @ingroup cnx_ratio
-[[nodiscard]] CnxRatio cnx_ratio_divide_scalar(CnxRatio ratio, i64 scalar);
+__attr(nodiscard) CnxRatio cnx_ratio_divide_scalar(CnxRatio ratio, i64 scalar);
 
 /// @brief Implement `CnxFormat.format` for `CnxRatio`
 ///
@@ -348,10 +348,10 @@ typedef struct CnxRatio {
 /// @param specifier - The format specifier
 ///
 /// @return `self` formatted as a `CnxString`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_ratio_format(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
-	cnx_disable_if(!self,
-				   "Can't format a nullptr (self must be a valid CnxRatio cast to CnxFormat)");
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_ratio_format(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+		cnx_disable_if(!self,
+					   "Can't format a nullptr (self must be a valid CnxRatio cast to CnxFormat)");
 
 /// @brief Implement `CnxFormat.format_with_allocator` for `CnxRatio`
 ///
@@ -360,18 +360,18 @@ cnx_ratio_format(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
 /// @param allocator - The allocator to allocate memory for the formatted string with
 ///
 /// @return `self` formatted as a `CnxString`
-[[nodiscard]] [[not_null(1)]] CnxString
-cnx_ratio_format_with_allocator(const CnxFormat* restrict self,
-								CnxFormatSpecifier specifier,
-								CnxAllocator allocator)
-	cnx_disable_if(!self,
-				   "Can't format a nullptr (self must be a valid CnxRatio cast to CnxFormat)");
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_ratio_format_with_allocator(const CnxFormat* restrict self,
+									CnxFormatSpecifier specifier,
+									CnxAllocator allocator)
+		cnx_disable_if(!self,
+					   "Can't format a nullptr (self must be a valid CnxRatio cast to CnxFormat)");
 
 /// @brief Implement `CnxFormat` for `CnxRatio`
 /// @ingroup cnx_ratio
-[[maybe_unused]] static ImplTraitFor(CnxFormat,
-									 CnxRatio,
-									 cnx_ratio_format,
-									 cnx_ratio_format_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 CnxRatio,
+										 cnx_ratio_format,
+										 cnx_ratio_format_with_allocator);
 
 #endif // CNX_RATIO

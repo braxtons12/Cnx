@@ -54,12 +54,13 @@ i64 cnx_error_category_get_last_error(CnxErrorCategory self) {
 	return trait_call(get_last_error, self);
 }
 
-const_cstring cnx_posix_category_get_message([[maybe_unused]] const CnxErrorCategory* restrict self,
-											 i64 error_code) {
+const_cstring
+cnx_posix_category_get_message(__attr(maybe_unused) const CnxErrorCategory* restrict self,
+							   i64 error_code) {
 	return strerror(narrow_cast(int)(error_code));
 }
 
-i64 cnx_posix_category_get_last_error([[maybe_unused]] const CnxErrorCategory* restrict self) {
+i64 cnx_posix_category_get_last_error(__attr(maybe_unused) const CnxErrorCategory* restrict self) {
 	return errno;
 }
 
@@ -67,8 +68,9 @@ i64 cnx_posix_category_get_last_error([[maybe_unused]] const CnxErrorCategory* r
 	#include <Cnx/Allocators.h>
 	#include <Windows.h>
 
-const_cstring cnx_win32_category_get_message([[maybe_unused]] const CnxErrorCategory* restrict self,
-											 i64 error_code) {
+const_cstring
+cnx_win32_category_get_message(__attr(maybe_unused) const CnxErrorCategory* restrict self,
+							   i64 error_code) {
 	wchar_t buffer[1024]; // NOLINT
 	// get the win32 system error message for the error code
 	DWORD wide_length
@@ -136,7 +138,7 @@ const_cstring cnx_win32_category_get_message([[maybe_unused]] const CnxErrorCate
 	return "failed to get message from system";
 }
 
-i64 cnx_win32_category_get_last_error([[maybe_unused]] const CnxErrorCategory* restrict self) {
+i64 cnx_win32_category_get_last_error(__attr(maybe_unused) const CnxErrorCategory* restrict self) {
 	return GetLastError();
 }
 #endif
@@ -146,7 +148,7 @@ CnxString cnx_error_format(const CnxFormat* restrict self, CnxFormatSpecifier sp
 }
 
 CnxString cnx_error_format_with_allocator(const CnxFormat* restrict self,
-										  [[maybe_unused]] CnxFormatSpecifier specifier,
+										  __attr(maybe_unused) CnxFormatSpecifier specifier,
 										  CnxAllocator allocator) {
 	cnx_assert(specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
 				   || specifier.m_type == CNX_FORMAT_TYPE_DEBUG,

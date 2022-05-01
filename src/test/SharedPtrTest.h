@@ -6,7 +6,7 @@
 #include <Cnx/Def.h>
 #include <Cnx/IO.h>
 
-[[always_inline]] static inline void i32_shared_deleter(i32* self, CnxAllocator allocator) {
+__attr(always_inline) static inline void i32_shared_deleter(i32* self, CnxAllocator allocator) {
 	cnx_allocator_deallocate(allocator, self);
 }
 

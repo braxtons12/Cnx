@@ -135,7 +135,7 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
 		-Wno-unknown-warning-option
 		)
 	target_compile_options(Cnx PRIVATE
-		-std=gnu2x
+		-std=gnu11
 		-Wall
 		-Wextra
 		-Weverything
@@ -182,13 +182,6 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
 			)
 	endif ()
 else ()
-	target_compile_options(Cnx-Test PRIVATE
-		-std=gnu2x
-		-Wall
-		-Wextra
-		-Werror
-		-Wno-unknown-warning
-		)
 	target_compile_options(FormatBenchmark PRIVATE
 		-std=gnu2x
 		-Wall
@@ -196,8 +189,15 @@ else ()
 		-Werror
 		-Wno-unknown-warning
 		)
-	target_compile_options(Cnx PRIVATE
+	target_compile_options(Cnx-Test PRIVATE
 		-std=gnu2x
+		-Wall
+		-Wextra
+		-Werror
+		-Wno-unknown-warning
+		)
+	target_compile_options(Cnx PRIVATE
+		-std=gnu11
 		-Wall
 		-Wextra
 		-Werror

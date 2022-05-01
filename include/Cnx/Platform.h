@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module macro defines for identifying the platform being compiled for (operating
 /// system, compiler, etc)
-/// @version 0.1.1
-/// @date 2022-04-20
+/// @version 0.1.2
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -42,6 +42,22 @@
 #endif // _GNU_SOURCE
 
 #include <stdbool.h>
+
+	#if __STDC_VERSION__ > 201710L
+		#define CNX_C_STD_23 1
+		#define CNX_C_STD_17 1
+		#define CNX_C_STD_11 1
+	#elif __STDC_VERSION__ == 201710L
+		#define CNX_C_STD_23 0
+		#define CNX_C_STD_17 1
+		#define CNX_C_STD_11 1
+	#elif __STDC_VERSION__ >= 201112L
+		#define CNX_C_STD_23 0
+		#define CNX_C_STD_17 0
+		#define CNX_C_STD_11 1
+	#else
+		#error CNX requires at least GNU C 11
+	#endif // __STDC_VERSION
 
 	/// @brief Declarations and definitions related to detecting the compiled-for platform
 	#define CNX_PLATFORM

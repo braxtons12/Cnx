@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides wrappers for standard C compile-time and runtime asserts and other
 /// custom asserts and assert-like facilities
-/// @version 0.1.1
-/// @date 2022-03-06
+/// @version 0.1.2
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -98,8 +98,10 @@
 /// @param error_message - The associated error message if `condition` is `false`
 /// @param file - The file the error occurred in
 /// @param line - The line number the error occurred at
-[[not_null(2, 3)]] void
-cnx_assert_cstring(bool condition, const_cstring error_message, const_cstring file, i64 line);
+__attr(not_null(2, 3)) void cnx_assert_cstring(bool condition,
+											   const_cstring error_message,
+											   const_cstring file,
+											   i64 line);
 
 	// clang-format off
 		

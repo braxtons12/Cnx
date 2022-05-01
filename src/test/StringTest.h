@@ -6,15 +6,16 @@
 
 #include "Criterion.h"
 
-static void* test_malloc([[maybe_unused]] CnxAllocator* self, usize bytes) {
+static void* test_malloc(__attr(maybe_unused) CnxAllocator* self, usize bytes) {
 	return malloc(bytes);
 }
 
-static void* test_realloc([[maybe_unused]] CnxAllocator* self, void* memory, usize new_size_bytes) {
+static void*
+test_realloc(__attr(maybe_unused) CnxAllocator* self, void* memory, usize new_size_bytes) {
 	return realloc(memory, new_size_bytes);
 }
 
-static void test_free([[maybe_unused]] CnxAllocator* self, void* memory) {
+static void test_free(__attr(maybe_unused) CnxAllocator* self, void* memory) {
 	free(memory);
 }
 

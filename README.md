@@ -1,6 +1,6 @@
 # Cnx
 
-Cnx is a GNU C23 library providing type-safe collections and ergonomic features typical in
+Cnx is a GNU C (11+) library providing type-safe collections and ergonomic features typical in
 higher-level languages, to C. It aims to be a proof-of-concept view of what a more modern standard
 (or at least widely used base) library could look like in the future if it only had to support C23,
 with much more modern abstractions and ergonomics over the standard C library. It is currently under

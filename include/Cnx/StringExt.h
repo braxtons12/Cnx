@@ -1,8 +1,8 @@
 /// @file StringExt.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides additional functionality for working with `CnxString`s
-/// @version 0.2.0
-/// @date 2022-04-11
+/// @version 0.2.1
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -53,7 +53,7 @@
 /// @return a `CnxVector(String)` containing the substrings delimited by `delimiter` in `self`
 /// @ingroup cnx_string
 /// @headerfile "Cnx/StringExt.h"
-[[nodiscard]] [[not_null(1)]] CnxVector(CnxString)
+__attr(nodiscard) __attr(not_null(1)) CnxVector(CnxString)
 	cnx_string_split_on(const CnxString* restrict self, char delimiter) ___DISABLE_IF_NULL(self);
 
 /// @brief Splits the given string at each instance of the given `delimiter` character, returning a
@@ -72,7 +72,7 @@
 /// @return a `CnxVector(String)` containing the substrings delimited by `delimiter` in `self`
 /// @ingroup cnx_string
 /// @headerfile "Cnx/StringExt.h"
-[[nodiscard]] [[not_null(1)]] CnxVector(CnxString)
+__attr(nodiscard) __attr(not_null(1)) CnxVector(CnxString)
 	cnx_string_split_on_with_allocator(const CnxString* restrict self,
 									   char delimiter,
 									   CnxAllocator allocator) ___DISABLE_IF_NULL(self);
@@ -93,7 +93,7 @@
 /// in `self`
 /// @ingroup cnx_string
 /// @headerfile "Cnx/StringExt.h"
-[[nodiscard]] [[not_null(1)]] CnxVector(CnxStringView)
+__attr(nodiscard) __attr(not_null(1)) CnxVector(CnxStringView)
 	cnx_string_view_split_on(const CnxString* restrict self, char delimiter)
 		___DISABLE_IF_NULL(self);
 
@@ -113,7 +113,7 @@
 /// in `self`
 /// @ingroup cnx_string
 /// @headerfile "Cnx/StringExt.h"
-[[nodiscard]] [[not_null(1)]] CnxVector(CnxStringView)
+__attr(nodiscard) __attr(not_null(1)) CnxVector(CnxStringView)
 	cnx_string_view_split_on_with_allocator(const CnxString* restrict self,
 											char delimiter,
 											CnxAllocator allocator) ___DISABLE_IF_NULL(self);
@@ -126,9 +126,9 @@
 /// @return The number of times `to_find` occurs in `self`
 /// @ingroup cnx_string
 /// @headerfile "Cnx/StringExt.h"
-[[nodiscard]] [[not_null(1)]] usize
-cnx_string_occurrences_of_char(const CnxString* restrict self, char to_find)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) usize
+	cnx_string_occurrences_of_char(const CnxString* restrict self, char to_find)
+		___DISABLE_IF_NULL(self);
 
 /// @brief Determines the total number of times the string `to_find` occurs in `self`
 ///
@@ -138,9 +138,9 @@ cnx_string_occurrences_of_char(const CnxString* restrict self, char to_find)
 /// @return The number of times `to_find` occurs in `self`
 /// @ingroup cnx_string
 /// @headerfile "Cnx/StringExt.h"
-[[nodiscard]] [[not_null(1)]] usize
-cnx_string_occurrences_of(const CnxString* restrict self, const CnxString* restrict to_find)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) usize
+	cnx_string_occurrences_of(const CnxString* restrict self, const CnxString* restrict to_find)
+		___DISABLE_IF_NULL(self);
 
 /// @brief Determines the total number of times the stringview `to_find` occurs in `self`
 ///
@@ -150,10 +150,10 @@ cnx_string_occurrences_of(const CnxString* restrict self, const CnxString* restr
 /// @return The number of times `to_find` occurs in `self`
 /// @ingroup cnx_string
 /// @headerfile "Cnx/StringExt.h"
-[[nodiscard]] [[not_null(1)]] usize
-cnx_string_occurrences_of_stringview(const CnxString* restrict self,
-									 const CnxStringView* restrict to_find)
-	___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) usize
+	cnx_string_occurrences_of_stringview(const CnxString* restrict self,
+										 const CnxStringView* restrict to_find)
+		___DISABLE_IF_NULL(self);
 
 /// @brief Determines the total number of times the `cstring` `to_find` occurs in `self`
 ///
@@ -164,10 +164,10 @@ cnx_string_occurrences_of_stringview(const CnxString* restrict self,
 /// @return The number of times `to_find` occurs in `self`
 /// @ingroup cnx_string
 /// @headerfile "Cnx/StringExt.h"
-[[nodiscard]] [[not_null(1)]] usize
-cnx_string_occurrences_of_cstring(const CnxString* restrict self,
-								  restrict const_cstring to_find,
-								  usize to_find_length) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) usize
+	cnx_string_occurrences_of_cstring(const CnxString* restrict self,
+									  restrict const_cstring to_find,
+									  usize to_find_length) ___DISABLE_IF_NULL(self);
 
 /// @brief Finds the indices at which the character `to_find` occurs in `self`, and returns them in
 /// a `CnxVector`
@@ -182,7 +182,7 @@ cnx_string_occurrences_of_cstring(const CnxString* restrict self,
 /// @return a `CnxVector(usize)` containing the indices at which `to_find` occurs in `self`
 /// @ingroup cnx_string
 /// @headerfile "Cnx/StringExt.h"
-[[nodiscard]] [[not_null(1)]] CnxVector(usize)
+__attr(nodiscard) __attr(not_null(1)) CnxVector(usize)
 	cnx_string_find_occurrences_of_char(const CnxString* restrict self, char to_find)
 		___DISABLE_IF_NULL(self);
 
@@ -199,7 +199,7 @@ cnx_string_occurrences_of_cstring(const CnxString* restrict self,
 /// @return a `CnxVector(usize)` containing the indices at which `to_find` occurs in `self`
 /// @ingroup cnx_string
 /// @headerfile "Cnx/StringExt.h"
-[[nodiscard]] [[not_null(1)]] CnxVector(usize)
+__attr(nodiscard) __attr(not_null(1)) CnxVector(usize)
 	cnx_string_find_occurrences_of(const CnxString* restrict self,
 								   const CnxString* restrict to_find) ___DISABLE_IF_NULL(self);
 
@@ -216,7 +216,7 @@ cnx_string_occurrences_of_cstring(const CnxString* restrict self,
 /// @return a `CnxVector(usize)` containing the indices at which `to_find` occurs in `self`
 /// @ingroup cnx_string
 /// @headerfile "Cnx/StringExt.h"
-[[nodiscard]] [[not_null(1)]] CnxVector(usize)
+__attr(nodiscard) __attr(not_null(1)) CnxVector(usize)
 	cnx_string_find_occurrences_of_stringview(const CnxString* restrict self,
 											  const CnxStringView* restrict to_find)
 		___DISABLE_IF_NULL(self);
@@ -235,7 +235,7 @@ cnx_string_occurrences_of_cstring(const CnxString* restrict self,
 /// @return a `CnxVector(usize)` containing the indices at which `to_find` occurs in `self`
 /// @ingroup cnx_string
 /// @headerfile "Cnx/StringExt.h"
-[[nodiscard]] [[not_null(1)]] CnxVector(usize)
+__attr(nodiscard) __attr(not_null(1)) CnxVector(usize)
 	cnx_string_find_occurrences_of_cstring(const CnxString* restrict self,
 										   restrict const_cstring to_find,
 										   usize to_find_length) ___DISABLE_IF_NULL(self);
@@ -252,7 +252,7 @@ cnx_string_occurrences_of_cstring(const CnxString* restrict self,
 /// @return a `CnxVector(usize)` containing the indices at which `to_find` occurs in `self`
 /// @ingroup cnx_string
 /// @headerfile "Cnx/StringExt.h"
-[[nodiscard]] [[not_null(1)]] CnxVector(usize)
+__attr(nodiscard) __attr(not_null(1)) CnxVector(usize)
 	cnx_string_find_occurrences_of_char_with_allocator(const CnxString* restrict self,
 													   char to_find,
 													   CnxAllocator allocator)
@@ -270,7 +270,7 @@ cnx_string_occurrences_of_cstring(const CnxString* restrict self,
 /// @return a `CnxVector(usize)` containing the indices at which `to_find` occurs in `self`
 /// @ingroup cnx_string
 /// @headerfile "Cnx/StringExt.h"
-[[nodiscard]] [[not_null(1)]] CnxVector(usize)
+__attr(nodiscard) __attr(not_null(1)) CnxVector(usize)
 	cnx_string_find_occurrences_of_with_allocator(const CnxString* restrict self,
 												  const CnxString* restrict to_find,
 												  CnxAllocator allocator) ___DISABLE_IF_NULL(self);
@@ -287,7 +287,7 @@ cnx_string_occurrences_of_cstring(const CnxString* restrict self,
 /// @return a `CnxVector(usize)` containing the indices at which `to_find` occurs in `self`
 /// @ingroup cnx_string
 /// @headerfile "Cnx/StringExt.h"
-[[nodiscard]] [[not_null(1)]] CnxVector(usize)
+__attr(nodiscard) __attr(not_null(1)) CnxVector(usize)
 	cnx_string_find_occurrences_of_stringview_with_allocator(const CnxString* restrict self,
 															 const CnxStringView* restrict to_find,
 															 CnxAllocator allocator)
@@ -306,7 +306,7 @@ cnx_string_occurrences_of_cstring(const CnxString* restrict self,
 /// @return a `CnxVector(usize)` containing the indices at which `to_find` occurs in `self`
 /// @ingroup cnx_string
 /// @headerfile "Cnx/StringExt.h"
-[[nodiscard]] [[not_null(1)]] CnxVector(usize)
+__attr(nodiscard) __attr(not_null(1)) CnxVector(usize)
 	cnx_string_find_occurrences_of_cstring_with_allocator(const CnxString* restrict self,
 														  restrict const_cstring to_find,
 														  usize to_find_length,

@@ -58,7 +58,7 @@
 		WCHAR* 			: win32_wchar_to_char(static_cast(WCHAR*)(string), size),\
 		const WCHAR* 	: win32_wchar_to_char(static_cast(WCHAR*)(string), size))
 
-[[always_inline]] [[nodiscard]] [[not_null(1)]] static inline CnxString
+__attr(always_inline) __attr(nodiscard) __attr(not_null(1)) static inline CnxString
 win32_wchar_to_char(WCHAR* wstring, usize wstring_size) {
 	let alloc_size = wstring_size * sizeof(WCHAR);
 	let_mut alloc = cnx_allocator_allocate_array_t(char, DEFAULT_ALLOCATOR, alloc_size);
@@ -138,14 +138,14 @@ bool cnx_path_is_valid_cstring(restrict const_cstring path, usize path_length) {
 
 #if CNX_PLATFORM_WINDOWS
 
-[[always_inline]] [[nodiscard]] static inline const_cstring get_user_name(void) {
+__attr(always_inline) __attr(nodiscard) static inline const_cstring get_user_name(void) {
 
 	return getenv("USERNAME");
 }
 
 #else
 
-[[always_inline]] [[nodiscard]] static inline const_cstring get_user_name(void) {
+__attr(always_inline) __attr(nodiscard) static inline const_cstring get_user_name(void) {
 	let uid = geteuid();
 	let password = getpwuid(uid);
 	if(password != nullptr) {
@@ -972,7 +972,7 @@ cnx_path_create_file_stringview(const CnxStringView* restrict file_path, bool ov
 }
 
 CnxResult cnx_path_create_file_cstring(restrict const_cstring file_path,
-									   [[maybe_unused]] usize file_path_length,
+									   __attr(maybe_unused) usize file_path_length,
 									   bool overwrite_existing) {
 	cnx_assert(cnx_path_is_valid_cstring(file_path, file_path_length),
 			   "Path given to cnx_path_create_file is invalid");
@@ -993,16 +993,16 @@ CnxResult cnx_path_create_file_cstring(restrict const_cstring file_path,
 #if !CNX_PLATFORM_WINDOWS
 
 int nftw_remove_path(const_cstring path,
-					 [[maybe_unused]] const struct stat* stat_ptr,
-					 [[maybe_unused]] int type_flag,
-					 [[maybe_unused]] struct FTW* ftw_ptr) {
+					 __attr(maybe_unused) const struct stat* stat_ptr,
+					 __attr(maybe_unused) int type_flag,
+					 __attr(maybe_unused) struct FTW* ftw_ptr) {
 	return remove(path);
 }
 
 #endif // !CNX_PLATFORM_WINDOWS
 
 CnxResult cnx_path_remove_file_impl(const_cstring restrict file_path,
-									[[maybe_unused]] usize file_path_length) {
+									__attr(maybe_unused) usize file_path_length) {
 	cnx_assert(cnx_path_is_valid_cstring(file_path, file_path_length),
 			   "Path given to cnx_path_remove_file is invalid");
 
@@ -1048,7 +1048,7 @@ CnxResult cnx_path_remove_file_cstring(const_cstring restrict file_path, usize f
 }
 
 #if CNX_PLATFORM_WINDOWS
-[[nodiscard]] [[not_null(1)]] CnxResult
+__attr(nodiscard) __attr(not_null(1)) CnxResult
 remove_directory_impl(restrict const_cstring pathname, bool recursive, bool guaranteed_empty) {
 	WIN32_FIND_DATA file_data;
 

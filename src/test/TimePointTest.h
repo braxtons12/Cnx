@@ -26,19 +26,19 @@ CnxTimePoint mock_clock_max_time_point(const CnxClock* restrict self) {
 										 self);
 }
 
-CnxClockResolution mock_clock_resolution([[maybe_unused]] const CnxClock* restrict self) {
+CnxClockResolution mock_clock_resolution(__attr(maybe_unused) const CnxClock* restrict self) {
 	return CNX_CLOCK_SECONDS;
 }
 
-CnxRatio mock_clock_resolution_as_ratio([[maybe_unused]] const CnxClock* restrict self) {
+CnxRatio mock_clock_resolution_as_ratio(__attr(maybe_unused) const CnxClock* restrict self) {
 	return cnx_seconds_period;
 }
 
-CnxTimePointLocale mock_clock_locale([[maybe_unused]] const CnxClock* restrict self) {
+CnxTimePointLocale mock_clock_locale(__attr(maybe_unused) const CnxClock* restrict self) {
 	return CNX_LOCAL_TIME;
 }
 
-CnxString mock_clock_format_with_allocator([[maybe_unused]] const CnxClock* restrict self,
+CnxString mock_clock_format_with_allocator(__attr(maybe_unused) const CnxClock* restrict self,
 										   CnxAllocator allocator) {
 	return cnx_string_from_with_allocator("MockClock", allocator);
 }
@@ -47,16 +47,16 @@ CnxString mock_clock_format(const CnxClock* restrict self) {
 	return mock_clock_format_with_allocator(self, DEFAULT_ALLOCATOR);
 }
 
-[[maybe_unused]] static ImplTraitFor(CnxClock,
-									 MockClock,
-									 mock_clock_now,
-									 mock_clock_min_time_point,
-									 mock_clock_max_time_point,
-									 mock_clock_resolution,
-									 mock_clock_resolution_as_ratio,
-									 mock_clock_locale,
-									 mock_clock_format,
-									 mock_clock_format_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxClock,
+										 MockClock,
+										 mock_clock_now,
+										 mock_clock_min_time_point,
+										 mock_clock_max_time_point,
+										 mock_clock_resolution,
+										 mock_clock_resolution_as_ratio,
+										 mock_clock_locale,
+										 mock_clock_format,
+										 mock_clock_format_with_allocator);
 
 IGNORE_RESERVED_IDENTIFIER_WARNING_START
 #define __mock_clock \
@@ -66,6 +66,7 @@ IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 
 static let mock_clock = as_trait(CnxClock, MockClock, __mock_clock);
 
+// NOLINTNEXTLINE(readability-function-cognitive-complexity,cppcoreguidelines-avoid-non-const-global-variables)
 TEST(CnxTimePoint, new_and_comparisons) {
 	let period = trait_call(resolution_as_ratio, mock_clock);
 	let min = trait_call(min_time_point, mock_clock);
@@ -123,6 +124,7 @@ TEST(CnxTimePoint, new_and_comparisons) {
 	TEST_ASSERT(cnx_duration_equal(dur, time_since_epoch));
 }
 
+// NOLINTNEXTLINE(readability-function-cognitive-complexity,cppcoreguidelines-avoid-non-const-global-variables)
 TEST(CnxTimePoint, add) {
 	let period = trait_call(resolution_as_ratio, mock_clock);
 	let point0 = cnx_time_point_new_with_clock(cnx_duration_new(0, period), &mock_clock);
@@ -139,6 +141,7 @@ TEST(CnxTimePoint, add) {
 	TEST_ASSERT(cnx_time_point_equal(added2, point11));
 }
 
+// NOLINTNEXTLINE(readability-function-cognitive-complexity,cppcoreguidelines-avoid-non-const-global-variables)
 TEST(CnxTimePoint, subtract) {
 	let period = trait_call(resolution_as_ratio, mock_clock);
 	let point0 = cnx_time_point_new_with_clock(cnx_duration_new(0, period), &mock_clock);

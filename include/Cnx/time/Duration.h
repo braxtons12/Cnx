@@ -1,8 +1,8 @@
 /// @file Duration.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides methods for dealing with durations of time
-/// @version 0.1.1
-/// @date 2022-01-06
+/// @version 0.1.2
+/// @date 2022-04-30
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -405,8 +405,8 @@ CnxString cnx_duration_format_with_allocator(const CnxFormat* restrict self,
 
 /// @brief Implements the `CnxFormat` trait for `CnxDuration`
 /// @ingroup cnx_duration
-[[maybe_unused]] static ImplTraitFor(CnxFormat,
-									 CnxDuration,
-									 cnx_duration_format,
-									 cnx_duration_format_with_allocator);
+__attr(maybe_unused) static ImplTraitFor(CnxFormat,
+										 CnxDuration,
+										 cnx_duration_format,
+										 cnx_duration_format_with_allocator);
 #endif // CNX_DURATION

@@ -54,7 +54,7 @@
 #undef RESULT_T
 #undef RESULT_IMPL
 
-[[nodiscard]] [[always_inline]] static inline CnxResult(cstring)
+__attr(nodiscard) __attr(always_inline) static inline CnxResult(cstring)
 	validate_file_options(CnxFileOptions options) {
 #define append_binary_mask		  (~(CnxFileAppend | CnxFileBinary))
 #define truncate_binary_mask	  (~(CnxFileTruncate | CnxFileBinary))
