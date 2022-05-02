@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief CnxFile provides various functions for working with type safe, uniquely owned files
 /// @version 0.2.0
-/// @date 2022-04-30
+/// @date 2022-05-01
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -203,6 +203,53 @@ __attr(nodiscard) __attr(not_null(1)) CnxResult(CnxFile)
 										 CnxFileOptions options,
 										 usize buffer_size,
 										 CnxAllocator allocator) __DISABLE_IF_NULL(path);
+
+#define cnx_file_open_with_allocator(path, options, buffer_size, allocator) \
+	_Generic((path), 							   												   \
+			const CnxString* 			: cnx_file_open_with_allocator_string( 					   \
+											static_cast(const CnxString*)(path), 				   \
+											options, 											   \
+											buffer_size, 										   \
+											allocator), 		  		   						   \
+			CnxString* 					: cnx_file_open_with_allocator_string( 					   \
+											static_cast(const CnxString*)(path), 		  		   \
+											options, 											   \
+											buffer_size, 										   \
+											allocator), 		  		   						   \
+			const CnxStringView* 		: cnx_file_open_with_allocator_stringview( 				   \
+											static_cast(const CnxStringView*)(path), 	  		   \
+											options, 											   \
+											buffer_size, 										   \
+											allocator), 		  		   						   \
+			CnxStringView* 				: cnx_file_open_with_allocator_stringview( 				   \
+											static_cast(const CnxStringView*)(path), 	  		   \
+											options, 											   \
+											buffer_size, 										   \
+											allocator), 		  		   						   \
+			const_cstring 				: cnx_file_open_with_allocator_cstring( 				   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path)), 			   \
+											options, 											   \
+											buffer_size, 										   \
+											allocator), 		  		   						   \
+			cstring 					: cnx_file_open_with_allocator_cstring( 				   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path)), 			   \
+											options, 											   \
+											buffer_size, 										   \
+											allocator), 		  		   						   \
+			const char[sizeof(path)] 	: cnx_file_open_with_allocator_cstring( 	/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path), 							/** NOLINT **/ \
+											options, 											   \
+											buffer_size, 										   \
+											allocator), 		  		   						   \
+			char[sizeof(path)] 			: cnx_file_open_with_allocator_cstring( 	/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path), 							/** NOLINT **/ \
+											options, 											   \
+											buffer_size,\
+											allocator))
 
 __attr(not_null(1, 2)) CnxResult(i32) __cnx_file_print(CnxFile* file,
 													   restrict const_cstring format_string,
