@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides an extensible type for communicating errors via both error codes and
 /// message strings.
-/// @version 0.2.1
-/// @date 2022-04-30
+/// @version 0.2.2
+/// @date 2022-05-01
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -71,71 +71,38 @@ i64 cnx_posix_category_get_last_error(__attr(maybe_unused) const CnxErrorCategor
 const_cstring
 cnx_win32_category_get_message(__attr(maybe_unused) const CnxErrorCategory* restrict self,
 							   i64 error_code) {
-	wchar_t buffer[1024]; // NOLINT
+	let_mut alloc_size = static_cast(usize)(64); // NOLINT
+	let_mut buffer = cnx_allocator_allocate_array_t(char, DEFAULT_ALLOCATOR, alloc_size);
 	// get the win32 system error message for the error code
-	DWORD wide_length
-		= FormatMessageW(0x00001000 /**FORMAT_MESSAGE_FROM_SYSTEM**/		   // NOLINT
-							 | 0x00000200 /**FORMAT_MESSAGE_IGNORE_INSERTS**/, // NOLINT
-						 nullptr,
-						 static_cast(DWORD)(error_code),
-						 0,
-						 buffer, // NOLINT
-						 1024,	 // NOLINT
-						 nullptr);
-
-	// bail if getting the message failed
-	if(wide_length == 0) {
-		return "failed to get message from system";
-	}
-
-	let_mut alloc_size = wide_length * static_cast(usize)(2);
 	DWORD error = 0;
-	// try to convert the "wide" error message string (UTF16, or UCS-2) to "narrow/normal"
-	// UTF8
+	DWORD message_length = 0;
 	do {
-		let_mut as_utf8 = cnx_allocator_allocate_array_t(char, DEFAULT_ALLOCATOR, alloc_size);
-		// if memory allocation fails, bail
-		if(as_utf8 == nullptr) {
-			return "failed to get message from system";
+		message_length = FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM			 // NOLINT
+											| FORMAT_MESSAGE_IGNORE_INSERTS, // NOLINT
+										nullptr,
+										static_cast(DWORD)(error_code),
+										0,
+										buffer, // NOLINT
+										static_cast(DWORD)(alloc_size),
+										nullptr);
+
+		// bail if getting the message failed
+		if(message_length == 0) {
+			error = GetLastError();
+			let old_size = alloc_size;
+			alloc_size *= static_cast(usize)(2);
+			buffer = cnx_allocator_reallocate_array_t(char,
+													  DEFAULT_ALLOCATOR,
+													  buffer,
+													  old_size,
+													  alloc_size);
 		}
-
-		// attempt to convert the system error message from "wide" string (UTF16 or UCS-2)
-		// to "narrow/normal" UTF8
-		let_mut bytes = static_cast(DWORD)(WideCharToMultiByte(65001 /**CP_UTF8**/, // NOLINT
-															   0,
-															   buffer, // NOLINT
-															   static_cast(int)(wide_length + 1),
-															   as_utf8,
-															   static_cast(int)(alloc_size),
-															   nullptr,
-															   nullptr));
-		// if conversion succeeded, trim the string and return it
-		if(bytes != 0) {
-			let_mut end = as_utf8 + strlen(as_utf8);
-			// We just want the primary error message, so trim all but the first line
-			while(end[-1] == '\n' || end[-1] == '\r') { // NOLINT
-				--end;									// NOLINT
-			}
-			*end = '\0';
-			let_mut reallocated
-				= cnx_allocator_reallocate_array_t(char,
-												   DEFAULT_ALLOCATOR,
-												   as_utf8,
-												   alloc_size,
-												   static_cast(usize)(end - as_utf8));
-			cnx_allocator_deallocate(DEFAULT_ALLOCATOR, as_utf8);
-			return reallocated;
+		else {
+			return buffer;
 		}
+	} while(error == ERROR_INSUFFICIENT_BUFFER);
 
-		cnx_allocator_deallocate(DEFAULT_ALLOCATOR, as_utf8);
-
-		// increase the allocation size and try again on the next iteration
-		alloc_size += alloc_size >> 2U;
-		// or bail if an error other than insufficient buffer size occurred
-		error = GetLastError();
-	} while(error == 0x7a /**ERROR_INSUFFICIENT_BUFFER**/); // NOLINT
-
-	return "failed to get message from system";
+	return "Failed to get the error message from the system";
 }
 
 i64 cnx_win32_category_get_last_error(__attr(maybe_unused) const CnxErrorCategory* restrict self) {

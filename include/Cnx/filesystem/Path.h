@@ -493,9 +493,8 @@ __attr(nodiscard) __attr(not_null(1)) CnxResult
 #define __cnx_path_create_symlink_3(...) cnx_path_create_symlink(__VA_ARGS__)
 #define __cnx_path_create_symlink_2(...) cnx_path_create_symlink(__VA_ARGS__, false)
 IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
-#define cnx_path_create_symlink(...)                                       \
-	CONCAT2_DEFERRED(__cnx_path_create_symlink_, PP_NUM_ARGS(__VA_ARGS__)) \
-	(__VA_ARGS__)
+#define cnx_path_create_symlink(...) \
+	CONCAT2_DEFERRED(__cnx_path_create_symlink_, PP_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 #define cnx_path_create_symlink_overwriting(link_name, target_name) \
 	cnx_path_create_symlink(link_name, target_name, true)
 

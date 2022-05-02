@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief CnxFile provides various functions for working with type safe, uniquely owned files
 /// @version 0.2.0
-/// @date 2022-04-30
+/// @date 2022-05-01
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -145,7 +145,6 @@ CnxResult(CnxFile) cnx_file_open_with_allocator(const CnxPath* restrict path,
 		UniquePtr(FileBuffer) buffer
 			= cnx_make_unique_array_with_allocator(FileBuffer, buffer_size, allocator);
 		if(setvbuf(file, cnx_unique_ptr_get(buffer), _IOFBF, buffer_size) != 0) {
-			println("Failed to associate buffer");
 			return Err(CnxFile, cnx_error_new(errno, CNX_POSIX_ERROR_CATEGORY));
 		}
 
@@ -177,14 +176,17 @@ CnxResult(i32) __cnx_file_print(CnxFile* file,
 	va_list list = {0};
 	va_start(list, num_args);
 	CnxScopedString string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
-	let res = fputs(cnx_string_into_cstring(string), cnx_unique_ptr_get(file->file));
+	let cstr = cnx_string_into_cstring(string);
+	let _file = cnx_unique_ptr_get(file->file);
+	let len = cnx_string_length(string);
+	let res = fwrite(cstr, sizeof(char), len, _file);
 	va_end(list);
 
-	if(res == EOF) {
+	if(res < len && errno != 0) {
 		return Err(i32, cnx_error_new(errno, CNX_POSIX_ERROR_CATEGORY));
 	}
 
-	return Ok(i32, res);
+	return Ok(i32, narrow_cast(i32)(res));
 }
 
 CnxResult(i32) __cnx_file_println(CnxFile* file,
@@ -200,15 +202,18 @@ CnxResult(i32) __cnx_file_println(CnxFile* file,
 	va_list list = {0};
 	va_start(list, num_args);
 	CnxScopedString string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
-	cnx_string_append(string, "\n");
-	let res = fputs(cnx_string_into_cstring(string), cnx_unique_ptr_get(file->file));
+	let cstr = cnx_string_into_cstring(string);
+	let _file = cnx_unique_ptr_get(file->file);
+	let len = cnx_string_length(string);
+	let res = fwrite(cstr, sizeof(char), len, _file);
+	let res2 = fputc('\n', _file);
 	va_end(list);
 
-	if(res == EOF) {
+	if((res < len && errno != 0) || res2 == EOF) {
 		return Err(i32, cnx_error_new(errno, CNX_POSIX_ERROR_CATEGORY));
 	}
 
-	return Ok(i32, res);
+	return Ok(i32, narrow_cast(i32)(res));
 }
 
 CnxResult(i32)
@@ -311,7 +316,8 @@ CnxResult cnx_file_flush(CnxFile* restrict file) {
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 CnxResult cnx_file_seek(CnxFile* restrict file, i64 offset, CnxFileSeekOrigin origin) {
 
-	if(fseek(cnx_unique_ptr_get(file->file), offset, static_cast(int)(origin)) != 0) {
+	if(fseek(cnx_unique_ptr_get(file->file), narrow_cast(long)(offset), static_cast(int)(origin))
+	   != 0) {
 		return Err(i32, cnx_error_new(errno, CNX_POSIX_ERROR_CATEGORY));
 	}
 

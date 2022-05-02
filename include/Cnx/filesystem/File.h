@@ -119,7 +119,7 @@ typedef struct CnxFile {
 #undef RESULT_DECL
 
 #if CNX_PLATFORM_WINDOWS
-	#define CNX_FILE_DEFAULT_BUFFER_SIZE (static_cast(usize)(4 * BUFSIZ))
+	#define CNX_FILE_DEFAULT_BUFFER_SIZE (static_cast(usize)(8192))
 #else
 	#define CNX_FILE_DEFAULT_BUFFER_SIZE (static_cast(usize)(BUFSIZ))
 #endif // CNX_PLATFORM_WINDOWS

@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Cnx I/O brings human readable formatted I/O, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
-/// @version 0.1.1
-/// @date 2022-04-30
+/// @version 0.1.2
+/// @date 2022-05-01
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -81,9 +81,14 @@ void println_(restrict const_cstring format_string, CnxAllocator allocator, usiz
 	va_start(list, num_args);
 	CnxScopedString string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
 	let cstr = cnx_string_into_cstring(string);
+	// puts is significantly faster on Windows than fwrite (particularly on MinGW)
+#if CNX_PLATFORM_WINDOWS
+	ignore(puts(cstr));
+#else
 	let len = cnx_string_length(string);
 	ignore(fwrite(cstr, sizeof(char), len, stdout));
 	ignore(putc('\n', stdout));
+#endif // CNX_PLATFORM_WINDOWS
 	va_end(list);
 }
 

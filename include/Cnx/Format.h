@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief CnxFormat brings human readable string formatting, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
-/// @version 0.2.1
-/// @date 2022-04-30
+/// @version 0.2.2
+/// @date 2022-05-01
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -289,7 +289,7 @@ __attr(nodiscard) __attr(not_null(1)) CnxString
 
 	#if CNX_PLATFORM_APPLE
 		#if CNX_AS_FORMAT_USES_USER_SUPPLIED_TYPES
-		// clang-format off
+			// clang-format off
 		/// @brief Converts the given variable into its associated `CnxFormat` Trait implementation
 		///
 		/// There must be an implementation of `CnxFormat` for the type of `x` and `x` must be an
@@ -299,43 +299,47 @@ __attr(nodiscard) __attr(not_null(1)) CnxString
 		///
 		/// @return `x` as `CnxFormat`
 		/// @ingroup format
-		#define as_format(x) _Generic((&(x)), 										\
-				char [sizeof((x))]  		:   as_format_t(cstring, x), 			\
-				bool* 						: 	as_format_t(bool, x), 				\
-				char* 						: 	as_format_t(char, x), 				\
-				u8* 						: 	as_format_t(u8, x), 				\
-				u16* 						: 	as_format_t(u16, x), 				\
-				u32* 						: 	as_format_t(u32, x), 				\
-				u64* 						: 	as_format_t(u64, x), 				\
-				usize* 						: 	as_format_t(u64, x), 				\
-				i8* 						: 	as_format_t(i8, x), 				\
-				i16* 						: 	as_format_t(i16, x), 				\
-				i32* 						: 	as_format_t(i32, x), 				\
-				i64* 						: 	as_format_t(i64, x), 				\
-				isize* 						: 	as_format_t(i64, x), 				\
-				f32* 						: 	as_format_t(f32, x), 				\
-				f64* 						: 	as_format_t(f64, x), 				\
-				nullptr_t* 					: 	as_format_t(nullptr_t, x), 			\
-				CnxString* 					: 	as_format_t(CnxString, x), 			\
-				CnxFormat* 					: 	(x), 								\
-				const char [sizeof((x))]    :   as_format_t(cstring, x), 			\
-				const bool* 				: 	as_format_t(bool, x), 				\
-				const char* 				: 	as_format_t(char, x), 				\
-				const u8* 					: 	as_format_t(u8, x), 				\
-				const u16* 					: 	as_format_t(u16, x), 				\
-				const u32* 					: 	as_format_t(u32, x), 				\
-				const u64* 					: 	as_format_t(u64, x), 				\
-				const usize* 				: 	as_format_t(u64, x), 				\
-				const i8* 					: 	as_format_t(i8, x), 				\
-				const i16* 					: 	as_format_t(i16, x), 				\
-				const i32* 					: 	as_format_t(i32, x), 				\
-				const i64* 					: 	as_format_t(i64, x), 				\
-				const isize* 				: 	as_format_t(i64, x), 				\
-				const f32* 					: 	as_format_t(f32, x), 				\
-				const f64* 					: 	as_format_t(f64, x), 				\
-				const nullptr_t*			: 	as_format_t(nullptr_t, x), 			\
-				const CnxString*			: 	as_format_t(CnxString, x), 			\
-				CNX_AS_FORMAT_USER_SUPPLIED_TYPES 									\
+		#define as_format(x) _Generic((&(x)), 											\
+				char (*)[sizeof((x))]  		:   as_format_t(cstring, x), 				\
+				char** 						: 	as_format_t(cstring, 					\
+													**static_cast(const char**)(&(x))), \
+				bool* 						: 	as_format_t(bool, x), 					\
+				char* 						: 	as_format_t(char, x), 					\
+				u8* 						: 	as_format_t(u8, x), 					\
+				u16* 						: 	as_format_t(u16, x), 					\
+				u32* 						: 	as_format_t(u32, x), 					\
+				u64* 						: 	as_format_t(u64, x), 					\
+				usize* 						: 	as_format_t(u64, x), 					\
+				i8* 						: 	as_format_t(i8, x), 					\
+				i16* 						: 	as_format_t(i16, x), 					\
+				i32* 						: 	as_format_t(i32, x), 					\
+				i64* 						: 	as_format_t(i64, x), 					\
+				isize* 						: 	as_format_t(i64, x), 					\
+				f32* 						: 	as_format_t(f32, x), 					\
+				f64* 						: 	as_format_t(f64, x), 					\
+				nullptr_t* 					: 	as_format_t(nullptr_t, x), 				\
+				CnxString* 					: 	as_format_t(CnxString, x), 				\
+				CnxFormat* 					: 	(x), 									\
+				const char (*)[sizeof((x))] :   as_format_t(cstring, x), 				\
+				const char** 				: 	as_format_t(cstring, 					\
+													**static_cast(const char**)(&(x))), \
+				const bool* 				: 	as_format_t(bool, x), 					\
+				const char* 				: 	as_format_t(char, x), 					\
+				const u8* 					: 	as_format_t(u8, x), 					\
+				const u16* 					: 	as_format_t(u16, x), 					\
+				const u32* 					: 	as_format_t(u32, x), 					\
+				const u64* 					: 	as_format_t(u64, x), 					\
+				const usize* 				: 	as_format_t(u64, x), 					\
+				const i8* 					: 	as_format_t(i8, x), 					\
+				const i16* 					: 	as_format_t(i16, x), 					\
+				const i32* 					: 	as_format_t(i32, x), 					\
+				const i64* 					: 	as_format_t(i64, x), 					\
+				const isize* 				: 	as_format_t(i64, x), 					\
+				const f32* 					: 	as_format_t(f32, x), 					\
+				const f64* 					: 	as_format_t(f64, x), 					\
+				const nullptr_t*			: 	as_format_t(nullptr_t, x), 				\
+				const CnxString*			: 	as_format_t(CnxString, x), 				\
+				CNX_AS_FORMAT_USER_SUPPLIED_TYPES 										\
 				const CnxFormat* 			: 	(x))
 	#else
 		/// @brief Converts the given variable into its associated `CnxFormat` Trait implementation
@@ -347,48 +351,52 @@ __attr(nodiscard) __attr(not_null(1)) CnxString
 		///
 		/// @return `x` as `CnxFormat`
 		/// @ingroup format
-		#define as_format(x) _Generic((&(x)), 							    		\
-				char (*)[sizeof((x))]  		:   as_format_t(cstring, x), 			\
-				bool* 						: 	as_format_t(bool, x), 				\
-				char* 						: 	as_format_t(char, x), 				\
-				u8* 						: 	as_format_t(u8, x), 				\
-				u16* 						: 	as_format_t(u16, x), 				\
-				u32* 						: 	as_format_t(u32, x), 				\
-				u64* 						: 	as_format_t(u64, x), 				\
-				usize* 						: 	as_format_t(u64, x), 				\
-				i8* 						: 	as_format_t(i8, x), 				\
-				i16* 						: 	as_format_t(i16, x), 				\
-				i32* 						: 	as_format_t(i32, x), 				\
-				i64* 						: 	as_format_t(i64, x), 				\
-				isize* 						: 	as_format_t(i64, x), 				\
-				f32* 						: 	as_format_t(f32, x), 				\
-				f64* 						: 	as_format_t(f64, x), 				\
-				nullptr_t* 					: 	as_format_t(nullptr_t, x), 			\
-				CnxString* 					: 	as_format_t(CnxString, x), 			\
-				CnxFormat* 					: 	(x), 								\
-				const char (*)[sizeof((x))] :   as_format_t(cstring, x), 			\
-				const bool* 				: 	as_format_t(bool, x), 				\
-				const char* 				: 	as_format_t(char, x), 				\
-				const u8* 					: 	as_format_t(u8, x), 				\
-				const u16* 					: 	as_format_t(u16, x), 				\
-				const u32* 					: 	as_format_t(u32, x), 				\
-				const u64* 					: 	as_format_t(u64, x), 				\
-				const usize* 				: 	as_format_t(u64, x), 				\
-				const i8* 					: 	as_format_t(i8, x), 				\
-				const i16* 					: 	as_format_t(i16, x), 				\
-				const i32* 					: 	as_format_t(i32, x), 				\
-				const i64* 					: 	as_format_t(i64, x), 				\
-				const isize* 				: 	as_format_t(i64, x), 				\
-				const f32* 					: 	as_format_t(f32, x), 				\
-				const f64* 					: 	as_format_t(f64, x), 				\
-				const nullptr_t*			: 	as_format_t(nullptr_t, x), 			\
-				const CnxString*			: 	as_format_t(CnxString, x), 			\
+		#define as_format(x) _Generic((&(x)), 							    			\
+				char (*)[sizeof((x))]  		:   as_format_t(cstring, x), 				\
+				char** 						: 	as_format_t(cstring, 					\
+													**static_cast(const char**)(&(x))), \
+				bool* 						: 	as_format_t(bool, x), 					\
+				char* 						: 	as_format_t(char, x), 					\
+				u8* 						: 	as_format_t(u8, x), 					\
+				u16* 						: 	as_format_t(u16, x), 					\
+				u32* 						: 	as_format_t(u32, x), 					\
+				u64* 						: 	as_format_t(u64, x), 					\
+				usize* 						: 	as_format_t(u64, x), 					\
+				i8* 						: 	as_format_t(i8, x), 					\
+				i16* 						: 	as_format_t(i16, x), 					\
+				i32* 						: 	as_format_t(i32, x), 					\
+				i64* 						: 	as_format_t(i64, x), 					\
+				isize* 						: 	as_format_t(i64, x), 					\
+				f32* 						: 	as_format_t(f32, x), 					\
+				f64* 						: 	as_format_t(f64, x), 					\
+				nullptr_t* 					: 	as_format_t(nullptr_t, x), 				\
+				CnxString* 					: 	as_format_t(CnxString, x), 				\
+				CnxFormat* 					: 	(x), 									\
+				const char (*)[sizeof((x))] :   as_format_t(cstring, x), 				\
+				const char** 				: 	as_format_t(cstring, 					\
+													**static_cast(const char**)(&(x))), \
+				const bool* 				: 	as_format_t(bool, x), 					\
+				const char* 				: 	as_format_t(char, x), 					\
+				const u8* 					: 	as_format_t(u8, x), 					\
+				const u16* 					: 	as_format_t(u16, x), 					\
+				const u32* 					: 	as_format_t(u32, x), 					\
+				const u64* 					: 	as_format_t(u64, x), 					\
+				const usize* 				: 	as_format_t(u64, x), 					\
+				const i8* 					: 	as_format_t(i8, x), 					\
+				const i16* 					: 	as_format_t(i16, x), 					\
+				const i32* 					: 	as_format_t(i32, x), 					\
+				const i64* 					: 	as_format_t(i64, x), 					\
+				const isize* 				: 	as_format_t(i64, x), 					\
+				const f32* 					: 	as_format_t(f32, x), 					\
+				const f64* 					: 	as_format_t(f64, x), 					\
+				const nullptr_t*			: 	as_format_t(nullptr_t, x), 				\
+				const CnxString*			: 	as_format_t(CnxString, x), 				\
 				const CnxFormat*			: 	(x))
 		// clang-format on
 		#endif // CNX_AS_FORMAT_USES_USER_SUPPLIED_TYPES
 	#else
 		#if CNX_AS_FORMAT_USES_USER_SUPPLIED_TYPES
-		// clang-format off
+			// clang-format off
 		/// @brief Converts the given variable into its associated `CnxFormat` Trait implementation
 		///
 		/// There must be an implementation of `CnxFormat` for the type of `x` and `x` must be an
@@ -398,39 +406,44 @@ __attr(nodiscard) __attr(not_null(1)) CnxString
 		///
 		/// @return `x` as `CnxFormat`
 		/// @ingroup format
-		#define as_format(x) _Generic((&(x)), 										\
-				char [sizeof((x))]  		:   as_format_t(cstring, x), 			\
-				bool* 						: 	as_format_t(bool, x), 				\
-				char* 						: 	as_format_t(char, x), 				\
-				u8* 						: 	as_format_t(u8, x), 				\
-				u16* 						: 	as_format_t(u16, x), 				\
-				u32* 						: 	as_format_t(u32, x), 				\
-				u64* 						: 	as_format_t(u64, x), 				\
-				i8* 						: 	as_format_t(i8, x), 				\
-				i16* 						: 	as_format_t(i16, x), 				\
-				i32* 						: 	as_format_t(i32, x), 				\
-				i64* 						: 	as_format_t(i64, x), 				\
-				f32* 						: 	as_format_t(f32, x), 				\
-				f64* 						: 	as_format_t(f64, x), 				\
-				nullptr_t* 					: 	as_format_t(nullptr_t, x), 			\
-				CnxString* 					: 	as_format_t(CnxString, x), 			\
-				CnxFormat* 					: 	(x), 								\
-				const char [sizeof((x))]    :   as_format_t(cstring, x), 			\
-				const bool* 				: 	as_format_t(bool, x), 				\
-				const char* 				: 	as_format_t(char, x), 				\
-				const u8* 					: 	as_format_t(u8, x), 				\
-				const u16* 					: 	as_format_t(u16, x), 				\
-				const u32* 					: 	as_format_t(u32, x), 				\
-				const u64* 					: 	as_format_t(u64, x), 				\
-				const i8* 					: 	as_format_t(i8, x), 				\
-				const i16* 					: 	as_format_t(i16, x), 				\
-				const i32* 					: 	as_format_t(i32, x), 				\
-				const i64* 					: 	as_format_t(i64, x), 				\
-				const f32* 					: 	as_format_t(f32, x), 				\
-				const f64* 					: 	as_format_t(f64, x), 				\
-				const nullptr_t*			: 	as_format_t(nullptr_t, x), 			\
-				const CnxString*			: 	as_format_t(CnxString, x), 			\
-				CNX_AS_FORMAT_USER_SUPPLIED_TYPES 									\
+		#define as_format(x) _Generic((&(x)), 											\
+				char (*)[sizeof((x))]  		:   as_format_t(cstring, x), 				\
+				char** 						: 	as_format_t(cstring, 					\
+													**static_cast(const char**)(&(x))), \
+				bool* 						: 	as_format_t(bool, x), 					\
+				char* 						: 	as_format_t(char, x), 					\
+				u8* 						: 	as_format_t(u8, x), 					\
+				u16* 						: 	as_format_t(u16, x), 					\
+				u32* 						: 	as_format_t(u32, x), 					\
+				u64* 						: 	as_format_t(u64, x), 					\
+				i8* 						: 	as_format_t(i8, x), 					\
+				i16* 						: 	as_format_t(i16, x), 					\
+				i32* 						: 	as_format_t(i32, x), 					\
+				i64* 						: 	as_format_t(i64, x), 					\
+				f32* 						: 	as_format_t(f32, x), 					\
+				f64* 						: 	as_format_t(f64, x), 					\
+				nullptr_t* 					: 	as_format_t(nullptr_t, x), 				\
+				CnxString* 					: 	as_format_t(CnxString, x), 				\
+				CnxFormat* 					: 	(x), 									\
+				const char (*)[sizeof((x))] :   as_format_t(cstring, x), 				\
+				const bool* 				: 	as_format_t(bool, x), 					\
+				const char** 				: 	as_format_t(cstring, 					\
+													**static_cast(const char**)(&(x))), \
+				const bool* 				: 	as_format_t(bool, x), 					\
+				const char* 				: 	as_format_t(char, x), 					\
+				const u8* 					: 	as_format_t(u8, x), 					\
+				const u16* 					: 	as_format_t(u16, x), 					\
+				const u32* 					: 	as_format_t(u32, x), 					\
+				const u64* 					: 	as_format_t(u64, x), 					\
+				const i8* 					: 	as_format_t(i8, x), 					\
+				const i16* 					: 	as_format_t(i16, x), 					\
+				const i32* 					: 	as_format_t(i32, x), 					\
+				const i64* 					: 	as_format_t(i64, x), 					\
+				const f32* 					: 	as_format_t(f32, x), 					\
+				const f64* 					: 	as_format_t(f64, x), 					\
+				const nullptr_t*			: 	as_format_t(nullptr_t, x), 				\
+				const CnxString*			: 	as_format_t(CnxString, x), 				\
+				CNX_AS_FORMAT_USER_SUPPLIED_TYPES 										\
 				const CnxFormat* 			: 	(x))
 	#else
 		/// @brief Converts the given variable into its associated `CnxFormat` Trait implementation
@@ -442,38 +455,42 @@ __attr(nodiscard) __attr(not_null(1)) CnxString
 		///
 		/// @return `x` as `CnxFormat`
 		/// @ingroup format
-		#define as_format(x) _Generic((&(x)), 							    		\
-				char (*)[sizeof((x))]  		:   as_format_t(cstring, x), 			\
-				bool* 						: 	as_format_t(bool, x), 				\
-				char* 						: 	as_format_t(char, x), 				\
-				u8* 						: 	as_format_t(u8, x), 				\
-				u16* 						: 	as_format_t(u16, x), 				\
-				u32* 						: 	as_format_t(u32, x), 				\
-				u64* 						: 	as_format_t(u64, x), 				\
-				i8* 						: 	as_format_t(i8, x), 				\
-				i16* 						: 	as_format_t(i16, x), 				\
-				i32* 						: 	as_format_t(i32, x), 				\
-				i64* 						: 	as_format_t(i64, x), 				\
-				f32* 						: 	as_format_t(f32, x), 				\
-				f64* 						: 	as_format_t(f64, x), 				\
-				nullptr_t* 					: 	as_format_t(nullptr_t, x), 			\
-				CnxString* 					: 	as_format_t(CnxString, x), 			\
-				CnxFormat* 					: 	(x), 								\
-				const char (*)[sizeof((x))] :   as_format_t(cstring, x), 			\
-				const bool* 				: 	as_format_t(bool, x), 				\
-				const char* 				: 	as_format_t(char, x), 				\
-				const u8* 					: 	as_format_t(u8, x), 				\
-				const u16* 					: 	as_format_t(u16, x), 				\
-				const u32* 					: 	as_format_t(u32, x), 				\
-				const u64* 					: 	as_format_t(u64, x), 				\
-				const i8* 					: 	as_format_t(i8, x), 				\
-				const i16* 					: 	as_format_t(i16, x), 				\
-				const i32* 					: 	as_format_t(i32, x), 				\
-				const i64* 					: 	as_format_t(i64, x), 				\
-				const f32* 					: 	as_format_t(f32, x), 				\
-				const f64* 					: 	as_format_t(f64, x), 				\
-				const nullptr_t*			: 	as_format_t(nullptr_t, x), 			\
-				const CnxString*			: 	as_format_t(CnxString, x), 			\
+		#define as_format(x) _Generic((&(x)), 							    			\
+				char (*)[sizeof((x))]  		:   as_format_t(cstring, x), 				\
+				char** 						: 	as_format_t(cstring, 					\
+													**static_cast(const char**)(&(x))), \
+				bool* 						: 	as_format_t(bool, x), 					\
+				char* 						: 	as_format_t(char, x), 					\
+				u8* 						: 	as_format_t(u8, x), 					\
+				u16* 						: 	as_format_t(u16, x), 					\
+				u32* 						: 	as_format_t(u32, x), 					\
+				u64* 						: 	as_format_t(u64, x), 					\
+				i8* 						: 	as_format_t(i8, x), 					\
+				i16* 						: 	as_format_t(i16, x), 					\
+				i32* 						: 	as_format_t(i32, x), 					\
+				i64* 						: 	as_format_t(i64, x), 					\
+				f32* 						: 	as_format_t(f32, x), 					\
+				f64* 						: 	as_format_t(f64, x), 					\
+				nullptr_t* 					: 	as_format_t(nullptr_t, x), 				\
+				CnxString* 					: 	as_format_t(CnxString, x), 				\
+				CnxFormat* 					: 	(x), 									\
+				const char (*)[sizeof((x))] :   as_format_t(cstring, x), 				\
+				const char** 				: 	as_format_t(cstring, 					\
+													**static_cast(const char**)(&(x))), \
+				const bool* 				: 	as_format_t(bool, x), 					\
+				const char* 				: 	as_format_t(char, x), 					\
+				const u8* 					: 	as_format_t(u8, x), 					\
+				const u16* 					: 	as_format_t(u16, x), 					\
+				const u32* 					: 	as_format_t(u32, x), 					\
+				const u64* 					: 	as_format_t(u64, x), 					\
+				const i8* 					: 	as_format_t(i8, x), 					\
+				const i16* 					: 	as_format_t(i16, x), 					\
+				const i32* 					: 	as_format_t(i32, x), 					\
+				const i64* 					: 	as_format_t(i64, x), 					\
+				const f32* 					: 	as_format_t(f32, x), 					\
+				const f64* 					: 	as_format_t(f64, x), 					\
+				const nullptr_t*			: 	as_format_t(nullptr_t, x), 				\
+				const CnxString*			: 	as_format_t(CnxString, x), 				\
 				const CnxFormat*			: 	(x))
 		// clang-format on
 		#endif // CNX_AS_FORMAT_USES_USER_SUPPLIED_TYPES

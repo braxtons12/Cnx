@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Path provides various functions for working with filesystem paths
 /// @version 0.2.0
-/// @date 2022-04-30
+/// @date 2022-05-01
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -50,25 +50,34 @@
 	#include <tchar.h>
 	#include <fileapi.h>
 	#include <io.h>
+	#include <winioctl.h>
 
 	#define win32_tchar_to_char(string, size) \
 		_Generic((string),\
-		char* 			: cnx_string_from(static_cast(char*)(string)),\
-		const char* 	: cnx_string_from(static_cast(const char*)(string)),\
+		char* 			: cnx_string_from_cstring(static_cast(char*)(string), size),\
+		const char* 	: cnx_string_from_cstring(static_cast(const char*)(string), size),\
 		WCHAR* 			: win32_wchar_to_char(static_cast(WCHAR*)(string), size),\
 		const WCHAR* 	: win32_wchar_to_char(static_cast(WCHAR*)(string), size))
 
 __attr(always_inline) __attr(nodiscard) __attr(not_null(1)) static inline CnxString
-win32_wchar_to_char(WCHAR* wstring, usize wstring_size) {
-	let alloc_size = wstring_size * sizeof(WCHAR);
-	let_mut alloc = cnx_allocator_allocate_array_t(char, DEFAULT_ALLOCATOR, alloc_size);
+win32_wchar_to_char(const WCHAR* wstring, __attr(maybe_unused) usize wstring_size) {
+
+	let alloc_size = WideCharToMultiByte(CP_UTF8,
+							   0,
+							   wstring,
+							   -1,
+							   nullptr,
+							   0,
+							   nullptr,
+							   nullptr);
+	let_mut alloc = cnx_allocator_allocate_array_t(char, DEFAULT_ALLOCATOR, static_cast(usize)(alloc_size));
 
 	ignore(WideCharToMultiByte(CP_UTF8,
 							   0,
 							   wstring,
-							   narrow_cast(int)(wstring_size),
+							   -1,
 							   alloc,
-							   narrow_cast(int)(alloc_size),
+							   alloc_size,
 							   nullptr,
 							   nullptr));
 
@@ -162,9 +171,9 @@ CnxPath cnx_path_new_string_was_invalid(CnxString path) {
 	CnxScopedString cloned = path;
 
 #if CNX_PLATFORM_WINDOWS
-	if(cnx_string_occurrences_of_char(*path, CNX_PATH_SEPARATOR_UNIX) != 0) {
+	if(cnx_string_occurrences_of_char(cloned, CNX_PATH_SEPARATOR_UNIX) != 0) {
 		CnxScopedVector(usize) occurrences
-			= cnx_string_find_occurrences_of_char(*path, CNX_PATH_SEPARATOR_WINDOWS);
+			= cnx_string_find_occurrences_of_char(cloned, CNX_PATH_SEPARATOR_WINDOWS);
 		foreach(index, occurrences) {
 			cnx_string_at(cloned, index) = CNX_PATH_SEPARATOR;
 		}
@@ -345,6 +354,7 @@ CnxPath cnx_current_executable_file(void) {
 		let old_size = size;
 		size += size / 2;
 		alloc = cnx_allocator_reallocate_array_t(TCHAR, DEFAULT_ALLOCATOR, alloc, old_size, size);
+		// NOLINTNEXTLINE(clang-analyzer-deadcode.DeadStores)
 		actual_size = GetModuleFileNameA(NULL, alloc, narrow_cast(DWORD)(size));
 	}
 
@@ -502,6 +512,7 @@ CnxPath cnx_current_working_directory(void) {
 		let old_size = size;
 		size += size / 2;
 		alloc = cnx_allocator_reallocate_array_t(TCHAR, DEFAULT_ALLOCATOR, alloc, old_size, size);
+		// NOLINTNEXTLINE(clang-analyzer-deadcode.DeadStores)
 		actual_size = GetCurrentDirectory(size, alloc);
 	}
 
@@ -531,9 +542,9 @@ char cnx_path_separator_char(void) {
 
 bool cnx_path_is_absolute_stringview(const CnxStringView* restrict path) {
 #if CNX_PLATFORM_WINDOWS
-	if(cnx_stringview_lenght(*path) >= 2) {
-		let first = cnx_stringview_at(*path, 0);
-		let second = cnx_stringview_at(*path, 1);
+	if(cnx_stringview_length(*path) >= 2) {
+		let first = *cnx_stringview_at(*path, 0);
+		let second = *cnx_stringview_at(*path, 1);
 
 		if(!((first >= 'a' && first <= 'z') || (first >= 'A' && first <= 'Z')
 			 || (first >= '0' && first <= '9')))
@@ -697,6 +708,7 @@ bool cnx_path_is_symlink(const CnxPath* restrict path) {
 		return false;
 	}
 
+	ignore(CloseHandle(handle));
 	// NOLINTNEXTLINE(hicpp-signed-bitwise)
 	return ((file_data.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT) != 0)
 		   && file_data.dwReserved0 == IO_REPARSE_TAG_SYMLINK;
@@ -723,32 +735,89 @@ CnxResult(CnxPath) cnx_path_get_symlink_target(const CnxPath* restrict path) {
 	}
 
 #if CNX_PLATFORM_WINDOWS
-	let name = cnx_string_into_cstring(*path);
+	// This implementation has been adapted from LLVM's libc++
 
-	HANDLE handle = CreateFile(name,
-							   GENERIC_READ,
-							   FILE_SHARE_READ,
-							   NULL,
+	typedef struct ReparseData {
+		unsigned long  ReparseTag;
+		unsigned short ReparseDataLength;
+		unsigned short Reserved;
+		union {
+			struct {
+				unsigned short SubstituteNameOffset;
+				unsigned short SubstituteNameLength;
+				unsigned short PrintNameOffset;
+				unsigned short PrintNameLength;
+				unsigned long  Flags;
+				wchar_t        PathBuffer[1];
+			} SymbolicLinkReparseBuffer;
+			struct {
+			  	unsigned short SubstituteNameOffset;
+			  	unsigned short SubstituteNameLength;
+			  	unsigned short PrintNameOffset;
+			  	unsigned short PrintNameLength;
+			  	wchar_t        PathBuffer[1];
+			} MountPointReparseBuffer;
+			struct {
+			  	unsigned char DataBuffer[1];
+			} GenericReparseBuffer;
+		};
+	} ReparseData;
+
+	TCHAR link_path[MAX_PATH];
+	_tcscpy(link_path, cnx_string_into_cstring(*path));
+
+	HANDLE handle = CreateFile(link_path,
+							   0,
+							   0,
+							   0,
 							   OPEN_EXISTING,
-							   FILE_FLAG_BACKUP_SEMANTICS,
+							   // NOLINTNEXTLINE(hicpp-signed-bitwise)
+							   FILE_READ_ATTRIBUTES | FILE_FLAG_OPEN_REPARSE_POINT,
 							   NULL);
 	// NOLINTNEXTLINE(performance-no-int-to-ptr)
 	if(handle == INVALID_HANDLE_VALUE) {
 		return Err(CnxPath, cnx_error_new(GetLastError(), CNX_WIN32_ERROR_CATEGORY));
 	}
 
-	DWORD size = GetFinalPathNameByHandle(handle, NULL, 0, FILE_NAME_OPENED);
-	if(size == 0) {
-		return Err(CnxPath, cnx_error_new(GetLastError(), CNX_WIN32_ERROR_CATEGORY));
-	}
-	let alloc
-		= cnx_allocator_allocate_array_t(TCHAR, DEFAULT_ALLOCATOR, static_cast(usize)(size + 1));
-	let res = GetFinalPathNameByHandle(handle, alloc, size, FILE_NAME_OPENED);
-	if(res == 0) {
+	DWORD out = 0;
+	u8 buf[MAXIMUM_REPARSE_DATA_BUFFER_SIZE];
+	// NOLINTNEXTLINE(hicpp-signed-bitwise)
+	if(!DeviceIoControl(handle, FSCTL_GET_REPARSE_POINT, nullptr, 0, buf, sizeof(buf), &out, 0)) {
 		return Err(CnxPath, cnx_error_new(GetLastError(), CNX_WIN32_ERROR_CATEGORY));
 	}
 
-	CnxScopedString str = win32_tchar_to_char(alloc, static_cast(usize)(size + 1));
+	ignore(CloseHandle(handle));
+
+	let reparse_data = static_cast(ReparseData*)(buf);
+
+	let path_buf_offset = offsetof(ReparseData, SymbolicLinkReparseBuffer.PathBuffer[0]);
+	if(out < path_buf_offset || reparse_data->ReparseTag != IO_REPARSE_TAG_SYMLINK) {
+		return Err(CnxPath, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
+	}
+
+	let symlink = &(reparse_data->SymbolicLinkReparseBuffer);
+	let_mut name_offset = static_cast(usize)(0);
+	let_mut name_length = static_cast(usize)(0);
+
+	if(symlink->PrintNameLength == 0) {
+		name_offset = symlink->SubstituteNameOffset;
+		name_length = symlink->SubstituteNameLength;
+	}
+	else {
+		name_offset = symlink->PrintNameOffset;
+		name_length = symlink->PrintNameLength;
+	}
+
+	name_offset /= sizeof(wchar_t);
+	name_length /= sizeof(wchar_t);
+
+	if(path_buf_offset + name_offset + name_length > out) {
+		return Err(CnxPath, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
+	}
+
+	let_mut alloc = cnx_allocator_allocate_array_t(wchar_t, DEFAULT_ALLOCATOR, name_length + 1);
+	cnx_memcpy(wchar_t, alloc, &(symlink->PathBuffer[name_offset]), name_length);
+	CnxScopedString str = win32_wchar_to_char(alloc, wcslen(alloc));
 	cnx_allocator_deallocate(DEFAULT_ALLOCATOR, alloc);
 
 	return Ok(CnxPath, move(str));
@@ -949,6 +1018,8 @@ CnxResult cnx_path_create_file_string(const CnxString* restrict file_path, bool 
 	if(res == nullptr) {
 		return Err(i32, cnx_error_new(errno, CNX_POSIX_ERROR_CATEGORY));
 	}
+	
+	ignore(fclose(res));
 
 	return Ok(i32, 0);
 }
@@ -968,6 +1039,8 @@ cnx_path_create_file_stringview(const CnxStringView* restrict file_path, bool ov
 		return Err(i32, cnx_error_new(errno, CNX_POSIX_ERROR_CATEGORY));
 	}
 
+	ignore(fclose(res));
+
 	return Ok(i32, 0);
 }
 
@@ -986,6 +1059,8 @@ CnxResult cnx_path_create_file_cstring(restrict const_cstring file_path,
 	if(res == nullptr) {
 		return Err(i32, cnx_error_new(errno, CNX_POSIX_ERROR_CATEGORY));
 	}
+
+	ignore(fclose(res));
 
 	return Ok(i32, 0);
 }
@@ -1049,6 +1124,7 @@ CnxResult cnx_path_remove_file_cstring(const_cstring restrict file_path, usize f
 
 #if CNX_PLATFORM_WINDOWS
 __attr(nodiscard) __attr(not_null(1)) CnxResult
+// NOLINTNEXTLINE(readability-function-cognitive-complexity, misc-no-recursion)
 remove_directory_impl(restrict const_cstring pathname, bool recursive, bool guaranteed_empty) {
 	WIN32_FIND_DATA file_data;
 
@@ -1069,7 +1145,7 @@ remove_directory_impl(restrict const_cstring pathname, bool recursive, bool guar
 	_tcscpy(dir_path, file_name);
 
 	if(guaranteed_empty) {
-		if(RemoveDirectory(dir_path)) {
+		if(RemoveDirectory(dir_path) == 0) {
 			return Err(i32, cnx_error_new(GetLastError(), CNX_WIN32_ERROR_CATEGORY));
 		}
 
@@ -1078,11 +1154,13 @@ remove_directory_impl(restrict const_cstring pathname, bool recursive, bool guar
 
 	bool directory_empty = false;
 	while(!directory_empty) {
-		if(FindNextFile(handle, &file_data) && recursive) {
-			// NOLINTNEXTLINE(bugprone-suspicious-string-compare)
-			if(!(_tcscmp(file_data.cFileName, ".") && _tcscmp(file_data.cFileName, ".."))) {
-				continue;
-			}
+		let find_res = FindNextFile(handle, &file_data);
+		// NOLINTNEXTLINE(bugprone-suspicious-string-compare)
+		if(find_res != 0 && !(_tcscmp(file_data.cFileName, ".") && _tcscmp(file_data.cFileName, ".."))) {
+			continue;
+		}
+
+		if(find_res != 0 && recursive) {
 
 			_tcscat(file_name, file_data.cFileName);
 
@@ -1103,14 +1181,14 @@ remove_directory_impl(restrict const_cstring pathname, bool recursive, bool guar
 					_chmod(file_name, _S_IWRITE);
 				}
 
-				if(!DeleteFile(file_name)) {
+				if(DeleteFile(file_name) == 0) {
 					FindClose(handle);
 					return Err(i32, cnx_error_new(GetLastError(), CNX_WIN32_ERROR_CATEGORY));
 				}
 				_tcscpy(file_name, dir_path);
 			}
 		}
-		else {
+		else if(find_res == 0) {
 			if(GetLastError() == ERROR_NO_MORE_FILES) {
 				directory_empty = true;
 			}
@@ -1119,9 +1197,13 @@ remove_directory_impl(restrict const_cstring pathname, bool recursive, bool guar
 				return Err(i32, cnx_error_new(GetLastError(), CNX_WIN32_ERROR_CATEGORY));
 			}
 		}
+		else {
+			FindClose(handle);
+			return Err(i32, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
+		}
 	}
 
-	if(RemoveDirectory(dir_path)) {
+	if(RemoveDirectory(dir_path) == 0) {
 		return Err(i32, cnx_error_new(GetLastError(), CNX_WIN32_ERROR_CATEGORY));
 	}
 	FindClose(handle);
@@ -1194,10 +1276,17 @@ CnxResult cnx_path_create_symlink(const CnxPath* restrict link_to_create,
 	}
 
 #if CNX_PLATFORM_WINDOWS
+	TCHAR create_path[MAX_PATH];
+	TCHAR target_path[MAX_PATH];
+
+	_tcscpy(create_path, cnx_string_into_cstring(*link_to_create));
+	_tcscpy(target_path, cnx_string_into_cstring(*link_target));
+
 	let is_dir = static_cast(DWORD)(cnx_path_is_directory(link_target));
-	if(!CreateSymbolicLink(cnx_string_into_cstring(*link_to_create),
-						   cnx_string_into_cstring(*link_target),
-						   is_dir))
+	if(CreateSymbolicLink(create_path,
+						   target_path,
+						   // NOLINTNEXTLINE(hicpp-signed-bitwise)
+						   is_dir | SYMBOLIC_LINK_FLAG_ALLOW_UNPRIVILEGED_CREATE) == 0)
 	{
 		return Err(i32, cnx_error_new(GetLastError(), CNX_WIN32_ERROR_CATEGORY));
 	}
@@ -1221,16 +1310,7 @@ CnxResult cnx_path_create_symlink(const CnxPath* restrict link_to_create,
 CnxResult cnx_path_remove_symlink(const CnxPath* restrict link_path) {
 	cnx_assert(cnx_path_is_valid(link_path), "Link path given to cnx_remove_symlink is invalid");
 
-#if CNX_PLATFORM_WINDOWS
-	if(cnx_path_is_file(link_path)) {
-		return cnx_path_remove_file(link_path);
-	}
-	else {
-		return remove_directory_impl(cnx_string_into_cstring(*link_path), false, false);
-	}
-#endif
-
-	if(unlink(cnx_string_into_cstring(*link_path)) != 0) {
+	if(_unlink(cnx_string_into_cstring(*link_path)) != 0) {
 		return Err(i32, cnx_error_new(errno, CNX_POSIX_ERROR_CATEGORY));
 	}
 

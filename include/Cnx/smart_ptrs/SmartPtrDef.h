@@ -1,8 +1,8 @@
 /// @file SmartPtrDef.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides the macro definitions for working with smart pointer templates
-/// @version 0.2.0
-/// @date 2022-03-29
+/// @version 0.2.1
+/// @date 2022-05-01
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -115,10 +115,10 @@
 #define __SMART_PTR_IS_ARRAY(T) (!(cnx_types_equal_v(typeof((T){0}), *(&(T){0}))))
 /// @brief gets the element pointer type for the given array type.
 /// e.g if `T` evaluates to `int[]`, returns `int*`.
-#define __SMART_PTR_ELEMENT_PTR_BASE(T) ((T){0}, (T){1})
+#define __SMART_PTR_ELEMENT_PTR_BASE(T) ((T){0}, (T){0})
 /// @brief gets the const element pointer type for the given array type.
 /// e.g if `T` evaluates to `int[]`, returns `const int*`.
-#define __SMART_PTR_CONST_ELEMENT_PTR_BASE(T) ((const T){0}, (const T){1})
+#define __SMART_PTR_CONST_ELEMENT_PTR_BASE(T) ((const T){0}, (const T){0})
 
 // clang-format off
 /// @brief gets the pointer type/element pointer type for the given type used in a

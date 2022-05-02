@@ -57,6 +57,7 @@ TEST(CnxPath, create_and_remove_directory) {
 	TEST_ASSERT_TRUE(cnx_string_equal(name, &name_actual));
 
 	res = cnx_path_remove_directory(&path);
+
 	TEST_ASSERT_TRUE(cnx_result_is_ok(res));
 
 	TEST_ASSERT_FALSE(cnx_path_exists(&path));
@@ -64,7 +65,11 @@ TEST(CnxPath, create_and_remove_directory) {
 
 // NOLINTNEXTLINE
 TEST(CnxPath, create_and_remove_symlink) {
+#if CNX_PLATFORM_WINDOWS
+	CnxScopedString path = cnx_string_from("Cnx-Test.exe");
+#else
 	CnxScopedString path = cnx_string_from("Cnx-Test");
+#endif
 
 	TEST_ASSERT_TRUE(cnx_path_exists(&path));
 

@@ -1,8 +1,8 @@
 /// @file String.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides string and stringview types comparable to C++ for Cnx
-/// @version 0.1.5
-/// @date 2022-04-30
+/// @version 0.1.6
+/// @date 2022-05-01
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -859,9 +859,11 @@ CnxOption(usize)(cnx_string_find_first)(const CnxString* restrict self,
 										const CnxString* restrict substring) {
 	let length = cnx_string_length(*self);
 	let sublength = cnx_string_length(*substring);
-	cnx_assert(length > sublength,
-			   "cnx_string_find_first called with "
-			   "substring->m_length > self->m_length (substring length out of bounds");
+
+	if(sublength > length) {
+		return None(usize);
+	}
+
 	let end = length - sublength;
 	for(let_mut i = 0U; i < end; ++i) {
 		let maybe_contains = cnx_string_contains_from_left(self, substring, i);
@@ -877,9 +879,10 @@ CnxOption(usize) cnx_string_find_first_cstring(const CnxString* restrict self,
 											   restrict const_cstring substring,
 											   usize substring_length) {
 	let length = cnx_string_length(*self);
-	cnx_assert(length > substring_length,
-			   "cnx_string_find_first_cstring called with "
-			   "substring_length > self->m_length (substring length out of bounds");
+	if(substring_length > length) {
+		return None(usize);
+	}
+
 	let end = length - substring_length;
 	for(let_mut i = 0U; i < end; ++i) {
 		let maybe_contains
@@ -901,10 +904,9 @@ CnxOption(usize)(cnx_string_find_last)(const CnxString* restrict self,
 									   const CnxString* restrict substring) {
 	let length = cnx_string_length(*self);
 	let sublength = cnx_string_length(*substring);
-	cnx_assert(length > sublength,
-			   "cnx_string_find_first_cstring called with "
-			   "substring->m_length > self->m_length (substring length out of bounds");
-	cnx_assert(sublength > 0, "cnx_string_find_last called with a substring of 0 length");
+	if(sublength > length) {
+		return None(usize);
+	}
 
 	let end = sublength;
 	for(let_mut i = length - 1; i >= end; --i) {
@@ -920,10 +922,9 @@ CnxOption(usize) cnx_string_find_last_cstring(const CnxString* restrict self,
 											  restrict const_cstring substring,
 											  usize substring_length) {
 	let length = cnx_string_length(*self);
-	cnx_assert(length > substring_length,
-			   "cnx_string_find_first_cstring called with "
-			   "substring_length > self->m_length (substring length out of bounds");
-	cnx_assert(substring_length > 0, "cnx_string_find_last called with a substring of 0 length");
+	if(substring_length > length) {
+		return None(usize);
+	}
 
 	let end = substring_length;
 	for(let_mut i = length - 1; i >= end; --i) {
