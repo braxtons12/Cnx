@@ -98,7 +98,8 @@ set(IMPLEMENTATIONS
 
 add_library(Cnx STATIC
 	${EXPORTS} ${IMPLEMENTATIONS})
-add_executable(FormatBenchmark "${CMAKE_CURRENT_SOURCE_DIR}/src/benchmark/benchmark.c")
+add_executable(PrintlnBenchmark "${CMAKE_CURRENT_SOURCE_DIR}/src/benchmark/println_benchmark.c")
+add_executable(FileIOBenchmark "${CMAKE_CURRENT_SOURCE_DIR}/src/benchmark/fileio_benchmark.c")
 add_executable(Cnx-Test "${CMAKE_CURRENT_SOURCE_DIR}/src/test/Test.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/test/Arrayi32_10.c")
 
@@ -107,7 +108,8 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
 		SET(CMAKE_C_CLANG_TIDY clang-tidy)
 	endif()
 	set_target_properties(Cnx PROPERTIES C_CLANG_TIDY ${CMAKE_C_CLANG_TIDY})
-	set_target_properties(FormatBenchmark PROPERTIES C_CLANG_TIDY ${CMAKE_C_CLANG_TIDY})
+	set_target_properties(PrintlnBenchmark PROPERTIES C_CLANG_TIDY ${CMAKE_C_CLANG_TIDY})
+	set_target_properties(FileIOBenchmark PROPERTIES C_CLANG_TIDY ${CMAKE_C_CLANG_TIDY})
 	set_target_properties(Cnx-Test PROPERTIES C_CLANG_TIDY ${CMAKE_C_CLANG_TIDY})
 endif ()
 
@@ -117,7 +119,15 @@ if (NOT (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "c
 endif()
 
 if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang")
-	target_compile_options(FormatBenchmark PRIVATE
+	target_compile_options(PrintlnBenchmark PRIVATE
+		-std=gnu2x
+		-Wall
+		-Wextra
+		-Weverything
+		-Werror
+		-Wno-unknown-warning-option
+		)
+	target_compile_options(FileIOBenchmark PRIVATE
 		-std=gnu2x
 		-Wall
 		-Wextra
@@ -182,7 +192,14 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
 			)
 	endif ()
 else ()
-	target_compile_options(FormatBenchmark PRIVATE
+	target_compile_options(PrintlnBenchmark PRIVATE
+		-std=gnu2x
+		-Wall
+		-Wextra
+		-Werror
+		-Wno-unknown-warning
+		)
+	target_compile_options(FileIOBenchmark PRIVATE
 		-std=gnu2x
 		-Wall
 		-Wextra
@@ -214,10 +231,15 @@ else ()
 		)
 endif ()
 
-target_compile_options(FormatBenchmark PRIVATE
+target_compile_options(PrintlnBenchmark PRIVATE
 	-march=native
 	-mtune=native
 	)
+target_compile_options(FileIOBenchmark PRIVATE
+	-march=native
+	-mtune=native
+	)
+
 
 if (APPLE)
 	target_include_directories(Cnx BEFORE PUBLIC
@@ -242,7 +264,8 @@ if(NOT WIN32)
 	target_link_libraries(Cnx PUBLIC pthread)
 endif()
 
-target_link_libraries(FormatBenchmark PRIVATE Cnx)
+target_link_libraries(PrintlnBenchmark PRIVATE Cnx)
+target_link_libraries(FileIOBenchmark PRIVATE Cnx)
 target_link_libraries(Cnx-Test PRIVATE Cnx ${CRITERION_LIBRARIES})
 target_include_directories(Cnx-Test PRIVATE ${CRITERION_INCLUDE_DIRS})
 

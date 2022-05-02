@@ -1,6 +1,7 @@
 #include <Cnx/IO.h>
 #include <Cnx/Platform.h>
 #include <Cnx/Vector.h>
+#include <Cnx/filesystem/File.h>
 #include <Cnx/time/Clock.h>
 #include <time.h>
 
@@ -9,7 +10,7 @@ i32 main(i32 argc, char** argv) {
 	ignore(argc, argv);
 
 	println("beginning println vs printf benchmark");
-	let num_runs = 100;
+	let num_runs = 1;
 	let unum = 1024U;
 	let snum = -1024;
 	let fnum = -1024.1024;
@@ -41,7 +42,7 @@ i32 main(i32 argc, char** argv) {
 		// NOLINTNEXTLINE(readability-identifier-length)
 		let f = fnum * i;
 		let start = cnx_clock_now(&cnx_steady_clock);
-		printf("%u, %d, %.3f, %s\n", u, s, f, cnx_string_into_cstring(string));
+		ignore(printf("%u, %d, %.3f, %s\n", u, s, f, cnx_string_into_cstring(string)));
 		let end = cnx_clock_now(&cnx_steady_clock);
 		average_printf += static_cast(f64)(
 			cnx_duration_subtract(end.time_since_epoch, start.time_since_epoch).count);

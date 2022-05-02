@@ -128,20 +128,81 @@ typedef struct CnxFile {
 	cnx_disable_if(!(file), "Can't perform a file operation with a nullptr")
 
 __attr(nodiscard) __attr(not_null(1)) CnxResult(CnxFile)
-	cnx_file_open(const CnxPath* restrict path, CnxFileOptions options, usize buffer_size)
+	cnx_file_open_string(const CnxPath* restrict path, CnxFileOptions options, usize buffer_size)
 		__DISABLE_IF_NULL(path);
 __attr(nodiscard) __attr(not_null(1)) CnxResult(CnxFile)
-	cnx_file_open_with_allocator(const CnxPath* restrict path,
-								 CnxFileOptions options,
-								 usize buffer_size,
-								 CnxAllocator allocator) __DISABLE_IF_NULL(path);
+	cnx_file_open_stringview(const CnxStringView* restrict path,
+							 CnxFileOptions options,
+							 usize buffer_size) __DISABLE_IF_NULL(path);
+__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxFile)
+	cnx_file_open_cstring(restrict const_cstring path,
+						  usize path_length,
+						  CnxFileOptions options,
+						  usize buffer_size) __DISABLE_IF_NULL(path);
 
 IGNORE_RESERVED_IDENTIFIER_WARNING_START
-#define __cnx_file_open_3(...) cnx_file_open(__VA_ARGS__)
-#define __cnx_file_open_2(...) cnx_file_open(__VA_ARGS__, CNX_FILE_DEFAULT_BUFFER_SIZE)
+#define __cnx_file_open(path, options, buffer_size) \
+	_Generic((path), 							   												   \
+			const CnxString* 			: cnx_file_open_string( 						  	   	   \
+											static_cast(const CnxString*)(path), 				   \
+											options, 											   \
+											buffer_size), 		  		   						   \
+			CnxString* 					: cnx_file_open_string( 						  	   	   \
+											static_cast(const CnxString*)(path), 		  		   \
+											options, 											   \
+											buffer_size), 		  		   						   \
+			const CnxStringView* 		: cnx_file_open_stringview( 					  	   	   \
+											static_cast(const CnxStringView*)(path), 	  		   \
+											options, 											   \
+											buffer_size), 		  		   						   \
+			CnxStringView* 				: cnx_file_open_stringview( 					  	   	   \
+											static_cast(const CnxStringView*)(path), 	  		   \
+											options, 											   \
+											buffer_size), 		  		   						   \
+			const_cstring 				: cnx_file_open_cstring( 						  	   	   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path)), 			   \
+											options, 											   \
+											buffer_size), 		  		   						   \
+			cstring 					: cnx_file_open_cstring( 						  	   	   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path)), 			   \
+											options, 											   \
+											buffer_size), 		  		   						   \
+			const char[sizeof(path)] 	: cnx_file_open_cstring( 					/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path), 							/** NOLINT **/ \
+											options, 											   \
+											buffer_size), 		  		   						   \
+			char[sizeof(path)] 			: cnx_file_open_cstring( 					/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path), 							/** NOLINT **/ \
+											options, 											   \
+											buffer_size))
+
+#define __cnx_file_open_3(...) __cnx_file_open(__VA_ARGS__)
+#define __cnx_file_open_2(...) __cnx_file_open(__VA_ARGS__, CNX_FILE_DEFAULT_BUFFER_SIZE)
 #define __cnx_file_open_1(...) \
-	cnx_file_open(__VA_ARGS__, CNX_FILE_DEFAULT_OPTIONS, CNX_FILE_DEFAULT_BUFFER_SIZE)
+	__cnx_file_open(__VA_ARGS__, CNX_FILE_DEFAULT_OPTIONS, CNX_FILE_DEFAULT_BUFFER_SIZE)
 #define cnx_file_open(...) CONCAT2_DEFERRED(__cnx_file_open_, PP_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+
+__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxFile)
+	cnx_file_open_with_allocator_string(const CnxPath* restrict path,
+										CnxFileOptions options,
+										usize buffer_size,
+										CnxAllocator allocator) __DISABLE_IF_NULL(path);
+__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxFile)
+	cnx_file_open_with_allocator_stringview(const CnxStringView* restrict path,
+											CnxFileOptions options,
+											usize buffer_size,
+											CnxAllocator allocator) __DISABLE_IF_NULL(path);
+
+__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxFile)
+	cnx_file_open_with_allocator_cstring(restrict const_cstring path,
+										 usize path_length,
+										 CnxFileOptions options,
+										 usize buffer_size,
+										 CnxAllocator allocator) __DISABLE_IF_NULL(path);
 
 __attr(not_null(1, 2)) CnxResult(i32) __cnx_file_print(CnxFile* file,
 													   restrict const_cstring format_string,

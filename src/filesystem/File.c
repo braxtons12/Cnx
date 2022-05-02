@@ -131,16 +131,40 @@ __attr(nodiscard) __attr(always_inline) static inline CnxResult(cstring)
 	return Err(cstring, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
 }
 
-CnxResult(CnxFile) cnx_file_open_with_allocator(const CnxPath* restrict path,
-												CnxFileOptions options,
-												usize buffer_size,
-												CnxAllocator allocator) {
+CnxResult(CnxFile) cnx_file_open_with_allocator_string(const CnxPath* restrict path,
+													   CnxFileOptions options,
+													   usize buffer_size,
+													   CnxAllocator allocator) {
+	return cnx_file_open_with_allocator_cstring(cnx_string_into_cstring(*path),
+												cnx_string_length(*path),
+												options,
+												buffer_size,
+												allocator);
+}
+
+CnxResult(CnxFile) cnx_file_open_with_allocator_stringview(const CnxStringView* restrict path,
+														   CnxFileOptions options,
+														   usize buffer_size,
+														   CnxAllocator allocator) {
+	CnxScopedString str = cnx_string_from(path);
+	return cnx_file_open_with_allocator_cstring(cnx_string_into_cstring(str),
+												cnx_string_length(str),
+												options,
+												buffer_size,
+												allocator);
+}
+
+CnxResult(CnxFile) cnx_file_open_with_allocator_cstring(restrict const_cstring path,
+														usize path_length,
+														CnxFileOptions options,
+														usize buffer_size,
+														CnxAllocator allocator) {
 	let_mut res = validate_file_options(options);
 	if(cnx_result_is_err(res)) {
 		return Err(CnxFile, cnx_result_unwrap_err(res));
 	}
 
-	let_mut file = fopen(cnx_string_into_cstring(*path), cnx_result_unwrap(res));
+	let_mut file = fopen(path, cnx_result_unwrap(res));
 	if(file != nullptr) {
 		UniquePtr(FileBuffer) buffer
 			= cnx_make_unique_array_with_allocator(FileBuffer, buffer_size, allocator);
@@ -148,10 +172,11 @@ CnxResult(CnxFile) cnx_file_open_with_allocator(const CnxPath* restrict path,
 			return Err(CnxFile, cnx_error_new(errno, CNX_POSIX_ERROR_CATEGORY));
 		}
 
-		let cnx_file = (CnxFile){.path = cnx_string_clone_with_allocator(*path, allocator),
-								 .file = cnx_unique_ptr_from(FILE, file),
-								 .buffer = move(buffer),
-								 .options = options};
+		let cnx_file = (CnxFile){
+			.path = cnx_string_from_cstring_with_allocator(path, path_length, allocator),
+			.file = cnx_unique_ptr_from(FILE, file),
+			.buffer = move(buffer),
+			.options = options};
 		return Ok(CnxFile, cnx_file);
 	}
 
@@ -159,8 +184,25 @@ CnxResult(CnxFile) cnx_file_open_with_allocator(const CnxPath* restrict path,
 }
 
 CnxResult(CnxFile)
-	cnx_file_open(const CnxPath* restrict path, CnxFileOptions options, usize buffer_size) {
-	return cnx_file_open_with_allocator(path, options, buffer_size, DEFAULT_ALLOCATOR);
+	cnx_file_open_string(const CnxPath* restrict path, CnxFileOptions options, usize buffer_size) {
+	return cnx_file_open_with_allocator_string(path, options, buffer_size, DEFAULT_ALLOCATOR);
+}
+
+CnxResult(CnxFile) cnx_file_open_stringview(const CnxStringView* restrict path,
+											CnxFileOptions options,
+											usize buffer_size) {
+	return cnx_file_open_with_allocator_stringview(path, options, buffer_size, DEFAULT_ALLOCATOR);
+}
+
+CnxResult(CnxFile) cnx_file_open_cstring(restrict const_cstring path,
+										 usize path_length,
+										 CnxFileOptions options,
+										 usize buffer_size) {
+	return cnx_file_open_with_allocator_cstring(path,
+												path_length,
+												options,
+												buffer_size,
+												DEFAULT_ALLOCATOR);
 }
 
 CnxResult(i32) __cnx_file_print(CnxFile* file,
@@ -335,8 +377,9 @@ CnxResult(i64) cnx_file_tell(CnxFile* restrict file) {
 
 void cnx_file_close(CnxFile* restrict file) {
 	cnx_string_free(file->path);
-	cnx_unique_ptr_free(FILE, file->file);
+	ignore(fflush(cnx_unique_ptr_get(file->file)));
 	cnx_unique_ptr_free(FileBuffer, file->buffer);
+	cnx_unique_ptr_free(FILE, file->file);
 }
 
 void cnx_file_free(void* file) {

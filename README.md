@@ -18,6 +18,8 @@ Some features of Cnx include:
 - Iterators, Ranges, and `foreach` loops (equivalent to C++'s `for(elem : collection)`)
 - Human-readable (no more having to remember which character combination corresonds to which type
   in `printf`), type-safe string formatting and formatted I/O via the `CnxFormat` Trait
+- More intuitive, more performant file API with `CnxFile`, along with simple file system interaction
+  API with `CnxPath`
 
 ##### Why not standard C?
 
@@ -140,17 +142,25 @@ For more details on string formatting, see the documentation for the `CnxFormat`
 ### Performance
 
 I know, you're probably thinking "So, something that nice can't be fast right? What's the cost?"
-And the answer is: not necessarily anything. Yes there is a performance hit to use all the
-functionality available, but it's small compared to the increased ergonomics and composability
-gained from using the library's features.
+And the answer is: not necessarily anything. Generally, performance is faster than traditional
+standard C functionality, even with the increased ergonomics and composability gained from using the
+library's features.
+
+We have two benchmarks to showcase this. The first pits `println` against `printf` from the standard
+library. The second pits the Cnx file API against the standard library's `fprintf`.
+For the code used for each benchmark and more detailed results (Std. Dev., Median, individual runs),
+see the project/code in the "benchmark" subfolder.
+
 
 The implementation of `println` makes heavy use of most of the functionality presented in the
-example
-(except for `CnxRange(T)`), as well as the `Result(T)` type, which means it's using most of
-the facilities currently provided by the library. So, lets look at a benchmark comparing the
+example (except for `CnxRange(T)`), as well as the `Result(T)` type, which means it's using many of
+the facilities currently provided by the library. Meanwhile, the file API uses everything `println`
+does, in addition to providing a safer and more ergonomic API for file manipulation than the
+standard library, while also taking better advantage of features like buffering to further improve
+performance. So, lets start by taking a look at the benchmark comparing the
 relative speed of `println` to `printf`.
 
-This benchmark consisted of printing out N strings to `stdout` consisting of:
+This benchmark consisted of printing out N strings to `stdout`, each consisting of:
 
 - the Mth multiple of 1024, unsigned
 - the Mth multiple of negative 1024
@@ -162,10 +172,17 @@ where M is in [0, N)
 It was run 10 times for each N, with the average of the 10 runs taken. The benchmark was performed
 with builds from both Clang 14.0.0 and GCC 11.2.0, and with both the default system allocator and
 jemalloc.<br>
-All benchmarks were run on an Intel Core i7-8750H with 16GB RAM running EndeavorOS (Arch Linux) with the Zen Kernel 5.17.5-zen1-1-zen.<br>
+All benchmarks were run on an Intel Core i7-8750H with 16GB RAM running EndeavorOS (Arch Linux) with
+the Zen Kernel 5.17.5-zen1-1-zen.<br>
 Clang builds were compiled with "-flto -Ofast -ffast-math -DNDEBUG".<br>
 GCC builds were compiled with "-flto -ffat-lto-objects -Ofast -DNDEBUG"
 All numbers are relative performance compared to `printf`
+
+While these numbers are Linux specific, in general you can expect comparable numbers on Windows
+using native clang, and even better numbers using MinGW, but benchmark on your specific platform
+for platform specific numbers.
+
+#### `println` vs `printf` Results
 
 | N                        |   Clang + System Allocator | Clang + jemalloc | GCC + System Allocator | GCC + jemalloc |
 | :----------------------- |--------------------------: | ---------------: | ---------------------: | -------------: |
@@ -177,24 +194,52 @@ All numbers are relative performance compared to `printf`
 | 100000                   |                     1.1154 |           1.1374 |                 1.0509 |         1.0517 |
 | average                  |                     1.3814 |           1.3434 |                 1.4905 |         1.3235 |
 
-For the code used for the benchmark and more detailed results (Std. Dev., Median, individual runs),
-see the project/code in the "benchmark" subfolder.
+As you can see, on __average__ you can expect around a 38% performance __boost__ compared to
+`printf`. For infrequent I/O you can expect up to a 200% performance __boost__, and for high
+frequency I/O you can expect around a 10% performance __boost__. If you dig into the detailed
+benchmark results, you'll see that in general you can expect it to be fairly allocator insensitive
+with clang (somewhat less so with GCC), and that building with clang and using the default system
+allocator is the most __consistently__ fast option to use.
 
-So, on __average__ (at least on linux, benchmark on your specific platform for platform specific
-numbers)
-you can expect around a 38% performance __boost__ compared to `printf`, for infrequent I/O you can
-expect up to a 200% performance __boost__, and for high frequency I/O you can expect around a 10%
-performance __boost__. If you dig into the benchmark results, you'll see that in general you can
-expect it to be fairly allocator insensitive with clang, and that building with clang and using the
-default system allocator is the most __consistently__ fast option to use.
+So not only does using Cnx for string formatting and I/O give greatly improved ergonomics and
+composability over traditional methods, you also get a performance increase too!
+
+Now for the benchmark pitting the file API against `fprintf`. This is nearly identical to the
+previous benchmark as fas as setup and methodologies go. The only difference is that the strings
+are printed to two separate files, one for the file API and one for `fprintf`, each using the
+API being benchmarked for performing the string formatting and I/O.
+
+#### Cnx File API vs `fprintf` Results
+
+| N                        |   Clang + System Allocator | Clang + jemalloc | GCC + System Allocator | GCC + jemalloc |
+| :----------------------- |--------------------------: | ---------------: | ---------------------: | -------------: |
+| 1                        |                     5.2710 |           6.6535 |                 3.6145 |         5.0965 |
+| 10                       |                     3.6245 |           3.3975 |                 3.2620 |         2.3175 |
+| 100                      |                     2.4345 |           2.7620 |                 1.6815 |         1.6745 |
+| 1000                     |                     1.5145 |           1.5195 |                 1.1050 |         1.1800 |
+| 10000                    |                     1.3485 |           1.3350 |                 0.9645 |         1.0255 |
+| 100000                   |                     1.3335 |           1.3115 |                 1.0365 |         1.0005 |
+| average                  |                     2.5878 |           2.8298 |                 1.9440 |         2.0491 |
+
+So, on __average__ you can expect around a 100% performance __boost__ compared to `fprintf`.
+For infrequent I/O you can expect at least a  250% performance __boost__, or even higher, and for high
+frequency I/O you can expect around a 17% performance __boost__. You can see that, particularly
+at very sparse workloads, taking better advantage of buffering the way Cnx's file API does leads to
+significant performance improvements over the standard functionality. If you dig into the detailed
+benchmark results, you'll see that allocator choice plays a bigger role here than with `println`,
+in particular at very sparse workloads. Unforntunately, GCC begins to sputter out as the workload
+increases, and in some cases actually manages to perform worse than the standard library functions.
+However, the gcc + system allocator pairing does the most consistent performance
+(lowest average standard deviation and smallest abs(averaged median - averaged average)). That said,
+it's also the slowest pairing, and the clang + system allocator pairing comes in at a close second
+in terms of consitency while still being the second fastest overall. Lastly, you'll see the
+clang + jemalloc pairing is the most __consistently__ fast option to use (highest average and
+highest averaged median).
 
 This was the performance for formatting builtin types (u32, i32, f32, cstring.
 `CnxString`'s `CnxFormat` implementation simply forwards itself, so it's about as expensive as
 passing a cstring to `printf`), but it would be reasonable to expect this to translate to custom
 types as well.
-
-So not only does using Cnx for string formatting and I/O give greatly improved ergonomics and
-composability over traditional methods, you also get a performance increase too!
 
 ### Testing
 
