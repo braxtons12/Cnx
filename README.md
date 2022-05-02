@@ -232,14 +232,14 @@ increases, and in some cases actually manages to perform worse than the standard
 However, the gcc + system allocator pairing does the most consistent performance
 (lowest average standard deviation and smallest abs(averaged median - averaged average)). That said,
 it's also the slowest pairing, and the clang + system allocator pairing comes in at a close second
-in terms of consitency while still being the second fastest overall. Lastly, you'll see the
+in terms of consistency while still being the second fastest overall. Lastly, you'll see the
 clang + jemalloc pairing is the most __consistently__ fast option to use (highest average and
 highest averaged median).
 
-This was the performance for formatting builtin types (u32, i32, f32, cstring.
-`CnxString`'s `CnxFormat` implementation simply forwards itself, so it's about as expensive as
-passing a cstring to `printf`), but it would be reasonable to expect this to translate to custom
-types as well.
+This was the performance for formatting builtin types (u32, i32, f32, cstring. `CnxString`'s
+`CnxFormat` implementation simply forwards itself, so it's about as expensive as passing a cstring
+to `printf`). That said, it would be reasonable to expect this performance to extend to printing for
+custom types as well.
 
 ### Testing
 
