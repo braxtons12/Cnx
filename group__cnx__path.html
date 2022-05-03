@@ -49,6 +49,7 @@
             <li>
               Reference
               <ul>
+                <li><a href="#typedef-members">Typedefs</a></li>
                 <li><a href="#func-members">Functions</a></li>
                 <li><a href="#define-members">Defines</a></li>
               </ul>
@@ -95,6 +96,15 @@
     <span class="n">let</span> <span class="n">remove_res</span> <span class="o">=</span> <span class="n">cnx_path_remove_file</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">);</span>
     <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_result_is_ok</span><span class="p">(</span><span class="n">remove_res</span><span class="p">),</span> <span class="s">&quot;Failed to remove test file!&quot;</span><span class="p">);</span>
 <span class="p">}</span></pre>
+        <section id="typedef-members">
+          <h2><a href="#typedef-members">Typedefs</a></h2>
+          <dl class="m-doc">
+            <dt>
+              using <a href="#gaf19dfc015436a4fbdbd445a2d2f5f68c" class="m-doc">CnxPath</a> = <a href="structCnxString.html" class="m-doc">CnxString</a>
+            </dt>
+            <dd><code>CnxPath</code> is the system-agnostic path type for performing filesystem queries and modifications.</dd>
+          </dl>
+        </section>
         <section id="func-members">
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
@@ -108,14 +118,52 @@
           <h2><a href="#define-members">Defines</a></h2>
           <dl class="m-doc">
             <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaff61a8cfcb93055f5b737b10bc8c052a" class="m-doc">CnxScopedPath</a></span>
+            </dt>
+            <dd>Declare a <code>CnxPath</code> as a <code>CnxScopedPath</code> for the resources associated with the path to be automatically <code>free</code>d when the path leaves the scope.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae84555b4e3cc500044a0eb1adcb30be3" class="m-doc">cnx_path_free</a>(</span><span class="m-doc-wrap">path_ptr)</span>
+            </dt>
+            <dd>Frees the resources associated with the given path.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga56112f53972b1865cadf7c2fe0b1b8bb" class="m-doc">CNX_PATHS_CASE_SENSITIVE</a></span>
+            </dt>
+            <dd><code>TRUE</code> if filesystem paths are case-sensitive on the host platform, <code>FALSE</code> otherwise</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#gadd820584c4e9d4c59e4120adfa0d0a56" class="m-doc">cnx_path_is_valid</a>(</span><span class="m-doc-wrap">path)</span>
             </dt>
             <dd>Checks if the given string would be a valid path on the host platform&#x27;s filesystem.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga5674ba18309c75bdd8f51922f3a3bc70" class="m-doc">cnx_path_new</a>(</span><span class="m-doc-wrap">path)</span>
             </dt>
-            <dd>Creates a new path from the given string, potentially modified so as to be valid on the host platform.</dd>
+            <dd>Creates a new path from the given string, canonicalized so as to be valid on the host platform.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga86ccee6c321426f6c39bed9faa4f6974" class="m-doc">cnx_path_is_absolute</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Checks if the given path is an absolute path.</dd>
           </dl>
+        </section>
+        <section>
+          <h2>Typedef documentation</h2>
+          <section class="m-doc-details" id="gaf19dfc015436a4fbdbd445a2d2f5f68c"><div>
+            <h3>
+              typedef <a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#gaf19dfc015436a4fbdbd445a2d2f5f68c" class="m-doc-self">CnxPath</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p><code>CnxPath</code> is the system-agnostic path type for performing filesystem queries and modifications.</p>
+<p>Example:</p><pre class="m-code"><span class="kt">void</span> <span class="nf">my_example</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">my_docs_dir</span> <span class="o">=</span> <span class="n">cnx_path_user_dcouments_directory</span><span class="p">();</span>
+    <span class="n">cnx_path_append</span><span class="p">(</span><span class="o">&amp;</span><span class="n">my_docs_dir</span><span class="p">,</span> <span class="s">&quot;my_file.txt&quot;</span><span class="p">);</span>
+    <span class="c1">// create the file &quot;$HOME/Documents/my_file.text&quot; if it doesn&#39;t already exist</span>
+    <span class="n">let_mut</span> <span class="n">result</span> <span class="o">=</span> <span class="n">cnx_path_create_file</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">);</span>
+    <span class="c1">// failed to create the file</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">cnx_result_is_err</span><span class="p">(</span><span class="n">result</span><span class="p">))</span> <span class="p">{</span>
+        <span class="c1">// do something</span>
+    <span class="p">}</span>
+
+    <span class="n">cnx_path_free</span><span class="p">(</span><span class="o">&amp;</span><span class="n">my_docs_dir</span><span class="p">);</span>
+<span class="p">}</span></pre>
+          </div></section>
         </section>
         <section>
           <h2>Function documentation</h2>
@@ -129,14 +177,50 @@
               <tfoot>
                 <tr>
                   <th style="width: 1%">Returns</th>
-                  <td>The current user&#x27;s home directory</td>
+                  <td>Path to the current user&#x27;s home directory</td>
                 </tr>
               </tfoot>
             </table>
+<p>Returns the path separator character of the host platform.</p><p>Returns the path to the current working directory.</p><p>Returns the path to the system applications directory.</p><p>Returns the path to the currently running application.</p><p>Returns the path to the currently running executable.</p><p>Returns a path to a directory suitable for storing temporary files.</p><p>Returns the path to the shared documents directory.</p><p>Returns the path to the application data directory for the system.</p><p>Returns the path to the documents directory for the current user.</p><p>Returns the path to the application data directory for the current user.</p><p>For example, this would return $HOME/AppData on Windows, or $HOME/Library/Preferences on Mac</p><p>For example, this would return $HOME/Documents or &quot;$HOME/My Documents&quot; on Windows, or $HOME/Documents on *NIX</p><p>For example, this would return C:/Users/Public/AppData on Windows, or /Library on Mac</p><p>For example, this would return C:/Users/Public/Documents on Windows, or /Users/Shared on Mac</p><p>For example, this would return $HOME/AppData/Local/Temp on Windows, or /tmp on *NIX</p><p>On Mac if the executable is an app, this will return the path to the executable binary contained in the package. If you need the path of the package folder, use <code>cnx_current_application_file</code> instead. On other platforms <code>cnx_current_executable_file</code> and <code>cnx_current_application_file</code> are interchangeable.</p><p>On Mac if the executable is an app, this will return the path to the application package folder. If you need the path of the executable binary, use <code>cnx_current_executable_file</code> instead. On other platforms <code>cnx_current_executable_file</code> and <code>cnx_current_application_file</code> are interchangeable.</p><p>On Windows this returns the 64-bit applications directory (&quot;Program Files&quot;). For the legacy/32-bit applications directory (&quot;Program Files (x86)&quot;) use <code>cnx_system_applications_directory_x86</code> instead.</p>
           </div></section>
         </section>
         <section>
           <h2>Define documentation</h2>
+          <section class="m-doc-details" id="gaff61a8cfcb93055f5b737b10bc8c052a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaff61a8cfcb93055f5b737b10bc8c052a" class="m-doc-self">CnxScopedPath</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Declare a <code>CnxPath</code> as a <code>CnxScopedPath</code> for the resources associated with the path to be automatically <code>free</code>d when the path leaves the scope.</p>
+<p>Example:</p><pre class="m-code"><span class="kt">void</span> <span class="nf">my_example</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CnxScopedPath</span> <span class="n">my_docs_dir</span> <span class="o">=</span> <span class="n">cnx_path_user_dcouments_directory</span><span class="p">();</span>
+    <span class="n">cnx_path_append</span><span class="p">(</span><span class="o">&amp;</span><span class="n">my_docs_dir</span><span class="p">,</span> <span class="s">&quot;my_file.txt&quot;</span><span class="p">);</span>
+    <span class="c1">// create the file &quot;$HOME/Documents/my_file.text&quot; if it doesn&#39;t already exist</span>
+    <span class="n">let_mut</span> <span class="n">result</span> <span class="o">=</span> <span class="n">cnx_path_create_file</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">);</span>
+    <span class="c1">// failed to create the file</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">cnx_result_is_err</span><span class="p">(</span><span class="n">result</span><span class="p">))</span> <span class="p">{</span>
+        <span class="c1">// do something</span>
+    <span class="p">}</span>
+
+    <span class="c1">// no need to free `my_docs_dir`, it&#39;s automatically freed when it exits scope</span>
+    <span class="c1">// since we declared it as `CnxScopedPath`</span>
+<span class="p">}</span></pre>
+          </div></section>
+          <section class="m-doc-details" id="gae84555b4e3cc500044a0eb1adcb30be3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae84555b4e3cc500044a0eb1adcb30be3" class="m-doc-self">cnx_path_free</a>(</span><span class="m-doc-wrap">path_ptr)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Frees the resources associated with the given path.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga56112f53972b1865cadf7c2fe0b1b8bb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga56112f53972b1865cadf7c2fe0b1b8bb" class="m-doc-self">CNX_PATHS_CASE_SENSITIVE</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p><code>TRUE</code> if filesystem paths are case-sensitive on the host platform, <code>FALSE</code> otherwise</p>
+<p>For example, on *NIX systems this will usualy be <code>TRUE</code>, but on Windows this is <code>FALSE</code></p>
+          </div></section>
           <section class="m-doc-details" id="gadd820584c4e9d4c59e4120adfa0d0a56"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gadd820584c4e9d4c59e4120adfa0d0a56" class="m-doc-self">cnx_path_is_valid</a>(</span><span class="m-doc-wrap">path)</span>
@@ -150,7 +234,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">path</td>
-                  <td>- The path to check for validity</td>
+                  <td>- The path to check for validity. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -160,14 +244,19 @@
                 </tr>
               </tfoot>
             </table>
-<p>Checks if the given path is syntactically valid on the host platform&#x27;s filesystem. Does not check if the path exists or is semantically logical.</p>
+<p>Checks if the given path is syntactically valid on the host platform&#x27;s filesystem. Does not check if the path exists or is semantically logical.</p><p>Example:</p><pre class="m-code"><span class="c1">// fails on all platforms because of mixed path separator use</span>
+<span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_path_is_valid</span><span class="p">(</span><span class="s">&quot;/home</span><span class="se">\\</span><span class="s">my_user&quot;</span><span class="p">),</span> <span class="s">&quot;Path /home</span><span class="se">\\</span><span class="s">my_user was invalid&quot;</span><span class="p">);</span>
+<span class="c1">// fails on Windows because it uses *NIX style separators and fs root</span>
+<span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_path_is_valid</span><span class="p">(</span><span class="s">&quot;/home/my_user&quot;</span><span class="p">),</span> <span class="s">&quot;Path /home/my_user was invalid&quot;</span><span class="p">);</span>
+<span class="c1">// fails on *NIX because it uses Windows style separators and fs root</span>
+<span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_path_is_valid</span><span class="p">(</span><span class="s">&quot;C:</span><span class="se">\\</span><span class="s">Users</span><span class="se">\\</span><span class="s">my_user&quot;</span><span class="p">),</span> <span class="s">&quot;Path /home/my_user was invalid&quot;</span><span class="p">);</span></pre>
           </div></section>
           <section class="m-doc-details" id="ga5674ba18309c75bdd8f51922f3a3bc70"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga5674ba18309c75bdd8f51922f3a3bc70" class="m-doc-self">cnx_path_new</a>(</span><span class="m-doc-wrap">path)</span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
             </h3>
-            <p>Creates a new path from the given string, potentially modified so as to be valid on the host platform.</p>
+            <p>Creates a new path from the given string, canonicalized so as to be valid on the host platform.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -175,7 +264,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">path</td>
-                  <td>- The string to create a path from</td>
+                  <td>- The string to create a path from. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -185,7 +274,34 @@
                 </tr>
               </tfoot>
             </table>
-<p>If the given string would be a valid path on the host platform&#x27;s filesystem, this simply returns a clone of the string. Otherwise, this will return a modified version of the given string, converted to be a valid filesystem path.</p><p>For example, if <code>path</code> is &quot;/home\\user_name//file.txt&quot; on *NIX, path separators will be converted to all be *NIX style separators and redundant separators will be removed. As a result, the returned path would be &quot;/home/user_name/file.txt&quot;</p><p>Coincidentally, this means that all paths created through this function can use a consistent path separator for all platforms, and separators will automatically be converted to the correct one for the platform at runtime. IE: all paths can be declared with *NIX style separators, but will be correctly converted to &#x27;\&#x27; on Windows</p>
+<p>If the given string would be a valid path on the host platform&#x27;s filesystem, this simply returns a clone of the string. Otherwise, this will return a modified, canonicalized clone of the given string so that it would be a valid filesystem path.</p><p>For example, if <code>path</code> is &quot;/home\\user_name//file.txt&quot; on *NIX, path separators will be converted to all be *NIX style separators and redundant separators will be removed. As a result, the returned path would be &quot;/home/user_name/file.txt&quot;</p><p>Coincidentally, this means that all paths created through this function can use a consistent path separator for all platforms, and separators will automatically be converted to the correct one for the platform at runtime. IE: all paths can be declared with *NIX style separators, but will be correctly converted to &#x27;\&#x27; on Windows</p><p>Example:</p><pre class="m-code"><span class="n">CnxScopedPath</span> <span class="n">home</span> <span class="o">=</span> <span class="n">cnx_path_user_home_directory</span><span class="p">();</span>
+<span class="c1">// returns a validated and canonicalized form for the path</span>
+<span class="n">CnxScopedPath</span> <span class="n">file_path</span> <span class="o">=</span> <span class="n">cnx_path_new</span><span class="p">(</span><span class="s">&quot;my_directory/my_file&quot;</span><span class="p">);</span>
+<span class="n">cnx_path_append</span><span class="p">(</span><span class="o">&amp;</span><span class="n">home</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">file_path</span><span class="p">);</span></pre>
+          </div></section>
+          <section class="m-doc-details" id="ga86ccee6c321426f6c39bed9faa4f6974"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga86ccee6c321426f6c39bed9faa4f6974" class="m-doc-self">cnx_path_is_absolute</a>(</span><span class="m-doc-wrap">path)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Checks if the given path is an absolute path.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">path</td>
+                  <td>- The path to check. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>whether <code>path</code> is an absolute path</td>
+                </tr>
+              </tfoot>
+            </table>
           </div></section>
         </section>
       </div>

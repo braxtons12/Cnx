@@ -51,13 +51,23 @@
             <li>
               Reference
               <ul>
+                <li><a href="#typedef-members">Typedefs</a></li>
                 <li><a href="#func-members">Functions</a></li>
                 <li><a href="#define-members">Defines</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.2.0</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-05-02</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.2.0</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-05-03</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        <section id="typedef-members">
+          <h2><a href="#typedef-members">Typedefs</a></h2>
+          <dl class="m-doc">
+            <dt>
+              using <a href="group__cnx__path.html#gaf19dfc015436a4fbdbd445a2d2f5f68c" class="m-doc">CnxPath</a> = <a href="structCnxString.html" class="m-doc">CnxString</a>
+            </dt>
+            <dd><code>CnxPath</code> is the system-agnostic path type for performing filesystem queries and modifications.</dd>
+          </dl>
+        </section>
         <section id="func-members">
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
@@ -71,13 +81,29 @@
           <h2><a href="#define-members">Defines</a></h2>
           <dl class="m-doc">
             <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#gaff61a8cfcb93055f5b737b10bc8c052a" class="m-doc">CnxScopedPath</a></span>
+            </dt>
+            <dd>Declare a <code>CnxPath</code> as a <code>CnxScopedPath</code> for the resources associated with the path to be automatically <code>free</code>d when the path leaves the scope.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#gae84555b4e3cc500044a0eb1adcb30be3" class="m-doc">cnx_path_free</a>(</span><span class="m-doc-wrap">path_ptr)</span>
+            </dt>
+            <dd>Frees the resources associated with the given path.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#ga56112f53972b1865cadf7c2fe0b1b8bb" class="m-doc">CNX_PATHS_CASE_SENSITIVE</a></span>
+            </dt>
+            <dd><code>TRUE</code> if filesystem paths are case-sensitive on the host platform, <code>FALSE</code> otherwise</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#gadd820584c4e9d4c59e4120adfa0d0a56" class="m-doc">cnx_path_is_valid</a>(</span><span class="m-doc-wrap">path)</span>
             </dt>
             <dd>Checks if the given string would be a valid path on the host platform&#x27;s filesystem.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#ga5674ba18309c75bdd8f51922f3a3bc70" class="m-doc">cnx_path_new</a>(</span><span class="m-doc-wrap">path)</span>
             </dt>
-            <dd>Creates a new path from the given string, potentially modified so as to be valid on the host platform.</dd>
+            <dd>Creates a new path from the given string, canonicalized so as to be valid on the host platform.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#ga86ccee6c321426f6c39bed9faa4f6974" class="m-doc">cnx_path_is_absolute</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Checks if the given path is an absolute path.</dd>
           </dl>
         </section>
       </div>
