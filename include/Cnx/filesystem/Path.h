@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Path provides various functions for working with filesystem paths
 /// @version 0.2.0
-/// @date 2022-05-02
+/// @date 2022-05-03
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -92,8 +92,53 @@
 #include <Cnx/Result.h>
 #undef RESULT_INCLUDE_DEFAULT_INSTANTIATIONS
 
+/// @brief `CnxPath` is the system-agnostic path type for performing filesystem queries and
+/// modifications.
+///
+/// Example:
+/// @code {.c}
+/// void my_example(void) {
+/// 	let_mut my_docs_dir = cnx_path_user_dcouments_directory();
+/// 	cnx_path_append(&my_docs_dir, "my_file.txt");
+/// 	// create the file "$HOME/Documents/my_file.text" if it doesn't already exist
+/// 	let_mut result = cnx_path_create_file(&path);
+/// 	// failed to create the file
+/// 	if(cnx_result_is_err(result)) {
+/// 		// do something
+/// 	}
+///
+/// 	cnx_path_free(&my_docs_dir);
+/// }
+/// @endcode
+/// @ingroup cnx_path
 typedef CnxString CnxPath;
+/// @brief Declare a `CnxPath` as a `CnxScopedPath` for the resources associated with the path
+/// to be automatically `free`d when the path leaves the scope.
+///
+/// Example:
+/// @code {.c}
+/// void my_example(void) {
+/// 	CnxScopedPath my_docs_dir = cnx_path_user_dcouments_directory();
+/// 	cnx_path_append(&my_docs_dir, "my_file.txt");
+/// 	// create the file "$HOME/Documents/my_file.text" if it doesn't already exist
+/// 	let_mut result = cnx_path_create_file(&path);
+/// 	// failed to create the file
+/// 	if(cnx_result_is_err(result)) {
+/// 		// do something
+/// 	}
+///
+/// 	// no need to free `my_docs_dir`, it's automatically freed when it exits scope
+/// 	// since we declared it as `CnxScopedPath`
+/// }
+/// @endcode
+/// @ingroup cnx_path
 #define CnxScopedPath CnxScopedString
+
+/// @brief Frees the resources associated with the given path
+///
+/// @param path - The `CnxPath` to free
+/// @ingroup cnx_path
+#define cnx_path_free(path_ptr) cnx_string_free(*(path_ptr))
 
 #define RESULT_T	CnxPath
 #define RESULT_DECL TRUE
@@ -101,6 +146,11 @@ typedef CnxString CnxPath;
 #undef RESULT_T
 #undef RESULT_DECL
 
+/// @def CNX_PATHS_CASE_SENSITIVE
+/// @brief `TRUE` if filesystem paths are case-sensitive on the host platform, `FALSE` otherwise
+///
+/// For example, on *NIX systems this will usualy be `TRUE`, but on Windows this is `FALSE`
+/// @ingroup cnx_path
 #if CNX_PLATFORM_WINDOWS
 	#define CNX_PATHS_CASE_SENSITIVE FALSE
 #else
@@ -116,9 +166,21 @@ typedef CnxString CnxPath;
 /// Checks if the given path is syntactically valid on the host platform's
 /// filesystem. Does not check if the path exists or is semantically logical.
 ///
-/// @param path - The path to check for validity
+/// Example:
+/// @code {.c}
+/// // fails on all platforms because of mixed path separator use
+/// cnx_assert(cnx_path_is_valid("/home\\my_user"), "Path /home\\my_user was invalid");
+/// // fails on Windows because it uses *NIX style separators and fs root
+/// cnx_assert(cnx_path_is_valid("/home/my_user"), "Path /home/my_user was invalid");
+/// // fails on *NIX because it uses Windows style separators and fs root
+/// cnx_assert(cnx_path_is_valid("C:\\Users\\my_user"), "Path /home/my_user was invalid");
+/// @endcode
+///
+/// @param path - The path to check for validity. This can be a pointer to any string or string-like
+/// type (i.e. it can be `CnxString*`, `CnxStringView*`, `cstring`, or a string literal)
 ///
 /// @return whether the path is valid
+///
 /// @ingroup cnx_path
 #define cnx_path_is_valid(path) \
 	_Generic((path), 								   				   							   \
@@ -143,13 +205,12 @@ typedef CnxString CnxPath;
 											static_cast(const_cstring)(path), 			   		   \
 											sizeof(path)) 							/** NOLINT **/ )
 
-/// @brief Creates a new path from the given string, potentially modified so as
-/// to be valid on the host platform.
+/// @brief Creates a new path from the given string, canonicalized so as to be valid on the host
+/// platform.
 ///
 /// If the given string would be a valid path on the host platform's filesystem,
 /// this simply returns a clone of the string. Otherwise, this will return a
-/// modified version of the given string, converted to be a valid filesystem
-/// path.
+/// modified, canonicalized clone of the given string so that it would be a valid filesystem path.
 ///
 /// For example, if `path` is "/home\\user_name//file.txt" on *NIX, path
 /// separators will be converted to all be *NIX style separators and redundant
@@ -162,7 +223,16 @@ typedef CnxString CnxPath;
 /// IE: all paths can be declared with *NIX style separators, but will be
 /// correctly converted to '\\' on Windows
 ///
-/// @param path - The string to create a path from
+/// Example:
+/// @code {.c}
+/// CnxScopedPath home = cnx_path_user_home_directory();
+/// // returns a validated and canonicalized form for the path
+/// CnxScopedPath file_path = cnx_path_new("my_directory/my_file");
+/// cnx_path_append(&home, &file_path);
+/// @endcode
+///
+/// @param path - The string to create a path from. This can be a pointer to any string or
+/// string-like type (i.e. it can be `CnxString*`, `CnxStringView*`, `cstring`, or a string literal)
 ///
 /// @return `path` converted to a valid filesystem path
 /// @ingroup cnx_path
@@ -192,26 +262,108 @@ typedef CnxString CnxPath;
 /// @brief Returns the path to the home directory of the user running this
 /// Program
 ///
-/// @return The current user's home directory
+/// @return Path to the current user's home directory
 /// @ingroup cnx_path
 __attr(nodiscard) CnxPath cnx_user_home_directory(void);
+/// @brief Returns the path to the application data directory for the current user
+///
+/// For example, this would return $HOME/AppData on Windows, or $HOME/Library/Preferences on Mac
+///
+/// @return Path to the current user's application data directory
+/// @ingroup cnx_path
 __attr(nodiscard) CnxPath cnx_user_application_data_directory(void);
+/// @brief Returns the path to the documents directory for the current user
+///
+/// For example, this would return $HOME/Documents or "$HOME/My Documents" on Windows, or
+/// $HOME/Documents on *NIX
+///
+/// @return Path to the current user's documents directory
+/// @ingroup cnx_path
 __attr(nodiscard) CnxPath cnx_user_documents_directory(void);
+/// @brief Returns the path to the application data directory for the system
+///
+/// For example, this would return C:/Users/Public/AppData on Windows, or /Library on Mac
+///
+/// @return Path to the system application data directory
+/// @ingroup cnx_path
 __attr(nodiscard) CnxPath cnx_common_application_data_directory(void);
+/// @brief Returns the path to the shared documents directory
+///
+/// For example, this would return C:/Users/Public/Documents on Windows, or /Users/Shared on Mac
+///
+/// @return Path to the shared documents directory
+/// @ingroup cnx_path
 __attr(nodiscard) CnxPath cnx_common_documents_directory(void);
+/// @brief Returns a path to a directory suitable for storing temporary files
+///
+/// For example, this would return $HOME/AppData/Local/Temp on Windows, or /tmp on *NIX
+///
+/// @return Path to a temporary files directory
+/// @ingroup cnx_path
 __attr(nodiscard) CnxPath cnx_temp_directory(void);
+/// @brief Returns the path to the currently running executable
+///
+/// On Mac if the executable is an app, this will return the path to the executable binary contained
+/// in the package. If you need the path of the package folder, use `cnx_current_application_file`
+/// instead. On other platforms `cnx_current_executable_file` and `cnx_current_application_file`
+/// are interchangeable.
+///
+/// @return Path to the current executable
+/// @ingroup cnx_path
 __attr(nodiscard) CnxPath cnx_current_executable_file(void);
+/// @brief Returns the path to the currently running application
+///
+/// On Mac if the executable is an app, this will return the path to the application package folder.
+/// If you need the path of the executable binary, use `cnx_current_executable_file` instead.
+/// On other platforms `cnx_current_executable_file` and `cnx_current_application_file` are
+/// interchangeable.
+///
+/// @return Path to the current application
+/// @ingroup cnx_path
 __attr(nodiscard) CnxPath cnx_current_application_file(void);
+/// @brief Returns the path to the system applications directory
+///
+/// On Windows this returns the 64-bit applications directory ("Program Files").
+/// For the legacy/32-bit applications directory ("Program Files (x86)") use
+/// `cnx_system_applications_directory_x86` instead.
+///
+/// @return Path to the system applications directory
+/// @ingroup cnx_path
 __attr(nodiscard) CnxPath cnx_system_applications_directory(void);
+
+/// @fn
+/// @brief Returns the path to the Legacy/32-bit system applications directory
+///
+/// This function is only available on Windows. It returns the path to the Legacy/32-bit
+/// applications directory ("Program Files (x86)"). To get the 64-bit applications directory,
+/// use `cnx_system_applications_directory` instead.
+///
+/// @return Path to the 32-bit system applications directory
+/// @ingroup cnx_path
 #if CNX_PLATFORM_WINDOWS
 
 __attr(nodiscard) CnxPath cnx_system_applications_directory_x86(void);
 
 #endif // CNX_PLATFORM_WINDOWS
 
+/// @brief Returns the path to the current working directory
+///
+/// @return Path to the current working directory
+/// @ingroup cnx_path
 __attr(nodiscard) CnxPath cnx_current_working_directory(void);
+/// @brief Returns the path separator character of the host platform
+///
+/// @return The path separator character for the platform
+/// @ingroup cnx_path
 __attr(nodiscard) char cnx_path_separator_char(void);
 
+/// @brief Checks if the given path is an absolute path
+///
+/// @param path - The path to check. This can be a pointer to any string or
+/// string-like type (i.e. it can be `CnxString*`, `CnxStringView*`, `cstring`, or a string literal)
+///
+/// @return whether `path` is an absolute path
+/// @ingroup cnx_path
 #define cnx_path_is_absolute(path) \
 	_Generic((path), 								   					   						   \
 			const CnxString* 			: cnx_path_is_absolute_string( 						  	   \
