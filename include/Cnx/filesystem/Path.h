@@ -121,7 +121,7 @@ typedef CnxString CnxPath;
 /// @return whether the path is valid
 /// @ingroup cnx_path
 #define cnx_path_is_valid(path) \
-	_Generic((path), 								   				   \
+	_Generic((path), 								   				   							   \
 			const CnxString* 			: cnx_path_is_valid_string( 						  	   \
 											static_cast(const CnxString*)(path)), 		  		   \
 			CnxString* 					: cnx_path_is_valid_string( 						  	   \
@@ -167,7 +167,7 @@ typedef CnxString CnxPath;
 /// @return `path` converted to a valid filesystem path
 /// @ingroup cnx_path
 #define cnx_path_new(path) \
-	_Generic((path), 								   					   \
+	_Generic((path), 								   					   						   \
 			const CnxString* 			: cnx_path_new_string( 						  		   	   \
 											static_cast(const CnxString*)(path)), 		  		   \
 			CnxString* 					: cnx_path_new_string( 						  		   	   \
@@ -1006,22 +1006,22 @@ IGNORE_RESERVED_IDENTIFIER_WARNING_START
 										to_create, 												   \
 										static_cast(const CnxStringView*)(target), 				   \
 										overwrite_existing), 									   \
-	const_cstring 					: cnx_path_create_symlink_string_cstring( 			   	   \
+	const_cstring 					: cnx_path_create_symlink_string_cstring( 			   	   	   \
 										to_create, 												   \
 										static_cast(const_cstring)(target), 					   \
 										strlen(static_cast(const_cstring)(target)), 			   \
 										overwrite_existing), 									   \
-	cstring 						: cnx_path_create_symlink_string_cstring( 			   	   \
+	cstring 						: cnx_path_create_symlink_string_cstring( 			   	   	   \
 										to_create, 												   \
 										static_cast(const_cstring)(target), 					   \
 										strlen(static_cast(const_cstring)(target)), 			   \
 										overwrite_existing), 									   \
-	const char[sizeof(target)] 		: cnx_path_create_symlink_string_cstring( 	/** NOLINT **/ \
+	const char[sizeof(target)] 		: cnx_path_create_symlink_string_cstring( 		/** NOLINT **/ \
 										to_create, 												   \
 										static_cast(const_cstring)(target), 		/** NOLINT **/ \
 										sizeof(target), 							/** NOLINT **/ \
 										overwrite_existing), 									   \
-	char[sizeof(target)] 			: cnx_path_create_symlink_string_cstring( 	/** NOLINT **/ \
+	char[sizeof(target)] 			: cnx_path_create_symlink_string_cstring( 		/** NOLINT **/ \
 										to_create, 												   \
 										static_cast(const_cstring)(target), 		/** NOLINT **/ \
 										sizeof(target), 							/** NOLINT **/ \
@@ -1045,22 +1045,22 @@ IGNORE_RESERVED_IDENTIFIER_WARNING_START
 										to_create, 												   \
 										static_cast(const CnxStringView*)(target), 				   \
 										overwrite_existing), 									   \
-	const_cstring 					: cnx_path_create_symlink_stringview_cstring( 			   \
+	const_cstring 					: cnx_path_create_symlink_stringview_cstring( 			   	   \
 										to_create, 												   \
 										static_cast(const_cstring)(target), 					   \
 										strlen(static_cast(const_cstring)(target)), 			   \
 										overwrite_existing), 									   \
-	cstring 						: cnx_path_create_symlink_stringview_cstring( 			   \
+	cstring 						: cnx_path_create_symlink_stringview_cstring( 			   	   \
 										to_create, 												   \
 										static_cast(const_cstring)(target), 					   \
 										strlen(static_cast(const_cstring)(target)), 			   \
 										overwrite_existing), 									   \
-	const char[sizeof(target)] 		: cnx_path_create_symlink_stringview_cstring( /** NOLINT **/ \
+	const char[sizeof(target)] 		: cnx_path_create_symlink_stringview_cstring( 	/** NOLINT **/ \
 										to_create, 												   \
 										static_cast(const_cstring)(target), 		/** NOLINT **/ \
 										sizeof(target), 							/** NOLINT **/ \
 										overwrite_existing), 									   \
-	char[sizeof(target)] 			: cnx_path_create_symlink_stringview_cstring( /** NOLINT **/ \
+	char[sizeof(target)] 			: cnx_path_create_symlink_stringview_cstring( 	/** NOLINT **/ \
 										to_create, 												   \
 										static_cast(const_cstring)(target), 		/** NOLINT **/ \
 										sizeof(target), 							/** NOLINT **/ \
@@ -1068,45 +1068,45 @@ IGNORE_RESERVED_IDENTIFIER_WARNING_START
 
 #define __cnx_path_create_symlink_cstring(to_create, to_create_length, target, overwrite_existing) \
 	_Generic((target), 																			   \
-	const CnxString* 				: cnx_path_create_symlink_cstring_string( 				   \
+	const CnxString* 				: cnx_path_create_symlink_cstring_string( 				   	   \
 										to_create, 				    							   \
 										to_create_length, 										   \
 										static_cast(const CnxString*)(target), 				   	   \
 										overwrite_existing), 									   \
-	CnxString* 						: cnx_path_create_symlink_cstring_string( 				   \
+	CnxString* 						: cnx_path_create_symlink_cstring_string( 				   	   \
 										to_create, 												   \
 										to_create_length, 										   \
 										static_cast(const CnxString*)(target), 				   	   \
 										overwrite_existing), 									   \
-	const CnxStringView* 			: cnx_path_create_symlink_cstring_stringview( 			   \
+	const CnxStringView* 			: cnx_path_create_symlink_cstring_stringview( 			   	   \
 										to_create, 												   \
 										to_create_length, 										   \
 										static_cast(const CnxStringView*)(target), 				   \
 										overwrite_existing), 									   \
-	CnxStringView* 					: cnx_path_create_symlink_cstring_stringview( 			   \
+	CnxStringView* 					: cnx_path_create_symlink_cstring_stringview( 			   	   \
 										to_create, 												   \
 										to_create_length, 										   \
 										static_cast(const CnxStringView*)(target), 				   \
 										overwrite_existing), 									   \
-	const_cstring 					: cnx_path_create_symlink_cstring_cstring( 				   \
+	const_cstring 					: cnx_path_create_symlink_cstring_cstring( 				   	   \
 										to_create, 												   \
 										to_create_length, 										   \
 										static_cast(const_cstring)(target), 					   \
 										strlen(static_cast(const_cstring)(target)), 			   \
 										overwrite_existing), 									   \
-	cstring 						: cnx_path_create_symlink_cstring_cstring( 				   \
+	cstring 						: cnx_path_create_symlink_cstring_cstring( 				   	   \
 										to_create, 												   \
 										to_create_length, 										   \
 										static_cast(const_cstring)(target), 					   \
 										strlen(static_cast(const_cstring)(target)), 			   \
 										overwrite_existing), 									   \
-	const char[sizeof(target)] 		: cnx_path_create_symlink_cstring_cstring( 	/** NOLINT **/ \
+	const char[sizeof(target)] 		: cnx_path_create_symlink_cstring_cstring( 		/** NOLINT **/ \
 										to_create, 												   \
 										to_create_length, 										   \
 										static_cast(const_cstring)(target), 		/** NOLINT **/ \
 										sizeof(target), 							/** NOLINT **/ \
 										overwrite_existing), 									   \
-	char[sizeof(target)] 			: cnx_path_create_symlink_cstring_cstring( 	/** NOLINT **/ \
+	char[sizeof(target)] 			: cnx_path_create_symlink_cstring_cstring( 		/** NOLINT **/ \
 										to_create, 												   \
 										to_create_length, 										   \
 										static_cast(const_cstring)(target), 		/** NOLINT **/ \
@@ -1114,7 +1114,7 @@ IGNORE_RESERVED_IDENTIFIER_WARNING_START
 										overwrite_existing))
 
 #define __cnx_path_create_symlink(to_create, target, overwrite_existing) \
-	_Generic((to_create), \
+	_Generic((to_create), 																		   \
 	const CnxString* 				: __cnx_path_create_symlink_string( 						   \
 										static_cast(const CnxString*)(to_create), 				   \
 										target, 				   								   \
