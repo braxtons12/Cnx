@@ -3,7 +3,7 @@
 /// @brief CnxAllocators provides an abstraction to modularize custom memory allocators to make
 /// custom allocator use simple and configurable
 /// @version 0.2.2
-/// @date 2022-04-30
+/// @date 2022-05-03
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -27,7 +27,6 @@
 /// SOFTWARE.
 #include <Cnx/Allocators.h>
 #include <Cnx/Math.h>
-#include <malloc.h>
 #include <memory.h>
 #include <stdio.h>
 #include <stdlib.h>

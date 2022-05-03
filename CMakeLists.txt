@@ -103,7 +103,7 @@ add_executable(FileIOBenchmark "${CMAKE_CURRENT_SOURCE_DIR}/src/benchmark/fileio
 add_executable(Cnx-Test "${CMAKE_CURRENT_SOURCE_DIR}/src/test/Test.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/test/Arrayi32_10.c")
 
-if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang" OR APPLE)
+if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang")
 	if(NOT DEFINED CMAKE_C_CLANG_TIDY)
 		SET(CMAKE_C_CLANG_TIDY clang-tidy)
 	endif()
@@ -113,7 +113,7 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
 	set_target_properties(Cnx-Test PROPERTIES C_CLANG_TIDY ${CMAKE_C_CLANG_TIDY})
 endif ()
 
-if (NOT (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang" OR APPLE))
+if (NOT (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"))
 	UNSET(CMAKE_C_CLANG_TIDY CACHE)
 	UNSET(CMAKE_C_CLANG_TIDY)
 endif()
@@ -231,14 +231,25 @@ else ()
 		)
 endif ()
 
-target_compile_options(PrintlnBenchmark PRIVATE
-	-march=native
-	-mtune=native
-	)
-target_compile_options(FileIOBenchmark PRIVATE
-	-march=native
-	-mtune=native
-	)
+if (APPLE AND CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "arm64")
+	target_compile_options(PrintlnBenchmark PRIVATE
+		-mcpu=apple-a14
+		-mtune=native
+		)
+	target_compile_options(FileIOBenchmark PRIVATE
+		-mcpu=apple-a14
+		-mtune=native
+		)
+else()
+	target_compile_options(PrintlnBenchmark PRIVATE
+		-march=native
+		-mtune=native
+		)
+	target_compile_options(FileIOBenchmark PRIVATE
+		-march=native
+		-mtune=native
+		)
+endif()
 
 
 if (APPLE)

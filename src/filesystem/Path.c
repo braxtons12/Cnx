@@ -406,7 +406,7 @@ CnxPath cnx_current_executable_file(void) {
 
 	let_mut alloc = cnx_allocator_allocate_array_t(char, DEFAULT_ALLOCATOR, size); // NOLINT
 
-	ignore(_NSGetExecutablePath(alloc, size));
+	ignore(_NSGetExecutablePath(alloc, &size));
 
 	CnxScopedString str = cnx_string_from(alloc);
 
@@ -426,7 +426,8 @@ CnxPath cnx_current_executable_file(void) {
 CnxPath cnx_current_application_file(void) {
 	CnxScopedPath executable = cnx_current_executable_file();
 
-	let_mut parent = cnx_path_get_parent_directory(&executable);
+	let_mut parent_res = cnx_path_get_parent_directory(&executable);
+	let_mut parent = cnx_result_unwrap(parent_res);
 
 	if(cnx_string_ends_with(parent, "Contents/MacOs")
 	   || cnx_string_ends_with(parent, "contents/macos")) {

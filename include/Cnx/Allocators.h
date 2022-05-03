@@ -3,7 +3,7 @@
 /// @brief Allocators provides an abstraction to modularize custom memory allocators to make
 /// custom allocator use simple and configurable
 /// @version 0.2.2
-/// @date 2022-04-30
+/// @date 2022-05-01
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -28,7 +28,11 @@
 
 #include <Cnx/BasicTypes.h>
 #include <Cnx/Trait.h>
-#include <malloc.h>
+#if !CNX_PLATFORM_APPLE
+	#include <malloc.h>
+#else
+	#include <stdlib.h>
+#endif
 #include <string.h>
 
 #ifndef CNX_ALLOCATORS

@@ -124,7 +124,7 @@ CnxTimePoint __cnx_system_clock_now(const CnxClock* restrict self) {
 
 #else
 CnxTimePoint __cnx_system_clock_now(const CnxClock* restrict self) {
-	timeval time_val;
+	struct timeval time_val;
 	gettimeofday(&time_val, 0);
 	return cnx_time_point_new_with_clock_and_locale(
 		cnx_duration_add(cnx_microseconds(time_val.tv_usec), cnx_seconds(time_val.tv_sec)),
