@@ -15,7 +15,7 @@ i32 main(i32 argc, char** argv) {
 	__attr(maybe_unused) CnxScopedFile cnx_file = cnx_result_unwrap(maybe_cnx_file);
 
 	println("beginning println vs printf benchmark");
-	let num_runs = 1;
+	let num_runs = 1000;
 	let unum = 1024U;
 	let snum = -1024;
 	let fnum = -1024.1024;

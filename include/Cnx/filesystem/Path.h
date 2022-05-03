@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Path provides various functions for working with filesystem paths
 /// @version 0.2.0
-/// @date 2022-04-30
+/// @date 2022-05-02
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -93,6 +93,7 @@
 #undef RESULT_INCLUDE_DEFAULT_INSTANTIATIONS
 
 typedef CnxString CnxPath;
+#define CnxScopedPath CnxScopedString
 
 #define RESULT_T	CnxPath
 #define RESULT_DECL TRUE
@@ -100,19 +101,14 @@ typedef CnxString CnxPath;
 #undef RESULT_T
 #undef RESULT_DECL
 
+#if CNX_PLATFORM_WINDOWS
+	#define CNX_PATHS_CASE_SENSITIVE FALSE
+#else
+	#define CNX_PATHS_CASE_SENSITIVE TRUE
+#endif // CNX_PLATFORM_WINDOWS
+
 #define __DISABLE_IF_NULL(path) \
 	cnx_disable_if(!(path), "Can't perform a path operation on a nullptr")
-
-__attr(nodiscard) __attr(not_null(1)) bool cnx_path_is_valid_string(const CnxString* restrict path)
-	__DISABLE_IF_NULL(path);
-__attr(nodiscard)
-	__attr(not_null(1)) bool cnx_path_is_valid_stringview(const CnxStringView* restrict path)
-		__DISABLE_IF_NULL(path);
-__attr(nodiscard) __attr(not_null(1)) bool cnx_path_is_valid_cstring(restrict const_cstring path,
-																	 usize path_length)
-	__DISABLE_IF_NULL(path);
-
-// clang-format off
 
 /// @brief Checks if the given string would be a valid path on the host
 /// platform's filesystem
@@ -124,7 +120,8 @@ __attr(nodiscard) __attr(not_null(1)) bool cnx_path_is_valid_cstring(restrict co
 ///
 /// @return whether the path is valid
 /// @ingroup cnx_path
-#define cnx_path_is_valid(path) _Generic((path), 								   				   \
+#define cnx_path_is_valid(path) \
+	_Generic((path), 								   				   \
 			const CnxString* 			: cnx_path_is_valid_string( 						  	   \
 											static_cast(const CnxString*)(path)), 		  		   \
 			CnxString* 					: cnx_path_is_valid_string( 						  	   \
@@ -145,17 +142,6 @@ __attr(nodiscard) __attr(not_null(1)) bool cnx_path_is_valid_cstring(restrict co
 			char[sizeof(path)] 			: cnx_path_is_valid_cstring( 				/** NOLINT **/ \
 											static_cast(const_cstring)(path), 			   		   \
 											sizeof(path)) 							/** NOLINT **/ )
-
-// clang-format on
-
-__attr(nodiscard) __attr(not_null(1)) CnxPath cnx_path_new_string(const CnxString* restrict path)
-	__DISABLE_IF_NULL(path);
-__attr(nodiscard) __attr(not_null(1)) CnxPath
-	cnx_path_new_stringview(const CnxStringView* restrict path) __DISABLE_IF_NULL(path);
-__attr(nodiscard) __attr(not_null(1)) CnxPath
-	cnx_path_new_cstring(restrict const_cstring path, usize path_length) __DISABLE_IF_NULL(path);
-
-// clang-format off
 
 /// @brief Creates a new path from the given string, potentially modified so as
 /// to be valid on the host platform.
@@ -180,7 +166,8 @@ __attr(nodiscard) __attr(not_null(1)) CnxPath
 ///
 /// @return `path` converted to a valid filesystem path
 /// @ingroup cnx_path
-#define cnx_path_new(path) _Generic((path), 								   					   \
+#define cnx_path_new(path) \
+	_Generic((path), 								   					   \
 			const CnxString* 			: cnx_path_new_string( 						  		   	   \
 											static_cast(const CnxString*)(path)), 		  		   \
 			CnxString* 					: cnx_path_new_string( 						  		   	   \
@@ -202,8 +189,6 @@ __attr(nodiscard) __attr(not_null(1)) CnxPath
 											static_cast(const_cstring)(path), 			   		   \
 											sizeof(path)) 							/** NOLINT **/ )
 
-// clang-format on
-
 /// @brief Returns the path to the home directory of the user running this
 /// Program
 ///
@@ -218,87 +203,329 @@ __attr(nodiscard) CnxPath cnx_temp_directory(void);
 __attr(nodiscard) CnxPath cnx_current_executable_file(void);
 __attr(nodiscard) CnxPath cnx_current_application_file(void);
 __attr(nodiscard) CnxPath cnx_system_applications_directory(void);
+#if CNX_PLATFORM_WINDOWS
+
+__attr(nodiscard) CnxPath cnx_system_applications_directory_x86(void);
+
+#endif // CNX_PLATFORM_WINDOWS
+
 __attr(nodiscard) CnxPath cnx_current_working_directory(void);
 __attr(nodiscard) char cnx_path_separator_char(void);
-__attr(nodiscard) __attr(not_null(1)) bool cnx_path_is_absolute(const CnxPath* restrict path)
-	__DISABLE_IF_NULL(path);
-__attr(nodiscard) __attr(not_null(1)) bool cnx_path_exists(const CnxPath* restrict path)
-	__DISABLE_IF_NULL(path);
-__attr(nodiscard) __attr(not_null(1)) bool cnx_path_is_file(const CnxPath* restrict path)
-	__DISABLE_IF_NULL(path);
-__attr(nodiscard) __attr(not_null(1)) bool cnx_path_is_directory(const CnxPath* restrict path)
-	__DISABLE_IF_NULL(path);
-__attr(nodiscard) __attr(not_null(1)) bool cnx_path_is_fs_root(const CnxPath* restrict path)
-	__DISABLE_IF_NULL(path);
-__attr(nodiscard) __attr(not_null(1)) bool cnx_path_is_symlink(const CnxPath* restrict path)
-	__DISABLE_IF_NULL(path);
-__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxPath)
-	cnx_path_get_symlink_target(const CnxPath* restrict path) __DISABLE_IF_NULL(path);
 
-__attr(nodiscard)
-	__attr(not_null(1,
-					2)) bool cnx_path_has_file_extension_string(const CnxPath* restrict path,
-																const CnxString* restrict extension)
-		__DISABLE_IF_NULL(path) __DISABLE_IF_NULL(extension);
-__attr(nodiscard) __attr(not_null(1, 2)) bool cnx_path_has_file_extension_stringview(
-	const CnxPath* restrict path,
-	const CnxStringView* restrict extension) __DISABLE_IF_NULL(path) __DISABLE_IF_NULL(extension);
-__attr(nodiscard)
-	__attr(not_null(1,
-					2)) bool cnx_path_has_file_extension_cstring(const CnxPath* restrict path,
-																 restrict const_cstring extension,
-																 usize extension_length)
-		__DISABLE_IF_NULL(path) __DISABLE_IF_NULL(extension);
+#define cnx_path_is_absolute(path) \
+	_Generic((path), 								   					   						   \
+			const CnxString* 			: cnx_path_is_absolute_string( 						  	   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			CnxString* 					: cnx_path_is_absolute_string( 						  	   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			const CnxStringView* 		: cnx_path_is_absolute_stringview( 					  	   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			CnxStringView* 				: cnx_path_is_absolute_stringview( 					  	   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			const_cstring 				: cnx_path_is_absolute_cstring( 						   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			cstring 					: cnx_path_is_absolute_cstring( 						   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			const char[sizeof(path)] 	: cnx_path_is_absolute_cstring( 			/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)), 							/** NOLINT **/ \
+			char[sizeof(path)] 			: cnx_path_is_absolute_cstring( 			/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)) 							/** NOLINT **/ )
 
-// clang-format off
+#define cnx_path_exists(path) \
+	_Generic((path), 								   					   						   \
+			const CnxString* 			: cnx_path_exists_string( 						  		   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			CnxString* 					: cnx_path_exists_string( 						  		   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			const CnxStringView* 		: cnx_path_exists_stringview( 					  		   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			CnxStringView* 				: cnx_path_exists_stringview( 					  		   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			const_cstring 				: cnx_path_exists_cstring( 						  	   	   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			cstring 					: cnx_path_exists_cstring( 						  	   	   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			const char[sizeof(path)] 	: cnx_path_exists_cstring( 					/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)), 							/** NOLINT **/ \
+			char[sizeof(path)] 			: cnx_path_exists_cstring( 					/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)) 							/** NOLINT **/ )
 
-#define cnx_path_has_file_extension(path, extension) _Generic((extension), 						   \
-	const CnxString* 				: cnx_path_has_file_extension_string((path), 				   \
-										static_cast(const CnxString*)(extension)), 		  	   	   \
-	CnxString* 						: cnx_path_has_file_extension_string((path), 				   \
-										static_cast(const CnxString*)(extension)), 		  	   	   \
-	const CnxStringView* 			: cnx_path_has_file_extension_stringview((path), 			   \
-										static_cast(const CnxStringView*)(extension)), 	  	   	   \
-	CnxStringView* 					: cnx_path_has_file_extension_stringview((path), 			   \
-										static_cast(const CnxStringView*)(extension)), 	  	   	   \
-	const_cstring 					: cnx_path_has_file_extension_cstring((path), 				   \
-										static_cast(const_cstring)(extension), 			  	   	   \
-										strlen(static_cast(const_cstring)(extension))), 		   \
-	cstring 						: cnx_path_has_file_extension_cstring((path), 				   \
-										static_cast(const_cstring)(extension), 			  	   	   \
-										strlen(static_cast(const_cstring)(extension))), 		   \
-	const char[sizeof(extension)] 	: cnx_path_has_file_extension_cstring((path), 	/** NOLINT **/ \
-										static_cast(const_cstring)(extension), 			   	   	   \
-										sizeof(extension)), 						/** NOLINT **/ \
-	char[sizeof(extension)] 		: cnx_path_has_file_extension_cstring((path), 	/** NOLINT **/ \
-										static_cast(const_cstring)(extension), 			   	   	   \
-										sizeof(extension)) 							/** NOLINT **/ )
+#define cnx_path_is_file(path) \
+	_Generic((path), 								   					   						   \
+			const CnxString* 			: cnx_path_is_file_string( 						  		   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			CnxString* 					: cnx_path_is_file_string( 						  		   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			const CnxStringView* 		: cnx_path_is_file_stringview( 					  		   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			CnxStringView* 				: cnx_path_is_file_stringview( 					  		   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			const_cstring 				: cnx_path_is_file_cstring( 						  	   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			cstring 					: cnx_path_is_file_cstring( 						  	   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			const char[sizeof(path)] 	: cnx_path_is_file_cstring( 				/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)), 							/** NOLINT **/ \
+			char[sizeof(path)] 			: cnx_path_is_file_cstring( 				/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)) 							/** NOLINT **/ )
 
-// clang-format on
+#define cnx_path_is_directory(path) \
+	_Generic((path), 								   					   						   \
+			const CnxString* 			: cnx_path_is_directory_string( 						   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			CnxString* 					: cnx_path_is_directory_string( 						   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			const CnxStringView* 		: cnx_path_is_directory_stringview( 					   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			CnxStringView* 				: cnx_path_is_directory_stringview( 					   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			const_cstring 				: cnx_path_is_directory_cstring( 						   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			cstring 					: cnx_path_is_directory_cstring( 						   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			const char[sizeof(path)] 	: cnx_path_is_directory_cstring( 			/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)), 							/** NOLINT **/ \
+			char[sizeof(path)] 			: cnx_path_is_directory_cstring( 			/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)) 							/** NOLINT **/ )
 
-__attr(nodiscard) __attr(not_null(1)) CnxString
-	cnx_path_get_file_extension(const CnxPath* restrict path) __DISABLE_IF_NULL(path);
-__attr(nodiscard) __attr(not_null(1)) CnxString cnx_path_get_file_name(const CnxPath* restrict path)
-	__DISABLE_IF_NULL(path);
-__attr(nodiscard) __attr(not_null(1)) CnxString
-	cnx_path_get_file_name_without_extension(const CnxPath* restrict path) __DISABLE_IF_NULL(path);
-__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxPath)
-	cnx_path_get_parent_directory(const CnxPath* restrict path) __DISABLE_IF_NULL(path);
+#define cnx_path_is_fs_root(path) \
+	_Generic((path), 								   					   						   \
+			const CnxString* 			: cnx_path_is_fs_root_string( 						  	   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			CnxString* 					: cnx_path_is_fs_root_string( 						  	   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			const CnxStringView* 		: cnx_path_is_fs_root_stringview( 					  	   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			CnxStringView* 				: cnx_path_is_fs_root_stringview( 					  	   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			const_cstring 				: cnx_path_is_fs_root_cstring( 						  	   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			cstring 					: cnx_path_is_fs_root_cstring( 						  	   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			const char[sizeof(path)] 	: cnx_path_is_fs_root_cstring( 				/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)), 							/** NOLINT **/ \
+			char[sizeof(path)] 			: cnx_path_is_fs_root_cstring( 				/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)) 							/** NOLINT **/ )
 
-__attr(not_null(1, 2)) CnxResult
-	cnx_path_append_string(CnxPath* restrict path, const CnxString* restrict entry_name)
-		__DISABLE_IF_NULL(path) __DISABLE_IF_NULL(entry_name);
-__attr(not_null(1, 2)) CnxResult cnx_path_append_cstring(CnxPath* restrict path,
-														 restrict const_cstring entry_name,
-														 usize entry_name_length)
-	__DISABLE_IF_NULL(path) __DISABLE_IF_NULL(entry_name);
-__attr(not_null(1, 2)) CnxResult
-	cnx_path_append_stringview(CnxPath* restrict path, const CnxStringView* restrict entry_name)
-		__DISABLE_IF_NULL(path) __DISABLE_IF_NULL(entry_name);
+#define cnx_path_is_symlink(path) \
+	_Generic((path), 								   					   						   \
+			const CnxString* 			: cnx_path_is_symlink_string( 						  	   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			CnxString* 					: cnx_path_is_symlink_string( 						  	   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			const CnxStringView* 		: cnx_path_is_symlink_stringview( 					  	   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			CnxStringView* 				: cnx_path_is_symlink_stringview( 					  	   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			const_cstring 				: cnx_path_is_symlink_cstring( 						  	   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			cstring 					: cnx_path_is_symlink_cstring( 						  	   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			const char[sizeof(path)] 	: cnx_path_is_symlink_cstring( 				/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)), 							/** NOLINT **/ \
+			char[sizeof(path)] 			: cnx_path_is_symlink_cstring( 				/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)) 							/** NOLINT **/ )
 
-// clang-format off
+#define cnx_path_get_symlink_target(path) \
+	_Generic((path), 								   					   						   \
+			const CnxString* 			: cnx_path_get_symlink_target_string( 					   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			CnxString* 					: cnx_path_get_symlink_target_string( 					   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			const CnxStringView* 		: cnx_path_get_symlink_target_stringview( 				   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			CnxStringView* 				: cnx_path_get_symlink_target_stringview( 				   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			const_cstring 				: cnx_path_get_symlink_target_cstring( 					   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			cstring 					: cnx_path_get_symlink_target_cstring( 					   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			const char[sizeof(path)] 	: cnx_path_get_symlink_target_cstring( 		/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)), 							/** NOLINT **/ \
+			char[sizeof(path)] 			: cnx_path_get_symlink_target_cstring( 		/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)) 							/** NOLINT **/ )
 
-#define cnx_path_append(path, entry_name) _Generic((entry_name), 								   \
+#define cnx_path_has_file_extension(path, extension) \
+	_Generic((path), 						   \
+	const CnxString* 				: __cnx_path_has_file_extension( 							   \
+										static_cast(const CnxString*)(path), 				   	   \
+										extension), 		  	   	   							   \
+	CnxString* 						: __cnx_path_has_file_extension( 							   \
+										static_cast(const CnxString*)(path), 				   	   \
+										extension), 		  	   	   							   \
+	const CnxStringView* 			: ({ 														   \
+											CnxScopedString UNIQUE_VAR(_path) 					   \
+												= cnx_string_from( 								   \
+													static_cast(const CnxStringView*)(path)); 	   \
+											__cnx_path_has_file_extension( 			   			   \
+												&UNIQUE_VAR(_path), 			   				   \
+												extension); 	   								   \
+										}), 													   \
+	CnxStringView* 					: ({ 														   \
+											CnxScopedString UNIQUE_VAR(_path) 					   \
+												= cnx_string_from( 								   \
+													static_cast(const CnxStringView*)(path)); 	   \
+											__cnx_path_has_file_extension( 			   			   \
+												&UNIQUE_VAR(_path), 			   				   \
+												extension); 	   								   \
+										}), 													   \
+	const_cstring 					: ({ 														   \
+											CnxScopedString UNIQUE_VAR(_path) 					   \
+												= cnx_string_from( 								   \
+													static_cast(const_cstring)(path)); 	   		   \
+											__cnx_path_has_file_extension( 			   			   \
+												&UNIQUE_VAR(_path), 			   				   \
+												extension); 	   								   \
+										}), 													   \
+	cstring 						: ({ 														   \
+											CnxScopedString UNIQUE_VAR(_path) 					   \
+												= cnx_string_from( 								   \
+													static_cast(const_cstring)(path)); 	   		   \
+											__cnx_path_has_file_extension( 			   			   \
+												&UNIQUE_VAR(_path), 			   				   \
+												extension); 	   								   \
+										}), 													   \
+	const char[sizeof(path)] 		: ({ 											/** NOLINT **/ \
+											CnxScopedString UNIQUE_VAR(_path) 					   \
+												= cnx_string_from( 								   \
+													static_cast(const_cstring)(path)); 	   		   \
+											__cnx_path_has_file_extension( 			   			   \
+												&UNIQUE_VAR(_path), 			   				   \
+												extension); 	   								   \
+										}), 													   \
+	char[sizeof(path)] 				: ({ 											/** NOLINT **/ \
+											CnxScopedString UNIQUE_VAR(_path) 					   \
+												= cnx_string_from( 								   \
+													static_cast(const_cstring)(path)); 	   		   \
+											__cnx_path_has_file_extension( 			   			   \
+												&UNIQUE_VAR(_path), 			   				   \
+												extension); 	   								   \
+										}))
+
+#define cnx_path_get_file_extension(path) \
+	_Generic((path), 								   					   						   \
+			const CnxString* 			: cnx_path_get_file_extension_string( 					   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			CnxString* 					: cnx_path_get_file_extension_string( 					   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			const CnxStringView* 		: cnx_path_get_file_extension_stringview( 				   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			CnxStringView* 				: cnx_path_get_file_extension_stringview( 				   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			const_cstring 				: cnx_path_get_file_extension_cstring( 					   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			cstring 					: cnx_path_get_file_extension_cstring( 					   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			const char[sizeof(path)] 	: cnx_path_get_file_extension_cstring( 		/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)), 							/** NOLINT **/ \
+			char[sizeof(path)] 			: cnx_path_get_file_extension_cstring( 		/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)) 							/** NOLINT **/ )
+
+#define cnx_path_get_file_name(path) \
+	_Generic((path), 								   					   						   \
+			const CnxString* 			: cnx_path_get_file_name_string( 					   	   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			CnxString* 					: cnx_path_get_file_name_string( 					   	   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			const CnxStringView* 		: cnx_path_get_file_name_stringview( 				   	   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			CnxStringView* 				: cnx_path_get_file_name_stringview( 				   	   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			const_cstring 				: cnx_path_get_file_name_cstring( 					   	   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			cstring 					: cnx_path_get_file_name_cstring( 					   	   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			const char[sizeof(path)] 	: cnx_path_get_file_name_cstring( 			/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)), 							/** NOLINT **/ \
+			char[sizeof(path)] 			: cnx_path_get_file_name_cstring( 			/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)) 							/** NOLINT **/ )
+
+#define cnx_path_get_file_name_without_extension(path) \
+	_Generic((path), 								   					   						   \
+			const CnxString* 			: cnx_path_get_file_name_without_extension_string( 		   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			CnxString* 					: cnx_path_get_file_name_without_extension_string( 		   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			const CnxStringView* 		: cnx_path_get_file_name_without_extension_stringview( 	   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			CnxStringView* 				: cnx_path_get_file_name_without_extension_stringview( 	   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			const_cstring 				: cnx_path_get_file_name_without_extension_cstring( 	   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			cstring 					: cnx_path_get_file_name_without_extension_cstring( 	   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			const char[sizeof(path)] 	: 											/** NOLINT **/ \
+										cnx_path_get_file_name_without_extension_cstring( 		   \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)), 							/** NOLINT **/ \
+			char[sizeof(path)] 			: 											/** NOLINT **/ \
+										cnx_path_get_file_name_without_extension_cstring( 		   \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)) 							/** NOLINT **/ )
+
+#define cnx_path_get_parent_directory(path) \
+	_Generic((path), 								   					   						   \
+			const CnxString* 			: cnx_path_get_parent_directory_string( 				   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			CnxString* 					: cnx_path_get_parent_directory_string( 				   \
+											static_cast(const CnxString*)(path)), 		  		   \
+			const CnxStringView* 		: cnx_path_get_parent_directory_stringview( 			   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			CnxStringView* 				: cnx_path_get_parent_directory_stringview( 			   \
+											static_cast(const CnxStringView*)(path)), 	  		   \
+			const_cstring 				: cnx_path_get_parent_directory_cstring( 				   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			cstring 					: cnx_path_get_parent_directory_cstring( 				   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path))), 			   \
+			const char[sizeof(path)] 	: cnx_path_get_parent_directory_cstring( 	/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)), 							/** NOLINT **/ \
+			char[sizeof(path)] 			: cnx_path_get_parent_directory_cstring( 	/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path)) 							/** NOLINT **/ )
+
+#define cnx_path_append(path, entry_name) \
+	_Generic((entry_name), 								   \
 	const CnxString* 				: cnx_path_append_string((path), 						  	   \
 										static_cast(const CnxString*)(entry_name)), 		  	   \
 	CnxString* 						: cnx_path_append_string((path), 						  	   \
@@ -320,9 +547,238 @@ __attr(not_null(1, 2)) CnxResult
 										static_cast(const_cstring)(entry_name), 			   	   \
 										sizeof(entry_name)) 						/** NOLINT **/ )
 
-// clang-format on
+#define cnx_path_create_file(...)                                       \
+	CONCAT2_DEFERRED(__cnx_path_create_file_, PP_NUM_ARGS(__VA_ARGS__)) \
+	(__VA_ARGS__)
+#define cnx_path_create_file_overwriting(file_path) cnx_path_create_file(file_path, true)
+
+#define cnx_path_create_directory(...)                                       \
+	CONCAT2_DEFERRED(__cnx_path_create_directory_, PP_NUM_ARGS(__VA_ARGS__)) \
+	(__VA_ARGS__)
+#define cnx_path_create_directory_overwriting(dir_path) cnx_path_create_directory(dir_path, true)
+
+#define cnx_path_remove_file(file_path) \
+	_Generic((file_path), 			   															   \
+	const CnxString* 				: cnx_path_remove_file_string( 								   \
+										static_cast(const CnxString*)(file_path)), 				   \
+	CnxString* 						: cnx_path_remove_file_string( 								   \
+										static_cast(const CnxString*)(file_path)), 				   \
+	const CnxStringView* 			: cnx_path_remove_file_stringview( 							   \
+										static_cast(const CnxStringView*)(file_path)), 			   \
+	CnxStringView* 					: cnx_path_remove_file_stringview( 							   \
+										static_cast(const CnxStringView*)(file_path)), 			   \
+	const_cstring 					: cnx_path_remove_file_cstring( 							   \
+										static_cast(const_cstring)(file_path), 					   \
+										strlen(static_cast(const_cstring)(file_path))), 		   \
+	cstring 						: cnx_path_remove_file_cstring( 							   \
+										static_cast(const_cstring)(file_path), 					   \
+										strlen(static_cast(const_cstring)(file_path))), 		   \
+	const char[sizeof(file_path)] 	: cnx_path_remove_file_cstring( 				/** NOLINT **/ \
+										static_cast(const_cstring)(file_path), 		/** NOLINT **/ \
+										sizeof(file_path)), 			   	   		/** NOLINT **/ \
+	char[sizeof(file_path)] 		: cnx_path_remove_file_cstring( 				/** NOLINT **/ \
+										static_cast(const_cstring)(file_path), 		/** NOLINT **/ \
+										sizeof(file_path)) 			   	   			/** NOLINT **/ )
+
+#define cnx_path_remove_directory(...)                                       \
+	CONCAT2_DEFERRED(__cnx_path_remove_directory_, PP_NUM_ARGS(__VA_ARGS__)) \
+	(__VA_ARGS__)
+#define cnx_path_remove_directory_recursive(dir_path) cnx_path_remove_directory(dir_path, true)
+
+#define cnx_path_create_symlink(...) \
+	CONCAT2_DEFERRED(__cnx_path_create_symlink_, PP_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+#define cnx_path_create_symlink_overwriting(link_name, target_name) \
+	cnx_path_create_symlink(link_name, target_name, true)
+
+#define cnx_path_remove_symlink(file_path) \
+	_Generic((file_path), 			   															   \
+	const CnxString* 				: cnx_path_remove_symlink_string( 							   \
+										static_cast(const CnxString*)(file_path)), 				   \
+	CnxString* 						: cnx_path_remove_symlink_string( 							   \
+										static_cast(const CnxString*)(file_path)), 				   \
+	const CnxStringView* 			: cnx_path_remove_symlink_stringview( 						   \
+										static_cast(const CnxStringView*)(file_path)), 			   \
+	CnxStringView* 					: cnx_path_remove_symlink_stringview( 						   \
+										static_cast(const CnxStringView*)(file_path)), 			   \
+	const_cstring 					: cnx_path_remove_symlink_cstring( 							   \
+										static_cast(const_cstring)(file_path), 					   \
+										strlen(static_cast(const_cstring)(file_path))), 		   \
+	cstring 						: cnx_path_remove_symlink_cstring( 							   \
+										static_cast(const_cstring)(file_path), 					   \
+										strlen(static_cast(const_cstring)(file_path))), 		   \
+	const char[sizeof(file_path)] 	: cnx_path_remove_symlink_cstring( 				/** NOLINT **/ \
+										static_cast(const_cstring)(file_path), 		/** NOLINT **/ \
+										sizeof(file_path)), 			   	   		/** NOLINT **/ \
+	char[sizeof(file_path)] 		: cnx_path_remove_symlink_cstring( 				/** NOLINT **/ \
+										static_cast(const_cstring)(file_path), 		/** NOLINT **/ \
+										sizeof(file_path)) 			   	   			/** NOLINT **/ )
+
+__attr(nodiscard) __attr(not_null(1)) bool cnx_path_is_valid_string(const CnxString* restrict path)
+	__DISABLE_IF_NULL(path);
+__attr(nodiscard)
+	__attr(not_null(1)) bool cnx_path_is_valid_stringview(const CnxStringView* restrict path)
+		__DISABLE_IF_NULL(path);
+__attr(nodiscard) __attr(not_null(1)) bool cnx_path_is_valid_cstring(restrict const_cstring path,
+																	 usize path_length)
+	__DISABLE_IF_NULL(path);
+__attr(nodiscard) __attr(not_null(1)) CnxPath cnx_path_new_string(const CnxString* restrict path)
+	__DISABLE_IF_NULL(path);
+__attr(nodiscard) __attr(not_null(1)) CnxPath
+	cnx_path_new_stringview(const CnxStringView* restrict path) __DISABLE_IF_NULL(path);
+__attr(nodiscard) __attr(not_null(1)) CnxPath
+	cnx_path_new_cstring(restrict const_cstring path, usize path_length) __DISABLE_IF_NULL(path);
+
+__attr(nodiscard) __attr(not_null(1)) bool cnx_path_is_absolute_string(const CnxPath* restrict path)
+	__DISABLE_IF_NULL(path);
+__attr(nodiscard)
+	__attr(not_null(1)) bool cnx_path_is_absolute_stringview(const CnxStringView* restrict path)
+		__DISABLE_IF_NULL(path);
+__attr(nodiscard) __attr(not_null(1)) bool cnx_path_is_absolute_cstring(restrict const_cstring path,
+																		usize path_length)
+	__DISABLE_IF_NULL(path);
+
+__attr(nodiscard) __attr(not_null(1)) bool cnx_path_exists_string(const CnxPath* restrict path)
+	__DISABLE_IF_NULL(path);
+__attr(nodiscard)
+	__attr(not_null(1)) bool cnx_path_exists_stringview(const CnxStringView* restrict path)
+		__DISABLE_IF_NULL(path);
+__attr(nodiscard)
+	__attr(not_null(1)) bool cnx_path_exists_cstring(restrict const_cstring path, usize path_length)
+		__DISABLE_IF_NULL(path);
+
+__attr(nodiscard) __attr(not_null(1)) bool cnx_path_is_file_string(const CnxPath* restrict path)
+	__DISABLE_IF_NULL(path);
+__attr(nodiscard)
+	__attr(not_null(1)) bool cnx_path_is_file_stringview(const CnxStringView* restrict path)
+		__DISABLE_IF_NULL(path);
+__attr(nodiscard) __attr(not_null(1)) bool cnx_path_is_file_cstring(restrict const_cstring path,
+																	usize path_length)
+	__DISABLE_IF_NULL(path);
+
+__attr(nodiscard)
+	__attr(not_null(1)) bool cnx_path_is_directory_string(const CnxPath* restrict path)
+		__DISABLE_IF_NULL(path);
+__attr(nodiscard)
+	__attr(not_null(1)) bool cnx_path_is_directory_stringview(const CnxStringView* restrict path)
+		__DISABLE_IF_NULL(path);
+__attr(nodiscard)
+	__attr(not_null(1)) bool cnx_path_is_directory_cstring(restrict const_cstring path,
+														   usize path_length)
+		__DISABLE_IF_NULL(path);
+
+__attr(nodiscard) __attr(not_null(1)) bool cnx_path_is_fs_root_string(const CnxPath* restrict path)
+	__DISABLE_IF_NULL(path);
+__attr(nodiscard)
+	__attr(not_null(1)) bool cnx_path_is_fs_root_stringview(const CnxStringView* restrict path)
+		__DISABLE_IF_NULL(path);
+__attr(nodiscard) __attr(not_null(1)) bool cnx_path_is_fs_root_cstring(restrict const_cstring path,
+																	   usize path_length)
+	__DISABLE_IF_NULL(path);
+
+__attr(nodiscard) __attr(not_null(1)) bool cnx_path_is_symlink_string(const CnxPath* restrict path)
+	__DISABLE_IF_NULL(path);
+__attr(nodiscard)
+	__attr(not_null(1)) bool cnx_path_is_symlink_stringview(const CnxStringView* restrict path)
+		__DISABLE_IF_NULL(path);
+__attr(nodiscard) __attr(not_null(1)) bool cnx_path_is_symlink_cstring(restrict const_cstring path,
+																	   usize path_length)
+	__DISABLE_IF_NULL(path);
+
+__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxPath)
+	cnx_path_get_symlink_target_string(const CnxPath* restrict path) __DISABLE_IF_NULL(path);
+__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxPath)
+	cnx_path_get_symlink_target_stringview(const CnxStringView* restrict path)
+		__DISABLE_IF_NULL(path);
+__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxPath)
+	cnx_path_get_symlink_target_cstring(restrict const_cstring path, usize path_length)
+		__DISABLE_IF_NULL(path);
+
+__attr(nodiscard)
+	__attr(not_null(1,
+					2)) bool cnx_path_has_file_extension_string(const CnxPath* restrict path,
+																const CnxString* restrict extension)
+		__DISABLE_IF_NULL(path) __DISABLE_IF_NULL(extension);
+__attr(nodiscard) __attr(not_null(1, 2)) bool cnx_path_has_file_extension_stringview(
+	const CnxPath* restrict path,
+	const CnxStringView* restrict extension) __DISABLE_IF_NULL(path) __DISABLE_IF_NULL(extension);
+__attr(nodiscard)
+	__attr(not_null(1,
+					2)) bool cnx_path_has_file_extension_cstring(const CnxPath* restrict path,
+																 restrict const_cstring extension,
+																 usize extension_length)
+		__DISABLE_IF_NULL(path) __DISABLE_IF_NULL(extension);
 
 IGNORE_RESERVED_IDENTIFIER_WARNING_START
+#define __cnx_path_has_file_extension(path, extension) \
+	_Generic((extension), 						   \
+	const CnxString* 				: cnx_path_has_file_extension_string((path), 				   \
+										static_cast(const CnxString*)(extension)), 		  	   	   \
+	CnxString* 						: cnx_path_has_file_extension_string((path), 				   \
+										static_cast(const CnxString*)(extension)), 		  	   	   \
+	const CnxStringView* 			: cnx_path_has_file_extension_stringview((path), 			   \
+										static_cast(const CnxStringView*)(extension)), 	  	   	   \
+	CnxStringView* 					: cnx_path_has_file_extension_stringview((path), 			   \
+										static_cast(const CnxStringView*)(extension)), 	  	   	   \
+	const_cstring 					: cnx_path_has_file_extension_cstring((path), 				   \
+										static_cast(const_cstring)(extension), 			  	   	   \
+										strlen(static_cast(const_cstring)(extension))), 		   \
+	cstring 						: cnx_path_has_file_extension_cstring((path), 				   \
+										static_cast(const_cstring)(extension), 			  	   	   \
+										strlen(static_cast(const_cstring)(extension))), 		   \
+	const char[sizeof(extension)] 	: cnx_path_has_file_extension_cstring((path), 	/** NOLINT **/ \
+										static_cast(const_cstring)(extension), 			   	   	   \
+										sizeof(extension)), 						/** NOLINT **/ \
+	char[sizeof(extension)] 		: cnx_path_has_file_extension_cstring((path), 	/** NOLINT **/ \
+										static_cast(const_cstring)(extension), 			   	   	   \
+										sizeof(extension)) 							/** NOLINT **/ )
+IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
+
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_path_get_file_extension_string(const CnxPath* restrict path) __DISABLE_IF_NULL(path);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_path_get_file_extension_stringview(const CnxStringView* restrict path)
+		__DISABLE_IF_NULL(path);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_path_get_file_extension_cstring(restrict const_cstring path, usize path_length)
+		__DISABLE_IF_NULL(path);
+
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_path_get_file_name_string(const CnxPath* restrict path) __DISABLE_IF_NULL(path);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_path_get_file_name_stringview(const CnxStringView* restrict path) __DISABLE_IF_NULL(path);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_path_get_file_name_cstring(restrict const_cstring path, usize path_length)
+		__DISABLE_IF_NULL(path);
+
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_path_get_file_name_without_extension_string(const CnxPath* restrict path)
+		__DISABLE_IF_NULL(path);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_path_get_file_name_without_extension_stringview(const CnxStringView* restrict path)
+		__DISABLE_IF_NULL(path);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_path_get_file_name_without_extension_cstring(restrict const_cstring path, usize path_length)
+		__DISABLE_IF_NULL(path);
+
+__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxPath)
+	cnx_path_get_parent_directory_string(const CnxPath* restrict path) __DISABLE_IF_NULL(path);
+__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxPath)
+	cnx_path_get_parent_directory_stringview(const CnxStringView* restrict path)
+		__DISABLE_IF_NULL(path);
+__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxPath)
+	cnx_path_get_parent_directory_cstring(restrict const_cstring path, usize path_length)
+		__DISABLE_IF_NULL(path);
+
+__attr(not_null(1, 2)) CnxResult
+	cnx_path_append_string(CnxPath* restrict path, const CnxString* restrict entry_name)
+		__DISABLE_IF_NULL(path) __DISABLE_IF_NULL(entry_name);
+__attr(not_null(1, 2)) CnxResult cnx_path_append_cstring(CnxPath* restrict path,
+														 restrict const_cstring entry_name,
+														 usize entry_name_length)
+	__DISABLE_IF_NULL(path) __DISABLE_IF_NULL(entry_name);
+__attr(not_null(1, 2)) CnxResult
+	cnx_path_append_stringview(CnxPath* restrict path, const CnxStringView* restrict entry_name)
+		__DISABLE_IF_NULL(path) __DISABLE_IF_NULL(entry_name);
 
 __attr(nodiscard) __attr(not_null(1)) CnxResult
 	cnx_path_create_file_string(const CnxString* restrict file_path, bool overwrite_existing)
@@ -335,9 +791,9 @@ __attr(nodiscard) __attr(not_null(1)) CnxResult
 								 usize file_path_length,
 								 bool overwrite_existing) __DISABLE_IF_NULL(file_path);
 
-// clang-format off
-
-#define __cnx_path_create_file(file_path, overwrite_existing) _Generic((file_path), 			   \
+IGNORE_RESERVED_IDENTIFIER_WARNING_START
+#define __cnx_path_create_file(file_path, overwrite_existing) \
+	_Generic((file_path), 			   \
 	const CnxString* 				: cnx_path_create_file_string( 								   \
 										static_cast(const CnxString*)(file_path), 				   \
 										overwrite_existing), 									   \
@@ -367,14 +823,9 @@ __attr(nodiscard) __attr(not_null(1)) CnxResult
 										sizeof(file_path), 			   	   			/** NOLINT **/ \
 										overwrite_existing))
 
-// clang-format on
-
 #define __cnx_path_create_file_2(...) __cnx_path_create_file(__VA_ARGS__)
 #define __cnx_path_create_file_1(...) __cnx_path_create_file(__VA_ARGS__, false)
-#define cnx_path_create_file(...)                                       \
-	CONCAT2_DEFERRED(__cnx_path_create_file_, PP_NUM_ARGS(__VA_ARGS__)) \
-	(__VA_ARGS__)
-#define cnx_path_create_file_overwriting(file_path) cnx_path_create_file(file_path, true)
+IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 
 __attr(nodiscard) __attr(not_null(1)) CnxResult
 	cnx_path_create_directory_string(const CnxString* restrict dir_path, bool overwrite_existing)
@@ -387,9 +838,9 @@ __attr(nodiscard) __attr(not_null(1)) CnxResult
 									  usize dir_path_length,
 									  bool overwrite_existing) __DISABLE_IF_NULL(dir_path);
 
-// clang-format off
-
-#define __cnx_path_create_directory(dir_path, overwrite_existing) _Generic((dir_path), 			   \
+IGNORE_RESERVED_IDENTIFIER_WARNING_START
+#define __cnx_path_create_directory(dir_path, overwrite_existing) \
+	_Generic((dir_path), 			   \
 	const CnxString* 				: cnx_path_create_directory_string( 						   \
 										static_cast(const CnxString*)(dir_path), 				   \
 										overwrite_existing), 									   \
@@ -419,14 +870,8 @@ __attr(nodiscard) __attr(not_null(1)) CnxResult
 										sizeof(dir_path), 			   	   			/** NOLINT **/ \
 										overwrite_existing))
 
-// clang-format on
-
 #define __cnx_path_create_directory_2(...) __cnx_path_create_directory(__VA_ARGS__)
 #define __cnx_path_create_directory_1(...) __cnx_path_create_directory(__VA_ARGS__, false)
-#define cnx_path_create_directory(...)                                       \
-	CONCAT2_DEFERRED(__cnx_path_create_directory_, PP_NUM_ARGS(__VA_ARGS__)) \
-	(__VA_ARGS__)
-#define cnx_path_create_directory_overwriting(dir_path) cnx_path_create_directory(dir_path, true)
 IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 
 __attr(nodiscard) __attr(not_null(1)) CnxResult
@@ -438,77 +883,283 @@ __attr(nodiscard) __attr(not_null(1)) CnxResult
 	cnx_path_remove_file_cstring(restrict const_cstring file_path, usize file_path_length)
 		__DISABLE_IF_NULL(file_path);
 
-// clang-format off
-
-#define cnx_path_remove_file(file_path) _Generic((file_path), 			   \
-	const CnxString* 				: cnx_path_remove_file_string( 								   \
-										static_cast(const CnxString*)(file_path)), 									   \
-	CnxString* 						: cnx_path_remove_file_string( 								   \
-										static_cast(const CnxString*)(file_path)), 									   \
-	const CnxStringView* 			: cnx_path_remove_file_stringview( 							   \
-										static_cast(const CnxStringView*)(file_path)), 									   \
-	CnxStringView* 					: cnx_path_remove_file_stringview( 							   \
-										static_cast(const CnxStringView*)(file_path)), 									   \
-	const_cstring 					: cnx_path_remove_file_cstring( 							   \
-										static_cast(const_cstring)(file_path), 					   \
-										strlen(static_cast(const_cstring)(file_path))), 									   \
-	cstring 						: cnx_path_remove_file_cstring( 							   \
-										static_cast(const_cstring)(file_path), 					   \
-										strlen(static_cast(const_cstring)(file_path))), 									   \
-	const char[sizeof(file_path)] 	: cnx_path_remove_file_cstring( 				/** NOLINT **/ \
-										static_cast(const_cstring)(file_path), 		/** NOLINT **/ \
-										sizeof(file_path)), 			   	   		/** NOLINT **/ \
-	char[sizeof(file_path)] 		: cnx_path_remove_file_cstring( 				/** NOLINT **/ \
-										static_cast(const_cstring)(file_path), 		/** NOLINT **/ \
-										sizeof(file_path)) 			   	   			/** NOLINT **/ )
-
-// clang-format on
-
 __attr(nodiscard) __attr(not_null(1)) CnxResult
-	cnx_path_remove_directory(const CnxPath* restrict dir_path, bool recursive)
+	cnx_path_remove_directory_string(const CnxPath* restrict dir_path, bool recursive)
 		__DISABLE_IF_NULL(dir_path);
+__attr(nodiscard) __attr(not_null(1)) CnxResult
+	cnx_path_remove_directory_stringview(const CnxStringView* restrict dir_path, bool recursive)
+		__DISABLE_IF_NULL(dir_path);
+__attr(nodiscard) __attr(not_null(1)) CnxResult
+	cnx_path_remove_directory_cstring(restrict const_cstring dir_path,
+									  usize dir_path_length,
+									  bool recursive) __DISABLE_IF_NULL(dir_path);
 
 IGNORE_RESERVED_IDENTIFIER_WARNING_START
-#define __cnx_path_remove_directory_2(...) cnx_path_remove_directory(__VA_ARGS__)
-#define __cnx_path_remove_directory_1(...) cnx_path_remove_directory(__VA_ARGS__, false)
+#define __cnx_path_remove_directory(dir_path, recursive) \
+	_Generic((dir_path), 			   															   \
+	const CnxString* 				: cnx_path_remove_directory_string( 						   \
+										static_cast(const CnxString*)(dir_path), 				   \
+										recursive), 									   		   \
+	CnxString* 						: cnx_path_remove_directory_string( 						   \
+										static_cast(const CnxString*)(dir_path), 				   \
+										recursive), 									   		   \
+	const CnxStringView* 			: cnx_path_remove_directory_stringview( 					   \
+										static_cast(const CnxStringView*)(dir_path), 			   \
+										recursive), 									   		   \
+	CnxStringView* 					: cnx_path_remove_directory_stringview( 					   \
+										static_cast(const CnxStringView*)(dir_path), 			   \
+										recursive), 									   		   \
+	const_cstring 					: cnx_path_remove_directory_cstring( 						   \
+										static_cast(const_cstring)(dir_path), 					   \
+										strlen(static_cast(const_cstring)(dir_path)), 			   \
+										recursive), 									   		   \
+	cstring 						: cnx_path_remove_directory_cstring( 						   \
+										static_cast(const_cstring)(dir_path), 					   \
+										strlen(static_cast(const_cstring)(dir_path)), 			   \
+										recursive), 									    	   \
+	const char[sizeof(dir_path)] 	: cnx_path_remove_directory_cstring( 			/** NOLINT **/ \
+										static_cast(const_cstring)(dir_path), 		/** NOLINT **/ \
+										sizeof(dir_path), 			   	   			/** NOLINT **/ \
+										recursive), 											   \
+	char[sizeof(dir_path)] 		: cnx_path_remove_directory_cstring( 				/** NOLINT **/ \
+										static_cast(const_cstring)(dir_path), 		/** NOLINT **/ \
+										sizeof(dir_path), 			   	   			/** NOLINT **/ \
+										recursive))
+
+#define __cnx_path_remove_directory_2(...) __cnx_path_remove_directory(__VA_ARGS__)
+#define __cnx_path_remove_directory_1(...) __cnx_path_remove_directory(__VA_ARGS__, false)
 IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
-#define cnx_path_remove_directory(...)                                       \
-	CONCAT2_DEFERRED(__cnx_path_remove_directory_, PP_NUM_ARGS(__VA_ARGS__)) \
-	(__VA_ARGS__)
-#define cnx_path_remove_directory_recursive(dir_path) cnx_path_remove_directory(dir_path, true)
-
-#define CnxScopedPath CnxScopedString
-
-IGNORE_RESERVED_IDENTIFIER_WARNING_START
 
 __attr(nodiscard) __attr(not_null(1, 2)) CnxResult
-	cnx_path_create_symlink(const CnxPath* restrict link_to_create,
-							const CnxPath* restrict link_target,
-							bool overwrite_existing) __DISABLE_IF_NULL(link_to_create)
+	cnx_path_create_symlink_string_string(const CnxPath* restrict link_to_create,
+										  const CnxPath* restrict link_target,
+										  bool overwrite_existing) __DISABLE_IF_NULL(link_to_create)
 		__DISABLE_IF_NULL(link_target);
+__attr(nodiscard) __attr(not_null(1, 2)) CnxResult
+	cnx_path_create_symlink_string_stringview(const CnxPath* restrict link_to_create,
+											  const CnxStringView* restrict link_target,
+											  bool overwrite_existing)
+		__DISABLE_IF_NULL(link_to_create) __DISABLE_IF_NULL(link_target);
+__attr(nodiscard) __attr(not_null(1, 2)) CnxResult
+	cnx_path_create_symlink_string_cstring(const CnxPath* restrict link_to_create,
+										   restrict const_cstring link_target,
+										   usize link_target_length,
+										   bool overwrite_existing)
+		__DISABLE_IF_NULL(link_to_create) __DISABLE_IF_NULL(link_target);
+
+__attr(nodiscard) __attr(not_null(1, 2)) CnxResult
+	cnx_path_create_symlink_stringview_string(const CnxStringView* restrict link_to_create,
+											  const CnxPath* restrict link_target,
+											  bool overwrite_existing)
+		__DISABLE_IF_NULL(link_to_create) __DISABLE_IF_NULL(link_target);
+__attr(nodiscard) __attr(not_null(1, 2)) CnxResult
+	cnx_path_create_symlink_stringview_stringview(const CnxStringView* restrict link_to_create,
+												  const CnxStringView* restrict link_target,
+												  bool overwrite_existing)
+		__DISABLE_IF_NULL(link_to_create) __DISABLE_IF_NULL(link_target);
+__attr(nodiscard) __attr(not_null(1, 2)) CnxResult
+	cnx_path_create_symlink_stringview_cstring(const CnxStringView* restrict link_to_create,
+											   restrict const_cstring link_target,
+											   usize link_target_length,
+											   bool overwrite_existing)
+		__DISABLE_IF_NULL(link_to_create) __DISABLE_IF_NULL(link_target);
+
+__attr(nodiscard) __attr(not_null(1, 3)) CnxResult
+	cnx_path_create_symlink_cstring_string(restrict const_cstring link_to_create,
+										   usize link_to_create_length,
+										   const CnxPath* restrict link_target,
+										   bool overwrite_existing)
+		__DISABLE_IF_NULL(link_to_create) __DISABLE_IF_NULL(link_target);
+__attr(nodiscard) __attr(not_null(1, 3)) CnxResult
+	cnx_path_create_symlink_cstring_stringview(restrict const_cstring link_to_create,
+											   usize link_to_create_length,
+											   const CnxStringView* restrict link_target,
+											   bool overwrite_existing)
+		__DISABLE_IF_NULL(link_to_create) __DISABLE_IF_NULL(link_target);
+__attr(nodiscard) __attr(not_null(1, 3)) CnxResult
+	cnx_path_create_symlink_cstring_cstring(restrict const_cstring link_to_create,
+											usize link_to_create_length,
+											restrict const_cstring link_target,
+											usize link_target_length,
+											bool overwrite_existing)
+		__DISABLE_IF_NULL(link_to_create) __DISABLE_IF_NULL(link_target);
+
+IGNORE_RESERVED_IDENTIFIER_WARNING_START
+#define __cnx_path_create_symlink_3(...) __cnx_path_create_symlink(__VA_ARGS__)
+#define __cnx_path_create_symlink_2(...) __cnx_path_create_symlink(__VA_ARGS__, false)
+
+#define __cnx_path_create_symlink_string(to_create, target, overwrite_existing) \
+	_Generic((target), 																			   \
+	const CnxString* 				: cnx_path_create_symlink_string_string( 				   	   \
+										to_create, 				    							   \
+										static_cast(const CnxString*)(target), 				   	   \
+										overwrite_existing), 									   \
+	CnxString* 						: cnx_path_create_symlink_string_string( 				   	   \
+										to_create, 												   \
+										static_cast(const CnxString*)(target), 				   	   \
+										overwrite_existing), 									   \
+	const CnxStringView* 			: cnx_path_create_symlink_string_stringview( 			   	   \
+										to_create, 												   \
+										static_cast(const CnxStringView*)(target), 				   \
+										overwrite_existing), 									   \
+	CnxStringView* 					: cnx_path_create_symlink_string_stringview( 			   	   \
+										to_create, 												   \
+										static_cast(const CnxStringView*)(target), 				   \
+										overwrite_existing), 									   \
+	const_cstring 					: cnx_path_create_symlink_string_cstring( 			   	   \
+										to_create, 												   \
+										static_cast(const_cstring)(target), 					   \
+										strlen(static_cast(const_cstring)(target)), 			   \
+										overwrite_existing), 									   \
+	cstring 						: cnx_path_create_symlink_string_cstring( 			   	   \
+										to_create, 												   \
+										static_cast(const_cstring)(target), 					   \
+										strlen(static_cast(const_cstring)(target)), 			   \
+										overwrite_existing), 									   \
+	const char[sizeof(target)] 		: cnx_path_create_symlink_string_cstring( 	/** NOLINT **/ \
+										to_create, 												   \
+										static_cast(const_cstring)(target), 		/** NOLINT **/ \
+										sizeof(target), 							/** NOLINT **/ \
+										overwrite_existing), 									   \
+	char[sizeof(target)] 			: cnx_path_create_symlink_string_cstring( 	/** NOLINT **/ \
+										to_create, 												   \
+										static_cast(const_cstring)(target), 		/** NOLINT **/ \
+										sizeof(target), 							/** NOLINT **/ \
+										overwrite_existing))
+
+#define __cnx_path_create_symlink_stringview(to_create, target, overwrite_existing) \
+	_Generic((target), 																			   \
+	const CnxString* 				: cnx_path_create_symlink_stringview_string( 				   \
+										to_create, 				    							   \
+										static_cast(const CnxString*)(target), 				   	   \
+										overwrite_existing), 									   \
+	CnxString* 						: cnx_path_create_symlink_stringview_string( 				   \
+										to_create, 												   \
+										static_cast(const CnxString*)(target), 				   	   \
+										overwrite_existing), 									   \
+	const CnxStringView* 			: cnx_path_create_symlink_stringview_stringview( 			   \
+										to_create, 												   \
+										static_cast(const CnxStringView*)(target), 				   \
+										overwrite_existing), 									   \
+	CnxStringView* 					: cnx_path_create_symlink_stringview_stringview( 			   \
+										to_create, 												   \
+										static_cast(const CnxStringView*)(target), 				   \
+										overwrite_existing), 									   \
+	const_cstring 					: cnx_path_create_symlink_stringview_cstring( 			   \
+										to_create, 												   \
+										static_cast(const_cstring)(target), 					   \
+										strlen(static_cast(const_cstring)(target)), 			   \
+										overwrite_existing), 									   \
+	cstring 						: cnx_path_create_symlink_stringview_cstring( 			   \
+										to_create, 												   \
+										static_cast(const_cstring)(target), 					   \
+										strlen(static_cast(const_cstring)(target)), 			   \
+										overwrite_existing), 									   \
+	const char[sizeof(target)] 		: cnx_path_create_symlink_stringview_cstring( /** NOLINT **/ \
+										to_create, 												   \
+										static_cast(const_cstring)(target), 		/** NOLINT **/ \
+										sizeof(target), 							/** NOLINT **/ \
+										overwrite_existing), 									   \
+	char[sizeof(target)] 			: cnx_path_create_symlink_stringview_cstring( /** NOLINT **/ \
+										to_create, 												   \
+										static_cast(const_cstring)(target), 		/** NOLINT **/ \
+										sizeof(target), 							/** NOLINT **/ \
+										overwrite_existing))
+
+#define __cnx_path_create_symlink_cstring(to_create, to_create_length, target, overwrite_existing) \
+	_Generic((target), 																			   \
+	const CnxString* 				: cnx_path_create_symlink_cstring_string( 				   \
+										to_create, 				    							   \
+										to_create_length, 										   \
+										static_cast(const CnxString*)(target), 				   	   \
+										overwrite_existing), 									   \
+	CnxString* 						: cnx_path_create_symlink_cstring_string( 				   \
+										to_create, 												   \
+										to_create_length, 										   \
+										static_cast(const CnxString*)(target), 				   	   \
+										overwrite_existing), 									   \
+	const CnxStringView* 			: cnx_path_create_symlink_cstring_stringview( 			   \
+										to_create, 												   \
+										to_create_length, 										   \
+										static_cast(const CnxStringView*)(target), 				   \
+										overwrite_existing), 									   \
+	CnxStringView* 					: cnx_path_create_symlink_cstring_stringview( 			   \
+										to_create, 												   \
+										to_create_length, 										   \
+										static_cast(const CnxStringView*)(target), 				   \
+										overwrite_existing), 									   \
+	const_cstring 					: cnx_path_create_symlink_cstring_cstring( 				   \
+										to_create, 												   \
+										to_create_length, 										   \
+										static_cast(const_cstring)(target), 					   \
+										strlen(static_cast(const_cstring)(target)), 			   \
+										overwrite_existing), 									   \
+	cstring 						: cnx_path_create_symlink_cstring_cstring( 				   \
+										to_create, 												   \
+										to_create_length, 										   \
+										static_cast(const_cstring)(target), 					   \
+										strlen(static_cast(const_cstring)(target)), 			   \
+										overwrite_existing), 									   \
+	const char[sizeof(target)] 		: cnx_path_create_symlink_cstring_cstring( 	/** NOLINT **/ \
+										to_create, 												   \
+										to_create_length, 										   \
+										static_cast(const_cstring)(target), 		/** NOLINT **/ \
+										sizeof(target), 							/** NOLINT **/ \
+										overwrite_existing), 									   \
+	char[sizeof(target)] 			: cnx_path_create_symlink_cstring_cstring( 	/** NOLINT **/ \
+										to_create, 												   \
+										to_create_length, 										   \
+										static_cast(const_cstring)(target), 		/** NOLINT **/ \
+										sizeof(target), 							/** NOLINT **/ \
+										overwrite_existing))
+
+#define __cnx_path_create_symlink(to_create, target, overwrite_existing) \
+	_Generic((to_create), \
+	const CnxString* 				: __cnx_path_create_symlink_string( 						   \
+										static_cast(const CnxString*)(to_create), 				   \
+										target, 				   								   \
+										overwrite_existing), 									   \
+	CnxString* 						: __cnx_path_create_symlink_string( 						   \
+										static_cast(const CnxString*)(to_create), 				   \
+										target, 												   \
+										overwrite_existing), 									   \
+	const CnxStringView* 			: __cnx_path_create_symlink_stringview( 					   \
+										static_cast(const CnxStringView*)(to_create), 			   \
+										target, 												   \
+										overwrite_existing), 									   \
+	CnxStringView* 					: __cnx_path_create_symlink_stringview( 					   \
+										static_cast(const CnxStringView*)(to_create), 			   \
+										target, 												   \
+										overwrite_existing), 									   \
+	const_cstring 					: __cnx_path_create_symlink_cstring( 						   \
+										static_cast(const_cstring)(to_create), 					   \
+										strlen(static_cast(const_cstring)(to_create)), 			   \
+										target, 												   \
+										overwrite_existing), 									   \
+	cstring 						: __cnx_path_create_symlink_cstring( 						   \
+										static_cast(const_cstring)(to_create), 					   \
+										strlen(static_cast(const_cstring)(to_create)), 			   \
+										target, 												   \
+										overwrite_existing), 									   \
+	const char[sizeof(to_create)] 	: __cnx_path_create_symlink_cstring( 			/** NOLINT **/ \
+										static_cast(const_cstring)(to_create), 		/** NOLINT **/ \
+										sizeof(to_create), 			   				/** NOLINT **/ \
+										target, 												   \
+										overwrite_existing), 									   \
+	char[sizeof(to_create)] 		: __cnx_path_create_symlink_cstring( 			/** NOLINT **/ \
+										static_cast(const_cstring)(to_create), 		/** NOLINT **/ \
+										sizeof(to_create), 			   				/** NOLINT **/ \
+										target, 												   \
+										overwrite_existing))
+
+IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 
 __attr(nodiscard) __attr(not_null(1)) CnxResult
-	cnx_path_remove_symlink(const CnxPath* restrict link_path);
-
-#define __cnx_path_create_symlink_3(...) cnx_path_create_symlink(__VA_ARGS__)
-#define __cnx_path_create_symlink_2(...) cnx_path_create_symlink(__VA_ARGS__, false)
-IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
-#define cnx_path_create_symlink(...) \
-	CONCAT2_DEFERRED(__cnx_path_create_symlink_, PP_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
-#define cnx_path_create_symlink_overwriting(link_name, target_name) \
-	cnx_path_create_symlink(link_name, target_name, true)
-
-#if CNX_PLATFORM_WINDOWS
-	#define CNX_PATHS_CASE_SENSITIVE FALSE
-#else
-	#define CNX_PATHS_CASE_SENSITIVE TRUE
-#endif // CNX_PLATFORM_WINDOWS
-
-#if CNX_PLATFORM_WINDOWS
-
-__attr(nodiscard) CnxPath cnx_system_applications_directory_x86(void);
-
-#endif // CNX_PLATFORM_WINDOWS
+	cnx_path_remove_symlink_string(const CnxPath* restrict link_path);
+__attr(nodiscard) __attr(not_null(1)) CnxResult
+	cnx_path_remove_symlink_stringview(const CnxStringView* restrict link_path);
+__attr(nodiscard) __attr(not_null(1)) CnxResult
+	cnx_path_remove_symlink_cstring(restrict const_cstring link_path, usize link_path_length);
 
 #undef __DISABLE_IF_NULL
 #endif // CNX_PATH

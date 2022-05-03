@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Path provides various functions for working with filesystem paths
 /// @version 0.2.0
-/// @date 2022-05-01
+/// @date 2022-05-02
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -527,11 +527,11 @@ char cnx_path_separator_char(void) {
 	return CNX_PATH_SEPARATOR;
 }
 
-bool cnx_path_is_absolute_stringview(const CnxStringView* restrict path) {
+bool cnx_path_is_absolute_cstring(const_cstring restrict path, usize path_length)  {
 #if CNX_PLATFORM_WINDOWS
-	if(cnx_stringview_length(*path) >= 2) {
-		let first = *cnx_stringview_at(*path, 0);
-		let second = *cnx_stringview_at(*path, 1);
+	if(path_length >= 2) {
+		let first = path[0];
+		let second = path[1];
 
 		if(!((first >= 'a' && first <= 'z') || (first >= 'A' && first <= 'Z')
 			 || (first >= '0' && first <= '9')))
@@ -550,51 +550,21 @@ bool cnx_path_is_absolute_stringview(const CnxStringView* restrict path) {
 	}
 
 #else
-	if(cnx_stringview_length(*path) > 0) {
-		return *cnx_stringview_at(*path, 0) == CNX_PATH_SEPARATOR;
+	if(path_length > 0) {
+		return path[0] == CNX_PATH_SEPARATOR;
 	}
 	else {
 		return false;
 	}
 #endif
+
+}
+bool cnx_path_is_absolute_stringview(const CnxStringView* restrict path) {
+	return cnx_path_is_absolute_cstring(path->m_view, path->m_length);
 }
 
-#define cnx_path_is_absolute_cstring(path, path_length)                   \
-	({                                                                    \
-		let UNIQUE_VAR(view) = cnx_stringview_from(path, 0, path_length); \
-		cnx_path_is_absolute_stringview(&UNIQUE_VAR(view));               \
-	})
-
-bool cnx_path_is_absolute(const CnxPath* restrict path) {
-#if CNX_PLATFORM_WINDOWS
-	if(cnx_string_length(*path) >= 2) {
-		let first = cnx_string_front(*path);
-		let second = cnx_string_at(*path, 1);
-
-		if(!((first >= 'a' && first <= 'z') || (first >= 'A' && first <= 'Z')
-			 || (first >= '0' && first <= '9')))
-		{
-			return false;
-		}
-
-		if(second != ':') {
-			return false;
-		}
-
-		return true;
-	}
-	else {
-		return false;
-	}
-#else
-
-	if(cnx_string_length(*path) > 0) {
-		return cnx_string_front(*path) == CNX_PATH_SEPARATOR;
-	}
-	else {
-		return false;
-	}
-#endif
+bool cnx_path_is_absolute_string(const CnxPath* restrict path) {
+	return cnx_path_is_absolute_cstring(cnx_string_into_cstring(*path), cnx_string_length(*path));
 }
 
 #if CNX_PLATFORM_WINDOWS
@@ -611,7 +581,7 @@ bool cnx_path_is_absolute(const CnxPath* restrict path) {
 	#endif
 #endif
 
-bool cnx_path_exists_cstring(restrict const_cstring path) {
+bool cnx_path_exists_cstring(restrict const_cstring path, __attr(maybe_unused) usize path_length) {
 	struct stat info;
 	if(stat(path, &info) == 0) {
 		// NOLINTNEXTLINE(hicpp-signed-bitwise)
@@ -622,13 +592,21 @@ bool cnx_path_exists_cstring(restrict const_cstring path) {
 
 	return false;
 }
-bool cnx_path_exists(const CnxPath* restrict path) {
+
+bool cnx_path_exists_string(const CnxPath* restrict path) {
 	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_exists is invalid");
 
-	return cnx_path_exists_cstring(cnx_string_into_cstring(*path));
+	return cnx_path_exists_cstring(cnx_string_into_cstring(*path), cnx_string_length(*path));
 }
 
-bool cnx_path_is_file_cstring(restrict const_cstring path) {
+bool cnx_path_exists_stringview(const CnxStringView* restrict path) {
+	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_exists is invalid");
+
+	CnxScopedString str = cnx_string_from(path);
+	return cnx_path_exists_cstring(cnx_string_into_cstring(str), cnx_string_length(str));
+}
+
+bool cnx_path_is_file_cstring(restrict const_cstring path, __attr(maybe_unused) usize path_length) {
 	struct stat info;
 	if(stat(path, &info) == 0) {
 		// NOLINTNEXTLINE(hicpp-signed-bitwise)
@@ -640,18 +618,24 @@ bool cnx_path_is_file_cstring(restrict const_cstring path) {
 	return false;
 }
 
-bool cnx_path_is_file(const CnxPath* restrict path) {
+bool cnx_path_is_file_string(const CnxPath* restrict path) {
 	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_is_file is invalid");
 
-	return cnx_path_is_file_cstring(cnx_string_into_cstring(*path));
+	return cnx_path_is_file_cstring(cnx_string_into_cstring(*path), cnx_string_length(*path));
 }
 
-bool cnx_path_is_directory(const CnxPath* restrict path) {
+bool cnx_path_is_file_stringview(const CnxStringView* restrict path) {
+	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_is_file is invalid");
+
+	CnxScopedString str = cnx_string_from(path);
+	return cnx_path_is_file_cstring(cnx_string_into_cstring(str), cnx_string_length(str));
+}
+
+bool cnx_path_is_directory_cstring(const_cstring restrict path, __attr(maybe_unused) usize path_length) {
 	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_is_directory is invalid");
 
 	struct stat info;
-	let str = cnx_string_into_cstring(*path);
-	if(stat(str, &info) == 0) {
+	if(stat(path, &info) == 0) {
 		// NOLINTNEXTLINE(hicpp-signed-bitwise)
 		if(S_ISDIR(info.st_mode)) {
 			return true;
@@ -661,32 +645,43 @@ bool cnx_path_is_directory(const CnxPath* restrict path) {
 	return false;
 }
 
-bool cnx_path_is_fs_root(const CnxPath* restrict path) {
+bool cnx_path_is_directory_string(const CnxPath* restrict path) {
+	return cnx_path_is_directory_cstring(cnx_string_into_cstring(*path), cnx_string_length(*path));
+}
+
+bool cnx_path_is_fs_root_cstring(const_cstring restrict path, usize path_length) {
 	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_is_fs_root is invalid");
 
 #if CNX_PLATFORM_WINDOWS
-	if(cnx_string_length(*path) == 3) {
-		return cnx_string_at(*path, 1) == ':' && cnx_string_at(*path, 2) == CNX_PATH_SEPARATOR;
+	if(path_length >= 3) {
+		return path[1] == ':' && path[2] == CNX_PATH_SEPARATOR;
 	}
 
 	return false;
 #else
-	if(cnx_string_length(*path) == 1) {
-		return cnx_string_front(*path) == CNX_PATH_SEPARATOR;
+	if(path_length >= 1) {
+		return path[0] == CNX_PATH_SEPARATOR;
 	}
 
 	return false;
 #endif // CNX_PLATFORM_WINDOWS
 }
 
-bool cnx_path_is_symlink(const CnxPath* restrict path) {
+bool cnx_path_is_fs_root_string(const CnxPath* restrict path) {
+	return cnx_path_is_fs_root_cstring(cnx_string_into_cstring(*path), cnx_string_length(*path));
+}
+
+bool cnx_path_is_fs_root_stringview(const CnxStringView* restrict path) {
+	return cnx_path_is_fs_root_cstring(path->m_view, path->m_length);
+}
+
+bool cnx_path_is_symlink_cstring(const_cstring restrict path, __attr(maybe_unused) usize path_length) {
 	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_is_symlink is invalid");
 
 #if CNX_PLATFORM_WINDOWS
-	let pathname = cnx_string_into_cstring(*path);
 	TCHAR dir_path[MAX_PATH];
 
-	_tcscpy(dir_path, pathname);
+	_tcscpy(dir_path, path);
 	WIN32_FIND_DATA file_data;
 	HANDLE handle = FindFirstFile(dir_path, &file_data);
 
@@ -702,8 +697,7 @@ bool cnx_path_is_symlink(const CnxPath* restrict path) {
 
 #else
 	struct stat info;
-	let str = cnx_string_into_cstring(*path);
-	if(lstat(str, &info) == 0) {
+	if(lstat(path, &info) == 0) {
 		// NOLINTNEXTLINE(hicpp-signed-bitwise)
 		if(S_ISLNK(info.st_mode)) {
 			return true;
@@ -714,7 +708,16 @@ bool cnx_path_is_symlink(const CnxPath* restrict path) {
 #endif // CNX_PLATFORM_WINDOWS
 }
 
-CnxResult(CnxPath) cnx_path_get_symlink_target(const CnxPath* restrict path) {
+bool cnx_path_is_symlink_string(const CnxPath* restrict path) {
+	return cnx_path_is_symlink_cstring(cnx_string_into_cstring(*path), cnx_string_length(*path));
+}
+
+bool cnx_path_is_symlink_stringview(const CnxStringView* restrict path) {
+	CnxScopedString str = cnx_string_from(path);
+	return cnx_path_is_symlink_cstring(cnx_string_into_cstring(str), cnx_string_length(str));
+}
+
+CnxResult(CnxPath) cnx_path_get_symlink_target_cstring(const_cstring restrict path, __attr(maybe_unused) usize path_length) {
 	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_get_symlink_target is invalid");
 
 	if(!cnx_path_is_symlink(path)) {
@@ -751,7 +754,7 @@ CnxResult(CnxPath) cnx_path_get_symlink_target(const CnxPath* restrict path) {
 	} ReparseData;
 
 	TCHAR link_path[MAX_PATH];
-	_tcscpy(link_path, cnx_string_into_cstring(*path));
+	_tcscpy(link_path, path);
 
 	HANDLE handle = CreateFile(link_path,
 							   0,
@@ -812,9 +815,8 @@ CnxResult(CnxPath) cnx_path_get_symlink_target(const CnxPath* restrict path) {
 #else
 	let_mut size = static_cast(usize)(64); // NOLINT
 	let_mut alloc = cnx_allocator_allocate_array_t(char, DEFAULT_ALLOCATOR, size);
-	let str = cnx_string_into_cstring(*path);
 
-	let_mut size_actual = readlink(str, alloc, size);
+	let_mut size_actual = readlink(path, alloc, size);
 
 	if(size_actual == -1) {
 		return Err(CnxPath, cnx_error_new(errno, CNX_POSIX_ERROR_CATEGORY));
@@ -824,7 +826,7 @@ CnxResult(CnxPath) cnx_path_get_symlink_target(const CnxPath* restrict path) {
 		let old_size = size;
 		size += size / 2;
 		alloc = cnx_allocator_reallocate_array_t(char, DEFAULT_ALLOCATOR, alloc, old_size, size);
-		size_actual = readlink(str, alloc, size);
+		size_actual = readlink(path, alloc, size);
 	}
 
 	if(alloc[size_actual - 1] != '\0') {
@@ -836,6 +838,15 @@ CnxResult(CnxPath) cnx_path_get_symlink_target(const CnxPath* restrict path) {
 
 	return Ok(CnxPath, move(string));
 #endif
+}
+
+CnxResult(CnxPath) cnx_path_get_symlink_target_string(const CnxPath* restrict path) {
+	return cnx_path_get_symlink_target_cstring(cnx_string_into_cstring(*path), cnx_string_length(*path));
+}
+
+CnxResult(CnxPath) cnx_path_get_symlink_target_stringview(const CnxStringView* restrict path) {
+	CnxScopedString str = cnx_string_from(path);
+	return cnx_path_get_symlink_target_cstring(cnx_string_into_cstring(str), cnx_string_length(str));
 }
 
 bool cnx_path_has_file_extension_string_impl(const CnxPath* restrict path, CnxString extension) {
@@ -884,7 +895,30 @@ bool cnx_path_has_file_extension_cstring(const CnxPath* restrict path,
 		cnx_string_from_cstring_with_allocator(extension, extension_length, path->m_allocator));
 }
 
-CnxString cnx_path_get_file_extension(const CnxPath* restrict path) {
+CnxString cnx_path_get_file_extension_cstring(const_cstring restrict path, usize path_length) {
+	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_get_file_extension is invalid");
+
+	if(!cnx_path_is_file(path)) {
+		return cnx_string_from("");
+	}
+	
+	let_mut extension_start = static_cast(usize)(0);
+	let_mut found = false;
+	for(let_mut index = path_length - 1; index > 0; --index) {
+		if(path[index] == '.') {
+			extension_start = index;
+			found = true;
+		}
+	}
+
+	if(!found) {
+		return cnx_string_from("");
+	}
+
+	return cnx_string_from_cstring(path + extension_start, path_length - extension_start);
+}
+
+CnxString cnx_path_get_file_extension_string(const CnxPath* restrict path) {
 	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_get_file_extension is invalid");
 
 	if(!cnx_path_is_file(path)) {
@@ -900,7 +934,32 @@ CnxString cnx_path_get_file_extension(const CnxPath* restrict path) {
 	return cnx_string_from("");
 }
 
-CnxString cnx_path_get_file_name(const CnxPath* restrict path) {
+CnxString cnx_path_get_file_extension_stringview(const CnxStringView* restrict path) {
+	return cnx_path_get_file_extension_cstring(path->m_view, path->m_length);
+}
+
+CnxString cnx_path_get_file_name_cstring(const_cstring restrict path, usize path_length) {
+	let_mut name_start = static_cast(usize)(0);
+	let_mut found = false;
+	for(let_mut index = path_length - 1; index > 0; --index) {
+		if(path[index] == CNX_PATH_SEPARATOR) {
+			name_start = index + 1;
+			found = true;
+		}
+	}
+
+	if(!found) {
+		return cnx_string_from_cstring(path, path_length);
+	}
+
+	return cnx_string_from_cstring(path + name_start, path_length - name_start);
+}
+
+CnxString cnx_path_get_file_name_stringview(const CnxStringView* restrict path) {
+	return cnx_path_get_file_name_cstring(path->m_view, path->m_length);
+}
+
+CnxString cnx_path_get_file_name_string(const CnxPath* restrict path) {
 	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_get_file_name is invalid");
 
 	let_mut maybe_start = cnx_string_find_last(*path, CNX_PATH_SEPARATOR_AS_STRING);
@@ -912,7 +971,39 @@ CnxString cnx_path_get_file_name(const CnxPath* restrict path) {
 	return cnx_string_clone(*path);
 }
 
-CnxString cnx_path_get_file_name_without_extension(const CnxPath* path) {
+CnxString cnx_path_get_file_name_without_extension_cstring(const_cstring restrict path, usize path_length) {
+	let_mut extension_start = static_cast(usize)(0);
+	let_mut found_extension = false;
+	let_mut name_start = static_cast(usize)(0);
+	let_mut found_name = false;
+	for(let_mut index = path_length - 1; index > 0; --index) {
+		if(path[index] == '.') {
+			extension_start = index;
+			found_extension = true;
+		}
+		if(path[index] == CNX_PATH_SEPARATOR) {
+			name_start = index;
+			found_name = true;
+		}
+	}
+
+	if(!found_extension) {
+		if(!found_name) {
+			return cnx_string_from_cstring(path, path_length);
+		}
+		else {
+			return cnx_string_from_cstring(path + name_start, path_length - name_start);
+		}
+	}
+
+	return cnx_string_from_cstring(path + name_start, extension_start - name_start);
+}
+
+CnxString cnx_path_get_file_name_without_extension_stringview(const CnxStringView* restrict path) {
+	return cnx_path_get_file_name_without_extension_cstring(path->m_view, path->m_length);
+}
+
+CnxString cnx_path_get_file_name_without_extension_string(const CnxPath* path) {
 	cnx_assert(cnx_path_is_valid(path),
 			   "Path given to cnx_path_get_file_name_without_extension is invalid");
 
@@ -928,7 +1019,16 @@ CnxString cnx_path_get_file_name_without_extension(const CnxPath* path) {
 	return with_extension;
 }
 
-CnxResult(CnxPath) cnx_path_get_parent_directory(const CnxPath* restrict path) {
+CnxResult(CnxPath) cnx_path_get_parent_directory_cstring(const_cstring restrict path, usize path_length) {
+	CnxScopedString str = cnx_string_from_cstring(path, path_length);
+	return cnx_path_get_parent_directory_string(&str);
+}
+
+CnxResult(CnxPath) cnx_path_get_parent_directory_stringview(const CnxStringView* restrict path) {
+	return cnx_path_get_parent_directory_cstring(path->m_view, path->m_length);
+}
+
+CnxResult(CnxPath) cnx_path_get_parent_directory_string(const CnxPath* restrict path) {
 	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_get_parent_directory is invalid");
 
 	if(cnx_path_is_absolute(path) && cnx_string_occurrences_of_char(*path, CNX_PATH_SEPARATOR) == 1)
@@ -1033,12 +1133,12 @@ cnx_path_create_file_stringview(const CnxStringView* restrict file_path, bool ov
 }
 
 CnxResult cnx_path_create_file_cstring(restrict const_cstring file_path,
-									   __attr(maybe_unused) usize file_path_length,
+									   usize file_path_length,
 									   bool overwrite_existing) {
 	cnx_assert(cnx_path_is_valid_cstring(file_path, file_path_length),
 			   "Path given to cnx_path_create_file is invalid");
 
-	if(cnx_path_exists_cstring(file_path) && !overwrite_existing) {
+	if(cnx_path_exists_cstring(file_path, file_path_length) && !overwrite_existing) {
 		return Err(i32, cnx_error_new(EEXIST, CNX_POSIX_ERROR_CATEGORY));
 	}
 
@@ -1104,7 +1204,7 @@ CnxResult cnx_path_remove_file_stringview(const CnxStringView* restrict file_pat
 }
 
 CnxResult cnx_path_remove_file_cstring(restrict const_cstring file_path, usize file_path_length) {
-	if(!cnx_path_is_file_cstring(file_path)) {
+	if(!cnx_path_is_file_cstring(file_path, file_path_length)) {
 		return Err(i32, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
 	}
 
@@ -1202,25 +1302,32 @@ __attr(nodiscard) __attr(not_null(1)) CnxResult
 }
 #endif // CNX_PLATFORM_WINDOWS
 
-// NOLINTNEXTLINE(misc-no-recursion, readability-function-cognitive-complexity))
-CnxResult cnx_path_remove_directory(const CnxPath* restrict path, bool recursive) {
+CnxResult cnx_path_remove_directory_string(const CnxPath* restrict path, bool recursive) {
+	return cnx_path_remove_directory_cstring(cnx_string_into_cstring(*path), cnx_string_length(*path), recursive);
+}
+
+CnxResult cnx_path_remove_directory_stringview(const CnxStringView* restrict path, bool recursive) {
+	CnxScopedString str = cnx_string_from(path);
+	return cnx_path_remove_directory_cstring(cnx_string_into_cstring(str), cnx_string_length(str), recursive);
+}
+
+CnxResult cnx_path_remove_directory_cstring(const_cstring restrict path, usize path_length, bool recursive) {
 	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_remove_directory is invalid");
 
-	if(!cnx_path_exists(path)) {
+	if(!cnx_path_exists_cstring(path, path_length)) {
 		return Err(i32, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
 	}
 
-	let pathname = cnx_string_into_cstring(*path);
 
 #if CNX_PLATFORM_WINDOWS
 
-	return remove_directory_impl(pathname, recursive, false);
+	return remove_directory_impl(path, recursive, false);
 
 #else
 
 	if(recursive) {
 		// NOLINTNEXTLINE(hicpp-signed-bitwise)
-		let res = nftw(pathname, nftw_remove_path, 64, FTW_DEPTH | FTW_PHYS);
+		let res = nftw(path, nftw_remove_path, 64, FTW_DEPTH | FTW_PHYS);
 		if(res != 0) {
 			return Err(i32, cnx_error_new(errno, CNX_POSIX_ERROR_CATEGORY));
 		}
@@ -1228,7 +1335,7 @@ CnxResult cnx_path_remove_directory(const CnxPath* restrict path, bool recursive
 		return Ok(i32, 0);
 	}
 	else {
-		let res = remove(pathname);
+		let res = remove(path);
 		if(res != 0) {
 			return Err(i32, cnx_error_new(errno, CNX_POSIX_ERROR_CATEGORY));
 		}
@@ -1238,27 +1345,29 @@ CnxResult cnx_path_remove_directory(const CnxPath* restrict path, bool recursive
 #endif // CNX_PLATFORM_WINDOWS
 }
 
-// NOLINTNEXTLINE(readability-function-cognitive-complexity, misc-no-recursion)
-CnxResult remove_path(const CnxPath* restrict path) {
+#define remove_path(path) \
+	({\
+	 	CnxResult UNIQUE_VAR(res);\
+		if(cnx_path_is_file(path)) {\
+			UNIQUE_VAR(res) = cnx_path_remove_file(path);\
+	 	}\
+	 	else {\
+			UNIQUE_VAR(res) = cnx_path_remove_directory(path, true);\
+		}\
+		UNIQUE_VAR(res);\
+	 })
 
-	if(cnx_path_is_file(path)) {
-		return cnx_path_remove_file(path);
-	}
-	else {
-		return cnx_path_remove_directory(path, true);
-	}
-}
-
-// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-CnxResult cnx_path_create_symlink(const CnxPath* restrict link_to_create,
-								  const CnxPath* restrict link_target,
+CnxResult cnx_path_create_symlink_cstring_cstring(const_cstring restrict link_to_create,
+								  usize link_to_create_length,
+								  const_cstring restrict link_target,
+								  __attr(maybe_unused) usize link_target_length,
 								  bool overwrite_existing) {
 	cnx_assert(cnx_path_is_valid(link_to_create),
 			   "Link path given to cnx_create_symlink is invalid");
 	cnx_assert(cnx_path_is_valid(link_target),
 			   "Link target given to cnx_create_symlink is invalid");
 
-	if(overwrite_existing && cnx_path_exists(link_to_create)) {
+	if(overwrite_existing && cnx_path_exists_cstring(link_to_create, link_to_create_length)) {
 		let res = remove_path(link_to_create);
 		if(cnx_result_is_err(res)) {
 			return res;
@@ -1269,8 +1378,8 @@ CnxResult cnx_path_create_symlink(const CnxPath* restrict link_to_create,
 	TCHAR create_path[MAX_PATH];
 	TCHAR target_path[MAX_PATH];
 
-	_tcscpy(create_path, cnx_string_into_cstring(*link_to_create));
-	_tcscpy(target_path, cnx_string_into_cstring(*link_target));
+	_tcscpy(create_path, link_to_create);
+	_tcscpy(target_path, link_target);
 
 	let is_dir = static_cast(DWORD)(cnx_path_is_directory(link_target));
 	if(CreateSymbolicLink(create_path,
@@ -1287,7 +1396,7 @@ CnxResult cnx_path_create_symlink(const CnxPath* restrict link_to_create,
 #else
 
 	let res
-		= symlink(cnx_string_into_cstring(*link_target), cnx_string_into_cstring(*link_to_create));
+		= symlink(link_target, link_to_create);
 
 	if(res != 0) {
 		return Err(i32, cnx_error_new(errno, CNX_POSIX_ERROR_CATEGORY));
@@ -1298,18 +1407,95 @@ CnxResult cnx_path_create_symlink(const CnxPath* restrict link_to_create,
 #endif // CNX_PLATFORM_WINDOWS
 }
 
+CnxResult cnx_path_create_symlink_cstring_string(const_cstring restrict link_to_create,
+								  usize link_to_create_length,
+								  const CnxString* restrict link_target,
+								  bool overwrite_existing) {
+	return cnx_path_create_symlink_cstring_cstring(link_to_create, link_to_create_length,
+			cnx_string_into_cstring(*link_target), cnx_string_length(*link_target), overwrite_existing);
+}
+
+CnxResult cnx_path_create_symlink_cstring_stringview(const_cstring restrict link_to_create,
+								  usize link_to_create_length,
+								  const CnxStringView* restrict link_target,
+								  bool overwrite_existing) {
+	CnxScopedString target = cnx_string_from(link_target);
+	return cnx_path_create_symlink_cstring_cstring(link_to_create, link_to_create_length,
+			cnx_string_into_cstring(target), cnx_string_length(target), overwrite_existing);
+}
+
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
+CnxResult cnx_path_create_symlink_string_string(const CnxPath* restrict link_to_create,
+								  const CnxPath* restrict link_target,
+								  bool overwrite_existing) {
+	return cnx_path_create_symlink_cstring_cstring(cnx_string_into_cstring(*link_to_create), cnx_string_length(*link_to_create),
+			cnx_string_into_cstring(*link_target), cnx_string_length(*link_target), overwrite_existing);
+}
+
+CnxResult cnx_path_create_symlink_string_stringview(const CnxPath* restrict link_to_create,
+								  const CnxStringView* restrict link_target,
+								  bool overwrite_existing) {
+	CnxScopedString target = cnx_string_from(link_target);
+	return cnx_path_create_symlink_cstring_cstring(cnx_string_into_cstring(*link_to_create), cnx_string_length(*link_to_create),
+			cnx_string_into_cstring(target), cnx_string_length(target), overwrite_existing);
+}
+
+CnxResult cnx_path_create_symlink_string_cstring(const CnxPath* restrict link_to_create,
+								  const_cstring restrict link_target,
+								  usize link_target_length,
+								  bool overwrite_existing) {
+	return cnx_path_create_symlink_cstring_cstring(cnx_string_into_cstring(*link_to_create), cnx_string_length(*link_to_create),
+			link_target, link_target_length, overwrite_existing);
+}
+
+CnxResult cnx_path_create_symlink_stringview_string(const CnxStringView* restrict link_to_create,
+								  const CnxPath* restrict link_target,
+								  bool overwrite_existing) {
+	CnxScopedString to_create = cnx_string_from(link_to_create);
+	return cnx_path_create_symlink_cstring_cstring(cnx_string_into_cstring(to_create), cnx_string_length(to_create),
+			cnx_string_into_cstring(*link_target), cnx_string_length(*link_target), overwrite_existing);
+}
+
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
+CnxResult cnx_path_create_symlink_stringvew_stringview(const CnxStringView* restrict link_to_create,
+								  const CnxStringView* restrict link_target,
+								  bool overwrite_existing) {
+	CnxScopedString target = cnx_string_from(link_target);
+	CnxScopedString to_create = cnx_string_from(link_to_create);
+	return cnx_path_create_symlink_cstring_cstring(cnx_string_into_cstring(to_create), cnx_string_length(to_create),
+			cnx_string_into_cstring(target), cnx_string_length(target), overwrite_existing);
+}
+
+CnxResult cnx_path_create_symlink_stringvew_cstring(const CnxStringView* restrict link_to_create,
+								  const_cstring restrict link_target,
+								  usize link_target_length,
+								  bool overwrite_existing) {
+	CnxScopedString to_create = cnx_string_from(link_to_create);
+	return cnx_path_create_symlink_cstring_cstring(cnx_string_into_cstring(to_create), cnx_string_length(to_create),
+			link_target, link_target_length, overwrite_existing);
+}
+
 #if CNX_PLATFORM_WINDOWS
 	#define unlink _unlink
 #endif // CNX_PLATFORM_WINDOWS
 
-CnxResult cnx_path_remove_symlink(const CnxPath* restrict link_path) {
+CnxResult cnx_path_remove_symlink_cstring(const_cstring restrict link_path, __attr(maybe_unused) usize link_path_length) {
 	cnx_assert(cnx_path_is_valid(link_path), "Link path given to cnx_remove_symlink is invalid");
 
-	if(unlink(cnx_string_into_cstring(*link_path)) != 0) {
+	if(unlink(link_path) != 0) {
 		return Err(i32, cnx_error_new(errno, CNX_POSIX_ERROR_CATEGORY));
 	}
 
 	return Ok(i32, 0);
+}
+
+CnxResult cnx_path_remove_symlink_stringview(const CnxStringView *restrict link_path) {
+	CnxScopedString str = cnx_string_from(link_path);
+	return cnx_path_remove_symlink_cstring(cnx_string_into_cstring(str), cnx_string_length(str));
+}
+
+CnxResult cnx_path_remove_symlink_string(const CnxPath* restrict link_path) {
+	return cnx_path_remove_symlink_cstring(cnx_string_into_cstring(*link_path), cnx_string_length(*link_path));
 }
 
 CnxResult
