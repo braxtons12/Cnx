@@ -264,77 +264,86 @@ typedef CnxString CnxPath;
 											static_cast(const_cstring)(path), 			   		   \
 											sizeof(path)) 							/** NOLINT **/ )
 
-/// @brief Returns the path to the home directory of the user running this
-/// Program
-///
-/// @return Path to the current user's home directory
-/// @ingroup cnx_path
-__attr(nodiscard) CnxPath cnx_path_user_home_directory(void);
-/// @brief Returns the path to the application data directory for the current user
-///
-/// For example, this would return $HOME/AppData on Windows, or $HOME/Library/Preferences on Mac
-///
-/// @return Path to the current user's application data directory
-/// @ingroup cnx_path
-__attr(nodiscard) CnxPath cnx_path_user_application_data_directory(void);
-/// @brief Returns the path to the documents directory for the current user
-///
-/// For example, this would return $HOME/Documents or "$HOME/My Documents" on Windows, or
-/// $HOME/Documents on *NIX
-///
-/// @return Path to the current user's documents directory
-/// @ingroup cnx_path
-__attr(nodiscard) CnxPath cnx_path_user_documents_directory(void);
-/// @brief Returns the path to the application data directory for the system
-///
-/// For example, this would return C:/Users/Public/AppData on Windows, or /Library on Mac
-///
-/// @return Path to the system application data directory
-/// @ingroup cnx_path
-__attr(nodiscard) CnxPath cnx_path_common_application_data_directory(void);
-/// @brief Returns the path to the shared documents directory
-///
-/// For example, this would return C:/Users/Public/Documents on Windows, or /Users/Shared on Mac
-///
-/// @return Path to the shared documents directory
-/// @ingroup cnx_path
-__attr(nodiscard) CnxPath cnx_path_common_documents_directory(void);
-/// @brief Returns a path to a directory suitable for storing temporary files
-///
-/// For example, this would return $HOME/AppData/Local/Temp on Windows, or /tmp on *NIX
-///
-/// @return Path to a temporary files directory
-/// @ingroup cnx_path
-__attr(nodiscard) CnxPath cnx_path_temp_directory(void);
-/// @brief Returns the path to the currently running executable
-///
-/// On Mac if the executable is an app, this will return the path to the executable binary contained
-/// in the package. If you need the path of the package folder, use `cnx_current_application_file`
-/// instead. On other platforms `cnx_current_executable_file` and `cnx_current_application_file`
-/// are interchangeable.
-///
-/// @return Path to the current executable
-/// @ingroup cnx_path
-__attr(nodiscard) CnxPath cnx_path_current_executable_file(void);
-/// @brief Returns the path to the currently running application
-///
-/// On Mac if the executable is an app, this will return the path to the application package folder.
-/// If you need the path of the executable binary, use `cnx_current_executable_file` instead.
-/// On other platforms `cnx_current_executable_file` and `cnx_current_application_file` are
-/// interchangeable.
-///
-/// @return Path to the current application
-/// @ingroup cnx_path
-__attr(nodiscard) CnxPath cnx_path_current_application_file(void);
-/// @brief Returns the path to the system applications directory
-///
-/// On Windows this returns the 64-bit applications directory ("Program Files").
-/// For the legacy/32-bit applications directory ("Program Files (x86)") use
-/// `cnx_system_applications_directory_x86` instead.
-///
-/// @return Path to the system applications directory
-/// @ingroup cnx_path
-__attr(nodiscard) CnxPath cnx_path_system_applications_directory(void);
+__attr(nodiscard)
+	/// @brief Returns the path to the home directory of the user running this
+	/// Program
+	///
+	/// @return Path to the current user's home directory
+	/// @ingroup cnx_path
+	CnxPath cnx_path_user_home_directory(void);
+__attr(nodiscard)
+	/// @brief Returns the path to the application data directory for the current user
+	///
+	/// For example, this would return $HOME/AppData on Windows, or $HOME/Library/Preferences on Mac
+	///
+	/// @return Path to the current user's application data directory
+	/// @ingroup cnx_path
+	CnxPath cnx_path_user_application_data_directory(void);
+__attr(nodiscard)
+	/// @brief Returns the path to the documents directory for the current user
+	///
+	/// For example, this would return $HOME/Documents or "$HOME/My Documents" on Windows, or
+	/// $HOME/Documents on *NIX
+	///
+	/// @return Path to the current user's documents directory
+	/// @ingroup cnx_path
+	CnxPath cnx_path_user_documents_directory(void);
+__attr(nodiscard)
+	/// @brief Returns the path to the application data directory for the system
+	///
+	/// For example, this would return C:/Users/Public/AppData on Windows, or /Library on Mac
+	///
+	/// @return Path to the system application data directory
+	/// @ingroup cnx_path
+	CnxPath cnx_path_common_application_data_directory(void);
+__attr(nodiscard)
+	/// @brief Returns the path to the shared documents directory
+	///
+	/// For example, this would return C:/Users/Public/Documents on Windows, or /Users/Shared on Mac
+	///
+	/// @return Path to the shared documents directory
+	/// @ingroup cnx_path
+	CnxPath cnx_path_common_documents_directory(void);
+__attr(nodiscard)
+	/// @brief Returns a path to a directory suitable for storing temporary files
+	///
+	/// For example, this would return $HOME/AppData/Local/Temp on Windows, or /tmp on *NIX
+	///
+	/// @return Path to a temporary files directory
+	/// @ingroup cnx_path
+	CnxPath cnx_path_temp_directory(void);
+__attr(nodiscard)
+	/// @brief Returns the path to the currently running executable
+	///
+	/// On Mac if the executable is an app, this will return the path to the executable binary
+	/// contained in the package. If you need the path of the package folder, use
+	/// `cnx_current_application_file` instead. On other platforms `cnx_current_executable_file` and
+	/// `cnx_current_application_file` are interchangeable.
+	///
+	/// @return Path to the current executable
+	/// @ingroup cnx_path
+	CnxPath cnx_path_current_executable_file(void);
+__attr(nodiscard)
+	/// @brief Returns the path to the currently running application
+	///
+	/// On Mac if the executable is an app, this will return the path to the application package
+	/// folder. If you need the path of the executable binary, use `cnx_current_executable_file`
+	/// instead. On other platforms `cnx_current_executable_file` and `cnx_current_application_file`
+	/// are interchangeable.
+	///
+	/// @return Path to the current application
+	/// @ingroup cnx_path
+	CnxPath cnx_path_current_application_file(void);
+__attr(nodiscard)
+	/// @brief Returns the path to the system applications directory
+	///
+	/// On Windows this returns the 64-bit applications directory ("Program Files").
+	/// For the legacy/32-bit applications directory ("Program Files (x86)") use
+	/// `cnx_system_applications_directory_x86` instead.
+	///
+	/// @return Path to the system applications directory
+	/// @ingroup cnx_path
+	CnxPath cnx_path_system_applications_directory(void);
 
 /// @fn
 /// @brief Returns the path to the Legacy/32-bit system applications directory
@@ -351,16 +360,18 @@ __attr(nodiscard) CnxPath cnx_path_system_applications_directory_x86(void);
 
 #endif // CNX_PLATFORM_WINDOWS
 
-/// @brief Returns the path to the current working directory
-///
-/// @return Path to the current working directory
-/// @ingroup cnx_path
-__attr(nodiscard) CnxPath cnx_path_current_working_directory(void);
-/// @brief Returns the path separator character of the host platform
-///
-/// @return The path separator character for the platform
-/// @ingroup cnx_path
-__attr(nodiscard) char cnx_path_separator_char(void);
+__attr(nodiscard)
+	/// @brief Returns the path to the current working directory
+	///
+	/// @return Path to the current working directory
+	/// @ingroup cnx_path
+	CnxPath cnx_path_current_working_directory(void);
+__attr(nodiscard)
+	/// @brief Returns the path separator character of the host platform
+	///
+	/// @return The path separator character for the platform
+	/// @ingroup cnx_path
+	char cnx_path_separator_char(void);
 
 /// @brief Checks if the given path is an absolute path
 ///
