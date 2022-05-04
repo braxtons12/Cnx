@@ -51,19 +51,105 @@
             <li>
               Reference
               <ul>
+                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#enum-members">Enums</a></li>
+                <li><a href="#typedef-members">Typedefs</a></li>
                 <li><a href="#func-members">Functions</a></li>
+                <li><a href="#define-members">Defines</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.2.0</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-05-01</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.2.0</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-05-04</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        <section id="nested-classes">
+          <h2><a href="#nested-classes">Classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              struct <a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a>
+            </dt>
+            <dd>Use to specify the access mode and behavior a file should be opened with.</dd>
+            <dt>
+              struct <a href="structCnxFile.html" class="m-doc">CnxFile</a>
+            </dt>
+            <dd>Cnx type used to manage reading and writing to/from a file, the buffering associated with the file, and closing it when it&#x27;s no longer used.</dd>
+          </dl>
+        </section>
+        <section id="enum-members">
+          <h2><a href="#enum-members">Enums</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">enum <a href="group__cnx__file.html#gaeb033d9cf665467bc25bc3f42dd19fcf" class="m-doc">CnxFileAccessMode</a> { </span><span class="m-doc-wrap"><a href="#ggaeb033d9cf665467bc25bc3f42dd19fcfadd5eb2b285140bcbcefec2517666dbd1" class="m-doc">CnxFileRead</a> = 0,
+              <a href="#ggaeb033d9cf665467bc25bc3f42dd19fcfa8c05f3616a1c845f3fe7eb7fa1d8f476" class="m-doc">CnxFileWrite</a>,
+              <a href="#ggaeb033d9cf665467bc25bc3f42dd19fcfa17dc79036598eaaa5f9766cd6a417cd2" class="m-doc">CnxFileReadWrite</a> }</span>
+            </dt>
+            <dd>Use in a <code><a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a></code> to specify the access mode a file should be opened with.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">enum <a href="group__cnx__file.html#ga044f3086e048eff4bfe0dfb0eddd71ca" class="m-doc">CnxFileOpenBehavior</a> { </span><span class="m-doc-wrap"><a href="#gga044f3086e048eff4bfe0dfb0eddd71caa5ff46e72b0ec95a11a48746b901fb152" class="m-doc">CnxFileNone</a> = 0,
+              <a href="#gga044f3086e048eff4bfe0dfb0eddd71caa0e52fa3e661c534c3374430e2c8bbc95" class="m-doc">CnxFileAppend</a> = 1,
+              <a href="#gga044f3086e048eff4bfe0dfb0eddd71caab3fea7aba7af9df828d5e8ab28ee52f2" class="m-doc">CnxFileTruncate</a> = 2,
+              <a href="#gga044f3086e048eff4bfe0dfb0eddd71caa12e09457b9be111411cceb4547dc0a10" class="m-doc">CnxFileBinary</a> = 4,
+              <a href="#gga044f3086e048eff4bfe0dfb0eddd71caa4f16d9a0d5ffb8e34b5505dd36f5b913" class="m-doc">CnxFileFailIfExists</a> = 8 }</span>
+            </dt>
+            <dd>Use in a <code><a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a></code> to specify the behavior a file should be opened with.</dd>
+          </dl>
+        </section>
+        <section id="typedef-members">
+          <h2><a href="#typedef-members">Typedefs</a></h2>
+          <dl class="m-doc">
+            <dt>
+              using <a href="group__cnx__file.html#ga03bf18a19b6b3b993471a93f8fda0e2a" class="m-doc">FileBuffer</a> = char[]
+            </dt>
+            <dd>Basic buffer type used to provide buffered for a <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code></dd>
+            <dt>
+              using <a href="group__cnx__file.html#gae74557a4f2f3b2b138a3c302e373049f" class="m-doc">CnxFileAccessMode</a> = enum <a href="group__cnx__file.html#gaeb033d9cf665467bc25bc3f42dd19fcf" class="m-doc">CnxFileAccessMode</a>
+            </dt>
+            <dd>Use in a <code><a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a></code> to specify the access mode a file should be opened with.</dd>
+            <dt>
+              using <a href="group__cnx__file.html#ga115ffad238cf4646d85efbbfdb8467a9" class="m-doc">CnxFileOpenBehavior</a> = enum <a href="group__cnx__file.html#ga044f3086e048eff4bfe0dfb0eddd71ca" class="m-doc">CnxFileOpenBehavior</a>
+            </dt>
+            <dd>Use in a <code><a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a></code> to specify the behavior a file should be opened with.</dd>
+            <dt>
+              using <a href="group__cnx__file.html#ga54081e0a10d035331affb635698278c9" class="m-doc">CnxFileOptions</a> = struct <a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a>
+            </dt>
+            <dd>Use to specify the access mode and behavior a file should be opened with.</dd>
+            <dt>
+              using <a href="group__cnx__file.html#ga804dc82ca002a986aba7e9e8988cf541" class="m-doc">CnxFile</a> = struct <a href="structCnxFile.html" class="m-doc">CnxFile</a>
+            </dt>
+            <dd>Cnx type used to manage reading and writing to/from a file, the buffering associated with the file, and closing it when it&#x27;s no longer used.</dd>
+          </dl>
+        </section>
         <section id="func-members">
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
             <dt>
+              <span class="m-doc-wrap-bumper"> <a href="group__cnx__file.html#ga9493aee78803f6e1e34e74db6dbf6277" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#gac620672df61cb1f3f6bf8901869b6be2" class="m-doc">always_<wbr />inline</a>) static inline void file_deleter(FILE *restrict file</span>
+            </dt>
+            <dd><code>CnxDeleter</code> function for smart pointers managing <code>FILE*</code>s</dd>
+            <dt>
               <span class="m-doc-wrap-bumper"> <a href="group__cnx__thread.html#ga455795303ea1f8fab8eb205a0eb1bf4d" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#ga48b8fada710e243661bafc9037e90eb5" class="m-doc">not_<wbr />null</a>(1))</span>
             </dt>
             <dd>Formats the given arguments into the specified format string then prints it to <code>Cnxerr</code></dd>
+          </dl>
+        </section>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__file.html#ga393f4d05e9f302aa1ea9e38cc35b494b" class="m-doc">CnxScopedFile</a></span>
+            </dt>
+            <dd>Declare a <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code> with this to ensure that it&#x27;s automatically closed when it leaves its containing scope.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__file.html#ga6362160525e8ec6e03f959e86b3404c7" class="m-doc">CNX_FILE_DEFAULT_OPTIONS</a></span>
+            </dt>
+            <dd>The default options used to open a <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__file.html#gab103f55137dc4446de6745d5aff38d0b" class="m-doc">CNX_FILE_DEFAULT_BUFFER_SIZE</a></span>
+            </dt>
+            <dd>The default buffer size used for newly opened <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code>s.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__file.html#ga7b62d07873304d12dd32c55e57cabfc9" class="m-doc">cnx_file_open</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Opens the file at the given <code>path</code>.</dd>
           </dl>
         </section>
       </div>

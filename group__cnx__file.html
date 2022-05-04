@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CnxFile module | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          CnxFile <span class="m-thin">module</span></h1>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#enum-members">Enums</a></li>
+                <li><a href="#typedef-members">Typedefs</a></li>
+                <li><a href="#func-members">Functions</a></li>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<p><code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code> provides an abstraction for reading and writing to files that manages buffering, string formatting, and automatic closing of the file when it leaves scope.</p><p>Example:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&lt;Cnx/filesystem/File.h&gt;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">maybe_file</span> <span class="o">=</span> <span class="n">cnx_file_open</span><span class="p">(</span><span class="s">&quot;my_file.txt&quot;</span><span class="p">);</span>
+    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_result_is_ok</span><span class="p">(</span><span class="n">maybe_file</span><span class="p">),</span> <span class="s">&quot;Failed to open my_file.txt&quot;</span><span class="p">);</span>
+    <span class="n">CnxScopedFile</span> <span class="n">file</span> <span class="o">=</span> <span class="n">cnx_result_unwrap</span><span class="p">(</span><span class="n">maybe_file</span><span class="p">);</span>
+    <span class="n">let</span> <span class="n">my_important_number</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+    <span class="n">let</span> <span class="n">my_important_float</span> <span class="mf">24.0F</span><span class="p">;</span>
+    <span class="n">cnx_file_println</span><span class="p">(</span><span class="o">&amp;</span><span class="n">file</span><span class="p">,</span> <span class="s">&quot;number: {}, float: {}&quot;</span><span class="p">,</span> <span class="n">my_important_number</span><span class="p">,</span> <span class="n">my_important_float</span><span class="p">);</span>
+
+    <span class="n">let_mut</span> <span class="n">maybe_file2</span> <span class="o">=</span> <span class="n">cnx_file_open</span><span class="p">(</span><span class="s">&quot;my_other_file.txt&quot;</span><span class="p">);</span>
+    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_result_is_ok</span><span class="p">(</span><span class="n">maybe_file2</span><span class="p">),</span> <span class="s">&quot;Failed to open my_other_file.txt&quot;</span><span class="p">);</span>
+    <span class="n">CnxScopedFile</span> <span class="n">file2</span> <span class="o">=</span> <span class="n">cnx_result_unwrap</span><span class="p">(</span><span class="n">maybe_file2</span><span class="p">);</span>
+    <span class="n">let_mut</span> <span class="n">maybe_read</span> <span class="o">=</span> <span class="n">cnx_file_read_line</span><span class="p">(</span><span class="o">&amp;</span><span class="n">file2</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">cnx_result_is_ok</span><span class="p">(</span><span class="n">maybe_read</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">CnxScopedString</span> <span class="n">str</span> <span class="o">=</span> <span class="n">cnx_result_unwrap</span><span class="p">(</span><span class="n">maybe_read</span><span class="p">);</span>
+        <span class="c1">// do something with the line read from `my_other_file.txt`</span>
+    <span class="p">}</span>
+
+    <span class="c1">// files automatically closed when they leave scope because they were declared as</span>
+    <span class="c1">// `CnxScopedFile`</span>
+<span class="p">}</span></pre>
+        <section id="nested-classes">
+          <h2><a href="#nested-classes">Classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              struct <a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a>
+            </dt>
+            <dd>Use to specify the access mode and behavior a file should be opened with.</dd>
+            <dt>
+              struct <a href="structCnxFile.html" class="m-doc">CnxFile</a>
+            </dt>
+            <dd>Cnx type used to manage reading and writing to/from a file, the buffering associated with the file, and closing it when it&#x27;s no longer used.</dd>
+          </dl>
+        </section>
+        <section id="enum-members">
+          <h2><a href="#enum-members">Enums</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">enum <a href="#gaeb033d9cf665467bc25bc3f42dd19fcf" class="m-doc">CnxFileAccessMode</a> { </span><span class="m-doc-wrap"><a href="#ggaeb033d9cf665467bc25bc3f42dd19fcfadd5eb2b285140bcbcefec2517666dbd1" class="m-doc">CnxFileRead</a> = 0,
+              <a href="#ggaeb033d9cf665467bc25bc3f42dd19fcfa8c05f3616a1c845f3fe7eb7fa1d8f476" class="m-doc">CnxFileWrite</a>,
+              <a href="#ggaeb033d9cf665467bc25bc3f42dd19fcfa17dc79036598eaaa5f9766cd6a417cd2" class="m-doc">CnxFileReadWrite</a> }</span>
+            </dt>
+            <dd>Use in a <code><a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a></code> to specify the access mode a file should be opened with.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">enum <a href="#ga044f3086e048eff4bfe0dfb0eddd71ca" class="m-doc">CnxFileOpenBehavior</a> { </span><span class="m-doc-wrap"><a href="#gga044f3086e048eff4bfe0dfb0eddd71caa5ff46e72b0ec95a11a48746b901fb152" class="m-doc">CnxFileNone</a> = 0,
+              <a href="#gga044f3086e048eff4bfe0dfb0eddd71caa0e52fa3e661c534c3374430e2c8bbc95" class="m-doc">CnxFileAppend</a> = 1,
+              <a href="#gga044f3086e048eff4bfe0dfb0eddd71caab3fea7aba7af9df828d5e8ab28ee52f2" class="m-doc">CnxFileTruncate</a> = 2,
+              <a href="#gga044f3086e048eff4bfe0dfb0eddd71caa12e09457b9be111411cceb4547dc0a10" class="m-doc">CnxFileBinary</a> = 4,
+              <a href="#gga044f3086e048eff4bfe0dfb0eddd71caa4f16d9a0d5ffb8e34b5505dd36f5b913" class="m-doc">CnxFileFailIfExists</a> = 8 }</span>
+            </dt>
+            <dd>Use in a <code><a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a></code> to specify the behavior a file should be opened with.</dd>
+          </dl>
+        </section>
+        <section id="typedef-members">
+          <h2><a href="#typedef-members">Typedefs</a></h2>
+          <dl class="m-doc">
+            <dt>
+              using <a href="#ga03bf18a19b6b3b993471a93f8fda0e2a" class="m-doc">FileBuffer</a> = char[]
+            </dt>
+            <dd>Basic buffer type used to provide buffered for a <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code></dd>
+            <dt>
+              using <a href="#gae74557a4f2f3b2b138a3c302e373049f" class="m-doc">CnxFileAccessMode</a> = enum <a href="group__cnx__file.html#gaeb033d9cf665467bc25bc3f42dd19fcf" class="m-doc">CnxFileAccessMode</a>
+            </dt>
+            <dd>Use in a <code><a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a></code> to specify the access mode a file should be opened with.</dd>
+            <dt>
+              using <a href="#ga115ffad238cf4646d85efbbfdb8467a9" class="m-doc">CnxFileOpenBehavior</a> = enum <a href="group__cnx__file.html#ga044f3086e048eff4bfe0dfb0eddd71ca" class="m-doc">CnxFileOpenBehavior</a>
+            </dt>
+            <dd>Use in a <code><a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a></code> to specify the behavior a file should be opened with.</dd>
+            <dt>
+              using <a href="#ga54081e0a10d035331affb635698278c9" class="m-doc">CnxFileOptions</a> = struct <a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a>
+            </dt>
+            <dd>Use to specify the access mode and behavior a file should be opened with.</dd>
+            <dt>
+              using <a href="#ga804dc82ca002a986aba7e9e8988cf541" class="m-doc">CnxFile</a> = struct <a href="structCnxFile.html" class="m-doc">CnxFile</a>
+            </dt>
+            <dd>Cnx type used to manage reading and writing to/from a file, the buffering associated with the file, and closing it when it&#x27;s no longer used.</dd>
+          </dl>
+        </section>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"> <a href="#ga9493aee78803f6e1e34e74db6dbf6277" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#gac620672df61cb1f3f6bf8901869b6be2" class="m-doc">always_<wbr />inline</a>) static inline void file_deleter(FILE *restrict file</span>
+            </dt>
+            <dd><code>CnxDeleter</code> function for smart pointers managing <code>FILE*</code>s</dd>
+          </dl>
+        </section>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga393f4d05e9f302aa1ea9e38cc35b494b" class="m-doc">CnxScopedFile</a></span>
+            </dt>
+            <dd>Declare a <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code> with this to ensure that it&#x27;s automatically closed when it leaves its containing scope.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga6362160525e8ec6e03f959e86b3404c7" class="m-doc">CNX_FILE_DEFAULT_OPTIONS</a></span>
+            </dt>
+            <dd>The default options used to open a <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab103f55137dc4446de6745d5aff38d0b" class="m-doc">CNX_FILE_DEFAULT_BUFFER_SIZE</a></span>
+            </dt>
+            <dd>The default buffer size used for newly opened <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code>s.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7b62d07873304d12dd32c55e57cabfc9" class="m-doc">cnx_file_open</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Opens the file at the given <code>path</code>.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Enum documentation</h2>
+          <section class="m-doc-details" id="gaeb033d9cf665467bc25bc3f42dd19fcf"><div>
+            <h3>
+              enum <a href="#gaeb033d9cf665467bc25bc3f42dd19fcf" class="m-doc-self">CnxFileAccessMode</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Use in a <code><a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a></code> to specify the access mode a file should be opened with.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga044f3086e048eff4bfe0dfb0eddd71ca"><div>
+            <h3>
+              enum <a href="#ga044f3086e048eff4bfe0dfb0eddd71ca" class="m-doc-self">CnxFileOpenBehavior</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Use in a <code><a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a></code> to specify the behavior a file should be opened with.</p>
+          </div></section>
+        </section>
+        <section>
+          <h2>Typedef documentation</h2>
+          <section class="m-doc-details" id="ga03bf18a19b6b3b993471a93f8fda0e2a"><div>
+            <h3>
+              typedef char<a href="#ga03bf18a19b6b3b993471a93f8fda0e2a" class="m-doc-self">FileBuffer</a>[]
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Basic buffer type used to provide buffered for a <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code></p>
+          </div></section>
+          <section class="m-doc-details" id="gae74557a4f2f3b2b138a3c302e373049f"><div>
+            <h3>
+              typedef enum <a href="group__cnx__file.html#gaeb033d9cf665467bc25bc3f42dd19fcf" class="m-doc">CnxFileAccessMode</a> <a href="#gae74557a4f2f3b2b138a3c302e373049f" class="m-doc-self">CnxFileAccessMode</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Use in a <code><a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a></code> to specify the access mode a file should be opened with.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga115ffad238cf4646d85efbbfdb8467a9"><div>
+            <h3>
+              typedef enum <a href="group__cnx__file.html#ga044f3086e048eff4bfe0dfb0eddd71ca" class="m-doc">CnxFileOpenBehavior</a> <a href="#ga115ffad238cf4646d85efbbfdb8467a9" class="m-doc-self">CnxFileOpenBehavior</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Use in a <code><a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a></code> to specify the behavior a file should be opened with.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga54081e0a10d035331affb635698278c9"><div>
+            <h3>
+              typedef struct <a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a> <a href="#ga54081e0a10d035331affb635698278c9" class="m-doc-self">CnxFileOptions</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Use to specify the access mode and behavior a file should be opened with.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga804dc82ca002a986aba7e9e8988cf541"><div>
+            <h3>
+              typedef struct <a href="structCnxFile.html" class="m-doc">CnxFile</a> <a href="#ga804dc82ca002a986aba7e9e8988cf541" class="m-doc-self">CnxFile</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Cnx type used to manage reading and writing to/from a file, the buffering associated with the file, and closing it when it&#x27;s no longer used.</p>
+<p>Example:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&lt;Cnx/filesystem/File.h&gt;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">maybe_file</span> <span class="o">=</span> <span class="n">cnx_file_open</span><span class="p">(</span><span class="s">&quot;my_file.txt&quot;</span><span class="p">);</span>
+    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_result_is_ok</span><span class="p">(</span><span class="n">maybe_file</span><span class="p">),</span> <span class="s">&quot;Failed to open my_file.txt&quot;</span><span class="p">);</span>
+    <span class="n">CnxScopedFile</span> <span class="n">file</span> <span class="o">=</span> <span class="n">cnx_result_unwrap</span><span class="p">(</span><span class="n">maybe_file</span><span class="p">);</span>
+    <span class="n">let</span> <span class="n">my_important_number</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+    <span class="n">let</span> <span class="n">my_important_float</span> <span class="mf">24.0F</span><span class="p">;</span>
+    <span class="n">cnx_file_println</span><span class="p">(</span><span class="o">&amp;</span><span class="n">file</span><span class="p">,</span> <span class="s">&quot;number: {}, float: {}&quot;</span><span class="p">,</span> <span class="n">my_important_number</span><span class="p">,</span> <span class="n">my_important_float</span><span class="p">);</span>
+
+    <span class="n">let_mut</span> <span class="n">maybe_file2</span> <span class="o">=</span> <span class="n">cnx_file_open</span><span class="p">(</span><span class="s">&quot;my_other_file.txt&quot;</span><span class="p">);</span>
+    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_result_is_ok</span><span class="p">(</span><span class="n">maybe_file2</span><span class="p">),</span> <span class="s">&quot;Failed to open my_other_file.txt&quot;</span><span class="p">);</span>
+    <span class="n">CnxScopedFile</span> <span class="n">file2</span> <span class="o">=</span> <span class="n">cnx_result_unwrap</span><span class="p">(</span><span class="n">maybe_file2</span><span class="p">);</span>
+    <span class="n">let_mut</span> <span class="n">maybe_read</span> <span class="o">=</span> <span class="n">cnx_file_read_line</span><span class="p">(</span><span class="o">&amp;</span><span class="n">file2</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">cnx_result_is_ok</span><span class="p">(</span><span class="n">maybe_read</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">CnxScopedString</span> <span class="n">str</span> <span class="o">=</span> <span class="n">cnx_result_unwrap</span><span class="p">(</span><span class="n">maybe_read</span><span class="p">);</span>
+        <span class="c1">// do something with the line read from `my_other_file.txt`</span>
+    <span class="p">}</span>
+
+    <span class="c1">// files automatically closed when they leave scope because they were declared as</span>
+    <span class="c1">// `CnxScopedFile`</span>
+<span class="p">}</span></pre>
+          </div></section>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ga9493aee78803f6e1e34e74db6dbf6277"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga9493aee78803f6e1e34e74db6dbf6277" class="m-doc-self">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#gac620672df61cb1f3f6bf8901869b6be2" class="m-doc">always_<wbr />inline</a>) static inline void file_deleter(FILE *restrict file</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p><code>CnxDeleter</code> function for smart pointers managing <code>FILE*</code>s</p>
+          </div></section>
+        </section>
+        <section>
+          <h2>Define documentation</h2>
+          <section class="m-doc-details" id="ga393f4d05e9f302aa1ea9e38cc35b494b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga393f4d05e9f302aa1ea9e38cc35b494b" class="m-doc-self">CnxScopedFile</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Declare a <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code> with this to ensure that it&#x27;s automatically closed when it leaves its containing scope.</p>
+<p>Example:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&lt;Cnx/filesystem/File.h&gt;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">let_mut</span> <span class="n">maybe_file</span> <span class="o">=</span> <span class="n">cnx_file_open</span><span class="p">(</span><span class="s">&quot;my_file.txt&quot;</span><span class="p">);</span>
+    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_result_is_ok</span><span class="p">(</span><span class="n">maybe_file</span><span class="p">),</span> <span class="s">&quot;Failed to open my_file.txt&quot;</span><span class="p">);</span>
+    <span class="n">CnxScopedFile</span> <span class="n">file</span> <span class="o">=</span> <span class="n">cnx_result_unwrap</span><span class="p">(</span><span class="n">maybe_file</span><span class="p">);</span>
+    <span class="n">let</span> <span class="n">my_important_number</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+    <span class="n">let</span> <span class="n">my_important_float</span> <span class="mf">24.0F</span><span class="p">;</span>
+    <span class="n">cnx_file_println</span><span class="p">(</span><span class="o">&amp;</span><span class="n">file</span><span class="p">,</span> <span class="s">&quot;number: {}, float: {}&quot;</span><span class="p">,</span> <span class="n">my_important_number</span><span class="p">,</span> <span class="n">my_important_float</span><span class="p">);</span>
+
+    <span class="n">let_mut</span> <span class="n">maybe_file2</span> <span class="o">=</span> <span class="n">cnx_file_open</span><span class="p">(</span><span class="s">&quot;my_other_file.txt&quot;</span><span class="p">);</span>
+    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_result_is_ok</span><span class="p">(</span><span class="n">maybe_file2</span><span class="p">),</span> <span class="s">&quot;Failed to open my_other_file.txt&quot;</span><span class="p">);</span>
+    <span class="n">CnxScopedFile</span> <span class="n">file2</span> <span class="o">=</span> <span class="n">cnx_result_unwrap</span><span class="p">(</span><span class="n">maybe_file2</span><span class="p">);</span>
+    <span class="n">let_mut</span> <span class="n">maybe_read</span> <span class="o">=</span> <span class="n">cnx_file_read_line</span><span class="p">(</span><span class="o">&amp;</span><span class="n">file2</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">cnx_result_is_ok</span><span class="p">(</span><span class="n">maybe_read</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">CnxScopedString</span> <span class="n">str</span> <span class="o">=</span> <span class="n">cnx_result_unwrap</span><span class="p">(</span><span class="n">maybe_read</span><span class="p">);</span>
+        <span class="c1">// do something with the line read from `my_other_file.txt`</span>
+    <span class="p">}</span>
+
+    <span class="c1">// files automatically closed when they leave scope because they were declared as</span>
+    <span class="c1">// `CnxScopedFile`</span>
+<span class="p">}</span></pre>
+          </div></section>
+          <section class="m-doc-details" id="ga6362160525e8ec6e03f959e86b3404c7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga6362160525e8ec6e03f959e86b3404c7" class="m-doc-self">CNX_FILE_DEFAULT_OPTIONS</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>The default options used to open a <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code></p>
+<p>The default behavior for opening a file with Cnx is to open in read/write mode, truncate contents on opening, and create a new file if one didn&#x27;t already exist (equivalent to &quot;w+&quot;)</p>
+          </div></section>
+          <section class="m-doc-details" id="gab103f55137dc4446de6745d5aff38d0b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab103f55137dc4446de6745d5aff38d0b" class="m-doc-self">CNX_FILE_DEFAULT_BUFFER_SIZE</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>The default buffer size used for newly opened <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code>s.</p>
+<p>This is the default buffer size used for newly opened <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code>s. It can be overridden by explicitly passing <code>buffer_size</code> to <code>cnx_file_open</code>.</p><p>On Windows or MacOS, this is 8K. On other platforms this will be equivalent to that platform&#x27;s BUFSIZ</p>
+          </div></section>
+          <section class="m-doc-details" id="ga7b62d07873304d12dd32c55e57cabfc9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7b62d07873304d12dd32c55e57cabfc9" class="m-doc-self">cnx_file_open</a>(</span><span class="m-doc-wrap">...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Opens the file at the given <code>path</code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">...</td>
+                  <td><ul><li><code>path</code> - The path to the file to open. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</li><li><code>options</code> - The <code><a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a></code> specifying opening permissions and behavior. This is <code>CNX_FILE_DEFAULT_OPTIONS</code> by default.</li><li><code>buffer_size</code> - The buffer size to allocate and use for buffering with the file. This is <code>CNX_FILE_DEFAULT_BUFFER_SIZE</code> by default.</li></ul></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code><a href="group__cnx__result.html#gae75db0a7127412b9b98576a3766b7f4f" class="m-doc">CnxResult(CnxFile)</a></code> - a <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code> at <code>path</code> if successful, otherwise an error.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to open the file at the given <code>path</code>. <code>path</code> <strong>must</strong> be a valild path for a file. By default, this uses <code>CNX_FILE_DEFAULT_OPTIONS</code> for <code>options</code>, the <code><a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a></code> indicating file opening permissions and behavior, and <code>CNX_FILE_DEFAULT_BUFFER_SIZE</code> for <code>buffer_size</code>, the buffer size to allocate and use for buffering in the file. Both of these can be passed explicit values to override this behavior, however.</p><p><code>options</code> <strong>must</strong> be a valid combination of <code>CnxFileAccessMode</code> and <code>CnxFileOpenBehavior</code>. For example, <code>CnxFileRead</code> combined with <code>CnxFileTruncate</code> would be an invalid pairing, and would result in this returning an error. Valid combinations are those equivalent to a valid <code>mode</code> for <code>fopen</code>.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+). Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>
