@@ -125,9 +125,9 @@ typedef char FileBuffer[];
 /// @brief Use in a `CnxFileOptions` to specify the access mode a file should be opened with
 /// @ingroup cnx_file
 typedef enum CnxFileAccessMode {
-	CnxFileRead = 0,
-	CnxFileWrite,
-	CnxFileReadWrite
+	CnxFileRead = 1,
+	CnxFileWrite = 2,
+	CnxFileReadWrite = 3
 } CnxFileAccessMode;
 
 /// @brief Use in a `CnxFileOptions` to specify the behavior a file should be opened with
@@ -181,6 +181,7 @@ typedef struct CnxFile {
 	CnxUniquePtr(FILE) file;
 	CnxUniquePtr(FileBuffer) buffer;
 	CnxFileOptions options;
+	bool dirty;
 } CnxFile;
 
 /// @brief Declare a `CnxFile` with this to ensure that it's automatically closed when it leaves
@@ -243,7 +244,8 @@ typedef struct CnxFile {
 	#define CNX_FILE_DEFAULT_BUFFER_SIZE (static_cast(usize)(BUFSIZ))
 #endif // CNX_PLATFORM_WINDOWS
 
-/// @brief Opens the file at the given `path`.
+/// @brief Opens the file at the given `path`, using the default allocator to allocate the memory
+/// used for buffering.
 ///
 /// Attempts to open the file at the given `path`. `path` __must__ be a valild path for a file.
 /// By default, this uses `CNX_FILE_DEFAULT_OPTIONS` for `options`, the `CnxFileOptions` indicating
@@ -268,71 +270,114 @@ typedef struct CnxFile {
 /// @ingroup cnx_file
 #define cnx_file_open(...) CONCAT2_DEFERRED(__cnx_file_open_, PP_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
-// TODO(braxtons12): Move allocator after path so we can make this variadic, making `options` and
-// `buffer_size` optional
-#define cnx_file_open_with_allocator(path, options, buffer_size, allocator) \
-	_Generic((path), 							   												   \
-			const CnxString* 			: cnx_file_open_with_allocator_string( 					   \
-											static_cast(const CnxString*)(path), 				   \
-											options, 											   \
-											buffer_size, 										   \
-											allocator), 		  		   						   \
-			CnxString* 					: cnx_file_open_with_allocator_string( 					   \
-											static_cast(const CnxString*)(path), 		  		   \
-											options, 											   \
-											buffer_size, 										   \
-											allocator), 		  		   						   \
-			const CnxStringView* 		: cnx_file_open_with_allocator_stringview( 				   \
-											static_cast(const CnxStringView*)(path), 	  		   \
-											options, 											   \
-											buffer_size, 										   \
-											allocator), 		  		   						   \
-			CnxStringView* 				: cnx_file_open_with_allocator_stringview( 				   \
-											static_cast(const CnxStringView*)(path), 	  		   \
-											options, 											   \
-											buffer_size, 										   \
-											allocator), 		  		   						   \
-			const_cstring 				: cnx_file_open_with_allocator_cstring( 				   \
-											static_cast(const_cstring)(path), 			  		   \
-											strlen(static_cast(const_cstring)(path)), 			   \
-											options, 											   \
-											buffer_size, 										   \
-											allocator), 		  		   						   \
-			cstring 					: cnx_file_open_with_allocator_cstring( 				   \
-											static_cast(const_cstring)(path), 			  		   \
-											strlen(static_cast(const_cstring)(path)), 			   \
-											options, 											   \
-											buffer_size, 										   \
-											allocator), 		  		   						   \
-			const char[sizeof(path)] 	: cnx_file_open_with_allocator_cstring( 	/** NOLINT **/ \
-											static_cast(const_cstring)(path), 			   		   \
-											sizeof(path), 							/** NOLINT **/ \
-											options, 											   \
-											buffer_size, 										   \
-											allocator), 		  		   						   \
-			char[sizeof(path)] 			: cnx_file_open_with_allocator_cstring( 	/** NOLINT **/ \
-											static_cast(const_cstring)(path), 			   		   \
-											sizeof(path), 							/** NOLINT **/ \
-											options, 											   \
-											buffer_size,\
-											allocator))
+/// @brief Opens the file at the given `path`, using the given allocator to allocate the memory
+/// used for buffering.
+///
+/// Attempts to open the file at the given `path`. `path` __must__ be a valild path for a file.
+/// By default, this uses `CNX_FILE_DEFAULT_OPTIONS` for `options`, the `CnxFileOptions` indicating
+/// file opening permissions and behavior, and `CNX_FILE_DEFAULT_BUFFER_SIZE` for `buffer_size`,
+/// the buffer size to allocate and use for buffering in the file. Both of these can be passed
+/// explicit values to override this behavior, however.
+///
+/// `options` __must__ be a valid combination of `CnxFileAccessMode` and `CnxFileOpenBehavior`. For
+/// example, `CnxFileRead` combined with `CnxFileTruncate` would be an invalid pairing, and would
+/// result in this returning an error. Valid combinations are those equivalent to a valid `mode`
+/// for `fopen`.
+///
+/// @param ...
+/// 	- `path` - The path to the file to open. This can be a pointer to any string or string-like
+/// 	type (i.e. it can be `CnxString*`, `CnxStringView*`, `cstring`, or a string literal)
+/// 	- `allocator` - The allocator to allocate the memory used for buffering.
+/// 	- `options` - The `CnxFileOptions` specifying opening permissions and behavior. This is
+/// 	`CNX_FILE_DEFAULT_OPTIONS` by default.
+/// 	- `buffer_size` - The buffer size to allocate and use for buffering with the file. This is
+/// 	`CNX_FILE_DEFAULT_BUFFER_SIZE` by default.
+///
+/// @return `CnxResult(CnxFile)` - a `CnxFile` at `path` if successful, otherwise an error.
+/// @ingroup cnx_file
+#define cnx_file_open_with_allocator(...) \
+	CONCAT2_DEFERRED(__cnx_file_open_with_allocator_, PP_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
+/// @brief Prints the string resulting from formatting `format_string` and the formatting arguments
+/// to the given file.
+///
+/// Attempts to write the string resulting from formatting to the file. Writing will fail if `file`
+/// was not opened with write access permissions or for any reason `fwrite` or similar libc
+/// functions may fail
+///
+/// @param file - The `CnxFile` to print the string to
+/// @param format_string - The `cstring` containing the text along with how to format the formatting
+/// arguments into the text. Uses the `CnxFormat` formatting syntax
+/// @param ... - The formatting arguments to create formatted strings of to insert in
+/// `format_string`
+///
+/// @return `CnxResult(i32)` - The number of characters written on success, otherwise an error
+/// @ingroup cnx_file
 #define cnx_file_print(file, format_string, ...) \
 	__cnx_file_print(file,                       \
 					 format_string,              \
 					 DEFAULT_ALLOCATOR,          \
 					 PP_NUM_ARGS(__VA_ARGS__) __VA_OPT__(, APPLY_TO_LIST(as_format, __VA_ARGS__)))
+/// @brief Prints the string resulting from formatting `format_string` and the formatting arguments
+/// to the given file, followed by a newline.
+///
+/// Attempts to write the string resulting from formatting, followed by a newline, to the file.
+/// Writing will fail if `file` was not opened with write access permissions or for any reason
+/// `fwrite` or similar libc functions may fail
+///
+/// @param file - The `CnxFile` to print the string to
+/// @param format_string - The `cstring` containing the text along with how to format the formatting
+/// arguments into the text. Uses the `CnxFormat` formatting syntax
+/// @param ... - The formatting arguments to create formatted strings of to insert in
+/// `format_string`
+///
+/// @return `CnxResult(i32)` - The number of characters written on success, otherwise an error
+/// @ingroup cnx_file
 #define cnx_file_println(file, format_string, ...) \
 	__cnx_file_println(file,                       \
 					   format_string,              \
 					   DEFAULT_ALLOCATOR,          \
 					   PP_NUM_ARGS(__VA_ARGS__)    \
 						   __VA_OPT__(, APPLY_TO_LIST(as_format, __VA_ARGS__)))
+/// @brief Prints the string resulting from formatting `format_string` and the formatting arguments
+/// to the given file, using the provided allocator for any memory allocations necessary to perform
+/// the string formatting.
+///
+/// Attempts to write the string resulting from formatting to the file. Writing will fail if `file`
+/// was not opened with write access permissions or for any reason `fwrite` or similar libc
+/// functions may fail
+///
+/// @param file - The `CnxFile` to print the string to
+/// @param allocator - The `CnxAllocator` to use for memory allocations, if necessary
+/// @param format_string - The `cstring` containing the text along with how to format the formatting
+/// arguments into the text. Uses the `CnxFormat` formatting syntax
+/// @param ... - The formatting arguments to create formatted strings of to insert in
+/// `format_string`
+///
+/// @return `CnxResult(i32)` - The number of characters written on success, otherwise an error
+/// @ingroup cnx_file
 #define cnx_file_print_with_allocator(file, allocator, format_string, ...) \
 	__cnx_file_print(file,                                                 \
 					 format_string,                                        \
 					 allocator,                                            \
 					 PP_NUM_ARGS(__VA_ARGS__) __VA_OPT__(, APPLY_TO_LIST(as_format, __VA_ARGS__)))
+/// @brief Prints the string resulting from formatting `format_string` and the formatting arguments
+/// to the given file, followed by a newline. Uses the provided allocator for any memory allocations
+/// necessary to perform the string formatting.
+///
+/// Attempts to write the string resulting from formatting, followed by a newline, to the file.
+/// Writing will fail if `file` was not opened with write access permissions or for any reason
+/// `fwrite` or similar libc functions may fail
+///
+/// @param file - The `CnxFile` to print the string to
+/// @param allocator - The `CnxAllocator` to use for memory allocations, if necessary
+/// @param format_string - The `cstring` containing the text along with how to format the formatting
+/// arguments into the text. Uses the `CnxFormat` formatting syntax
+/// @param ... - The formatting arguments to create formatted strings of to insert in
+/// `format_string`
+///
+/// @return `CnxResult(i32)` - The number of characters written on success, otherwise an error
+/// @ingroup cnx_file
 #define cnx_file_println_with_allocator(file, allocator, format_string, ...) \
 	__cnx_file_println(file,                                                 \
 					   format_string,                                        \
@@ -343,49 +388,212 @@ typedef struct CnxFile {
 #define __DISABLE_IF_NULL(file) \
 	cnx_disable_if(!(file), "Can't perform a file operation with a nullptr")
 
+/// @brief Writes the given `bytes` to the `file`.
+///
+/// Attempts to write bytes in the given byte array, `bytes` to the file. Writing will fail if
+/// `file` was not opened with write access permissions or for any reason `fwrite` or similar libc
+/// functions may fail
+///
+/// @param file - The `CnxFile` to write to
+/// @param bytes - The array of bytes to write
+/// @param num_bytes - The number of bytes in `bytes`
+///
+/// @return `CnxResult(i32)` - The number of bytes written on success, otherwise an error
+/// @ingroup cnx_file
 __attr(not_null(1, 2)) CnxResult(i32)
 	cnx_file_write_bytes(CnxFile* restrict file, const u8* restrict bytes, usize num_bytes)
 		__DISABLE_IF_NULL(file);
 
+/// @brief Reads `num_chars` characters from `file` and returns them in a `CnxString`
+///
+/// Attempts to read `num_chars` characters from `file`, returning the result in a `CnxString`.
+/// May read less than `num_chars` characters if `EOF` is reached. Reading will fail if the `file`
+/// was not opened with read access permissions or for any reason `fread` or similar libc functions
+/// may fail.
+///
+/// @param file - The `CnxFile` to read from
+/// @param num_chars - The number of characters to read
+///
+/// @return `CnxResult(CnxString)` - The string containing the characters read from the file on
+/// success, otherwise an error
+/// @ingroup cnx_file
 __attr(nodiscard) __attr(not_null(1)) CnxResult(CnxString)
 	cnx_file_read(CnxFile* restrict file, usize num_chars) __DISABLE_IF_NULL(file);
+/// @brief Reads `num_chars` characters from `file` and returns them in a `CnxString` allocated
+/// with the given memory allocator.
+///
+/// Attempts to read `num_chars` characters from `file`, returning the result in a `CnxString`
+/// allocated with the given memory allocator. May read less than `num_chars` characters if `EOF`
+/// is reached. Reading will fail if the `file` was not opened with read access permissions or for
+/// any reason `fread` or similar libc functions may fail.
+///
+/// @param file - The `CnxFile` to read from
+/// @param num_chars - The number of characters to read
+/// @param allocator - The memory allocator to allocate the returned string with
+///
+/// @return `CnxResult(CnxString)` - The string containing the characters read from the file on
+/// success, otherwise an error
+/// @ingroup cnx_file
 __attr(nodiscard) __attr(not_null(1)) CnxResult(CnxString)
 	cnx_file_read_with_allocator(CnxFile* restrict file, usize num_chars, CnxAllocator allocator)
 		__DISABLE_IF_NULL(file);
+/// @brief Reads a line of text from `file` and returns it in a `CnxString`
+///
+/// Attempts to read a line of text from `file`, returning the result in a `CnxString`.
+/// May read less than a line if `EOF` is reached before a newline is encountered. Reading will fail
+/// if the `file` was not opened with read access permissions or for any reason `fread` or similar
+/// libc functions may fail.
+///
+/// @param file - The `CnxFile` to read from
+///
+/// @return `CnxResult(CnxString)` - The string containing the line read from the file on
+/// success, otherwise an error
+/// @ingroup cnx_file
 __attr(nodiscard) __attr(not_null(1)) CnxResult(CnxString)
 	cnx_file_read_line(CnxFile* restrict file) __DISABLE_IF_NULL(file);
+/// @brief Reads a line of text from `file` and returns it in a `CnxString`
+///
+/// Attempts to read a line of text from `file`, returning the result in a `CnxString`.
+/// May read less than a line if `EOF` is reached before a newline is encountered. Reading will fail
+/// if the `file` was not opened with read access permissions or for any reason `fread` or similar
+/// libc functions may fail.
+///
+/// @param file - The `CnxFile` to read from
+///
+/// @return `CnxResult(CnxString)` - The string containing the line read from the file on
+/// success, otherwise an error
+/// @ingroup cnx_file
 __attr(nodiscard) __attr(not_null(1)) CnxResult(CnxString)
 	cnx_file_read_line_with_allocator(CnxFile* restrict file, CnxAllocator allocator)
 		__DISABLE_IF_NULL(file);
+/// @brief Reads up to `max_num_bytes` bytes from `file` and writes them to `bytes`, returning the
+/// number of bytes read.
+///
+/// Attempts to read up to `max_num_bytes` bytes from `file`, and writes them to `bytes`.
+/// May read less than `max_num_bytes` bytes if `EOF` is reached. Returns the number of bytes read
+/// when successful. Reading will fail if the `file` was not opened with read access permissions or
+/// for any reason `fread` or similar libc functions may fail.
+///
+/// @param file - The `CnxFile` to read from
+/// @param bytes - The byte array to write the bytes to
+/// @param max_num_bytes - The maximum number of bytes able to be written to `bytes`
+///
+/// @return `CnxResult(usize)` - The number of bytes read from the file and written to `bytes` on
+/// success, otherwise an error
+/// @ingroup cnx_file
 __attr(nodiscard) __attr(not_null(1, 2)) CnxResult(usize)
 	cnx_file_read_bytes(CnxFile* restrict file, u8* restrict bytes, usize max_num_bytes)
 		__DISABLE_IF_NULL(file);
 
+/// @brief Flushes the given `file`.
+///
+/// Attempts to flush the given `file`. Flushing may fail for any reason `fflush` from libc may
+/// fail.
+///
+/// @param file - The `CnxFile` to flush
+///
+/// @return `CnxResult` - `Ok()` on success, otherwise an error
+/// @ingroup cnx_file
 __attr(not_null(1)) CnxResult cnx_file_flush(CnxFile* restrict file) __DISABLE_IF_NULL(file);
 
+/// @brief Use to identify where a seek should begin from when seeking in a `CnxFile`
+/// @ingroup cnx_file
 typedef enum CnxFileSeekOrigin {
+	/// @brief Indicates a file seek should originate from the beginning of the file
 	CnxFileSeekBegin = SEEK_SET,
+	/// @brief Indicates a file seek should originate from the current position in the file
 	CnxFileSeekCurrent = SEEK_CUR,
+	/// @brief Indicates a file seek should originate from the end of the file
 	CnxFileSeekEnd = SEEK_END
 } CnxFileSeekOrigin;
 
+/// @brief Seeks to the given location in the `file`
+///
+/// Attempts to seek to the location indicated by `origin` and `offset` in the `file`. May fail for
+/// any reason `fseek` from libc may fail.
+///
+/// @param file - The `CnxFile` to seek in
+/// @param offset - The offset from origin to seek to. After successful seeking, the file will be at
+/// the effective location of `origin` + `offset`
+/// @param origin - The location in the file the seek should originate from
+///
+/// @return `CnxResult` - `Ok()` on success, otherwise an error
+/// @ingroup cnx_file
 __attr(not_null(1)) CnxResult
 	cnx_file_seek(CnxFile* restrict file, i64 offset, CnxFileSeekOrigin origin)
 		__DISABLE_IF_NULL(file);
 __attr(nodiscard) __attr(not_null(1)) CnxResult(i64) cnx_file_tell(CnxFile* restrict file)
 	__DISABLE_IF_NULL(file);
 
-#define cnx_file_is_symlink(file) cnx_path_is_symlink(&((file)->path))
-#define cnx_file_has_extension(file, extension) \
-	cnx_path_has_file_extension(&((file)->path), extension)
-#define cnx_file_get_extension(file) cnx_path_get_file_extension(&((file)->path))
-#define cnx_file_get_name(file)		 cnx_path_get_file_name(&((file)->path))
-#define cnx_file_get_name_without_extension(file) \
-	cnx_path_get_file_name_without_extension(&((file)->path))
-#define cnx_file_get_parent_directory(file) cnx_path_get_parent_directory(&((file)->path))
-
+/// @brief Closes the given `file`
+///
+/// Closes the given `file`, freeing the allocated buffer and any operating system level resources
+/// associated with the file.
+///
+/// @param file - The `CnxFile` to close
+/// @ingroup cnx_file
 __attr(not_null(1)) void cnx_file_close(CnxFile* restrict file) __DISABLE_IF_NULL(file);
 
+/// @brief Returns whether the given `file` is actually symbolic link
+///
+/// @param file - The pointer to the `CnxFile` to test
+///
+/// @return `bool` - Whether `file` is a symlink
+/// @ingroup cnx_file
+#define cnx_file_is_symlink(file) cnx_path_is_symlink(&((file)->path))
+/// @brief Returns whether the given `file` has the given file extension
+///
+/// @param file - The pointer to the `CnxFile` to test
+/// @param extension - The extension to test for. This can be a pointer to any string or string-like
+/// type (i.e. it can be `CnxString*`, `CnxStringView*`, `cstring`, or a string literal)
+///
+/// @return `bool` - Whether `file` is a symlink
+/// @ingroup cnx_file
+#define cnx_file_has_extension(file, extension) \
+	cnx_path_has_file_extension(&((file)->path), extension)
+/// @brief Returns the file extension of the given `file`
+///
+/// Attempts to get the file extension of the given `file`. If it does not have a file extension,
+/// then this will return `None()`.
+///
+/// @param file - The pointer to the `CnxFile` to get the file extension of
+///
+/// @return `CnxOption(CnxString)` - If `file` is a file with a file extension, the file extension
+/// of `file`. Otherwise, `None(CnxString)`.
+/// @ingroup cnx_file
+#define cnx_file_get_extension(file) cnx_path_get_file_extension(&((file)->path))
+/// @brief Returns the file name of the given `file`, including the file extension, if it has one.
+///
+/// @param file - The pointer to the `CnxFile` to get the file name of
+///
+/// @return `CnxString` - the file name of `file`.
+/// @ingroup cnx_file
+#define cnx_file_get_name(file) cnx_path_get_file_name(&((file)->path))
+/// @brief Returns the file name of the given `file`, excluding the file extension, if it has one.
+///
+/// @param file - The pointer to the `CnxFile` to get the file name of
+///
+/// @return `CnxString` - the file name of `file`.
+/// @ingroup cnx_file
+#define cnx_file_get_name_without_extension(file) \
+	cnx_path_get_file_name_without_extension(&((file)->path))
+/// @brief Returns the parent directory of the given `file` as an absolute path
+///
+/// @param file - The pointer to the `CnxFile` to get the parent directory of
+///
+/// @return `CnxPath` - the parent directory of `file` as an absolute path.
+/// @ingroup cnx_file
+#define cnx_file_get_parent_directory(file) cnx_path_get_parent_directory(&((file)->path))
+
+/// @brief Frees the given `file`
+///
+/// Frees the given `file`. Closes the file, freeing the allocated buffer and any operating system
+/// level resources associated with the file. This should not be called manually, instead prefer to
+/// use `cnx_file_close`, or declare your file as a `CnxScopedFile` so that is is closed
+/// automatically when it leaves scope
+///
+/// @param file - The `CnxFile` to free
+/// ingroup cnx_file
 __attr(not_null(1)) void cnx_file_free(void* file) __DISABLE_IF_NULL(file);
 
 __attr(nodiscard) __attr(not_null(1)) CnxResult(CnxFile)
@@ -463,6 +671,61 @@ __attr(nodiscard) __attr(not_null(1)) CnxResult(CnxFile)
 										 CnxFileOptions options,
 										 usize buffer_size,
 										 CnxAllocator allocator) __DISABLE_IF_NULL(path);
+
+#define __cnx_file_open_with_allocator_2(...)                \
+	__cnx_file_open_with_allocator(__VA_ARGS__,              \
+								   CNX_FILE_DEFAULT_OPTIONS, \
+								   CNX_FILE_DEFAULT_BUFFER_SIZE)
+#define __cnx_file_open_with_allocator_3(...) \
+	__cnx_file_open_with_allocator(__VA_ARGS__, CNX_FILE_DEFAULT_BUFFER_SIZE)
+#define __cnx_file_open_with_allocator_4(...) __cnx_file_open_with_allocator(__VA_ARGS__)
+
+#define __cnx_file_open_with_allocator(path, allocator, options, buffer_size) \
+	_Generic((path), 							   												   \
+			const CnxString* 			: cnx_file_open_with_allocator_string( 					   \
+											static_cast(const CnxString*)(path), 				   \
+											options, 											   \
+											buffer_size, 										   \
+											allocator), 		  		   						   \
+			CnxString* 					: cnx_file_open_with_allocator_string( 					   \
+											static_cast(const CnxString*)(path), 		  		   \
+											options, 											   \
+											buffer_size, 										   \
+											allocator), 		  		   						   \
+			const CnxStringView* 		: cnx_file_open_with_allocator_stringview( 				   \
+											static_cast(const CnxStringView*)(path), 	  		   \
+											options, 											   \
+											buffer_size, 										   \
+											allocator), 		  		   						   \
+			CnxStringView* 				: cnx_file_open_with_allocator_stringview( 				   \
+											static_cast(const CnxStringView*)(path), 	  		   \
+											options, 											   \
+											buffer_size, 										   \
+											allocator), 		  		   						   \
+			const_cstring 				: cnx_file_open_with_allocator_cstring( 				   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path)), 			   \
+											options, 											   \
+											buffer_size, 										   \
+											allocator), 		  		   						   \
+			cstring 					: cnx_file_open_with_allocator_cstring( 				   \
+											static_cast(const_cstring)(path), 			  		   \
+											strlen(static_cast(const_cstring)(path)), 			   \
+											options, 											   \
+											buffer_size, 										   \
+											allocator), 		  		   						   \
+			const char[sizeof(path)] 	: cnx_file_open_with_allocator_cstring( 	/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path), 							/** NOLINT **/ \
+											options, 											   \
+											buffer_size, 										   \
+											allocator), 		  		   						   \
+			char[sizeof(path)] 			: cnx_file_open_with_allocator_cstring( 	/** NOLINT **/ \
+											static_cast(const_cstring)(path), 			   		   \
+											sizeof(path), 							/** NOLINT **/ \
+											options, 											   \
+											buffer_size,\
+											allocator))
 
 __attr(not_null(1, 2)) CnxResult(i32) __cnx_file_print(CnxFile* file,
 													   restrict const_cstring format_string,

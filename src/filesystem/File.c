@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief CnxFile provides various functions for working with type safe, uniquely owned files
 /// @version 0.2.0
-/// @date 2022-05-01
+/// @date 2022-05-04
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -215,6 +215,8 @@ CnxResult(i32) __cnx_file_print(CnxFile* file,
 		return Err(i32, cnx_error_new(EPERM, CNX_POSIX_ERROR_CATEGORY));
 	}
 
+	file->dirty = true;
+
 	va_list list = {0};
 	va_start(list, num_args);
 	CnxScopedString string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
@@ -241,6 +243,8 @@ CnxResult(i32) __cnx_file_println(CnxFile* file,
 		return Err(i32, cnx_error_new(EPERM, CNX_POSIX_ERROR_CATEGORY));
 	}
 
+	file->dirty = true;
+
 	va_list list = {0};
 	va_start(list, num_args);
 	CnxScopedString string = cnx_vformat_with_allocator(format_string, allocator, num_args, list);
@@ -264,6 +268,8 @@ CnxResult(i32)
 	if(file->options.mode == CnxFileRead) {
 		return Err(i32, cnx_error_new(EPERM, CNX_POSIX_ERROR_CATEGORY));
 	}
+
+	file->dirty = true;
 
 	let res = fwrite(bytes, sizeof(u8), num_bytes, cnx_unique_ptr_get(file->file));
 	if(res != num_bytes) {
@@ -344,9 +350,7 @@ CnxResult(usize)
 }
 
 CnxResult cnx_file_flush(CnxFile* restrict file) {
-	if(file->options.mode == CnxFileRead) {
-		return Err(i32, cnx_error_new(EPERM, CNX_POSIX_ERROR_CATEGORY));
-	}
+	file->dirty = false;
 
 	if(fflush(cnx_unique_ptr_get(file->file)) != 0) {
 		return Err(i32, cnx_error_new(errno, CNX_POSIX_ERROR_CATEGORY));
@@ -377,7 +381,10 @@ CnxResult(i64) cnx_file_tell(CnxFile* restrict file) {
 
 void cnx_file_close(CnxFile* restrict file) {
 	cnx_string_free(file->path);
-	ignore(fflush(cnx_unique_ptr_get(file->file)));
+	// NOLINTNEXTLINE(hicpp-signed-bitwise)
+	if(file->dirty || (file->options.mode & CnxFileRead) != 0) {
+		ignore(fflush(cnx_unique_ptr_get(file->file)));
+	}
 	cnx_unique_ptr_free(FileBuffer, file->buffer);
 	cnx_unique_ptr_free(FILE, file->file);
 }
