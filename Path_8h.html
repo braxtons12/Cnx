@@ -72,7 +72,7 @@
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"> <a href="group__cnx__path.html#gacd59252345e36702d91c684d6da8917e" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#gafe19720a962dabdfb36a17b7ca5e76a9" class="m-doc">nodiscard</a>)</span>
+              <span class="m-doc-wrap-bumper"> <a href="group__cnx__path.html#ga55ec16304b886d8d293d8f674d35112b" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#gafe19720a962dabdfb36a17b7ca5e76a9" class="m-doc">nodiscard</a>)</span>
             </dt>
             <dd>Returns the path to the home directory of the user running this Program.</dd>
           </dl>
@@ -104,6 +104,105 @@
               <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#ga86ccee6c321426f6c39bed9faa4f6974" class="m-doc">cnx_path_is_absolute</a>(</span><span class="m-doc-wrap">path)</span>
             </dt>
             <dd>Checks if the given path is an absolute path.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#ga24c5ceb851fabd88dcad65df9f180973" class="m-doc">cnx_path_is_relative</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Checks if the given path is a relative path.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#gabf4dec94e810a81de7518759ff8ea9d2" class="m-doc">cnx_path_get_absolute_path</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Returns the absolute path of <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#ga9f5a16159af33dda08f704e39c46496f" class="m-doc">cnx_path_exists</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Checks if the given path exists.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#ga4e080a9f228240851c56cb52ef9f27e5" class="m-doc">cnx_path_is_file</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Checks if the given path is a path to a file.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#gab642c91f86794d2e2f79196c4cb6f80c" class="m-doc">cnx_path_is_directory</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Checks if the given path is a path to a directory.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#ga3005be171fbcf81e951a4d5b22845555" class="m-doc">cnx_path_is_fs_root</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Checks if the given path is a path to a filesystem root (ie &quot;C:\\&quot; or &quot;/&quot;)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#gaf652bf222cac7e5e452ed40a189a7998" class="m-doc">cnx_path_is_symlink</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Checks if the given path is a path to a symbolic link.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#ga6c8cfe311d957e8e26dc0d4764fb3ae1" class="m-doc">cnx_path_get_symlink_target</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Attempts to get the path of the target of the symbolic link <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#gab5fc50874c74ab0cdf9627280e3786f0" class="m-doc">cnx_path_has_file_extension</a>(</span><span class="m-doc-wrap">path,
+              extension)</span>
+            </dt>
+            <dd>Checks if the given path is a file with the given file extension.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#gacec83235eb59c10f49552ded5cf1fad1" class="m-doc">cnx_path_get_file_extension</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Attempts to get the file extension of the file <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#ga98fc4813250277dc47d3e7f155145243" class="m-doc">cnx_path_get_file_name</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Gets the file name of the given path, including file extension.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#gabce2ad48db42560b38df86b67074b2aa" class="m-doc">cnx_path_get_file_name_without_extension</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Gets the file name of the given path, without the file extension.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#gaa79ce71a314eb382f6f50dfb292b5432" class="m-doc">cnx_path_get_parent_directory</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Returns the parent directory of the given <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#gadd0bacd7ee1c36f25020e383c032804c" class="m-doc">cnx_path_append</a>(</span><span class="m-doc-wrap">path,
+              entry_name)</span>
+            </dt>
+            <dd>Appends the relative path <code>entry_name</code> to <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#ga108ae0d9c87b86fc3497801cf2561180" class="m-doc">cnx_path_create_file</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Creates a new file with the path and name indicated by <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#gaba4838fd98f9f49a0365325679d12390" class="m-doc">cnx_path_create_file_overwriting</a>(</span><span class="m-doc-wrap">file_path)</span>
+            </dt>
+            <dd>Creates a new file with the path and name indicated by <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#ga0f13a50aeb906cb69315dc59cd2dd06c" class="m-doc">cnx_path_create_directory</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Creates a new directory with the path and name indicated by <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#ga85959dc6105152f50b7bbb81b3b35f94" class="m-doc">cnx_path_create_directory_overwriting</a>(</span><span class="m-doc-wrap">dir_path)</span>
+            </dt>
+            <dd>Creates a new directory with the path and name indicated by <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#ga92e6a06027806308d6312026ec4f0af7" class="m-doc">cnx_path_remove_file</a>(</span><span class="m-doc-wrap">file_path)</span>
+            </dt>
+            <dd>Removes the file located at <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#gaadd9323dd43acd524ec439ffa7da2311" class="m-doc">cnx_path_remove_directory</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Removes the directory located at <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#gad7d00d27e4c5d7e9adc8d5ad20f24745" class="m-doc">cnx_path_remove_directory_recursive</a>(</span><span class="m-doc-wrap">dir_path)</span>
+            </dt>
+            <dd>Removes the directory located at <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#ga1044d3e674463ec1d62635e281b4fcdb" class="m-doc">cnx_path_create_symlink</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Creates a new symbolic link with the name and path indicated by <code>link_name</code> that points to the file or directory at <code>link_target</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#gaefc40d16c1c011926f26bfe78b09e5ae" class="m-doc">cnx_path_create_symlink_overwriting</a>(</span><span class="m-doc-wrap">link_name,
+              link_target)</span>
+            </dt>
+            <dd>Creates a new symbolic link with the name and path indicated by <code>link_name</code> that points to the file or directory at <code>link_target</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="group__cnx__path.html#ga082be33f9d4a2417eb2e120bec9ffec1" class="m-doc">cnx_path_remove_symlink</a>(</span><span class="m-doc-wrap">link_path)</span>
+            </dt>
+            <dd>Removes the symbolic link <code>link_path</code></dd>
           </dl>
         </section>
       </div>

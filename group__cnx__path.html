@@ -59,39 +59,40 @@
 <p><code>CnxPath</code> provides utilities for working with filesystem paths and perfoming basic file system operations, such as checking the current status (or lack thereof) of a path on the filesystem, querying attributes of an existing path on the file system, creating and removing files, directories, and symbolic links, and retrieving semantically correct paths for certain special filesystem paths, such as the user home directory.</p><p>Example:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&lt;Cnx/filesystem/Path.h&gt;</span><span class="cp"></span>
 
 <span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">let</span> <span class="n">path</span> <span class="o">=</span> <span class="n">cnx_string_from</span><span class="p">(</span><span class="s">&quot;/home/my_user/test.txt&quot;</span><span class="p">);</span>
+    <span class="n">CnxScopedPath</span> <span class="n">path</span> <span class="o">=</span> <span class="n">cnx_string_from</span><span class="p">(</span><span class="s">&quot;/home/my_user/test.txt&quot;</span><span class="p">);</span>
     <span class="n">let</span> <span class="n">create_res</span> <span class="o">=</span> <span class="n">cnx_path_create_file</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">);</span>
     <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_result_is_ok</span><span class="p">(</span><span class="n">create_res</span><span class="p">),</span> <span class="s">&quot;Failed to create test path&quot;</span><span class="p">);</span>
 
     <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_path_is_valid</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">),</span>
-               <span class="s">&quot;Path is not a valid filesystem path on this</span>
-<span class="n">platform</span><span class="s">&quot;);     cnx_assert(cnx_path_exists(&amp;path), &quot;</span><span class="n">Path</span> <span class="n">does</span> <span class="n">not</span> <span class="n">exist</span><span class="o">!</span><span class="s">&quot;);</span>
+               <span class="s">&quot;Path is not a valid filesystem path on this platform&quot;</span><span class="p">);</span>
+    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_path_exists</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">),</span> <span class="s">&quot;Path does not exist!&quot;</span><span class="p">);</span>
     <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_path_is_file</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">),</span> <span class="s">&quot;Path is not a file!&quot;</span><span class="p">);</span>
     <span class="n">cnx_assert</span><span class="p">(</span><span class="o">!</span><span class="n">cnx_path_is_directory</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">),</span> <span class="s">&quot;Path is a directory !?&quot;</span><span class="p">);</span>
     <span class="n">cnx_assert</span><span class="p">(</span><span class="o">!</span><span class="n">cnx_path_is_symlink</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">),</span> <span class="s">&quot;Path is a symlink !?&quot;</span><span class="p">);</span>
     <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_path_is_absolute</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">),</span> <span class="s">&quot;Path is not absolute!&quot;</span><span class="p">);</span>
 
-    <span class="n">let</span> <span class="n">name</span> <span class="o">=</span> <span class="n">cnx_string_from</span><span class="p">(</span><span class="s">&quot;test.txt&quot;</span><span class="p">);</span>
-    <span class="n">let</span> <span class="n">name_without_extension</span> <span class="o">=</span> <span class="n">cnx_string_from</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">);</span>
-    <span class="n">let</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">cnx_string_from</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">);</span>
+    <span class="n">CnxScopedString</span> <span class="n">name</span> <span class="o">=</span> <span class="n">cnx_string_from</span><span class="p">(</span><span class="s">&quot;test.txt&quot;</span><span class="p">);</span>
+    <span class="n">CnxScopedString</span> <span class="n">name_without_extension</span> <span class="o">=</span> <span class="n">cnx_string_from</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">);</span>
+    <span class="n">CnxScopedString</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">cnx_string_from</span><span class="p">(</span><span class="s">&quot;txt&quot;</span><span class="p">);</span>
 
-    <span class="n">let</span> <span class="n">name_actual</span> <span class="o">=</span> <span class="n">cnx_path_get_file_name</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">);</span>
-    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_string_equal</span><span class="p">(</span><span class="n">name_actual</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">),</span> <span class="s">&quot;path name is not</span>
-<span class="n">test</span><span class="p">.</span><span class="n">txt</span><span class="o">!</span><span class="s">&quot;);</span>
+    <span class="n">CnxScopedString</span> <span class="n">name_actual</span> <span class="o">=</span> <span class="n">cnx_path_get_file_name</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">);</span>
+    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_string_equal</span><span class="p">(</span><span class="n">name_actual</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">),</span> <span class="s">&quot;path name is not test.txt!&quot;</span><span class="p">);</span>
 
-    <span class="n">let</span> <span class="n">name_without_extension_actual</span> <span class="o">=</span>
-<span class="n">cnx_path_get_file_name_without_extension</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">);</span>
-    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_string_equal</span><span class="p">(</span><span class="n">name_without_extension_actual</span><span class="p">,</span>
-<span class="o">&amp;</span><span class="n">name_without_extension</span><span class="p">),</span>              <span class="s">&quot;path name without extension is not test!&quot;</span><span class="p">);</span>
+    <span class="n">CnxScopedString</span> <span class="n">name_without_extension_actual</span>
+        <span class="o">=</span> <span class="n">cnx_path_get_file_name_without_extension</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">);</span>
+    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_string_equal</span><span class="p">(</span><span class="n">name_without_extension_actual</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">name_without_extension</span><span class="p">),</span>
+               <span class="s">&quot;path name without extension is not test!&quot;</span><span class="p">);</span>
 
     <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_path_has_file_extension</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">extension</span><span class="p">),</span>
                <span class="s">&quot;path name does not have .txt file extension&quot;</span><span class="p">);</span>
 
-    <span class="n">let</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">cnx_string_from</span><span class="p">(</span><span class="s">&quot;/home/my_user&quot;</span><span class="p">);</span>
+    <span class="n">CnxScopedString</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">cnx_string_from</span><span class="p">(</span><span class="s">&quot;/home/my_user&quot;</span><span class="p">);</span>
 
-    <span class="n">let</span> <span class="n">parent_actual</span> <span class="o">=</span> <span class="n">cnx_path_get_parent_directory</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">);</span>
-    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_string_equal</span><span class="p">(</span><span class="n">parent_actual</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">parent</span><span class="p">),</span> <span class="s">&quot;Path&#39;s parent is</span>
-<span class="n">not</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">my_user</span><span class="o">!</span><span class="s">&quot;);</span>
+    <span class="n">let</span> <span class="n">maybe_parent</span> <span class="o">=</span> <span class="n">cnx_path_get_parent_directory</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">);</span>
+    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_option_is_some</span><span class="p">(</span><span class="n">maybe_parent</span><span class="p">),</span> <span class="s">&quot;Path doesn&#39;t have a parent!&quot;</span><span class="p">);</span>
+
+    <span class="n">CnxScopedPath</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">cnx_option_unwrap</span><span class="p">(</span><span class="n">maybe_parent</span><span class="p">);</span>
+    <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_string_equal</span><span class="p">(</span><span class="n">parent_actual</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">parent</span><span class="p">),</span> <span class="s">&quot;Path&#39;s parent is not /home/my_user!&quot;</span><span class="p">);</span>
 
     <span class="n">let</span> <span class="n">remove_res</span> <span class="o">=</span> <span class="n">cnx_path_remove_file</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">);</span>
     <span class="n">cnx_assert</span><span class="p">(</span><span class="n">cnx_result_is_ok</span><span class="p">(</span><span class="n">remove_res</span><span class="p">),</span> <span class="s">&quot;Failed to remove test file!&quot;</span><span class="p">);</span>
@@ -109,7 +110,7 @@
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"> <a href="#gacd59252345e36702d91c684d6da8917e" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#gafe19720a962dabdfb36a17b7ca5e76a9" class="m-doc">nodiscard</a>)</span>
+              <span class="m-doc-wrap-bumper"> <a href="#ga55ec16304b886d8d293d8f674d35112b" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#gafe19720a962dabdfb36a17b7ca5e76a9" class="m-doc">nodiscard</a>)</span>
             </dt>
             <dd>Returns the path to the home directory of the user running this Program.</dd>
           </dl>
@@ -141,6 +142,105 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga86ccee6c321426f6c39bed9faa4f6974" class="m-doc">cnx_path_is_absolute</a>(</span><span class="m-doc-wrap">path)</span>
             </dt>
             <dd>Checks if the given path is an absolute path.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga24c5ceb851fabd88dcad65df9f180973" class="m-doc">cnx_path_is_relative</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Checks if the given path is a relative path.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gabf4dec94e810a81de7518759ff8ea9d2" class="m-doc">cnx_path_get_absolute_path</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Returns the absolute path of <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9f5a16159af33dda08f704e39c46496f" class="m-doc">cnx_path_exists</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Checks if the given path exists.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4e080a9f228240851c56cb52ef9f27e5" class="m-doc">cnx_path_is_file</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Checks if the given path is a path to a file.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab642c91f86794d2e2f79196c4cb6f80c" class="m-doc">cnx_path_is_directory</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Checks if the given path is a path to a directory.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga3005be171fbcf81e951a4d5b22845555" class="m-doc">cnx_path_is_fs_root</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Checks if the given path is a path to a filesystem root (ie &quot;C:\\&quot; or &quot;/&quot;)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaf652bf222cac7e5e452ed40a189a7998" class="m-doc">cnx_path_is_symlink</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Checks if the given path is a path to a symbolic link.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga6c8cfe311d957e8e26dc0d4764fb3ae1" class="m-doc">cnx_path_get_symlink_target</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Attempts to get the path of the target of the symbolic link <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab5fc50874c74ab0cdf9627280e3786f0" class="m-doc">cnx_path_has_file_extension</a>(</span><span class="m-doc-wrap">path,
+              extension)</span>
+            </dt>
+            <dd>Checks if the given path is a file with the given file extension.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gacec83235eb59c10f49552ded5cf1fad1" class="m-doc">cnx_path_get_file_extension</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Attempts to get the file extension of the file <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga98fc4813250277dc47d3e7f155145243" class="m-doc">cnx_path_get_file_name</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Gets the file name of the given path, including file extension.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gabce2ad48db42560b38df86b67074b2aa" class="m-doc">cnx_path_get_file_name_without_extension</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Gets the file name of the given path, without the file extension.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaa79ce71a314eb382f6f50dfb292b5432" class="m-doc">cnx_path_get_parent_directory</a>(</span><span class="m-doc-wrap">path)</span>
+            </dt>
+            <dd>Returns the parent directory of the given <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadd0bacd7ee1c36f25020e383c032804c" class="m-doc">cnx_path_append</a>(</span><span class="m-doc-wrap">path,
+              entry_name)</span>
+            </dt>
+            <dd>Appends the relative path <code>entry_name</code> to <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga108ae0d9c87b86fc3497801cf2561180" class="m-doc">cnx_path_create_file</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Creates a new file with the path and name indicated by <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaba4838fd98f9f49a0365325679d12390" class="m-doc">cnx_path_create_file_overwriting</a>(</span><span class="m-doc-wrap">file_path)</span>
+            </dt>
+            <dd>Creates a new file with the path and name indicated by <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga0f13a50aeb906cb69315dc59cd2dd06c" class="m-doc">cnx_path_create_directory</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Creates a new directory with the path and name indicated by <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga85959dc6105152f50b7bbb81b3b35f94" class="m-doc">cnx_path_create_directory_overwriting</a>(</span><span class="m-doc-wrap">dir_path)</span>
+            </dt>
+            <dd>Creates a new directory with the path and name indicated by <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga92e6a06027806308d6312026ec4f0af7" class="m-doc">cnx_path_remove_file</a>(</span><span class="m-doc-wrap">file_path)</span>
+            </dt>
+            <dd>Removes the file located at <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaadd9323dd43acd524ec439ffa7da2311" class="m-doc">cnx_path_remove_directory</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Removes the directory located at <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad7d00d27e4c5d7e9adc8d5ad20f24745" class="m-doc">cnx_path_remove_directory_recursive</a>(</span><span class="m-doc-wrap">dir_path)</span>
+            </dt>
+            <dd>Removes the directory located at <code>path</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1044d3e674463ec1d62635e281b4fcdb" class="m-doc">cnx_path_create_symlink</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Creates a new symbolic link with the name and path indicated by <code>link_name</code> that points to the file or directory at <code>link_target</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaefc40d16c1c011926f26bfe78b09e5ae" class="m-doc">cnx_path_create_symlink_overwriting</a>(</span><span class="m-doc-wrap">link_name,
+              link_target)</span>
+            </dt>
+            <dd>Creates a new symbolic link with the name and path indicated by <code>link_name</code> that points to the file or directory at <code>link_target</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga082be33f9d4a2417eb2e120bec9ffec1" class="m-doc">cnx_path_remove_symlink</a>(</span><span class="m-doc-wrap">link_path)</span>
+            </dt>
+            <dd>Removes the symbolic link <code>link_path</code></dd>
           </dl>
         </section>
         <section>
@@ -167,9 +267,9 @@
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="gacd59252345e36702d91c684d6da8917e"><div>
+          <section class="m-doc-details" id="ga55ec16304b886d8d293d8f674d35112b"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gacd59252345e36702d91c684d6da8917e" class="m-doc-self">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#gafe19720a962dabdfb36a17b7ca5e76a9" class="m-doc">nodiscard</a>)</span></span>
+              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga55ec16304b886d8d293d8f674d35112b" class="m-doc-self">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#gafe19720a962dabdfb36a17b7ca5e76a9" class="m-doc">nodiscard</a>)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
             </h3>
             <p>Returns the path to the home directory of the user running this Program.</p>
@@ -240,7 +340,7 @@
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>whether the path is valid</td>
+                  <td><code>bool</code> - whether the path is valid</td>
                 </tr>
               </tfoot>
             </table>
@@ -270,7 +370,7 @@
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td><code>path</code> converted to a valid filesystem path</td>
+                  <td><code>CnxPath</code> - <code>path</code> converted to a valid filesystem path</td>
                 </tr>
               </tfoot>
             </table>
@@ -298,10 +398,616 @@
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>whether <code>path</code> is an absolute path</td>
+                  <td><code>bool</code> - whether <code>path</code> is an absolute path</td>
                 </tr>
               </tfoot>
             </table>
+          </div></section>
+          <section class="m-doc-details" id="ga24c5ceb851fabd88dcad65df9f180973"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga24c5ceb851fabd88dcad65df9f180973" class="m-doc-self">cnx_path_is_relative</a>(</span><span class="m-doc-wrap">path)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Checks if the given path is a relative path.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">path</td>
+                  <td>- The path to check. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>bool</code> - whether <code>path</code> is a relative path</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gabf4dec94e810a81de7518759ff8ea9d2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gabf4dec94e810a81de7518759ff8ea9d2" class="m-doc-self">cnx_path_get_absolute_path</a>(</span><span class="m-doc-wrap">path)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Returns the absolute path of <code>path</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">path</td>
+                  <td>- The path to get the absolute path of. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>CnxPath</code> - <code>path</code> as an absolute path</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the absolute path of <code>path</code>. For example if <code>path</code> is &quot;my_dir/my_file.txt&quot;, this returns &quot;$CWD/my_dir/my_file.txt&quot; where &quot;$CWD&quot; is the absolute path of the current working directory. If <code>path</code> is already an absolute path, this returns a clone of <code>path</code></p>
+          </div></section>
+          <section class="m-doc-details" id="ga9f5a16159af33dda08f704e39c46496f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga9f5a16159af33dda08f704e39c46496f" class="m-doc-self">cnx_path_exists</a>(</span><span class="m-doc-wrap">path)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Checks if the given path exists.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">path</td>
+                  <td>- The path to check. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>bool</code> - whether <code>path</code> exists</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga4e080a9f228240851c56cb52ef9f27e5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4e080a9f228240851c56cb52ef9f27e5" class="m-doc-self">cnx_path_is_file</a>(</span><span class="m-doc-wrap">path)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Checks if the given path is a path to a file.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">path</td>
+                  <td>- The path to check. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>bool</code> - whether <code>path</code> is a file</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gab642c91f86794d2e2f79196c4cb6f80c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab642c91f86794d2e2f79196c4cb6f80c" class="m-doc-self">cnx_path_is_directory</a>(</span><span class="m-doc-wrap">path)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Checks if the given path is a path to a directory.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">path</td>
+                  <td>- The path to check. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>bool</code> - whether <code>path</code> is a directory</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga3005be171fbcf81e951a4d5b22845555"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga3005be171fbcf81e951a4d5b22845555" class="m-doc-self">cnx_path_is_fs_root</a>(</span><span class="m-doc-wrap">path)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Checks if the given path is a path to a filesystem root (ie &quot;C:\\&quot; or &quot;/&quot;)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">path</td>
+                  <td>- The path to check. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>bool</code> - whether <code>path</code> is a filesystem root</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaf652bf222cac7e5e452ed40a189a7998"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaf652bf222cac7e5e452ed40a189a7998" class="m-doc-self">cnx_path_is_symlink</a>(</span><span class="m-doc-wrap">path)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Checks if the given path is a path to a symbolic link.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">path</td>
+                  <td>- The path to check. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>bool</code> - whether <code>path</code> is a symlink</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga6c8cfe311d957e8e26dc0d4764fb3ae1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga6c8cfe311d957e8e26dc0d4764fb3ae1" class="m-doc-self">cnx_path_get_symlink_target</a>(</span><span class="m-doc-wrap">path)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Attempts to get the path of the target of the symbolic link <code>path</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">path</td>
+                  <td>- The symlink to get the target of. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>CnxResult(CnxPath</code>) - If <code>path</code> is a symlink and actively links to a target, the target of <code>path</code>. Otherwise, an error.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gab5fc50874c74ab0cdf9627280e3786f0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gab5fc50874c74ab0cdf9627280e3786f0" class="m-doc-self">cnx_path_has_file_extension</a>(</span><span class="m-doc-wrap">path,
+              extension)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Checks if the given path is a file with the given file extension.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">path</td>
+                  <td>- The path to check. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+                <tr>
+                  <td>extension</td>
+                  <td>- The extension to check for. This should be without the &quot;.&quot; prefix. I.E. for a &quot;.txt&quot; extension, this should be &quot;txt&quot;. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>bool</code> - whether <code>path</code> is a symlink</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gacec83235eb59c10f49552ded5cf1fad1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gacec83235eb59c10f49552ded5cf1fad1" class="m-doc-self">cnx_path_get_file_extension</a>(</span><span class="m-doc-wrap">path)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Attempts to get the file extension of the file <code>path</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">path</td>
+                  <td>- Path to the file to get the extension of. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>CnxOption(<a href="structCnxString.html" class="m-doc">CnxString</a></code>) - If <code>path</code> is a file with a file extension, the file extension of <code>path</code>. Otherwise, <code><a href="group__cnx__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(CnxString)</a></code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga98fc4813250277dc47d3e7f155145243"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga98fc4813250277dc47d3e7f155145243" class="m-doc-self">cnx_path_get_file_name</a>(</span><span class="m-doc-wrap">path)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Gets the file name of the given path, including file extension.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">path</td>
+                  <td>- The path to get the file name of. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code><a href="structCnxString.html" class="m-doc">CnxString</a></code> - The name of the file indicated by path</td>
+                </tr>
+              </tfoot>
+            </table>
+<aside class="m-note m-info"><h4>Note</h4><p>If <code>path</code> is a directory, then this will return the directory name</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="gabce2ad48db42560b38df86b67074b2aa"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gabce2ad48db42560b38df86b67074b2aa" class="m-doc-self">cnx_path_get_file_name_without_extension</a>(</span><span class="m-doc-wrap">path)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Gets the file name of the given path, without the file extension.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">path</td>
+                  <td>- The path to get the file name of. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code><a href="structCnxString.html" class="m-doc">CnxString</a></code> - The name of the file indicated by path, without the file extension if it has one.</td>
+                </tr>
+              </tfoot>
+            </table>
+<aside class="m-note m-info"><h4>Note</h4><p>If <code>path</code> is a directory, then this will return the directory name</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="gaa79ce71a314eb382f6f50dfb292b5432"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaa79ce71a314eb382f6f50dfb292b5432" class="m-doc-self">cnx_path_get_parent_directory</a>(</span><span class="m-doc-wrap">path)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Returns the parent directory of the given <code>path</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">path</td>
+                  <td>- The path to get the parent directory of. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>CnxPath</code> - The parent directory of <code>path</code></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Returns the parent directory of the given path. For example, for a path &quot;/usr/local/bin&quot; on *NIX, the parent directory would be &quot;/usr/local&quot;, or for a path &quot;Documents/my_file.txt&quot;, the parent directory would be &quot;$CWD/Documents&quot;.</p><p>If <code>path</code> is a file system root, <code>path</code> is returned.</p><p>The returned path is <strong>always</strong> an absolute path.</p>
+          </div></section>
+          <section class="m-doc-details" id="gadd0bacd7ee1c36f25020e383c032804c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadd0bacd7ee1c36f25020e383c032804c" class="m-doc-self">cnx_path_append</a>(</span><span class="m-doc-wrap">path,
+              entry_name)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Appends the relative path <code>entry_name</code> to <code>path</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">path</td>
+                  <td>- The path to append to. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+                <tr>
+                  <td>entry_name</td>
+                  <td>- The path to be appended. This must be a relative path. If this is an absolute path, an error will be returned. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>CnxResult</code> - <code><a href="group__cnx__result.html#ga45604f9f51cb2d871049f911e32047db" class="m-doc">Ok()</a></code> if appending was successful, an error otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to append the relative path <code>entry_name</code> to the path <code>path</code>. <code>entry_name</code> <strong>must</strong> be a relative path: if <code>entry_name</code> is absolute, this will return an error.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga108ae0d9c87b86fc3497801cf2561180"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga108ae0d9c87b86fc3497801cf2561180" class="m-doc-self">cnx_path_create_file</a>(</span><span class="m-doc-wrap">...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Creates a new file with the path and name indicated by <code>path</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">...</td>
+                  <td><ul><li><code>path</code> - The path of the file to create. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</li><li><code>overwrite_existing</code> - Whether existing filesystem contents should be deleted and overwritten if <code>path</code> already exists. This is <code>false</code> by default.</li></ul></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>CnxResult</code> - <code><a href="group__cnx__result.html#ga45604f9f51cb2d871049f911e32047db" class="m-doc">Ok()</a></code> if creating the file was successful, an error otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to create a new file with the path and name indicated by <code>path</code>. By default, this will fail if <code>path</code> already exists. If <code>overwrite_existing</code> is given as <code>true</code>, however, all filesystem contents originally existing at <code>path</code> will attempt to be deleted, and a new file will be created if deletion was successful. <code>overwrite_existing</code> may also be given as <code>false</code> to explicitly signal that failure should occur if <code>path</code> exists.</p>
+          </div></section>
+          <section class="m-doc-details" id="gaba4838fd98f9f49a0365325679d12390"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaba4838fd98f9f49a0365325679d12390" class="m-doc-self">cnx_path_create_file_overwriting</a>(</span><span class="m-doc-wrap">file_path)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Creates a new file with the path and name indicated by <code>path</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">file_path</td>
+                  <td>- The path of the file to create. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>CnxResult</code> - <code><a href="group__cnx__result.html#ga45604f9f51cb2d871049f911e32047db" class="m-doc">Ok()</a></code> if creating the file was successful, an error otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to create a new file with the path and name indicated by <code>path</code>. Unlike <code>cnx_path_create_file</code>, this will always overwrite existing filesystem contents: if <code>path</code> already exists, all contents originally existing at <code>path</code> will attempt to be deleted, and a new file will be created if deletion was successful.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga0f13a50aeb906cb69315dc59cd2dd06c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga0f13a50aeb906cb69315dc59cd2dd06c" class="m-doc-self">cnx_path_create_directory</a>(</span><span class="m-doc-wrap">...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Creates a new directory with the path and name indicated by <code>path</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">...</td>
+                  <td><ul><li><code>path</code> - The path of the directory to create. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</li><li><code>overwrite_existing</code> - Whether existing filesystem contents should be deleted and overwritten if <code>path</code> already exists. This is <code>false</code> by default.</li></ul></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>CnxResult</code> - <code><a href="group__cnx__result.html#ga45604f9f51cb2d871049f911e32047db" class="m-doc">Ok()</a></code> if creating the directory was successful, an error otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to create a new directory with the path and name indicated by <code>path</code>. By default, this will fail if <code>path</code> already exists. If <code>overwrite_existing</code> is given as <code>true</code>, however, all filesystem contents originally existing at <code>path</code> will attempt to be deleted, and a new directory will be created if deletion was successful. <code>overwrite_existing</code> may also be given as <code>false</code> to explicitly signal that failure should occur if <code>path</code> exists.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga85959dc6105152f50b7bbb81b3b35f94"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga85959dc6105152f50b7bbb81b3b35f94" class="m-doc-self">cnx_path_create_directory_overwriting</a>(</span><span class="m-doc-wrap">dir_path)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Creates a new directory with the path and name indicated by <code>path</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">dir_path</td>
+                  <td>- The path of the directory to create. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>CnxResult</code> - <code><a href="group__cnx__result.html#ga45604f9f51cb2d871049f911e32047db" class="m-doc">Ok()</a></code> if creating the directory was successful, an error otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to create a new directory with the path and name indicated by <code>path</code>. Unlike <code>cnx_path_create_directory</code>, this will always overwrite existing filesystem contents: if <code>path</code> already exists, all contents originally existing at <code>path</code> will attempt to be deleted, and a new directory will be created if deletion was successful.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga92e6a06027806308d6312026ec4f0af7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga92e6a06027806308d6312026ec4f0af7" class="m-doc-self">cnx_path_remove_file</a>(</span><span class="m-doc-wrap">file_path)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Removes the file located at <code>path</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">file_path</td>
+                  <td>- The path of the file to remove. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>CnxResult</code> - <code><a href="group__cnx__result.html#ga45604f9f51cb2d871049f911e32047db" class="m-doc">Ok()</a></code> if removing the file was successful, an error otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to remove the file located at <code>path</code>. If <code>path</code> is not a file (aka, it is a directory), or if <code>path</code> does not exist, this will return an error. This may also return an error if an error occurs when removing the file.</p>
+          </div></section>
+          <section class="m-doc-details" id="gaadd9323dd43acd524ec439ffa7da2311"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaadd9323dd43acd524ec439ffa7da2311" class="m-doc-self">cnx_path_remove_directory</a>(</span><span class="m-doc-wrap">...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Removes the directory located at <code>path</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">...</td>
+                  <td><ul><li><code>path</code> - The path of the directory to remove. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</li><li><code>recursive</code> - Whether <code>path</code> should be deleted recursively, meaning any filesytem contents contained in <code>path</code> would be deleted if <code>path</code> is not empty. This is <code>false</code> by default.</li></ul></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>CnxResult</code> - <code><a href="group__cnx__result.html#ga45604f9f51cb2d871049f911e32047db" class="m-doc">Ok()</a></code> if removing the directory was successful, an error otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to remove the directory located at <code>path</code>. By default, this will fail if <code>path</code> is a non-empty directory (aka if <code>path</code> has contents). If <code>recursive</code> is passed as <code>true</code>, however, this will recursively delete all filesystem contents contained in <code>path</code>. <code>recursive</code> can also be passed as <code>false</code> to explicitly signal that <code>path</code> should <strong>NOT</strong> be removed recursively.</p><p>If <code>path</code> is not a directory (aka, it is a file), or if <code>path</code> does not exist, this will return an error. This may also return an error if an error occurs when removing the directory.</p>
+          </div></section>
+          <section class="m-doc-details" id="gad7d00d27e4c5d7e9adc8d5ad20f24745"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad7d00d27e4c5d7e9adc8d5ad20f24745" class="m-doc-self">cnx_path_remove_directory_recursive</a>(</span><span class="m-doc-wrap">dir_path)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Removes the directory located at <code>path</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">dir_path</td>
+                  <td>- The path of the directory to remove. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>CnxResult</code> - <code><a href="group__cnx__result.html#ga45604f9f51cb2d871049f911e32047db" class="m-doc">Ok()</a></code> if removing the directory was successful, an error otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to remove the directory located at <code>path</code>. Unlike <code>cnx_path_remove_directory</code>, this will always delete <code>path</code> recursively, and any filesystem contents contained in <code>path</code> will be deleted if <code>path</code> is not empty.</p><p>If <code>path</code> is not a directory (aka, it is a file), or if <code>path</code> does not exist, this will return an error. This may also return an error if an error occurs when removing the directory.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga1044d3e674463ec1d62635e281b4fcdb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga1044d3e674463ec1d62635e281b4fcdb" class="m-doc-self">cnx_path_create_symlink</a>(</span><span class="m-doc-wrap">...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Creates a new symbolic link with the name and path indicated by <code>link_name</code> that points to the file or directory at <code>link_target</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">...</td>
+                  <td><ul><li><code>link_name</code> - The path of the symlink to create. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</li><li><code>link_target</code> - The path <code>link_name</code> should link to. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</li><li><code>overwrite_existing</code> - Whether existing filesystem contents should be deleted and overwritten if <code>path</code> already exists. This is <code>false</code> by default.</li></ul></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>CnxResult</code> - <code><a href="group__cnx__result.html#ga45604f9f51cb2d871049f911e32047db" class="m-doc">Ok()</a></code> if creating the symlink was successful, an error otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to create a new symlink with the path and name indicated by <code>link_name</code> that points to the file or directory at <code>link_target</code>. By default, this will fail if <code>link_name</code> already exists. If <code>overwrite_existing</code> is given as <code>true</code>, however, all filesystem contents originally existing at <code>link_name</code> will attempt to be deleted, and a new symlink to <code>link_target</code> will be created if deletion was successful. <code>overwrite_existing</code> may also be given as <code>false</code> to explicitly signal that failure should occur if <code>path</code> exists.</p>
+          </div></section>
+          <section class="m-doc-details" id="gaefc40d16c1c011926f26bfe78b09e5ae"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaefc40d16c1c011926f26bfe78b09e5ae" class="m-doc-self">cnx_path_create_symlink_overwriting</a>(</span><span class="m-doc-wrap">link_name,
+              link_target)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Creates a new symbolic link with the name and path indicated by <code>link_name</code> that points to the file or directory at <code>link_target</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">link_name</td>
+                  <td>- The path of the symlink to create. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+                <tr>
+                  <td>link_target</td>
+                  <td>- The path <code>link_name</code> should link to. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>CnxResult</code> - <code><a href="group__cnx__result.html#ga45604f9f51cb2d871049f911e32047db" class="m-doc">Ok()</a></code> if creating the symlink was successful, an error otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to create a new symlink with the path and name indicated by <code>link_name</code> that points to the file or directory at <code>link_target</code>. Unlike <code>cnx_path_create_symlink</code>, this will always delete any filesystem contents at <code>link_name</code> if <code>link_name</code> already exists.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga082be33f9d4a2417eb2e120bec9ffec1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga082be33f9d4a2417eb2e120bec9ffec1" class="m-doc-self">cnx_path_remove_symlink</a>(</span><span class="m-doc-wrap">link_path)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Path_8h.html">&lt;include/Cnx/filesystem/Path.h&gt;</a></div>
+            </h3>
+            <p>Removes the symbolic link <code>link_path</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">link_path</td>
+                  <td>- The path of the symlink to remove. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>CnxResult</code> - <code><a href="group__cnx__result.html#ga45604f9f51cb2d871049f911e32047db" class="m-doc">Ok()</a></code> if removing the symlink was successful, an error otherwise</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to remove the symlink <code>link_path</code>. This will not remove the filesystem contents at <code>link_path</code>&#x27;s target. Any contents pointed to by <code>link_path</code> will be preserved, only the link will be deleted. If <code>link_path</code> is not a symlink, this will return an error.</p>
           </div></section>
         </section>
       </div>
