@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Path provides various functions for working with filesystem paths
 /// @version 0.2.0
-/// @date 2022-05-02
+/// @date 2022-05-03
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -288,7 +288,7 @@ CnxPath cnx_user_documents_directory(void) {
 	return move(path);
 }
 
-CnxPath cnx_common_application_data_directory(void) {
+CnxPath cnx_path_common_application_data_directory(void) {
 
 #if CNX_PLATFORM_WINDOWS
 
@@ -305,7 +305,7 @@ CnxPath cnx_common_application_data_directory(void) {
 #endif // CNX_PLATFORM_WINDOWS
 }
 
-CnxPath cnx_common_documents_directory(void) {
+CnxPath cnx_path_common_documents_directory(void) {
 
 #if CNX_PLATFORM_WINDOWS
 
@@ -322,10 +322,10 @@ CnxPath cnx_common_documents_directory(void) {
 #endif // CNX_PLATFORM_WINDOWS
 }
 
-CnxPath cnx_temp_directory(void) {
+CnxPath cnx_path_temp_directory(void) {
 #if CNX_PLATFORM_WINDOWS
 
-	CnxScopedString path = cnx_user_application_data_directory();
+	CnxScopedString path = cnx_path_user_application_data_directory();
 	cnx_path_append(&path, "Local\\Temp");
 	return move(path);
 
@@ -338,7 +338,7 @@ CnxPath cnx_temp_directory(void) {
 
 #if CNX_PLATFORM_WINDOWS
 
-CnxPath cnx_current_executable_file(void) {
+CnxPath cnx_path_current_executable_file(void) {
 	let_mut size = static_cast(usize)(64); // NOLINT
 	let_mut alloc = cnx_allocator_allocate_array_t(TCHAR, DEFAULT_ALLOCATOR, size);
 	let_mut actual_size = GetModuleFileNameA(NULL, alloc, narrow_cast(DWORD)(size));
@@ -383,7 +383,7 @@ CnxPath cnx_current_executable_file(void) {
 
 	#endif // CNX_PLATFORM_LINUX
 
-CnxPath cnx_current_executable_file(void) {
+CnxPath cnx_path_current_executable_file(void) {
 	struct stat stat;
 	ignore(lstat(CNX_PROC_EXE_PATH, &stat));
 	let size = stat.st_size;
@@ -405,7 +405,7 @@ CnxPath cnx_current_executable_file(void) {
 
 	#include <mach-o/dyld.h>
 
-CnxPath cnx_current_executable_file(void) {
+CnxPath cnx_path_current_executable_file(void) {
 	let_mut size = static_cast(u32)(0);
 
 	ignore(_NSGetExecutablePath(nullptr, &size));
@@ -423,40 +423,34 @@ CnxPath cnx_current_executable_file(void) {
 
 #else
 
-	#error cnx_current_executable_file not supported on this platform
+	#error cnx_path_current_executable_file not supported on this platform
 
 #endif // CNX_PLATFORM_WINDOWS
 
 #if CNX_PLATFORM_APPLE
 
-CnxPath cnx_current_application_file(void) {
-	CnxScopedPath executable = cnx_current_executable_file();
+CnxPath cnx_path_current_application_file(void) {
+	CnxScopedPath executable = cnx_path_current_executable_file();
 
-	let_mut maybe_parent = cnx_path_get_parent_directory(&executable);
-	if(cnx_option_is_some(maybe_parent)) {
-		let_mut parent = cnx_option_unwrap(parent_res);
-		if(cnx_string_ends_with(parent, "Contents/MacOs")
-		   || cnx_string_ends_with(parent, "contents/macos")) {
-			let size = cnx_string_size(parent);
-			cnx_string_erase_n(parent, size - 14, 14);
-		}
+	let_mut parent = cnx_path_get_parent_directory(&executable);
+	if(cnx_string_ends_with(parent, "Contents/MacOs")
+	   || cnx_string_ends_with(parent, "contents/macos")) {
+		let size = cnx_string_size(parent);
+		cnx_string_erase_n(parent, size - 14, 14);
+	}
 
-		return parent;
-	}
-	else {
-		return move(executable);
-	}
+	return parent;
 }
 
 #else
 
-CnxPath cnx_current_application_file(void) {
-	return cnx_current_executable_file();
+CnxPath cnx_path_current_application_file(void) {
+	return cnx_path_current_executable_file();
 }
 
 #endif // CNX_PLATFORM_APPLE
 
-CnxPath cnx_system_applications_directory(void) {
+CnxPath cnx_path_system_applications_directory(void) {
 #if CNX_PLATFORM_WINDOWS
 
 	return cnx_string_from("C:\\Program Files");
@@ -474,14 +468,14 @@ CnxPath cnx_system_applications_directory(void) {
 
 #if CNX_PLATFORM_WINDOWS
 
-CnxPath cnx_system_applications_directory_x86(void) {
+CnxPath cnx_path_system_applications_directory_x86(void) {
 
 	return cnx_string_from("C:\\Program Files (x86)");
 }
 
 #endif // CNX_PLATFORM_WINDOWS
 
-CnxPath cnx_current_working_directory(void) {
+CnxPath cnx_path_current_working_directory(void) {
 #if CNX_PLATFORM_UNIX || CNX_PLATFORM_APPLE
 
 	let_mut size = static_cast(usize)(64); // NOLINT
@@ -529,7 +523,7 @@ CnxPath cnx_current_working_directory(void) {
 	}
 #else
 
-	#error cnx_current_working_directory not supported on this platform
+	#error cnx_path_current_working_directory not supported on this platform
 
 #endif // CNX_PLATFORM_UNIX || CNX_PLATFORM_APPLE
 }
@@ -576,6 +570,26 @@ bool cnx_path_is_absolute_stringview(const CnxStringView* restrict path) {
 
 bool cnx_path_is_absolute_string(const CnxPath* restrict path) {
 	return cnx_path_is_absolute_cstring(cnx_string_into_cstring(*path), cnx_string_length(*path));
+}
+
+CnxPath cnx_path_get_absolute_path_string(const CnxPath* restrict path) {
+	if(cnx_path_is_absolute(path)) {
+		return cnx_string_clone(*path);
+	}
+
+	CnxScopedString cwd = cnx_path_current_working_directory();
+	cnx_path_append(&cwd, path);
+	return move(cwd);
+}
+
+CnxPath cnx_path_get_absolute_path_cstring(const_cstring restrict path, usize path_length) {
+	CnxScopedString str = cnx_string_from_cstring(path, path_length);
+	return cnx_path_get_absolute_path_string(&str);
+}
+
+CnxPath cnx_path_get_absolute_path_stringview(const CnxStringView* path) {
+	CnxScopedString str = cnx_string_from(path);
+	return cnx_path_get_absolute_path_string(&str);
 }
 
 #if CNX_PLATFORM_WINDOWS
@@ -906,11 +920,11 @@ bool cnx_path_has_file_extension_cstring(const CnxPath* restrict path,
 		cnx_string_from_cstring_with_allocator(extension, extension_length, path->m_allocator));
 }
 
-CnxString cnx_path_get_file_extension_cstring(const_cstring restrict path, usize path_length) {
+CnxOption(CnxString) cnx_path_get_file_extension_cstring(const_cstring restrict path, usize path_length) {
 	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_get_file_extension is invalid");
 
 	if(!cnx_path_is_file(path)) {
-		return cnx_string_from("");
+		return None(CnxString);
 	}
 	
 	let_mut extension_start = static_cast(usize)(0);
@@ -923,29 +937,29 @@ CnxString cnx_path_get_file_extension_cstring(const_cstring restrict path, usize
 	}
 
 	if(!found) {
-		return cnx_string_from("");
+		return None(CnxString);
 	}
 
-	return cnx_string_from_cstring(path + extension_start, path_length - extension_start);
+	return Some(CnxString, cnx_string_from_cstring(path + extension_start, path_length - extension_start));
 }
 
-CnxString cnx_path_get_file_extension_string(const CnxPath* restrict path) {
+CnxOption(CnxString) cnx_path_get_file_extension_string(const CnxPath* restrict path) {
 	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_get_file_extension is invalid");
 
 	if(!cnx_path_is_file(path)) {
-		return cnx_string_from("");
+		return None(CnxString);
 	}
 
 	let_mut maybe_start = cnx_string_find_last(*path, ".");
 	if(cnx_option_is_some(maybe_start)) {
 		let start = cnx_option_unwrap(maybe_start);
-		return cnx_string_last(*path, cnx_string_length(*path) - start);
+		return Some(CnxString, cnx_string_last(*path, cnx_string_length(*path) - start));
 	}
 
-	return cnx_string_from("");
+	return None(CnxString);
 }
 
-CnxString cnx_path_get_file_extension_stringview(const CnxStringView* restrict path) {
+CnxOption(CnxString) cnx_path_get_file_extension_stringview(const CnxStringView* restrict path) {
 	return cnx_path_get_file_extension_cstring(path->m_view, path->m_length);
 }
 
@@ -1030,36 +1044,46 @@ CnxString cnx_path_get_file_name_without_extension_string(const CnxPath* path) {
 	return with_extension;
 }
 
-CnxOption(CnxPath) cnx_path_get_parent_directory_cstring(const_cstring restrict path, usize path_length) {
+CnxPath cnx_path_get_parent_directory_cstring(const_cstring restrict path, usize path_length) {
 	CnxScopedString str = cnx_string_from_cstring(path, path_length);
 	return cnx_path_get_parent_directory_string(&str);
 }
 
-CnxOption(CnxPath) cnx_path_get_parent_directory_stringview(const CnxStringView* restrict path) {
+CnxPath cnx_path_get_parent_directory_stringview(const CnxStringView* restrict path) {
 	return cnx_path_get_parent_directory_cstring(path->m_view, path->m_length);
 }
 
-CnxOption(CnxPath) cnx_path_get_parent_directory_string(const CnxPath* restrict path) {
+CnxPath cnx_path_get_parent_directory_string(const CnxPath* restrict path) {
 	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_get_parent_directory is invalid");
 
-	if(cnx_path_is_absolute(path) && cnx_string_occurrences_of_char(*path, CNX_PATH_SEPARATOR) == 1)
+	let is_absolute = cnx_path_is_absolute(path);
+
+	if(is_absolute && cnx_string_occurrences_of_char(*path, CNX_PATH_SEPARATOR) == 1)
 	{
 #if CNX_PLATFORM_WINDOWS
 
-		return Some(CnxPath, cnx_string_first(*path, 3));
+		return cnx_string_first(*path, 3);
 #else
 
-		return Some(CnxPath, cnx_string_from(CNX_PATH_SEPARATOR_AS_STRING));
+		return cnx_string_from(CNX_PATH_SEPARATOR_AS_STRING);
 #endif
 	}
 
 	let_mut maybe_last = cnx_string_find_last(*path, CNX_PATH_SEPARATOR_AS_STRING);
 	if(cnx_option_is_some(maybe_last)) {
 		let last = cnx_option_unwrap(maybe_last);
-		return Some(CnxPath, cnx_string_first(*path, last));
+		CnxScopedString parent = cnx_string_first(*path, last);
+		if(is_absolute) {
+			return move(parent);
+		}
+		else {
+			CnxScopedPath cwd = cnx_path_current_working_directory();
+			cnx_path_append(&cwd, &parent);	
+			return move(cwd);
+		}
 	}
 
-	return None(CnxPath);
+	return cnx_path_current_working_directory();
 }
 
 CnxResult cnx_path_append_string(CnxPath* restrict path, const CnxString* restrict entry_name) {
@@ -1374,9 +1398,9 @@ CnxResult cnx_path_create_symlink_cstring_cstring(const_cstring restrict link_to
 								  __attr(maybe_unused) usize link_target_length,
 								  bool overwrite_existing) {
 	cnx_assert(cnx_path_is_valid(link_to_create),
-			   "Link path given to cnx_create_symlink is invalid");
+			   "Link path given to cnx_path_create_symlink is invalid");
 	cnx_assert(cnx_path_is_valid(link_target),
-			   "Link target given to cnx_create_symlink is invalid");
+			   "Link target given to cnx_path_create_symlink is invalid");
 
 	if(overwrite_existing && cnx_path_exists_cstring(link_to_create, link_to_create_length)) {
 		let res = remove_path(link_to_create);
@@ -1511,7 +1535,7 @@ CnxResult cnx_path_remove_symlink_string(const CnxPath* restrict link_path) {
 
 CnxResult
 cnx_path_create_directory_string(const CnxString* restrict dir_path, bool overwrite_existing) {
-	cnx_assert(cnx_path_is_valid(dir_path), "Path given to cnx_create_directory is invalid");
+	cnx_assert(cnx_path_is_valid(dir_path), "Path given to cnx_path_create_directory is invalid");
 
 	let exists = cnx_path_exists(dir_path);
 	if(exists && !overwrite_existing) {
