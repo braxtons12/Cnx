@@ -98,9 +98,9 @@
           <h2><a href="#enum-members">Enums</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">enum <a href="#gaeb033d9cf665467bc25bc3f42dd19fcf" class="m-doc">CnxFileAccessMode</a> { </span><span class="m-doc-wrap"><a href="#ggaeb033d9cf665467bc25bc3f42dd19fcfadd5eb2b285140bcbcefec2517666dbd1" class="m-doc">CnxFileRead</a> = 0,
-              <a href="#ggaeb033d9cf665467bc25bc3f42dd19fcfa8c05f3616a1c845f3fe7eb7fa1d8f476" class="m-doc">CnxFileWrite</a>,
-              <a href="#ggaeb033d9cf665467bc25bc3f42dd19fcfa17dc79036598eaaa5f9766cd6a417cd2" class="m-doc">CnxFileReadWrite</a> }</span>
+              <span class="m-doc-wrap-bumper">enum <a href="#gaeb033d9cf665467bc25bc3f42dd19fcf" class="m-doc">CnxFileAccessMode</a> { </span><span class="m-doc-wrap"><a href="#ggaeb033d9cf665467bc25bc3f42dd19fcfadd5eb2b285140bcbcefec2517666dbd1" class="m-doc">CnxFileRead</a> = 1,
+              <a href="#ggaeb033d9cf665467bc25bc3f42dd19fcfa8c05f3616a1c845f3fe7eb7fa1d8f476" class="m-doc">CnxFileWrite</a> = 2,
+              <a href="#ggaeb033d9cf665467bc25bc3f42dd19fcfa17dc79036598eaaa5f9766cd6a417cd2" class="m-doc">CnxFileReadWrite</a> = 3 }</span>
             </dt>
             <dd>Use in a <code><a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a></code> to specify the access mode a file should be opened with.</dd>
             <dt>
@@ -111,6 +111,12 @@
               <a href="#gga044f3086e048eff4bfe0dfb0eddd71caa4f16d9a0d5ffb8e34b5505dd36f5b913" class="m-doc">CnxFileFailIfExists</a> = 8 }</span>
             </dt>
             <dd>Use in a <code><a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a></code> to specify the behavior a file should be opened with.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">enum <a href="#ga90d1910e2e52f64b14f88998f53237c1" class="m-doc">CnxFileSeekOrigin</a> { </span><span class="m-doc-wrap"><a href="#gga90d1910e2e52f64b14f88998f53237c1a38151bd3c99538eee0d945b0eacc1ec9" class="m-doc">CnxFileSeekBegin</a> = SEEK_SET,
+              <a href="#gga90d1910e2e52f64b14f88998f53237c1a6ac0c57b1975f161f6c9a0d816abefc3" class="m-doc">CnxFileSeekCurrent</a> = SEEK_CUR,
+              <a href="#gga90d1910e2e52f64b14f88998f53237c1a9fe373f45d8ef1c68c03c56ba75eeb69" class="m-doc">CnxFileSeekEnd</a> = SEEK_END }</span>
+            </dt>
+            <dd>Use to identify where a seek should begin from when seeking in a <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code></dd>
           </dl>
         </section>
         <section id="typedef-members">
@@ -136,6 +142,10 @@
               using <a href="#ga804dc82ca002a986aba7e9e8988cf541" class="m-doc">CnxFile</a> = struct <a href="structCnxFile.html" class="m-doc">CnxFile</a>
             </dt>
             <dd>Cnx type used to manage reading and writing to/from a file, the buffering associated with the file, and closing it when it&#x27;s no longer used.</dd>
+            <dt>
+              using <a href="#ga9079ce54b63a7f30c77a7145e76c56f2" class="m-doc">CnxFileSeekOrigin</a> = enum <a href="group__cnx__file.html#ga90d1910e2e52f64b14f88998f53237c1" class="m-doc">CnxFileSeekOrigin</a>
+            </dt>
+            <dd>Use to identify where a seek should begin from when seeking in a <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code></dd>
           </dl>
         </section>
         <section id="func-members">
@@ -146,6 +156,32 @@
               <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
             </dt>
             <dd><code>CnxDeleter</code> function for smart pointers managing <code>FILE*</code>s</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"> <a href="#gafa29201c23f63ff889bca425cdac0730" class="m-doc">CnxResult</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga48d6cd8e4135fb2ff7e7f2dac84089ec" class="m-doc">i32</a>) cnx_file_write_bytes(CnxFile *restrict file</span>
+            </dt>
+            <dd>Writes the given <code>bytes</code> to the <code>file</code>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"> <a href="#ga95c35116fe4ca18a943e7b15fedd9619" class="m-doc">CnxResult</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>) cnx_file_read(CnxFile *restrict file</span>
+            </dt>
+            <dd>Reads <code>num_chars</code> characters from <code>file</code> and returns them in a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"> <a href="#ga0fdb86284a83426af57877caba311a26" class="m-doc">CnxResult</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a>) cnx_file_read_bytes(CnxFile *restrict file</span>
+            </dt>
+            <dd>Reads up to <code>max_num_bytes</code> bytes from <code>file</code> and writes them to <code>bytes</code>, returning the number of bytes read.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#gaa25271b46ca137cd9f8b2c52dda1b435" class="m-doc">cnx_file_flush</a>(</span><span class="m-doc-wrap"><a href="structCnxFile.html" class="m-doc">CnxFile</a>*restrict file)</span>
+            </dt>
+            <dd>Flushes the given <code>file</code>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#ga3d94b35bae481351a6e2e8af8d6c8f7b" class="m-doc">cnx_file_seek</a>(</span><span class="m-doc-wrap"><a href="structCnxFile.html" class="m-doc">CnxFile</a>*restrict file,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> offset,
+              <a href="group__cnx__file.html#ga90d1910e2e52f64b14f88998f53237c1" class="m-doc">CnxFileSeekOrigin</a> origin)</span>
+            </dt>
+            <dd>Seeks to the given location in the <code>file</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga1cbc40c12c2bae78f1b6667817a479fc" class="m-doc">cnx_file_close</a>(</span><span class="m-doc-wrap"><a href="structCnxFile.html" class="m-doc">CnxFile</a>*restrict file)</span>
+            </dt>
+            <dd>Closes the given <code>file</code></dd>
           </dl>
         </section>
         <section id="define-members">
@@ -166,7 +202,62 @@
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga7b62d07873304d12dd32c55e57cabfc9" class="m-doc">cnx_file_open</a>(</span><span class="m-doc-wrap">...)</span>
             </dt>
-            <dd>Opens the file at the given <code>path</code>.</dd>
+            <dd>Opens the file at the given <code>path</code>, using the default allocator to allocate the memory used for buffering.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga8a04bda7c01c4f6288f07f5302862eff" class="m-doc">cnx_file_open_with_allocator</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Opens the file at the given <code>path</code>, using the given allocator to allocate the memory used for buffering.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga554cfffee2c12e3ef61a6dd187ce866c" class="m-doc">cnx_file_print</a>(</span><span class="m-doc-wrap">file,
+              format_string,
+              ...)</span>
+            </dt>
+            <dd>Prints the string resulting from formatting <code>format_string</code> and the formatting arguments to the given file.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadd6e67c8d3b3960219b0993d8148c42c" class="m-doc">cnx_file_println</a>(</span><span class="m-doc-wrap">file,
+              format_string,
+              ...)</span>
+            </dt>
+            <dd>Prints the string resulting from formatting <code>format_string</code> and the formatting arguments to the given file, followed by a newline.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gafd75ff05a6c3c80da4dd436a76396c9f" class="m-doc">cnx_file_print_with_allocator</a>(</span><span class="m-doc-wrap">file,
+              allocator,
+              format_string,
+              ...)</span>
+            </dt>
+            <dd>Prints the string resulting from formatting <code>format_string</code> and the formatting arguments to the given file, using the provided allocator for any memory allocations necessary to perform the string formatting.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad38b6d35df7fd675be209867785911ea" class="m-doc">cnx_file_println_with_allocator</a>(</span><span class="m-doc-wrap">file,
+              allocator,
+              format_string,
+              ...)</span>
+            </dt>
+            <dd>Prints the string resulting from formatting <code>format_string</code> and the formatting arguments to the given file, followed by a newline. Uses the provided allocator for any memory allocations necessary to perform the string formatting.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaca86f3d18ac60ccae82359a92fb3d3b9" class="m-doc">cnx_file_is_symlink</a>(</span><span class="m-doc-wrap">file)</span>
+            </dt>
+            <dd>Returns whether the given <code>file</code> is actually symbolic link.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga484816df5cfa8b5568e485fbd5e44452" class="m-doc">cnx_file_has_extension</a>(</span><span class="m-doc-wrap">file,
+              extension)</span>
+            </dt>
+            <dd>Returns whether the given <code>file</code> has the given file extension.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga34bd969177e368c47fff756f7f1c0ab4" class="m-doc">cnx_file_get_extension</a>(</span><span class="m-doc-wrap">file)</span>
+            </dt>
+            <dd>Returns the file extension of the given <code>file</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga6c94562b0bb11d6bd9b7ab48a3897b8a" class="m-doc">cnx_file_get_name</a>(</span><span class="m-doc-wrap">file)</span>
+            </dt>
+            <dd>Returns the file name of the given <code>file</code>, including the file extension, if it has one.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga25febff02dd9aab542ca46e7704716b8" class="m-doc">cnx_file_get_name_without_extension</a>(</span><span class="m-doc-wrap">file)</span>
+            </dt>
+            <dd>Returns the file name of the given <code>file</code>, excluding the file extension, if it has one.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga89482cbced549edcb9f401941344f2c6" class="m-doc">cnx_file_get_parent_directory</a>(</span><span class="m-doc-wrap">file)</span>
+            </dt>
+            <dd>Returns the parent directory of the given <code>file</code> as an absolute path.</dd>
           </dl>
         </section>
         <section>
@@ -184,6 +275,36 @@
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
             </h3>
             <p>Use in a <code><a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a></code> to specify the behavior a file should be opened with.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga90d1910e2e52f64b14f88998f53237c1"><div>
+            <h3>
+              enum <a href="#ga90d1910e2e52f64b14f88998f53237c1" class="m-doc-self">CnxFileSeekOrigin</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Use to identify where a seek should begin from when seeking in a <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code></p>
+            <table class="m-table m-fullwidth m-flat m-doc">
+              <thead><tr><th style="width: 1%">Enumerators</th><th></th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><a href="#gga90d1910e2e52f64b14f88998f53237c1a38151bd3c99538eee0d945b0eacc1ec9" class="m-doc-self" id="gga90d1910e2e52f64b14f88998f53237c1a38151bd3c99538eee0d945b0eacc1ec9">CnxFileSeekBegin</a></td>
+                  <td>
+                  <p>Indicates a file seek should originate from the beginning of the file.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#gga90d1910e2e52f64b14f88998f53237c1a6ac0c57b1975f161f6c9a0d816abefc3" class="m-doc-self" id="gga90d1910e2e52f64b14f88998f53237c1a6ac0c57b1975f161f6c9a0d816abefc3">CnxFileSeekCurrent</a></td>
+                  <td>
+                  <p>Indicates a file seek should originate from the current position in the file.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#gga90d1910e2e52f64b14f88998f53237c1a9fe373f45d8ef1c68c03c56ba75eeb69" class="m-doc-self" id="gga90d1910e2e52f64b14f88998f53237c1a9fe373f45d8ef1c68c03c56ba75eeb69">CnxFileSeekEnd</a></td>
+                  <td>
+                  <p>Indicates a file seek should originate from the end of the file.</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div></section>
         </section>
         <section>
@@ -245,6 +366,13 @@
     <span class="c1">// `CnxScopedFile`</span>
 <span class="p">}</span></pre>
           </div></section>
+          <section class="m-doc-details" id="ga9079ce54b63a7f30c77a7145e76c56f2"><div>
+            <h3>
+              typedef enum <a href="group__cnx__file.html#ga90d1910e2e52f64b14f88998f53237c1" class="m-doc">CnxFileSeekOrigin</a> <a href="#ga9079ce54b63a7f30c77a7145e76c56f2" class="m-doc-self">CnxFileSeekOrigin</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Use to identify where a seek should begin from when seeking in a <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code></p>
+          </div></section>
         </section>
         <section>
           <h2>Function documentation</h2>
@@ -255,6 +383,133 @@
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
             </h3>
             <p><code>CnxDeleter</code> function for smart pointers managing <code>FILE*</code>s</p>
+          </div></section>
+          <section class="m-doc-details" id="gafa29201c23f63ff889bca425cdac0730"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gafa29201c23f63ff889bca425cdac0730" class="m-doc-self">CnxResult</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga48d6cd8e4135fb2ff7e7f2dac84089ec" class="m-doc">i32</a>) cnx_file_write_bytes(CnxFile *restrict file</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Writes the given <code>bytes</code> to the <code>file</code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><code><a href="group__cnx__file.html#gafa29201c23f63ff889bca425cdac0730" class="m-doc">CnxResult(i32)</a></code> - The number of bytes written on success, otherwise an error</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to write bytes in the given byte array, <code>bytes</code> to the file. Writing will fail if <code>file</code> was not opened with write access permissions or for any reason <code>fwrite</code> or similar libc functions may fail</p>
+          </div></section>
+          <section class="m-doc-details" id="ga95c35116fe4ca18a943e7b15fedd9619"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga95c35116fe4ca18a943e7b15fedd9619" class="m-doc-self">CnxResult</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>) cnx_file_read(CnxFile *restrict file</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Reads <code>num_chars</code> characters from <code>file</code> and returns them in a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><code><a href="group__cnx__file.html#ga95c35116fe4ca18a943e7b15fedd9619" class="m-doc">CnxResult(CnxString)</a></code> - The string containing the characters read from the file on success, otherwise an error</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Reads a line of text from <code>file</code> and returns it in a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p><p>Reads <code>num_chars</code> characters from <code>file</code> and returns them in a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> allocated with the given memory allocator.</p><p>Attempts to read <code>num_chars</code> characters from <code>file</code>, returning the result in a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>. May read less than <code>num_chars</code> characters if <code>EOF</code> is reached. Reading will fail if the <code>file</code> was not opened with read access permissions or for any reason <code>fread</code> or similar libc functions may fail.</p><p>Attempts to read <code>num_chars</code> characters from <code>file</code>, returning the result in a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> allocated with the given memory allocator. May read less than <code>num_chars</code> characters if <code>EOF</code> is reached. Reading will fail if the <code>file</code> was not opened with read access permissions or for any reason <code>fread</code> or similar libc functions may fail.</p><p>Attempts to read a line of text from <code>file</code>, returning the result in a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>. May read less than a line if <code>EOF</code> is reached before a newline is encountered. Reading will fail if the <code>file</code> was not opened with read access permissions or for any reason <code>fread</code> or similar libc functions may fail.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga0fdb86284a83426af57877caba311a26"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga0fdb86284a83426af57877caba311a26" class="m-doc-self">CnxResult</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a>) cnx_file_read_bytes(CnxFile *restrict file</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Reads up to <code>max_num_bytes</code> bytes from <code>file</code> and writes them to <code>bytes</code>, returning the number of bytes read.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><code><a href="group__cnx__file.html#ga0fdb86284a83426af57877caba311a26" class="m-doc">CnxResult(usize)</a></code> - The number of bytes read from the file and written to <code>bytes</code> on success, otherwise an error</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to read up to <code>max_num_bytes</code> bytes from <code>file</code>, and writes them to <code>bytes</code>. May read less than <code>max_num_bytes</code> bytes if <code>EOF</code> is reached. Returns the number of bytes read when successful. Reading will fail if the <code>file</code> was not opened with read access permissions or for any reason <code>fread</code> or similar libc functions may fail.</p>
+          </div></section>
+          <section class="m-doc-details" id="gaa25271b46ca137cd9f8b2c52dda1b435"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaa25271b46ca137cd9f8b2c52dda1b435" class="m-doc-self">cnx_file_flush</a>(</span><span class="m-doc-wrap"><a href="structCnxFile.html" class="m-doc">CnxFile</a>*restrict file)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Flushes the given <code>file</code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">file</td>
+                  <td>- The <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code> to flush</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>CnxResult</code> - <code><a href="group__cnx__result.html#ga45604f9f51cb2d871049f911e32047db" class="m-doc">Ok()</a></code> on success, otherwise an error</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to flush the given <code>file</code>. Flushing may fail for any reason <code>fflush</code> from libc may fail.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga3d94b35bae481351a6e2e8af8d6c8f7b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3d94b35bae481351a6e2e8af8d6c8f7b" class="m-doc-self">cnx_file_seek</a>(</span><span class="m-doc-wrap"><a href="structCnxFile.html" class="m-doc">CnxFile</a>*restrict file,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> offset,
+              <a href="group__cnx__file.html#ga90d1910e2e52f64b14f88998f53237c1" class="m-doc">CnxFileSeekOrigin</a> origin)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Seeks to the given location in the <code>file</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">file</td>
+                  <td>- The <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code> to seek in</td>
+                </tr>
+                <tr>
+                  <td>offset</td>
+                  <td>- The offset from origin to seek to. After successful seeking, the file will be at the effective location of <code>origin</code> + <code>offset</code></td>
+                </tr>
+                <tr>
+                  <td>origin</td>
+                  <td>- The location in the file the seek should originate from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>CnxResult</code> - <code><a href="group__cnx__result.html#ga45604f9f51cb2d871049f911e32047db" class="m-doc">Ok()</a></code> on success, otherwise an error</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to seek to the location indicated by <code>origin</code> and <code>offset</code> in the <code>file</code>. May fail for any reason <code>fseek</code> from libc may fail.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga1cbc40c12c2bae78f1b6667817a479fc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga1cbc40c12c2bae78f1b6667817a479fc" class="m-doc-self">cnx_file_close</a>(</span><span class="m-doc-wrap"><a href="structCnxFile.html" class="m-doc">CnxFile</a>*restrict file)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Closes the given <code>file</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">file</td>
+                  <td>- The <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code> to close</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Closes the given <code>file</code>, freeing the allocated buffer and any operating system level resources associated with the file.</p>
           </div></section>
         </section>
         <section>
@@ -309,7 +564,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga7b62d07873304d12dd32c55e57cabfc9" class="m-doc-self">cnx_file_open</a>(</span><span class="m-doc-wrap">...)</span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
             </h3>
-            <p>Opens the file at the given <code>path</code>.</p>
+            <p>Opens the file at the given <code>path</code>, using the default allocator to allocate the memory used for buffering.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -328,6 +583,331 @@
               </tfoot>
             </table>
 <p>Attempts to open the file at the given <code>path</code>. <code>path</code> <strong>must</strong> be a valild path for a file. By default, this uses <code>CNX_FILE_DEFAULT_OPTIONS</code> for <code>options</code>, the <code><a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a></code> indicating file opening permissions and behavior, and <code>CNX_FILE_DEFAULT_BUFFER_SIZE</code> for <code>buffer_size</code>, the buffer size to allocate and use for buffering in the file. Both of these can be passed explicit values to override this behavior, however.</p><p><code>options</code> <strong>must</strong> be a valid combination of <code>CnxFileAccessMode</code> and <code>CnxFileOpenBehavior</code>. For example, <code>CnxFileRead</code> combined with <code>CnxFileTruncate</code> would be an invalid pairing, and would result in this returning an error. Valid combinations are those equivalent to a valid <code>mode</code> for <code>fopen</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga8a04bda7c01c4f6288f07f5302862eff"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga8a04bda7c01c4f6288f07f5302862eff" class="m-doc-self">cnx_file_open_with_allocator</a>(</span><span class="m-doc-wrap">...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Opens the file at the given <code>path</code>, using the given allocator to allocate the memory used for buffering.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">...</td>
+                  <td><ul><li><code>path</code> - The path to the file to open. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</li><li><code>allocator</code> - The allocator to allocate the memory used for buffering.</li><li><code>options</code> - The <code><a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a></code> specifying opening permissions and behavior. This is <code>CNX_FILE_DEFAULT_OPTIONS</code> by default.</li><li><code>buffer_size</code> - The buffer size to allocate and use for buffering with the file. This is <code>CNX_FILE_DEFAULT_BUFFER_SIZE</code> by default.</li></ul></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code><a href="group__cnx__result.html#gae75db0a7127412b9b98576a3766b7f4f" class="m-doc">CnxResult(CnxFile)</a></code> - a <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code> at <code>path</code> if successful, otherwise an error.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to open the file at the given <code>path</code>. <code>path</code> <strong>must</strong> be a valild path for a file. By default, this uses <code>CNX_FILE_DEFAULT_OPTIONS</code> for <code>options</code>, the <code><a href="structCnxFileOptions.html" class="m-doc">CnxFileOptions</a></code> indicating file opening permissions and behavior, and <code>CNX_FILE_DEFAULT_BUFFER_SIZE</code> for <code>buffer_size</code>, the buffer size to allocate and use for buffering in the file. Both of these can be passed explicit values to override this behavior, however.</p><p><code>options</code> <strong>must</strong> be a valid combination of <code>CnxFileAccessMode</code> and <code>CnxFileOpenBehavior</code>. For example, <code>CnxFileRead</code> combined with <code>CnxFileTruncate</code> would be an invalid pairing, and would result in this returning an error. Valid combinations are those equivalent to a valid <code>mode</code> for <code>fopen</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga554cfffee2c12e3ef61a6dd187ce866c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga554cfffee2c12e3ef61a6dd187ce866c" class="m-doc-self">cnx_file_print</a>(</span><span class="m-doc-wrap">file,
+              format_string,
+              ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Prints the string resulting from formatting <code>format_string</code> and the formatting arguments to the given file.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">file</td>
+                  <td>- The <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code> to print the string to</td>
+                </tr>
+                <tr>
+                  <td>format_string</td>
+                  <td>- The <code>cstring</code> containing the text along with how to format the formatting arguments into the text. Uses the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> formatting syntax</td>
+                </tr>
+                <tr>
+                  <td>...</td>
+                  <td>- The formatting arguments to create formatted strings of to insert in <code>format_string</code></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code><a href="group__cnx__file.html#gafa29201c23f63ff889bca425cdac0730" class="m-doc">CnxResult(i32)</a></code> - The number of characters written on success, otherwise an error</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to write the string resulting from formatting to the file. Writing will fail if <code>file</code> was not opened with write access permissions or for any reason <code>fwrite</code> or similar libc functions may fail</p>
+          </div></section>
+          <section class="m-doc-details" id="gadd6e67c8d3b3960219b0993d8148c42c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gadd6e67c8d3b3960219b0993d8148c42c" class="m-doc-self">cnx_file_println</a>(</span><span class="m-doc-wrap">file,
+              format_string,
+              ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Prints the string resulting from formatting <code>format_string</code> and the formatting arguments to the given file, followed by a newline.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">file</td>
+                  <td>- The <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code> to print the string to</td>
+                </tr>
+                <tr>
+                  <td>format_string</td>
+                  <td>- The <code>cstring</code> containing the text along with how to format the formatting arguments into the text. Uses the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> formatting syntax</td>
+                </tr>
+                <tr>
+                  <td>...</td>
+                  <td>- The formatting arguments to create formatted strings of to insert in <code>format_string</code></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code><a href="group__cnx__file.html#gafa29201c23f63ff889bca425cdac0730" class="m-doc">CnxResult(i32)</a></code> - The number of characters written on success, otherwise an error</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to write the string resulting from formatting, followed by a newline, to the file. Writing will fail if <code>file</code> was not opened with write access permissions or for any reason <code>fwrite</code> or similar libc functions may fail</p>
+          </div></section>
+          <section class="m-doc-details" id="gafd75ff05a6c3c80da4dd436a76396c9f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gafd75ff05a6c3c80da4dd436a76396c9f" class="m-doc-self">cnx_file_print_with_allocator</a>(</span><span class="m-doc-wrap">file,
+              allocator,
+              format_string,
+              ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Prints the string resulting from formatting <code>format_string</code> and the formatting arguments to the given file, using the provided allocator for any memory allocations necessary to perform the string formatting.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">file</td>
+                  <td>- The <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code> to print the string to</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to use for memory allocations, if necessary</td>
+                </tr>
+                <tr>
+                  <td>format_string</td>
+                  <td>- The <code>cstring</code> containing the text along with how to format the formatting arguments into the text. Uses the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> formatting syntax</td>
+                </tr>
+                <tr>
+                  <td>...</td>
+                  <td>- The formatting arguments to create formatted strings of to insert in <code>format_string</code></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code><a href="group__cnx__file.html#gafa29201c23f63ff889bca425cdac0730" class="m-doc">CnxResult(i32)</a></code> - The number of characters written on success, otherwise an error</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to write the string resulting from formatting to the file. Writing will fail if <code>file</code> was not opened with write access permissions or for any reason <code>fwrite</code> or similar libc functions may fail</p>
+          </div></section>
+          <section class="m-doc-details" id="gad38b6d35df7fd675be209867785911ea"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad38b6d35df7fd675be209867785911ea" class="m-doc-self">cnx_file_println_with_allocator</a>(</span><span class="m-doc-wrap">file,
+              allocator,
+              format_string,
+              ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Prints the string resulting from formatting <code>format_string</code> and the formatting arguments to the given file, followed by a newline. Uses the provided allocator for any memory allocations necessary to perform the string formatting.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">file</td>
+                  <td>- The <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code> to print the string to</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to use for memory allocations, if necessary</td>
+                </tr>
+                <tr>
+                  <td>format_string</td>
+                  <td>- The <code>cstring</code> containing the text along with how to format the formatting arguments into the text. Uses the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> formatting syntax</td>
+                </tr>
+                <tr>
+                  <td>...</td>
+                  <td>- The formatting arguments to create formatted strings of to insert in <code>format_string</code></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code><a href="group__cnx__file.html#gafa29201c23f63ff889bca425cdac0730" class="m-doc">CnxResult(i32)</a></code> - The number of characters written on success, otherwise an error</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to write the string resulting from formatting, followed by a newline, to the file. Writing will fail if <code>file</code> was not opened with write access permissions or for any reason <code>fwrite</code> or similar libc functions may fail</p>
+          </div></section>
+          <section class="m-doc-details" id="gaca86f3d18ac60ccae82359a92fb3d3b9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaca86f3d18ac60ccae82359a92fb3d3b9" class="m-doc-self">cnx_file_is_symlink</a>(</span><span class="m-doc-wrap">file)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Returns whether the given <code>file</code> is actually symbolic link.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">file</td>
+                  <td>- The pointer to the <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code> to test</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>bool</code> - Whether <code>file</code> is a symlink</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga484816df5cfa8b5568e485fbd5e44452"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga484816df5cfa8b5568e485fbd5e44452" class="m-doc-self">cnx_file_has_extension</a>(</span><span class="m-doc-wrap">file,
+              extension)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Returns whether the given <code>file</code> has the given file extension.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">file</td>
+                  <td>- The pointer to the <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code> to test</td>
+                </tr>
+                <tr>
+                  <td>extension</td>
+                  <td>- The extension to test for. This can be a pointer to any string or string-like type (i.e. it can be <code>CnxString*</code>, <code>CnxStringView*</code>, <code>cstring</code>, or a string literal)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>bool</code> - Whether <code>file</code> is a symlink</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga34bd969177e368c47fff756f7f1c0ab4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga34bd969177e368c47fff756f7f1c0ab4" class="m-doc-self">cnx_file_get_extension</a>(</span><span class="m-doc-wrap">file)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Returns the file extension of the given <code>file</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">file</td>
+                  <td>- The pointer to the <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code> to get the file extension of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code><a href="group__cnx__option.html#ga115e240208ecd9d6c00cbe9dd8993f7a" class="m-doc">CnxOption(CnxString)</a></code> - If <code>file</code> is a file with a file extension, the file extension of <code>file</code>. Otherwise, <code><a href="group__cnx__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(CnxString)</a></code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to get the file extension of the given <code>file</code>. If it does not have a file extension, then this will return <code><a href="group__cnx__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None()</a></code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga6c94562b0bb11d6bd9b7ab48a3897b8a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga6c94562b0bb11d6bd9b7ab48a3897b8a" class="m-doc-self">cnx_file_get_name</a>(</span><span class="m-doc-wrap">file)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Returns the file name of the given <code>file</code>, including the file extension, if it has one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">file</td>
+                  <td>- The pointer to the <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code> to get the file name of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code><a href="structCnxString.html" class="m-doc">CnxString</a></code> - the file name of <code>file</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga25febff02dd9aab542ca46e7704716b8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga25febff02dd9aab542ca46e7704716b8" class="m-doc-self">cnx_file_get_name_without_extension</a>(</span><span class="m-doc-wrap">file)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Returns the file name of the given <code>file</code>, excluding the file extension, if it has one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">file</td>
+                  <td>- The pointer to the <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code> to get the file name of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code><a href="structCnxString.html" class="m-doc">CnxString</a></code> - the file name of <code>file</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga89482cbced549edcb9f401941344f2c6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga89482cbced549edcb9f401941344f2c6" class="m-doc-self">cnx_file_get_parent_directory</a>(</span><span class="m-doc-wrap">file)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
+            </h3>
+            <p>Returns the parent directory of the given <code>file</code> as an absolute path.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">file</td>
+                  <td>- The pointer to the <code><a href="structCnxFile.html" class="m-doc">CnxFile</a></code> to get the parent directory of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>CnxPath</code> - the parent directory of <code>file</code> as an absolute path.</td>
+                </tr>
+              </tfoot>
+            </table>
           </div></section>
         </section>
       </div>
