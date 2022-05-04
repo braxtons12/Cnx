@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Path provides various functions for working with filesystem paths
 /// @version 0.2.0
-/// @date 2022-05-03
+/// @date 2022-05-04
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -87,7 +87,6 @@
 #include <Cnx/Def.h>
 #include <Cnx/Platform.h>
 #include <Cnx/String.h>
-#include <stdio.h>
 
 #define RESULT_INCLUDE_DEFAULT_INSTANTIATIONS TRUE
 #include <Cnx/Result.h>
