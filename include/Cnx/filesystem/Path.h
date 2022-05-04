@@ -146,6 +146,12 @@ typedef CnxString CnxPath;
 #undef RESULT_T
 #undef RESULT_DECL
 
+#define OPTION_T	CnxPath
+#define OPTION_DECL TRUE
+#include <Cnx/Option.h>
+#undef OPTION_T
+#undef OPTION_DECL
+
 /// @def CNX_PATHS_CASE_SENSITIVE
 /// @brief `TRUE` if filesystem paths are case-sensitive on the host platform, `FALSE` otherwise
 ///
@@ -912,12 +918,12 @@ __attr(nodiscard) __attr(not_null(1)) CnxString
 	cnx_path_get_file_name_without_extension_cstring(restrict const_cstring path, usize path_length)
 		__DISABLE_IF_NULL(path);
 
-__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxPath)
+__attr(nodiscard) __attr(not_null(1)) CnxOption(CnxPath)
 	cnx_path_get_parent_directory_string(const CnxPath* restrict path) __DISABLE_IF_NULL(path);
-__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxPath)
+__attr(nodiscard) __attr(not_null(1)) CnxOption(CnxPath)
 	cnx_path_get_parent_directory_stringview(const CnxStringView* restrict path)
 		__DISABLE_IF_NULL(path);
-__attr(nodiscard) __attr(not_null(1)) CnxResult(CnxPath)
+__attr(nodiscard) __attr(not_null(1)) CnxOption(CnxPath)
 	cnx_path_get_parent_directory_cstring(restrict const_cstring path, usize path_length)
 		__DISABLE_IF_NULL(path);
 

@@ -93,6 +93,12 @@ __attr(always_inline) __attr(nodiscard) __attr(not_null(1)) static inline CnxStr
 #undef RESULT_T
 #undef RESULT_IMPL
 
+#define OPTION_T	CnxPath
+#define OPTION_IMPL TRUE
+#include <Cnx/Option.h>
+#undef OPTION_T
+#undef OPTION_IMPL
+
 bool cnx_path_is_valid_string(const CnxPath* restrict path) {
 	CnxScopedVector(usize) occurrences
 		= cnx_string_find_occurrences_of_char_with_allocator(*path,
@@ -426,16 +432,20 @@ CnxPath cnx_current_executable_file(void) {
 CnxPath cnx_current_application_file(void) {
 	CnxScopedPath executable = cnx_current_executable_file();
 
-	let_mut parent_res = cnx_path_get_parent_directory(&executable);
-	let_mut parent = cnx_result_unwrap(parent_res);
+	let_mut maybe_parent = cnx_path_get_parent_directory(&executable);
+	if(cnx_option_is_some(maybe_parent)) {
+		let_mut parent = cnx_option_unwrap(parent_res);
+		if(cnx_string_ends_with(parent, "Contents/MacOs")
+		   || cnx_string_ends_with(parent, "contents/macos")) {
+			let size = cnx_string_size(parent);
+			cnx_string_erase_n(parent, size - 14, 14);
+		}
 
-	if(cnx_string_ends_with(parent, "Contents/MacOs")
-	   || cnx_string_ends_with(parent, "contents/macos")) {
-		let size = cnx_string_size(parent);
-		cnx_string_erase_n(parent, size - 14, 14);
+		return parent;
 	}
-
-	return parent;
+	else {
+		return move(executable);
+	}
 }
 
 #else
@@ -1020,36 +1030,36 @@ CnxString cnx_path_get_file_name_without_extension_string(const CnxPath* path) {
 	return with_extension;
 }
 
-CnxResult(CnxPath) cnx_path_get_parent_directory_cstring(const_cstring restrict path, usize path_length) {
+CnxOption(CnxPath) cnx_path_get_parent_directory_cstring(const_cstring restrict path, usize path_length) {
 	CnxScopedString str = cnx_string_from_cstring(path, path_length);
 	return cnx_path_get_parent_directory_string(&str);
 }
 
-CnxResult(CnxPath) cnx_path_get_parent_directory_stringview(const CnxStringView* restrict path) {
+CnxOption(CnxPath) cnx_path_get_parent_directory_stringview(const CnxStringView* restrict path) {
 	return cnx_path_get_parent_directory_cstring(path->m_view, path->m_length);
 }
 
-CnxResult(CnxPath) cnx_path_get_parent_directory_string(const CnxPath* restrict path) {
+CnxOption(CnxPath) cnx_path_get_parent_directory_string(const CnxPath* restrict path) {
 	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_get_parent_directory is invalid");
 
 	if(cnx_path_is_absolute(path) && cnx_string_occurrences_of_char(*path, CNX_PATH_SEPARATOR) == 1)
 	{
 #if CNX_PLATFORM_WINDOWS
 
-		return Ok(CnxPath, cnx_string_first(*path, 3));
+		return Some(CnxPath, cnx_string_first(*path, 3));
 #else
 
-		return Ok(CnxPath, cnx_string_from(CNX_PATH_SEPARATOR_AS_STRING));
+		return Some(CnxPath, cnx_string_from(CNX_PATH_SEPARATOR_AS_STRING));
 #endif
 	}
 
 	let_mut maybe_last = cnx_string_find_last(*path, CNX_PATH_SEPARATOR_AS_STRING);
 	if(cnx_option_is_some(maybe_last)) {
 		let last = cnx_option_unwrap(maybe_last);
-		return Ok(CnxPath, cnx_string_first(*path, last));
+		return Some(CnxPath, cnx_string_first(*path, last));
 	}
 
-	return Err(CnxPath, cnx_error_new(EINVAL, CNX_POSIX_ERROR_CATEGORY));
+	return None(CnxPath);
 }
 
 CnxResult cnx_path_append_string(CnxPath* restrict path, const CnxString* restrict entry_name) {
