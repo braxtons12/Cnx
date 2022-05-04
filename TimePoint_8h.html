@@ -88,7 +88,7 @@
             </dt>
             <dd>Indicates whether a <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> is in UTC time, local time, or an unknown locale.</dd>
             <dt>
-              using <a href="group__cnx__time__point.html#ga1e26cc2ea7d414e60e9e2b7ac3ca3b28" class="m-doc">CnxTimePoint</a> = struct <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a>
+              using <a href="group__cnx__time__point.html#ga7a6c090f64a9b3b7e85df39428dd64b4" class="m-doc">CnxTimePoint</a> = struct <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a>
             </dt>
             <dd><code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> represents a specific point in time, since the UNIX epoch, represented in a particular level of precision</dd>
           </dl>
@@ -97,9 +97,56 @@
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"> <a href="group__cnx__time__point.html#ga0bbf11e8e2b5a14d5e52747f04a5cfbd" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#gafe19720a962dabdfb36a17b7ca5e76a9" class="m-doc">nodiscard</a>)</span>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__time__point.html#ga9f1c5f300ea57a488830e9e62e9ccb12" class="m-doc">cnx_time_point_new</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> time_since_epoch)</span>
             </dt>
             <dd>Constructs a new <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> representing the given time since the UNIX epoch, assuming the same precision as <code>cnx_system_clock</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__time__point.html#ga7cc2db83d0245e788ca492e4bd89e8b1" class="m-doc">cnx_time_point_new_with_clock</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> time_since_epoch,
+              const <a href="structCnxClock.html" class="m-doc">CnxClock</a>*restrict clock) cnx_disable_if(!clock</span>
+            </dt>
+            <dd>Constructs a new <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> representing the given time since the UNIX epoch, with the same precision of the given <code><a href="structCnxClock.html" class="m-doc">CnxClock</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__time__point.html#ga16a9c9eda49ea962152a1662abe893be" class="m-doc">cnx_time_point_new_with_clock_and_locale</a>(</span><span class="m-doc-wrap"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> time_since_epoch,
+              const <a href="structCnxClock.html" class="m-doc">CnxClock</a>*restrict clock,
+              <a href="group__cnx__time__point.html#gaba7dfa35a6a117f109eed893b4ba9cc7" class="m-doc">CnxTimePointLocale</a> locale) cnx_disable_if(!clock</span>
+            </dt>
+            <dd>Constructs a new <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> representing the given time since the UNIX epoch, with the same precision of the given <code><a href="structCnxClock.html" class="m-doc">CnxClock</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxDuration.html" class="m-doc">CnxDuration</a> <a href="group__cnx__time__point.html#gaf65d9f21298628e2ab9f01caf5720e3b" class="m-doc">cnx_time_point_time_since_epoch</a>(</span><span class="m-doc-wrap"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> self)</span>
+            </dt>
+            <dd>Returns the time since the UNIX epoch of the given <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__time__point.html#gaa48c99855a8a0b093611f20d25591479" class="m-doc">cnx_time_point_min</a>(</span><span class="m-doc-wrap"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> self)</span>
+            </dt>
+            <dd>Returns the minimum possible <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> with the same precision as the given one.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__time__point.html#ga1044327530adee31b927c8b8d63492af" class="m-doc">cnx_time_point_max</a>(</span><span class="m-doc-wrap"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> self)</span>
+            </dt>
+            <dd>Returns the maximum possible <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> with the same precision as the given one.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__time__point.html#ga33de3018987db308d7d1d145f0958e04" class="m-doc">cnx_time_point_cast</a>(</span><span class="m-doc-wrap"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> to_cast,
+              <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> new_precision)</span>
+            </dt>
+            <dd>Converts the first <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> to the same precision as the second one.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__time__point.html#ga36b54bcf11375b8b13015c884f8b8e85" class="m-doc">cnx_time_point_ceil</a>(</span><span class="m-doc-wrap"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> to_cast,
+              <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> new_precision)</span>
+            </dt>
+            <dd>Converts the first <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> to the same precision as the second one, taking the ceiling of any fractional part in the result.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__time__point.html#gaa3006aac7e104fdd28a5800c372ffd90" class="m-doc">cnx_time_point_floor</a>(</span><span class="m-doc-wrap"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> to_cast,
+              <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> new_precision)</span>
+            </dt>
+            <dd>Converts the first <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> to the same precision as the second one, taking the floor of any fractional part in the result.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="group__cnx__time__point.html#gaef32ac962202abbb6fca487fc8151f18" class="m-doc">cnx_time_point_round</a>(</span><span class="m-doc-wrap"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> to_cast,
+              <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> new_precision)</span>
+            </dt>
+            <dd>Converts the first <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> to the same precision as the second one, rounding any fractional part in the result.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">time_t <a href="group__cnx__time__point.html#ga9c48ca94966b45810db102dab5ac45d0" class="m-doc">cnx_time_point_as_time_t</a>(</span><span class="m-doc-wrap"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> to_cast)</span>
+            </dt>
+            <dd>Converts the given <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> to <code>time_t</code></dd>
             <dt>
               <span class="m-doc-wrap-bumper"> <a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a>(</span><span class="m-doc-wrap">tm)</span>
             </dt>
@@ -193,7 +240,10 @@
             </dt>
             <dd>Implements the allocator-aware part of the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"> <a href="group__cnx__time__point.html#ga783e2d55d77a5b3fd07d8bd836ec230c" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a>) static ImplTraitFor(CnxFormat</span>
+              <span class="m-doc-wrap-bumper">static  <a href="group__cnx__time__point.html#gafc1493b71a16a5e2f4b75cdea9c84cd3" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a>,
+              <a href="group__cnx__time__point.html#ga51efd03eadb961fb771253e213514839" class="m-doc">cnx_<wbr />time_<wbr />point_<wbr />format</a>,
+              <a href="group__cnx__time__point.html#gaf10b3f458f1071dda4c90577e41aa30f" class="m-doc">cnx_<wbr />time_<wbr />point_<wbr />format_<wbr />with_<wbr />allocator</a>)</span>
             </dt>
             <dd>Implements the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code></dd>
           </dl>

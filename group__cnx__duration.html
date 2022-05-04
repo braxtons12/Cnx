@@ -73,7 +73,7 @@
           <h2><a href="#typedef-members">Typedefs</a></h2>
           <dl class="m-doc">
             <dt>
-              using <a href="#ga343626816536b9e3eb860eeae23cf0fb" class="m-doc">CnxDuration</a> = struct <a href="structCnxDuration.html" class="m-doc">CnxDuration</a>
+              using <a href="#ga6249a20dc9324046a94bc582f74a5d78" class="m-doc">CnxDuration</a> = struct <a href="structCnxDuration.html" class="m-doc">CnxDuration</a>
             </dt>
             <dd><code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> represents a duration in a particular unit of time A <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> occurs in a particular unit of time (e.g. seconds, nanoseconds, or years), and can represent a positive or negative amount of that unit</dd>
           </dl>
@@ -187,7 +187,10 @@
             </dt>
             <dd>Implements the allocator-aware part of the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"> <a href="#ga783e2d55d77a5b3fd07d8bd836ec230c" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a>) static ImplTraitFor(CnxFormat</span>
+              <span class="m-doc-wrap-bumper">static  <a href="#ga4992eea3de15e6b0abf2cfe53b206488" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a>,
+              <a href="group__cnx__duration.html#gaad2a6022fa311731f540b66d3fbdff00" class="m-doc">cnx_<wbr />duration_<wbr />format</a>,
+              <a href="group__cnx__duration.html#gaadbc64a4978bfd7d996f9eedcd062cb5" class="m-doc">cnx_<wbr />duration_<wbr />format_<wbr />with_<wbr />allocator</a>)</span>
             </dt>
             <dd>Implements the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code></dd>
           </dl>
@@ -296,9 +299,9 @@
         </section>
         <section>
           <h2>Typedef documentation</h2>
-          <section class="m-doc-details" id="ga343626816536b9e3eb860eeae23cf0fb"><div>
+          <section class="m-doc-details" id="ga6249a20dc9324046a94bc582f74a5d78"><div>
             <h3>
-              typedef struct <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> <a href="#ga343626816536b9e3eb860eeae23cf0fb" class="m-doc-self">CnxDuration</a>
+              typedef struct <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> <a href="#ga6249a20dc9324046a94bc582f74a5d78" class="m-doc-self">CnxDuration</a>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
             </h3>
             <p><code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> represents a duration in a particular unit of time A <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> occurs in a particular unit of time (e.g. seconds, nanoseconds, or years), and can represent a positive or negative amount of that unit</p>
@@ -923,9 +926,12 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga783e2d55d77a5b3fd07d8bd836ec230c"><div>
+          <section class="m-doc-details" id="ga4992eea3de15e6b0abf2cfe53b206488"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga783e2d55d77a5b3fd07d8bd836ec230c" class="m-doc-self">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a>) static ImplTraitFor(CnxFormat</span></span>
+              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga4992eea3de15e6b0abf2cfe53b206488" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a>,
+              <a href="group__cnx__duration.html#gaad2a6022fa311731f540b66d3fbdff00" class="m-doc">cnx_<wbr />duration_<wbr />format</a>,
+              <a href="group__cnx__duration.html#gaadbc64a4978bfd7d996f9eedcd062cb5" class="m-doc">cnx_<wbr />duration_<wbr />format_<wbr />with_<wbr />allocator</a>)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
             </h3>
             <p>Implements the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code></p>

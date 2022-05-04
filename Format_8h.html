@@ -101,13 +101,307 @@
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"> <a href="#a5eec26e03a8304c49309676be6cc7ba6" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#gafe19720a962dabdfb36a17b7ca5e76a9" class="m-doc">nodiscard</a>) CnxString cnx_format_with_allocator(restrict const _cstring format_string</span>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a72d819ff35845aefbce80922b823cf1b" class="m-doc">cnx_format_with_allocator</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
+              ...) cnx_disable_if(!format_string</span>
             </dt>
             <dd>Formats the various parameter pack arguments into their associated place in the given format string, using the provided allocator.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"> <a href="#a783e2d55d77a5b3fd07d8bd836ec230c" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a>) static ImplTraitFor(CnxFormat</span>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a9dd9786883b966076158511e22629d02" class="m-doc">cnx_vformat_with_allocator</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
+              va_list list) cnx_disable_if(!format_string</span>
+            </dt>
+            <dd>Formats the various parameter pack arguments into their associated place in the given format string, using the provided allocator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#aa52dbb136d919af9d5735048a74ffc0d" class="m-doc">cnx_format_cstring</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format</code> for the builtin <code>cstring</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#ab6716c9313f986f49e61b085d328ebcc" class="m-doc">cnx_format_bool</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format</code> for the builtin <code>bool</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a46f09020bff3eca528951ef8305e30bc" class="m-doc">cnx_format_char</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format</code> for the builtin <code>char</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#af4a32309c9075f1bfea4e253f1db84ef" class="m-doc">cnx_format_u8</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format</code> for the builtin <code>u8</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a4329fd99e33f470279575c8e8df41a1d" class="m-doc">cnx_format_u16</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format</code> for the builtin <code>u16</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#aae024b98e9b2b55e3ac90eaa9f8ff752" class="m-doc">cnx_format_u32</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format</code> for the builtin <code>u32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#af090e6636227180ac177ca13f6d9a513" class="m-doc">cnx_format_u64</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format</code> for the builtin <code>u64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#af43df4ec4b577661c12004ba59301041" class="m-doc">cnx_format_i8</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format</code> for the builtin <code>i8</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a43b2b9d636d6e2ec36884c7a04e8ddd1" class="m-doc">cnx_format_i16</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format</code> for the builtin <code>i16</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#ae60e7f45917bac430115fd0c6f5d8248" class="m-doc">cnx_format_i32</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format</code> for the builtin <code>i32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a4ffe11120bfdf49182aa84842124b9ae" class="m-doc">cnx_format_i64</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format</code> for the builtin <code>i64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#ab791db773fa1d35a6fdffd35e5c6b4c5" class="m-doc">cnx_format_f32</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format</code> for the builtin <code>f32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a6d64b1ccf60caaf832773f5e2a95c831" class="m-doc">cnx_format_f64</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format</code> for the builtin <code>f64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#aec97ed83564d3658660659e3249100a4" class="m-doc">cnx_format_ptr</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format</code> for pointers</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a75f12315eb4338c1dffeaab3cbc9dd0f" class="m-doc">cnx_format_cnx_string</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format</code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#ab8989ef105e0154ca47b2e30e1918ad0" class="m-doc">cnx_format_cnx_stringview</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format</code> for <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a073cab129090531e8eaf281e1da0552f" class="m-doc">cnx_format_cstring_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>cstring</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#ae1efc8d52b208963c57b887b18299069" class="m-doc">cnx_format_bool_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>bool</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a47f5cc0e5fe4f6f17cd95be2ec519feb" class="m-doc">cnx_format_char_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>char</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a2c0abe17f541a5bd2c33a657f57c4ff4" class="m-doc">cnx_format_u8_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>u8</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a1869506865fedc0f238c9372ffe9e2da" class="m-doc">cnx_format_u16_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>u16</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a589d4fa686855678f08a7c43d5c458b5" class="m-doc">cnx_format_u32_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>u32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#aab12bb1ad7207c8b658f850170b927e3" class="m-doc">cnx_format_u64_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>u64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a48a92ca006002e22dfc3c28491abac7f" class="m-doc">cnx_format_i8_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>i8</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a4bdc18e61837b3b9c2a8f16a4203266b" class="m-doc">cnx_format_i16_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>i16</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a5f9631426afb507c6426650c841520a6" class="m-doc">cnx_format_i32_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>i32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#aebfee219cfd143fc31125c09415840bf" class="m-doc">cnx_format_i64_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>i64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a408212aaee564eddb754f4d837a14084" class="m-doc">cnx_format_f32_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>f32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a9c5c824db4f6b5bf41d280c50989a985" class="m-doc">cnx_format_f64_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>f64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#ac9f63630690ccc8de7de6e76a2122aa5" class="m-doc">cnx_format_ptr_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format_with_allocator</code> for pointers</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#ae98fa4b6e12e7c7a0933801b9e48388e" class="m-doc">cnx_format_cnx_string_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format_with_allocator</code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a8ba3e1e71ce4f26f7a897a26e4075729" class="m-doc">cnx_format_cnx_stringview_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>implementation of <code>CnxFormat.format_with_allocator</code> for <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static  <a href="#af5e8ae62e6f02617c670071e0afa384b" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#ga00d8f39b4b304be8134e652bf61ff840" class="m-doc">cstring</a>,
+              <a href="Format_8h.html#aa52dbb136d919af9d5735048a74ffc0d" class="m-doc">cnx_<wbr />format_<wbr />cstring</a>,
+              <a href="Format_8h.html#a073cab129090531e8eaf281e1da0552f" class="m-doc">cnx_<wbr />format_<wbr />cstring_<wbr />with_<wbr />allocator</a>)</span>
             </dt>
             <dd>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>cstring</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static  <a href="#a3b0dcfcf76eabb0d8dcaa03e777becad" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              bool,
+              <a href="Format_8h.html#ab6716c9313f986f49e61b085d328ebcc" class="m-doc">cnx_<wbr />format_<wbr />bool</a>,
+              <a href="Format_8h.html#ae1efc8d52b208963c57b887b18299069" class="m-doc">cnx_<wbr />format_<wbr />bool_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>bool</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static  <a href="#a0adc7cd90f3ce04e29d0b72737bbb539" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              char,
+              <a href="Format_8h.html#a46f09020bff3eca528951ef8305e30bc" class="m-doc">cnx_<wbr />format_<wbr />char</a>,
+              <a href="Format_8h.html#a47f5cc0e5fe4f6f17cd95be2ec519feb" class="m-doc">cnx_<wbr />format_<wbr />char_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>char</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static  <a href="#addcc3ade93a5ccb1f61e8a6c766e26cc" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#ga92c50087ca0e64fa93fc59402c55f8ca" class="m-doc">u8</a>,
+              <a href="Format_8h.html#af4a32309c9075f1bfea4e253f1db84ef" class="m-doc">cnx_<wbr />format_<wbr />u8</a>,
+              <a href="Format_8h.html#a2c0abe17f541a5bd2c33a657f57c4ff4" class="m-doc">cnx_<wbr />format_<wbr />u8_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>u8</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static  <a href="#ab1a4858aab220a928c8ee444276ecd69" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#gace9d960e74685e2cd84b36132dbbf8aa" class="m-doc">u16</a>,
+              <a href="Format_8h.html#a4329fd99e33f470279575c8e8df41a1d" class="m-doc">cnx_<wbr />format_<wbr />u16</a>,
+              <a href="Format_8h.html#a1869506865fedc0f238c9372ffe9e2da" class="m-doc">cnx_<wbr />format_<wbr />u16_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>u16</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static  <a href="#acd3583d78e7aed43c3293c43a06e58ee" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#gafaa62991928fb9fb18ff0db62a040aba" class="m-doc">u32</a>,
+              <a href="Format_8h.html#aae024b98e9b2b55e3ac90eaa9f8ff752" class="m-doc">cnx_<wbr />format_<wbr />u32</a>,
+              <a href="Format_8h.html#a589d4fa686855678f08a7c43d5c458b5" class="m-doc">cnx_<wbr />format_<wbr />u32_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>u32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static  <a href="#a223619f22f7157ad796d63bdad778c6a" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#ga3f7e2bcbb0b4c338f3c4f6c937cd4234" class="m-doc">u64</a>,
+              <a href="Format_8h.html#af090e6636227180ac177ca13f6d9a513" class="m-doc">cnx_<wbr />format_<wbr />u64</a>,
+              <a href="Format_8h.html#aab12bb1ad7207c8b658f850170b927e3" class="m-doc">cnx_<wbr />format_<wbr />u64_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>u64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static  <a href="#ad01d35806734be8328debe881a547d86" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#gae3702327b5f47e83b431e22b33da7b58" class="m-doc">i8</a>,
+              <a href="Format_8h.html#af43df4ec4b577661c12004ba59301041" class="m-doc">cnx_<wbr />format_<wbr />i8</a>,
+              <a href="Format_8h.html#a48a92ca006002e22dfc3c28491abac7f" class="m-doc">cnx_<wbr />format_<wbr />i8_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>i8</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static  <a href="#aa767e1785b19d85b509e0c16d975c661" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#gad309dbcaeea13aa602d686964156ea0b" class="m-doc">i16</a>,
+              <a href="Format_8h.html#a43b2b9d636d6e2ec36884c7a04e8ddd1" class="m-doc">cnx_<wbr />format_<wbr />i16</a>,
+              <a href="Format_8h.html#a4bdc18e61837b3b9c2a8f16a4203266b" class="m-doc">cnx_<wbr />format_<wbr />i16_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>i16</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static  <a href="#abcf38d31fc3e20dfc218f8d662d731dd" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#ga48d6cd8e4135fb2ff7e7f2dac84089ec" class="m-doc">i32</a>,
+              <a href="Format_8h.html#ae60e7f45917bac430115fd0c6f5d8248" class="m-doc">cnx_<wbr />format_<wbr />i32</a>,
+              <a href="Format_8h.html#a5f9631426afb507c6426650c841520a6" class="m-doc">cnx_<wbr />format_<wbr />i32_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>i32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static  <a href="#a1e6a584a4c8126e97259b19dee24e65c" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a>,
+              <a href="Format_8h.html#a4ffe11120bfdf49182aa84842124b9ae" class="m-doc">cnx_<wbr />format_<wbr />i64</a>,
+              <a href="Format_8h.html#aebfee219cfd143fc31125c09415840bf" class="m-doc">cnx_<wbr />format_<wbr />i64_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>i64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static  <a href="#aaa422b6560839d535c9f24c7a114f4c6" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#ga5f6906312a689f27d70e9d086649d3fd" class="m-doc">f32</a>,
+              <a href="Format_8h.html#ab791db773fa1d35a6fdffd35e5c6b4c5" class="m-doc">cnx_<wbr />format_<wbr />f32</a>,
+              <a href="Format_8h.html#a408212aaee564eddb754f4d837a14084" class="m-doc">cnx_<wbr />format_<wbr />f32_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>f32</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static  <a href="#a77449fd423df786a9ac6b22ad9677850" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#ga94dab5770726ccbef8c7d026cfbdf8e5" class="m-doc">f64</a>,
+              <a href="Format_8h.html#a6d64b1ccf60caaf832773f5e2a95c831" class="m-doc">cnx_<wbr />format_<wbr />f64</a>,
+              <a href="Format_8h.html#a9c5c824db4f6b5bf41d280c50989a985" class="m-doc">cnx_<wbr />format_<wbr />f64_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>f64</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static  <a href="#adbae8eadba71018bd2990c2e982ed4e0" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#ga3fb3b2ff539eeed58a5802e9979022c8" class="m-doc">nullptr_<wbr />t</a>,
+              <a href="Format_8h.html#aec97ed83564d3658660659e3249100a4" class="m-doc">cnx_<wbr />format_<wbr />ptr</a>,
+              <a href="Format_8h.html#ac9f63630690ccc8de7de6e76a2122aa5" class="m-doc">cnx_<wbr />format_<wbr />ptr_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for pointers</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static  <a href="#aa73777c23fc9f842308dbe689de380f4" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="structCnxString.html" class="m-doc">CnxString</a>,
+              <a href="Format_8h.html#a75f12315eb4338c1dffeaab3cbc9dd0f" class="m-doc">cnx_<wbr />format_<wbr />cnx_<wbr />string</a>,
+              <a href="Format_8h.html#ae98fa4b6e12e7c7a0933801b9e48388e" class="m-doc">cnx_<wbr />format_<wbr />cnx_<wbr />string_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static  <a href="#a7b4cd190a78ff626f0b2c7497d226776" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>,
+              <a href="Format_8h.html#ab8989ef105e0154ca47b2e30e1918ad0" class="m-doc">cnx_<wbr />format_<wbr />cnx_<wbr />stringview</a>,
+              <a href="Format_8h.html#a8ba3e1e71ce4f26f7a897a26e4075729" class="m-doc">cnx_<wbr />format_<wbr />cnx_<wbr />stringview_<wbr />with_<wbr />allocator</a>)</span>
+            </dt>
+            <dd>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></dd>
           </dl>
         </section>
         <section id="define-members">
@@ -166,24 +460,1060 @@
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a5eec26e03a8304c49309676be6cc7ba6"><div>
+          <section class="m-doc-details" id="a72d819ff35845aefbce80922b823cf1b"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5eec26e03a8304c49309676be6cc7ba6" class="m-doc-self">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#gafe19720a962dabdfb36a17b7ca5e76a9" class="m-doc">nodiscard</a>) CnxString cnx_format_with_allocator(restrict const _cstring format_string</span></span>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a72d819ff35845aefbce80922b823cf1b" class="m-doc-self">cnx_format_with_allocator</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
+              ...) cnx_disable_if(!format_string</span></span>
             </h3>
             <p>Formats the various parameter pack arguments into their associated place in the given format string, using the provided allocator.</p>
             <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">format_string</td>
+                  <td>- The string specifying the format positions, specifiers, and other text that should be present in the output string</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to allocate the output string with</td>
+                </tr>
+                <tr>
+                  <td>num_args</td>
+                  <td>- The number of arguments in the parameter pack</td>
+                </tr>
+              </tbody>
               <tfoot>
                 <tr>
-                  <th style="width: 1%">Returns</th>
+                  <th>Returns</th>
                   <td>The formatted output string</td>
                 </tr>
               </tfoot>
             </table>
-<p>implementation of <code>CnxFormat.format_with_allocator</code> for <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p><p>implementation of <code>CnxFormat.format_with_allocator</code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p><p>implementation of <code>CnxFormat.format_with_allocator</code> for pointers</p><p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>f64</code></p><p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>f32</code></p><p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>i64</code></p><p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>i32</code></p><p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>i16</code></p><p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>i8</code></p><p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>u64</code></p><p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>u32</code></p><p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>u16</code></p><p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>u8</code></p><p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>char</code></p><p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>bool</code></p><p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>cstring</code></p><p>implementation of <code>CnxFormat.format</code> for <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p><p>implementation of <code>CnxFormat.format</code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p><p>implementation of <code>CnxFormat.format</code> for pointers</p><p>implementation of <code>CnxFormat.format</code> for the builtin <code>f64</code></p><p>implementation of <code>CnxFormat.format</code> for the builtin <code>f32</code></p><p>implementation of <code>CnxFormat.format</code> for the builtin <code>i64</code></p><p>implementation of <code>CnxFormat.format</code> for the builtin <code>i32</code></p><p>implementation of <code>CnxFormat.format</code> for the builtin <code>i16</code></p><p>implementation of <code>CnxFormat.format</code> for the builtin <code>i8</code></p><p>implementation of <code>CnxFormat.format</code> for the builtin <code>u64</code></p><p>implementation of <code>CnxFormat.format</code> for the builtin <code>u32</code></p><p>implementation of <code>CnxFormat.format</code> for the builtin <code>u16</code></p><p>implementation of <code>CnxFormat.format</code> for the builtin <code>u8</code></p><p>implementation of <code>CnxFormat.format</code> for the builtin <code>char</code></p><p>implementation of <code>CnxFormat.format</code> for the builtin <code>bool</code></p><p>implementation of <code>CnxFormat.format</code> for the builtin <code>cstring</code></p>
           </div></section>
-          <section class="m-doc-details" id="a783e2d55d77a5b3fd07d8bd836ec230c"><div>
+          <section class="m-doc-details" id="a9dd9786883b966076158511e22629d02"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a783e2d55d77a5b3fd07d8bd836ec230c" class="m-doc-self">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a>) static ImplTraitFor(CnxFormat</span></span>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9dd9786883b966076158511e22629d02" class="m-doc-self">cnx_vformat_with_allocator</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
+              va_list list) cnx_disable_if(!format_string</span></span>
+            </h3>
+            <p>Formats the various parameter pack arguments into their associated place in the given format string, using the provided allocator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">format_string</td>
+                  <td>- The string specifying the format positions, specifiers, and other text that should be present in the output string</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to allocate the output string with</td>
+                </tr>
+                <tr>
+                  <td>num_args</td>
+                  <td>- The number of arguments in the parameter pack</td>
+                </tr>
+                <tr>
+                  <td>list</td>
+                  <td>- The parameter pack of arguments to be formatted</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The formatted output string</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa52dbb136d919af9d5735048a74ffc0d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa52dbb136d919af9d5735048a74ffc0d" class="m-doc-self">cnx_format_cstring</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format</code> for the builtin <code>cstring</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab6716c9313f986f49e61b085d328ebcc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab6716c9313f986f49e61b085d328ebcc" class="m-doc-self">cnx_format_bool</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format</code> for the builtin <code>bool</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a46f09020bff3eca528951ef8305e30bc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a46f09020bff3eca528951ef8305e30bc" class="m-doc-self">cnx_format_char</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format</code> for the builtin <code>char</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af4a32309c9075f1bfea4e253f1db84ef"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af4a32309c9075f1bfea4e253f1db84ef" class="m-doc-self">cnx_format_u8</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format</code> for the builtin <code>u8</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4329fd99e33f470279575c8e8df41a1d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4329fd99e33f470279575c8e8df41a1d" class="m-doc-self">cnx_format_u16</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format</code> for the builtin <code>u16</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aae024b98e9b2b55e3ac90eaa9f8ff752"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aae024b98e9b2b55e3ac90eaa9f8ff752" class="m-doc-self">cnx_format_u32</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format</code> for the builtin <code>u32</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af090e6636227180ac177ca13f6d9a513"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af090e6636227180ac177ca13f6d9a513" class="m-doc-self">cnx_format_u64</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format</code> for the builtin <code>u64</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af43df4ec4b577661c12004ba59301041"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af43df4ec4b577661c12004ba59301041" class="m-doc-self">cnx_format_i8</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format</code> for the builtin <code>i8</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a43b2b9d636d6e2ec36884c7a04e8ddd1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a43b2b9d636d6e2ec36884c7a04e8ddd1" class="m-doc-self">cnx_format_i16</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format</code> for the builtin <code>i16</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae60e7f45917bac430115fd0c6f5d8248"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae60e7f45917bac430115fd0c6f5d8248" class="m-doc-self">cnx_format_i32</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format</code> for the builtin <code>i32</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4ffe11120bfdf49182aa84842124b9ae"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4ffe11120bfdf49182aa84842124b9ae" class="m-doc-self">cnx_format_i64</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format</code> for the builtin <code>i64</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab791db773fa1d35a6fdffd35e5c6b4c5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab791db773fa1d35a6fdffd35e5c6b4c5" class="m-doc-self">cnx_format_f32</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format</code> for the builtin <code>f32</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a6d64b1ccf60caaf832773f5e2a95c831"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6d64b1ccf60caaf832773f5e2a95c831" class="m-doc-self">cnx_format_f64</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format</code> for the builtin <code>f64</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aec97ed83564d3658660659e3249100a4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aec97ed83564d3658660659e3249100a4" class="m-doc-self">cnx_format_ptr</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format</code> for pointers</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a75f12315eb4338c1dffeaab3cbc9dd0f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a75f12315eb4338c1dffeaab3cbc9dd0f" class="m-doc-self">cnx_format_cnx_string</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format</code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab8989ef105e0154ca47b2e30e1918ad0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab8989ef105e0154ca47b2e30e1918ad0" class="m-doc-self">cnx_format_cnx_stringview</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format</code> for <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a073cab129090531e8eaf281e1da0552f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a073cab129090531e8eaf281e1da0552f" class="m-doc-self">cnx_format_cstring_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>cstring</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae1efc8d52b208963c57b887b18299069"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae1efc8d52b208963c57b887b18299069" class="m-doc-self">cnx_format_bool_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>bool</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a47f5cc0e5fe4f6f17cd95be2ec519feb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a47f5cc0e5fe4f6f17cd95be2ec519feb" class="m-doc-self">cnx_format_char_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>char</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a2c0abe17f541a5bd2c33a657f57c4ff4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2c0abe17f541a5bd2c33a657f57c4ff4" class="m-doc-self">cnx_format_u8_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>u8</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1869506865fedc0f238c9372ffe9e2da"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1869506865fedc0f238c9372ffe9e2da" class="m-doc-self">cnx_format_u16_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>u16</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a589d4fa686855678f08a7c43d5c458b5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a589d4fa686855678f08a7c43d5c458b5" class="m-doc-self">cnx_format_u32_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>u32</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aab12bb1ad7207c8b658f850170b927e3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aab12bb1ad7207c8b658f850170b927e3" class="m-doc-self">cnx_format_u64_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>u64</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a48a92ca006002e22dfc3c28491abac7f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a48a92ca006002e22dfc3c28491abac7f" class="m-doc-self">cnx_format_i8_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>i8</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4bdc18e61837b3b9c2a8f16a4203266b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4bdc18e61837b3b9c2a8f16a4203266b" class="m-doc-self">cnx_format_i16_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>i16</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a5f9631426afb507c6426650c841520a6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5f9631426afb507c6426650c841520a6" class="m-doc-self">cnx_format_i32_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>i32</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aebfee219cfd143fc31125c09415840bf"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aebfee219cfd143fc31125c09415840bf" class="m-doc-self">cnx_format_i64_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>i64</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a408212aaee564eddb754f4d837a14084"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a408212aaee564eddb754f4d837a14084" class="m-doc-self">cnx_format_f32_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>f32</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a9c5c824db4f6b5bf41d280c50989a985"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9c5c824db4f6b5bf41d280c50989a985" class="m-doc-self">cnx_format_f64_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format_with_allocator</code> for the builtin <code>f64</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac9f63630690ccc8de7de6e76a2122aa5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac9f63630690ccc8de7de6e76a2122aa5" class="m-doc-self">cnx_format_ptr_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format_with_allocator</code> for pointers</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae98fa4b6e12e7c7a0933801b9e48388e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae98fa4b6e12e7c7a0933801b9e48388e" class="m-doc-self">cnx_format_cnx_string_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format_with_allocator</code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8ba3e1e71ce4f26f7a897a26e4075729"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8ba3e1e71ce4f26f7a897a26e4075729" class="m-doc-self">cnx_format_cnx_stringview_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span></span>
+            </h3>
+            <p>implementation of <code>CnxFormat.format_with_allocator</code> for <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> object to format</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The format specifier to follow</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to allocate the format string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a formatted string associated with <code>self</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af5e8ae62e6f02617c670071e0afa384b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af5e8ae62e6f02617c670071e0afa384b" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#ga00d8f39b4b304be8134e652bf61ff840" class="m-doc">cstring</a>,
+              <a href="Format_8h.html#aa52dbb136d919af9d5735048a74ffc0d" class="m-doc">cnx_<wbr />format_<wbr />cstring</a>,
+              <a href="Format_8h.html#a073cab129090531e8eaf281e1da0552f" class="m-doc">cnx_<wbr />format_<wbr />cstring_<wbr />with_<wbr />allocator</a>)</span></span>
             </h3>
             <p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>cstring</code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -194,7 +1524,261 @@
                 </tr>
               </tfoot>
             </table>
-<p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p><p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p><p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for pointers</p><p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>f64</code></p><p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>f32</code></p><p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>i64</code></p><p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>i32</code></p><p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>i16</code></p><p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>i8</code></p><p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>u64</code></p><p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>u32</code></p><p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>u16</code></p><p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>u8</code></p><p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>char</code></p><p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>bool</code></p>
+          </div></section>
+          <section class="m-doc-details" id="a3b0dcfcf76eabb0d8dcaa03e777becad"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3b0dcfcf76eabb0d8dcaa03e777becad" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              bool,
+              <a href="Format_8h.html#ab6716c9313f986f49e61b085d328ebcc" class="m-doc">cnx_<wbr />format_<wbr />bool</a>,
+              <a href="Format_8h.html#ae1efc8d52b208963c57b887b18299069" class="m-doc">cnx_<wbr />format_<wbr />bool_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>bool</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a0adc7cd90f3ce04e29d0b72737bbb539"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0adc7cd90f3ce04e29d0b72737bbb539" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              char,
+              <a href="Format_8h.html#a46f09020bff3eca528951ef8305e30bc" class="m-doc">cnx_<wbr />format_<wbr />char</a>,
+              <a href="Format_8h.html#a47f5cc0e5fe4f6f17cd95be2ec519feb" class="m-doc">cnx_<wbr />format_<wbr />char_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>char</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="addcc3ade93a5ccb1f61e8a6c766e26cc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#addcc3ade93a5ccb1f61e8a6c766e26cc" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#ga92c50087ca0e64fa93fc59402c55f8ca" class="m-doc">u8</a>,
+              <a href="Format_8h.html#af4a32309c9075f1bfea4e253f1db84ef" class="m-doc">cnx_<wbr />format_<wbr />u8</a>,
+              <a href="Format_8h.html#a2c0abe17f541a5bd2c33a657f57c4ff4" class="m-doc">cnx_<wbr />format_<wbr />u8_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>u8</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab1a4858aab220a928c8ee444276ecd69"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab1a4858aab220a928c8ee444276ecd69" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#gace9d960e74685e2cd84b36132dbbf8aa" class="m-doc">u16</a>,
+              <a href="Format_8h.html#a4329fd99e33f470279575c8e8df41a1d" class="m-doc">cnx_<wbr />format_<wbr />u16</a>,
+              <a href="Format_8h.html#a1869506865fedc0f238c9372ffe9e2da" class="m-doc">cnx_<wbr />format_<wbr />u16_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>u16</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="acd3583d78e7aed43c3293c43a06e58ee"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acd3583d78e7aed43c3293c43a06e58ee" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#gafaa62991928fb9fb18ff0db62a040aba" class="m-doc">u32</a>,
+              <a href="Format_8h.html#aae024b98e9b2b55e3ac90eaa9f8ff752" class="m-doc">cnx_<wbr />format_<wbr />u32</a>,
+              <a href="Format_8h.html#a589d4fa686855678f08a7c43d5c458b5" class="m-doc">cnx_<wbr />format_<wbr />u32_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>u32</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a223619f22f7157ad796d63bdad778c6a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a223619f22f7157ad796d63bdad778c6a" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#ga3f7e2bcbb0b4c338f3c4f6c937cd4234" class="m-doc">u64</a>,
+              <a href="Format_8h.html#af090e6636227180ac177ca13f6d9a513" class="m-doc">cnx_<wbr />format_<wbr />u64</a>,
+              <a href="Format_8h.html#aab12bb1ad7207c8b658f850170b927e3" class="m-doc">cnx_<wbr />format_<wbr />u64_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>u64</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad01d35806734be8328debe881a547d86"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad01d35806734be8328debe881a547d86" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#gae3702327b5f47e83b431e22b33da7b58" class="m-doc">i8</a>,
+              <a href="Format_8h.html#af43df4ec4b577661c12004ba59301041" class="m-doc">cnx_<wbr />format_<wbr />i8</a>,
+              <a href="Format_8h.html#a48a92ca006002e22dfc3c28491abac7f" class="m-doc">cnx_<wbr />format_<wbr />i8_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>i8</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa767e1785b19d85b509e0c16d975c661"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa767e1785b19d85b509e0c16d975c661" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#gad309dbcaeea13aa602d686964156ea0b" class="m-doc">i16</a>,
+              <a href="Format_8h.html#a43b2b9d636d6e2ec36884c7a04e8ddd1" class="m-doc">cnx_<wbr />format_<wbr />i16</a>,
+              <a href="Format_8h.html#a4bdc18e61837b3b9c2a8f16a4203266b" class="m-doc">cnx_<wbr />format_<wbr />i16_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>i16</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="abcf38d31fc3e20dfc218f8d662d731dd"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abcf38d31fc3e20dfc218f8d662d731dd" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#ga48d6cd8e4135fb2ff7e7f2dac84089ec" class="m-doc">i32</a>,
+              <a href="Format_8h.html#ae60e7f45917bac430115fd0c6f5d8248" class="m-doc">cnx_<wbr />format_<wbr />i32</a>,
+              <a href="Format_8h.html#a5f9631426afb507c6426650c841520a6" class="m-doc">cnx_<wbr />format_<wbr />i32_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>i32</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1e6a584a4c8126e97259b19dee24e65c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1e6a584a4c8126e97259b19dee24e65c" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a>,
+              <a href="Format_8h.html#a4ffe11120bfdf49182aa84842124b9ae" class="m-doc">cnx_<wbr />format_<wbr />i64</a>,
+              <a href="Format_8h.html#aebfee219cfd143fc31125c09415840bf" class="m-doc">cnx_<wbr />format_<wbr />i64_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>i64</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aaa422b6560839d535c9f24c7a114f4c6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aaa422b6560839d535c9f24c7a114f4c6" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#ga5f6906312a689f27d70e9d086649d3fd" class="m-doc">f32</a>,
+              <a href="Format_8h.html#ab791db773fa1d35a6fdffd35e5c6b4c5" class="m-doc">cnx_<wbr />format_<wbr />f32</a>,
+              <a href="Format_8h.html#a408212aaee564eddb754f4d837a14084" class="m-doc">cnx_<wbr />format_<wbr />f32_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>f32</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a77449fd423df786a9ac6b22ad9677850"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a77449fd423df786a9ac6b22ad9677850" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#ga94dab5770726ccbef8c7d026cfbdf8e5" class="m-doc">f64</a>,
+              <a href="Format_8h.html#a6d64b1ccf60caaf832773f5e2a95c831" class="m-doc">cnx_<wbr />format_<wbr />f64</a>,
+              <a href="Format_8h.html#a9c5c824db4f6b5bf41d280c50989a985" class="m-doc">cnx_<wbr />format_<wbr />f64_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for the builtin <code>f64</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="adbae8eadba71018bd2990c2e982ed4e0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adbae8eadba71018bd2990c2e982ed4e0" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="group__types.html#ga3fb3b2ff539eeed58a5802e9979022c8" class="m-doc">nullptr_<wbr />t</a>,
+              <a href="Format_8h.html#aec97ed83564d3658660659e3249100a4" class="m-doc">cnx_<wbr />format_<wbr />ptr</a>,
+              <a href="Format_8h.html#ac9f63630690ccc8de7de6e76a2122aa5" class="m-doc">cnx_<wbr />format_<wbr />ptr_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for pointers</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa73777c23fc9f842308dbe689de380f4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa73777c23fc9f842308dbe689de380f4" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="structCnxString.html" class="m-doc">CnxString</a>,
+              <a href="Format_8h.html#a75f12315eb4338c1dffeaab3cbc9dd0f" class="m-doc">cnx_<wbr />format_<wbr />cnx_<wbr />string</a>,
+              <a href="Format_8h.html#ae98fa4b6e12e7c7a0933801b9e48388e" class="m-doc">cnx_<wbr />format_<wbr />cnx_<wbr />string_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a7b4cd190a78ff626f0b2c7497d226776"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7b4cd190a78ff626f0b2c7497d226776" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>,
+              <a href="Format_8h.html#ab8989ef105e0154ca47b2e30e1918ad0" class="m-doc">cnx_<wbr />format_<wbr />cnx_<wbr />stringview</a>,
+              <a href="Format_8h.html#a8ba3e1e71ce4f26f7a897a26e4075729" class="m-doc">cnx_<wbr />format_<wbr />cnx_<wbr />stringview_<wbr />with_<wbr />allocator</a>)</span></span>
+            </h3>
+            <p>implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation</td>
+                </tr>
+              </tfoot>
+            </table>
           </div></section>
         </section>
       </div>

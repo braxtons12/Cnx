@@ -62,9 +62,38 @@
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"> <a href="group__cnx__string.html#ga954408e428f5b5125f7b3696c75f7a38" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#gafe19720a962dabdfb36a17b7ca5e76a9" class="m-doc">nodiscard</a>)</span>
+              <span class="m-doc-wrap-bumper"> <a href="group__cnx__string.html#ga7c4ffe2b7acfd6159d35eef2a77a8017" class="m-doc">CnxVector</a>(</span><span class="m-doc-wrap"><a href="structCnxString.html" class="m-doc">CnxString</a>) cnx_string_split_on(const CnxString *restrict self</span>
             </dt>
-            <dd>Creates a new, empty <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></dd>
+            <dd>Splits the given string at each instance of the given <code>delimiter</code> character, returning a <code>CnxVector</code> of the resulting substrings.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"> <a href="group__cnx__string.html#ga724cf39e4ab589a64082123512f614a6" class="m-doc">CnxVector</a>(</span><span class="m-doc-wrap"><a href="structCnxStringView.html" class="m-doc">CnxStringView</a>) cnx_string_view_split_on(const CnxString *restrict self</span>
+            </dt>
+            <dd>Splits the given string into a set of stringviews at each instance of the given <code>delimiter</code> character, returning them in a <code>CnxVector</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="group__cnx__string.html#gaec10e45762852c280d5b483bd14b146d" class="m-doc">cnx_string_occurrences_of_char</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              char to_find)</span>
+            </dt>
+            <dd>Determines the total number of times the character <code>to_find</code> occurs in <code>self</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="group__cnx__string.html#ga30a7a4b52acb6813f9827e08dde4636d" class="m-doc">cnx_string_occurrences_of</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict to_find)</span>
+            </dt>
+            <dd>Determines the total number of times the string <code>to_find</code> occurs in <code>self</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="group__cnx__string.html#ga2c1f1132bb846aca28f4f153dd274f5f" class="m-doc">cnx_string_occurrences_of_stringview</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              const <a href="structCnxStringView.html" class="m-doc">CnxStringView</a>*restrict to_find)</span>
+            </dt>
+            <dd>Determines the total number of times the stringview <code>to_find</code> occurs in <code>self</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="group__cnx__string.html#ga16772908efc096d9d36f08cbbccac7cf" class="m-doc">cnx_string_occurrences_of_cstring</a>(</span><span class="m-doc-wrap">const <a href="structCnxString.html" class="m-doc">CnxString</a>*restrict self,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> to_find,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> to_find_length)</span>
+            </dt>
+            <dd>Determines the total number of times the <code>cstring</code> <code>to_find</code> occurs in <code>self</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"> <a href="group__cnx__string.html#gae5104aa67000504001379fdb7799f41b" class="m-doc">CnxVector</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a>) cnx_string_find_occurrences_of_char(const CnxString *restrict self</span>
+            </dt>
+            <dd>Finds the indices at which the character <code>to_find</code> occurs in <code>self</code>, and returns them in a <code>CnxVector</code></dd>
           </dl>
         </section>
         <section id="define-members">

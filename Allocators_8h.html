@@ -81,13 +81,51 @@
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"> <a href="group__memory.html#ga2db339d3f16d675bcde80ab8aeb8da39" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#gafe19720a962dabdfb36a17b7ca5e76a9" class="m-doc">nodiscard</a>) CnxAllocator *restrict self</span>
+              <span class="m-doc-wrap-bumper">void* <a href="group__memory.html#gae0d18029fa0ab523ea549a9b7669c5b7" class="m-doc">cnx_allocate</a>(</span><span class="m-doc-wrap"><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a>*restrict self,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> size_bytes) cnx_disable_if(!self</span>
             </dt>
             <dd>Wrapper for <code>malloc</code> so it can be used in <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code>s Behavior matches that of <code>malloc</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"> <a href="group__memory.html#ga2f36314d135d8bab31a7d8979b1167ff" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#ga48b8fada710e243661bafc9037e90eb5" class="m-doc">not_<wbr />null</a>(1, 2)) CnxAllocator *restrict self</span>
+              <span class="m-doc-wrap-bumper">void* <a href="group__memory.html#gadcbadcf8f6017192538c27291d013406" class="m-doc">cnx_reallocate</a>(</span><span class="m-doc-wrap"><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a>*restrict self,
+              void* memory,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> new_size_bytes) cnx_disable_if(!self</span>
+            </dt>
+            <dd>Wrapper for <code>realloc</code> so it can be used in <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code>s Behavior matches that of <code>realloc</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__memory.html#ga4e464667bf77346d96854dc0c529dc80" class="m-doc">cnx_deallocate</a>(</span><span class="m-doc-wrap"><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a>*restrict self,
+              void* memory) cnx_disable_if(!self</span>
             </dt>
             <dd>Wrapper for <code>free</code> so it can be used in <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code>s Behavior matches that of <code>free</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> <a href="group__memory.html#gae05e759a412af924e76a686e8565d9fb" class="m-doc">cnx_allocator_new</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Creates a new <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> with the default allocation and default deallocation functions.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void* <a href="group__memory.html#ga85b31307615fed1975664e21060bbe33" class="m-doc">cnx_allocator_allocate</a>(</span><span class="m-doc-wrap"><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> size_bytes)</span>
+            </dt>
+            <dd>Allocates new memory with the given <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void* <a href="group__memory.html#ga1546661be8385b124c850a0674f05bdb" class="m-doc">cnx_allocator_allocate_array</a>(</span><span class="m-doc-wrap"><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_elements,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> element_size_bytes)</span>
+            </dt>
+            <dd>Allocates new memory for an array of the given size with the given <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void* <a href="group__memory.html#ga1dbdcce37736cc3c66de205cd197186d" class="m-doc">cnx_allocator_reallocate</a>(</span><span class="m-doc-wrap"><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              void* memory,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> old_size_bytes,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> new_size_bytes)</span>
+            </dt>
+            <dd>Allocates new memory large enough to store <code>new_size_bytes</code> bytes of data, and copies the old contents over.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void* <a href="group__memory.html#gadb3e793a8e5d9d43471783cfac847d1c" class="m-doc">cnx_allocator_reallocate_array</a>(</span><span class="m-doc-wrap"><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              void* memory,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> old_num_elements,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> new_num_elements,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> element_size_bytes)</span>
+            </dt>
+            <dd>Allocates new memory large enough to store <code>new_num_elements</code> elements of size <code>element_size_bytes</code>, and copies the old contents over.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="group__memory.html#ga38b4489916b4df6c3a862b683bada057" class="m-doc">cnx_allocator_deallocate</a>(</span><span class="m-doc-wrap"><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
               void* memory)</span>

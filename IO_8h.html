@@ -62,13 +62,49 @@
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"> <a href="#a080634caa6b4a199ed08aba82554bdcc" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#ga48b8fada710e243661bafc9037e90eb5" class="m-doc">not_<wbr />null</a>(1)) void print_(restrict const _cstring format_string</span>
+              <span class="m-doc-wrap-bumper">void <a href="#ae713628636c6991dbd06db1a10f6e63e" class="m-doc">print_</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
+              ...)</span>
             </dt>
             <dd>Formats the given arguments into the specified format string then prints it to <code>stdout</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"> <a href="#a539289f2a4cbec30b16be01111f7d36d" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#ga48b8fada710e243661bafc9037e90eb5" class="m-doc">not_<wbr />null</a>(1, 2)) void fprint_(FILE *file</span>
+              <span class="m-doc-wrap-bumper">void <a href="#a22a2c48175150890fa308d225641afc7" class="m-doc">eprint_</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
+              ...)</span>
+            </dt>
+            <dd>Formats the given arguments into the specified format string then prints it to <code>Cnxerr</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a0cf381448ae297dcd4923a9563480026" class="m-doc">fprint_</a>(</span><span class="m-doc-wrap">FILE* file,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
+              ...) cnx_disable_if(!file</span>
             </dt>
             <dd>Formats the given arguments into the specified format string then prints it to the given file.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aaa7c7ce153ce728507b4eed86af144d2" class="m-doc">println_</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
+              ...)</span>
+            </dt>
+            <dd>Formats the given arguments into the specified format string then prints it to <code>stdout</code>, followed by a newline.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a2d2bcdba5eed02aeee2a5b3c039d776a" class="m-doc">eprintln_</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
+              ...)</span>
+            </dt>
+            <dd>Formats the given arguments into the specified format string then prints it to <code>stderr</code>, followed by a newline.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ad49f7c0543bbd9e8a555b8e6b10704f6" class="m-doc">fprintln_</a>(</span><span class="m-doc-wrap">FILE* file,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
+              ...) cnx_disable_if(!file</span>
+            </dt>
+            <dd>Formats the given arguments into the specified format string then prints it to the given file, followed by a newline.</dd>
           </dl>
         </section>
         <section id="define-members">
@@ -152,19 +188,183 @@
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a080634caa6b4a199ed08aba82554bdcc"><div>
+          <section class="m-doc-details" id="ae713628636c6991dbd06db1a10f6e63e"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a080634caa6b4a199ed08aba82554bdcc" class="m-doc-self">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#ga48b8fada710e243661bafc9037e90eb5" class="m-doc">not_<wbr />null</a>(1)) void print_(restrict const _cstring format_string</span></span>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae713628636c6991dbd06db1a10f6e63e" class="m-doc-self">print_</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
+              ...)</span></span>
             </h3>
             <p>Formats the given arguments into the specified format string then prints it to <code>stdout</code></p>
-<p>Formats the given arguments into the specified format string then prints it to <code>stderr</code>, followed by a newline.</p><p>Formats the given arguments into the specified format string then prints it to <code>stdout</code>, followed by a newline.</p><p>Formats the given arguments into the specified format string then prints it to <code>Cnxerr</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">format_string</td>
+                  <td>- The format string specifying how text and arguments should be formatted</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The allocator to allocate the formatted string with</td>
+                </tr>
+                <tr>
+                  <td>num_args</td>
+                  <td>- The number of args in the parameter pack</td>
+                </tr>
+              </tbody>
+            </table>
           </div></section>
-          <section class="m-doc-details" id="a539289f2a4cbec30b16be01111f7d36d"><div>
+          <section class="m-doc-details" id="a22a2c48175150890fa308d225641afc7"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a539289f2a4cbec30b16be01111f7d36d" class="m-doc-self">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#ga48b8fada710e243661bafc9037e90eb5" class="m-doc">not_<wbr />null</a>(1, 2)) void fprint_(FILE *file</span></span>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a22a2c48175150890fa308d225641afc7" class="m-doc-self">eprint_</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
+              ...)</span></span>
+            </h3>
+            <p>Formats the given arguments into the specified format string then prints it to <code>Cnxerr</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">format_string</td>
+                  <td>- The format string specifying how text and arguments should be formatted</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The allocator to allocate the formatted string with</td>
+                </tr>
+                <tr>
+                  <td>num_args</td>
+                  <td>- The number of args in the parameter pack</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a0cf381448ae297dcd4923a9563480026"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0cf381448ae297dcd4923a9563480026" class="m-doc-self">fprint_</a>(</span><span class="m-doc-wrap">FILE* file,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
+              ...) cnx_disable_if(!file</span></span>
             </h3>
             <p>Formats the given arguments into the specified format string then prints it to the given file.</p>
-<p>Formats the given arguments into the specified format string then prints it to the given file, followed by a newline.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">file</td>
+                  <td>- The file to print the formatted string to</td>
+                </tr>
+                <tr>
+                  <td>format_string</td>
+                  <td>- The format string specifying how text and arguments should be formatted</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The allocator to allocate the formatted string with</td>
+                </tr>
+                <tr>
+                  <td>num_args</td>
+                  <td>- The number of args in the parameter pack</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aaa7c7ce153ce728507b4eed86af144d2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aaa7c7ce153ce728507b4eed86af144d2" class="m-doc-self">println_</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
+              ...)</span></span>
+            </h3>
+            <p>Formats the given arguments into the specified format string then prints it to <code>stdout</code>, followed by a newline.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">format_string</td>
+                  <td>- The format string specifying how text and arguments should be formatted</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The allocator to allocate the formatted string with</td>
+                </tr>
+                <tr>
+                  <td>num_args</td>
+                  <td>- The number of args in the parameter pack</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a2d2bcdba5eed02aeee2a5b3c039d776a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2d2bcdba5eed02aeee2a5b3c039d776a" class="m-doc-self">eprintln_</a>(</span><span class="m-doc-wrap">restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
+              ...)</span></span>
+            </h3>
+            <p>Formats the given arguments into the specified format string then prints it to <code>stderr</code>, followed by a newline.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">format_string</td>
+                  <td>- The format string specifying how text and arguments should be formatted</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The allocator to allocate the formatted string with</td>
+                </tr>
+                <tr>
+                  <td>num_args</td>
+                  <td>- The number of args in the parameter pack</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad49f7c0543bbd9e8a555b8e6b10704f6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad49f7c0543bbd9e8a555b8e6b10704f6" class="m-doc-self">fprintln_</a>(</span><span class="m-doc-wrap">FILE* file,
+              restrict <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> format_string,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator,
+              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> num_args,
+              ...) cnx_disable_if(!file</span></span>
+            </h3>
+            <p>Formats the given arguments into the specified format string then prints it to the given file, followed by a newline.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">file</td>
+                  <td>- The file to print the formatted string to</td>
+                </tr>
+                <tr>
+                  <td>format_string</td>
+                  <td>- The format string specifying how text and arguments should be formatted</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The allocator to allocate the formatted string with</td>
+                </tr>
+                <tr>
+                  <td>num_args</td>
+                  <td>- The number of args in the parameter pack</td>
+                </tr>
+              </tbody>
+            </table>
           </div></section>
         </section>
         <section>

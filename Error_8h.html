@@ -73,7 +73,7 @@
           <h2><a href="#typedef-members">Typedefs</a></h2>
           <dl class="m-doc">
             <dt>
-              using <a href="group__cnx__error.html#gab99da54e524bc228ddeb99f4b1434e6b" class="m-doc">CnxError</a> = struct <a href="structCnxError.html" class="m-doc">CnxError</a>
+              using <a href="group__cnx__error.html#gaa5139761f60937519aabe5d2c2d2af2d" class="m-doc">CnxError</a> = struct <a href="structCnxError.html" class="m-doc">CnxError</a>
             </dt>
             <dd><code><a href="structCnxError.html" class="m-doc">CnxError</a></code> provides an extensible, configurable type for communicating recoverable errors via error codes and error message strings</dd>
           </dl>
@@ -87,11 +87,52 @@
             </dt>
             <dd><code>CnxErrorCategory</code> is a <code>Trait</code> that provides the mechanism to convert an arbitrary error code into a corresponding message associated with a specific class of errors, and to get the last error that occurred in a particular category (if supported by the category. For example, global categories like <code>CNX_WIN32_ERROR_CATEGORY</code> and <code>CNX_POSIX_ERROR_CATEGORY</code> support this, but categories local to specific modules probably won&#x27;t).</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"> <a href="group__cnx__error.html#ga08f171ccf171d99c409aa1591c937f29" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#gafe19720a962dabdfb36a17b7ca5e76a9" class="m-doc">nodiscard</a>) CnxError cnx_error_new(i64 error_code</span>
+              <span class="m-doc-wrap-bumper"><a href="structCnxError.html" class="m-doc">CnxError</a> <a href="group__cnx__error.html#ga8c0c6cffe2fa15d45b1c9f51069a3239" class="m-doc">cnx_error_new</a>(</span><span class="m-doc-wrap"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> error_code,
+              CnxErrorCategory error_category)</span>
             </dt>
             <dd>Creates a <code><a href="structCnxError.html" class="m-doc">CnxError</a></code> with the given error code and category.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"> <a href="group__cnx__error.html#ga783e2d55d77a5b3fd07d8bd836ec230c" class="m-doc">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#ga209f2e04922e102ff5e0cb60206201dc" class="m-doc">maybe_<wbr />unused</a>) static ImplTraitFor(CnxFormat</span>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> <a href="group__cnx__error.html#gac7286b051b33a107b5ffaaa4c8a6c6c0" class="m-doc">cnx_error_code</a>(</span><span class="m-doc-wrap">const <a href="structCnxError.html" class="m-doc">CnxError</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the error code associated with the given error.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> <a href="group__cnx__error.html#gac378c850576270f625feb668dcf089ff" class="m-doc">cnx_error_message</a>(</span><span class="m-doc-wrap">const <a href="structCnxError.html" class="m-doc">CnxError</a>*restrict self)</span>
+            </dt>
+            <dd>Returns the error message associated with the given error, as a <code>cstring</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> <a href="group__cnx__error.html#ga2a83739c4cf5bd47e896005828bf818b" class="m-doc">cnx_error_category_get_message</a>(</span><span class="m-doc-wrap">CnxErrorCategory self,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> error_code)</span>
+            </dt>
+            <dd>Returns the error message associated with the given error code, as a <code>cstring</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> <a href="group__cnx__error.html#ga09734ad21d6677e22b9de5fa39c20bd2" class="m-doc">cnx_error_category_get_last_error</a>(</span><span class="m-doc-wrap">CnxErrorCategory self)</span>
+            </dt>
+            <dd>Returns the error code for the last reported error.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> <a href="group__cnx__error.html#ga22a6515fd9dbcc5cf9247fa199114179" class="m-doc">cnx_posix_category_get_message</a>(</span><span class="m-doc-wrap">const CnxErrorCategory*restrict self,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> error_code)</span>
+            </dt>
+            <dd>Returns the POSIX error message associated with the given error code, as a <code>cstring</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> <a href="group__cnx__error.html#gaa94da227fea2ed1067d4950498cdb630" class="m-doc">cnx_posix_category_get_last_error</a>(</span><span class="m-doc-wrap">const CnxErrorCategory*restrict self)</span>
+            </dt>
+            <dd>Returns the error code for the last reported POSIX error.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a7fb714b22ab38000b81437eb40df7fb1" class="m-doc">cnx_error_format</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+            </dt>
+            <dd>Implementation of <code>CnxFormat.format</code> for <code><a href="structCnxError.html" class="m-doc">CnxError</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#adce78a61b32fd6939efd27fe235ed319" class="m-doc">cnx_error_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
+            </dt>
+            <dd>Implementation of <code>CnxFormat.format_with_allocator</code> for <code><a href="structCnxError.html" class="m-doc">CnxError</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static  <a href="group__cnx__error.html#gaafecaa1b546f4d421b737c405a2e4e13" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <a href="structCnxError.html" class="m-doc">CnxError</a>,
+              <a href="Error_8h.html#a7fb714b22ab38000b81437eb40df7fb1" class="m-doc">cnx_<wbr />error_<wbr />format</a>,
+              <a href="Error_8h.html#adce78a61b32fd6939efd27fe235ed319" class="m-doc">cnx_<wbr />error_<wbr />format_<wbr />with_<wbr />allocator</a>)</span>
             </dt>
             <dd>Implement <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for <code><a href="structCnxError.html" class="m-doc">CnxError</a></code></dd>
           </dl>
@@ -112,6 +153,70 @@
             </dt>
             <dd>the default <code>CnxErrorCategory</code>. By default, this is <code>CNX_POSIX_ERROR_CATEGORY</code></dd>
           </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a7fb714b22ab38000b81437eb40df7fb1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7fb714b22ab38000b81437eb40df7fb1" class="m-doc-self">cnx_error_format</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span></span>
+            </h3>
+            <p>Implementation of <code>CnxFormat.format</code> for <code><a href="structCnxError.html" class="m-doc">CnxError</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxError.html" class="m-doc">CnxError</a></code> to format as a <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait object</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The <code><a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a></code> in the format string. Unused</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>self</code> formatted as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="adce78a61b32fd6939efd27fe235ed319"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adce78a61b32fd6939efd27fe235ed319" class="m-doc-self">cnx_error_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span></span>
+            </h3>
+            <p>Implementation of <code>CnxFormat.format_with_allocator</code> for <code><a href="structCnxError.html" class="m-doc">CnxError</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxError.html" class="m-doc">CnxError</a></code> to format as a <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait object</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The <code><a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a></code> in the format string. Unused</td>
+                </tr>
+                <tr>
+                  <td>allocator</td>
+                  <td>- The <code><a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a></code> to allocate the formatted string with</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>self</code> formatted as a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
         </section>
       </div>
     </div>

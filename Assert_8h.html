@@ -61,8 +61,11 @@
         <section id="func-members">
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
-            <dt id="a31d001979fba9b8dfec5a665f9a888fb">
-              <span class="m-doc-wrap-bumper"> <a href="#a31d001979fba9b8dfec5a665f9a888fb" class="m-doc-self">__attr</a>(</span><span class="m-doc-wrap"><a href="group__cnx__def.html#ga48b8fada710e243661bafc9037e90eb5" class="m-doc">not_<wbr />null</a>(2, 3)) void cnx_assert_cstring(bool condition</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ab75fe1513ed07de32c7d62f225a7821a" class="m-doc">cnx_assert_cstring</a>(</span><span class="m-doc-wrap">bool condition,
+              <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> error_message,
+              <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> file,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> line)</span>
             </dt>
             <dd>Asserts that the given condition is <code>true</code>. If <code>false</code>, prints the given file, line, and error message and aborts.</dd>
           </dl>
@@ -104,6 +107,41 @@
             </dt>
             <dd>Asserts that the types of the two given values are equivalent at compile-time.</dd>
           </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ab75fe1513ed07de32c7d62f225a7821a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab75fe1513ed07de32c7d62f225a7821a" class="m-doc-self">cnx_assert_cstring</a>(</span><span class="m-doc-wrap">bool condition,
+              <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> error_message,
+              <a href="group__types.html#ga144d0c3c4e987cdbe967ca96a2191600" class="m-doc">const_<wbr />cstring</a> file,
+              <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> line)</span></span>
+            </h3>
+            <p>Asserts that the given condition is <code>true</code>. If <code>false</code>, prints the given file, line, and error message and aborts.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">condition</td>
+                  <td>- The condition that must be <code>true</code></td>
+                </tr>
+                <tr>
+                  <td>error_message</td>
+                  <td>- The associated error message if <code>condition</code> is <code>false</code></td>
+                </tr>
+                <tr>
+                  <td>file</td>
+                  <td>- The file the error occurred in</td>
+                </tr>
+                <tr>
+                  <td>line</td>
+                  <td>- The line number the error occurred at</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
         </section>
       </div>
     </div>
