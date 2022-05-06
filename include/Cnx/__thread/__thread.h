@@ -1,8 +1,8 @@
 /// @file __thread.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Type definitions for threading functionality
-/// @version 0.2.0
-/// @date 2022-04-10
+/// @version 0.2.1
+/// @date 2022-05-05
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -70,10 +70,6 @@ IGNORE_RESERVED_IDENTIFIER_WARNING_START
 	#define ___CNX_HAS_NO_THREADS TRUE
 
 #endif // defined(__has_include) && !CNX_PLATFORM_WINDOWS
-
-#if ___CNX_HAS_NO_THREADS
-	#error Threads not supported on the target platform
-#endif
 
 #if ___CNX_HAS_C11_THREADS
 

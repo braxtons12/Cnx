@@ -3,7 +3,7 @@
 /// @brief Def provides various `#define`s for performing basic tasks and macro-related
 /// functions.
 /// @version 0.2.3
-/// @date 2022-04-30
+/// @date 2022-05-05
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -537,6 +537,10 @@
 /// "-Wdiscarded-qualifiers" may be necessary
 /// @ingroup cnx_def
 #define let_mut __auto_type
+
+/// @brief Use to declare an infinite loop, equivalent to `while(true)` or `for(;;)`
+/// @ingroup cnx_def
+#define loop while(true)
 
 /// @brief shorthand for writing `T_ptr`, used for generating typedef names needed for macros
 /// that require an alphanumeric name for `T*`

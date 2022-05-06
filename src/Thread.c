@@ -1,8 +1,8 @@
 /// @file Thread.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Function implementations for threading functionality
-/// @version 0.2.2
-/// @date 2022-04-30
+/// @version 0.2.3
+/// @date 2022-05-06
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -25,53 +25,57 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#include <Cnx/Assert.h>
-#include <Cnx/Atomic.h>
-#include <Cnx/Thread.h>
-#include <Cnx/time/Clock.h>
-#include <Cnx/time/TimePoint.h>
-#include <time.h>
+#include <Cnx/__thread/__thread.h>
 
-#define RESULT_T	CnxBasicMutex
-#define RESULT_IMPL TRUE
-#include <Cnx/Result.h>
-#undef RESULT_T
-#undef RESULT_IMPL
+#if !___CNX_HAS_NO_THREADS
 
-#define RESULT_T	CnxRecursiveBasicMutex
-#define RESULT_IMPL TRUE
-// NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/Result.h>
-#undef RESULT_T
-#undef RESULT_IMPL
+	#include <Cnx/Assert.h>
+	#include <Cnx/Atomic.h>
+	#include <Cnx/Thread.h>
+	#include <Cnx/time/Clock.h>
+	#include <Cnx/time/TimePoint.h>
+	#include <time.h>
 
-#define RESULT_T	CnxCondvar
-#define RESULT_IMPL TRUE
-// NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/Result.h>
-#undef RESULT_T
-#undef RESULT_IMPL
+	#define RESULT_T	CnxBasicMutex
+	#define RESULT_IMPL TRUE
+	#include <Cnx/Result.h>
+	#undef RESULT_T
+	#undef RESULT_IMPL
 
-#define RESULT_T	CnxThread
-#define RESULT_IMPL TRUE
-// NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/Result.h>
-#undef RESULT_T
-#undef RESULT_IMPL
+	#define RESULT_T	CnxRecursiveBasicMutex
+	#define RESULT_IMPL TRUE
+	// NOLINTNEXTLINE(readability-duplicate-include)
+	#include <Cnx/Result.h>
+	#undef RESULT_T
+	#undef RESULT_IMPL
 
-#define RESULT_T	CnxJThread
-#define RESULT_IMPL TRUE
-// NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/Result.h>
-#undef RESULT_T
-#undef RESULT_IMPL
+	#define RESULT_T	CnxBasicCondvar
+	#define RESULT_IMPL TRUE
+	// NOLINTNEXTLINE(readability-duplicate-include)
+	#include <Cnx/Result.h>
+	#undef RESULT_T
+	#undef RESULT_IMPL
 
-#define RESULT_T	CnxTLSKey
-#define RESULT_IMPL TRUE
-// NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/Result.h>
-#undef RESULT_T
-#undef RESULT_IMPL
+	#define RESULT_T	CnxThread
+	#define RESULT_IMPL TRUE
+	// NOLINTNEXTLINE(readability-duplicate-include)
+	#include <Cnx/Result.h>
+	#undef RESULT_T
+	#undef RESULT_IMPL
+
+	#define RESULT_T	CnxJThread
+	#define RESULT_IMPL TRUE
+	// NOLINTNEXTLINE(readability-duplicate-include)
+	#include <Cnx/Result.h>
+	#undef RESULT_T
+	#undef RESULT_IMPL
+
+	#define RESULT_T	CnxTLSKey
+	#define RESULT_IMPL TRUE
+	// NOLINTNEXTLINE(readability-duplicate-include)
+	#include <Cnx/Result.h>
+	#undef RESULT_T
+	#undef RESULT_IMPL
 
 struct timespec duration_to_timespec(CnxDuration duration) {
 	let now = cnx_clock_now(&cnx_utc_clock);
@@ -83,15 +87,15 @@ struct timespec duration_to_timespec(CnxDuration duration) {
 	return (struct timespec){.tv_sec = seconds, .tv_nsec = static_cast(long)(nanoseconds)};
 }
 
-#define CHECK_ERROR_POSIX(res)                                           \
-	if((res) != 0) {                                                     \
-		return Err(i32, cnx_error_new(errno, CNX_POSIX_ERROR_CATEGORY)); \
-	}                                                                    \
-                                                                         \
-	return Ok(i32, 0)
+	#define CHECK_ERROR_POSIX(res)                                           \
+		if((res) != 0) {                                                     \
+			return Err(i32, cnx_error_new(errno, CNX_POSIX_ERROR_CATEGORY)); \
+		}                                                                    \
+                                                                             \
+		return Ok(i32, 0)
 
-#if ___CNX_HAS_C11_THREADS
-	#include <threads.h>
+	#if ___CNX_HAS_C11_THREADS
+		#include <threads.h>
 
 CnxResult(CnxBasicMutex) cnx_basic_mutex_new(void) {
 	CnxBasicMutex mutex;
@@ -154,42 +158,42 @@ CnxResult cnx_recursive_basic_mutex_free(CnxRecursiveBasicMutex* restrict mutex)
 	return Ok(i32, 0);
 }
 
-CnxResult(CnxCondvar) cnx_condvar_new(void) {
-	CnxCondvar condvar;
-	let_mut res = cnx_condvar_init(&condvar);
-	return cnx_result_and(res, Ok(CnxCondvar, condvar));
+CnxResult(CnxBasicCondvar) cnx_basic_condvar_new(void) {
+	CnxBasicCondvar condvar;
+	let_mut res = cnx_basic_condvar_init(&condvar);
+	return cnx_result_and(res, Ok(CnxBasicCondvar, condvar));
 }
 
-CnxResult cnx_condvar_init(CnxCondvar* restrict condvar) {
+CnxResult cnx_basic_condvar_init(CnxBasicCondvar* restrict condvar) {
 	let res = cnd_init(condvar);
 	CHECK_ERROR_POSIX(res);
 }
 
-CnxResult cnx_condvar_signal(CnxCondvar* restrict condvar) {
+CnxResult cnx_basic_condvar_signal(CnxBasicCondvar* restrict condvar) {
 	let res = cnd_signal(condvar);
 	CHECK_ERROR_POSIX(res);
 }
 
-CnxResult cnx_condvar_broadcast(CnxCondvar* restrict condvar) {
+CnxResult cnx_basic_condvar_broadcast(CnxBasicCondvar* restrict condvar) {
 	let res = cnd_broadcast(condvar);
 	CHECK_ERROR_POSIX(res);
 }
 
-CnxResult cnx_condvar_wait(CnxCondvar* restrict condvar, CnxBasicMutex* restrict mutex) {
+CnxResult cnx_basic_condvar_wait(CnxBasicCondvar* restrict condvar, CnxBasicMutex* restrict mutex) {
 	let res = cnd_wait(condvar, mutex);
 	CHECK_ERROR_POSIX(res);
 }
 
-CnxResult cnx_condvar_wait_for(CnxCondvar* restrict condvar,
-							   CnxBasicMutex* restrict mutex,
-							   CnxDuration to_wait) {
+CnxResult cnx_basic_condvar_wait_for(CnxBasicCondvar* restrict condvar,
+									 CnxBasicMutex* restrict mutex,
+									 CnxDuration to_wait) {
 	let spec = duration_to_timespec(to_wait);
 
 	let res = cnd_timedwait(condvar, mutex, &spec);
 	CHECK_ERROR_POSIX(res);
 }
 
-CnxResult cnx_condvar_free(CnxCondvar* restrict condvar) {
+CnxResult cnx_basic_condvar_free(CnxBasicCondvar* restrict condvar) {
 	cnd_destroy(condvar);
 
 	return Ok(i32, 0);
@@ -320,7 +324,7 @@ CnxResult cnx_tls_set(CnxTLSKey key, void* data) {
 	CHECK_ERROR_POSIX(res);
 }
 
-#elif ___CNX_HAS_PTHREADS
+	#elif ___CNX_HAS_PTHREADS
 
 CnxResult(CnxBasicMutex) cnx_basic_mutex_new(void) {
 	CnxBasicMutex mutex = {0};
@@ -428,41 +432,41 @@ CnxResult cnx_recursive_basic_mutex_free(CnxRecursiveBasicMutex* restrict mutex)
 	CHECK_ERROR_POSIX(res);
 }
 
-CnxResult(CnxCondvar) cnx_condvar_new(void) {
-	CnxCondvar condvar = __CNX_CONDVAR_INITIALIZER;
-	return Ok(CnxCondvar, condvar);
+CnxResult(CnxBasicCondvar) cnx_basic_condvar_new(void) {
+	CnxBasicCondvar condvar = __CNX_CONDVAR_INITIALIZER;
+	return Ok(CnxBasicCondvar, condvar);
 }
 
-CnxResult cnx_condvar_init(CnxCondvar* restrict condvar) {
+CnxResult cnx_basic_condvar_init(CnxBasicCondvar* restrict condvar) {
 	*condvar = __CNX_CONDVAR_INITIALIZER;
 	return Ok(i32, 0);
 }
 
-CnxResult cnx_condvar_signal(CnxCondvar* restrict condvar) {
+CnxResult cnx_basic_condvar_signal(CnxBasicCondvar* restrict condvar) {
 	let res = pthread_cond_signal(condvar);
 	CHECK_ERROR_POSIX(res);
 }
 
-CnxResult cnx_condvar_broadcast(CnxCondvar* restrict condvar) {
+CnxResult cnx_basic_condvar_broadcast(CnxBasicCondvar* restrict condvar) {
 	let res = pthread_cond_broadcast(condvar);
 	CHECK_ERROR_POSIX(res);
 }
 
-CnxResult cnx_condvar_wait(CnxCondvar* restrict condvar, CnxBasicMutex* restrict mutex) {
+CnxResult cnx_basic_condvar_wait(CnxBasicCondvar* restrict condvar, CnxBasicMutex* restrict mutex) {
 	let res = pthread_cond_wait(condvar, mutex);
 	CHECK_ERROR_POSIX(res);
 }
 
-CnxResult cnx_condvar_wait_for(CnxCondvar* restrict condvar,
-							   CnxBasicMutex* restrict mutex,
-							   CnxDuration to_wait) {
+CnxResult cnx_basic_condvar_wait_for(CnxBasicCondvar* restrict condvar,
+									 CnxBasicMutex* restrict mutex,
+									 CnxDuration to_wait) {
 	let spec = duration_to_timespec(to_wait);
 
 	let res = pthread_cond_timedwait(condvar, mutex, &spec);
 	CHECK_ERROR_POSIX(res);
 }
 
-CnxResult cnx_condvar_free(CnxCondvar* restrict condvar) {
+CnxResult cnx_basic_condvar_free(CnxBasicCondvar* restrict condvar) {
 	let res = pthread_cond_destroy(condvar);
 	CHECK_ERROR_POSIX(res);
 }
@@ -585,11 +589,11 @@ CnxResult cnx_tls_set(CnxTLSKey key, void* data) {
 	CHECK_ERROR_POSIX(res);
 }
 
-#elif CNX_PLATFORM_WINDOWS
+	#elif CNX_PLATFORM_WINDOWS
 
-	#define NOMINMAX
-	#define WIN32_LEAN_AND_MEAN
-	#include <Windows.h>
+		#define NOMINMAX
+		#define WIN32_LEAN_AND_MEAN
+		#include <Windows.h>
 
 CnxResult(CnxBasicMutex) cnx_basic_mutex_new(void) {
 	CnxBasicMutex mutex;
@@ -651,35 +655,35 @@ CnxResult cnx_recursive_basic_mutex_free(CnxRecursiveBasicMutex* restrict mutex)
 	return Ok(i32, 0);
 }
 
-CnxResult(CnxCondvar) cnx_condvar_new(void) {
-	CnxCondvar condvar;
+CnxResult(CnxBasicCondvar) cnx_basic_condvar_new(void) {
+	CnxBasicCondvar condvar;
 	InitializeConditionVariable(&condvar);
-	return Ok(CnxCondvar, condvar);
+	return Ok(CnxBasicCondvar, condvar);
 }
 
-CnxResult cnx_condvar_init(CnxCondvar* restrict condvar) {
+CnxResult cnx_basic_condvar_init(CnxBasicCondvar* restrict condvar) {
 	InitializeConditionVariable(condvar);
 	return Ok(i32, 0);
 }
 
-CnxResult cnx_condvar_signal(CnxCondvar* restrict condvar) {
+CnxResult cnx_basic_condvar_signal(CnxBasicCondvar* restrict condvar) {
 	WakeConditionVariable(condvar);
 	return Ok(i32, 0);
 }
 
-CnxResult cnx_condvar_broadcast(CnxCondvar* restrict condvar) {
+CnxResult cnx_basic_condvar_broadcast(CnxBasicCondvar* restrict condvar) {
 	WakeAllConditionVariable(condvar);
 	return Ok(i32, 0);
 }
 
-CnxResult cnx_condvar_wait(CnxCondvar* restrict condvar, CnxBasicMutex* restrict mutex) {
+CnxResult cnx_basic_condvar_wait(CnxBasicCondvar* restrict condvar, CnxBasicMutex* restrict mutex) {
 	SleepConditionVariableSRW(condvar, mutex, INFINITE, 0);
 	return Ok(i32, 0);
 }
 
-CnxResult cnx_condvar_wait_for(CnxCondvar* restrict condvar,
-							   CnxBasicMutex* restrict mutex,
-							   CnxDuration to_wait) {
+CnxResult cnx_basic_condvar_wait_for(CnxBasicCondvar* restrict condvar,
+									 CnxBasicMutex* restrict mutex,
+									 CnxDuration to_wait) {
 	let milliseconds = cnx_duration_cast(to_wait, cnx_milliseconds_period);
 
 	if(!SleepConditionVariableSRW(condvar,
@@ -695,7 +699,7 @@ CnxResult cnx_condvar_wait_for(CnxCondvar* restrict condvar,
 	return Ok(i32, 0);
 }
 
-CnxResult cnx_condvar_free(CnxCondvar* restrict condvar) {
+CnxResult cnx_basic_condvar_free(CnxBasicCondvar* restrict condvar) {
 	ignore(condvar);
 	return Ok(i32, 0);
 }
@@ -853,7 +857,7 @@ CnxResult cnx_tls_set(CnxTLSKey key, void* data) {
 	return Ok(i32, 0);
 }
 
-#endif // ___CNX_HAS_C11_THREADS
+	#endif // ___CNX_HAS_C11_THREADS
 
 void cnx_stop_token_request_stop(CnxStopToken* restrict token) {
 	atomic_store(token, true);
@@ -915,3 +919,5 @@ void cnx_jthread_free(void* thread) {
 	let_mut _thread = static_cast(CnxJThread*)(thread);
 	ignore(cnx_jthread_join(_thread));
 }
+
+#endif // !___CNX_HAS_NO_THREADS
