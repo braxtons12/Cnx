@@ -59,7 +59,7 @@
             </li>
           </ul>
         </nav>
-<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.2.2</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-04-30</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.2.2</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-05-05</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
         <section id="nested-classes">
           <h2><a href="#nested-classes">Classes</a></h2>
           <dl class="m-doc">
@@ -81,9 +81,9 @@
             </dt>
             <dd><code>CnxRecursiveBasicMutex</code> is the basic reentrant mutual exclusion object type provided by Cnx&#x27;s threading and synchronization API. Using a <code>CnxRecursiveBasicMutex</code> to control access to shared resources will ensure that all access is synchronized and mutually exclusive between threads, and allows for rentrant ownership of the lock on that access.</dd>
             <dt>
-              using <a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a> = __cnx_condvar
+              using <a href="group__cnx__thread.html#ga0ddd086d09be17f2527c7c81aca98d6c" class="m-doc">CnxBasicCondvar</a> = __cnx_condvar
             </dt>
-            <dd><code>CnxCondvar</code> is the Condition Variable object type provided by Cnx&#x27;s threading and synchronization API. Using a <code>CnxCondvar</code> allows to block one or more threads until an event is triggered, without wasting CPU resources.</dd>
+            <dd><code>CnxBasicCondvar</code> is the Condition Variable object type provided by Cnx&#x27;s threading and synchronization API. Using a <code>CnxBasicCondvar</code> allows to block one or more threads until an event is triggered, without wasting CPU resources.</dd>
             <dt>
               using <a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> = __cnx_thread_id
             </dt>
@@ -114,23 +114,23 @@
             </dt>
             <dd>Creates a new mutex.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga9f2e961411cc904758218920bd230e33" class="m-doc">cnx_basic_mutex_init</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga38d63af3f2c4c2c06fd70ca539a5247c" class="m-doc">cnx_basic_mutex_init</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span>
             </dt>
             <dd>Initializes the mutex pointed to by <code>mutex</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga737eaf1efd0b5a006464ecbc80400b6e" class="m-doc">cnx_basic_mutex_lock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga8b47962c8b0d5659755705b86b899ae7" class="m-doc">cnx_basic_mutex_lock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span>
             </dt>
             <dd>Unconditionally locks the mutex pointed to by <code>mutex</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__thread.html#ga67eb8baadeb17c8c95af7619d556d0d6" class="m-doc">cnx_basic_mutex_try_lock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__thread.html#ga90924713b57f30586bb48e7a56e1b02c" class="m-doc">cnx_basic_mutex_try_lock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span>
             </dt>
             <dd>Attempts to lock the mutex pointed to by <code>mutex</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga1f866719154fdc67b62e3480d5daecc3" class="m-doc">cnx_basic_mutex_unlock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#gabe89ff131a2af4acd9bec741c59f7d7b" class="m-doc">cnx_basic_mutex_unlock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span>
             </dt>
             <dd>Unlocks the mutex pointed to by <code>mutex</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#gacb95e384e4610c53a1e7306762d60d18" class="m-doc">cnx_basic_mutex_free</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga3bf1c0a6013f249f093ddf73a7af4950" class="m-doc">cnx_basic_mutex_free</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span>
             </dt>
             <dd>Destroys the mutex pointed to by <code>mutex</code></dd>
             <dt>
@@ -138,54 +138,54 @@
             </dt>
             <dd>Creates a new recursive mutex.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga111e22346f31efee2991b0177dc669ff" class="m-doc">cnx_recursive_basic_mutex_init</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>*restrict mutex)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga75712fc9bad430098253ac740aa5a74b" class="m-doc">cnx_recursive_basic_mutex_init</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>*restrict mutex)</span>
             </dt>
             <dd>Initializes the recursive mutex pointed to by <code>mutex</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga54fec93d33fd504bd5e5a2f48e21698b" class="m-doc">cnx_recursive_basic_mutex_lock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>*restrict mutex)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#gab163bfba8a7a5db54b204f03e9abb602" class="m-doc">cnx_recursive_basic_mutex_lock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>*restrict mutex)</span>
             </dt>
             <dd>Unconditionally locks the recursive mutex pointed to by <code>mutex</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__thread.html#ga2ee4629a90d284f3632a733d44543b72" class="m-doc">cnx_recursive_basic_mutex_try_lock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>*restrict mutex)</span>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__thread.html#ga76c8e2cd51cfbef49d5eef458a18a596" class="m-doc">cnx_recursive_basic_mutex_try_lock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>*restrict mutex)</span>
             </dt>
             <dd>Attempts to lock the recursive mutex pointed to by <code>mutex</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#gad511770dd62cea2d3568c3e3e237f2d3" class="m-doc">cnx_recursive_basic_mutex_unlock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>*restrict mutex)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga0740e331ff662e83bbdd289a3265d4a8" class="m-doc">cnx_recursive_basic_mutex_unlock</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>*restrict mutex)</span>
             </dt>
             <dd>Unlocks the recursive mutex pointed to by <code>mutex</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#gad96f610552732378098b68410f55168f" class="m-doc">cnx_recursive_basic_mutex_free</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>*restrict mutex)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#gab4b54dee83c7282e1a0f6df8a23d74b6" class="m-doc">cnx_recursive_basic_mutex_free</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c666e13fd72b15a4f2c4817f2bbbb95" class="m-doc">CnxRecursiveBasicMutex</a>*restrict mutex)</span>
             </dt>
             <dd>Destroys the recursive mutex pointed to by <code>mutex</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"> <a href="group__cnx__thread.html#ga49e5e647bec4b0c8e74a6e3de9b341af" class="m-doc">CnxResult</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>)</span>
+              <span class="m-doc-wrap-bumper"> <a href="group__cnx__thread.html#ga6905bc241f03270ac8cc2316679a0352" class="m-doc">CnxResult</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0ddd086d09be17f2527c7c81aca98d6c" class="m-doc">CnxBasicCondvar</a>)</span>
             </dt>
             <dd>Creates a new condition variable, returning the result in a <code>CnxResult</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#gada5da787c81d51e6e51fe764569648f6" class="m-doc">cnx_condvar_init</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>*restrict condvar)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#gaf7963bf46930d074dae7dc9a83fd309c" class="m-doc">cnx_basic_condvar_init</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0ddd086d09be17f2527c7c81aca98d6c" class="m-doc">CnxBasicCondvar</a>*restrict condvar)</span>
             </dt>
             <dd>Initializes the condition variable pointed to by <code>condvar</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#gafe90488d53e90489cf200adae969f8f7" class="m-doc">cnx_condvar_signal</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>*restrict condvar)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga97a5c3ac2f2931640fb129b7968b56ed" class="m-doc">cnx_basic_condvar_signal</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0ddd086d09be17f2527c7c81aca98d6c" class="m-doc">CnxBasicCondvar</a>*restrict condvar)</span>
             </dt>
             <dd>Signals to the first thread waiting on the condition variable pointed to by <code>condvar</code> to wake and continue execution.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga6904f5ff9c4cdc6666ae306409435856" class="m-doc">cnx_condvar_broadcast</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>*restrict condvar)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga96ea38c49f519d829e6ec5a42a1a5b5a" class="m-doc">cnx_basic_condvar_broadcast</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0ddd086d09be17f2527c7c81aca98d6c" class="m-doc">CnxBasicCondvar</a>*restrict condvar)</span>
             </dt>
             <dd>Signals to every thread waiting on the condition variable pointed to by <code>condvar</code> to wake and continue execution.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga1b3487351e4a43e4335f143e00af789b" class="m-doc">cnx_condvar_wait</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>*restrict condvar,
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#gafcf2b8cdcfe1d30444eb66091c4a7705" class="m-doc">cnx_basic_condvar_wait</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0ddd086d09be17f2527c7c81aca98d6c" class="m-doc">CnxBasicCondvar</a>*restrict condvar,
               <a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex)</span>
             </dt>
             <dd>Blocks on the condition variable pointed to by <code>condvar</code> until the thread is signalled by it.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga37ec9ea1dd0c390286646a53d0c443db" class="m-doc">cnx_condvar_wait_for</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>*restrict condvar,
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga9d7d32e6e0ef7a0a9872c476720f4146" class="m-doc">cnx_basic_condvar_wait_for</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0ddd086d09be17f2527c7c81aca98d6c" class="m-doc">CnxBasicCondvar</a>*restrict condvar,
               <a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex,
               <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> to_wait) cnx_disable_if(!mutex</span>
             </dt>
             <dd>Blocks on the condition variable pointed to by <code>condvar</code> until the thread is signalled by it, or <code>to_wait</code> time has elapsed.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga1b8781c46dc590e4a8022d0c5eaff07e" class="m-doc">cnx_condvar_free</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaf409be7a4fcffc4a6b4388187562f0a5" class="m-doc">CnxCondvar</a>*restrict condvar)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga698bb4d5bf064980bd017fc9bb56437b" class="m-doc">cnx_basic_condvar_free</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0ddd086d09be17f2527c7c81aca98d6c" class="m-doc">CnxBasicCondvar</a>*restrict condvar)</span>
             </dt>
             <dd>Destroys the condition variable pointed to by <code>condvar</code></dd>
             <dt>
@@ -232,28 +232,28 @@
             </dt>
             <dd>Spawns a new thread, with the given <code>CnxThreadLambda</code> as its startup routine.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#gad4e64d064923b06b7bc960b7ee62748d" class="m-doc">cnx_thread_init</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>*restrict thread,
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#gada0ed0c4008a445af65e05dc7546916b" class="m-doc">cnx_thread_init</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>*restrict thread,
               CnxThreadLambda lambda)</span>
             </dt>
             <dd>Spawns a new thread, with the given <code>CnxThreadLambda</code> as its startup routine.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__thread.html#ga53e9371a6d1a508cef4db81ff2c0c9e6" class="m-doc">cnx_thread_is_null</a>(</span><span class="m-doc-wrap">const <a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>*restrict thread)</span>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__thread.html#ga676cbf699d362f81d0b3b3dc276cebd8" class="m-doc">cnx_thread_is_null</a>(</span><span class="m-doc-wrap">const <a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>*restrict thread)</span>
             </dt>
             <dd>Checks if the given thread handle is null (if it has been initialized)</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> <a href="group__cnx__thread.html#ga2795e7062779da1014cdaaaeb683ece8" class="m-doc">cnx_thread_get_id</a>(</span><span class="m-doc-wrap">const <a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>*restrict thread)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__thread.html#ga945d280e8d71fd9bdac561db881a37b0" class="m-doc">CnxThreadID</a> <a href="group__cnx__thread.html#gab142a586446b91ab7f3b602409930902" class="m-doc">cnx_thread_get_id</a>(</span><span class="m-doc-wrap">const <a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>*restrict thread)</span>
             </dt>
             <dd>Gets the ID of the current thread.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga0d338b16082b0ab1c7ef4cf305d63e15" class="m-doc">cnx_thread_join</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>*restrict thread)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga1a90135d6b006852f383774a93a4f6cf" class="m-doc">cnx_thread_join</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>*restrict thread)</span>
             </dt>
             <dd>Joins the given thread, blocking until its execution has completed.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga296a55c679791c6d709a0f4807f02a72" class="m-doc">cnx_thread_detach</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>*restrict thread)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga92218df8db8b4dc5fa0143e3683a4b2d" class="m-doc">cnx_thread_detach</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#gaafa65a9e37a173abfeeca30bfea59d1d" class="m-doc">CnxThread</a>*restrict thread)</span>
             </dt>
             <dd>Separates execution of the thread associated with the given thread handle from the handle.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="group__cnx__thread.html#ga3992587aed2a44de27059dea97581aa7" class="m-doc">cnx_thread_free</a>(</span><span class="m-doc-wrap">void* thread)</span>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__thread.html#ga6a6352638ac2782dd439d427bd1e835b" class="m-doc">cnx_thread_free</a>(</span><span class="m-doc-wrap">void* thread)</span>
             </dt>
             <dd>Frees the given thread, blocking until it&#x27;s joined or joining fails.</dd>
             <dt>
@@ -269,11 +269,11 @@
             </dt>
             <dd>Returns the ID of the current thread.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="group__cnx__thread.html#ga03d41fb534abcbf8d7b1819495da3767" class="m-doc">cnx_stop_token_request_stop</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a>*restrict token)</span>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__thread.html#ga0446c2e2741483d0f895464d59e5922e" class="m-doc">cnx_stop_token_request_stop</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a>*restrict token)</span>
             </dt>
             <dd>Requests the thread associated with the given stop token to end execution.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__thread.html#ga71a36a29ecdcb9c481ef836846877a3c" class="m-doc">cnx_stop_token_stop_requested</a>(</span><span class="m-doc-wrap">const <a href="group__cnx__thread.html#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a>*restrict token)</span>
+              <span class="m-doc-wrap-bumper">bool <a href="group__cnx__thread.html#ga17fa2b583c4aac94ca8b203a724697aa" class="m-doc">cnx_stop_token_stop_requested</a>(</span><span class="m-doc-wrap">const <a href="group__cnx__thread.html#ga997e2a15d76ae50edae242c3d011b35d" class="m-doc">CnxStopToken</a>*restrict token)</span>
             </dt>
             <dd>Returns whether the thread associated with the given stop token has been requested to end execution.</dd>
             <dt>
@@ -286,16 +286,16 @@
             </dt>
             <dd>Spawns a new <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, with the given <code>CnxJThreadLambda</code> as its startup routine.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#ga6c93f8534a9296769aba9c481ca416f6" class="m-doc">cnx_jthread_init</a>(</span><span class="m-doc-wrap"><a href="structCnxJThread.html" class="m-doc">CnxJThread</a>*restrict thread,
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#gab3d1d11c9455578cc982ab408f3509d1" class="m-doc">cnx_jthread_init</a>(</span><span class="m-doc-wrap"><a href="structCnxJThread.html" class="m-doc">CnxJThread</a>*restrict thread,
               CnxJThreadLambda lambda)</span>
             </dt>
             <dd>Spawns a new <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, with the given <code>CnxJThreadLambda</code> as its startup routine.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#gacedc83bdc308bc4201c01254c4c890f6" class="m-doc">cnx_jthread_join</a>(</span><span class="m-doc-wrap"><a href="structCnxJThread.html" class="m-doc">CnxJThread</a>*restrict thread)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#gae5b705368365f98056dedfe6b0544b29" class="m-doc">cnx_jthread_join</a>(</span><span class="m-doc-wrap"><a href="structCnxJThread.html" class="m-doc">CnxJThread</a>*restrict thread)</span>
             </dt>
             <dd>Joins the given <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, blocking until its execution has completed.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="group__cnx__thread.html#gac175e5c3ee12f5b78c62f5d878518794" class="m-doc">cnx_jthread_free</a>(</span><span class="m-doc-wrap">void* thread)</span>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__thread.html#gacc50c1352dab87c9cfea5388c30a0783" class="m-doc">cnx_jthread_free</a>(</span><span class="m-doc-wrap">void* thread)</span>
             </dt>
             <dd>Frees the given <code><a href="structCnxJThread.html" class="m-doc">CnxJThread</a></code>, blocking until it&#x27;s joined or joining fails.</dd>
             <dt>
@@ -303,7 +303,7 @@
             </dt>
             <dd>Creates a new thread-local storage.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#gab5d58163eaefda62ca1c40e82c991ddc" class="m-doc">cnx_tls_init</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c0e7bcf640c8205c50186c5a1c6be95" class="m-doc">CnxTLSKey</a>*restrict key,
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#gadd04905a2733053cc4080176cd4b77b5" class="m-doc">cnx_tls_init</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c0e7bcf640c8205c50186c5a1c6be95" class="m-doc">CnxTLSKey</a>*restrict key,
               void* data,
               void(__CNX_TLS_DESTRUCTOR_TAG*destructor)(void*))</span>
             </dt>
@@ -313,7 +313,7 @@
             </dt>
             <dd>Retrieves the current value of the thread-local storage associated with <code>key</code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#gadb8a3ed6de58bca8b48385f27caf24ec" class="m-doc">cnx_tls_set</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c0e7bcf640c8205c50186c5a1c6be95" class="m-doc">CnxTLSKey</a> key,
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="group__cnx__thread.html#gac38aa6978c64e243fd14378eaf247b19" class="m-doc">cnx_tls_set</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0c0e7bcf640c8205c50186c5a1c6be95" class="m-doc">CnxTLSKey</a> key,
               void* data)</span>
             </dt>
             <dd>Sets the value of the thread-local storage associated with <code>key</code> to <code>data</code></dd>
@@ -384,7 +384,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+). Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+). Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.5 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

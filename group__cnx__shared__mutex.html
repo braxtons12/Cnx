@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CnxSharedMutex module | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          CnxSharedMutex <span class="m-thin">module</span></h1>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#func-members">Functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<p><code><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a></code> provides several higher-level reader-writer mutex types comparable to those provided in C++&#x27;s <code>&lt;shared_mutex&gt;</code></p>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a> <a href="#ga68c4a73c3f54a0f676220c7e6a47d7d7" class="m-doc">cnx_shared_mutex_new</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Creates a new shared mutex.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#gada626260da957f3a3f81caff79ef2de2" class="m-doc">cnx_shared_mutex_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Unconditionally locks the mutex pointed to by <code>mutex</code> exclusively (aka for writing)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#ga72e4e82903a6d0a4a7ad672b17384447" class="m-doc">cnx_shared_mutex_try_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Attempts to lock the mutex pointed to by <code>mutex</code> exclusively (aka for writing)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga83dd198d1a3e8588eccefb344ebc72f3" class="m-doc">cnx_shared_mutex_lock_shared</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Unconditionally locks the mutex pointed to by <code>mutex</code> non-exclusively (shared, aka for reading)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#gac80b7afb0aa8d4ff60a7e2f2f6b2ef81" class="m-doc">cnx_shared_mutex_try_lock_shared</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Attempts to lock the mutex pointed to by <code>mutex</code> non-exclusively (shared, aka for reading)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga9b421b882758a06c2f2113a1698cd516" class="m-doc">cnx_shared_mutex_unlock</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Unlocks the exclusively locked mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga1c1fb0efc55274f3b2a35e1643d39b78" class="m-doc">cnx_shared_mutex_unlock_shared</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Unlocks the non-exclusively (aka shared) locked mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga7ce693d6bbf53dfeca8d465083d5ddcd" class="m-doc">cnx_shared_mutex_free</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Destroys the mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a> <a href="#gadb34faf5ddbab839f699346a8cc04a54" class="m-doc">cnx_shared_timed_mutex_new</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Creates a new shared timed mutex.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga9b4ecea9ee8d29989b8484c85df99614" class="m-doc">cnx_shared_timed_mutex_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Unconditionally locks the mutex pointed to by <code>mutex</code> exclusively (aka for writing)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#gaa8fbe8f2fc5a0a2fa9e714612557ed94" class="m-doc">cnx_shared_timed_mutex_try_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Attempts to lock the mutex pointed to by <code>mutex</code> exclusively (aka for writing)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#gacfa4d8ddfacb73af8e5b9e00953fb430" class="m-doc">cnx_shared_timed_mutex_try_lock_for</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> duration)</span>
+            </dt>
+            <dd>Attempts to lock the mutex pointed to by <code>mutex</code> exclusively (aka for writing)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#ga6b39cf164aef1576ff72ca24ac3de394" class="m-doc">cnx_shared_timed_mutex_try_lock_until</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex,
+              <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> stop_point)</span>
+            </dt>
+            <dd>Attempts to lock the mutex pointed to by <code>mutex</code> exclusively (aka for writing)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#gaa4d16dbd0549db12d4edbd5104170f93" class="m-doc">cnx_shared_timed_mutex_lock_shared</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Unconditionally locks the mutex pointed to by <code>mutex</code> non-exclusively (shared, aka for reading)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#ga1e2dfb9fedb4a9ca1cd2a143cf885a96" class="m-doc">cnx_shared_timed_mutex_try_lock_shared</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Attempts to lock the mutex pointed to by <code>mutex</code> non-exclusively (shared, aka for reading)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#gaeeec25eb5dc519be5cb57355903214a5" class="m-doc">cnx_shared_timed_mutex_try_lock_shared_for</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> duration)</span>
+            </dt>
+            <dd>Attempts to lock the mutex pointed to by <code>mutex</code> non-exclusively (aka shared, for reading)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#ga2e63db1f068bbaf77e2dbd47170ce86d" class="m-doc">cnx_shared_timed_mutex_try_lock_shared_until</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex,
+              <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> stop_point)</span>
+            </dt>
+            <dd>Attempts to lock the mutex pointed to by <code>mutex</code> non-exclusively (aka shared, for reading)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#gaca68ecd80de48de2bdb54d58d23f4afb" class="m-doc">cnx_shared_timed_mutex_unlock</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Unlocks the exclusively locked mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga92e019a87c856b42f4047c86514e7289" class="m-doc">cnx_shared_timed_mutex_unlock_shared</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Unlocks the non-exclusively (aka shared) locked mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#gae23ae72b0d31c4cd3077afddbf350e0c" class="m-doc">cnx_shared_timed_mutex_free</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Destroys the mutex pointed to by <code>mutex</code></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ga68c4a73c3f54a0f676220c7e6a47d7d7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga68c4a73c3f54a0f676220c7e6a47d7d7" class="m-doc-self">cnx_shared_mutex_new</a>(</span><span class="m-doc-wrap">void)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
+            </h3>
+            <p>Creates a new shared mutex.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>A <code><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gada626260da957f3a3f81caff79ef2de2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gada626260da957f3a3f81caff79ef2de2" class="m-doc-self">cnx_shared_mutex_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
+            </h3>
+            <p>Unconditionally locks the mutex pointed to by <code>mutex</code> exclusively (aka for writing)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock exclusively (aka for writing)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga72e4e82903a6d0a4a7ad672b17384447"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga72e4e82903a6d0a4a7ad672b17384447" class="m-doc-self">cnx_shared_mutex_try_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
+            </h3>
+            <p>Attempts to lock the mutex pointed to by <code>mutex</code> exclusively (aka for writing)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock exclusively (aka for writing)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If locking the mutex is successful, return <code>true</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga83dd198d1a3e8588eccefb344ebc72f3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga83dd198d1a3e8588eccefb344ebc72f3" class="m-doc-self">cnx_shared_mutex_lock_shared</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
+            </h3>
+            <p>Unconditionally locks the mutex pointed to by <code>mutex</code> non-exclusively (shared, aka for reading)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock non-exclusively (aka shared, for reading)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gac80b7afb0aa8d4ff60a7e2f2f6b2ef81"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gac80b7afb0aa8d4ff60a7e2f2f6b2ef81" class="m-doc-self">cnx_shared_mutex_try_lock_shared</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
+            </h3>
+            <p>Attempts to lock the mutex pointed to by <code>mutex</code> non-exclusively (shared, aka for reading)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock non-exclusively (aka shared, for reading)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If locking the mutex is successful, return <code>true</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga9b421b882758a06c2f2113a1698cd516"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga9b421b882758a06c2f2113a1698cd516" class="m-doc-self">cnx_shared_mutex_unlock</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
+            </h3>
+            <p>Unlocks the exclusively locked mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to unlock exclusively</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga1c1fb0efc55274f3b2a35e1643d39b78"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga1c1fb0efc55274f3b2a35e1643d39b78" class="m-doc-self">cnx_shared_mutex_unlock_shared</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
+            </h3>
+            <p>Unlocks the non-exclusively (aka shared) locked mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to unlock non-exclusively</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga7ce693d6bbf53dfeca8d465083d5ddcd"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga7ce693d6bbf53dfeca8d465083d5ddcd" class="m-doc-self">cnx_shared_mutex_free</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
+            </h3>
+            <p>Destroys the mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to free</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gadb34faf5ddbab839f699346a8cc04a54"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gadb34faf5ddbab839f699346a8cc04a54" class="m-doc-self">cnx_shared_timed_mutex_new</a>(</span><span class="m-doc-wrap">void)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
+            </h3>
+            <p>Creates a new shared timed mutex.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>A <code><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga9b4ecea9ee8d29989b8484c85df99614"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga9b4ecea9ee8d29989b8484c85df99614" class="m-doc-self">cnx_shared_timed_mutex_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
+            </h3>
+            <p>Unconditionally locks the mutex pointed to by <code>mutex</code> exclusively (aka for writing)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock exclusively (aka for writing)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaa8fbe8f2fc5a0a2fa9e714612557ed94"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaa8fbe8f2fc5a0a2fa9e714612557ed94" class="m-doc-self">cnx_shared_timed_mutex_try_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
+            </h3>
+            <p>Attempts to lock the mutex pointed to by <code>mutex</code> exclusively (aka for writing)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock exclusively (aka for writing)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If locking the mutex is successful, return <code>true</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="gacfa4d8ddfacb73af8e5b9e00953fb430"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gacfa4d8ddfacb73af8e5b9e00953fb430" class="m-doc-self">cnx_shared_timed_mutex_try_lock_for</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> duration)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
+            </h3>
+            <p>Attempts to lock the mutex pointed to by <code>mutex</code> exclusively (aka for writing)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock</td>
+                </tr>
+                <tr>
+                  <td>duration</td>
+                  <td>- The amount to time spend trying to lock the mutex</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Tries to lock the <code>mutex</code> until the amount of time specified by <code>duration</code> has passed. If locking is successful before <code>duration</code> has elapsed, returns <code>true</code>. Otherwise stops trying to acquire the lock and returns <code>false</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga6b39cf164aef1576ff72ca24ac3de394"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga6b39cf164aef1576ff72ca24ac3de394" class="m-doc-self">cnx_shared_timed_mutex_try_lock_until</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex,
+              <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> stop_point)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
+            </h3>
+            <p>Attempts to lock the mutex pointed to by <code>mutex</code> exclusively (aka for writing)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock</td>
+                </tr>
+                <tr>
+                  <td>stop_point</td>
+                  <td>- The point in time at which to quit trying to lock the mutex</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Tries to lock the <code>mutex</code> until the the point in time specified by <code>stop_point</code>. If locking is successful before <code>stop_point</code> has occurred, returns <code>true</code>. Otherwise stops trying to acquire the lock and returns <code>false</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="gaa4d16dbd0549db12d4edbd5104170f93"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaa4d16dbd0549db12d4edbd5104170f93" class="m-doc-self">cnx_shared_timed_mutex_lock_shared</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
+            </h3>
+            <p>Unconditionally locks the mutex pointed to by <code>mutex</code> non-exclusively (shared, aka for reading)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock non-exclusively (aka shared, for reading)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga1e2dfb9fedb4a9ca1cd2a143cf885a96"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga1e2dfb9fedb4a9ca1cd2a143cf885a96" class="m-doc-self">cnx_shared_timed_mutex_try_lock_shared</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
+            </h3>
+            <p>Attempts to lock the mutex pointed to by <code>mutex</code> non-exclusively (shared, aka for reading)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock non-exclusively (aka shared, for reading)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If locking the mutex is successful, return <code>true</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="gaeeec25eb5dc519be5cb57355903214a5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaeeec25eb5dc519be5cb57355903214a5" class="m-doc-self">cnx_shared_timed_mutex_try_lock_shared_for</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> duration)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
+            </h3>
+            <p>Attempts to lock the mutex pointed to by <code>mutex</code> non-exclusively (aka shared, for reading)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock</td>
+                </tr>
+                <tr>
+                  <td>duration</td>
+                  <td>- The amount to time spend trying to lock the mutex</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Tries to lock the <code>mutex</code> until the amount of time specified by <code>duration</code> has passed. If locking is successful before <code>duration</code> has elapsed, returns <code>true</code>. Otherwise stops trying to acquire the lock and returns <code>false</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga2e63db1f068bbaf77e2dbd47170ce86d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga2e63db1f068bbaf77e2dbd47170ce86d" class="m-doc-self">cnx_shared_timed_mutex_try_lock_shared_until</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex,
+              <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> stop_point)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
+            </h3>
+            <p>Attempts to lock the mutex pointed to by <code>mutex</code> non-exclusively (aka shared, for reading)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock</td>
+                </tr>
+                <tr>
+                  <td>stop_point</td>
+                  <td>- The point in time at which to quit trying to lock the mutex</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Tries to lock the <code>mutex</code> until the the point in time specified by <code>stop_point</code>. If locking is successful before <code>stop_point</code> has occurred, returns <code>true</code>. Otherwise stops trying to acquire the lock and returns <code>false</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="gaca68ecd80de48de2bdb54d58d23f4afb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaca68ecd80de48de2bdb54d58d23f4afb" class="m-doc-self">cnx_shared_timed_mutex_unlock</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
+            </h3>
+            <p>Unlocks the exclusively locked mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to unlock exclusively</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga92e019a87c856b42f4047c86514e7289"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga92e019a87c856b42f4047c86514e7289" class="m-doc-self">cnx_shared_timed_mutex_unlock_shared</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
+            </h3>
+            <p>Unlocks the non-exclusively (aka shared) locked mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to unlock non-exclusively</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gae23ae72b0d31c4cd3077afddbf350e0c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gae23ae72b0d31c4cd3077afddbf350e0c" class="m-doc-self">cnx_shared_timed_mutex_free</a>(</span><span class="m-doc-wrap"><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
+            </h3>
+            <p>Destroys the mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to free</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+). Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.5 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

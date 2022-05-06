@@ -146,6 +146,10 @@
             </dt>
             <dd>Declare a variable with <code>let_mut</code> to create a mutable variable with inferred type.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga8093cf142de43413a3649101cf95152c" class="m-doc">loop</a></span>
+            </dt>
+            <dd>Use to declare an infinite loop, equivalent to <code>while(true)</code> or <code>for(;;)</code></dd>
+            <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga28338fefdeddaeb43c50bc76a60c01d3" class="m-doc">Ptr</a>(</span><span class="m-doc-wrap">T)</span>
             </dt>
             <dd>shorthand for writing <code>T_ptr</code>, used for generating typedef names needed for macros that require an alphanumeric name for <code>T*</code></dd>
@@ -504,6 +508,13 @@
             <p>Declare a variable with <code>let_mut</code> to create a mutable variable with inferred type.</p>
 <p><code>let_mut</code> declares the variable and infers the type from the value being assigned to it. A variable declared with <code>let_mut</code> will be mutable and thus able to be modified. <code>let_mut</code> should be preferred for all variable declarations when mutability is required, whenever possible.</p><aside class="m-note m-info"><h4>Note</h4><p>When compiling with GCC, <code>let_mut</code> may infer the constness of the value being assigned as part of the type, which means a <code>const_cast</code> or temporary ignoring of &quot;-Wdiscarded-qualifiers&quot; may be necessary</p></aside>
           </div></section>
+          <section class="m-doc-details" id="ga8093cf142de43413a3649101cf95152c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga8093cf142de43413a3649101cf95152c" class="m-doc-self">loop</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Def_8h.html">&lt;include/Cnx/Def.h&gt;</a></div>
+            </h3>
+            <p>Use to declare an infinite loop, equivalent to <code>while(true)</code> or <code>for(;;)</code></p>
+          </div></section>
           <section class="m-doc-details" id="ga28338fefdeddaeb43c50bc76a60c01d3"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga28338fefdeddaeb43c50bc76a60c01d3" class="m-doc-self">Ptr</a>(</span><span class="m-doc-wrap">T)</span>
@@ -730,7 +741,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+). Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.4 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+). Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.5 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

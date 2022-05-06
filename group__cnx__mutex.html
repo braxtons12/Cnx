@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CnxMutex module | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          CnxMutex <span class="m-thin">module</span></h1>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#func-members">Functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<p><code><a href="structCnxMutex.html" class="m-doc">CnxMutex</a></code> provides several high-level mutex types similar to those provided in C++&#x27;s <code>&lt;mutex&gt;</code></p>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxMutex.html" class="m-doc">CnxMutex</a> <a href="#gaa6b1b7396084c9c369457dad0b4cfc8c" class="m-doc">cnx_mutex_new</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Creates a new mutex.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga4824637ae275bb1a3d9ba716a2dc3306" class="m-doc">cnx_mutex_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxMutex.html" class="m-doc">CnxMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Unconditionally locks the mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#ga5f71373b83cf9fb9a49d48789834a9f1" class="m-doc">cnx_mutex_try_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxMutex.html" class="m-doc">CnxMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Attempts to lock the mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#gac1352f015a58a04d944aab73ceab1203" class="m-doc">cnx_mutex_unlock</a>(</span><span class="m-doc-wrap"><a href="structCnxMutex.html" class="m-doc">CnxMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Unlocks the locked mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga380edaa7fe2c17af60bdfcf7c7b0f68a" class="m-doc">cnx_mutex_free</a>(</span><span class="m-doc-wrap"><a href="structCnxMutex.html" class="m-doc">CnxMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Destroys the mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxRecursiveMutex.html" class="m-doc">CnxRecursiveMutex</a> <a href="#ga3bb6ca61552d732b6e24ab68debfcb08" class="m-doc">cnx_recursive_mutex_new</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Creates a new recursive mutex.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#gaf38a87652e93bf685c580f39e497ec5a" class="m-doc">cnx_recursive_mutex_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveMutex.html" class="m-doc">CnxRecursiveMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Unconditionally locks the mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#ga94a93656d65e994c9cda07de03128166" class="m-doc">cnx_recursive_mutex_try_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveMutex.html" class="m-doc">CnxRecursiveMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Attempts to lock the mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga2be31bc15a1e29a9549a26cd87d84909" class="m-doc">cnx_recursive_mutex_unlock</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveMutex.html" class="m-doc">CnxRecursiveMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Unlocks the locked mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#gac02b24070a238de6f4ef765d8f3e439d" class="m-doc">cnx_recursive_mutex_free</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveMutex.html" class="m-doc">CnxRecursiveMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Destroys the mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimedMutex.html" class="m-doc">CnxTimedMutex</a> <a href="#ga7302f2ac0bc8aeb31b52061d4fb104db" class="m-doc">cnx_timed_mutex_new</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Creates a new timed mutex.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga20df1d52383f92e7a5c59a1dc8d149be" class="m-doc">cnx_timed_mutex_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxTimedMutex.html" class="m-doc">CnxTimedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Unconditionally locks the mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#gac72701a7a48a1ef39b372bdec0e51612" class="m-doc">cnx_timed_mutex_try_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxTimedMutex.html" class="m-doc">CnxTimedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Attempts to lock the mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#gac1961d679bf62de2a0183202cf706ec9" class="m-doc">cnx_timed_mutex_try_lock_for</a>(</span><span class="m-doc-wrap"><a href="structCnxTimedMutex.html" class="m-doc">CnxTimedMutex</a>*restrict mutex,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> duration)</span>
+            </dt>
+            <dd>Attempts to lock the mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#ga20d7dc4062c6131e67cbe38fcf4bbc30" class="m-doc">cnx_timed_mutex_try_lock_until</a>(</span><span class="m-doc-wrap"><a href="structCnxTimedMutex.html" class="m-doc">CnxTimedMutex</a>*restrict mutex,
+              <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> stop_point)</span>
+            </dt>
+            <dd>Attempts to lock the mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga2210fbc023866bc08276a283f7b7c21e" class="m-doc">cnx_timed_mutex_unlock</a>(</span><span class="m-doc-wrap"><a href="structCnxTimedMutex.html" class="m-doc">CnxTimedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Unlocks the locked mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#gada355d4415e2b3f93826e63745620605" class="m-doc">cnx_timed_mutex_free</a>(</span><span class="m-doc-wrap"><a href="structCnxTimedMutex.html" class="m-doc">CnxTimedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Destroys the mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxRecursiveTimedMutex.html" class="m-doc">CnxRecursiveTimedMutex</a> <a href="#ga1de8b466d441e1a3c19dc94b7d2b187e" class="m-doc">cnx_recursive_timed_mutex_new</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Creates a new recursive timed mutex.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga261608199cc2789b6b5eb2a81c38f7a4" class="m-doc">cnx_recursive_timed_mutex_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveTimedMutex.html" class="m-doc">CnxRecursiveTimedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Unconditionally locks the mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#ga84149be14cc3865d09f4cba84e00ca98" class="m-doc">cnx_recursive_timed_mutex_try_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveTimedMutex.html" class="m-doc">CnxRecursiveTimedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Attempts to lock the mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#gab4c361a1db499d105ab4e916b8f5ae81" class="m-doc">cnx_recursive_timed_mutex_try_lock_for</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveTimedMutex.html" class="m-doc">CnxRecursiveTimedMutex</a>*restrict mutex,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> duration)</span>
+            </dt>
+            <dd>Attempts to lock the mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#ga638506691ff21e1547a73190655778ad" class="m-doc">cnx_recursive_timed_mutex_try_lock_until</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveTimedMutex.html" class="m-doc">CnxRecursiveTimedMutex</a>*restrict mutex,
+              <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> stop_point)</span>
+            </dt>
+            <dd>Attempts to lock the mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga6ae51fa4e5e5da17289d8e00a5fd257d" class="m-doc">cnx_recursive_timed_mutex_unlock</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveTimedMutex.html" class="m-doc">CnxRecursiveTimedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Unlocks the locked mutex pointed to by <code>mutex</code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#gadff4ca8ddd9a77c9924bf9a638c8c9e9" class="m-doc">cnx_recursive_timed_mutex_free</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveTimedMutex.html" class="m-doc">CnxRecursiveTimedMutex</a>*restrict mutex)</span>
+            </dt>
+            <dd>Destroys the mutex pointed to by <code>mutex</code></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="gaa6b1b7396084c9c369457dad0b4cfc8c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxMutex.html" class="m-doc">CnxMutex</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaa6b1b7396084c9c369457dad0b4cfc8c" class="m-doc-self">cnx_mutex_new</a>(</span><span class="m-doc-wrap">void)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Creates a new mutex.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>A <code><a href="structCnxMutex.html" class="m-doc">CnxMutex</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga4824637ae275bb1a3d9ba716a2dc3306"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga4824637ae275bb1a3d9ba716a2dc3306" class="m-doc-self">cnx_mutex_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxMutex.html" class="m-doc">CnxMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Unconditionally locks the mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga5f71373b83cf9fb9a49d48789834a9f1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga5f71373b83cf9fb9a49d48789834a9f1" class="m-doc-self">cnx_mutex_try_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxMutex.html" class="m-doc">CnxMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Attempts to lock the mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If locking the mutex is successful, return <code>true</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="gac1352f015a58a04d944aab73ceab1203"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gac1352f015a58a04d944aab73ceab1203" class="m-doc-self">cnx_mutex_unlock</a>(</span><span class="m-doc-wrap"><a href="structCnxMutex.html" class="m-doc">CnxMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Unlocks the locked mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to unlock</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga380edaa7fe2c17af60bdfcf7c7b0f68a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga380edaa7fe2c17af60bdfcf7c7b0f68a" class="m-doc-self">cnx_mutex_free</a>(</span><span class="m-doc-wrap"><a href="structCnxMutex.html" class="m-doc">CnxMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Destroys the mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to free</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga3bb6ca61552d732b6e24ab68debfcb08"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxRecursiveMutex.html" class="m-doc">CnxRecursiveMutex</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3bb6ca61552d732b6e24ab68debfcb08" class="m-doc-self">cnx_recursive_mutex_new</a>(</span><span class="m-doc-wrap">void)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Creates a new recursive mutex.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>A <code><a href="structCnxRecursiveMutex.html" class="m-doc">CnxRecursiveMutex</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaf38a87652e93bf685c580f39e497ec5a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaf38a87652e93bf685c580f39e497ec5a" class="m-doc-self">cnx_recursive_mutex_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveMutex.html" class="m-doc">CnxRecursiveMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Unconditionally locks the mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga94a93656d65e994c9cda07de03128166"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga94a93656d65e994c9cda07de03128166" class="m-doc-self">cnx_recursive_mutex_try_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveMutex.html" class="m-doc">CnxRecursiveMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Attempts to lock the mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If locking the mutex is successful, return <code>true</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga2be31bc15a1e29a9549a26cd87d84909"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga2be31bc15a1e29a9549a26cd87d84909" class="m-doc-self">cnx_recursive_mutex_unlock</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveMutex.html" class="m-doc">CnxRecursiveMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Unlocks the locked mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to unlock</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gac02b24070a238de6f4ef765d8f3e439d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gac02b24070a238de6f4ef765d8f3e439d" class="m-doc-self">cnx_recursive_mutex_free</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveMutex.html" class="m-doc">CnxRecursiveMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Destroys the mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to free</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga7302f2ac0bc8aeb31b52061d4fb104db"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimedMutex.html" class="m-doc">CnxTimedMutex</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga7302f2ac0bc8aeb31b52061d4fb104db" class="m-doc-self">cnx_timed_mutex_new</a>(</span><span class="m-doc-wrap">void)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Creates a new timed mutex.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>A <code><a href="structCnxTimedMutex.html" class="m-doc">CnxTimedMutex</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga20df1d52383f92e7a5c59a1dc8d149be"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga20df1d52383f92e7a5c59a1dc8d149be" class="m-doc-self">cnx_timed_mutex_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxTimedMutex.html" class="m-doc">CnxTimedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Unconditionally locks the mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gac72701a7a48a1ef39b372bdec0e51612"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gac72701a7a48a1ef39b372bdec0e51612" class="m-doc-self">cnx_timed_mutex_try_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxTimedMutex.html" class="m-doc">CnxTimedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Attempts to lock the mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If locking the mutex is successful, return <code>true</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="gac1961d679bf62de2a0183202cf706ec9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gac1961d679bf62de2a0183202cf706ec9" class="m-doc-self">cnx_timed_mutex_try_lock_for</a>(</span><span class="m-doc-wrap"><a href="structCnxTimedMutex.html" class="m-doc">CnxTimedMutex</a>*restrict mutex,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> duration)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Attempts to lock the mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock</td>
+                </tr>
+                <tr>
+                  <td>duration</td>
+                  <td>- The amount to time spend trying to lock the mutex</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Tries to lock the <code>mutex</code> until the amount of time specified by <code>duration</code> has passed. If locking is successful before <code>duration</code> has elapsed, returns <code>true</code>. Otherwise stops trying to acquire the lock and returns <code>false</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga20d7dc4062c6131e67cbe38fcf4bbc30"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga20d7dc4062c6131e67cbe38fcf4bbc30" class="m-doc-self">cnx_timed_mutex_try_lock_until</a>(</span><span class="m-doc-wrap"><a href="structCnxTimedMutex.html" class="m-doc">CnxTimedMutex</a>*restrict mutex,
+              <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> stop_point)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Attempts to lock the mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock</td>
+                </tr>
+                <tr>
+                  <td>stop_point</td>
+                  <td>- The point in time at which to quit trying to lock the mutex</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Tries to lock the <code>mutex</code> until the the point in time specified by <code>stop_point</code>. If locking is successful before <code>stop_point</code> has occurred, returns <code>true</code>. Otherwise stops trying to acquire the lock and returns <code>false</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga2210fbc023866bc08276a283f7b7c21e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga2210fbc023866bc08276a283f7b7c21e" class="m-doc-self">cnx_timed_mutex_unlock</a>(</span><span class="m-doc-wrap"><a href="structCnxTimedMutex.html" class="m-doc">CnxTimedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Unlocks the locked mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to unlock</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gada355d4415e2b3f93826e63745620605"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gada355d4415e2b3f93826e63745620605" class="m-doc-self">cnx_timed_mutex_free</a>(</span><span class="m-doc-wrap"><a href="structCnxTimedMutex.html" class="m-doc">CnxTimedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Destroys the mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to free</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga1de8b466d441e1a3c19dc94b7d2b187e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxRecursiveTimedMutex.html" class="m-doc">CnxRecursiveTimedMutex</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga1de8b466d441e1a3c19dc94b7d2b187e" class="m-doc-self">cnx_recursive_timed_mutex_new</a>(</span><span class="m-doc-wrap">void)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Creates a new recursive timed mutex.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>A <code><a href="structCnxRecursiveTimedMutex.html" class="m-doc">CnxRecursiveTimedMutex</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga261608199cc2789b6b5eb2a81c38f7a4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga261608199cc2789b6b5eb2a81c38f7a4" class="m-doc-self">cnx_recursive_timed_mutex_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveTimedMutex.html" class="m-doc">CnxRecursiveTimedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Unconditionally locks the mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga84149be14cc3865d09f4cba84e00ca98"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga84149be14cc3865d09f4cba84e00ca98" class="m-doc-self">cnx_recursive_timed_mutex_try_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveTimedMutex.html" class="m-doc">CnxRecursiveTimedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Attempts to lock the mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If locking the mutex is successful, return <code>true</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="gab4c361a1db499d105ab4e916b8f5ae81"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gab4c361a1db499d105ab4e916b8f5ae81" class="m-doc-self">cnx_recursive_timed_mutex_try_lock_for</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveTimedMutex.html" class="m-doc">CnxRecursiveTimedMutex</a>*restrict mutex,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> duration)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Attempts to lock the mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock</td>
+                </tr>
+                <tr>
+                  <td>duration</td>
+                  <td>- The amount to time spend trying to lock the mutex</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Tries to lock the <code>mutex</code> until the amount of time specified by <code>duration</code> has passed. If locking is successful before <code>duration</code> has elapsed, returns <code>true</code>. Otherwise stops trying to acquire the lock and returns <code>false</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga638506691ff21e1547a73190655778ad"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga638506691ff21e1547a73190655778ad" class="m-doc-self">cnx_recursive_timed_mutex_try_lock_until</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveTimedMutex.html" class="m-doc">CnxRecursiveTimedMutex</a>*restrict mutex,
+              <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> stop_point)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Attempts to lock the mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to lock</td>
+                </tr>
+                <tr>
+                  <td>stop_point</td>
+                  <td>- The point in time at which to quit trying to lock the mutex</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Tries to lock the <code>mutex</code> until the the point in time specified by <code>stop_point</code>. If locking is successful before <code>stop_point</code> has occurred, returns <code>true</code>. Otherwise stops trying to acquire the lock and returns <code>false</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga6ae51fa4e5e5da17289d8e00a5fd257d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga6ae51fa4e5e5da17289d8e00a5fd257d" class="m-doc-self">cnx_recursive_timed_mutex_unlock</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveTimedMutex.html" class="m-doc">CnxRecursiveTimedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Unlocks the locked mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to unlock</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gadff4ca8ddd9a77c9924bf9a638c8c9e9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gadff4ca8ddd9a77c9924bf9a638c8c9e9" class="m-doc-self">cnx_recursive_timed_mutex_free</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveTimedMutex.html" class="m-doc">CnxRecursiveTimedMutex</a>*restrict mutex)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>Destroys the mutex pointed to by <code>mutex</code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mutex</td>
+                  <td>- The mutex to free</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+). Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.5 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>
