@@ -124,6 +124,10 @@
               struct <a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>
             </dt>
             <dd><code><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a></code> is a higher-level reader-writer mutex type for use when timed backoff of mutex locking is required, and is directly comparable to C++&#x27;s <code>std::shared_timed_mutex</code>. It allows for specifying a timeout, which if reached will cause execution to stop attempting to acquire the lock and signal failure to the caller, instead of blocking indefinitely until the lock was successfully acquired like a tradition mutex. For example, if an algorithm needs reader-writer synchronization, but blocking for longer than X milliseconds when trying to acquire the lock would be problematic, a <code><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a></code> would be the appropriate mutex type to use.</dd>
+            <dt>
+              struct <a href="structCnxSharedMutexInterface.html" class="m-doc">CnxSharedMutexInterface</a>
+            </dt>
+            <dd></dd>
           </dl>
         </section>
         <section id="func-members">
