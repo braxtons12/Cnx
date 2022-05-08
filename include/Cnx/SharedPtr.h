@@ -1,8 +1,8 @@
 /// @file SharedPtr.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a struct template for representing a sharedly owned pointer
-/// @version 0.2.0
-/// @date 2022-04-15
+/// @version 0.2.1
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -249,6 +249,18 @@
 			not defined "
 #endif // !defined(SHARED_T) && SHARED_IMPL
 
+#if SHARED_DECL && SHARED_IMPL
+	#define SHARED_STATIC static
+	#define SHARED_INLINE inline
+#else
+	#ifndef SHARED_STATIC
+		#define SHARED_STATIC
+	#endif // SHARED_STATIC
+	#ifndef SHARED_INLINE
+		#define SHARED_INLINE
+	#endif // SHARED_INLINE
+#endif	   // SHARED_DECL && SHARED_IMPL
+
 #if defined(SHARED_T) && SHARED_DECL && !CNX_TEMPLATE_SUPPRESS_INSTANTIATIONS
 	#include <Cnx/shared_ptr/SharedPtrDecl.h>
 #endif // defined(SHARED_T) && SHARED_DECL && !CNX_TEMPLATE_SUPPRESS_INSTANTIATIONS
@@ -268,3 +280,10 @@
 	#undef SHARED_DELETER
 	#undef __SHARED_DEFAULTED_DELETER
 #endif // __SHARED_DEFAULTED_DELETER
+
+#ifdef SHARED_STATIC
+	#undef SHARED_STATIC
+#endif // SHARED_STATIC
+#ifdef SHARED_INLINE
+	#undef SHARED_INLINE
+#endif // SHARED_INLINE

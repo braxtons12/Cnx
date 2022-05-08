@@ -3,7 +3,7 @@
 /// @brief This module provides the type and function declarations for a template instantiation of
 /// `CnxVector(VECTOR_T)`
 /// @version 0.2.4
-/// @date 2022-04-30
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -70,16 +70,18 @@ typedef struct CnxVectorConstIterator(VECTOR_T) {
 }
 CnxVectorConstIterator(VECTOR_T);
 
-__attr(nodiscard) CnxVector(VECTOR_T) CnxVectorIdentifier(VECTOR_T, new)(void);
-__attr(nodiscard) CnxVector(VECTOR_T)
+__attr(nodiscard) VECTOR_STATIC VECTOR_INLINE CnxVector(VECTOR_T)
+	CnxVectorIdentifier(VECTOR_T, new)(void);
+__attr(nodiscard) VECTOR_STATIC VECTOR_INLINE CnxVector(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T, new_with_allocator)(CnxAllocator allocator);
-__attr(nodiscard) __attr(not_null(1)) CnxVector(VECTOR_T) CnxVectorIdentifier(
-	VECTOR_T,
-	new_with_collection_data)(const CnxCollectionData(CnxVector(VECTOR_T)) * restrict data)
-	cnx_disable_if(!data,
-				   "Can't create a CnxVector(VECTOR_T) with null CnxCollectionData. To create a "
-				   "CnxVector(VECTOR_T) with defaulted CnxCollectionData, use cnx_vector_new()");
-__attr(nodiscard) __attr(not_null(2)) CnxVector(VECTOR_T)
+__attr(nodiscard) __attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE CnxVector(VECTOR_T)
+	CnxVectorIdentifier(VECTOR_T, new_with_collection_data)(
+		const CnxCollectionData(CnxVector(VECTOR_T)) * restrict data)
+		cnx_disable_if(
+			!data,
+			"Can't create a CnxVector(VECTOR_T) with null CnxCollectionData. To create a "
+			"CnxVector(VECTOR_T) with defaulted CnxCollectionData, use cnx_vector_new()");
+__attr(nodiscard) __attr(not_null(2)) VECTOR_STATIC VECTOR_INLINE CnxVector(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T, new_with_allocator_and_collection_data)(
 		CnxAllocator allocator,
 		const CnxCollectionData(CnxVector(VECTOR_T)) * restrict data)
@@ -88,12 +90,12 @@ __attr(nodiscard) __attr(not_null(2)) CnxVector(VECTOR_T)
 			"Can't create a CnxVector(VECTOR_T) with null CnxCollectionData. To create a "
 			"CnxVector(VECTOR_T) with a custom allocator and defaulted CnxCollectionData, use "
 			"cnx_vector_new_with_allocator()");
-__attr(nodiscard) CnxVector(VECTOR_T)
+__attr(nodiscard) VECTOR_STATIC VECTOR_INLINE CnxVector(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T, new_with_capacity)(usize capacity);
-__attr(nodiscard) CnxVector(VECTOR_T)
+__attr(nodiscard) VECTOR_STATIC VECTOR_INLINE CnxVector(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T, new_with_capacity_and_allocator)(usize capacity,
 																   CnxAllocator allocator);
-__attr(nodiscard) __attr(not_null(2)) CnxVector(VECTOR_T)
+__attr(nodiscard) __attr(not_null(2)) VECTOR_STATIC VECTOR_INLINE CnxVector(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T, new_with_capacity_and_collection_data)(
 		usize capacity,
 		const CnxCollectionData(CnxVector(VECTOR_T)) * restrict data)
@@ -102,7 +104,7 @@ __attr(nodiscard) __attr(not_null(2)) CnxVector(VECTOR_T)
 			"Can't create a CnxVector(VECTOR_T) with null CnxCollectionData. To create a "
 			"CnxVector(VECTOR_T) with an initial capacity and defaulted CnxCollectionData, use "
 			"cnx_vector_new_with_capacity()");
-__attr(nodiscard) __attr(not_null(3)) CnxVector(VECTOR_T)
+__attr(nodiscard) __attr(not_null(3)) VECTOR_STATIC VECTOR_INLINE CnxVector(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T, new_with_capacity_allocator_and_collection_data)(
 		usize capacity,
 		CnxAllocator allocator,
@@ -112,7 +114,7 @@ __attr(nodiscard) __attr(not_null(3)) CnxVector(VECTOR_T)
 					   "CnxVector(T) with an initial capacity, custom allocator and defaulted "
 					   "CnxCollectionData, use "
 					   "cnx_vector_new_with_capacity_and_allocator()");
-__attr(nodiscard) __attr(not_null(1)) CnxVector(VECTOR_T)
+__attr(nodiscard) __attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE CnxVector(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T, clone)(const CnxVector(VECTOR_T) * restrict self)
 		cnx_disable_if(!(self->m_data->m_copy_constructor),
 					   "Can't clone a CnxVector(T) with elements that aren't copyable (no "
@@ -121,77 +123,81 @@ __attr(nodiscard) __attr(not_null(1)) CnxVector(VECTOR_T)
 	#define ___DISABLE_IF_NULL(self) \
 		cnx_disable_if(!self, "Can't perform an operator on a null vector")
 
-__attr(nodiscard) __attr(not_null(1)) __attr(returns_not_null) const VECTOR_T* CnxVectorIdentifier(
-	VECTOR_T,
-	at_const)(const CnxVector(VECTOR_T) * restrict self, usize index) ___DISABLE_IF_NULL(self);
-__attr(nodiscard) __attr(not_null(1)) __attr(returns_not_null) VECTOR_T* CnxVectorIdentifier(
-	VECTOR_T,
-	at_mut)(CnxVector(VECTOR_T) * restrict self, usize index) ___DISABLE_IF_NULL(self);
 __attr(nodiscard) __attr(not_null(1))
-	__attr(returns_not_null) const VECTOR_T* CnxVectorIdentifier(VECTOR_T, front_const)(
-		const CnxVector(VECTOR_T) * restrict self) ___DISABLE_IF_NULL(self);
+	__attr(returns_not_null) VECTOR_STATIC VECTOR_INLINE const VECTOR_T* CnxVectorIdentifier(
+		VECTOR_T,
+		at_const)(const CnxVector(VECTOR_T) * restrict self, usize index) ___DISABLE_IF_NULL(self);
 __attr(nodiscard) __attr(not_null(1))
-	__attr(returns_not_null) VECTOR_T* CnxVectorIdentifier(VECTOR_T, front_mut)(
-		CnxVector(VECTOR_T) * restrict self) ___DISABLE_IF_NULL(self);
-__attr(nodiscard) __attr(not_null(1))
-	__attr(returns_not_null) const VECTOR_T* CnxVectorIdentifier(VECTOR_T, back_const)(
-		const CnxVector(VECTOR_T) * restrict self) ___DISABLE_IF_NULL(self);
-__attr(nodiscard) __attr(not_null(1))
-	__attr(returns_not_null) VECTOR_T* CnxVectorIdentifier(VECTOR_T, back_mut)(
-		CnxVector(VECTOR_T) * restrict self) ___DISABLE_IF_NULL(self);
-__attr(nodiscard) __attr(not_null(1))
-	__attr(returns_not_null) const VECTOR_T* CnxVectorIdentifier(VECTOR_T, data_const)(
-		const CnxVector(VECTOR_T) * restrict self) ___DISABLE_IF_NULL(self);
-__attr(nodiscard) __attr(not_null(1))
-	__attr(returns_not_null) VECTOR_T* CnxVectorIdentifier(VECTOR_T, data_mut)(
-		CnxVector(VECTOR_T) * restrict self) ___DISABLE_IF_NULL(self);
-__attr(nodiscard) __attr(not_null(1)) bool CnxVectorIdentifier(VECTOR_T, is_empty)(
-	const CnxVector(VECTOR_T) * restrict self) ___DISABLE_IF_NULL(self);
-__attr(nodiscard)
-	__attr(not_null(1)) bool CnxVectorIdentifier(VECTOR_T,
-												 is_full)(const CnxVector(VECTOR_T) * restrict self)
+	__attr(returns_not_null) VECTOR_STATIC VECTOR_INLINE VECTOR_T* CnxVectorIdentifier(
+		VECTOR_T,
+		at_mut)(CnxVector(VECTOR_T) * restrict self, usize index) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) __attr(returns_not_null) VECTOR_STATIC VECTOR_INLINE const
+	VECTOR_T* CnxVectorIdentifier(VECTOR_T, front_const)(const CnxVector(VECTOR_T) * restrict self)
 		___DISABLE_IF_NULL(self);
-__attr(nodiscard) __attr(not_null(1)) usize
+__attr(nodiscard) __attr(not_null(1)) __attr(returns_not_null) VECTOR_STATIC VECTOR_INLINE
+	VECTOR_T* CnxVectorIdentifier(VECTOR_T, front_mut)(CnxVector(VECTOR_T) * restrict self)
+		___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) __attr(returns_not_null) VECTOR_STATIC VECTOR_INLINE const
+	VECTOR_T* CnxVectorIdentifier(VECTOR_T, back_const)(const CnxVector(VECTOR_T) * restrict self)
+		___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) __attr(returns_not_null) VECTOR_STATIC VECTOR_INLINE
+	VECTOR_T* CnxVectorIdentifier(VECTOR_T, back_mut)(CnxVector(VECTOR_T) * restrict self)
+		___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) __attr(returns_not_null) VECTOR_STATIC VECTOR_INLINE const
+	VECTOR_T* CnxVectorIdentifier(VECTOR_T, data_const)(const CnxVector(VECTOR_T) * restrict self)
+		___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) __attr(returns_not_null) VECTOR_STATIC VECTOR_INLINE
+	VECTOR_T* CnxVectorIdentifier(VECTOR_T, data_mut)(CnxVector(VECTOR_T) * restrict self)
+		___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
+	bool CnxVectorIdentifier(VECTOR_T, is_empty)(const CnxVector(VECTOR_T) * restrict self)
+		___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
+	bool CnxVectorIdentifier(VECTOR_T, is_full)(const CnxVector(VECTOR_T) * restrict self)
+		___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE usize
 	CnxVectorIdentifier(VECTOR_T, size)(const CnxVector(VECTOR_T) * restrict self)
 		___DISABLE_IF_NULL(self);
-__attr(nodiscard) usize CnxVectorIdentifier(VECTOR_T, max_size)(void);
-__attr(nodiscard) __attr(not_null(1)) usize
+__attr(nodiscard) VECTOR_STATIC VECTOR_INLINE usize CnxVectorIdentifier(VECTOR_T, max_size)(void);
+__attr(nodiscard) __attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE usize
 	CnxVectorIdentifier(VECTOR_T, capacity)(const CnxVector(VECTOR_T) * restrict self)
 		___DISABLE_IF_NULL(self);
-__attr(not_null(1)) void CnxVectorIdentifier(VECTOR_T, reserve)(CnxVector(VECTOR_T) * restrict self,
-																usize new_capacity)
-	___DISABLE_IF_NULL(self);
-__attr(not_null(1)) void CnxVectorIdentifier(VECTOR_T, resize)(CnxVector(VECTOR_T) * restrict self,
-															   usize new_size)
-	___DISABLE_IF_NULL(self);
-__attr(not_null(1)) void CnxVectorIdentifier(VECTOR_T,
-											 shrink_to_fit)(CnxVector(VECTOR_T) * restrict self)
-	___DISABLE_IF_NULL(self);
-__attr(not_null(1)) void CnxVectorIdentifier(VECTOR_T, clear)(CnxVector(VECTOR_T) * restrict self)
-	___DISABLE_IF_NULL(self);
-__attr(not_null(1)) void CnxVectorIdentifier(VECTOR_T,
-											 push_back)(CnxVector(VECTOR_T) * restrict self,
-														VECTOR_T element) ___DISABLE_IF_NULL(self);
-__attr(not_null(1)) CnxOption(VECTOR_T)
+__attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
+	void CnxVectorIdentifier(VECTOR_T, reserve)(CnxVector(VECTOR_T) * restrict self,
+												usize new_capacity) ___DISABLE_IF_NULL(self);
+__attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
+	void CnxVectorIdentifier(VECTOR_T, resize)(CnxVector(VECTOR_T) * restrict self, usize new_size)
+		___DISABLE_IF_NULL(self);
+__attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
+	void CnxVectorIdentifier(VECTOR_T, shrink_to_fit)(CnxVector(VECTOR_T) * restrict self)
+		___DISABLE_IF_NULL(self);
+__attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
+	void CnxVectorIdentifier(VECTOR_T, clear)(CnxVector(VECTOR_T) * restrict self)
+		___DISABLE_IF_NULL(self);
+__attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
+	void CnxVectorIdentifier(VECTOR_T, push_back)(CnxVector(VECTOR_T) * restrict self,
+												  VECTOR_T element) ___DISABLE_IF_NULL(self);
+__attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE CnxOption(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T, pop_back)(CnxVector(VECTOR_T) * restrict self)
 		___DISABLE_IF_NULL(self);
-__attr(not_null(1)) void CnxVectorIdentifier(VECTOR_T, insert)(CnxVector(VECTOR_T) * restrict self,
-															   VECTOR_T element,
-															   usize index)
-	___DISABLE_IF_NULL(self);
-__attr(not_null(1)) void CnxVectorIdentifier(VECTOR_T, erase)(CnxVector(VECTOR_T) * restrict self,
-															  usize index) ___DISABLE_IF_NULL(self);
-__attr(not_null(1)) void CnxVectorIdentifier(VECTOR_T, erase_n)(CnxVector(VECTOR_T) * restrict self,
-																usize index,
-																usize num_elements)
-	___DISABLE_IF_NULL(self);
-__attr(not_null(1)) void CnxVectorIdentifier(VECTOR_T, free)(void* restrict self)
-	___DISABLE_IF_NULL(self);
+__attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
+	void CnxVectorIdentifier(VECTOR_T, insert)(CnxVector(VECTOR_T) * restrict self,
+											   VECTOR_T element,
+											   usize index) ___DISABLE_IF_NULL(self);
+__attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
+	void CnxVectorIdentifier(VECTOR_T, erase)(CnxVector(VECTOR_T) * restrict self, usize index)
+		___DISABLE_IF_NULL(self);
+__attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
+	void CnxVectorIdentifier(VECTOR_T, erase_n)(CnxVector(VECTOR_T) * restrict self,
+												usize index,
+												usize num_elements) ___DISABLE_IF_NULL(self);
+__attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
+	void CnxVectorIdentifier(VECTOR_T, free)(void* restrict self) ___DISABLE_IF_NULL(self);
 
-__attr(nodiscard) __attr(not_null(1)) CnxString
+__attr(nodiscard) __attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE CnxString
 	CnxVectorIdentifier(VECTOR_T, format)(const CnxFormat* restrict self,
 										  CnxFormatSpecifier specifier) ___DISABLE_IF_NULL(self);
-__attr(nodiscard) __attr(not_null(1)) CnxString
+__attr(nodiscard) __attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE CnxString
 	CnxVectorIdentifier(VECTOR_T, format_with_allocator)(const CnxFormat* restrict self,
 														 CnxFormatSpecifier specifier,
 														 CnxAllocator allocator)
@@ -219,31 +225,39 @@ DeclIntoCnxRandomAccessIterator(CnxVector(VECTOR_T),
 								CnxVectorIdentifier(VECTOR_T, into_reverse_const_iter),
 								into_reverse);
 
-__attr(nodiscard) __attr(not_null(1)) CnxRandomAccessIterator(Ref(VECTOR_T))
-	CnxVectorIdentifier(VECTOR_T, begin)(CnxVector(VECTOR_T) * restrict self)
-		___DISABLE_IF_NULL(self);
-__attr(nodiscard) __attr(not_null(1)) CnxRandomAccessIterator(Ref(VECTOR_T))
-	CnxVectorIdentifier(VECTOR_T, end)(CnxVector(VECTOR_T) * restrict self)
-		___DISABLE_IF_NULL(self);
-__attr(nodiscard) __attr(not_null(1)) CnxRandomAccessIterator(Ref(VECTOR_T))
-	CnxVectorIdentifier(VECTOR_T, rbegin)(CnxVector(VECTOR_T) * restrict self)
-		___DISABLE_IF_NULL(self);
-__attr(nodiscard) __attr(not_null(1)) CnxRandomAccessIterator(Ref(VECTOR_T))
-	CnxVectorIdentifier(VECTOR_T, rend)(CnxVector(VECTOR_T) * restrict self)
-		___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
+	CnxRandomAccessIterator(Ref(VECTOR_T))
+		CnxVectorIdentifier(VECTOR_T, begin)(CnxVector(VECTOR_T) * restrict self)
+			___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
+	CnxRandomAccessIterator(Ref(VECTOR_T))
+		CnxVectorIdentifier(VECTOR_T, end)(CnxVector(VECTOR_T) * restrict self)
+			___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
+	CnxRandomAccessIterator(Ref(VECTOR_T))
+		CnxVectorIdentifier(VECTOR_T, rbegin)(CnxVector(VECTOR_T) * restrict self)
+			___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
+	CnxRandomAccessIterator(Ref(VECTOR_T))
+		CnxVectorIdentifier(VECTOR_T, rend)(CnxVector(VECTOR_T) * restrict self)
+			___DISABLE_IF_NULL(self);
 
-__attr(nodiscard) __attr(not_null(1)) CnxRandomAccessIterator(ConstRef(VECTOR_T))
-	CnxVectorIdentifier(VECTOR_T, cbegin)(const CnxVector(VECTOR_T) * restrict self)
-		___DISABLE_IF_NULL(self);
-__attr(nodiscard) __attr(not_null(1)) CnxRandomAccessIterator(ConstRef(VECTOR_T))
-	CnxVectorIdentifier(VECTOR_T, cend)(const CnxVector(VECTOR_T) * restrict self)
-		___DISABLE_IF_NULL(self);
-__attr(nodiscard) __attr(not_null(1)) CnxRandomAccessIterator(ConstRef(VECTOR_T))
-	CnxVectorIdentifier(VECTOR_T, crbegin)(const CnxVector(VECTOR_T) * restrict self)
-		___DISABLE_IF_NULL(self);
-__attr(nodiscard) __attr(not_null(1)) CnxRandomAccessIterator(ConstRef(VECTOR_T))
-	CnxVectorIdentifier(VECTOR_T, crend)(const CnxVector(VECTOR_T) * restrict self)
-		___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
+	CnxRandomAccessIterator(ConstRef(VECTOR_T))
+		CnxVectorIdentifier(VECTOR_T, cbegin)(const CnxVector(VECTOR_T) * restrict self)
+			___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
+	CnxRandomAccessIterator(ConstRef(VECTOR_T))
+		CnxVectorIdentifier(VECTOR_T, cend)(const CnxVector(VECTOR_T) * restrict self)
+			___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
+	CnxRandomAccessIterator(ConstRef(VECTOR_T))
+		CnxVectorIdentifier(VECTOR_T, crbegin)(const CnxVector(VECTOR_T) * restrict self)
+			___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
+	CnxRandomAccessIterator(ConstRef(VECTOR_T))
+		CnxVectorIdentifier(VECTOR_T, crend)(const CnxVector(VECTOR_T) * restrict self)
+			___DISABLE_IF_NULL(self);
 
 typedef struct CnxVectorIdentifier(VECTOR_T, vtable) {
 	CnxVector(VECTOR_T) (*const clone)(const CnxVector(VECTOR_T)* restrict self);

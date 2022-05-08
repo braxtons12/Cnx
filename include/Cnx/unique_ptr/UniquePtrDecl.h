@@ -3,7 +3,7 @@
 /// @brief This module provides the type definitions and function declarations for a struct template
 /// for representing a uniquely owned pointer
 /// @version 0.2.1
-/// @date 2022-04-30
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -58,86 +58,90 @@ CnxUniquePtr(UNIQUE_T);
 	#define ___DISABLE_IF_NULL(self) \
 		cnx_disable_if(!(self), "Can't perform an operator on a null unique_ptr")
 
-__attr(nodiscard) CnxUniquePtr(UNIQUE_T) CnxUniquePtrIdentifier(UNIQUE_T, default)(void);
+__attr(nodiscard) UNIQUE_STATIC UNIQUE_INLINE CnxUniquePtr(UNIQUE_T)
+	CnxUniquePtrIdentifier(UNIQUE_T, default)(void);
 
-__attr(nodiscard) CnxUniquePtr(UNIQUE_T)
+__attr(nodiscard) UNIQUE_STATIC UNIQUE_INLINE CnxUniquePtr(UNIQUE_T)
 	CnxUniquePtrIdentifier(UNIQUE_T, default_with_allocator)(CnxAllocator allocator);
 
-__attr(nodiscard) CnxUniquePtr(UNIQUE_T) CnxUniquePtrIdentifier(UNIQUE_T, new)(void)
-	cnx_disable_if(__UNIQUE_PTR_IS_ARRAY,
-				   "cnx_unique_ptr_new is only available if "
-				   "UNIQUE_T is NOT an array type");
+__attr(nodiscard) UNIQUE_STATIC UNIQUE_INLINE CnxUniquePtr(UNIQUE_T)
+	CnxUniquePtrIdentifier(UNIQUE_T, new)(void)
+		cnx_disable_if(__UNIQUE_PTR_IS_ARRAY,
+					   "cnx_unique_ptr_new is only available if "
+					   "UNIQUE_T is NOT an array type");
 
-__attr(nodiscard) CnxUniquePtr(UNIQUE_T)
+__attr(nodiscard) UNIQUE_STATIC UNIQUE_INLINE CnxUniquePtr(UNIQUE_T)
 	CnxUniquePtrIdentifier(UNIQUE_T, new_with_allocator)(CnxAllocator allocator)
 		cnx_disable_if(__UNIQUE_PTR_IS_ARRAY,
 					   "cnx_unique_ptr_new_with_allocator is only available if "
 					   "UNIQUE_T is NOT an array type");
 
-__attr(nodiscard) CnxUniquePtr(UNIQUE_T)
+__attr(nodiscard) UNIQUE_STATIC UNIQUE_INLINE CnxUniquePtr(UNIQUE_T)
 	CnxUniquePtrIdentifier(UNIQUE_T, new_with_capacity)(usize capacity)
 		cnx_disable_if(!__UNIQUE_PTR_IS_ARRAY,
 					   "cnx_unique_ptr_new_with_capacity is only available if "
 					   "UNIQUE_T is an array type");
 
-__attr(nodiscard) CnxUniquePtr(UNIQUE_T)
+__attr(nodiscard) UNIQUE_STATIC UNIQUE_INLINE CnxUniquePtr(UNIQUE_T)
 	CnxUniquePtrIdentifier(UNIQUE_T, new_with_capacity_and_allocator)(usize capacity,
 																	  CnxAllocator allocator)
 		cnx_disable_if(!__UNIQUE_PTR_IS_ARRAY,
 					   "cnx_unique_ptr_new_with_capacity_and_allocator is only available if "
 					   "UNIQUE_T is an array type");
 
-__attr(nodiscard) CnxUniquePtr(UNIQUE_T)
+__attr(nodiscard) UNIQUE_STATIC UNIQUE_INLINE CnxUniquePtr(UNIQUE_T)
 	CnxUniquePtrIdentifier(UNIQUE_T, from)(__UNIQUE_PTR_ELEMENT_PTR restrict ptr);
 
-__attr(nodiscard) CnxUniquePtr(UNIQUE_T)
+__attr(nodiscard) UNIQUE_STATIC UNIQUE_INLINE CnxUniquePtr(UNIQUE_T)
 	CnxUniquePtrIdentifier(UNIQUE_T, from_with_allocator)(__UNIQUE_PTR_ELEMENT_PTR restrict ptr,
 														  CnxAllocator allocator);
 
-__attr(nodiscard) __attr(not_null(1)) __UNIQUE_PTR_ELEMENT_PTR
+__attr(nodiscard) __attr(not_null(1)) UNIQUE_STATIC UNIQUE_INLINE __UNIQUE_PTR_ELEMENT_PTR
 	CnxUniquePtrIdentifier(UNIQUE_T, release)(CnxUniquePtr(UNIQUE_T) * restrict self)
 		___DISABLE_IF_NULL(self);
 
-__attr(not_null(1)) void CnxUniquePtrIdentifier(UNIQUE_T,
-												reset)(CnxUniquePtr(UNIQUE_T) * restrict self,
-													   __UNIQUE_PTR_ELEMENT_PTR restrict new_ptr)
-	___DISABLE_IF_NULL(self);
+__attr(not_null(1)) UNIQUE_STATIC UNIQUE_INLINE
+	void CnxUniquePtrIdentifier(UNIQUE_T, reset)(CnxUniquePtr(UNIQUE_T) * restrict self,
+												 __UNIQUE_PTR_ELEMENT_PTR restrict new_ptr)
+		___DISABLE_IF_NULL(self);
 
-__attr(not_null(1, 2)) void CnxUniquePtrIdentifier(UNIQUE_T,
-												   swap)(CnxUniquePtr(UNIQUE_T) * restrict self,
-														 CnxUniquePtr(UNIQUE_T) * restrict other)
-	___DISABLE_IF_NULL(self) ___DISABLE_IF_NULL(other);
+__attr(not_null(1, 2)) UNIQUE_STATIC UNIQUE_INLINE
+	void CnxUniquePtrIdentifier(UNIQUE_T, swap)(CnxUniquePtr(UNIQUE_T) * restrict self,
+												CnxUniquePtr(UNIQUE_T) * restrict other)
+		___DISABLE_IF_NULL(self) ___DISABLE_IF_NULL(other);
 
-__attr(nodiscard) __attr(not_null(1)) __UNIQUE_PTR_CONST_ELEMENT_PTR
+__attr(nodiscard) __attr(not_null(1)) UNIQUE_STATIC UNIQUE_INLINE __UNIQUE_PTR_CONST_ELEMENT_PTR
 	CnxUniquePtrIdentifier(UNIQUE_T, get_const)(const CnxUniquePtr(UNIQUE_T) * restrict self)
 		___DISABLE_IF_NULL(self);
 
-__attr(nodiscard) __attr(not_null(1)) __UNIQUE_PTR_ELEMENT_PTR
+__attr(nodiscard) __attr(not_null(1)) UNIQUE_STATIC UNIQUE_INLINE __UNIQUE_PTR_ELEMENT_PTR
 	CnxUniquePtrIdentifier(UNIQUE_T, get)(CnxUniquePtr(UNIQUE_T) * restrict self)
 		___DISABLE_IF_NULL(self);
 
-__attr(nodiscard) __attr(not_null(1)) __attr(returns_not_null)
+__attr(nodiscard) __attr(not_null(1)) __attr(returns_not_null) UNIQUE_STATIC UNIQUE_INLINE
 	CnxUniquePtrIdentifier(UNIQUE_T, Deleter)
 		CnxUniquePtrIdentifier(UNIQUE_T, get_deleter)(const CnxUniquePtr(UNIQUE_T) * restrict self)
 			___DISABLE_IF_NULL(self);
 
-__attr(nodiscard) __attr(not_null(1)) bool CnxUniquePtrIdentifier(UNIQUE_T, as_bool)(
-	const CnxUniquePtr(UNIQUE_T) * restrict self) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) UNIQUE_STATIC UNIQUE_INLINE
+	bool CnxUniquePtrIdentifier(UNIQUE_T, as_bool)(const CnxUniquePtr(UNIQUE_T) * restrict self)
+		___DISABLE_IF_NULL(self);
 
-__attr(nodiscard) __attr(not_null(1)) __UNIQUE_PTR_CONST_ELEMENT_PTR
+__attr(nodiscard) __attr(not_null(1)) UNIQUE_STATIC UNIQUE_INLINE __UNIQUE_PTR_CONST_ELEMENT_PTR
 	CnxUniquePtrIdentifier(UNIQUE_T, at_const)(const CnxUniquePtr(UNIQUE_T) * restrict self,
 											   usize index) ___DISABLE_IF_NULL(self)
 		cnx_disable_if(!__UNIQUE_PTR_IS_ARRAY,
 					   "cnx_unique_ptr_at_const is only available if "
 					   "UNIQUE_T is an array type");
 
-__attr(nodiscard) __attr(not_null(1)) __UNIQUE_PTR_ELEMENT_PTR
+__attr(nodiscard) __attr(not_null(1)) UNIQUE_STATIC UNIQUE_INLINE __UNIQUE_PTR_ELEMENT_PTR
 	CnxUniquePtrIdentifier(UNIQUE_T, at)(CnxUniquePtr(UNIQUE_T) * restrict self, usize index)
 		___DISABLE_IF_NULL(self) cnx_disable_if(!__UNIQUE_PTR_IS_ARRAY,
 												"cnx_unique_ptr_at is only available if "
 												"UNIQUE_T is an array type");
 
-__attr(not_null(1)) void CnxUniquePtrIdentifier(UNIQUE_T, free)(void* self);
+__attr(not_null(1)) UNIQUE_STATIC UNIQUE_INLINE
+	void CnxUniquePtrIdentifier(UNIQUE_T, free)(void* self);
 
 typedef struct CnxUniquePtrIdentifier(UNIQUE_T, vtable) {
 	__UNIQUE_PTR_ELEMENT_PTR(*const release)

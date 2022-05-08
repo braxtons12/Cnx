@@ -36,82 +36,83 @@
 #define VECTOR_SMALL_OPT_CAPACITY 8
 
 #define VECTOR_T char
-#include <Cnx/vector/VectorImpl.h>
+// NOLINTNEXTLINE(readability-duplicate-include)
+#include <Cnx/Vector.h>
 #undef VECTOR_T
 
 #define VECTOR_T u8
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/vector/VectorImpl.h>
+#include <Cnx/Vector.h>
 #undef VECTOR_T
 
 #define VECTOR_T u16
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/vector/VectorImpl.h>
+#include <Cnx/Vector.h>
 #undef VECTOR_T
 
 #define VECTOR_T u32
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/vector/VectorImpl.h>
+#include <Cnx/Vector.h>
 #undef VECTOR_T
 
 #define VECTOR_T u64
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/vector/VectorImpl.h>
+#include <Cnx/Vector.h>
 #undef VECTOR_T
 
 #define VECTOR_T usize
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/vector/VectorImpl.h>
+#include <Cnx/Vector.h>
 #undef VECTOR_T
 
 #define VECTOR_T i8
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/vector/VectorImpl.h>
+#include <Cnx/Vector.h>
 #undef VECTOR_T
 
 #define VECTOR_T i16
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/vector/VectorImpl.h>
+#include <Cnx/Vector.h>
 #undef VECTOR_T
 
 #define VECTOR_T i32
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/vector/VectorImpl.h>
+#include <Cnx/Vector.h>
 #undef VECTOR_T
 
 #define VECTOR_T i64
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/vector/VectorImpl.h>
+#include <Cnx/Vector.h>
 #undef VECTOR_T
 
 #define VECTOR_T isize
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/vector/VectorImpl.h>
+#include <Cnx/Vector.h>
 #undef VECTOR_T
 
 #define VECTOR_T f32
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/vector/VectorImpl.h>
+#include <Cnx/Vector.h>
 #undef VECTOR_T
 
 #define VECTOR_T f64
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/vector/VectorImpl.h>
+#include <Cnx/Vector.h>
 #undef VECTOR_T
 
 #define VECTOR_T cstring
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/vector/VectorImpl.h>
+#include <Cnx/Vector.h>
 #undef VECTOR_T
 
 #define VECTOR_T CnxString
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/vector/VectorImpl.h>
+#include <Cnx/Vector.h>
 #undef VECTOR_T
 
 #define VECTOR_T CnxStringView
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/vector/VectorImpl.h>
+#include <Cnx/Vector.h>
 #undef VECTOR_T
 
 #undef VECTOR_SMALL_OPT_CAPACITY

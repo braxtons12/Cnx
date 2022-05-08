@@ -3,7 +3,7 @@
 /// @brief This module provides the function definitions for a template instantiation of
 /// `CnxRange(T)`
 /// @version 0.2.1
-/// @date 2022-04-30
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -48,20 +48,22 @@ __attr(maybe_unused) static const CnxRangeIdentifier(RANGE_T, vtable)
 	#define ___DISABLE_IF_NULL(self) \
 		cnx_disable_if(!(self), "Can't perform an operation on a null range")
 
-__attr(nodiscard) __attr(not_null(1)) CnxRangeIdentifier(RANGE_T, Iterator)
-	CnxRangeIdentifier(RANGE_T, iterator_new)(const CnxRange(RANGE_T) * restrict self)
-		___DISABLE_IF_NULL(self);
-__attr(nodiscard) __attr(not_null(1)) Ref(RANGE_T)
+__attr(nodiscard) __attr(not_null(1)) RANGE_STATIC RANGE_INLINE
+	CnxRangeIdentifier(RANGE_T, Iterator)
+		CnxRangeIdentifier(RANGE_T, iterator_new)(const CnxRange(RANGE_T) * restrict self)
+			___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) RANGE_STATIC RANGE_INLINE Ref(RANGE_T)
 	CnxRangeIdentifier(RANGE_T, iterator_next)(CnxForwardIterator(Ref(RANGE_T)) * restrict self)
 		___DISABLE_IF_NULL(self);
-__attr(nodiscard) __attr(not_null(1)) Ref(RANGE_T)
+__attr(nodiscard) __attr(not_null(1)) RANGE_STATIC RANGE_INLINE Ref(RANGE_T)
 	CnxRangeIdentifier(RANGE_T,
 					   iterator_current)(const CnxForwardIterator(Ref(RANGE_T)) * restrict self)
 		___DISABLE_IF_NULL(self);
-__attr(nodiscard) __attr(not_null(1, 2)) bool CnxRangeIdentifier(RANGE_T, iterator_equals)(
-	const CnxForwardIterator(Ref(RANGE_T)) * restrict self,
-	const CnxForwardIterator(Ref(RANGE_T)) * restrict rhs) ___DISABLE_IF_NULL(self)
-	cnx_disable_if(!rhs, "Can't compare a CnxRange to a nullptr");
+__attr(nodiscard) __attr(not_null(1, 2)) RANGE_STATIC RANGE_INLINE
+	bool CnxRangeIdentifier(RANGE_T,
+							iterator_equals)(const CnxForwardIterator(Ref(RANGE_T)) * restrict self,
+											 const CnxForwardIterator(Ref(RANGE_T)) * restrict rhs)
+		___DISABLE_IF_NULL(self) cnx_disable_if(!rhs, "Can't compare a CnxRange to a nullptr");
 
 ImplIntoCnxForwardIterator(CnxRange(RANGE_T),
 						   Ref(RANGE_T),
@@ -71,7 +73,7 @@ ImplIntoCnxForwardIterator(CnxRange(RANGE_T),
 						   CnxRangeIdentifier(RANGE_T, iterator_current),
 						   CnxRangeIdentifier(RANGE_T, iterator_equals));
 
-CnxRangeIdentifier(RANGE_T, Iterator)
+RANGE_STATIC RANGE_INLINE CnxRangeIdentifier(RANGE_T, Iterator)
 	CnxRangeIdentifier(RANGE_T, iterator_new)(const CnxRange(RANGE_T) * restrict self) {
 	let_mut _self = const_cast(CnxRange(RANGE_T)*)(
 		self); /** HACK relying on all Cnx compliant concrete iterator
@@ -83,7 +85,7 @@ CnxRangeIdentifier(RANGE_T, Iterator)
 	};
 }
 
-Ref(RANGE_T)
+RANGE_STATIC RANGE_INLINE Ref(RANGE_T)
 	CnxRangeIdentifier(RANGE_T, iterator_next)(CnxForwardIterator(Ref(RANGE_T)) * restrict self) {
 	let_mut _self = static_cast(CnxRangeIdentifier(RANGE_T, Iterator)*)(self->m_self);
 	while(!cnx_iterator_equals(_self->m_range->m_current, _self->m_range->m_end)) {
@@ -97,23 +99,24 @@ Ref(RANGE_T)
 	return &cnx_iterator_current(_self->m_range->m_begin);
 }
 
-Ref(RANGE_T)
+RANGE_STATIC RANGE_INLINE Ref(RANGE_T)
 	CnxRangeIdentifier(RANGE_T,
 					   iterator_current)(const CnxForwardIterator(Ref(RANGE_T)) * restrict self) {
 	let_mut _self = static_cast(const CnxRangeIdentifier(RANGE_T, Iterator)*)(self->m_self);
 	return &cnx_iterator_current(_self->m_range->m_current);
 }
 
-bool CnxRangeIdentifier(RANGE_T,
-						iterator_equals)(const CnxForwardIterator(Ref(RANGE_T)) * restrict self,
-										 const CnxForwardIterator(Ref(RANGE_T)) * restrict rhs) {
+RANGE_STATIC RANGE_INLINE bool
+CnxRangeIdentifier(RANGE_T,
+				   iterator_equals)(const CnxForwardIterator(Ref(RANGE_T)) * restrict self,
+									const CnxForwardIterator(Ref(RANGE_T)) * restrict rhs) {
 	let_mut _self = static_cast(const CnxRangeIdentifier(RANGE_T, Iterator)*)(self->m_self);
 	let_mut _rhs = static_cast(const CnxRangeIdentifier(RANGE_T, Iterator)*)(rhs->m_self);
 
 	return _self->m_range == _rhs->m_range && _self->m_index == _rhs->m_index;
 }
 
-CnxForwardIterator(Ref(RANGE_T))
+RANGE_STATIC RANGE_INLINE CnxForwardIterator(Ref(RANGE_T))
 	CnxRangeIdentifier(RANGE_T, begin)(CnxRange(RANGE_T) * restrict self) {
 	let iter = cnx_range_into_iter(*self);
 	let_mut inner = static_cast(CnxRangeIdentifier(RANGE_T, Iterator)*)(iter.m_self);
@@ -130,7 +133,7 @@ CnxForwardIterator(Ref(RANGE_T))
 	return iter;
 }
 
-CnxForwardIterator(Ref(RANGE_T))
+RANGE_STATIC RANGE_INLINE CnxForwardIterator(Ref(RANGE_T))
 	CnxRangeIdentifier(RANGE_T, end)(CnxRange(RANGE_T) * restrict self) {
 	let_mut iter = cnx_range_into_iter(*self);
 	let_mut inner = static_cast(CnxRangeIdentifier(RANGE_T, Iterator)*)(
@@ -141,9 +144,10 @@ CnxForwardIterator(Ref(RANGE_T))
 	return iter;
 }
 
-CnxRange(RANGE_T) CnxRangeIdentifier(RANGE_T, from)(CnxForwardIterator(Ref(RANGE_T)) begin,
-													CnxForwardIterator(Ref(RANGE_T)) end,
-													CnxRangeFilter(RANGE_T) filter) {
+RANGE_STATIC RANGE_INLINE CnxRange(RANGE_T)
+	CnxRangeIdentifier(RANGE_T, from)(CnxForwardIterator(Ref(RANGE_T)) begin,
+									  CnxForwardIterator(Ref(RANGE_T)) end,
+									  CnxRangeFilter(RANGE_T) filter) {
 	return (CnxRange(RANGE_T)){.m_begin = begin,
 							   .m_end = end,
 							   .m_current = begin,
@@ -151,7 +155,8 @@ CnxRange(RANGE_T) CnxRangeIdentifier(RANGE_T, from)(CnxForwardIterator(Ref(RANGE
 							   .m_vtable = &CnxRangeIdentifier(RANGE_T, vtable_impl)};
 }
 
-bool CnxRangeIdentifier(RANGE_T, default_filter)(__attr(maybe_unused) const RANGE_T* elem) {
+RANGE_STATIC RANGE_INLINE bool
+CnxRangeIdentifier(RANGE_T, default_filter)(__attr(maybe_unused) const RANGE_T* elem) {
 	return true;
 }
 

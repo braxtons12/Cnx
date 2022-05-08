@@ -1,8 +1,8 @@
 /// @file Result.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a struct template for representing the value of a fallible operation
-/// @version 0.2.1
-/// @date 2022-03-20
+/// @version 0.2.2
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -103,6 +103,18 @@
 	#error CnxResult.h included with RESULT_IMPL defined true but template parameter RESULT_T not defined
 #endif // !defined(RESULT_T) && RESULT_IMPL && !RESULT_INCLUDE_DEFAULT_INSTANTIATIONS
 
+#if RESULT_DECL && RESULT_IMPL
+	#define RESULT_STATIC static
+	#define RESULT_INLINE inline
+#else
+	#ifndef RESULT_STATIC
+		#define RESULT_STATIC
+	#endif // RESULT_STATIC
+	#ifndef RESULT_INLINE
+		#define RESULT_INLINE
+	#endif // RESULT_INLINE
+#endif	   // RESULT_DECL && RESULT_IMPL
+
 #if defined(RESULT_T) && RESULT_DECL && !CNX_TEMPLATE_SUPPRESS_INSTANTIATIONS
 	#include <Cnx/result/ResultDecl.h>
 #endif // defined(RESULT_T) && RESULT_DECL && !CNX_TEMPLATE_SUPPRESS_INSTANTIATIONS
@@ -190,3 +202,10 @@ typedef CnxResult(i32) CnxResult;
 	#undef RESULT_DECL
 	#undef RESULT_IMPL
 #endif // RESULT_UNDEF_PARAMS
+
+#ifdef RESULT_STATIC
+	#undef RESULT_STATIC
+#endif
+#ifdef RESULT_INLINE
+	#undef RESULT_INLINE
+#endif

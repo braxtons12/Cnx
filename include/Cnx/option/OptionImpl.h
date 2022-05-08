@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides the function definitions for a template instantiation of
 /// `CnxOption(T)`
-/// @version 0.2.2
-/// @date 2022-03-20
+/// @version 0.2.3
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -37,15 +37,18 @@
 	#include <Cnx/BasicTypes.h>
 	#include <Cnx/monadic/IfLet.h>
 
-bool CnxOptionIdentifier(OPTION_T, is_some)(const CnxOption(OPTION_T) * restrict self) {
+OPTION_STATIC OPTION_INLINE bool
+CnxOptionIdentifier(OPTION_T, is_some)(const CnxOption(OPTION_T) * restrict self) {
 	return is_variant(*self, Some);
 }
 
-bool CnxOptionIdentifier(OPTION_T, is_none)(const CnxOption(OPTION_T) * restrict self) {
+OPTION_STATIC OPTION_INLINE bool
+CnxOptionIdentifier(OPTION_T, is_none)(const CnxOption(OPTION_T) * restrict self) {
 	return is_variant(*self, None);
 }
 
-const OPTION_T* CnxOptionIdentifier(OPTION_T, as_const)(const CnxOption(OPTION_T) * restrict self) {
+OPTION_STATIC OPTION_INLINE const OPTION_T*
+CnxOptionIdentifier(OPTION_T, as_const)(const CnxOption(OPTION_T) * restrict self) {
 	match_let(*self, None) {
 		cnx_panic("as_const called on a None value, terminating");
 	}
@@ -53,7 +56,8 @@ const OPTION_T* CnxOptionIdentifier(OPTION_T, as_const)(const CnxOption(OPTION_T
 	return &(self->variant_identifier(Some)._1);
 }
 
-OPTION_T* CnxOptionIdentifier(OPTION_T, as_mut)(CnxOption(OPTION_T) * restrict self) {
+OPTION_STATIC OPTION_INLINE OPTION_T*
+CnxOptionIdentifier(OPTION_T, as_mut)(CnxOption(OPTION_T) * restrict self) {
 	match_let(*self, None) {
 		cnx_panic("as_mut called on a None value, terminating");
 	}
@@ -61,7 +65,8 @@ OPTION_T* CnxOptionIdentifier(OPTION_T, as_mut)(CnxOption(OPTION_T) * restrict s
 	return &(self->variant_identifier(Some)._1);
 }
 
-OPTION_T CnxOptionIdentifier(OPTION_T, unwrap)(CnxOption(OPTION_T) * restrict self) {
+OPTION_STATIC OPTION_INLINE OPTION_T
+CnxOptionIdentifier(OPTION_T, unwrap)(CnxOption(OPTION_T) * restrict self) {
 	match_let(*self, None) {
 		cnx_panic("unwrap called on a None value, terminating");
 	}
@@ -69,8 +74,9 @@ OPTION_T CnxOptionIdentifier(OPTION_T, unwrap)(CnxOption(OPTION_T) * restrict se
 	return extract_variant(*self, Some)._1;
 }
 
-OPTION_T CnxOptionIdentifier(OPTION_T, unwrap_or)(CnxOption(OPTION_T) * restrict self,
-												  OPTION_T default_value) {
+OPTION_STATIC OPTION_INLINE OPTION_T
+CnxOptionIdentifier(OPTION_T, unwrap_or)(CnxOption(OPTION_T) * restrict self,
+										 OPTION_T default_value) {
 	match_let(*self, Some, some) {
 		return some;
 	}
@@ -78,8 +84,9 @@ OPTION_T CnxOptionIdentifier(OPTION_T, unwrap_or)(CnxOption(OPTION_T) * restrict
 	return default_value;
 }
 
-OPTION_T CnxOptionIdentifier(OPTION_T, unwrap_or_else)(CnxOption(OPTION_T) * restrict self,
-													   OPTION_T (*const default_generator)(void)) {
+OPTION_STATIC OPTION_INLINE OPTION_T
+CnxOptionIdentifier(OPTION_T, unwrap_or_else)(CnxOption(OPTION_T) * restrict self,
+											  OPTION_T (*const default_generator)(void)) {
 	match_let(*self, Some, some) {
 		return some;
 	}
@@ -87,8 +94,9 @@ OPTION_T CnxOptionIdentifier(OPTION_T, unwrap_or_else)(CnxOption(OPTION_T) * res
 	return default_generator();
 }
 
-OPTION_T CnxOptionIdentifier(OPTION_T, expect)(CnxOption(OPTION_T) * restrict self,
-											   restrict const_cstring panic_message) {
+OPTION_STATIC OPTION_INLINE OPTION_T
+CnxOptionIdentifier(OPTION_T, expect)(CnxOption(OPTION_T) * restrict self,
+									  restrict const_cstring panic_message) {
 	match_let(*self, None) {
 		cnx_panic(panic_message);
 	}
@@ -96,8 +104,9 @@ OPTION_T CnxOptionIdentifier(OPTION_T, expect)(CnxOption(OPTION_T) * restrict se
 	return extract_variant(*self, Some)._1;
 }
 
-CnxOption(OPTION_T) CnxOptionIdentifier(OPTION_T, or)(const CnxOption(OPTION_T) * restrict self,
-													  CnxOption(OPTION_T) option_b) {
+OPTION_STATIC OPTION_INLINE CnxOption(OPTION_T)
+	CnxOptionIdentifier(OPTION_T, or)(const CnxOption(OPTION_T) * restrict self,
+									  CnxOption(OPTION_T) option_b) {
 	if(cnx_option_is_some(*self)) {
 		return *self;
 	}
@@ -106,7 +115,7 @@ CnxOption(OPTION_T) CnxOptionIdentifier(OPTION_T, or)(const CnxOption(OPTION_T) 
 	}
 }
 
-CnxOption(OPTION_T)
+OPTION_STATIC OPTION_INLINE CnxOption(OPTION_T)
 	CnxOptionIdentifier(OPTION_T, or_else)(const CnxOption(OPTION_T) * restrict self,
 										   CnxOption(OPTION_T) (*const func)(void)) {
 	if(cnx_option_is_some(*self)) {
@@ -117,7 +126,8 @@ CnxOption(OPTION_T)
 	}
 }
 
-bool CnxOptionIdentifier(OPTION_T, as_bool)(const CnxOption(OPTION_T) * restrict self) {
+OPTION_STATIC OPTION_INLINE bool
+CnxOptionIdentifier(OPTION_T, as_bool)(const CnxOption(OPTION_T) * restrict self) {
 	return cnx_option_is_some(*self);
 }
 

@@ -3,7 +3,7 @@
 /// @brief This module provides the function definitions for a template instantiation of
 /// `CnxVector(VECTOR_T)`
 /// @version 0.2.4
-/// @date 2022-04-30
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -38,44 +38,44 @@
 	#include <Cnx/Format.h>
 	#include <Cnx/vector/VectorDef.h>
 
-CnxVectorIterator(VECTOR_T)
+VECTOR_STATIC VECTOR_INLINE CnxVectorIterator(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T, iterator_new)(const CnxVector(VECTOR_T) * restrict self);
-CnxVectorConstIterator(VECTOR_T)
+VECTOR_STATIC VECTOR_INLINE CnxVectorConstIterator(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T, const_iterator_new)(const CnxVector(VECTOR_T) * restrict self);
 
-Ref(VECTOR_T)
+VECTOR_STATIC VECTOR_INLINE Ref(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T,
 						iterator_next)(CnxRandomAccessIterator(Ref(VECTOR_T)) * restrict self);
-Ref(VECTOR_T)
+VECTOR_STATIC VECTOR_INLINE Ref(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T,
 						iterator_previous)(CnxRandomAccessIterator(Ref(VECTOR_T)) * restrict self);
-Ref(VECTOR_T)
+VECTOR_STATIC VECTOR_INLINE Ref(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T,
 						iterator_at)(const CnxRandomAccessIterator(Ref(VECTOR_T)) * restrict self,
 									 usize index);
-Ref(VECTOR_T)
+VECTOR_STATIC VECTOR_INLINE Ref(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T,
 						iterator_rat)(const CnxRandomAccessIterator(Ref(VECTOR_T)) * restrict self,
 									  usize index);
-Ref(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_current)(
+VECTOR_STATIC VECTOR_INLINE Ref(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_current)(
 	const CnxRandomAccessIterator(Ref(VECTOR_T)) * restrict self);
-bool CnxVectorIdentifier(VECTOR_T, iterator_equals)(
+VECTOR_STATIC VECTOR_INLINE bool CnxVectorIdentifier(VECTOR_T, iterator_equals)(
 	const CnxRandomAccessIterator(Ref(VECTOR_T)) * restrict self,
 	const CnxRandomAccessIterator(Ref(VECTOR_T)) * restrict rhs);
 
-ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_cnext)(
+VECTOR_STATIC VECTOR_INLINE ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_cnext)(
 	CnxRandomAccessIterator(ConstRef(VECTOR_T)) * restrict self);
-ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_cprevious)(
+VECTOR_STATIC VECTOR_INLINE ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_cprevious)(
 	CnxRandomAccessIterator(ConstRef(VECTOR_T)) * restrict self);
-ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_cat)(
+VECTOR_STATIC VECTOR_INLINE ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_cat)(
 	const CnxRandomAccessIterator(ConstRef(VECTOR_T)) * restrict self,
 	usize index);
-ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_crat)(
+VECTOR_STATIC VECTOR_INLINE ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_crat)(
 	const CnxRandomAccessIterator(ConstRef(VECTOR_T)) * restrict self,
 	usize index);
-ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_ccurrent)(
+VECTOR_STATIC VECTOR_INLINE ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_ccurrent)(
 	const CnxRandomAccessIterator(ConstRef(VECTOR_T)) * restrict self);
-bool CnxVectorIdentifier(VECTOR_T, iterator_cequals)(
+VECTOR_STATIC VECTOR_INLINE bool CnxVectorIdentifier(VECTOR_T, iterator_cequals)(
 	const CnxRandomAccessIterator(ConstRef(VECTOR_T)) * restrict self,
 	const CnxRandomAccessIterator(ConstRef(VECTOR_T)) * restrict rhs);
 
@@ -191,29 +191,32 @@ __attr(always_inline) static inline bool CnxVectorIdentifier(VECTOR_T, is_short)
 	return self->m_capacity <= VECTOR_SMALL_OPT_CAPACITY;
 }
 
-CnxVector(VECTOR_T) CnxVectorIdentifier(VECTOR_T, new)(void) {
+VECTOR_STATIC VECTOR_INLINE CnxVector(VECTOR_T) CnxVectorIdentifier(VECTOR_T, new)(void) {
 	return cnx_vector_new_with_allocator_and_collection_data(
 		VECTOR_T,
 		DEFAULT_ALLOCATOR,
 		&CnxVectorIdentifier(VECTOR_T, default_collection_data));
 }
 
-CnxVector(VECTOR_T) CnxVectorIdentifier(VECTOR_T, new_with_allocator)(CnxAllocator allocator) {
+VECTOR_STATIC VECTOR_INLINE CnxVector(VECTOR_T)
+	CnxVectorIdentifier(VECTOR_T, new_with_allocator)(CnxAllocator allocator) {
 	return cnx_vector_new_with_allocator_and_collection_data(
 		VECTOR_T,
 		allocator,
 		&CnxVectorIdentifier(VECTOR_T, default_collection_data));
 }
 
-CnxVector(VECTOR_T) CnxVectorIdentifier(VECTOR_T, new_with_collection_data)(
-	const CnxCollectionData(CnxVector(VECTOR_T)) * restrict data) {
+VECTOR_STATIC VECTOR_INLINE CnxVector(VECTOR_T)
+	CnxVectorIdentifier(VECTOR_T, new_with_collection_data)(
+		const CnxCollectionData(CnxVector(VECTOR_T)) * restrict data) {
 
 	return cnx_vector_new_with_allocator_and_collection_data(VECTOR_T, DEFAULT_ALLOCATOR, data);
 }
 
-CnxVector(VECTOR_T) CnxVectorIdentifier(VECTOR_T, new_with_allocator_and_collection_data)(
-	CnxAllocator allocator,
-	const CnxCollectionData(CnxVector(VECTOR_T)) * restrict data) {
+VECTOR_STATIC VECTOR_INLINE CnxVector(VECTOR_T)
+	CnxVectorIdentifier(VECTOR_T, new_with_allocator_and_collection_data)(
+		CnxAllocator allocator,
+		const CnxCollectionData(CnxVector(VECTOR_T)) * restrict data) {
 	let_mut vec = (CnxVector(VECTOR_T)){.m_size = 0,
 										.m_capacity = VECTOR_SMALL_OPT_CAPACITY,
 										.m_allocator = allocator,
@@ -238,11 +241,12 @@ CnxVector(VECTOR_T) CnxVectorIdentifier(VECTOR_T, new_with_allocator_and_collect
 	return vec;
 }
 
-CnxVector(VECTOR_T) CnxVectorIdentifier(VECTOR_T, new_with_capacity)(usize capacity) {
+VECTOR_STATIC VECTOR_INLINE CnxVector(VECTOR_T)
+	CnxVectorIdentifier(VECTOR_T, new_with_capacity)(usize capacity) {
 	return cnx_vector_new_with_capacity_and_allocator(VECTOR_T, capacity, DEFAULT_ALLOCATOR);
 }
 
-CnxVector(VECTOR_T)
+VECTOR_STATIC VECTOR_INLINE CnxVector(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T, new_with_capacity_and_allocator)(usize capacity,
 																   CnxAllocator allocator) {
 	let_mut vec = cnx_vector_new_with_allocator(VECTOR_T, allocator);
@@ -250,29 +254,32 @@ CnxVector(VECTOR_T)
 	return vec;
 }
 
-CnxVector(VECTOR_T) CnxVectorIdentifier(VECTOR_T, new_with_capacity_and_collection_data)(
-	usize capacity,
-	const CnxCollectionData(CnxVector(VECTOR_T)) * restrict data) {
+VECTOR_STATIC VECTOR_INLINE CnxVector(VECTOR_T)
+	CnxVectorIdentifier(VECTOR_T, new_with_capacity_and_collection_data)(
+		usize capacity,
+		const CnxCollectionData(CnxVector(VECTOR_T)) * restrict data) {
 
 	let_mut vec = cnx_vector_new_with_collection_data(VECTOR_T, data);
 	cnx_vector_reserve(vec, capacity);
 	return vec;
 }
 
-CnxVector(VECTOR_T) CnxVectorIdentifier(VECTOR_T, new_with_capacity_allocator_and_collection_data)(
-	usize capacity,
-	CnxAllocator allocator,
-	const CnxCollectionData(CnxVector(VECTOR_T)) * restrict data) {
+VECTOR_STATIC VECTOR_INLINE CnxVector(VECTOR_T)
+	CnxVectorIdentifier(VECTOR_T, new_with_capacity_allocator_and_collection_data)(
+		usize capacity,
+		CnxAllocator allocator,
+		const CnxCollectionData(CnxVector(VECTOR_T)) * restrict data) {
 
 	let_mut vec = cnx_vector_new_with_allocator_and_collection_data(VECTOR_T, allocator, data);
 	cnx_vector_reserve(vec, capacity);
 	return vec;
 }
 
-CnxVector(VECTOR_T) CnxVectorIdentifier(VECTOR_T, clone)(const CnxVector(VECTOR_T) * restrict self)
-	cnx_disable_if(!(self->m_data->m_copy_constructor),
-				   "Can't clone a CnxVector(VECTOR_T) with elements that aren't copyable (no "
-				   "element copy constructor defined)") {
+VECTOR_STATIC VECTOR_INLINE CnxVector(VECTOR_T)
+	CnxVectorIdentifier(VECTOR_T, clone)(const CnxVector(VECTOR_T) * restrict self)
+		cnx_disable_if(!(self->m_data->m_copy_constructor),
+					   "Can't clone a CnxVector(VECTOR_T) with elements that aren't copyable (no "
+					   "element copy constructor defined)") {
 	cnx_assert(self->m_data->m_copy_constructor != nullptr,
 			   "Can't clone CnxVector(VECTOR_T) with elements that aren't copyable (no element "
 			   "copy constructor defined)");
@@ -288,7 +295,7 @@ CnxVector(VECTOR_T) CnxVectorIdentifier(VECTOR_T, clone)(const CnxVector(VECTOR_
 	return vec;
 }
 
-const VECTOR_T*
+VECTOR_STATIC VECTOR_INLINE const VECTOR_T*
 CnxVectorIdentifier(VECTOR_T, at_const)(const CnxVector(VECTOR_T) * restrict self, usize index) {
 	cnx_assert(index <= self->m_size,
 			   "cnx_vector_at called with index > size (index out of bounds");
@@ -299,7 +306,8 @@ CnxVectorIdentifier(VECTOR_T, at_const)(const CnxVector(VECTOR_T) * restrict sel
 														   &(self->m_long[index]);
 }
 
-VECTOR_T* CnxVectorIdentifier(VECTOR_T, at_mut)(CnxVector(VECTOR_T) * restrict self, usize index) {
+VECTOR_STATIC VECTOR_INLINE VECTOR_T*
+CnxVectorIdentifier(VECTOR_T, at_mut)(CnxVector(VECTOR_T) * restrict self, usize index) {
 	cnx_assert(index <= self->m_size,
 			   "cnx_vector_at called with index > size (index out of bounds");
 	cnx_assert(index < self->m_capacity,
@@ -309,59 +317,67 @@ VECTOR_T* CnxVectorIdentifier(VECTOR_T, at_mut)(CnxVector(VECTOR_T) * restrict s
 														   &(self->m_long[index]);
 }
 
-const VECTOR_T*
+VECTOR_STATIC VECTOR_INLINE const VECTOR_T*
 CnxVectorIdentifier(VECTOR_T, front_const)(const CnxVector(VECTOR_T) * restrict self) {
 	return &cnx_vector_at(*self, 0);
 }
 
-VECTOR_T* CnxVectorIdentifier(VECTOR_T, front_mut)(CnxVector(VECTOR_T) * restrict self) {
+VECTOR_STATIC VECTOR_INLINE VECTOR_T*
+CnxVectorIdentifier(VECTOR_T, front_mut)(CnxVector(VECTOR_T) * restrict self) {
 	return &cnx_vector_at_mut(*self, 0);
 }
 
-const VECTOR_T*
+VECTOR_STATIC VECTOR_INLINE const VECTOR_T*
 CnxVectorIdentifier(VECTOR_T, back_const)(const CnxVector(VECTOR_T) * restrict self) {
 	let size = cnx_vector_size(*self);
 	let back_index = size > 0 ? size - 1 : 0;
 	return &cnx_vector_at(*self, back_index);
 }
 
-VECTOR_T* CnxVectorIdentifier(VECTOR_T, back_mut)(CnxVector(VECTOR_T) * restrict self) {
+VECTOR_STATIC VECTOR_INLINE VECTOR_T*
+CnxVectorIdentifier(VECTOR_T, back_mut)(CnxVector(VECTOR_T) * restrict self) {
 	let size = cnx_vector_size(*self);
 	let back_index = size > 0 ? size - 1 : 0;
 	return &cnx_vector_at_mut(*self, back_index);
 }
 
-const VECTOR_T*
+VECTOR_STATIC VECTOR_INLINE const VECTOR_T*
 CnxVectorIdentifier(VECTOR_T, data_const)(const CnxVector(VECTOR_T) * restrict self) {
 	return &cnx_vector_front(*self);
 }
 
-VECTOR_T* CnxVectorIdentifier(VECTOR_T, data_mut)(CnxVector(VECTOR_T) * restrict self) {
+VECTOR_STATIC VECTOR_INLINE VECTOR_T*
+CnxVectorIdentifier(VECTOR_T, data_mut)(CnxVector(VECTOR_T) * restrict self) {
 	return &cnx_vector_front_mut(*self);
 }
 
-bool CnxVectorIdentifier(VECTOR_T, is_empty)(const CnxVector(VECTOR_T) * restrict self) {
+VECTOR_STATIC VECTOR_INLINE bool
+CnxVectorIdentifier(VECTOR_T, is_empty)(const CnxVector(VECTOR_T) * restrict self) {
 	return cnx_vector_size(*self) == 0;
 }
 
-bool CnxVectorIdentifier(VECTOR_T, is_full)(const CnxVector(VECTOR_T) * restrict self) {
+VECTOR_STATIC VECTOR_INLINE bool
+CnxVectorIdentifier(VECTOR_T, is_full)(const CnxVector(VECTOR_T) * restrict self) {
 	return self->m_size == self->m_capacity;
 }
 
-usize CnxVectorIdentifier(VECTOR_T, size)(const CnxVector(VECTOR_T) * restrict self) {
+VECTOR_STATIC VECTOR_INLINE usize
+CnxVectorIdentifier(VECTOR_T, size)(const CnxVector(VECTOR_T) * restrict self) {
 	return self->m_size;
 }
 
-usize CnxVectorIdentifier(VECTOR_T, max_size)(void) {
+VECTOR_STATIC VECTOR_INLINE usize CnxVectorIdentifier(VECTOR_T, max_size)(void) {
 	return (cnx_max_value(usize) - 1) << 1U;
 }
 
-usize CnxVectorIdentifier(VECTOR_T, capacity)(const CnxVector(VECTOR_T) * restrict self) {
+VECTOR_STATIC VECTOR_INLINE usize
+CnxVectorIdentifier(VECTOR_T, capacity)(const CnxVector(VECTOR_T) * restrict self) {
 	return self->m_capacity;
 }
 
-void CnxVectorIdentifier(VECTOR_T, resize_internal)(CnxVector(VECTOR_T) * restrict self,
-													usize new_size) {
+VECTOR_STATIC VECTOR_INLINE void
+CnxVectorIdentifier(VECTOR_T, resize_internal)(CnxVector(VECTOR_T) * restrict self,
+											   usize new_size) {
 	let size = cnx_vector_size(*self);
 	if(self->m_data->m_destructor != CnxVectorIdentifier(VECTOR_T, default_destructor)
 	   && new_size < size)
@@ -415,8 +431,8 @@ __attr(always_inline) static inline usize
 	return num_increments * ((old_capacity * 3) / 2);
 }
 
-void CnxVectorIdentifier(VECTOR_T, reserve)(CnxVector(VECTOR_T) * restrict self,
-											usize new_capacity) {
+VECTOR_STATIC VECTOR_INLINE void
+CnxVectorIdentifier(VECTOR_T, reserve)(CnxVector(VECTOR_T) * restrict self, usize new_capacity) {
 	if(new_capacity > self->m_capacity) {
 		let num_increments = 1 + (new_capacity / ((self->m_capacity * 3) / 2));
 		let actual_new_capacity
@@ -426,7 +442,8 @@ void CnxVectorIdentifier(VECTOR_T, reserve)(CnxVector(VECTOR_T) * restrict self,
 	}
 }
 
-void CnxVectorIdentifier(VECTOR_T, resize)(CnxVector(VECTOR_T) * restrict self, usize new_size) {
+VECTOR_STATIC VECTOR_INLINE void
+CnxVectorIdentifier(VECTOR_T, resize)(CnxVector(VECTOR_T) * restrict self, usize new_size) {
 	CnxVectorIdentifier(VECTOR_T, resize_internal)(self, new_size);
 	if(new_size > self->m_size) {
 		for(let_mut i = self->m_size - 1; i < new_size; ++i) {
@@ -436,20 +453,23 @@ void CnxVectorIdentifier(VECTOR_T, resize)(CnxVector(VECTOR_T) * restrict self, 
 	self->m_size = new_size;
 }
 
-void CnxVectorIdentifier(VECTOR_T, shrink_to_fit)(CnxVector(VECTOR_T) * restrict self) {
+VECTOR_STATIC VECTOR_INLINE void
+CnxVectorIdentifier(VECTOR_T, shrink_to_fit)(CnxVector(VECTOR_T) * restrict self) {
 	CnxVectorIdentifier(VECTOR_T, resize_internal)(self, cnx_vector_size(*self));
 }
 
-void CnxVectorIdentifier(VECTOR_T, clear)(CnxVector(VECTOR_T) * restrict self) {
+VECTOR_STATIC VECTOR_INLINE void
+CnxVectorIdentifier(VECTOR_T, clear)(CnxVector(VECTOR_T) * restrict self) {
 	for(let_mut i = 0U; i < cnx_vector_size(*self); ++i) {
 		self->m_data->m_destructor(&cnx_vector_at_mut(*self, i), self->m_allocator);
 	}
 	self->m_size = 0U;
 }
 
-void CnxVectorIdentifier(VECTOR_T, push_back)(
-	CnxVector(VECTOR_T) * restrict self,
-	VECTOR_T element /** NOLINT(readability-non-const-parameter) **/) {
+VECTOR_STATIC VECTOR_INLINE void
+CnxVectorIdentifier(VECTOR_T,
+					push_back)(CnxVector(VECTOR_T) * restrict self,
+							   VECTOR_T element /** NOLINT(readability-non-const-parameter) **/) {
 	if(self->m_size == self->m_capacity) {
 		let new_capacity
 			= CnxVectorIdentifier(VECTOR_T, get_expanded_capacity)(self->m_capacity, 1);
@@ -460,7 +480,8 @@ void CnxVectorIdentifier(VECTOR_T, push_back)(
 	self->m_size++;
 }
 
-CnxOption(VECTOR_T) CnxVectorIdentifier(VECTOR_T, pop_back)(CnxVector(VECTOR_T) * restrict self) {
+VECTOR_STATIC VECTOR_INLINE CnxOption(VECTOR_T)
+	CnxVectorIdentifier(VECTOR_T, pop_back)(CnxVector(VECTOR_T) * restrict self) {
 	if(self->m_size == 0) {
 		return None(VECTOR_T);
 	}
@@ -473,10 +494,11 @@ CnxOption(VECTOR_T) CnxVectorIdentifier(VECTOR_T, pop_back)(CnxVector(VECTOR_T) 
 	return elem;
 }
 
-void CnxVectorIdentifier(VECTOR_T,
-						 insert)(CnxVector(VECTOR_T) * restrict self,
-								 VECTOR_T element /** NOLINT(readability-non-const-parameter **/,
-								 usize index) {
+VECTOR_STATIC VECTOR_INLINE void
+CnxVectorIdentifier(VECTOR_T,
+					insert)(CnxVector(VECTOR_T) * restrict self,
+							VECTOR_T element /** NOLINT(readability-non-const-parameter **/,
+							usize index) {
 	cnx_assert(index <= self->m_size,
 			   "cnx_vector_insert called with index > size (index out of bounds)");
 
@@ -497,7 +519,8 @@ void CnxVectorIdentifier(VECTOR_T,
 	self->m_size++;
 }
 
-void CnxVectorIdentifier(VECTOR_T, erase)(CnxVector(VECTOR_T) * restrict self, usize index) {
+VECTOR_STATIC VECTOR_INLINE void
+CnxVectorIdentifier(VECTOR_T, erase)(CnxVector(VECTOR_T) * restrict self, usize index) {
 	cnx_assert(index < self->m_size,
 			   "cnx_vector_erase called with index >= self->m_size (index out of bounds)");
 
@@ -513,9 +536,9 @@ void CnxVectorIdentifier(VECTOR_T, erase)(CnxVector(VECTOR_T) * restrict self, u
 	self->m_size--;
 }
 
-void CnxVectorIdentifier(VECTOR_T, erase_n)(CnxVector(VECTOR_T) * restrict self,
-											usize index,
-											usize num_elements) {
+VECTOR_STATIC VECTOR_INLINE void
+CnxVectorIdentifier(VECTOR_T,
+					erase_n)(CnxVector(VECTOR_T) * restrict self, usize index, usize num_elements) {
 	cnx_assert(index < self->m_size,
 			   "cnx_vector_erase_n called with index >= size (index out of bounds)");
 	cnx_assert(index + num_elements < self->m_size,
@@ -538,7 +561,7 @@ void CnxVectorIdentifier(VECTOR_T, erase_n)(CnxVector(VECTOR_T) * restrict self,
 	self->m_size -= num_elements;
 }
 
-void CnxVectorIdentifier(VECTOR_T, free)(void* restrict self) {
+VECTOR_STATIC VECTOR_INLINE void CnxVectorIdentifier(VECTOR_T, free)(void* restrict self) {
 	let self_ = static_cast(CnxVector(VECTOR_T)*)(self);
 	for(let_mut i = 0U; i < self_->m_size; ++i) {
 		self_->m_data->m_destructor(&cnx_vector_at_mut(*self_, i), self_->m_allocator);
@@ -551,19 +574,19 @@ void CnxVectorIdentifier(VECTOR_T, free)(void* restrict self) {
 	self_->m_size = 0U;
 }
 
-CnxVectorIterator(VECTOR_T)
+VECTOR_STATIC VECTOR_INLINE CnxVectorIterator(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T, iterator_new)(const CnxVector(VECTOR_T) * restrict self) {
 	return (CnxVectorIterator(VECTOR_T)){.m_index = 0U,
 										 .m_vector = const_cast(CnxVector(VECTOR_T)*)(self)};
 }
 
-CnxVectorConstIterator(VECTOR_T)
+VECTOR_STATIC VECTOR_INLINE CnxVectorConstIterator(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T, const_iterator_new)(const CnxVector(VECTOR_T) * restrict self) {
 	return (CnxVectorConstIterator(VECTOR_T)){.m_index = 0U,
 											  .m_vector = const_cast(CnxVector(VECTOR_T)*)(self)};
 }
 
-Ref(VECTOR_T)
+VECTOR_STATIC VECTOR_INLINE Ref(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T,
 						iterator_next)(CnxRandomAccessIterator(Ref(VECTOR_T)) * restrict self) {
 	let _self = static_cast(CnxVectorIterator(VECTOR_T)*)(self->m_self);
@@ -586,7 +609,7 @@ Ref(VECTOR_T)
 	return &cnx_vector_at_mut(*(_self->m_vector), static_cast(usize)(_self->m_index));
 }
 
-Ref(VECTOR_T)
+VECTOR_STATIC VECTOR_INLINE Ref(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T,
 						iterator_previous)(CnxRandomAccessIterator(Ref(VECTOR_T)) * restrict self) {
 	let _self = static_cast(CnxVectorIterator(VECTOR_T)*)(self->m_self);
@@ -606,7 +629,7 @@ Ref(VECTOR_T)
 	return &cnx_vector_at_mut(*(_self->m_vector), static_cast(usize)(_self->m_index));
 }
 
-Ref(VECTOR_T)
+VECTOR_STATIC VECTOR_INLINE Ref(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T,
 						iterator_at)(const CnxRandomAccessIterator(Ref(VECTOR_T)) * restrict self,
 									 usize index) {
@@ -618,7 +641,7 @@ Ref(VECTOR_T)
 	return &cnx_vector_at_mut(*(_self->m_vector), index);
 }
 
-Ref(VECTOR_T)
+VECTOR_STATIC VECTOR_INLINE Ref(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T,
 						iterator_rat)(const CnxRandomAccessIterator(Ref(VECTOR_T)) * restrict self,
 									  usize index) {
@@ -630,7 +653,7 @@ Ref(VECTOR_T)
 	return &cnx_vector_at_mut(*(_self->m_vector), (_self->m_vector->m_size - 1) - index);
 }
 
-Ref(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_current)(
+VECTOR_STATIC VECTOR_INLINE Ref(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_current)(
 	const CnxRandomAccessIterator(Ref(VECTOR_T)) * restrict self) {
 	let _self = static_cast(const CnxVectorIterator(VECTOR_T)*)(self->m_self);
 
@@ -647,16 +670,17 @@ Ref(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_current)(
 	return &cnx_vector_at_mut(*(_self->m_vector), static_cast(usize)(_self->m_index));
 }
 
-bool CnxVectorIdentifier(VECTOR_T, iterator_equals)(
-	const CnxRandomAccessIterator(Ref(VECTOR_T)) * restrict self,
-	const CnxRandomAccessIterator(Ref(VECTOR_T)) * restrict rhs) {
+VECTOR_STATIC VECTOR_INLINE bool
+CnxVectorIdentifier(VECTOR_T,
+					iterator_equals)(const CnxRandomAccessIterator(Ref(VECTOR_T)) * restrict self,
+									 const CnxRandomAccessIterator(Ref(VECTOR_T)) * restrict rhs) {
 	let _self = static_cast(const CnxVectorIterator(VECTOR_T)*)(self->m_self);
 	let _rhs = static_cast(const CnxVectorIterator(VECTOR_T)*)(rhs->m_self);
 
 	return _self->m_index == _rhs->m_index && _self->m_vector == _rhs->m_vector;
 }
 
-ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_cnext)(
+VECTOR_STATIC VECTOR_INLINE ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_cnext)(
 	CnxRandomAccessIterator(ConstRef(VECTOR_T)) * restrict self) {
 	let _self = static_cast(CnxVectorConstIterator(VECTOR_T)*)(self->m_self);
 
@@ -678,7 +702,7 @@ ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_cnext)(
 	return &cnx_vector_at(*(_self->m_vector), static_cast(usize)(_self->m_index));
 }
 
-ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_cprevious)(
+VECTOR_STATIC VECTOR_INLINE ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_cprevious)(
 	CnxRandomAccessIterator(ConstRef(VECTOR_T)) * restrict self) {
 	let _self = static_cast(CnxVectorConstIterator(VECTOR_T)*)(self->m_self);
 
@@ -697,7 +721,7 @@ ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_cprevious)(
 	return &cnx_vector_at(*(_self->m_vector), static_cast(usize)(_self->m_index));
 }
 
-ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_cat)(
+VECTOR_STATIC VECTOR_INLINE ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_cat)(
 	const CnxRandomAccessIterator(ConstRef(VECTOR_T)) * restrict self,
 	usize index) {
 	let _self = static_cast(CnxVectorConstIterator(VECTOR_T)*)(self->m_self);
@@ -708,7 +732,7 @@ ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_cat)(
 	return &cnx_vector_at(*(_self->m_vector), index);
 }
 
-ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_crat)(
+VECTOR_STATIC VECTOR_INLINE ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_crat)(
 	const CnxRandomAccessIterator(ConstRef(VECTOR_T)) * restrict self,
 	usize index) {
 	let _self = static_cast(CnxVectorConstIterator(VECTOR_T)*)(self->m_self);
@@ -719,7 +743,7 @@ ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_crat)(
 	return &cnx_vector_at(*(_self->m_vector), (_self->m_vector->m_size - 1) - index);
 }
 
-ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_ccurrent)(
+VECTOR_STATIC VECTOR_INLINE ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_ccurrent)(
 	const CnxRandomAccessIterator(ConstRef(VECTOR_T)) * restrict self) {
 	let _self = static_cast(const CnxVectorConstIterator(VECTOR_T)*)(self->m_self);
 
@@ -736,7 +760,7 @@ ConstRef(VECTOR_T) CnxVectorIdentifier(VECTOR_T, iterator_ccurrent)(
 	return &cnx_vector_at(*(_self->m_vector), static_cast(usize)(_self->m_index));
 }
 
-bool CnxVectorIdentifier(VECTOR_T, iterator_cequals)(
+VECTOR_STATIC VECTOR_INLINE bool CnxVectorIdentifier(VECTOR_T, iterator_cequals)(
 	const CnxRandomAccessIterator(ConstRef(VECTOR_T)) * restrict self,
 	const CnxRandomAccessIterator(ConstRef(VECTOR_T)) * restrict rhs) {
 	let _self = static_cast(const CnxVectorConstIterator(VECTOR_T)*)(self->m_self);
@@ -745,7 +769,7 @@ bool CnxVectorIdentifier(VECTOR_T, iterator_cequals)(
 	return _self->m_index == _rhs->m_index && _self->m_vector == _rhs->m_vector;
 }
 
-CnxRandomAccessIterator(Ref(VECTOR_T))
+VECTOR_STATIC VECTOR_INLINE CnxRandomAccessIterator(Ref(VECTOR_T))
 	CnxVectorIdentifier(VECTOR_T, begin)(CnxVector(VECTOR_T) * restrict self) {
 	let_mut iter = cnx_vector_into_iter(*self);
 	let_mut inner = static_cast(CnxVectorIterator(VECTOR_T)*)(iter.m_self);
@@ -753,7 +777,7 @@ CnxRandomAccessIterator(Ref(VECTOR_T))
 	return iter;
 }
 
-CnxRandomAccessIterator(Ref(VECTOR_T))
+VECTOR_STATIC VECTOR_INLINE CnxRandomAccessIterator(Ref(VECTOR_T))
 	CnxVectorIdentifier(VECTOR_T, end)(CnxVector(VECTOR_T) * restrict self) {
 	let_mut iter = cnx_vector_into_iter(*self);
 	let_mut inner = static_cast(CnxVectorIterator(VECTOR_T)*)(iter.m_self);
@@ -761,7 +785,7 @@ CnxRandomAccessIterator(Ref(VECTOR_T))
 	return iter;
 }
 
-CnxRandomAccessIterator(Ref(VECTOR_T))
+VECTOR_STATIC VECTOR_INLINE CnxRandomAccessIterator(Ref(VECTOR_T))
 	CnxVectorIdentifier(VECTOR_T, rbegin)(CnxVector(VECTOR_T) * restrict self) {
 	let_mut iter = cnx_vector_into_reverse_iter(*self);
 	let_mut inner = static_cast(CnxVectorIterator(VECTOR_T)*)(iter.m_self);
@@ -769,7 +793,7 @@ CnxRandomAccessIterator(Ref(VECTOR_T))
 	return iter;
 }
 
-CnxRandomAccessIterator(Ref(VECTOR_T))
+VECTOR_STATIC VECTOR_INLINE CnxRandomAccessIterator(Ref(VECTOR_T))
 	CnxVectorIdentifier(VECTOR_T, rend)(CnxVector(VECTOR_T) * restrict self) {
 	let_mut iter = cnx_vector_into_reverse_iter(*self);
 	let_mut inner = static_cast(CnxVectorIterator(VECTOR_T)*)(iter.m_self);
@@ -777,7 +801,7 @@ CnxRandomAccessIterator(Ref(VECTOR_T))
 	return iter;
 }
 
-CnxRandomAccessIterator(ConstRef(VECTOR_T))
+VECTOR_STATIC VECTOR_INLINE CnxRandomAccessIterator(ConstRef(VECTOR_T))
 	CnxVectorIdentifier(VECTOR_T, cbegin)(const CnxVector(VECTOR_T) * restrict self) {
 	let_mut iter = cnx_vector_into_const_iter(*self);
 	let_mut inner = static_cast(CnxVectorConstIterator(VECTOR_T)*)(iter.m_self);
@@ -785,7 +809,7 @@ CnxRandomAccessIterator(ConstRef(VECTOR_T))
 	return iter;
 }
 
-CnxRandomAccessIterator(ConstRef(VECTOR_T))
+VECTOR_STATIC VECTOR_INLINE CnxRandomAccessIterator(ConstRef(VECTOR_T))
 	CnxVectorIdentifier(VECTOR_T, cend)(const CnxVector(VECTOR_T) * restrict self) {
 	let_mut iter = cnx_vector_into_const_iter(*self);
 	let_mut inner = static_cast(CnxVectorConstIterator(VECTOR_T)*)(iter.m_self);
@@ -793,7 +817,7 @@ CnxRandomAccessIterator(ConstRef(VECTOR_T))
 	return iter;
 }
 
-CnxRandomAccessIterator(ConstRef(VECTOR_T))
+VECTOR_STATIC VECTOR_INLINE CnxRandomAccessIterator(ConstRef(VECTOR_T))
 	CnxVectorIdentifier(VECTOR_T, crbegin)(const CnxVector(VECTOR_T) * restrict self) {
 	let_mut iter = cnx_vector_into_reverse_const_iter(*self);
 	let_mut inner = static_cast(CnxVectorConstIterator(VECTOR_T)*)(iter.m_self);
@@ -801,7 +825,7 @@ CnxRandomAccessIterator(ConstRef(VECTOR_T))
 	return iter;
 }
 
-CnxRandomAccessIterator(ConstRef(VECTOR_T))
+VECTOR_STATIC VECTOR_INLINE CnxRandomAccessIterator(ConstRef(VECTOR_T))
 	CnxVectorIdentifier(VECTOR_T, crend)(const CnxVector(VECTOR_T) * restrict self) {
 	let_mut iter = cnx_vector_into_reverse_const_iter(*self);
 	let_mut inner = static_cast(CnxVectorConstIterator(VECTOR_T)*)(iter.m_self);
@@ -809,15 +833,16 @@ CnxRandomAccessIterator(ConstRef(VECTOR_T))
 	return iter;
 }
 
-CnxString CnxVectorIdentifier(VECTOR_T, format)(const CnxFormat* restrict self,
-												CnxFormatSpecifier specifier) {
+VECTOR_STATIC VECTOR_INLINE CnxString CnxVectorIdentifier(VECTOR_T,
+														  format)(const CnxFormat* restrict self,
+																  CnxFormatSpecifier specifier) {
 	return CnxVectorIdentifier(VECTOR_T, format_with_allocator)(self, specifier, DEFAULT_ALLOCATOR);
 }
 
-CnxString CnxVectorIdentifier(VECTOR_T, format_with_allocator)(const CnxFormat* restrict self,
-															   __attr(maybe_unused)
-																   CnxFormatSpecifier specifier,
-															   CnxAllocator allocator) {
+VECTOR_STATIC VECTOR_INLINE CnxString CnxVectorIdentifier(VECTOR_T, format_with_allocator)(
+	const CnxFormat* restrict self,
+	__attr(maybe_unused) CnxFormatSpecifier specifier,
+	CnxAllocator allocator) {
 	cnx_assert(specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
 				   || specifier.m_type == CNX_FORMAT_TYPE_DEBUG,
 			   "Can only format CnxVector with default or debug format specifier");

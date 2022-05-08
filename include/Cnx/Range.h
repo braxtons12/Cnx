@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides collection agnostic ways for passing, modifying, and working with
 /// collections of elements as "Ranges"
-/// @version 0.2.0
-/// @date 2022-03-22
+/// @version 0.2.1
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -184,6 +184,18 @@
 	#error Range.h included with RANGE_IMPL defined true but template parameter RANGE_T not defined
 #endif // !defined(RANGE_T) && RANGE_IMPL && !RANGE_INCLUDE_DEFAULT_INSTANTIATIONS
 
+#if RANGE_DECL && RANGE_IMPL
+	#define RANGE_STATIC static
+	#define RANGE_INLINE inline
+#else
+	#ifndef RANGE_STATIC
+		#define RANGE_STATIC
+	#endif // RANGE_STATIC
+	#ifndef RANGE_INLINE
+		#define RANGE_INLINE
+	#endif // RANGE_INLINE
+#endif	   // RANGE_IMPL && RANGE_DECL
+
 #if defined(RANGE_T) && RANGE_DECL && !CNX_TEMPLATE_SUPPRESS_INSTANTIATIONS
 	#include <Cnx/range/RangeDecl.h>
 #endif // defined(RANGE_T) && RANGE_DECL && !CNX_TEMPLATE_SUPPRESS_INSTANTIATIONS
@@ -258,3 +270,10 @@
 
 #endif // RANGE_INCLUDE_DEFAULT_INSTANTIATIONS && !defined(RANGE_T) \
 	   // && !CNX_TEMPLATE_SUPPRESS_INSTANTIATIONS
+
+#ifdef RANGE_STATIC
+	#undef RANGE_STATIC
+#endif // RANGE_STATIC
+#ifdef RANGE_INLINE
+	#undef RANGE_INLINE
+#endif // RANGE_INLINE

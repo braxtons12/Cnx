@@ -3,7 +3,7 @@
 /// @brief This module provides the function definitions for a template instantiation of
 /// `CnxArray(ARRAY_T, ARRAY_N)`
 /// @version 0.2.1
-/// @date 2022-04-30
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -38,54 +38,55 @@
 	#include <Cnx/array/ArrayDef.h>
 	#include <Cnx/option/OptionDef.h>
 
-CnxArrayIterator(ARRAY_T, ARRAY_N)
+ARRAY_STATIC ARRAY_INLINE CnxArrayIterator(ARRAY_T, ARRAY_N)
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_new)(const CnxArray(ARRAY_T,
 																	  ARRAY_N) * restrict self);
-CnxArrayConstIterator(ARRAY_T, ARRAY_N)
+ARRAY_STATIC ARRAY_INLINE CnxArrayConstIterator(ARRAY_T, ARRAY_N)
 	CnxArrayIdentifier(ARRAY_T,
 					   ARRAY_N,
 					   const_iterator_new)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self);
 
-Ref(ARRAY_T)
+ARRAY_STATIC ARRAY_INLINE Ref(ARRAY_T)
 	CnxArrayIdentifier(ARRAY_T,
 					   ARRAY_N,
 					   iterator_next)(CnxRandomAccessIterator(Ref(ARRAY_T)) * restrict self);
-Ref(ARRAY_T)
+ARRAY_STATIC ARRAY_INLINE Ref(ARRAY_T)
 	CnxArrayIdentifier(ARRAY_T,
 					   ARRAY_N,
 					   iterator_previous)(CnxRandomAccessIterator(Ref(ARRAY_T)) * restrict self);
-Ref(ARRAY_T)
+ARRAY_STATIC ARRAY_INLINE Ref(ARRAY_T)
 	CnxArrayIdentifier(ARRAY_T,
 					   ARRAY_N,
 					   iterator_at)(const CnxRandomAccessIterator(Ref(ARRAY_T)) * restrict self,
 									usize index);
-Ref(ARRAY_T)
+ARRAY_STATIC ARRAY_INLINE Ref(ARRAY_T)
 	CnxArrayIdentifier(ARRAY_T,
 					   ARRAY_N,
 					   iterator_rat)(const CnxRandomAccessIterator(Ref(ARRAY_T)) * restrict self,
 									 usize index);
-Ref(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_current)(
+ARRAY_STATIC ARRAY_INLINE Ref(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_current)(
 	const CnxRandomAccessIterator(Ref(ARRAY_T)) * restrict self);
-bool
+ARRAY_STATIC ARRAY_INLINE bool
 	CnxArrayIdentifier(ARRAY_T,
 					   ARRAY_N,
 					   iterator_equals)(const CnxRandomAccessIterator(Ref(ARRAY_T)) * restrict self,
 										const CnxRandomAccessIterator(Ref(ARRAY_T)) * restrict rhs);
-ConstRef(ARRAY_T)
+ARRAY_STATIC ARRAY_INLINE ConstRef(ARRAY_T)
 	CnxArrayIdentifier(ARRAY_T,
 					   ARRAY_N,
 					   iterator_cnext)(CnxRandomAccessIterator(ConstRef(ARRAY_T)) * restrict self);
-ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_cprevious)(
-	CnxRandomAccessIterator(ConstRef(ARRAY_T)) * restrict self);
-ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_cat)(
+ARRAY_STATIC
+	ARRAY_INLINE ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_cprevious)(
+		CnxRandomAccessIterator(ConstRef(ARRAY_T)) * restrict self);
+ARRAY_STATIC ARRAY_INLINE ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_cat)(
 	const CnxRandomAccessIterator(ConstRef(ARRAY_T)) * restrict self,
 	usize index);
-ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_crat)(
+ARRAY_STATIC ARRAY_INLINE ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_crat)(
 	const CnxRandomAccessIterator(ConstRef(ARRAY_T)) * restrict self,
 	usize index);
-ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_ccurrent)(
+ARRAY_STATIC ARRAY_INLINE ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_ccurrent)(
 	const CnxRandomAccessIterator(ConstRef(ARRAY_T)) * restrict self);
-bool CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_cequals)(
+ARRAY_STATIC ARRAY_INLINE bool CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_cequals)(
 	const CnxRandomAccessIterator(ConstRef(ARRAY_T)) * restrict self,
 	const CnxRandomAccessIterator(ConstRef(ARRAY_T)) * restrict rhs);
 
@@ -193,7 +194,8 @@ static const struct CnxCollectionData(CnxArray(ARRAY_T, ARRAY_N))
 	   .m_copy_constructor = CnxArrayIdentifier(ARRAY_T, ARRAY_N, default_copy_constructor),
 	   .m_destructor = CnxArrayIdentifier(ARRAY_T, ARRAY_N, default_destructor)};
 
-CnxArray(ARRAY_T, ARRAY_N) CnxArrayIdentifier(ARRAY_T, ARRAY_N, new)(void) {
+ARRAY_STATIC ARRAY_INLINE CnxArray(ARRAY_T, ARRAY_N)
+	CnxArrayIdentifier(ARRAY_T, ARRAY_N, new)(void) {
 	return cnx_array_new_with_allocator_and_collection_data(
 		ARRAY_T,
 		ARRAY_N,
@@ -201,7 +203,7 @@ CnxArray(ARRAY_T, ARRAY_N) CnxArrayIdentifier(ARRAY_T, ARRAY_N, new)(void) {
 		&CnxArrayIdentifier(ARRAY_T, ARRAY_N, default_collection_data));
 }
 
-CnxArray(ARRAY_T, ARRAY_N)
+ARRAY_STATIC ARRAY_INLINE CnxArray(ARRAY_T, ARRAY_N)
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, new_with_allocator)(CnxAllocator allocator) {
 	return cnx_array_new_with_allocator_and_collection_data(
 		ARRAY_T,
@@ -210,15 +212,16 @@ CnxArray(ARRAY_T, ARRAY_N)
 		&CnxArrayIdentifier(ARRAY_T, ARRAY_N, default_collection_data));
 }
 
-CnxArray(ARRAY_T, ARRAY_N) CnxArrayIdentifier(ARRAY_T, ARRAY_N, new_with_collection_data)(
-	const CnxCollectionData(CnxArray(ARRAY_T, ARRAY_N)) * restrict data) {
+ARRAY_STATIC ARRAY_INLINE CnxArray(ARRAY_T, ARRAY_N)
+	CnxArrayIdentifier(ARRAY_T, ARRAY_N, new_with_collection_data)(
+		const CnxCollectionData(CnxArray(ARRAY_T, ARRAY_N)) * restrict data) {
 	return cnx_array_new_with_allocator_and_collection_data(ARRAY_T,
 															ARRAY_N,
 															DEFAULT_ALLOCATOR,
 															data);
 }
 
-CnxArray(ARRAY_T, ARRAY_N)
+ARRAY_STATIC ARRAY_INLINE CnxArray(ARRAY_T, ARRAY_N)
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, new_with_allocator_and_collection_data)(
 		CnxAllocator allocator,
 		const CnxCollectionData(CnxArray(ARRAY_T, ARRAY_N)) * restrict data) {
@@ -230,7 +233,7 @@ CnxArray(ARRAY_T, ARRAY_N)
 										= &CnxArrayIdentifier(ARRAY_T, ARRAY_N, vtable_impl)};
 }
 
-CnxArray(ARRAY_T, ARRAY_N)
+ARRAY_STATIC ARRAY_INLINE CnxArray(ARRAY_T, ARRAY_N)
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, clone)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self)
 		cnx_disable_if(
 			!(self->m_data->m_copy_constructor),
@@ -249,7 +252,7 @@ CnxArray(ARRAY_T, ARRAY_N)
 	return array;
 }
 
-const ARRAY_T*
+ARRAY_STATIC ARRAY_INLINE const ARRAY_T*
 CnxArrayIdentifier(ARRAY_T, ARRAY_N, at_const)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self,
 											   usize index) {
 	cnx_assert(index <= self->m_size,
@@ -258,70 +261,72 @@ CnxArrayIdentifier(ARRAY_T, ARRAY_N, at_const)(const CnxArray(ARRAY_T, ARRAY_N) 
 	return &(self->m_array[index]);
 }
 
-ARRAY_T* CnxArrayIdentifier(ARRAY_T, ARRAY_N, at_mut)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
-													  usize index) {
+ARRAY_STATIC ARRAY_INLINE ARRAY_T*
+CnxArrayIdentifier(ARRAY_T, ARRAY_N, at_mut)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
+											 usize index) {
 	cnx_assert(index <= self->m_size,
 			   "cnx_array_at_mut called with index > size (index out of bounds)");
 	cnx_assert(index < ARRAY_N, "cnx_array_at_mut called with index >= N (index out of bounds)");
 	return &(self->m_array[index]);
 }
 
-const ARRAY_T* CnxArrayIdentifier(ARRAY_T,
-								  ARRAY_N,
-								  front_const)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
+ARRAY_STATIC ARRAY_INLINE const ARRAY_T*
+CnxArrayIdentifier(ARRAY_T, ARRAY_N, front_const)(const CnxArray(ARRAY_T,
+																 ARRAY_N) * restrict self) {
 	return &cnx_array_at(*self, 0);
 }
 
-ARRAY_T*
+ARRAY_STATIC ARRAY_INLINE ARRAY_T*
 CnxArrayIdentifier(ARRAY_T, ARRAY_N, front_mut)(CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
 	return &cnx_array_at_mut(*self, 0);
 }
 
-const ARRAY_T*
+ARRAY_STATIC ARRAY_INLINE const ARRAY_T*
 CnxArrayIdentifier(ARRAY_T, ARRAY_N, back_const)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
 	let back_index = self->m_size > 0 ? self->m_size - 1 : 0;
 	return &cnx_array_at(*self, back_index);
 }
 
-ARRAY_T*
+ARRAY_STATIC ARRAY_INLINE ARRAY_T*
 CnxArrayIdentifier(ARRAY_T, ARRAY_N, back_mut)(CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
 	let back_index = self->m_size > 0 ? self->m_size - 1 : 0;
 	return &cnx_array_at_mut(*self, back_index);
 }
 
-const ARRAY_T*
+ARRAY_STATIC ARRAY_INLINE const ARRAY_T*
 CnxArrayIdentifier(ARRAY_T, ARRAY_N, data_const)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
 	return &cnx_array_front(*self);
 }
 
-ARRAY_T*
+ARRAY_STATIC ARRAY_INLINE ARRAY_T*
 CnxArrayIdentifier(ARRAY_T, ARRAY_N, data_mut)(CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
 	return &cnx_array_front_mut(*self);
 }
 
-bool CnxArrayIdentifier(ARRAY_T, ARRAY_N, is_empty)(const CnxArray(ARRAY_T,
-																   ARRAY_N) * restrict self) {
+ARRAY_STATIC ARRAY_INLINE bool
+CnxArrayIdentifier(ARRAY_T, ARRAY_N, is_empty)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
 	return self->m_size == 0;
 }
 
-bool CnxArrayIdentifier(ARRAY_T, ARRAY_N, is_full)(const CnxArray(ARRAY_T,
-																  ARRAY_N) * restrict self) {
+ARRAY_STATIC ARRAY_INLINE bool
+CnxArrayIdentifier(ARRAY_T, ARRAY_N, is_full)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
 	return self->m_size == ARRAY_N;
 }
 
-usize CnxArrayIdentifier(ARRAY_T, ARRAY_N, size)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
+ARRAY_STATIC ARRAY_INLINE usize
+CnxArrayIdentifier(ARRAY_T, ARRAY_N, size)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
 	return self->m_size;
 }
 
-usize CnxArrayIdentifier(ARRAY_T, ARRAY_N, capacity)(const CnxArray(ARRAY_T,
-																	ARRAY_N) * restrict self) {
+ARRAY_STATIC ARRAY_INLINE usize
+CnxArrayIdentifier(ARRAY_T, ARRAY_N, capacity)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
 	ignore(self);
 	return ARRAY_N;
 }
 
-void CnxArrayIdentifier(ARRAY_T, ARRAY_N, resize_internal)(CnxArray(ARRAY_T,
-																	ARRAY_N) * restrict self,
-														   usize new_size) {
+ARRAY_STATIC ARRAY_INLINE void
+CnxArrayIdentifier(ARRAY_T, ARRAY_N, resize_internal)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
+													  usize new_size) {
 	if(new_size < self->m_size) {
 		for(let_mut i = new_size; i < self->m_size; ++i) {
 			self->m_data->m_destructor(&cnx_array_at_mut(*self, i), self->m_allocator);
@@ -338,29 +343,33 @@ void CnxArrayIdentifier(ARRAY_T, ARRAY_N, resize_internal)(CnxArray(ARRAY_T,
 	}
 }
 
-void CnxArrayIdentifier(ARRAY_T, ARRAY_N, resize)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
-												  usize new_size) {
+ARRAY_STATIC ARRAY_INLINE void
+CnxArrayIdentifier(ARRAY_T, ARRAY_N, resize)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
+											 usize new_size) {
 	cnx_assert(new_size <= ARRAY_N, "can't resize an array larger than it's capacity");
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, resize_internal)(self, new_size);
 }
 
-void CnxArrayIdentifier(ARRAY_T, ARRAY_N, clear)(CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
+ARRAY_STATIC ARRAY_INLINE void
+CnxArrayIdentifier(ARRAY_T, ARRAY_N, clear)(CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
 	for(let_mut i = 0U; i < self->m_size; ++i) {
 		self->m_data->m_destructor(&cnx_array_at_mut(*self, i), self->m_allocator);
 	}
 	self->m_size = 0;
 }
 
-void CnxArrayIdentifier(ARRAY_T, ARRAY_N, push_back)(
-	CnxArray(ARRAY_T, ARRAY_N) * restrict self,
-	ARRAY_T element /** NOLINT(readability-non-const-parameter) **/) {
+ARRAY_STATIC ARRAY_INLINE void
+CnxArrayIdentifier(ARRAY_T,
+				   ARRAY_N,
+				   push_back)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
+							  ARRAY_T element /** NOLINT(readability-non-const-parameter) **/) {
 	cnx_assert(self->m_size < ARRAY_N,
 			   "cnx_array_push_back called with self->m_size >= N (array bounds full)");
 	cnx_array_at_mut(*self, self->m_size) = element;
 	self->m_size++;
 }
 
-CnxOption(ARRAY_T)
+ARRAY_STATIC ARRAY_INLINE CnxOption(ARRAY_T)
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, pop_back)(CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
 	if(self->m_size == 0) {
 		return None(ARRAY_T);
@@ -374,11 +383,12 @@ CnxOption(ARRAY_T)
 	return elem;
 }
 
-void CnxArrayIdentifier(ARRAY_T,
-						ARRAY_N,
-						insert)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
-								ARRAY_T element /** NOLINT(readability-non-const-parameter **/,
-								usize index) {
+ARRAY_STATIC ARRAY_INLINE void
+CnxArrayIdentifier(ARRAY_T,
+				   ARRAY_N,
+				   insert)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
+						   ARRAY_T element /** NOLINT(readability-non-const-parameter **/,
+						   usize index) {
 	cnx_assert(index < ARRAY_N, "cnx_array_insert called with index >= N (index out of bounds)");
 	cnx_assert(self->m_size < ARRAY_N,
 			   "cnx_array_insert called with self->m_size >= N (array bounds full)");
@@ -394,8 +404,9 @@ void CnxArrayIdentifier(ARRAY_T,
 	self->m_size++;
 }
 
-void CnxArrayIdentifier(ARRAY_T, ARRAY_N, erase)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
-												 usize index) {
+ARRAY_STATIC ARRAY_INLINE void
+CnxArrayIdentifier(ARRAY_T, ARRAY_N, erase)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
+											usize index) {
 	cnx_assert(index < self->m_size,
 			   "cnx_array_erase called with index >= self->m_size (index out of bounds)");
 	self->m_data->m_destructor(&cnx_array_at_mut(*self, index), self->m_allocator);
@@ -409,9 +420,10 @@ void CnxArrayIdentifier(ARRAY_T, ARRAY_N, erase)(CnxArray(ARRAY_T, ARRAY_N) * re
 	self->m_size--;
 }
 
-void CnxArrayIdentifier(ARRAY_T, ARRAY_N, erase_n)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
-												   usize index,
-												   usize length) {
+ARRAY_STATIC ARRAY_INLINE void
+CnxArrayIdentifier(ARRAY_T, ARRAY_N, erase_n)(CnxArray(ARRAY_T, ARRAY_N) * restrict self,
+											  usize index,
+											  usize length) {
 	cnx_assert(index < self->m_size,
 			   "cnx_array_erase_n called with index >= self->m_size (index out of bounds)");
 	cnx_assert(index + length < self->m_size,
@@ -432,7 +444,7 @@ void CnxArrayIdentifier(ARRAY_T, ARRAY_N, erase_n)(CnxArray(ARRAY_T, ARRAY_N) * 
 	self->m_size -= length;
 }
 
-void CnxArrayIdentifier(ARRAY_T, ARRAY_N, free)(void* restrict self) {
+ARRAY_STATIC ARRAY_INLINE void CnxArrayIdentifier(ARRAY_T, ARRAY_N, free)(void* restrict self) {
 	let self_ = static_cast(CnxArray(ARRAY_T, ARRAY_N)*)(self);
 	for(let_mut i = 0U; i < self_->m_size; ++i) {
 		self_->m_data->m_destructor(&cnx_array_at_mut(*self_, i), self_->m_allocator);
@@ -440,7 +452,7 @@ void CnxArrayIdentifier(ARRAY_T, ARRAY_N, free)(void* restrict self) {
 	self_->m_size = 0;
 }
 
-CnxArrayIterator(ARRAY_T, ARRAY_N)
+ARRAY_STATIC ARRAY_INLINE CnxArrayIterator(ARRAY_T, ARRAY_N)
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_new)(const CnxArray(ARRAY_T,
 																	  ARRAY_N) * restrict self) {
 	return (CnxArrayIterator(ARRAY_T, ARRAY_N)){.m_index = 0U,
@@ -448,7 +460,7 @@ CnxArrayIterator(ARRAY_T, ARRAY_N)
 												= const_cast(CnxArray(ARRAY_T, ARRAY_N)*)(self)};
 }
 
-CnxArrayConstIterator(ARRAY_T, ARRAY_N)
+ARRAY_STATIC ARRAY_INLINE CnxArrayConstIterator(ARRAY_T, ARRAY_N)
 	CnxArrayIdentifier(ARRAY_T,
 					   ARRAY_N,
 					   const_iterator_new)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
@@ -457,7 +469,7 @@ CnxArrayConstIterator(ARRAY_T, ARRAY_N)
 		.m_array = const_cast(CnxArray(ARRAY_T, ARRAY_N)*)(self)};
 }
 
-Ref(ARRAY_T)
+ARRAY_STATIC ARRAY_INLINE Ref(ARRAY_T)
 	CnxArrayIdentifier(ARRAY_T,
 					   ARRAY_N,
 					   iterator_next)(CnxRandomAccessIterator(Ref(ARRAY_T)) * restrict self) {
@@ -476,7 +488,7 @@ Ref(ARRAY_T)
 	return &cnx_array_at_mut(*(_self->m_array), static_cast(usize)(_self->m_index));
 }
 
-Ref(ARRAY_T)
+ARRAY_STATIC ARRAY_INLINE Ref(ARRAY_T)
 	CnxArrayIdentifier(ARRAY_T,
 					   ARRAY_N,
 					   iterator_previous)(CnxRandomAccessIterator(Ref(ARRAY_T)) * restrict self) {
@@ -495,7 +507,7 @@ Ref(ARRAY_T)
 	return &cnx_array_at_mut(*(_self->m_array), static_cast(usize)(_self->m_index));
 }
 
-Ref(ARRAY_T)
+ARRAY_STATIC ARRAY_INLINE Ref(ARRAY_T)
 	CnxArrayIdentifier(ARRAY_T,
 					   ARRAY_N,
 					   iterator_at)(const CnxRandomAccessIterator(Ref(ARRAY_T)) * restrict self,
@@ -507,7 +519,7 @@ Ref(ARRAY_T)
 	return &cnx_array_at_mut(*(_self->m_array), index);
 }
 
-Ref(ARRAY_T)
+ARRAY_STATIC ARRAY_INLINE Ref(ARRAY_T)
 	CnxArrayIdentifier(ARRAY_T,
 					   ARRAY_N,
 					   iterator_rat)(const CnxRandomAccessIterator(Ref(ARRAY_T)) * restrict self,
@@ -519,7 +531,7 @@ Ref(ARRAY_T)
 	return &cnx_array_at_mut(*(_self->m_array), (cnx_array_size(*(_self->m_array)) - 1) - index);
 }
 
-Ref(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_current)(
+ARRAY_STATIC ARRAY_INLINE Ref(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_current)(
 	const CnxRandomAccessIterator(Ref(ARRAY_T)) * restrict self) {
 	let _self = static_cast(CnxArrayIterator(ARRAY_T, ARRAY_N)*)(self->m_self);
 	cnx_assert(_self->m_index > -1,
@@ -531,15 +543,17 @@ Ref(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_current)(
 	return &cnx_array_at_mut(*(_self->m_array), static_cast(usize)(_self->m_index));
 }
 
-bool CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_equals)(
-	const CnxRandomAccessIterator(Ref(ARRAY_T)) * restrict self,
-	const CnxRandomAccessIterator(Ref(ARRAY_T)) * restrict rhs) {
+ARRAY_STATIC ARRAY_INLINE bool
+CnxArrayIdentifier(ARRAY_T,
+				   ARRAY_N,
+				   iterator_equals)(const CnxRandomAccessIterator(Ref(ARRAY_T)) * restrict self,
+									const CnxRandomAccessIterator(Ref(ARRAY_T)) * restrict rhs) {
 	let _self = static_cast(const CnxArrayIterator(ARRAY_T, ARRAY_N)*)(self->m_self);
 	let _rhs = static_cast(const CnxArrayIterator(ARRAY_T, ARRAY_N)*)(rhs->m_self);
 	return _self->m_index == _rhs->m_index && _self->m_array == _rhs->m_array;
 }
 
-ConstRef(ARRAY_T)
+ARRAY_STATIC ARRAY_INLINE ConstRef(ARRAY_T)
 	CnxArrayIdentifier(ARRAY_T,
 					   ARRAY_N,
 					   iterator_cnext)(CnxRandomAccessIterator(ConstRef(ARRAY_T)) * restrict self) {
@@ -559,8 +573,9 @@ ConstRef(ARRAY_T)
 	return &cnx_array_at(*(_self->m_array), static_cast(usize)(_self->m_index));
 }
 
-ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_cprevious)(
-	CnxRandomAccessIterator(ConstRef(ARRAY_T)) * restrict self) {
+ARRAY_STATIC ARRAY_INLINE ConstRef(ARRAY_T)
+	CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_cprevious)(
+		CnxRandomAccessIterator(ConstRef(ARRAY_T)) * restrict self) {
 	let _self = static_cast(CnxArrayConstIterator(ARRAY_T, ARRAY_N)*)(self->m_self);
 	cnx_assert(_self->m_index > -1,
 			   "Iterator value accessed when iterator is positioned before "
@@ -576,7 +591,7 @@ ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_cprevious)(
 	return &cnx_array_at(*(_self->m_array), static_cast(usize)(_self->m_index));
 }
 
-ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_cat)(
+ARRAY_STATIC ARRAY_INLINE ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_cat)(
 	const CnxRandomAccessIterator(ConstRef(ARRAY_T)) * restrict self,
 	usize index) {
 	let _self = static_cast(CnxArrayConstIterator(ARRAY_T, ARRAY_N)*)(self->m_self);
@@ -587,7 +602,7 @@ ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_cat)(
 	return &cnx_array_at(*(_self->m_array), index);
 }
 
-ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_crat)(
+ARRAY_STATIC ARRAY_INLINE ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_crat)(
 	const CnxRandomAccessIterator(ConstRef(ARRAY_T)) * restrict self,
 	usize index) {
 	let _self = static_cast(CnxArrayConstIterator(ARRAY_T, ARRAY_N)*)(self->m_self);
@@ -598,7 +613,7 @@ ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_crat)(
 	return &cnx_array_at(*(_self->m_array), (cnx_array_size(*(_self->m_array)) - 1) - index);
 }
 
-ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_ccurrent)(
+ARRAY_STATIC ARRAY_INLINE ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_ccurrent)(
 	const CnxRandomAccessIterator(ConstRef(ARRAY_T)) * restrict self) {
 	let _self = static_cast(CnxArrayConstIterator(ARRAY_T, ARRAY_N)*)(self->m_self);
 	cnx_assert(_self->m_index > -1,
@@ -611,7 +626,7 @@ ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_ccurrent)(
 	return &cnx_array_at(*(_self->m_array), static_cast(usize)(_self->m_index));
 }
 
-bool CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_cequals)(
+ARRAY_STATIC ARRAY_INLINE bool CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_cequals)(
 	const CnxRandomAccessIterator(ConstRef(ARRAY_T)) * restrict self,
 	const CnxRandomAccessIterator(ConstRef(ARRAY_T)) * restrict rhs) {
 	let _self = static_cast(const CnxArrayConstIterator(ARRAY_T, ARRAY_N)*)(self->m_self);
@@ -619,7 +634,7 @@ bool CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_cequals)(
 	return _self->m_index == _rhs->m_index && _self->m_array == _rhs->m_array;
 }
 
-CnxRandomAccessIterator(Ref(ARRAY_T))
+ARRAY_STATIC ARRAY_INLINE CnxRandomAccessIterator(Ref(ARRAY_T))
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, begin)(CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
 	let_mut iter = cnx_array_into_iter(*self);
 	let_mut inner = static_cast(CnxArrayIterator(ARRAY_T, ARRAY_N)*)(iter.m_self);
@@ -627,7 +642,7 @@ CnxRandomAccessIterator(Ref(ARRAY_T))
 	return iter;
 }
 
-CnxRandomAccessIterator(Ref(ARRAY_T))
+ARRAY_STATIC ARRAY_INLINE CnxRandomAccessIterator(Ref(ARRAY_T))
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, end)(CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
 	let_mut iter = cnx_array_into_iter(*self);
 	let_mut inner = static_cast(CnxArrayIterator(ARRAY_T, ARRAY_N)*)(iter.m_self);
@@ -635,7 +650,7 @@ CnxRandomAccessIterator(Ref(ARRAY_T))
 	return iter;
 }
 
-CnxRandomAccessIterator(Ref(ARRAY_T))
+ARRAY_STATIC ARRAY_INLINE CnxRandomAccessIterator(Ref(ARRAY_T))
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, rbegin)(CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
 	let_mut iter = cnx_array_into_reverse_iter(*self);
 	let_mut inner = static_cast(CnxArrayIterator(ARRAY_T, ARRAY_N)*)(iter.m_self);
@@ -643,7 +658,7 @@ CnxRandomAccessIterator(Ref(ARRAY_T))
 	return iter;
 }
 
-CnxRandomAccessIterator(Ref(ARRAY_T))
+ARRAY_STATIC ARRAY_INLINE CnxRandomAccessIterator(Ref(ARRAY_T))
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, rend)(CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
 	let_mut iter = cnx_array_into_reverse_iter(*self);
 	let_mut inner = static_cast(CnxArrayIterator(ARRAY_T, ARRAY_N)*)(iter.m_self);
@@ -651,7 +666,7 @@ CnxRandomAccessIterator(Ref(ARRAY_T))
 	return iter;
 }
 
-CnxRandomAccessIterator(ConstRef(ARRAY_T))
+ARRAY_STATIC ARRAY_INLINE CnxRandomAccessIterator(ConstRef(ARRAY_T))
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, cbegin)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
 	let_mut iter = cnx_array_into_const_iter(*self);
 	let_mut inner = static_cast(CnxArrayConstIterator(ARRAY_T, ARRAY_N)*)(iter.m_self);
@@ -659,7 +674,7 @@ CnxRandomAccessIterator(ConstRef(ARRAY_T))
 	return iter;
 }
 
-CnxRandomAccessIterator(ConstRef(ARRAY_T))
+ARRAY_STATIC ARRAY_INLINE CnxRandomAccessIterator(ConstRef(ARRAY_T))
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, cend)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
 	let_mut iter = cnx_array_into_const_iter(*self);
 	let_mut inner = static_cast(CnxArrayConstIterator(ARRAY_T, ARRAY_N)*)(iter.m_self);
@@ -667,7 +682,7 @@ CnxRandomAccessIterator(ConstRef(ARRAY_T))
 	return iter;
 }
 
-CnxRandomAccessIterator(ConstRef(ARRAY_T))
+ARRAY_STATIC ARRAY_INLINE CnxRandomAccessIterator(ConstRef(ARRAY_T))
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, crbegin)(const CnxArray(ARRAY_T,
 																 ARRAY_N) * restrict self) {
 	let_mut iter = cnx_array_into_reverse_const_iter(*self);
@@ -676,7 +691,7 @@ CnxRandomAccessIterator(ConstRef(ARRAY_T))
 	return iter;
 }
 
-CnxRandomAccessIterator(ConstRef(ARRAY_T))
+ARRAY_STATIC ARRAY_INLINE CnxRandomAccessIterator(ConstRef(ARRAY_T))
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, crend)(const CnxArray(ARRAY_T, ARRAY_N) * restrict self) {
 	let_mut iter = cnx_array_into_reverse_const_iter(*self);
 	let_mut inner = static_cast(CnxArrayConstIterator(ARRAY_T, ARRAY_N)*)(iter.m_self);
@@ -684,18 +699,19 @@ CnxRandomAccessIterator(ConstRef(ARRAY_T))
 	return iter;
 }
 
-CnxString CnxArrayIdentifier(ARRAY_T, ARRAY_N, format)(const CnxFormat* restrict self,
-													   CnxFormatSpecifier specifier) {
+ARRAY_STATIC ARRAY_INLINE CnxString CnxArrayIdentifier(ARRAY_T,
+													   ARRAY_N,
+													   format)(const CnxFormat* restrict self,
+															   CnxFormatSpecifier specifier) {
 	return CnxArrayIdentifier(ARRAY_T, ARRAY_N, format_with_allocator)(self,
 																	   specifier,
 																	   DEFAULT_ALLOCATOR);
 }
 
-CnxString
-CnxArrayIdentifier(ARRAY_T, ARRAY_N, format_with_allocator)(const CnxFormat* restrict self,
-															__attr(maybe_unused)
-																CnxFormatSpecifier specifier,
-															CnxAllocator allocator) {
+ARRAY_STATIC ARRAY_INLINE CnxString CnxArrayIdentifier(ARRAY_T, ARRAY_N, format_with_allocator)(
+	const CnxFormat* restrict self,
+	__attr(maybe_unused) CnxFormatSpecifier specifier,
+	CnxAllocator allocator) {
 	cnx_assert(specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
 				   || specifier.m_type == CNX_FORMAT_TYPE_DEBUG,
 			   "Can only format CnxArray with default or debug format specifier");

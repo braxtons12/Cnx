@@ -34,72 +34,73 @@
 #define RESULT_IMPL TRUE
 
 #define RESULT_T char
-#include <Cnx/result/ResultImpl.h>
+// NOLINTNEXTLINE(readability-duplicate-include)
+#include <Cnx/Result.h>
 #undef RESULT_T
 
 #define RESULT_T u8
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/result/ResultImpl.h>
+#include <Cnx/Result.h>
 #undef RESULT_T
 
 #define RESULT_T u16
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/result/ResultImpl.h>
+#include <Cnx/Result.h>
 #undef RESULT_T
 
 #define RESULT_T u32
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/result/ResultImpl.h>
+#include <Cnx/Result.h>
 #undef RESULT_T
 
 #define RESULT_T u64
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/result/ResultImpl.h>
+#include <Cnx/Result.h>
 #undef RESULT_T
 
 #define RESULT_T usize
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/result/ResultImpl.h>
+#include <Cnx/Result.h>
 #undef RESULT_T
 
 #define RESULT_T i8
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/result/ResultImpl.h>
+#include <Cnx/Result.h>
 #undef RESULT_T
 
 #define RESULT_T i16
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/result/ResultImpl.h>
+#include <Cnx/Result.h>
 #undef RESULT_T
 
 #define RESULT_T i32
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/result/ResultImpl.h>
+#include <Cnx/Result.h>
 #undef RESULT_T
 
 #define RESULT_T i64
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/result/ResultImpl.h>
+#include <Cnx/Result.h>
 #undef RESULT_T
 
 #define RESULT_T isize
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/result/ResultImpl.h>
+#include <Cnx/Result.h>
 #undef RESULT_T
 
 #define RESULT_T f32
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/result/ResultImpl.h>
+#include <Cnx/Result.h>
 #undef RESULT_T
 
 #define RESULT_T f64
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/result/ResultImpl.h>
+#include <Cnx/Result.h>
 #undef RESULT_T
 
 #define RESULT_T cstring
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/result/ResultImpl.h>
+#include <Cnx/Result.h>
 #undef RESULT_T
 
 #undef RESULT_IMPL

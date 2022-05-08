@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a dynamic-array type comparable to C++'s `std::vector` and Rust's
 /// `std::vec::Vec` for Cnx
-/// @version 0.2.2
-/// @date 2022-03-21
+/// @version 0.2.3
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -341,6 +341,18 @@
 	#error Vector.h included with VECTOR_IMPL defined true but template parameter VECTOR_T not defined
 #endif // !defined(T) && VECTOR_IMPL &&!VECTOR_INCLUDE_DEFAULT_INSTANTIATIONS
 
+#if VECTOR_DECL && VECTOR_IMPL
+	#define VECTOR_STATIC static
+	#define VECTOR_INLINE inline
+#else
+	#ifndef VECTOR_STATIC
+		#define VECTOR_STATIC
+	#endif // VECTOR_STATIC
+	#ifndef VECTOR_INLINE
+		#define VECTOR_INLINE
+	#endif // VECTOR_INLINE
+#endif	   // VECTOR_DECL && VECTOR_IMPL
+
 #if defined(VECTOR_T) && defined(VECTOR_SMALL_OPT_CAPACITY) && VECTOR_DECL \
 	&& !CNX_TEMPLATE_SUPPRESS_INSTANTIATIONS
 	#include <Cnx/vector/VectorDecl.h>
@@ -444,3 +456,10 @@
 	#undef VECTOR_DECL
 	#undef VECTOR_IMPL
 #endif // VECTOR_UNDEF_PARAMS
+
+#ifdef VECTOR_STATIC
+	#undef VECTOR_STATIC
+#endif // VECTOR_STATIC
+#ifdef VECTOR_INLINE
+	#undef VECTOR_INLINE
+#endif // VECTOR_INLINE

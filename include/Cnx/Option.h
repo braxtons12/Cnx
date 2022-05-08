@@ -1,8 +1,8 @@
 /// @file Option.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a struct template for representing an optional value
-/// @version 0.2.2
-/// @date 2022-03-20
+/// @version 0.2.3
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -96,6 +96,18 @@
 	#error Option.h included with OPTION_IMPL defined true but template parameter OPTION_T not defined
 #endif // !defined(OPTION_T) && OPTION_IMPL && !OPTION_INCLUDE_DEFAULT_INSTANTIATIONS
 
+#if OPTION_DECL && OPTION_IMPL
+	#define OPTION_STATIC static
+	#define OPTION_INLINE inline
+#else
+	#ifndef OPTION_STATIC
+		#define OPTION_STATIC
+	#endif // OPTION_STATIC
+	#ifndef OPTION_INLINE
+		#define OPTION_INLINE
+	#endif // OPTION_INLINE
+#endif	   // OPTION_DECL && OPTION_IMPL
+
 #if defined(OPTION_T) && OPTION_DECL && !CNX_TEMPLATE_SUPPRESS_INSTANTIATIONS
 	#include <Cnx/option/OptionDecl.h>
 #endif // defined(OPTION_T) && OPTION_DECL && !CNX_TEMPLATE_SUPPRESS_INSTANTIATIONS
@@ -181,3 +193,10 @@
 	#undef OPTION_DECL
 	#undef OPTION_IMPL
 #endif // OPTION_UNDEF_PARAMS
+
+#ifdef OPTION_STATIC
+	#undef OPTION_STATIC
+#endif // OPTION_STATIC
+#ifdef OPTION_INLINE
+	#undef OPTION_INLINE
+#endif // OPTION_INLINE

@@ -1,8 +1,8 @@
 /// @file UniquePtr.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a struct template for representing a uniquely owned pointer
-/// @version 0.2.0
-/// @date 2022-03-29
+/// @version 0.2.1
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -249,6 +249,18 @@
 			not defined "
 #endif // !defined(UNIQUE_T) && UNIQUE_IMPL
 
+#if UNIQUE_DECL && UNIQUE_IMPL
+	#define UNIQUE_STATIC static
+	#define UNIQUE_INLINE inline
+#else
+	#ifndef UNIQUE_STATIC
+		#define UNIQUE_STATIC
+	#endif // UNIQUE_STATIC
+	#ifndef UNIQUE_INLINE
+		#define UNIQUE_INLINE
+	#endif // UNIQUE_INLINE
+#endif	   // UNIQUE_DECL && UNIQUE_IMPL
+
 #if defined(UNIQUE_T) && UNIQUE_DECL && !CNX_TEMPLATE_SUPPRESS_INSTANTIATIONS
 	#include <Cnx/unique_ptr/UniquePtrDecl.h>
 #endif // defined(UNIQUE_T) && UNIQUE_DECL && !CNX_TEMPLATE_SUPPRESS_INSTANTIATIONS
@@ -268,3 +280,10 @@
 	#undef UNIQUE_DELETER
 	#undef __UNIQUE_DEFAULTED_DELETER
 #endif // __UNIQUE_DEFAULTED_DELETER
+
+#ifdef UNIQUE_STATIC
+	#undef UNIQUE_STATIC
+#endif // UNIQUE_STATIC
+#ifdef UNIQUE_INLINE
+	#undef UNIQUE_INLINE
+#endif // UNIQUE_INLINE

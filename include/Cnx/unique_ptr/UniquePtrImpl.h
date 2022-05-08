@@ -3,7 +3,7 @@
 /// @brief This module provides the function definitions for a struct template
 /// for representing a uniquely owned pointer
 /// @version 0.2.1
-/// @date 2022-04-30
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -46,18 +46,18 @@ __attr(always_inline) static inline void CnxUniquePtrIdentifier(UNIQUE_T, defaul
 	cnx_allocator_deallocate(allocator, ptr);
 }
 
-CnxUniquePtr(UNIQUE_T) CnxUniquePtrIdentifier(UNIQUE_T, default)(void) {
+UNIQUE_STATIC UNIQUE_INLINE CnxUniquePtr(UNIQUE_T) CnxUniquePtrIdentifier(UNIQUE_T, default)(void) {
 	return CnxUniquePtrIdentifier(UNIQUE_T, default_with_allocator)(DEFAULT_ALLOCATOR);
 }
 
-CnxUniquePtr(UNIQUE_T)
+UNIQUE_STATIC UNIQUE_INLINE CnxUniquePtr(UNIQUE_T)
 	CnxUniquePtrIdentifier(UNIQUE_T, default_with_allocator)(CnxAllocator allocator) {
 	return (CnxUniquePtr(UNIQUE_T)){.m_ptr = nullptr,
 									.m_allocator = allocator,
 									.m_vtable = &CnxUniquePtrIdentifier(UNIQUE_T, vtable_impl)};
 }
 
-CnxUniquePtr(UNIQUE_T) CnxUniquePtrIdentifier(UNIQUE_T, new)(void) {
+UNIQUE_STATIC UNIQUE_INLINE CnxUniquePtr(UNIQUE_T) CnxUniquePtrIdentifier(UNIQUE_T, new)(void) {
 	// if compiling with clang, we'll trigger a cnx_disable_if clause at compile time if this is
 	// ever used on an array type, and for GCC/others we'll trigger a static_assert when called
 	// through the macro, but this could still be called if directly called instead of going through
@@ -75,7 +75,7 @@ CnxUniquePtr(UNIQUE_T) CnxUniquePtrIdentifier(UNIQUE_T, new)(void) {
 									.m_vtable = &CnxUniquePtrIdentifier(UNIQUE_T, vtable_impl)};
 }
 
-CnxUniquePtr(UNIQUE_T)
+UNIQUE_STATIC UNIQUE_INLINE CnxUniquePtr(UNIQUE_T)
 	CnxUniquePtrIdentifier(UNIQUE_T, new_with_allocator)(CnxAllocator allocator) {
 	// if compiling with clang, we'll trigger a cnx_disable_if clause at compile time if this is
 	// ever used on an array type, and for GCC/others we'll trigger a static_assert when called
@@ -94,7 +94,8 @@ CnxUniquePtr(UNIQUE_T)
 									.m_vtable = &CnxUniquePtrIdentifier(UNIQUE_T, vtable_impl)};
 }
 
-CnxUniquePtr(UNIQUE_T) CnxUniquePtrIdentifier(UNIQUE_T, new_with_capacity)(usize capacity) {
+UNIQUE_STATIC UNIQUE_INLINE CnxUniquePtr(UNIQUE_T)
+	CnxUniquePtrIdentifier(UNIQUE_T, new_with_capacity)(usize capacity) {
 	// if compiling with clang, we'll trigger a cnx_disable_if clause at compile time if this is
 	// ever used on a non-array type, and for GCC/others we'll trigger a static_assert when called
 	// through the macro, but this could still be called if directly called instead of going through
@@ -113,7 +114,7 @@ CnxUniquePtr(UNIQUE_T) CnxUniquePtrIdentifier(UNIQUE_T, new_with_capacity)(usize
 									.m_vtable = &CnxUniquePtrIdentifier(UNIQUE_T, vtable_impl)};
 }
 
-CnxUniquePtr(UNIQUE_T)
+UNIQUE_STATIC UNIQUE_INLINE CnxUniquePtr(UNIQUE_T)
 	CnxUniquePtrIdentifier(UNIQUE_T, new_with_capacity_and_allocator)(usize capacity,
 																	  CnxAllocator allocator) {
 	// if compiling with clang, we'll trigger a cnx_disable_if clause at compile time if this is
@@ -134,12 +135,12 @@ CnxUniquePtr(UNIQUE_T)
 									.m_vtable = &CnxUniquePtrIdentifier(UNIQUE_T, vtable_impl)};
 }
 
-CnxUniquePtr(UNIQUE_T)
+UNIQUE_STATIC UNIQUE_INLINE CnxUniquePtr(UNIQUE_T)
 	CnxUniquePtrIdentifier(UNIQUE_T, from)(__UNIQUE_PTR_ELEMENT_PTR restrict ptr) {
 	return CnxUniquePtrIdentifier(UNIQUE_T, from_with_allocator)(ptr, DEFAULT_ALLOCATOR);
 }
 
-CnxUniquePtr(UNIQUE_T)
+UNIQUE_STATIC UNIQUE_INLINE CnxUniquePtr(UNIQUE_T)
 	CnxUniquePtrIdentifier(UNIQUE_T, from_with_allocator)(__UNIQUE_PTR_ELEMENT_PTR restrict ptr,
 														  CnxAllocator allocator) {
 	return (CnxUniquePtr(UNIQUE_T)){.m_ptr = ptr,
@@ -147,15 +148,16 @@ CnxUniquePtr(UNIQUE_T)
 									.m_vtable = &CnxUniquePtrIdentifier(UNIQUE_T, vtable_impl)};
 }
 
-__UNIQUE_PTR_ELEMENT_PTR
+UNIQUE_STATIC UNIQUE_INLINE __UNIQUE_PTR_ELEMENT_PTR
 CnxUniquePtrIdentifier(UNIQUE_T, release)(CnxUniquePtr(UNIQUE_T) * restrict self) {
 	let_mut ptr = self->m_ptr;
 	self->m_ptr = nullptr;
 	return ptr;
 }
 
-void CnxUniquePtrIdentifier(UNIQUE_T, reset)(CnxUniquePtr(UNIQUE_T) * restrict self,
-											 __UNIQUE_PTR_ELEMENT_PTR restrict new_ptr) {
+UNIQUE_STATIC UNIQUE_INLINE void
+CnxUniquePtrIdentifier(UNIQUE_T, reset)(CnxUniquePtr(UNIQUE_T) * restrict self,
+										__UNIQUE_PTR_ELEMENT_PTR restrict new_ptr) {
 	let_mut ptr = self->m_ptr;
 	self->m_ptr = new_ptr;
 	if(ptr != nullptr) {
@@ -163,35 +165,37 @@ void CnxUniquePtrIdentifier(UNIQUE_T, reset)(CnxUniquePtr(UNIQUE_T) * restrict s
 	}
 }
 
-void CnxUniquePtrIdentifier(UNIQUE_T, swap)(CnxUniquePtr(UNIQUE_T) * restrict self,
-											CnxUniquePtr(UNIQUE_T) * restrict other) {
+UNIQUE_STATIC UNIQUE_INLINE void
+CnxUniquePtrIdentifier(UNIQUE_T, swap)(CnxUniquePtr(UNIQUE_T) * restrict self,
+									   CnxUniquePtr(UNIQUE_T) * restrict other) {
 	let_mut _self = self->m_ptr;
 	self->m_ptr = other->m_ptr;
 	other->m_ptr = _self;
 }
 
-__UNIQUE_PTR_CONST_ELEMENT_PTR
+UNIQUE_STATIC UNIQUE_INLINE __UNIQUE_PTR_CONST_ELEMENT_PTR
 CnxUniquePtrIdentifier(UNIQUE_T, get_const)(const CnxUniquePtr(UNIQUE_T) * restrict self) {
 	return self->m_ptr;
 }
 
-__UNIQUE_PTR_ELEMENT_PTR
+UNIQUE_STATIC UNIQUE_INLINE __UNIQUE_PTR_ELEMENT_PTR
 CnxUniquePtrIdentifier(UNIQUE_T, get)(CnxUniquePtr(UNIQUE_T) * restrict self) {
 	return self->m_ptr;
 }
 
-CnxUniquePtrIdentifier(UNIQUE_T, Deleter)
+UNIQUE_STATIC UNIQUE_INLINE CnxUniquePtrIdentifier(UNIQUE_T, Deleter)
 	CnxUniquePtrIdentifier(UNIQUE_T,
 						   get_deleter)(__attr(maybe_unused)
 											const CnxUniquePtr(UNIQUE_T) * restrict self) {
 	return UNIQUE_DELETER;
 }
 
-bool CnxUniquePtrIdentifier(UNIQUE_T, as_bool)(const CnxUniquePtr(UNIQUE_T) * restrict self) {
+UNIQUE_STATIC UNIQUE_INLINE bool
+CnxUniquePtrIdentifier(UNIQUE_T, as_bool)(const CnxUniquePtr(UNIQUE_T) * restrict self) {
 	return self->m_ptr != nullptr;
 }
 
-__UNIQUE_PTR_CONST_ELEMENT_PTR
+UNIQUE_STATIC UNIQUE_INLINE __UNIQUE_PTR_CONST_ELEMENT_PTR
 CnxUniquePtrIdentifier(UNIQUE_T, at_const)(const CnxUniquePtr(UNIQUE_T) * restrict self,
 										   usize index) {
 	// if compiling with clang, we'll trigger a cnx_disable_if clause at compile time if this is
@@ -208,7 +212,7 @@ CnxUniquePtrIdentifier(UNIQUE_T, at_const)(const CnxUniquePtr(UNIQUE_T) * restri
 	return &((self->m_ptr)[index]);
 }
 
-__UNIQUE_PTR_ELEMENT_PTR
+UNIQUE_STATIC UNIQUE_INLINE __UNIQUE_PTR_ELEMENT_PTR
 CnxUniquePtrIdentifier(UNIQUE_T, at)(CnxUniquePtr(UNIQUE_T) * restrict self, usize index) {
 	// if compiling with clang, we'll trigger a cnx_disable_if clause at compile time if this is
 	// ever used on a non-array type, and for GCC/others we'll trigger a static_assert when called
@@ -224,7 +228,7 @@ CnxUniquePtrIdentifier(UNIQUE_T, at)(CnxUniquePtr(UNIQUE_T) * restrict self, usi
 	return &((self->m_ptr)[index]);
 }
 
-void CnxUniquePtrIdentifier(UNIQUE_T, free)(void* self) {
+UNIQUE_STATIC UNIQUE_INLINE void CnxUniquePtrIdentifier(UNIQUE_T, free)(void* self) {
 	let_mut _self = static_cast(CnxUniquePtr(UNIQUE_T)*)(self);
 	if(_self->m_ptr != nullptr) {
 		let_mut ptr = _self->m_ptr;

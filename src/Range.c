@@ -35,67 +35,68 @@
 #define RANGE_IMPL TRUE
 
 #define RANGE_T char
-#include <Cnx/range/RangeImpl.h>
+// NOLINTNEXTLINE(readability-duplicate-include)
+#include <Cnx/Range.h>
 #undef RANGE_T
 
 #define RANGE_T u8
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/range/RangeImpl.h>
+#include <Cnx/Range.h>
 #undef RANGE_T
 
 #define RANGE_T u16
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/range/RangeImpl.h>
+#include <Cnx/Range.h>
 #undef RANGE_T
 
 #define RANGE_T u32
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/range/RangeImpl.h>
+#include <Cnx/Range.h>
 #undef RANGE_T
 
 #define RANGE_T u64
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/range/RangeImpl.h>
+#include <Cnx/Range.h>
 #undef RANGE_T
 
 #define RANGE_T usize
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/range/RangeImpl.h>
+#include <Cnx/Range.h>
 #undef RANGE_T
 
 #define RANGE_T i8
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/range/RangeImpl.h>
+#include <Cnx/Range.h>
 #undef RANGE_T
 
 #define RANGE_T i16
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/range/RangeImpl.h>
+#include <Cnx/Range.h>
 #undef RANGE_T
 
 #define RANGE_T i32
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/range/RangeImpl.h>
+#include <Cnx/Range.h>
 #undef RANGE_T
 
 #define RANGE_T i64
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/range/RangeImpl.h>
+#include <Cnx/Range.h>
 #undef RANGE_T
 
 #define RANGE_T isize
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/range/RangeImpl.h>
+#include <Cnx/Range.h>
 #undef RANGE_T
 
 #define RANGE_T f32
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/range/RangeImpl.h>
+#include <Cnx/Range.h>
 #undef RANGE_T
 
 #define RANGE_T f64
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/range/RangeImpl.h>
+#include <Cnx/Range.h>
 #undef RANGE_T
 
 #undef RANGE_IMPL

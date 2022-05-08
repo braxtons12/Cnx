@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a generic, type-safe, fixed-capacity, dynamic-size, stack allocated
 /// array type (`CnxArray(T, N)`) similar to `std::array` in C++
-/// @version 0.2.0
-/// @date 2022-03-21
+/// @version 0.2.1
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -236,6 +236,18 @@
 			(ARRAY_T or ARRAY_N) not defined"
 #endif // (defined(ARRAY_DECL) || defined(ARRAY_IMPL)) && (!defined(ARRAY_T) || !defined(ARRAY_N))
 
+#if ARRAY_IMPL && ARRAY_DECL
+	#define ARRAY_STATIC static
+	#define ARRAY_INLINE inline
+#else
+	#ifndef ARRAY_STATIC
+		#define ARRAY_STATIC
+	#endif // ARRAY_STATIC
+	#ifndef ARRAY_INLINE
+		#define ARRAY_INLINE
+	#endif // ARRAY_INLINE
+#endif	   // ARRAY_IMPL && ARRAY_DECL
+
 #if defined(ARRAY_T) && defined(ARRAY_N) && ARRAY_DECL && !CNX_TEMPLATE_SUPPRESS_INSTANTIATIONS
 	#include <Cnx/array/ArrayDecl.h>
 #endif // defined(ARRAY_T) && defined(ARRAY_N) && ARRAY_DECL &&
@@ -252,3 +264,10 @@
 	#undef ARRAY_DECL
 	#undef ARRAY_IMPL
 #endif // ARRAY_UNDEF_PARAMS
+
+#ifdef ARRAY_STATIC
+	#undef ARRAY_STATIC
+#endif // ARRAY_STATIC
+#ifdef ARRAY_INLINE
+	#undef ARRAY_INLINE
+#endif // ARRAY_INLINE

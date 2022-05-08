@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides the function definitions for a template instantiation of
 /// `CnxResult(RESULT_T)`
-/// @version 0.2.3
-/// @date 2022-04-30
+/// @version 0.2.4
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -55,15 +55,18 @@
 	#include <Cnx/Enum.h>
 	#include <Cnx/monadic/IfLet.h>
 
-bool CnxResultIdentifier(RESULT_T, is_ok)(const CnxResult(RESULT_T) * restrict self) {
+RESULT_STATIC RESULT_INLINE bool
+CnxResultIdentifier(RESULT_T, is_ok)(const CnxResult(RESULT_T) * restrict self) {
 	return is_variant(*self, Ok);
 }
 
-bool CnxResultIdentifier(RESULT_T, is_err)(const CnxResult(RESULT_T) * restrict self) {
+RESULT_STATIC RESULT_INLINE bool
+CnxResultIdentifier(RESULT_T, is_err)(const CnxResult(RESULT_T) * restrict self) {
 	return is_variant(*self, Err);
 }
 
-const RESULT_T* CnxResultIdentifier(RESULT_T, as_const)(const CnxResult(RESULT_T) * restrict self) {
+RESULT_STATIC RESULT_INLINE const RESULT_T*
+CnxResultIdentifier(RESULT_T, as_const)(const CnxResult(RESULT_T) * restrict self) {
 	match_let(*self, Err) {
 		cnx_panic("as_const called on an Err, terminating");
 	}
@@ -71,7 +74,8 @@ const RESULT_T* CnxResultIdentifier(RESULT_T, as_const)(const CnxResult(RESULT_T
 	return &(self->variant_identifier(Ok)._1);
 }
 
-RESULT_T* CnxResultIdentifier(RESULT_T, as_mut)(CnxResult(RESULT_T) * restrict self) {
+RESULT_STATIC RESULT_INLINE RESULT_T*
+CnxResultIdentifier(RESULT_T, as_mut)(CnxResult(RESULT_T) * restrict self) {
 	match_let(*self, Err) {
 		cnx_panic("as_mut called on an Err, terminating");
 	}
@@ -79,7 +83,8 @@ RESULT_T* CnxResultIdentifier(RESULT_T, as_mut)(CnxResult(RESULT_T) * restrict s
 	return &(self->variant_identifier(Ok)._1);
 }
 
-RESULT_T CnxResultIdentifier(RESULT_T, unwrap)(CnxResult(RESULT_T) * restrict self) {
+RESULT_STATIC RESULT_INLINE RESULT_T
+CnxResultIdentifier(RESULT_T, unwrap)(CnxResult(RESULT_T) * restrict self) {
 	match_let(*self, Err) {
 		cnx_panic("unwrap called on an Err, terminating");
 	}
@@ -87,8 +92,9 @@ RESULT_T CnxResultIdentifier(RESULT_T, unwrap)(CnxResult(RESULT_T) * restrict se
 	return self->variant_identifier(Ok)._1;
 }
 
-RESULT_T CnxResultIdentifier(RESULT_T, unwrap_or)(CnxResult(RESULT_T) * restrict self,
-												  RESULT_T default_value) {
+RESULT_STATIC RESULT_INLINE RESULT_T
+CnxResultIdentifier(RESULT_T, unwrap_or)(CnxResult(RESULT_T) * restrict self,
+										 RESULT_T default_value) {
 	match_let(*self, Ok, ok) {
 		return ok;
 	}
@@ -96,8 +102,9 @@ RESULT_T CnxResultIdentifier(RESULT_T, unwrap_or)(CnxResult(RESULT_T) * restrict
 	return default_value;
 }
 
-RESULT_T CnxResultIdentifier(RESULT_T, unwrap_or_else)(CnxResult(RESULT_T) * restrict self,
-													   RESULT_T (*const default_generator)(void)) {
+RESULT_STATIC RESULT_INLINE RESULT_T
+CnxResultIdentifier(RESULT_T, unwrap_or_else)(CnxResult(RESULT_T) * restrict self,
+											  RESULT_T (*const default_generator)(void)) {
 	match_let(*self, Ok, ok) {
 		return ok;
 	}
@@ -105,8 +112,9 @@ RESULT_T CnxResultIdentifier(RESULT_T, unwrap_or_else)(CnxResult(RESULT_T) * res
 	return default_generator();
 }
 
-RESULT_T CnxResultIdentifier(RESULT_T, expect)(CnxResult(RESULT_T) * restrict self,
-											   restrict const_cstring panic_message) {
+RESULT_STATIC RESULT_INLINE RESULT_T
+CnxResultIdentifier(RESULT_T, expect)(CnxResult(RESULT_T) * restrict self,
+									  restrict const_cstring panic_message) {
 	match_let(*self, Err) {
 		cnx_panic(panic_message);
 	}
@@ -114,7 +122,8 @@ RESULT_T CnxResultIdentifier(RESULT_T, expect)(CnxResult(RESULT_T) * restrict se
 	return self->variant_identifier(Ok)._1;
 }
 
-CnxError CnxResultIdentifier(RESULT_T, unwrap_err)(CnxResult(RESULT_T) * restrict self) {
+RESULT_STATIC RESULT_INLINE CnxError
+CnxResultIdentifier(RESULT_T, unwrap_err)(CnxResult(RESULT_T) * restrict self) {
 	match_let(*self, Ok) {
 		cnx_panic("unwrap_err called on an Ok, terminating");
 	}
@@ -122,8 +131,9 @@ CnxError CnxResultIdentifier(RESULT_T, unwrap_err)(CnxResult(RESULT_T) * restric
 	return self->variant_identifier(Err)._1;
 }
 
-CnxResult(RESULT_T) CnxResultIdentifier(RESULT_T, or)(const CnxResult(RESULT_T) * restrict self,
-													  CnxResult(RESULT_T) result_b) {
+RESULT_STATIC RESULT_INLINE CnxResult(RESULT_T)
+	CnxResultIdentifier(RESULT_T, or)(const CnxResult(RESULT_T) * restrict self,
+									  CnxResult(RESULT_T) result_b) {
 	match_let(*self, Ok) {
 		return *self;
 	}
@@ -132,7 +142,7 @@ CnxResult(RESULT_T) CnxResultIdentifier(RESULT_T, or)(const CnxResult(RESULT_T) 
 	}
 }
 
-CnxResult(RESULT_T)
+RESULT_STATIC RESULT_INLINE CnxResult(RESULT_T)
 	CnxResultIdentifier(RESULT_T, or_else)(const CnxResult(RESULT_T) * restrict self,
 										   CnxResult(RESULT_T) (*const func)(void)) {
 	match_let(*self, Ok) {
@@ -143,7 +153,8 @@ CnxResult(RESULT_T)
 	}
 }
 
-bool CnxResultIdentifier(RESULT_T, as_bool)(const CnxResult(RESULT_T) * restrict self) {
+RESULT_STATIC RESULT_INLINE bool
+CnxResultIdentifier(RESULT_T, as_bool)(const CnxResult(RESULT_T) * restrict self) {
 	return cnx_result_is_ok(*self);
 }
 

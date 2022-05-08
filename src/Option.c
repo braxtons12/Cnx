@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides a struct template for representing an optional value
 /// @version 0.2.3
-/// @date 2022-04-06
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -34,72 +34,73 @@
 #define OPTION_IMPL TRUE
 
 #define OPTION_T char
-#include <Cnx/option/OptionImpl.h>
+// NOLINTNEXTLINE(readability-duplicate-include)
+#include <Cnx/Option.h>
 #undef OPTION_T
 
 #define OPTION_T u8
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/option/OptionImpl.h>
+#include <Cnx/Option.h>
 #undef OPTION_T
 
 #define OPTION_T u16
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/option/OptionImpl.h>
+#include <Cnx/Option.h>
 #undef OPTION_T
 
 #define OPTION_T u32
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/option/OptionImpl.h>
+#include <Cnx/Option.h>
 #undef OPTION_T
 
 #define OPTION_T u64
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/option/OptionImpl.h>
+#include <Cnx/Option.h>
 #undef OPTION_T
 
 #define OPTION_T usize
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/option/OptionImpl.h>
+#include <Cnx/Option.h>
 #undef OPTION_T
 
 #define OPTION_T i8
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/option/OptionImpl.h>
+#include <Cnx/Option.h>
 #undef OPTION_T
 
 #define OPTION_T i16
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/option/OptionImpl.h>
+#include <Cnx/Option.h>
 #undef OPTION_T
 
 #define OPTION_T i32
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/option/OptionImpl.h>
+#include <Cnx/Option.h>
 #undef OPTION_T
 
 #define OPTION_T i64
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/option/OptionImpl.h>
+#include <Cnx/Option.h>
 #undef OPTION_T
 
 #define OPTION_T isize
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/option/OptionImpl.h>
+#include <Cnx/Option.h>
 #undef OPTION_T
 
 #define OPTION_T f32
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/option/OptionImpl.h>
+#include <Cnx/Option.h>
 #undef OPTION_T
 
 #define OPTION_T f64
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/option/OptionImpl.h>
+#include <Cnx/Option.h>
 #undef OPTION_T
 
 #define OPTION_T cstring
 // NOLINTNEXTLINE(readability-duplicate-include)
-#include <Cnx/option/OptionImpl.h>
+#include <Cnx/Option.h>
 #undef OPTION_T
 
 #undef OPTION_IMPL

@@ -3,7 +3,7 @@
 /// @brief This module provides the function declarations and type definitions for a template
 /// instantiation of `CnxRange(T)`
 /// @version 0.2.1
-/// @date 2022-04-30
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -50,7 +50,7 @@ typedef struct CnxRange(RANGE_T) {
 }
 CnxRange(RANGE_T);
 
-__attr(nodiscard) CnxRange(RANGE_T)
+__attr(nodiscard) RANGE_STATIC RANGE_INLINE CnxRange(RANGE_T)
 	CnxRangeIdentifier(RANGE_T, from)(CnxForwardIterator(Ref(RANGE_T)) begin,
 									  CnxForwardIterator(Ref(RANGE_T)) end,
 									  CnxRangeFilter(RANGE_T) filter);
@@ -58,9 +58,9 @@ __attr(nodiscard) CnxRange(RANGE_T)
 	#define ___DISABLE_IF_NULL(self) \
 		cnx_disable_if(!(self), "Can't perform an operation on a null range")
 
-__attr(nodiscard) __attr(not_null(1)) CnxForwardIterator(Ref(RANGE_T))
+__attr(nodiscard) __attr(not_null(1)) RANGE_STATIC RANGE_INLINE CnxForwardIterator(Ref(RANGE_T))
 	CnxRangeIdentifier(RANGE_T, begin)(CnxRange(RANGE_T) * restrict self) ___DISABLE_IF_NULL(self);
-__attr(nodiscard) __attr(not_null(1)) CnxForwardIterator(Ref(RANGE_T))
+__attr(nodiscard) __attr(not_null(1)) RANGE_STATIC RANGE_INLINE CnxForwardIterator(Ref(RANGE_T))
 	CnxRangeIdentifier(RANGE_T, end)(CnxRange(RANGE_T) * restrict self) ___DISABLE_IF_NULL(self);
 
 typedef struct CnxRangeIdentifier(RANGE_T, Iterator) {
@@ -80,7 +80,8 @@ typedef struct CnxRangeIdentifier(RANGE_T, vtable) {
 }
 CnxRangeIdentifier(RANGE_T, vtable);
 
-__attr(nodiscard) bool CnxRangeIdentifier(RANGE_T, default_filter)(const RANGE_T* elem);
+__attr(nodiscard) RANGE_STATIC RANGE_INLINE
+	bool CnxRangeIdentifier(RANGE_T, default_filter)(const RANGE_T* elem);
 
 	#undef ___DISABLE_IF_NULL
 	#undef CNX_TEMPLATE_SUPPRESS_INSTANTIATIONS
