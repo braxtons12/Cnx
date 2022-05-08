@@ -3,7 +3,7 @@
 /// @brief `CnxSharedMutex` provides several higher-level reader-writer mutex types similar to those
 /// provided in C++'s `<shared_mutex>`
 /// @version 0.2.0
-/// @date 2022-05-06
+/// @date 2022-05-07
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -390,7 +390,7 @@ __attr(maybe_unused) static ImplTraitFor(
 	.try_lock_shared_for = __cnx_shared_timed_mutex_try_lock_shared_for_ishared,
 	.try_lock_shared_until = __cnx_shared_timed_mutex_try_lock_shared_until_ishared,
 	.unlock_shared = __cnx_shared_timed_mutex_unlock_shared_ishared,
-	.type_id = __cnx_shared_mutex_id_ishared);
+	.type_id = __cnx_shared_timed_mutex_id_ishared);
 IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 
 #undef __DISABLE_IF_NULL

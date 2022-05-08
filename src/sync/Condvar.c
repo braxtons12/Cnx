@@ -3,7 +3,7 @@
 /// @brief `CnxCondvar` provides a higher-level condition variable type similar to that provided in
 /// C++'s `<condition_variable>`
 /// @version 0.2.0
-/// @date 2022-05-06
+/// @date 2022-05-07
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -41,7 +41,10 @@ CnxCondvar cnx_condvar_new(void) {
 									   "Failed to create new CnxBasicCondvar in cnx_condvar_new")};
 }
 
-__attr(always_inline) __attr(nodiscard) CnxBasicMutex* get_mutex_ptr(CnxMutexInterface mutex) {
+	#if CNX_PLATFORM_COMPILER_GCC
+_Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wattributes\"")
+	#endif
+	__attr(always_inline) __attr(nodiscard) CnxBasicMutex* get_mutex_ptr(CnxMutexInterface mutex) {
 	switch(trait_call(type_id, mutex)) {
 		case __CNX_MUTEX_ID_MUTEX:
 			{
@@ -74,15 +77,20 @@ __attr(always_inline) __attr(nodiscard) CnxBasicMutex* get_mutex_ptr(CnxMutexInt
 				return &(mtx->__mutex.__mutex.__mutex);
 			}
 	}
+	unreachable();
 }
 
-void cnx_condvar_wait(CnxCondvar* restrict condvar, struct CnxUniqueLock* restrict lock) {
+	#if CNX_PLATFORM_COMPILER_GCC
+_Pragma("GCC diagnostic pop")
+	#endif
+
+	void cnx_condvar_wait(CnxCondvar* restrict condvar, struct CnxUniqueLock* restrict lock) {
 	if(!cnx_unique_lock_owns_lock(lock)) {
 		cnx_panic("cnx_condvar_wait called with a CnxUniqueLock that doesn't own its lock!");
 	}
 
 	let_mut mutex = cnx_unique_lock_mutex(lock);
-	cnx_basic_condvar_wait(&(condvar->__condvar), get_mutex_ptr(mutex));
+	ignore(cnx_basic_condvar_wait(&(condvar->__condvar), get_mutex_ptr(mutex)));
 }
 
 CnxCondvarStatus cnx_condvar_wait_for(CnxCondvar* restrict condvar,
@@ -103,7 +111,7 @@ CnxCondvarStatus cnx_condvar_wait_until(CnxCondvar* restrict condvar,
 	}
 
 	let_mut mutex = cnx_unique_lock_mutex(lock);
-	cnx_basic_condvar_wait_until(&(condvar->__condvar), get_mutex_ptr(mutex), stop_point);
+	ignore(cnx_basic_condvar_wait_until(&(condvar->__condvar), get_mutex_ptr(mutex), stop_point));
 
 	return cnx_time_point_less_than(cnx_clock_now(stop_point.clock), stop_point) ?
 			   CnxCondvarNoTimeout :
@@ -111,15 +119,15 @@ CnxCondvarStatus cnx_condvar_wait_until(CnxCondvar* restrict condvar,
 }
 
 void cnx_condvar_notify_one(CnxCondvar* restrict condvar) {
-	cnx_basic_condvar_signal(&(condvar->__condvar));
+	ignore(cnx_basic_condvar_signal(&(condvar->__condvar)));
 }
 
 void cnx_condvar_notify_all(CnxCondvar* restrict condvar) {
-	cnx_basic_condvar_broadcast(&(condvar->__condvar));
+	ignore(cnx_basic_condvar_broadcast(&(condvar->__condvar)));
 }
 
 void cnx_condvar_free(CnxCondvar* restrict condvar) {
-	cnx_basic_condvar_free(&(condvar->__condvar));
+	ignore(cnx_basic_condvar_free(&(condvar->__condvar)));
 }
 
 #endif // !___CNX_HAS_NO_THREADSinclude <Cnx/sync/Condvar.h>
