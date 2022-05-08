@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Synchronization &raquo; CnxUniqueLock module | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Cnx <span class="m-thin">A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="group__cnx__sync.html">Synchronization</a> &raquo;</span>
+          CnxUniqueLock <span class="m-thin">module</span></h1>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#typedef-members">Typedefs</a></li>
+                <li><a href="#func-members">Functions</a></li>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<p><code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> provides scoped exclusive locking of any higher-level mutexes (eg <code><a href="structCnxMutex.html" class="m-doc">CnxMutex</a></code>, <code><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a></code>, etc.) provided by Cnx. It allows for a simple, concise way to acquire the exclusive lock on a mutex and ensure that lock is released appropriately.</p><p>Example:</p><pre class="m-code"><span class="c1">// MyThing.h</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/sync/Mutex.h&gt;</span><span class="cp"></span>
+<span class="k">static</span> <span class="n">MyType</span> <span class="n">my_very_important_thing</span><span class="p">;</span>
+<span class="k">static</span> <span class="n">CnxMutex</span><span class="o">*</span> <span class="n">my_thing_mutex</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">init_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">update_my_thing</span><span class="p">(</span><span class="n">u64</span> <span class="n">value</span><span class="p">);</span>
+<span class="n">u64</span> <span class="nf">get_value_from_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="c1">// MyThing.c</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/Allocators.h&gt;</span><span class="cp"></span>
+<span class="kt">void</span> <span class="nf">init_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">my_thing_mutex</span> <span class="o">==</span> <span class="n">nullptr</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">my_thing_mutex</span> <span class="o">=</span> <span class="n">cnx_allocator_allocate_t</span><span class="p">(</span><span class="n">CnxMutex</span><span class="p">,</span> <span class="n">DEFAULT_ALLOCATOR</span><span class="p">);</span>
+        <span class="o">*</span><span class="n">my_thing_mutex</span> <span class="o">=</span> <span class="n">cnx_mutex_new</span><span class="p">();</span>
+
+        <span class="p">{</span>
+            <span class="c1">// use a `CnxUniqueLock` to lock `my_thing_mutex`.</span>
+            <span class="c1">// mark `lock` as `maybe_unused` so we don&#39;t get warnings about an unused variable</span>
+            <span class="n">__attr</span><span class="p">(</span><span class="n">maybe_unused</span><span class="p">)</span> <span class="n">UniqueLock</span> <span class="n">lock</span> <span class="o">=</span> <span class="n">cnx_unique_lock</span><span class="p">(</span><span class="o">*</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+            <span class="n">my_very_important_thing</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="c1">// important intialization</span>
+            <span class="p">};</span>
+            <span class="c1">// `lock` automatically destroyed at scope end, releasing the lock on</span>
+<span class="err">`</span><span class="n">my_thing_mutex</span><span class="err">`</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">update_my_thing</span><span class="p">(</span><span class="n">u64</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">__attr</span><span class="p">(</span><span class="n">maybe_unused</span><span class="p">)</span> <span class="n">UniqueLock</span> <span class="n">lock</span> <span class="o">=</span> <span class="n">cnx_unique_lock</span><span class="p">(</span><span class="o">*</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+    <span class="n">my_very_important_thing</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+    <span class="c1">// `lock` automatically destroyed at scope end, releasing the lock on `my_thing_mutex`</span>
+<span class="p">}</span>
+
+<span class="n">u64</span> <span class="nf">get_value_from_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">__attr</span><span class="p">(</span><span class="n">maybe_unused</span><span class="p">)</span> <span class="n">UniqueLock</span> <span class="n">lock</span> <span class="o">=</span> <span class="n">cnx_unique_lock</span><span class="p">(</span><span class="o">*</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+    <span class="n">let</span> <span class="n">val</span> <span class="o">=</span> <span class="n">my_very_important_thing</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">val</span><span class="p">;</span>
+    <span class="c1">// `lock` automatically destroyed at scope end, releasing the lock on `my_thing_mutex`</span>
+<span class="p">}</span>
+
+
+<span class="c1">// do some compute intensive task...</span>
+<span class="c1">// update the value</span>
+<span class="n">update_my_thing</span><span class="p">(</span><span class="n">new_value</span><span class="p">);</span>
+
+<span class="n">my_val</span> <span class="o">=</span> <span class="n">get_value_from_my_thing</span><span class="p">();</span>
+<span class="c1">// do something with my_val</span>
+
+<span class="n">let_mut</span> <span class="n">newval</span> <span class="o">=</span> <span class="n">get_value_from_my_thing</span><span class="p">();</span>
+<span class="k">while</span><span class="p">(</span><span class="n">newval</span> <span class="o">==</span> <span class="n">my_val</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">cnx_this_thread_sleep_for</span><span class="p">(</span><span class="n">cnx_milliseconds</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
+    <span class="n">newval</span> <span class="o">=</span> <span class="n">get_value_from_my_thing</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">my_val</span> <span class="o">=</span> <span class="n">newval</span><span class="p">;</span>
+<span class="c1">// do something with new value</span></pre>
+        <section id="nested-classes">
+          <h2><a href="#nested-classes">Classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              struct <a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>
+            </dt>
+            <dd><code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> provides scoped exclusive locking of any higher-level mutexes (eg <code><a href="structCnxMutex.html" class="m-doc">CnxMutex</a></code>, <code><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a></code>, etc.) provided by Cnx. It allows for a simple, concise way to acquire the exclusive lock on a mutex and ensure that lock is released appropriately when the <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> exits scope.</dd>
+          </dl>
+        </section>
+        <section id="typedef-members">
+          <h2><a href="#typedef-members">Typedefs</a></h2>
+          <dl class="m-doc">
+            <dt>
+              using <a href="#gaa0d36da96c5ec348a3a81b8a9292e78e" class="m-doc">CnxUniqueLock</a> = struct <a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>
+            </dt>
+            <dd><code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> provides scoped exclusive locking of any higher-level mutexes (eg <code><a href="structCnxMutex.html" class="m-doc">CnxMutex</a></code>, <code><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a></code>, etc.) provided by Cnx. It allows for a simple, concise way to acquire the exclusive lock on a mutex and ensure that lock is released appropriately when the <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> exits scope.</dd>
+          </dl>
+        </section>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga71cb466c61e44c0a6356d8f7ad23d09d" class="m-doc">cnx_unique_lock_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock)</span>
+            </dt>
+            <dd>Acquires an exclusive lock on the mutex associated with the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#ga769e8895b2d81798ded4cb6eb8ce24d2" class="m-doc">cnx_unique_lock_try_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock)</span>
+            </dt>
+            <dd>Attempts to acquire an exclusive lock on the mutex associated with the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#ga566ea1e0fea7b1c8c4143df73e0aab13" class="m-doc">cnx_unique_lock_try_lock_for</a>(</span><span class="m-doc-wrap"><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> duration)</span>
+            </dt>
+            <dd>Attempts to acquire an exclusive lock on the mutex associated with the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#ga3b84f6cfc4b72ef6b558114bf29de7db" class="m-doc">cnx_unique_lock_try_lock_until</a>(</span><span class="m-doc-wrap"><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock,
+              <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> stop_point)</span>
+            </dt>
+            <dd>Attempts to acquire an exclusive lock on the mutex associated with the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga180163cea9cbbfcfca85a2616764e1b5" class="m-doc">cnx_unique_lock_unlock</a>(</span><span class="m-doc-wrap"><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock)</span>
+            </dt>
+            <dd>Unlocks the mutex associated with the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">CnxMutexInterface <a href="#gaaf39250a745c5ee31b85847da9e33511" class="m-doc">cnx_unique_lock_mutex</a>(</span><span class="m-doc-wrap"><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock)</span>
+            </dt>
+            <dd>Returns the <code>CnxMutexInterface</code> Trait object corresponding with the mutex associated with the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">bool <a href="#ga5c876b05fba1f01c244d640bc25f489b" class="m-doc">cnx_unique_lock_owns_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock)</span>
+            </dt>
+            <dd>Returns whether the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> currently owns an exclusive lock on its associated mutex.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga9fed197c642c56052f63729ec2fafa59" class="m-doc">cnx_unique_lock_free</a>(</span><span class="m-doc-wrap">void* lock)</span>
+            </dt>
+            <dd>Destroys the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code>, unlocking its associated mutex if it owns a lock on it.</dd>
+          </dl>
+        </section>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad2f794a35c60b98b14beb20673bf2de0" class="m-doc">UniqueLock</a></span>
+            </dt>
+            <dd>Declaring a <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> as a <code>UniqueLock</code> ensures that it will be destroyed when it exits scope, releasing the lock on its associated mutex.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaefa420b8e628be4587280a8f57a4bb9c" class="m-doc">cnx_unique_lock</a>(</span><span class="m-doc-wrap">...)</span>
+            </dt>
+            <dd>Creates a new <code>cnx_unique_lock</code> associated with the given mutex.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Typedef documentation</h2>
+          <section class="m-doc-details" id="gaa0d36da96c5ec348a3a81b8a9292e78e"><div>
+            <h3>
+              typedef struct <a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a> <a href="#gaa0d36da96c5ec348a3a81b8a9292e78e" class="m-doc-self">CnxUniqueLock</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="UniqueLock_8h.html">&lt;include/Cnx/sync/UniqueLock.h&gt;</a></div>
+            </h3>
+            <p><code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> provides scoped exclusive locking of any higher-level mutexes (eg <code><a href="structCnxMutex.html" class="m-doc">CnxMutex</a></code>, <code><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a></code>, etc.) provided by Cnx. It allows for a simple, concise way to acquire the exclusive lock on a mutex and ensure that lock is released appropriately when the <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> exits scope.</p>
+<p>To ensure that a <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> is appropriately destroyed when it leaves scope, releasing the lock on its associated mutex, declare it as a <code>UniqueLock</code>.</p><p>A <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> should never be copied, to do so is undefined behavior. A <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> may be moved into a new scope with <code>move</code> (eg. passing it to a function as a parameter), however. If this is done though, the receiving function will need to either move the parameter into a local variable declared as a <code>UniqueLock</code>, or manually unlock the mutex before it returns.</p><p>Example:</p><pre class="m-code"><span class="c1">// MyThing.h</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/sync/Mutex.h&gt;</span><span class="cp"></span>
+<span class="k">static</span> <span class="n">MyType</span> <span class="n">my_very_important_thing</span><span class="p">;</span>
+<span class="k">static</span> <span class="n">CnxMutex</span><span class="o">*</span> <span class="n">my_thing_mutex</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">init_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">update_my_thing</span><span class="p">(</span><span class="n">u64</span> <span class="n">value</span><span class="p">);</span>
+<span class="n">u64</span> <span class="nf">get_value_from_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="c1">// MyThing.c</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/Allocators.h&gt;</span><span class="cp"></span>
+<span class="kt">void</span> <span class="nf">init_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">my_thing_mutex</span> <span class="o">==</span> <span class="n">nullptr</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">my_thing_mutex</span> <span class="o">=</span> <span class="n">cnx_allocator_allocate_t</span><span class="p">(</span><span class="n">CnxMutex</span><span class="p">,</span> <span class="n">DEFAULT_ALLOCATOR</span><span class="p">);</span>
+        <span class="o">*</span><span class="n">my_thing_mutex</span> <span class="o">=</span> <span class="n">cnx_mutex_new</span><span class="p">();</span>
+
+        <span class="p">{</span>
+            <span class="c1">// use a `CnxUniqueLock` to lock `my_thing_mutex`.</span>
+            <span class="c1">// mark `lock` as `maybe_unused` so we don&#39;t get warnings about an unused variable</span>
+            <span class="n">__attr</span><span class="p">(</span><span class="n">maybe_unused</span><span class="p">)</span> <span class="n">UniqueLock</span> <span class="n">lock</span> <span class="o">=</span> <span class="n">cnx_unique_lock</span><span class="p">(</span><span class="o">*</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+            <span class="n">my_very_important_thing</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="c1">// important intialization</span>
+            <span class="p">};</span>
+            <span class="c1">// `lock` automatically destroyed at scope end, releasing the lock on</span>
+<span class="err">`</span><span class="n">my_thing_mutex</span><span class="err">`</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">update_my_thing</span><span class="p">(</span><span class="n">u64</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">__attr</span><span class="p">(</span><span class="n">maybe_unused</span><span class="p">)</span> <span class="n">UniqueLock</span> <span class="n">lock</span> <span class="o">=</span> <span class="n">cnx_unique_lock</span><span class="p">(</span><span class="o">*</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+    <span class="n">my_very_important_thing</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+    <span class="c1">// `lock` automatically destroyed at scope end, releasing the lock on `my_thing_mutex`</span>
+<span class="p">}</span>
+
+<span class="n">u64</span> <span class="nf">get_value_from_my_thing</span><span class="p">(</span><span class="n">CnxUniqueLock</span> <span class="n">lock</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// move lock into lock2 so that the mutex will be unlocked at scope exit</span>
+    <span class="n">__attr</span><span class="p">(</span><span class="n">maybe_unused</span><span class="p">)</span> <span class="n">UniqueLock</span> <span class="n">lock2</span> <span class="o">=</span> <span class="n">move</span><span class="p">(</span><span class="n">lock</span><span class="p">);</span>
+    <span class="n">let</span> <span class="n">val</span> <span class="o">=</span> <span class="n">my_very_important_thing</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">val</span><span class="p">;</span>
+    <span class="c1">// `lock2` automatically destroyed at scope end, releasing the lock on `my_thing_mutex`</span>
+<span class="p">}</span>
+
+
+<span class="c1">// do some compute intensive task...</span>
+<span class="c1">// update the value</span>
+<span class="n">update_my_thing</span><span class="p">(</span><span class="n">new_value</span><span class="p">);</span>
+
+<span class="n">my_val</span> <span class="o">=</span> <span class="n">get_value_from_my_thing</span><span class="p">();</span>
+<span class="c1">// do something with my_val</span>
+
+<span class="n">let_mut</span> <span class="n">newval</span> <span class="o">=</span> <span class="n">get_value_from_my_thing</span><span class="p">();</span>
+<span class="k">while</span><span class="p">(</span><span class="n">newval</span> <span class="o">==</span> <span class="n">my_val</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">cnx_this_thread_sleep_for</span><span class="p">(</span><span class="n">cnx_milliseconds</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
+    <span class="n">UniqueLock</span> <span class="n">lock</span> <span class="o">=</span> <span class="n">cnx_unique_lock</span><span class="p">(</span><span class="o">*</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+    <span class="n">newval</span> <span class="o">=</span> <span class="n">get_value_from_my_thing</span><span class="p">(</span><span class="n">move</span><span class="p">(</span><span class="n">lock</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="n">my_val</span> <span class="o">=</span> <span class="n">newval</span><span class="p">;</span>
+<span class="c1">// do something with new value</span></pre>
+          </div></section>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ga71cb466c61e44c0a6356d8f7ad23d09d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga71cb466c61e44c0a6356d8f7ad23d09d" class="m-doc-self">cnx_unique_lock_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="UniqueLock_8h.html">&lt;include/Cnx/sync/UniqueLock.h&gt;</a></div>
+            </h3>
+            <p>Acquires an exclusive lock on the mutex associated with the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lock</td>
+                  <td>- The <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> associated with the mutex to lock</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga769e8895b2d81798ded4cb6eb8ce24d2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga769e8895b2d81798ded4cb6eb8ce24d2" class="m-doc-self">cnx_unique_lock_try_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="UniqueLock_8h.html">&lt;include/Cnx/sync/UniqueLock.h&gt;</a></div>
+            </h3>
+            <p>Attempts to acquire an exclusive lock on the mutex associated with the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lock</td>
+                  <td>- The <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> associated with the mutex to lock</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>whether locking the mutex was successful</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga566ea1e0fea7b1c8c4143df73e0aab13"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga566ea1e0fea7b1c8c4143df73e0aab13" class="m-doc-self">cnx_unique_lock_try_lock_for</a>(</span><span class="m-doc-wrap"><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> duration)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="UniqueLock_8h.html">&lt;include/Cnx/sync/UniqueLock.h&gt;</a></div>
+            </h3>
+            <p>Attempts to acquire an exclusive lock on the mutex associated with the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lock</td>
+                  <td>- The <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> associated with the mutex to lock</td>
+                </tr>
+                <tr>
+                  <td>duration</td>
+                  <td>- The maximum amount of time to spend trying to acquire the lock, after which acquisition will timeout and fail</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>whether locking the mutex was successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to acquire an exclusive lock on the mutex associated with <code>lock</code>. If the amount of time specified by <code>duration</code> has passed before successfully acquiring the lock, this will timeout and cease acquisition.</p><aside class="m-note m-info"><h4>Note</h4><p>This is unavailable if the mutex associated with <code>lock</code> is not a timed mutex. Calling this on a <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> associated with a non-timed mutex is undefined behavior.</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga3b84f6cfc4b72ef6b558114bf29de7db"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3b84f6cfc4b72ef6b558114bf29de7db" class="m-doc-self">cnx_unique_lock_try_lock_until</a>(</span><span class="m-doc-wrap"><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock,
+              <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> stop_point)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="UniqueLock_8h.html">&lt;include/Cnx/sync/UniqueLock.h&gt;</a></div>
+            </h3>
+            <p>Attempts to acquire an exclusive lock on the mutex associated with the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lock</td>
+                  <td>- The <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> associated with the mutex to lock</td>
+                </tr>
+                <tr>
+                  <td>stop_point</td>
+                  <td>- The point in time after which acquisition should timeout and fail, if the lock has not yet been acquired</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>whether locking the mutex was successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Attempts to acquire an exclusive lock on the mutex associated with <code>lock</code>. If the point in time specified by <code>stop_point</code> has passed before successfully acquiring the lock, this will timeout and cease acquisition.</p><aside class="m-note m-info"><h4>Note</h4><p>This is unavailable if the mutex associated with <code>lock</code> is not a timed mutex. Calling this on a <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> associated with a non-timed mutex is undefined behavior.</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga180163cea9cbbfcfca85a2616764e1b5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga180163cea9cbbfcfca85a2616764e1b5" class="m-doc-self">cnx_unique_lock_unlock</a>(</span><span class="m-doc-wrap"><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="UniqueLock_8h.html">&lt;include/Cnx/sync/UniqueLock.h&gt;</a></div>
+            </h3>
+            <p>Unlocks the mutex associated with the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lock</td>
+                  <td>- The <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> associated with the mutex to unlock</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaaf39250a745c5ee31b85847da9e33511"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">CnxMutexInterface </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaaf39250a745c5ee31b85847da9e33511" class="m-doc-self">cnx_unique_lock_mutex</a>(</span><span class="m-doc-wrap"><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="UniqueLock_8h.html">&lt;include/Cnx/sync/UniqueLock.h&gt;</a></div>
+            </h3>
+            <p>Returns the <code>CnxMutexInterface</code> Trait object corresponding with the mutex associated with the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lock</td>
+                  <td>- The <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> to get the associated mutex of</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>the <code>CnxMutexInterface</code> Trait object of the mutex associated with the given lock</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga5c876b05fba1f01c244d640bc25f489b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga5c876b05fba1f01c244d640bc25f489b" class="m-doc-self">cnx_unique_lock_owns_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="UniqueLock_8h.html">&lt;include/Cnx/sync/UniqueLock.h&gt;</a></div>
+            </h3>
+            <p>Returns whether the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> currently owns an exclusive lock on its associated mutex.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lock</td>
+                  <td>- The <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> to check if owns an exclusive lock on its mutex</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>whether <code>lock</code> owns a lock on its mutex</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga9fed197c642c56052f63729ec2fafa59"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga9fed197c642c56052f63729ec2fafa59" class="m-doc-self">cnx_unique_lock_free</a>(</span><span class="m-doc-wrap">void* lock)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="UniqueLock_8h.html">&lt;include/Cnx/sync/UniqueLock.h&gt;</a></div>
+            </h3>
+            <p>Destroys the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code>, unlocking its associated mutex if it owns a lock on it.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lock</td>
+                  <td>- The <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> to destroy</td>
+                </tr>
+              </tbody>
+            </table>
+<aside class="m-note m-info"><h4>Note</h4><p>In practice, this shouldn&#x27;t be called manually, and instead the associated <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> should be declared as a <code>UniqueLock</code> so that this is called on it implicitly when it exits scope</p></aside>
+          </div></section>
+        </section>
+        <section>
+          <h2>Define documentation</h2>
+          <section class="m-doc-details" id="gad2f794a35c60b98b14beb20673bf2de0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gad2f794a35c60b98b14beb20673bf2de0" class="m-doc-self">UniqueLock</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="UniqueLock_8h.html">&lt;include/Cnx/sync/UniqueLock.h&gt;</a></div>
+            </h3>
+            <p>Declaring a <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> as a <code>UniqueLock</code> ensures that it will be destroyed when it exits scope, releasing the lock on its associated mutex.</p>
+          </div></section>
+          <section class="m-doc-details" id="gaefa420b8e628be4587280a8f57a4bb9c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gaefa420b8e628be4587280a8f57a4bb9c" class="m-doc-self">cnx_unique_lock</a>(</span><span class="m-doc-wrap">...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="UniqueLock_8h.html">&lt;include/Cnx/sync/UniqueLock.h&gt;</a></div>
+            </h3>
+            <p>Creates a new <code>cnx_unique_lock</code> associated with the given mutex.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">...</td>
+                  <td><ul><li>mutex - The mutex to acquire an exclusive lock on. Can be any of <code><a href="structCnxMutex.html" class="m-doc">CnxMutex</a></code>, <code><a href="structCnxRecursiveMutex.html" class="m-doc">CnxRecursiveMutex</a></code>, <code><a href="structCnxTimedMutex.html" class="m-doc">CnxTimedMutex</a></code>, <code><a href="structCnxRecursiveTimedMutex.html" class="m-doc">CnxRecursiveTimedMutex</a></code>, <code><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a></code>, or <code><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a></code></li><li>tag - An instance of the tag type specifying construction behavior (see above).</li></ul></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>a <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> constructed with the specified behavior</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new <code>cnx_unique_lock</code> associated with the given mutex. If an instance of a tag type is <strong>NOT</strong> given to specify construction behavior, this will block until the exclusive lock is acquired on the given mutex. If an instance of a tag type specifying construction behavior <strong>IS</strong> given, however, then construction will behave according to the given tag type:</p><ul><li>A <code><a href="structcnx__defer__lock__t.html" class="m-doc">cnx_<wbr />defer_<wbr />lock_<wbr />t</a></code>: Construct the <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> without acquiring the lock on the given mutex. The mutex will need to be manually locked (via the unique lock) later</li><li>A <code><a href="structcnx__adopt__lock__t.html" class="m-doc">cnx_<wbr />adopt_<wbr />lock_<wbr />t</a></code>: The lock has already been acquired, so the <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> does not need to acquire it. Behavior will otherwise proceed as if no tag type instance were given.</li><li>A <code><a href="structcnx__try__lock__t.html" class="m-doc">cnx_<wbr />try_<wbr />lock_<wbr />t</a></code>: Attempt to acquire the lock on the given mutex during construction. The <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> will need to be queried as to whether it successfully acquired the lock with <code>cnx_unique_lock_owns_lock</code>, but otherwise behavior will proceed as if no tag type instance were given.</li></ul>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+). Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.5 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

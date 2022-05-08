@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>CnxMutex module | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</title>
+  <title>Synchronization &raquo; CnxMutex module | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -42,6 +42,7 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
+          <span class="m-breadcrumb"><a href="group__cnx__sync.html">Synchronization</a> &raquo;</span>
           CnxMutex <span class="m-thin">module</span></h1>
         <nav class="m-block m-default">
           <h3>Contents</h3>
@@ -49,12 +50,99 @@
             <li>
               Reference
               <ul>
+                <li><a href="#nested-classes">Classes</a></li>
                 <li><a href="#func-members">Functions</a></li>
+                <li><a href="#var-members">Variables</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-<p><code><a href="structCnxMutex.html" class="m-doc">CnxMutex</a></code> provides several high-level mutex types similar to those provided in C++&#x27;s <code>&lt;mutex&gt;</code></p>
+<p><code><a href="structCnxMutex.html" class="m-doc">CnxMutex</a></code> provides several high-level mutex types similar to those provided in C++&#x27;s <code>&lt;mutex&gt;</code>, to make working with multi-threaded code simpler and easier.</p><p>Example:</p><pre class="m-code"><span class="c1">// MyThing.h</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/sync/Mutex.h&gt;</span><span class="cp"></span>
+<span class="k">static</span> <span class="n">MyType</span> <span class="n">my_very_important_thing</span><span class="p">;</span>
+<span class="k">static</span> <span class="n">CnxMutex</span><span class="o">*</span> <span class="n">my_thing_mutex</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">init_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">update_my_thing</span><span class="p">(</span><span class="n">u64</span> <span class="n">value</span><span class="p">);</span>
+<span class="n">u64</span> <span class="nf">get_value_from_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="c1">// MyThing.c</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/Allocators.h&gt;</span><span class="cp"></span>
+<span class="kt">void</span> <span class="nf">init_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">my_thing_mutex</span> <span class="o">==</span> <span class="n">nullptr</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">my_thing_mutex</span> <span class="o">=</span> <span class="n">cnx_allocator_allocate_t</span><span class="p">(</span><span class="n">CnxMutex</span><span class="p">,</span> <span class="n">DEFAULT_ALLOCATOR</span><span class="p">);</span>
+        <span class="o">*</span><span class="n">my_thing_mutex</span> <span class="o">=</span> <span class="n">cnx_mutex_new</span><span class="p">();</span>
+
+        <span class="n">cnx_mutex_lock</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+        <span class="n">my_very_important_thing</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1">// important intialization</span>
+        <span class="p">};</span>
+        <span class="n">cnx_mutex_unlock</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">update_my_thing</span><span class="p">(</span><span class="n">u64</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">cnx_mutex_lock</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+    <span class="n">my_very_important_thing</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+    <span class="n">cnx_mutex_unlock</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">u64</span> <span class="nf">get_value_from_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">cnx_mutex_lock</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+    <span class="n">let</span> <span class="n">val</span> <span class="o">=</span> <span class="n">my_very_important_thing</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+    <span class="n">cnx_mutex_unlock</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">val</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="c1">// do some compute intensive task...</span>
+<span class="c1">// update the value</span>
+<span class="n">update_my_thing</span><span class="p">(</span><span class="n">new_value</span><span class="p">);</span>
+
+<span class="n">my_val</span> <span class="o">=</span> <span class="n">get_value_from_my_thing</span><span class="p">();</span>
+<span class="c1">// do something with my_val</span>
+
+<span class="n">let_mut</span> <span class="n">newval</span> <span class="o">=</span> <span class="n">get_value_from_my_thing</span><span class="p">();</span>
+<span class="k">while</span><span class="p">(</span><span class="n">newval</span> <span class="o">==</span> <span class="n">my_val</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">cnx_this_thread_sleep_for</span><span class="p">(</span><span class="n">cnx_milliseconds</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
+    <span class="n">newval</span> <span class="o">=</span> <span class="n">get_value_from_my_thing</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">my_val</span> <span class="o">=</span> <span class="n">newval</span><span class="p">;</span>
+<span class="c1">// do something with new value</span></pre>
+        <section id="nested-classes">
+          <h2><a href="#nested-classes">Classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              struct <a href="structCnxMutex.html" class="m-doc">CnxMutex</a>
+            </dt>
+            <dd><code><a href="structCnxMutex.html" class="m-doc">CnxMutex</a></code> is the generic higher-level mutex type provided by Cnx. It is a simple mutex type suitable for general purpose use (ie, it is not timed, recursive, etc), and is directly comparable to C++&#x27;s <code>std::mutex</code></dd>
+            <dt>
+              struct <a href="structCnxRecursiveMutex.html" class="m-doc">CnxRecursiveMutex</a>
+            </dt>
+            <dd><code><a href="structCnxRecursiveMutex.html" class="m-doc">CnxRecursiveMutex</a></code> is a higher-level mutex type, directly comparable to C++&#x27;s std::recursive_mutex`, for use when an algorithm requires that a thread be able to lock the same mutex multiple times in its control flow. While such an algorithm would cause the thread to deadlock itself when used with a normal mutex, this is the intended task for a recursive mutex. For example, if a recursive algorithm requires synchronization using the same mutex at multiple levels of recursion, and one level of the algorithm can&#x27;t release the lock before calling the next, a <code><a href="structCnxRecursiveMutex.html" class="m-doc">CnxRecursiveMutex</a></code> would make this type of algorithm possible and prevent the thread from deadlocking itself.</dd>
+            <dt>
+              struct <a href="structCnxTimedMutex.html" class="m-doc">CnxTimedMutex</a>
+            </dt>
+            <dd><code><a href="structCnxTimedMutex.html" class="m-doc">CnxTimedMutex</a></code> is a higher-level mutex type for use when timed backoff of mutex locking is required, and is directly comparable to C++&#x27;s <code>std::timed_mutex</code>. It allows for specifying a timeout, which if reached will cause execution to stop attempting to acquire the lock and signal failure to the caller, instead of blocking indefinitely until the lock was successfully acquired like a tradition mutex. For example, if an algorithm needs synchronization, but blocking for longer than X milliseconds when trying to acquire the lock would be problematic, a <code><a href="structCnxTimedMutex.html" class="m-doc">CnxTimedMutex</a></code> would be the appropriate mutex type to use.</dd>
+            <dt>
+              struct <a href="structCnxRecursiveTimedMutex.html" class="m-doc">CnxRecursiveTimedMutex</a>
+            </dt>
+            <dd><code><a href="structCnxRecursiveTimedMutex.html" class="m-doc">CnxRecursiveTimedMutex</a></code> is a higher-level mutex type for use when the properties of both a recursive and a timed mutex are necessary for the task at hand. It&#x27;s directly comparable to C++&#x27;s <code>std::recursive_timed_mutex</code>. It allows for both specifying a timeout for lock acquisition as well as recursive lock acquisition on the same thread.</dd>
+            <dt>
+              struct <a href="structcnx__defer__lock__t.html" class="m-doc">cnx_defer_lock_t</a>
+            </dt>
+            <dd><code><a href="structcnx__defer__lock__t.html" class="m-doc">cnx_<wbr />defer_<wbr />lock_<wbr />t</a></code> is a tag type intended for use with scoped lock guards such as <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> and <code><a href="structCnxSharedLock.html" class="m-doc">CnxSharedLock</a></code>, to communicate that the guard should defer locking the given mutex until requested to do so. This is in contrast to the default behavior, where a lock guard will acquire the lock upon its construction.</dd>
+            <dt>
+              struct <a href="structcnx__adopt__lock__t.html" class="m-doc">cnx_adopt_lock_t</a>
+            </dt>
+            <dd><code><a href="structcnx__adopt__lock__t.html" class="m-doc">cnx_<wbr />adopt_<wbr />lock_<wbr />t</a></code> is a tag type intended for use with scoped lock guards such as <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> and <code><a href="structCnxSharedLock.html" class="m-doc">CnxSharedLock</a></code>, to communicate that the given mutex has already been locked and thus the guard does not need to acquire the lock itself. This is in contrast to the default behavior, where a lock guard will acquire the lock upon its construction.</dd>
+            <dt>
+              struct <a href="structcnx__try__lock__t.html" class="m-doc">cnx_try_lock_t</a>
+            </dt>
+            <dd><code><a href="structcnx__try__lock__t.html" class="m-doc">cnx_<wbr />try_<wbr />lock_<wbr />t</a></code> is a tag type intended for use with scoped lock guards such as <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> and <code><a href="structCnxSharedLock.html" class="m-doc">CnxSharedLock</a></code>, to communicate that the guard should only attempt to lock the given mutex (via <code>try_lock</code>), and not block if lock acquisition was unsuccessful. This is in contrast to the default behavior, where a lock guard will unconditionally acquire the lock upon its construction.</dd>
+          </dl>
+        </section>
         <section id="func-members">
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
@@ -158,6 +246,23 @@
               <span class="m-doc-wrap-bumper">void <a href="#gadff4ca8ddd9a77c9924bf9a638c8c9e9" class="m-doc">cnx_recursive_timed_mutex_free</a>(</span><span class="m-doc-wrap"><a href="structCnxRecursiveTimedMutex.html" class="m-doc">CnxRecursiveTimedMutex</a>*restrict mutex)</span>
             </dt>
             <dd>Destroys the mutex pointed to by <code>mutex</code></dd>
+          </dl>
+        </section>
+        <section id="var-members">
+          <h2><a href="#var-members">Variables</a></h2>
+          <dl class="m-doc">
+            <dt>
+              static <a href="group__cnx__def.html#ga045dd54932944d8830380f4596d64446" class="m-doc">let</a> <a href="#gad7ad8e7dcb88c2035151822f04f26c14" class="m-doc">cnx_defer_lock</a>
+            </dt>
+            <dd>A global instantiation of <code><a href="structcnx__defer__lock__t.html" class="m-doc">cnx_<wbr />defer_<wbr />lock_<wbr />t</a></code>, provided for convenience.</dd>
+            <dt>
+              static <a href="group__cnx__def.html#ga045dd54932944d8830380f4596d64446" class="m-doc">let</a> <a href="#gaedbf0832bb000d06f8aed425cea4817c" class="m-doc">cnx_adopt_lock</a>
+            </dt>
+            <dd>A global instantiation of <code><a href="structcnx__adopt__lock__t.html" class="m-doc">cnx_<wbr />adopt_<wbr />lock_<wbr />t</a></code>, provided for convenience.</dd>
+            <dt>
+              static <a href="group__cnx__def.html#ga045dd54932944d8830380f4596d64446" class="m-doc">let</a> <a href="#ga8b16c7aa5939939e1cf60c8d9164dd6e" class="m-doc">cnx_try_lock</a>
+            </dt>
+            <dd>A global instantiation of <code><a href="structcnx__try__lock__t.html" class="m-doc">cnx_<wbr />try_<wbr />lock_<wbr />t</a></code>, provided for convenience.</dd>
           </dl>
         </section>
         <section>
@@ -657,6 +762,30 @@
                 </tr>
               </tbody>
             </table>
+          </div></section>
+        </section>
+        <section>
+          <h2>Variable documentation</h2>
+          <section class="m-doc-details" id="gad7ad8e7dcb88c2035151822f04f26c14"><div>
+            <h3>
+              static <a href="group__cnx__def.html#ga045dd54932944d8830380f4596d64446" class="m-doc">let</a> <a href="#gad7ad8e7dcb88c2035151822f04f26c14" class="m-doc-self">cnx_defer_lock</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>A global instantiation of <code><a href="structcnx__defer__lock__t.html" class="m-doc">cnx_<wbr />defer_<wbr />lock_<wbr />t</a></code>, provided for convenience.</p>
+          </div></section>
+          <section class="m-doc-details" id="gaedbf0832bb000d06f8aed425cea4817c"><div>
+            <h3>
+              static <a href="group__cnx__def.html#ga045dd54932944d8830380f4596d64446" class="m-doc">let</a> <a href="#gaedbf0832bb000d06f8aed425cea4817c" class="m-doc-self">cnx_adopt_lock</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>A global instantiation of <code><a href="structcnx__adopt__lock__t.html" class="m-doc">cnx_<wbr />adopt_<wbr />lock_<wbr />t</a></code>, provided for convenience.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga8b16c7aa5939939e1cf60c8d9164dd6e"><div>
+            <h3>
+              static <a href="group__cnx__def.html#ga045dd54932944d8830380f4596d64446" class="m-doc">let</a> <a href="#ga8b16c7aa5939939e1cf60c8d9164dd6e" class="m-doc-self">cnx_try_lock</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+            </h3>
+            <p>A global instantiation of <code><a href="structcnx__try__lock__t.html" class="m-doc">cnx_<wbr />try_<wbr />lock_<wbr />t</a></code>, provided for convenience.</p>
           </div></section>
         </section>
       </div>

@@ -269,6 +269,12 @@
             </dt>
             <dd>Blocks on the condition variable pointed to by <code>condvar</code> until the thread is signalled by it, or <code>to_wait</code> time has elapsed.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#ga777a250567cf4e749d4b89de9ed79040" class="m-doc">cnx_basic_condvar_wait_until</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0ddd086d09be17f2527c7c81aca98d6c" class="m-doc">CnxBasicCondvar</a>*restrict condvar,
+              <a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex,
+              <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> stop_point) cnx_disable_if(!mutex</span>
+            </dt>
+            <dd>Blocks on the condition variable pointed to by <code>condvar</code> until the thread is signalled by it, or the point in time indicated by <code>stop_point</code> time has been reached.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#ga698bb4d5bf064980bd017fc9bb56437b" class="m-doc">cnx_basic_condvar_free</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0ddd086d09be17f2527c7c81aca98d6c" class="m-doc">CnxBasicCondvar</a>*restrict condvar)</span>
             </dt>
             <dd>Destroys the condition variable pointed to by <code>condvar</code></dd>
@@ -911,7 +917,7 @@
                 </tr>
                 <tr>
                   <td>to_wait</td>
-                  <td>- The amount of time to wait on the condvasr</td>
+                  <td>- The amount of time to wait on the condvar</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -922,6 +928,41 @@
               </tfoot>
             </table>
 <p>Unlocks the mutex pointed to by <code>mutex</code> and blocks on the condition variable pointed to by <code>condvar</code> until the thread is signalled by it, or <code>to_wait</code> time has elapsed. The mutex is re-locked again before the function returns. The mutex must be locked by the calling thread prior to calling this.</p><p>Waiting on a condition variable can fail. Returns <code>Ok</code> if a signal is received from the condition variable before <code>to_wait</code> has elapsed, otherwise returns an error.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga777a250567cf4e749d4b89de9ed79040"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga777a250567cf4e749d4b89de9ed79040" class="m-doc-self">cnx_basic_condvar_wait_until</a>(</span><span class="m-doc-wrap"><a href="group__cnx__thread.html#ga0ddd086d09be17f2527c7c81aca98d6c" class="m-doc">CnxBasicCondvar</a>*restrict condvar,
+              <a href="group__cnx__thread.html#gaac85ca56e447e828a845d7166772def9" class="m-doc">CnxBasicMutex</a>*restrict mutex,
+              <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> stop_point) cnx_disable_if(!mutex</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Thread_8h.html">&lt;include/Cnx/Thread.h&gt;</a></div>
+            </h3>
+            <p>Blocks on the condition variable pointed to by <code>condvar</code> until the thread is signalled by it, or the point in time indicated by <code>stop_point</code> time has been reached.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">condvar</td>
+                  <td>- The condvar to wait on</td>
+                </tr>
+                <tr>
+                  <td>mutex</td>
+                  <td>- The mutex associated with the condvar</td>
+                </tr>
+                <tr>
+                  <td>stop_point</td>
+                  <td>- The point in time to stop waiting on the condvar</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>Ok</code> if successful</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Unlocks the mutex pointed to by <code>mutex</code> and blocks on the condition variable pointed to by <code>condvar</code> until the thread is signalled by it, or the time indicated by <code>stop_point</code> has been reached. The mutex is re-locked again before the function returns. The mutex must be locked by the calling thread prior to calling this.</p><p>Waiting on a condition variable can fail. Returns <code>Ok</code> if a signal is received from the condition variable before <code>to_wait</code> has elapsed, otherwise returns an error.</p>
           </div></section>
           <section class="m-doc-details" id="ga698bb4d5bf064980bd017fc9bb56437b"><div>
             <h3>
