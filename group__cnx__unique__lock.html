@@ -69,6 +69,8 @@
 
 <span class="c1">// MyThing.c</span>
 <span class="cp">#include</span> <span class="cpf">&lt;Cnx/Allocators.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/sync/UniqueLock.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;MyThing.h&quot;</span><span class="cp"></span>
 <span class="kt">void</span> <span class="nf">init_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span><span class="p">(</span><span class="n">my_thing_mutex</span> <span class="o">==</span> <span class="n">nullptr</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">my_thing_mutex</span> <span class="o">=</span> <span class="n">cnx_allocator_allocate_t</span><span class="p">(</span><span class="n">CnxMutex</span><span class="p">,</span> <span class="n">DEFAULT_ALLOCATOR</span><span class="p">);</span>
@@ -160,9 +162,9 @@
             </dt>
             <dd>Unlocks the mutex associated with the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">CnxMutexInterface <a href="#gaaf39250a745c5ee31b85847da9e33511" class="m-doc">cnx_unique_lock_mutex</a>(</span><span class="m-doc-wrap"><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock)</span>
+              <span class="m-doc-wrap-bumper"><a href="structCnxMutexInterface.html" class="m-doc">CnxMutexInterface</a> <a href="#gaaf39250a745c5ee31b85847da9e33511" class="m-doc">cnx_unique_lock_mutex</a>(</span><span class="m-doc-wrap"><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock)</span>
             </dt>
-            <dd>Returns the <code>CnxMutexInterface</code> Trait object corresponding with the mutex associated with the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code></dd>
+            <dd>Returns the <code><a href="structCnxMutexInterface.html" class="m-doc">CnxMutexInterface</a></code> Trait object corresponding with the mutex associated with the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code></dd>
             <dt>
               <span class="m-doc-wrap-bumper">bool <a href="#ga5c876b05fba1f01c244d640bc25f489b" class="m-doc">cnx_unique_lock_owns_lock</a>(</span><span class="m-doc-wrap"><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock)</span>
             </dt>
@@ -205,6 +207,8 @@
 
 <span class="c1">// MyThing.c</span>
 <span class="cp">#include</span> <span class="cpf">&lt;Cnx/Allocators.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/sync/UniqueLock.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;MyThing.h&quot;</span><span class="cp"></span>
 <span class="kt">void</span> <span class="nf">init_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span><span class="p">(</span><span class="n">my_thing_mutex</span> <span class="o">==</span> <span class="n">nullptr</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">my_thing_mutex</span> <span class="o">=</span> <span class="n">cnx_allocator_allocate_t</span><span class="p">(</span><span class="n">CnxMutex</span><span class="p">,</span> <span class="n">DEFAULT_ALLOCATOR</span><span class="p">);</span>
@@ -380,10 +384,10 @@
           </div></section>
           <section class="m-doc-details" id="gaaf39250a745c5ee31b85847da9e33511"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">CnxMutexInterface </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaaf39250a745c5ee31b85847da9e33511" class="m-doc-self">cnx_unique_lock_mutex</a>(</span><span class="m-doc-wrap"><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="structCnxMutexInterface.html" class="m-doc">CnxMutexInterface</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaaf39250a745c5ee31b85847da9e33511" class="m-doc-self">cnx_unique_lock_mutex</a>(</span><span class="m-doc-wrap"><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="UniqueLock_8h.html">&lt;include/Cnx/sync/UniqueLock.h&gt;</a></div>
             </h3>
-            <p>Returns the <code>CnxMutexInterface</code> Trait object corresponding with the mutex associated with the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code></p>
+            <p>Returns the <code><a href="structCnxMutexInterface.html" class="m-doc">CnxMutexInterface</a></code> Trait object corresponding with the mutex associated with the given <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code></p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -397,7 +401,7 @@
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>the <code>CnxMutexInterface</code> Trait object of the mutex associated with the given lock</td>
+                  <td>the <code><a href="structCnxMutexInterface.html" class="m-doc">CnxMutexInterface</a></code> Trait object of the mutex associated with the given lock</td>
                 </tr>
               </tfoot>
             </table>

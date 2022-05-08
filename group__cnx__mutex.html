@@ -68,6 +68,7 @@
 
 <span class="c1">// MyThing.c</span>
 <span class="cp">#include</span> <span class="cpf">&lt;Cnx/Allocators.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;MyThing.h&quot;</span><span class="cp"></span>
 <span class="kt">void</span> <span class="nf">init_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span><span class="p">(</span><span class="n">my_thing_mutex</span> <span class="o">==</span> <span class="n">nullptr</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">my_thing_mutex</span> <span class="o">=</span> <span class="n">cnx_allocator_allocate_t</span><span class="p">(</span><span class="n">CnxMutex</span><span class="p">,</span> <span class="n">DEFAULT_ALLOCATOR</span><span class="p">);</span>
@@ -141,6 +142,14 @@
               struct <a href="structcnx__try__lock__t.html" class="m-doc">cnx_try_lock_t</a>
             </dt>
             <dd><code><a href="structcnx__try__lock__t.html" class="m-doc">cnx_<wbr />try_<wbr />lock_<wbr />t</a></code> is a tag type intended for use with scoped lock guards such as <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> and <code><a href="structCnxSharedLock.html" class="m-doc">CnxSharedLock</a></code>, to communicate that the guard should only attempt to lock the given mutex (via <code>try_lock</code>), and not block if lock acquisition was unsuccessful. This is in contrast to the default behavior, where a lock guard will unconditionally acquire the lock upon its construction.</dd>
+            <dt>
+              struct <a href="structCnxMutexInterface.html" class="m-doc">CnxMutexInterface</a>
+            </dt>
+            <dd></dd>
+            <dt>
+              struct <a href="structCnxSharedMutexInterface.html" class="m-doc">CnxSharedMutexInterface</a>
+            </dt>
+            <dd></dd>
           </dl>
         </section>
         <section id="func-members">

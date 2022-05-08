@@ -50,12 +50,82 @@
             <li>
               Reference
               <ul>
+                <li><a href="#nested-classes">Classes</a></li>
                 <li><a href="#func-members">Functions</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-<p><code><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a></code> provides several higher-level reader-writer mutex types comparable to those provided in C++&#x27;s <code>&lt;shared_mutex&gt;</code></p>
+<p><code><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a></code> provides several higher-level reader-writer mutex types comparable to those provided in C++&#x27;s <code>&lt;shared_mutex&gt;</code>, to make working with multi-threaded code simpler and easier.</p><p>A shared mutex is a reader-writer mutex that allows for different categories of locking, either exclusively, for writing/mutation, or non-exclusively/shared for reading. This can allow for significant throughput improvements in applications where many threads need to read the same data often, but only a comparatively small number of threads will ever try to mutate the data, by allowing the reading threads to share a lock on the mutex, while forcing a writing thread to gain an exclusive lock on the mutex to perform its mutation.</p><p>Example:</p><pre class="m-code"><span class="c1">// MyThing.h</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/sync/SharedMutex.h&gt;</span><span class="cp"></span>
+<span class="k">static</span> <span class="n">MyType</span> <span class="n">my_very_important_thing</span><span class="p">;</span>
+<span class="k">static</span> <span class="n">CnxSharedMutex</span><span class="o">*</span> <span class="n">my_thing_mutex</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">init_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">update_my_thing</span><span class="p">(</span><span class="n">u64</span> <span class="n">value</span><span class="p">);</span>
+<span class="n">u64</span> <span class="nf">get_value_from_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="c1">// MyThing.c</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/Allocators.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;MyThing.h&quot;</span><span class="cp"></span>
+<span class="kt">void</span> <span class="nf">init_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">my_thing_mutex</span> <span class="o">==</span> <span class="n">nullptr</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">my_thing_mutex</span> <span class="o">=</span> <span class="n">cnx_allocator_allocate_t</span><span class="p">(</span><span class="n">CnxSharedMutex</span><span class="p">,</span> <span class="n">DEFAULT_ALLOCATOR</span><span class="p">);</span>
+        <span class="o">*</span><span class="n">my_thing_mutex</span> <span class="o">=</span> <span class="n">cnx_shared_mutex_new</span><span class="p">();</span>
+
+        <span class="n">cnx_shared_mutex_lock</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+        <span class="n">my_very_important_thing</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1">// important intialization</span>
+        <span class="p">};</span>
+        <span class="n">cnx_shared_mutex_unlock</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// only one thread at a time can `update_my_thing`, because it uses exclusive locking</span>
+<span class="kt">void</span> <span class="nf">update_my_thing</span><span class="p">(</span><span class="n">u64</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">cnx_shared_mutex_lock</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+    <span class="n">my_very_important_thing</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+    <span class="n">cnx_shared_mutex_unlock</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// any number of threads can `get_value_from_my_thing` without blocking eachother,</span>
+<span class="c1">// because it uses shared locking.</span>
+<span class="n">u64</span> <span class="nf">get_value_from_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">cnx_shared_mutex_lock_shared</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+    <span class="n">let</span> <span class="n">val</span> <span class="o">=</span> <span class="n">my_very_important_thing</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+    <span class="n">cnx_shared_mutex_unlock_shared</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">val</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="c1">// do some compute intensive task...</span>
+<span class="c1">// update the value</span>
+<span class="n">update_my_thing</span><span class="p">(</span><span class="n">new_value</span><span class="p">);</span>
+
+<span class="n">my_val</span> <span class="o">=</span> <span class="n">get_value_from_my_thing</span><span class="p">();</span>
+<span class="c1">// do something with my_val</span>
+
+<span class="n">let_mut</span> <span class="n">newval</span> <span class="o">=</span> <span class="n">get_value_from_my_thing</span><span class="p">();</span>
+<span class="k">while</span><span class="p">(</span><span class="n">newval</span> <span class="o">==</span> <span class="n">my_val</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">cnx_this_thread_sleep_for</span><span class="p">(</span><span class="n">cnx_milliseconds</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
+    <span class="n">newval</span> <span class="o">=</span> <span class="n">get_value_from_my_thing</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">my_val</span> <span class="o">=</span> <span class="n">newval</span><span class="p">;</span>
+<span class="c1">// do something with new value</span></pre>
+        <section id="nested-classes">
+          <h2><a href="#nested-classes">Classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              struct <a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a>
+            </dt>
+            <dd><code><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a></code> is the generic (it&#x27;s not timed or recursive) reader-writer mutex provided by Cnx. It&#x27;s directly comparable to C++&#x27;s <code>std::shared_mutex</code> and is suitable for any situation where a reader-writer mutex is necessary.</dd>
+            <dt>
+              struct <a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a>
+            </dt>
+            <dd><code><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a></code> is a higher-level reader-writer mutex type for use when timed backoff of mutex locking is required, and is directly comparable to C++&#x27;s <code>std::shared_timed_mutex</code>. It allows for specifying a timeout, which if reached will cause execution to stop attempting to acquire the lock and signal failure to the caller, instead of blocking indefinitely until the lock was successfully acquired like a tradition mutex. For example, if an algorithm needs reader-writer synchronization, but blocking for longer than X milliseconds when trying to acquire the lock would be problematic, a <code><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a></code> would be the appropriate mutex type to use.</dd>
+          </dl>
+        </section>
         <section id="func-members">
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">

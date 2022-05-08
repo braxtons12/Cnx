@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>CnxMutex struct | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</title>
+  <title>CnxSharedMutex struct | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -42,14 +42,14 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          CnxMutex <span class="m-thin">struct</span>
-          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Mutex_8h.html">&lt;include/Cnx/sync/Mutex.h&gt;</a></div>
+          CnxSharedMutex <span class="m-thin">struct</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedMutex_8h.html">&lt;include/Cnx/sync/SharedMutex.h&gt;</a></div>
         </h1>
-        <p><code><a href="structCnxMutex.html" class="m-doc">CnxMutex</a></code> is the generic higher-level mutex type provided by Cnx. It is a simple mutex type suitable for general purpose use (ie, it is not timed, recursive, etc), and is directly comparable to C++&#x27;s <code>std::mutex</code></p>
+        <p><code><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a></code> is the generic (it&#x27;s not timed or recursive) reader-writer mutex provided by Cnx. It&#x27;s directly comparable to C++&#x27;s <code>std::shared_mutex</code> and is suitable for any situation where a reader-writer mutex is necessary.</p>
 <p>Example:</p><pre class="m-code"><span class="c1">// MyThing.h</span>
-<span class="cp">#include</span> <span class="cpf">&lt;Cnx/sync/Mutex.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/sync/SharedMutex.h&gt;</span><span class="cp"></span>
 <span class="k">static</span> <span class="n">MyType</span> <span class="n">my_very_important_thing</span><span class="p">;</span>
-<span class="k">static</span> <span class="n">CnxMutex</span><span class="o">*</span> <span class="n">my_thing_mutex</span><span class="p">;</span>
+<span class="k">static</span> <span class="n">CnxSharedMutex</span><span class="o">*</span> <span class="n">my_thing_mutex</span><span class="p">;</span>
 
 <span class="kt">void</span> <span class="nf">init_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
 <span class="kt">void</span> <span class="nf">update_my_thing</span><span class="p">(</span><span class="n">u64</span> <span class="n">value</span><span class="p">);</span>
@@ -60,27 +60,30 @@
 <span class="cp">#include</span> <span class="cpf">&quot;MyThing.h&quot;</span><span class="cp"></span>
 <span class="kt">void</span> <span class="nf">init_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span><span class="p">(</span><span class="n">my_thing_mutex</span> <span class="o">==</span> <span class="n">nullptr</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">my_thing_mutex</span> <span class="o">=</span> <span class="n">cnx_allocator_allocate_t</span><span class="p">(</span><span class="n">CnxMutex</span><span class="p">,</span> <span class="n">DEFAULT_ALLOCATOR</span><span class="p">);</span>
-        <span class="o">*</span><span class="n">my_thing_mutex</span> <span class="o">=</span> <span class="n">cnx_mutex_new</span><span class="p">();</span>
+        <span class="n">my_thing_mutex</span> <span class="o">=</span> <span class="n">cnx_allocator_allocate_t</span><span class="p">(</span><span class="n">CnxSharedMutex</span><span class="p">,</span> <span class="n">DEFAULT_ALLOCATOR</span><span class="p">);</span>
+        <span class="o">*</span><span class="n">my_thing_mutex</span> <span class="o">=</span> <span class="n">cnx_shared_mutex_new</span><span class="p">();</span>
 
-        <span class="n">cnx_mutex_lock</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+        <span class="n">cnx_shared_mutex_lock</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
         <span class="n">my_very_important_thing</span> <span class="o">=</span> <span class="p">{</span>
         <span class="c1">// important intialization</span>
         <span class="p">};</span>
-        <span class="n">cnx_mutex_unlock</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+        <span class="n">cnx_shared_mutex_unlock</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
+<span class="c1">// only one thread at a time can `update_my_thing`, because it uses exclusive locking</span>
 <span class="kt">void</span> <span class="nf">update_my_thing</span><span class="p">(</span><span class="n">u64</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">cnx_mutex_lock</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+    <span class="n">cnx_shared_mutex_lock</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
     <span class="n">my_very_important_thing</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
-    <span class="n">cnx_mutex_unlock</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+    <span class="n">cnx_shared_mutex_unlock</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
 <span class="p">}</span>
 
+<span class="c1">// any number of threads can `get_value_from_my_thing` without blocking eachother,</span>
+<span class="c1">// because it uses shared locking.</span>
 <span class="n">u64</span> <span class="nf">get_value_from_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">cnx_mutex_lock</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+    <span class="n">cnx_shared_mutex_lock_shared</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
     <span class="n">let</span> <span class="n">val</span> <span class="o">=</span> <span class="n">my_very_important_thing</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
-    <span class="n">cnx_mutex_unlock</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+    <span class="n">cnx_shared_mutex_unlock_shared</span><span class="p">(</span><span class="n">my_thing_mutex</span><span class="p">);</span>
     <span class="k">return</span> <span class="n">val</span><span class="p">;</span>
 <span class="p">}</span>
 
