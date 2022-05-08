@@ -3,7 +3,7 @@
 /// @brief `CnxMutex` provides several higher-level mutex types similar to those provided in C++'s
 /// `<mutex>`
 /// @version 0.2.0
-/// @date 2022-05-07
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -45,6 +45,7 @@
 ///
 /// // MyThing.c
 /// #include <Cnx/Allocators.h>
+/// #include "MyThing.h"
 /// void init_my_thing(void) {
 /// 	if(my_thing_mutex == nullptr) {
 /// 		my_thing_mutex = cnx_allocator_allocate_t(CnxMutex, DEFAULT_ALLOCATOR);
@@ -118,6 +119,7 @@
 ///
 /// // MyThing.c
 /// #include <Cnx/Allocators.h>
+/// #include "MyThing.h"
 /// void init_my_thing(void) {
 /// 	if(my_thing_mutex == nullptr) {
 /// 		my_thing_mutex = cnx_allocator_allocate_t(CnxMutex, DEFAULT_ALLOCATOR);
@@ -193,6 +195,7 @@ typedef struct {
 ///
 /// // MyThing.c
 /// #include <Cnx/Allocators.h>
+/// #include "MyThing.h"
 /// void init_my_thing(void) {
 /// 	if(my_thing_mutex == nullptr) {
 /// 		my_thing_mutex = cnx_allocator_allocate_t(CnxRecursiveMutex, DEFAULT_ALLOCATOR);
@@ -275,6 +278,7 @@ typedef struct {
 ///
 /// // MyThing.c
 /// #include <Cnx/Allocators.h>
+/// #include "MyThing.h"
 /// void init_my_thing(void) {
 /// 	if(my_thing_mutex == nullptr) {
 /// 		my_thing_mutex = cnx_allocator_allocate_t(CnxTimedMutex, DEFAULT_ALLOCATOR);
@@ -406,11 +410,56 @@ typedef enum {
 IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 
 Trait(
+	/// @struct CnxMutexInterface
 	/// @brief `CnxMutexInterface` is a uniform interface and Trait implementation that all
-	/// higher-level mutexes (ie not the basic primitives provided in `<Cnx/Thread.h>) meeting
+	/// higher-level mutexes (ie not the basic primitives provided in `<Cnx/Thread.h>`) meeting
 	/// Cnx's requirements provide. This interface allows for using the various mutex types provided
-	/// by cnx with other facilities like `CnxUniqueLock` without having to special case on the
+	/// by Cnx with other facilities like `CnxUniqueLock` without having to special case on the
 	/// type(s) of the mutex(es) used.
+	/// 
+	///
+	/// Functions:
+	/// 	- 
+	/// 	@code {.c}
+	/// 	void (*const lock)(CnxMutexInterface* restrict mutex)
+	/// 	@endcode
+	///
+	/// 		Exclusively lock the mutex
+	/// 	- 
+	/// 	@code {.c}
+	/// 	bool (*const try_lock)(CnxMutexInterface* restrict mutex)
+	/// 	@endcode
+	///
+	/// 		Attempt to exclusively lock the mutex
+	/// 	- 
+	/// 	@code {.c}
+	/// 	bool (*const try_lock_for)(CnxMutexInterface* restrict mutex, CnxDuration duration)
+	/// 	@endcode
+	///
+	/// 		Attempt to exclusively lock the mutex, timeout after `duration` amount of time has
+	/// 		passed. Only available if `mutex` is a timed mutex (otherwise this will be
+	/// 		`nullptr`).
+	/// 	- 
+	/// 	@code {.c}
+	/// 	bool (*const try_lock_until)(CnxMutexInterface* restrict mutex, CnxTimePoint stop_point)
+	/// 	@endcode
+	///
+	/// 		Attempt to exclusively lock the mutex, timeout once the time `stop_point` has
+	/// 		occurred. Only available if `mutex` is a timed mutex (otherwise this will be
+	/// 		`nullptr`).
+	/// 	- 
+	/// 	@code {.c}
+	/// 	void (*const unlock)(CnxMutexInterface* restrict mutex)
+	/// 	@endcode
+	///
+	/// 		Unlocks the mutex
+	/// 	- 
+	/// 	@code {.c}
+	/// 	__CnxMutexId (*const type_id)(CnxMutexInterface* restrict mutex)
+	/// 	@endcode
+	///
+	/// 		Returns the mutex type ID for the mutex. Used internally by scoped lock guards
+	/// 		like `CnxUniqueLock` to identify the concrete type of the mutex
 	///
 	/// @note While all Cnx mutexes provide this interface, only `lock`, `try_lock`, and
 	/// `unlock` are mandatory. `try_lock_for` and `try_lock_until` may not be provided if they

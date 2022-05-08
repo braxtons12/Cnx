@@ -3,7 +3,7 @@
 /// @brief `CnxSharedMutex` provides several higher-level reader-writer mutex types similar to those
 /// provided in C++'s `<shared_mutex>`
 /// @version 0.2.0
-/// @date 2022-05-07
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -30,7 +30,78 @@
 /// @{
 /// @defgroup cnx_shared_mutex CnxSharedMutex
 /// `CnxSharedMutex` provides several higher-level reader-writer mutex types comparable to those
-/// provided in C++'s `<shared_mutex>`
+/// provided in C++'s `<shared_mutex>`, to make working with multi-threaded code simpler and easier.
+///
+/// A shared mutex is a reader-writer mutex that allows for different categories of locking, either
+/// exclusively, for writing/mutation, or non-exclusively/shared for reading. This can allow for
+/// significant throughput improvements in applications where many threads need to read the same
+/// data often, but only a comparatively small number of threads will ever try to mutate the data,
+/// by allowing the reading threads to share a lock on the mutex, while forcing a writing thread to
+/// gain an exclusive lock on the mutex to perform its mutation.
+///
+/// Example:
+/// @code {.c}
+/// // MyThing.h
+/// #include <Cnx/sync/SharedMutex.h>
+/// static MyType my_very_important_thing;
+/// static CnxSharedMutex* my_thing_mutex;
+///
+/// void init_my_thing(void);
+/// void update_my_thing(u64 value);
+/// u64 get_value_from_my_thing(void);
+///
+/// // MyThing.c
+/// #include <Cnx/Allocators.h>
+/// #include "MyThing.h"
+/// void init_my_thing(void) {
+/// 	if(my_thing_mutex == nullptr) {
+/// 		my_thing_mutex = cnx_allocator_allocate_t(CnxSharedMutex, DEFAULT_ALLOCATOR);
+/// 		*my_thing_mutex = cnx_shared_mutex_new();
+///
+/// 		cnx_shared_mutex_lock(my_thing_mutex);
+/// 		my_very_important_thing = {
+/// 		// important intialization
+/// 		};
+/// 		cnx_shared_mutex_unlock(my_thing_mutex);
+/// 	}
+/// }
+///
+/// // only one thread at a time can `update_my_thing`, because it uses exclusive locking
+/// void update_my_thing(u64 value) {
+/// 	cnx_shared_mutex_lock(my_thing_mutex);
+/// 	my_very_important_thing.value = value;
+/// 	cnx_shared_mutex_unlock(my_thing_mutex);
+/// }
+///
+/// // any number of threads can `get_value_from_my_thing` without blocking eachother,
+/// // because it uses shared locking.
+/// u64 get_value_from_my_thing(void) {
+/// 	cnx_shared_mutex_lock_shared(my_thing_mutex);
+/// 	let val = my_very_important_thing.value;
+/// 	cnx_shared_mutex_unlock_shared(my_thing_mutex);
+/// 	return val;
+/// }
+///
+/// /// elsewhere...
+/// /// in thread1-related code
+///
+/// // do some compute intensive task...
+/// // update the value
+/// update_my_thing(new_value);
+///
+/// /// in thread2,3,4,...-related code
+/// my_val = get_value_from_my_thing();
+/// // do something with my_val
+///
+/// let_mut newval = get_value_from_my_thing();
+/// while(newval == my_val) {
+/// 	cnx_this_thread_sleep_for(cnx_milliseconds(100));
+/// 	newval = get_value_from_my_thing();
+/// }
+///
+/// my_val = newval;
+/// // do something with new value
+/// @endcode
 ///@}
 
 #ifndef CNX_SHARED_MUTEX
@@ -40,6 +111,74 @@
 #include <Cnx/Thread.h>
 #include <Cnx/sync/Mutex.h>
 
+/// @brief `CnxSharedMutex` is the generic (it's not timed or recursive) reader-writer mutex
+/// provided by Cnx. It's directly comparable to C++'s `std::shared_mutex` and is suitable for any
+/// situation where a reader-writer mutex is necessary.
+///
+/// Example:
+/// @code {.c}
+/// // MyThing.h
+/// #include <Cnx/sync/SharedMutex.h>
+/// static MyType my_very_important_thing;
+/// static CnxSharedMutex* my_thing_mutex;
+///
+/// void init_my_thing(void);
+/// void update_my_thing(u64 value);
+/// u64 get_value_from_my_thing(void);
+///
+/// // MyThing.c
+/// #include <Cnx/Allocators.h>
+/// #include "MyThing.h"
+/// void init_my_thing(void) {
+/// 	if(my_thing_mutex == nullptr) {
+/// 		my_thing_mutex = cnx_allocator_allocate_t(CnxSharedMutex, DEFAULT_ALLOCATOR);
+/// 		*my_thing_mutex = cnx_shared_mutex_new();
+///
+/// 		cnx_shared_mutex_lock(my_thing_mutex);
+/// 		my_very_important_thing = {
+/// 		// important intialization
+/// 		};
+/// 		cnx_shared_mutex_unlock(my_thing_mutex);
+/// 	}
+/// }
+///
+/// // only one thread at a time can `update_my_thing`, because it uses exclusive locking
+/// void update_my_thing(u64 value) {
+/// 	cnx_shared_mutex_lock(my_thing_mutex);
+/// 	my_very_important_thing.value = value;
+/// 	cnx_shared_mutex_unlock(my_thing_mutex);
+/// }
+///
+/// // any number of threads can `get_value_from_my_thing` without blocking eachother,
+/// // because it uses shared locking.
+/// u64 get_value_from_my_thing(void) {
+/// 	cnx_shared_mutex_lock_shared(my_thing_mutex);
+/// 	let val = my_very_important_thing.value;
+/// 	cnx_shared_mutex_unlock_shared(my_thing_mutex);
+/// 	return val;
+/// }
+///
+/// /// elsewhere...
+/// /// in thread1-related code
+///
+/// // do some compute intensive task...
+/// // update the value
+/// update_my_thing(new_value);
+///
+/// /// in thread2,3,4,...-related code
+/// my_val = get_value_from_my_thing();
+/// // do something with my_val
+///
+/// let_mut newval = get_value_from_my_thing();
+/// while(newval == my_val) {
+/// 	cnx_this_thread_sleep_for(cnx_milliseconds(100));
+/// 	newval = get_value_from_my_thing();
+/// }
+///
+/// my_val = newval;
+/// // do something with new value
+/// @endcode
+/// @ingroup cnx_shared_mutex
 typedef struct {
 	IGNORE_RESERVED_IDENTIFIER_WARNING_START
 	CnxMutex __mutex;
@@ -49,6 +188,90 @@ typedef struct {
 	IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 } CnxSharedMutex;
 
+/// @brief `CnxSharedTimedMutex` is a higher-level reader-writer mutex type for use when timed
+/// backoff of mutex locking is required, and is directly comparable to C++'s
+/// `std::shared_timed_mutex`. It allows for specifying a timeout, which if reached will cause
+/// execution to stop attempting to acquire the lock and signal failure to the caller, instead of
+/// blocking indefinitely until the lock was successfully acquired like a tradition mutex. For
+/// example, if an algorithm needs reader-writer synchronization, but blocking for
+/// longer than X milliseconds when trying to acquire the lock would be problematic, a
+/// `CnxSharedTimedMutex` would be the appropriate mutex type to use.
+///
+/// Example:
+/// @code {.c}
+/// // MyThing.h
+/// #include <Cnx/sync/SharedMutex.h>
+/// static MyType my_very_important_thing;
+/// static CnxSharedMutex* my_thing_mutex;
+///
+/// void init_my_thing(void);
+/// bool update_my_thing(u64 value);
+/// u64 get_value_from_my_thing(void);
+///
+/// // MyThing.c
+/// #include <Cnx/Allocators.h>
+/// #include "MyThing.h"
+/// void init_my_thing(void) {
+/// 	if(my_thing_mutex == nullptr) {
+/// 		my_thing_mutex = cnx_allocator_allocate_t(CnxSharedTimedMutex, DEFAULT_ALLOCATOR);
+/// 		*my_thing_mutex = cnx_shared_timed_mutex_new();
+///
+/// 		cnx_shared_timed_mutex_lock(my_thing_mutex);
+/// 		my_very_important_thing = {
+/// 		// important intialization
+/// 		};
+/// 		cnx_shared_timed_mutex_unlock(my_thing_mutex);
+/// 	}
+/// }
+///
+/// // only one thread at a time can `update_my_thing`, because it uses exclusive locking
+/// bool update_my_thing(u64 value) {
+/// 	// we can only afford to wait 50 milliseconds to update the value before we need to start
+/// 	// doing more calculations
+/// 	if(cnx_shared_timed_mutex_try_lock_for(my_thing_mutex, cnx_milliseconds(50))) {
+/// 		my_very_important_thing.value = value;
+/// 		return true;
+/// 	}
+///
+/// 	return false;
+/// }
+///
+/// // any number of threads can `get_value_from_my_thing` without blocking eachother,
+/// // because it uses shared locking.
+/// u64 get_value_from_my_thing(void) {
+/// 	cnx_shared_timed_mutex_lock_shared(my_thing_mutex);
+/// 	let val = my_very_important_thing.value;
+/// 	cnx_shared_timed_mutex_unlock_shared(my_thing_mutex);
+/// 	return val;
+/// }
+///
+/// /// elsewhere...
+/// /// in thread1-related code
+///
+/// loop {
+/// 	// do some compute intensive task...
+///
+/// 	// try to update the value
+/// 	if(!update_my_thing(new_value)) {
+/// 		fprintln(log_file, "INFO: Failed to update value");
+/// 	}
+/// }
+///
+///
+/// /// in thread2,3,4,...-related code
+/// my_val = get_value_from_my_thing();
+/// // do something with my_val
+///
+/// let_mut newval = get_value_from_my_thing();
+/// while(newval == my_val) {
+/// 	cnx_this_thread_sleep_for(cnx_milliseconds(100));
+/// 	newval = get_value_from_my_thing();
+/// }
+///
+/// my_val = newval;
+/// // do something with new value
+/// @endcode
+/// @ingroup cnx_shared_mutex
 typedef struct {
 	IGNORE_RESERVED_IDENTIFIER_WARNING_START
 	CnxSharedMutex __mutex;
@@ -58,15 +281,97 @@ typedef struct {
 // clang-format off
 
 Trait(
+	/// @struct `CnxSharedMutexInterface`
 	/// @brief `CnxSharedMutexInterface` is a uniform interface and Trait implementation that all
-	/// higher-level reader-writer mutexes (ie shared mutexes) meeting Cnx's requirements provide.
+	/// higher-level reader-writer mutexes meeting Cnx's requirements provide. This interface allows
+	/// for using the various reader-writer mutex types provided by Cnx with other facilities like
+	/// `CnxSharedLock` without having to special case on the type(s) of the mutex(es) used.
 	///
-	/// @note While all Cnx shared mutexes provide this interface, only `lock`, `try_lock`, 
+	/// Functions:
+	/// 	- 
+	/// 	@code {.c}
+	/// 	void (*const lock)(CnxMutexInterface* restrict mutex)
+	/// 	@endcode
+	///
+	/// 		Exclusively lock the mutex
+	/// 	- 
+	/// 	@code {.c}
+	/// 	bool (*const try_lock)(CnxMutexInterface* restrict mutex)
+	/// 	@endcode
+	///
+	/// 		Attempt to exclusively lock the mutex
+	/// 	- 
+	/// 	@code {.c}
+	/// 	bool (*const try_lock_for)(CnxMutexInterface* restrict mutex, CnxDuration duration)
+	/// 	@endcode
+	///
+	/// 		Attempt to exclusively lock the mutex, timeout after `duration` amount of time has
+	/// 		passed. Only available if `mutex` is a timed mutex (otherwise this will be
+	/// 		`nullptr`).
+	/// 	- 
+	/// 	@code {.c}
+	/// 	bool (*const try_lock_until)(CnxMutexInterface* restrict mutex, CnxTimePoint stop_point)
+	/// 	@endcode
+	///
+	/// 		Attempt to exclusively lock the mutex, timeout once the time `stop_point` has
+	/// 		occurred. Only available if `mutex` is a timed mutex (otherwise this will be
+	/// 		`nullptr`).
+	/// 	- 
+	/// 	@code {.c}
+	/// 	void (*const unlock)(CnxMutexInterface* restrict mutex)
+	/// 	@endcode
+	///
+	/// 		Releases the exclusive lock on the mutex
+	/// 	- 
+	/// 	@code {.c}
+	/// 	void (*const lock_shared)(CnxMutexInterface* restrict mutex)
+	/// 	@endcode
+	///
+	/// 		Non-exclusively (shared) lock the mutex
+	/// 	- 
+	/// 	@code {.c}
+	/// 	bool (*const try_lock_shared)(CnxMutexInterface* restrict mutex)
+	/// 	@endcode
+	///
+	/// 		Attempt to non-exclusively (shared) lock the mutex
+	/// 	- 
+	/// 	@code {.c}
+	/// 	bool (*const try_lock_shared_for)(CnxMutexInterface* restrict mutex, CnxDuration duration)
+	/// 	@endcode
+	///
+	/// 		Attempt to non-exclusively (shared) lock the mutex, timeout after `duration` amount
+	/// 		of time has passed. Only available if `mutex` is a timed mutex (otherwise this will
+	/// 		be `nullptr`).
+	/// 	- 
+	/// 	@code {.c}
+	/// 	bool (*const try_lock_shared_until)(CnxMutexInterface* restrict mutex, CnxTimePoint stop_point)
+	/// 	@endcode
+	///
+	/// 		Attempt to non-exclusively (shared) lock the mutex, timeout once the time
+	/// 		`stop_point` has occurred. Only available if `mutex` is a timed mutex (otherwise
+	/// 		this will be `nullptr`).
+	/// 	- 
+	/// 	@code {.c}
+	/// 	void (*const unlock_shared)(CnxMutexInterface* restrict mutex)
+	/// 	@endcode
+	///
+	/// 		Releases a non-exclusive (shared) lock on the mutex
+
+	/// 	- 
+	/// 	@code {.c}
+	/// 	__CnxMutexId (*const type_id)(CnxMutexInterface* restrict mutex)
+	/// 	@endcode
+	///
+	/// 		Returns the mutex type ID for the mutex. Used internally by scoped lock guards
+	/// 		like `CnxSharedLock` to identify the concrete type of the mutex
+	///
+	///
+	/// @note While all Cnx reader-writer mutexes provide this interface, only `lock`, `try_lock`,
 	/// `unlock`, `lock_shared`, `try_lock_shared`, and `unlock_shared` are mandatory.
 	/// `try_lock_for`, `try_lock_until`, `try_lock_shared_for`, and `try_lock_shared_until` may not
 	/// be provided if they are not supported by a particular mutex type, in which case they will be
 	/// initialized to `nullptr`
-	/// @ingroup cnx_shared_mutex
+	/// @ingroup cnx_mutex
 	CnxSharedMutexInterface,
 	__attr(not_null(1)) void (*const lock)(CnxSharedMutexInterface* restrict mutex);
 	__attr(nodiscard) __attr(not_null(1)) bool (*const try_lock)(

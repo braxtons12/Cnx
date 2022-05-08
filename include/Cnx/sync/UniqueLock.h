@@ -3,7 +3,7 @@
 /// @brief `CnxUniqueLock` provides an exlusive-ownership scoped mutex locking mechanism similar to
 /// C++'s `std::unique_lock`
 /// @version 0.2.0
-/// @date 2022-05-07
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -46,6 +46,8 @@
 ///
 /// // MyThing.c
 /// #include <Cnx/Allocators.h>
+/// #include <Cnx/sync/UniqueLock.h>
+/// #include "MyThing.h"
 /// void init_my_thing(void) {
 /// 	if(my_thing_mutex == nullptr) {
 /// 		my_thing_mutex = cnx_allocator_allocate_t(CnxMutex, DEFAULT_ALLOCATOR);
@@ -133,6 +135,8 @@
 ///
 /// // MyThing.c
 /// #include <Cnx/Allocators.h>
+/// #include <Cnx/sync/UniqueLock.h>
+/// #include "MyThing.h"
 /// void init_my_thing(void) {
 /// 	if(my_thing_mutex == nullptr) {
 /// 		my_thing_mutex = cnx_allocator_allocate_t(CnxMutex, DEFAULT_ALLOCATOR);
