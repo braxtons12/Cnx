@@ -3,7 +3,7 @@
 /// @brief `Sync` provides higher-level synchronization abstractions and utilites to make
 /// it easy to write multi-threaded code simply and correctly
 /// @version 0.2.0
-/// @date 2022-05-06
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -29,3 +29,9 @@
 /// @defgroup cnx_sync Synchronization
 /// Cnx provides various higher-level synchronization abstractions through various types and
 /// utilities to make it easy to write multi-threaded code simply and correctly
+
+#include <Cnx/sync/Condvar.h>
+#include <Cnx/sync/Mutex.h>
+#include <Cnx/sync/SharedLock.h>
+#include <Cnx/sync/SharedMutex.h>
+#include <Cnx/sync/UniqueLock.h>

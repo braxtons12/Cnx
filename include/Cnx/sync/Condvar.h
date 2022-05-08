@@ -26,8 +26,6 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#include <Cnx/__thread/__thread.h>
-
 /// @ingroup cnx_sync Synchronization
 /// @{
 /// @defgroup cnx_condvar CnxCondvar
@@ -62,14 +60,12 @@
 /// @endcode
 /// @}
 
-#if !___CNX_HAS_NO_THREADS
+#ifndef CNX_CONDVAR
+#define CNX_CONDVAR
 
-	#ifndef CNX_CONDVAR
-		#define CNX_CONDVAR
-
-		#include <Cnx/Def.h>
-		#include <Cnx/Thread.h>
-		#include <Cnx/time/TimePoint.h>
+#include <Cnx/Def.h>
+#include <Cnx/Thread.h>
+#include <Cnx/time/TimePoint.h>
 
 /// @brief `CnxCondvar` provides a higher-level condition variable type, directly comparable to
 /// C++'s `std::condition_variable`, that helps to make writing efficient multi-threaded code
@@ -118,8 +114,8 @@ typedef enum {
 
 struct CnxUniqueLock;
 
-		#define __DISABLE_IF_NULL(val) \
-			cnx_disable_if(!(val), "Can't perform a CnxCondvar operation with a nullptr")
+#define __DISABLE_IF_NULL(val) \
+	cnx_disable_if(!(val), "Can't perform a CnxCondvar operation with a nullptr")
 
 /// @brief Creates a new `CnxCondvar`
 /// @return a new `CnxCondvar`
@@ -188,8 +184,6 @@ __attr(not_null(1)) void cnx_condvar_notify_all(CnxCondvar* restrict condvar)
 /// @ingroup cnx_condvar
 __attr(not_null(1)) void cnx_condvar_free(CnxCondvar* restrict condvar) __DISABLE_IF_NULL(condvar);
 
-		#undef __DISABLE_IF_NULL
+#undef __DISABLE_IF_NULL
 
-	#endif // CNX_CONDVAR
-
-#endif //!___CNX_HAS_NO_THREADS
+#endif // CNX_CONDVAR

@@ -72,6 +72,7 @@ set(EXPORTS
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/sync/SharedMutex.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/sync/SharedLock.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/sync/UniqueLock.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/Sync.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/unique_ptr/UniquePtrDef.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/unique_ptr/UniquePtrDecl.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/Cnx/unique_ptr/UniquePtrImpl.h"
