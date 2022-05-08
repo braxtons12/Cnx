@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>include/Cnx/Sync.h file | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</title>
+  <title>CnxCondvar struct | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -42,10 +42,32 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a>/</span><span class="m-breadcrumb"><a href="dir_eb0c9390901bc8c114e0f1e21e68b5be.html">Cnx</a>/</span>Sync.h <span class="m-thin">file</span>
+          CnxCondvar <span class="m-thin">struct</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Condvar_8h.html">&lt;include/Cnx/sync/Condvar.h&gt;</a></div>
         </h1>
-        <p><code>Sync</code> provides higher-level synchronization abstractions and utilites to make it easy to write multi-threaded code simply and correctly</p>
-<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.2.0</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-05-08</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        <p><code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code> provides a higher-level condition variable type, directly comparable to C++&#x27;s <code>std::condition_variable</code>, that helps to make writing efficient multi-threaded code simpler and easier.</p>
+<p>Example:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&lt;Cnx/sync/Mutex.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/sync/UniqueLock.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/sync/Condvar.h&gt;</span><span class="cp"></span>
+<span class="kt">bool</span> <span class="n">flag</span><span class="p">;</span>
+<span class="n">CnxCondvar</span> <span class="n">condvar</span><span class="p">;</span>
+<span class="n">CnxMutex</span> <span class="n">mutex</span><span class="p">;</span>
+
+<span class="c1">// thread1:</span>
+<span class="n">UniqueLock</span> <span class="n">lock</span> <span class="o">=</span> <span class="n">cnx_unique_lock</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span>
+<span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">flag</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">cnx_condvar_wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">condvar</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">lock</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="c1">// do something now that we&#39;ve received the flag</span>
+
+<span class="c1">// thread2:</span>
+<span class="c1">// do some stuff</span>
+<span class="p">{</span>
+    <span class="n">UniqueLock</span> <span class="n">lock</span> <span class="o">=</span> <span class="n">cnx_unique_lock</span><span class="p">(</span><span class="n">muted</span><span class="p">);</span>
+    <span class="n">flag</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="c1">// signal to thread1 that we&#39;re done and it can do its work now</span>
+    <span class="n">cnx_condvar_notify_one</span><span class="p">(</span><span class="o">&amp;</span><span class="n">condvar</span><span class="p">);</span>
+<span class="p">}</span></pre>
       </div>
     </div>
   </div>

@@ -44,8 +44,78 @@
         <h1>
           <span class="m-breadcrumb"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a>/</span><span class="m-breadcrumb"><a href="dir_eb0c9390901bc8c114e0f1e21e68b5be.html">Cnx</a>/</span><span class="m-breadcrumb"><a href="dir_d16b3b8ac8f5cc9b8335b6822ceebcee.html">sync</a>/</span>Condvar.h <span class="m-thin">file</span>
         </h1>
-        <p><code>CnxCondvar</code> provides a higher-level condition variable type similar to that provided in C++&#x27;s <code>&lt;condition_variable&gt;</code></p>
+        <p><code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code> provides a higher-level condition variable type similar to that provided in C++&#x27;s <code>&lt;condition_variable&gt;</code></p>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#enum-members">Enums</a></li>
+                <li><a href="#func-members">Functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
 <aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.2.0</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-05-08</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        <section id="nested-classes">
+          <h2><a href="#nested-classes">Classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              struct <a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a>
+            </dt>
+            <dd><code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code> provides a higher-level condition variable type, directly comparable to C++&#x27;s <code>std::condition_variable</code>, that helps to make writing efficient multi-threaded code simpler and easier.</dd>
+          </dl>
+        </section>
+        <section id="enum-members">
+          <h2><a href="#enum-members">Enums</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">enum <a href="group__cnx__condvar.html#ga5ec5a6e1ca76809b701fab5fdccb01ed" class="m-doc">CnxCondvarStatus</a> { </span><span class="m-doc-wrap"><a href="#gga5ec5a6e1ca76809b701fab5fdccb01edaf5ed5512e2fd94c48a3fc27e762c0a56" class="m-doc">CnxCondvarNoTimeout</a> = 0,
+              <a href="#gga5ec5a6e1ca76809b701fab5fdccb01eda836fa8489ee91c6b3a3956f90e33f7be" class="m-doc">CnxCondvarTimeout</a> }</span>
+            </dt>
+            <dd>Used to communicate the timeout status for <code>cnx_condvar_wait_for</code> and <code>cnx_condvar_wait_until</code>. If a timeout occurs during either of these functions, then <code>CnxCondvarTimeout</code> will be returned. Otherwise <code>CnxCondvarTimeout</code> will be returned.</dd>
+          </dl>
+        </section>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a> <a href="group__cnx__condvar.html#ga0382bbd8b4d469361bcd273cf7853c50" class="m-doc">cnx_condvar_new</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Creates a new <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__condvar.html#gacbc6e156963ed6367150130d742b5739" class="m-doc">cnx_condvar_wait</a>(</span><span class="m-doc-wrap"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a>*restrict condvar,
+              struct <a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock)</span>
+            </dt>
+            <dd>Immediately unlocks <code>lock</code> and waits on the given <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code>, <code>condvar</code> until it has been notified by another thread. <code>lock</code> will be automatically relocked before this function returns.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__condvar.html#ga5ec5a6e1ca76809b701fab5fdccb01ed" class="m-doc">CnxCondvarStatus</a> <a href="group__cnx__condvar.html#ga36fe548f1ad2ba0a15596d4e8b599162" class="m-doc">cnx_condvar_wait_for</a>(</span><span class="m-doc-wrap"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a>*restrict condvar,
+              struct <a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> duration)</span>
+            </dt>
+            <dd>Immediately unlocks <code>lock</code> and waits on the given <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code>, <code>condvar</code> until it has been notified by another thread, or the amount of time specified by <code>duration</code> has passed. <code>lock</code> will be automatically relocked before this function returns.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__condvar.html#ga5ec5a6e1ca76809b701fab5fdccb01ed" class="m-doc">CnxCondvarStatus</a> <a href="group__cnx__condvar.html#ga898111f75b22e11490594e187347f36e" class="m-doc">cnx_condvar_wait_until</a>(</span><span class="m-doc-wrap"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a>*restrict condvar,
+              struct <a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock,
+              <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> stop_point)</span>
+            </dt>
+            <dd>Immediately unlocks <code>lock</code> and waits on the given <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code>, <code>condvar</code> until it has been notified by another thread, or point in time specified by <code>stop_point</code> has occurred. <code>lock</code> will be automatically relocked before this function returns.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__condvar.html#ga7a83bc25350e6f027ea5425799fdd55e" class="m-doc">cnx_condvar_notify_one</a>(</span><span class="m-doc-wrap"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a>*restrict condvar)</span>
+            </dt>
+            <dd>Notifies exactly <strong>one</strong> thread waiting on the given <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code> to stop waiting and continue execution.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__condvar.html#ga5634798a9cb4e5a8d0ef48f733bd8448" class="m-doc">cnx_condvar_notify_all</a>(</span><span class="m-doc-wrap"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a>*restrict condvar)</span>
+            </dt>
+            <dd>Notifies all threads waiting on the given <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code> to stop waiting and continue execution.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="group__cnx__condvar.html#ga76aa925117e34fa4cd9ba1379b954442" class="m-doc">cnx_condvar_free</a>(</span><span class="m-doc-wrap"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a>*restrict condvar)</span>
+            </dt>
+            <dd>Destroys the given <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code>, freeing any associated resources.</dd>
+          </dl>
+        </section>
       </div>
     </div>
   </div>

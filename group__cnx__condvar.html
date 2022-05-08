@@ -44,7 +44,20 @@
         <h1>
           <span class="m-breadcrumb"><a href="group__cnx__sync.html">Synchronization</a> &raquo;</span>
           CnxCondvar <span class="m-thin">module</span></h1>
-<p><code>CnxCondvar</code> provides a higher-level condition variable type, directly comparable to C++&#x27;s <code>std::condition_variable</code>, that helps to make writing efficient multi-threaded code simpler and easier</p><p>Example:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&lt;Cnx/sync/Mutex.h&gt;</span><span class="cp"></span>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#enum-members">Enums</a></li>
+                <li><a href="#func-members">Functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<p><code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code> provides a higher-level condition variable type, directly comparable to C++&#x27;s <code>std::condition_variable</code>, that helps to make writing efficient multi-threaded code simpler and easier</p><p>Example:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&lt;Cnx/sync/Mutex.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;Cnx/sync/UniqueLock.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;Cnx/sync/Condvar.h&gt;</span><span class="cp"></span>
 <span class="kt">bool</span> <span class="n">flag</span><span class="p">;</span>
@@ -66,6 +79,236 @@
     <span class="c1">// signal to thread1 that we&#39;re done and it can do its work now</span>
     <span class="n">cnx_condvar_notify_one</span><span class="p">(</span><span class="o">&amp;</span><span class="n">condvar</span><span class="p">);</span>
 <span class="p">}</span></pre>
+        <section id="nested-classes">
+          <h2><a href="#nested-classes">Classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              struct <a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a>
+            </dt>
+            <dd><code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code> provides a higher-level condition variable type, directly comparable to C++&#x27;s <code>std::condition_variable</code>, that helps to make writing efficient multi-threaded code simpler and easier.</dd>
+          </dl>
+        </section>
+        <section id="enum-members">
+          <h2><a href="#enum-members">Enums</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">enum <a href="#ga5ec5a6e1ca76809b701fab5fdccb01ed" class="m-doc">CnxCondvarStatus</a> { </span><span class="m-doc-wrap"><a href="#gga5ec5a6e1ca76809b701fab5fdccb01edaf5ed5512e2fd94c48a3fc27e762c0a56" class="m-doc">CnxCondvarNoTimeout</a> = 0,
+              <a href="#gga5ec5a6e1ca76809b701fab5fdccb01eda836fa8489ee91c6b3a3956f90e33f7be" class="m-doc">CnxCondvarTimeout</a> }</span>
+            </dt>
+            <dd>Used to communicate the timeout status for <code>cnx_condvar_wait_for</code> and <code>cnx_condvar_wait_until</code>. If a timeout occurs during either of these functions, then <code>CnxCondvarTimeout</code> will be returned. Otherwise <code>CnxCondvarTimeout</code> will be returned.</dd>
+          </dl>
+        </section>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a> <a href="#ga0382bbd8b4d469361bcd273cf7853c50" class="m-doc">cnx_condvar_new</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Creates a new <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#gacbc6e156963ed6367150130d742b5739" class="m-doc">cnx_condvar_wait</a>(</span><span class="m-doc-wrap"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a>*restrict condvar,
+              struct <a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock)</span>
+            </dt>
+            <dd>Immediately unlocks <code>lock</code> and waits on the given <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code>, <code>condvar</code> until it has been notified by another thread. <code>lock</code> will be automatically relocked before this function returns.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__condvar.html#ga5ec5a6e1ca76809b701fab5fdccb01ed" class="m-doc">CnxCondvarStatus</a> <a href="#ga36fe548f1ad2ba0a15596d4e8b599162" class="m-doc">cnx_condvar_wait_for</a>(</span><span class="m-doc-wrap"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a>*restrict condvar,
+              struct <a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> duration)</span>
+            </dt>
+            <dd>Immediately unlocks <code>lock</code> and waits on the given <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code>, <code>condvar</code> until it has been notified by another thread, or the amount of time specified by <code>duration</code> has passed. <code>lock</code> will be automatically relocked before this function returns.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__condvar.html#ga5ec5a6e1ca76809b701fab5fdccb01ed" class="m-doc">CnxCondvarStatus</a> <a href="#ga898111f75b22e11490594e187347f36e" class="m-doc">cnx_condvar_wait_until</a>(</span><span class="m-doc-wrap"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a>*restrict condvar,
+              struct <a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock,
+              <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> stop_point)</span>
+            </dt>
+            <dd>Immediately unlocks <code>lock</code> and waits on the given <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code>, <code>condvar</code> until it has been notified by another thread, or point in time specified by <code>stop_point</code> has occurred. <code>lock</code> will be automatically relocked before this function returns.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga7a83bc25350e6f027ea5425799fdd55e" class="m-doc">cnx_condvar_notify_one</a>(</span><span class="m-doc-wrap"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a>*restrict condvar)</span>
+            </dt>
+            <dd>Notifies exactly <strong>one</strong> thread waiting on the given <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code> to stop waiting and continue execution.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga5634798a9cb4e5a8d0ef48f733bd8448" class="m-doc">cnx_condvar_notify_all</a>(</span><span class="m-doc-wrap"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a>*restrict condvar)</span>
+            </dt>
+            <dd>Notifies all threads waiting on the given <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code> to stop waiting and continue execution.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga76aa925117e34fa4cd9ba1379b954442" class="m-doc">cnx_condvar_free</a>(</span><span class="m-doc-wrap"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a>*restrict condvar)</span>
+            </dt>
+            <dd>Destroys the given <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code>, freeing any associated resources.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Enum documentation</h2>
+          <section class="m-doc-details" id="ga5ec5a6e1ca76809b701fab5fdccb01ed"><div>
+            <h3>
+              enum <a href="#ga5ec5a6e1ca76809b701fab5fdccb01ed" class="m-doc-self">CnxCondvarStatus</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Condvar_8h.html">&lt;include/Cnx/sync/Condvar.h&gt;</a></div>
+            </h3>
+            <p>Used to communicate the timeout status for <code>cnx_condvar_wait_for</code> and <code>cnx_condvar_wait_until</code>. If a timeout occurs during either of these functions, then <code>CnxCondvarTimeout</code> will be returned. Otherwise <code>CnxCondvarTimeout</code> will be returned.</p>
+          </div></section>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ga0382bbd8b4d469361bcd273cf7853c50"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga0382bbd8b4d469361bcd273cf7853c50" class="m-doc-self">cnx_condvar_new</a>(</span><span class="m-doc-wrap">void)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Condvar_8h.html">&lt;include/Cnx/sync/Condvar.h&gt;</a></div>
+            </h3>
+            <p>Creates a new <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>a new <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gacbc6e156963ed6367150130d742b5739"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gacbc6e156963ed6367150130d742b5739" class="m-doc-self">cnx_condvar_wait</a>(</span><span class="m-doc-wrap"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a>*restrict condvar,
+              struct <a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Condvar_8h.html">&lt;include/Cnx/sync/Condvar.h&gt;</a></div>
+            </h3>
+            <p>Immediately unlocks <code>lock</code> and waits on the given <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code>, <code>condvar</code> until it has been notified by another thread. <code>lock</code> will be automatically relocked before this function returns.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">condvar</td>
+                  <td>- The condvar to wait on</td>
+                </tr>
+                <tr>
+                  <td>lock</td>
+                  <td>- The exclusive lock associated with the condition</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga36fe548f1ad2ba0a15596d4e8b599162"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__condvar.html#ga5ec5a6e1ca76809b701fab5fdccb01ed" class="m-doc">CnxCondvarStatus</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga36fe548f1ad2ba0a15596d4e8b599162" class="m-doc-self">cnx_condvar_wait_for</a>(</span><span class="m-doc-wrap"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a>*restrict condvar,
+              struct <a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock,
+              <a href="structCnxDuration.html" class="m-doc">CnxDuration</a> duration)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Condvar_8h.html">&lt;include/Cnx/sync/Condvar.h&gt;</a></div>
+            </h3>
+            <p>Immediately unlocks <code>lock</code> and waits on the given <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code>, <code>condvar</code> until it has been notified by another thread, or the amount of time specified by <code>duration</code> has passed. <code>lock</code> will be automatically relocked before this function returns.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">condvar</td>
+                  <td>- The condvar to wait on</td>
+                </tr>
+                <tr>
+                  <td>lock</td>
+                  <td>- The exclusive lock associated with the condition</td>
+                </tr>
+                <tr>
+                  <td>duration</td>
+                  <td>- The maximum amount of time to wait on the condition</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The <code>CnxCondvarStatus</code> indicating whether the thread was notified (<code>CnxCondvarNoTimeout</code>), or, a timeout occurred and <code>duration</code> passed before a notification was received (<code>CnxCondvarTimeout</code>).</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga898111f75b22e11490594e187347f36e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__condvar.html#ga5ec5a6e1ca76809b701fab5fdccb01ed" class="m-doc">CnxCondvarStatus</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga898111f75b22e11490594e187347f36e" class="m-doc-self">cnx_condvar_wait_until</a>(</span><span class="m-doc-wrap"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a>*restrict condvar,
+              struct <a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a>*restrict lock,
+              <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> stop_point)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Condvar_8h.html">&lt;include/Cnx/sync/Condvar.h&gt;</a></div>
+            </h3>
+            <p>Immediately unlocks <code>lock</code> and waits on the given <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code>, <code>condvar</code> until it has been notified by another thread, or point in time specified by <code>stop_point</code> has occurred. <code>lock</code> will be automatically relocked before this function returns.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">condvar</td>
+                  <td>- The condvar to wait on</td>
+                </tr>
+                <tr>
+                  <td>lock</td>
+                  <td>- The exclusive lock associated with the condition</td>
+                </tr>
+                <tr>
+                  <td>stop_point</td>
+                  <td>- The point in time at which to stop waiting on the condition</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The <code>CnxCondvarStatus</code> indicating whether the thread was notified (<code>CnxCondvarNoTimeout</code>), or, a timeout occurred and <code>stop_point</code> occurred before a notification was received (<code>CnxCondvarTimeout</code>).</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga7a83bc25350e6f027ea5425799fdd55e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga7a83bc25350e6f027ea5425799fdd55e" class="m-doc-self">cnx_condvar_notify_one</a>(</span><span class="m-doc-wrap"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a>*restrict condvar)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Condvar_8h.html">&lt;include/Cnx/sync/Condvar.h&gt;</a></div>
+            </h3>
+            <p>Notifies exactly <strong>one</strong> thread waiting on the given <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code> to stop waiting and continue execution.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">condvar</td>
+                  <td>- The condvar to notify a waiting thread to continue</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga5634798a9cb4e5a8d0ef48f733bd8448"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga5634798a9cb4e5a8d0ef48f733bd8448" class="m-doc-self">cnx_condvar_notify_all</a>(</span><span class="m-doc-wrap"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a>*restrict condvar)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Condvar_8h.html">&lt;include/Cnx/sync/Condvar.h&gt;</a></div>
+            </h3>
+            <p>Notifies all threads waiting on the given <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code> to stop waiting and continue execution.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">condvar</td>
+                  <td>- The condvar to notify waiting threads to continue</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga76aa925117e34fa4cd9ba1379b954442"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga76aa925117e34fa4cd9ba1379b954442" class="m-doc-self">cnx_condvar_free</a>(</span><span class="m-doc-wrap"><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a>*restrict condvar)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Condvar_8h.html">&lt;include/Cnx/sync/Condvar.h&gt;</a></div>
+            </h3>
+            <p>Destroys the given <code><a href="structCnxCondvar.html" class="m-doc">CnxCondvar</a></code>, freeing any associated resources.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">condvar</td>
+                  <td>- The condvar to destroy</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
       </div>
     </div>
   </div>
