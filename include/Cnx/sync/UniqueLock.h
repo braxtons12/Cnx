@@ -177,10 +177,12 @@
 /// update_my_thing(new_value);
 ///
 /// /// in thread2-related code
-/// my_val = get_value_from_my_thing();
+/// UniqueLock lock1 = cnx_unique_lock(*my_thing_mutex);
+/// my_val = get_value_from_my_thing(move(lock1));
 /// // do something with my_val
 ///
-/// let_mut newval = get_value_from_my_thing();
+/// UniqueLock lock2 = cnx_unique_lock(*my_thing_mutex);
+/// let_mut newval = get_value_from_my_thing(move(lock2));
 /// while(newval == my_val) {
 /// 	cnx_this_thread_sleep_for(cnx_milliseconds(100));
 /// 	UniqueLock lock = cnx_unique_lock(*my_thing_mutex);
@@ -206,9 +208,9 @@ typedef struct CnxUniqueLock {
 #define __DISABLE_IF_NULL(lock) \
 	cnx_disable_if(!(lock), "Can't perform a CnxUniqueLock operation on a nullptr")
 
-/// @brief Creates a new `cnx_unique_lock` associated with the given mutex
+/// @brief Creates a new `CnxUniqueLock` associated with the given mutex
 ///
-/// Creates a new `cnx_unique_lock` associated with the given mutex. If an instance of a tag type is
+/// Creates a new `CnxUniqueLock` associated with the given mutex. If an instance of a tag type is
 /// __NOT__ given to specify construction behavior, this will block until the exclusive lock is
 /// acquired on the given mutex. If an instance of a tag type specifying construction behavior
 /// __IS__ given, however, then construction will behave according to the given tag type:
