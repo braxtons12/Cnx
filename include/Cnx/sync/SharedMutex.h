@@ -371,7 +371,7 @@ Trait(
 	/// `try_lock_for`, `try_lock_until`, `try_lock_shared_for`, and `try_lock_shared_until` may not
 	/// be provided if they are not supported by a particular mutex type, in which case they will be
 	/// initialized to `nullptr`
-	/// @ingroup cnx_mutex
+	/// @ingroup cnx_shared_mutex
 	CnxSharedMutexInterface,
 	__attr(not_null(1)) void (*const lock)(CnxSharedMutexInterface* restrict mutex);
 	__attr(nodiscard) __attr(not_null(1)) bool (*const try_lock)(
