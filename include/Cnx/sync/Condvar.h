@@ -122,6 +122,7 @@ struct CnxUniqueLock;
 
 /// @brief Creates a new `CnxCondvar`
 /// @return a new `CnxCondvar`
+/// @ingroup cnx_condvar
 __attr(nodiscard) CnxCondvar cnx_condvar_new(void);
 /// @brief Immediately unlocks `lock` and waits on the given `CnxCondvar`, `condvar` until it has
 /// been notified by another thread. `lock` will be automatically relocked before this function
