@@ -26,6 +26,8 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
+#include <Cnx/__thread/__thread.h>
+
 /// @ingroup cnx_sync Synchronization
 /// @{
 /// @defgroup cnx_condvar CnxCondvar
@@ -59,7 +61,6 @@
 /// }
 /// @endcode
 /// @}
-#include <Cnx/__thread/__thread.h>
 
 #if !___CNX_HAS_NO_THREADS
 
