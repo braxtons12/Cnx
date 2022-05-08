@@ -34,6 +34,7 @@
 	#include <Cnx/Thread.h>
 	#include <Cnx/time/Clock.h>
 	#include <Cnx/time/TimePoint.h>
+
 	#include <time.h>
 
 	#define RESULT_T	CnxBasicMutex
@@ -77,11 +78,9 @@
 	#undef RESULT_T
 	#undef RESULT_IMPL
 
-struct timespec duration_to_timespec(CnxDuration duration) {
-	let now = cnx_clock_now(&cnx_utc_clock);
-	let added = cnx_time_point_add(now, duration);
+struct timespec timepoint_to_timespec(CnxTimePoint timepoint) {
 	let as_nanoseconds
-		= cnx_duration_cast(cnx_time_point_time_since_epoch(added), cnx_nanoseconds_period);
+		= cnx_duration_cast(cnx_time_point_time_since_epoch(timepoint), cnx_nanoseconds_period);
 	let seconds = as_nanoseconds.count / as_nanoseconds.period.den;
 	let nanoseconds = as_nanoseconds.count % as_nanoseconds.period.den;
 	return (struct timespec){.tv_sec = seconds, .tv_nsec = static_cast(long)(nanoseconds)};
@@ -187,7 +186,16 @@ CnxResult cnx_basic_condvar_wait(CnxBasicCondvar* restrict condvar, CnxBasicMute
 CnxResult cnx_basic_condvar_wait_for(CnxBasicCondvar* restrict condvar,
 									 CnxBasicMutex* restrict mutex,
 									 CnxDuration to_wait) {
-	let spec = duration_to_timespec(to_wait);
+
+	let now = cnx_system_clock_now();
+	let end = cnx_time_point_add(now, to_wait);
+	return cnx_basic_condvar_wait_until(condvar, mutex, end);
+}
+
+CnxResult cnx_basic_condvar_wait_until(CnxBasicCondvar* restrict condvar,
+									   CnxBasicMutex* restrict mutex,
+									   CnxTimePoint stop_point) {
+	let spec = timepoint_to_timespec(stop_point);
 
 	let res = cnd_timedwait(condvar, mutex, &spec);
 	CHECK_ERROR_POSIX(res);
@@ -460,7 +468,16 @@ CnxResult cnx_basic_condvar_wait(CnxBasicCondvar* restrict condvar, CnxBasicMute
 CnxResult cnx_basic_condvar_wait_for(CnxBasicCondvar* restrict condvar,
 									 CnxBasicMutex* restrict mutex,
 									 CnxDuration to_wait) {
-	let spec = duration_to_timespec(to_wait);
+
+	let now = cnx_system_clock_now();
+	let end = cnx_time_point_add(now, to_wait);
+	return cnx_basic_condvar_wait_until(condvar, mutex, end);
+}
+
+CnxResult cnx_basic_condvar_wait_until(CnxBasicCondvar* restrict condvar,
+									   CnxBasicMutex* restrict mutex,
+									   CnxTimePoint stop_point) {
+	let spec = timepoint_to_timespec(stop_point);
 
 	let res = pthread_cond_timedwait(condvar, mutex, &spec);
 	CHECK_ERROR_POSIX(res);
@@ -555,7 +572,9 @@ void cnx_this_thread_yield(void) {
 }
 
 void cnx_this_thread_sleep_for(CnxDuration duration) {
-	let_mut spec = duration_to_timespec(duration);
+	let now = cnx_system_clock_now();
+	let end = cnx_time_point_add(now, duration);
+	let_mut spec = timepoint_to_timespec(end);
 	while(nanosleep(&spec, &spec) == -1 && errno == EINTR) {
 	}
 }
@@ -685,6 +704,26 @@ CnxResult cnx_basic_condvar_wait_for(CnxBasicCondvar* restrict condvar,
 									 CnxBasicMutex* restrict mutex,
 									 CnxDuration to_wait) {
 	let milliseconds = cnx_duration_cast(to_wait, cnx_milliseconds_period);
+
+	if(!SleepConditionVariableSRW(condvar,
+								  mutex,
+								  milliseconds.count > 0 ? narrow_cast(DWORD)(milliseconds.count) :
+														   0,
+								  0))
+	{
+		let error = cnx_error_category_get_last_error(CNX_WIN32_ERROR_CATEGORY);
+		return Err(i32, cnx_error_new(error, CNX_WIN32_ERROR_CATEGORY));
+	}
+
+	return Ok(i32, 0);
+}
+
+CnxResult cnx_basic_condvar_wait_until(CnxBasicCondvar* restrict condvar,
+									   CnxBasicMutex* restrict mutex,
+									   CnxTimePoint stop_point) {
+	let now = cnx_clock_now(stop_point.clock);
+	let diff = cnx_time_point_time_since_epoch(cnx_time_point_subtract_time_point(stop_point, now));
+	let milliseconds = cnx_duration_cast(diff, cnx_milliseconds_period);
 
 	if(!SleepConditionVariableSRW(condvar,
 								  mutex,

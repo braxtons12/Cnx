@@ -254,6 +254,10 @@ void __cnx_shared_mutex_unlock_imutex(CnxMutexInterface* restrict mutex) {
 	cnx_shared_mutex_unlock(self);
 }
 
+__CnxMutexId __cnx_shared_mutex_id_imutex(__attr(maybe_unused) CnxMutexInterface* restrict mutex) {
+	return __CNX_MUTEX_ID_SHARED_MUTEX;
+}
+
 void __cnx_shared_timed_mutex_lock_imutex(CnxMutexInterface* restrict mutex) {
 	let_mut self = static_cast(CnxSharedTimedMutex*)(mutex->m_self);
 	cnx_shared_timed_mutex_lock(self);
@@ -279,6 +283,11 @@ bool __cnx_shared_timed_mutex_try_lock_until_imutex(CnxMutexInterface* restrict 
 void __cnx_shared_timed_mutex_unlock_imutex(CnxMutexInterface* restrict mutex) {
 	let_mut self = static_cast(CnxSharedTimedMutex*)(mutex->m_self);
 	cnx_shared_timed_mutex_unlock(self);
+}
+
+__CnxMutexId
+__cnx_shared_timed_mutex_id_imutex(__attr(maybe_unused) CnxMutexInterface* restrict mutex) {
+	return __CNX_MUTEX_ID_SHARED_TIMED_MUTEX;
 }
 
 /////////////////////////////// SHARED MUTEX INTERFACE IMPLEMENTATIONS /////////////////////////////
@@ -311,6 +320,11 @@ bool __cnx_shared_mutex_try_lock_shared_ishared(CnxSharedMutexInterface* restric
 void __cnx_shared_mutex_unlock_shared_ishared(CnxSharedMutexInterface* restrict mutex) {
 	let_mut self = static_cast(CnxSharedMutex*)(mutex->m_self);
 	cnx_shared_mutex_unlock_shared(self);
+}
+
+__CnxMutexId
+__cnx_shared_mutex_id_ishared(__attr(maybe_unused) CnxSharedMutexInterface* restrict mutex) {
+	return __CNX_MUTEX_ID_SHARED_MUTEX;
 }
 
 void __cnx_shared_timed_mutex_lock_ishared(CnxSharedMutexInterface* restrict mutex) {
@@ -367,4 +381,8 @@ void __cnx_shared_timed_mutex_unlock_shared_ishared(CnxSharedMutexInterface* res
 	cnx_shared_timed_mutex_unlock_shared(self);
 }
 
+__CnxMutexId
+__cnx_shared_timed_mutex_id_ishared(__attr(maybe_unused) CnxSharedMutexInterface* restrict mutex) {
+	return __CNX_MUTEX_ID_SHARED_TIMED_MUTEX;
+}
 #endif // !___CNX_HAS_NO_THREADS

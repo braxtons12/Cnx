@@ -245,6 +245,10 @@ void __cnx_mutex_unlock(CnxMutexInterface* restrict mutex) {
 	cnx_mutex_unlock(self);
 }
 
+__CnxMutexId __cnx_mutex_id(__attr(maybe_unused) CnxMutexInterface* restrict mutex) {
+	return __CNX_MUTEX_ID_MUTEX;
+}
+
 void __cnx_recursive_mutex_lock(CnxMutexInterface* restrict mutex) {
 	let_mut self = static_cast(CnxRecursiveMutex*)(mutex->m_self);
 	cnx_recursive_mutex_lock(self);
@@ -258,6 +262,10 @@ bool __cnx_recursive_mutex_try_lock(CnxMutexInterface* restrict mutex) {
 void __cnx_recursive_mutex_unlock(CnxMutexInterface* restrict mutex) {
 	let_mut self = static_cast(CnxRecursiveMutex*)(mutex->m_self);
 	cnx_recursive_mutex_unlock(self);
+}
+
+__CnxMutexId __cnx_recursive_mutex_id(__attr(maybe_unused) CnxMutexInterface* restrict mutex) {
+	return __CNX_MUTEX_ID_RECURSIVE_MUTEX;
 }
 
 void __cnx_timed_mutex_lock(CnxMutexInterface* restrict mutex) {
@@ -285,6 +293,10 @@ void __cnx_timed_mutex_unlock(CnxMutexInterface* restrict mutex) {
 	cnx_timed_mutex_unlock(self);
 }
 
+__CnxMutexId __cnx_timed_mutex_id(__attr(maybe_unused) CnxMutexInterface* restrict mutex) {
+	return __CNX_MUTEX_ID_TIMED_MUTEX;
+}
+
 void __cnx_recursive_timed_mutex_lock(CnxMutexInterface* restrict mutex) {
 	let_mut self = static_cast(CnxRecursiveTimedMutex*)(mutex->m_self);
 	cnx_recursive_timed_mutex_lock(self);
@@ -310,6 +322,11 @@ bool __cnx_recursive_timed_mutex_try_lock_until(CnxMutexInterface* restrict mute
 void __cnx_recursive_timed_mutex_unlock(CnxMutexInterface* restrict mutex) {
 	let_mut self = static_cast(CnxRecursiveTimedMutex*)(mutex->m_self);
 	cnx_recursive_timed_mutex_unlock(self);
+}
+
+__CnxMutexId
+__cnx_recursive_timed_mutex_id(__attr(maybe_unused) CnxMutexInterface* restrict mutex) {
+	return __CNX_MUTEX_ID_RECURSIVE_TIMED_MUTEX;
 }
 
 #endif // !___CNX_HAS_NO_THREADS

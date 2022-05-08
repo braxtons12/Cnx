@@ -62,6 +62,8 @@ void cnx_unique_lock_lock(CnxUniqueLock* restrict lock) {
 		cnx_panic(
 			"cnx_unique_lock_lock called on a CnxUniqueLock that has already acquired its mutex");
 	}
+	cnx_assert(lock->__mutex.m_self != nullptr,
+			   "cnx_unique_lock_lock called on a CnxUniqueLock that has been moved out of");
 	trait_call(lock, lock->__mutex);
 	lock->__owned = true;
 }
@@ -71,6 +73,8 @@ bool cnx_unique_lock_try_lock(CnxUniqueLock* restrict lock) {
 		cnx_panic("cnx_unique_lock_try_lock called on a CnxUniqueLock that has already acquired "
 				  "its mutex");
 	}
+	cnx_assert(lock->__mutex.m_self != nullptr,
+			   "cnx_unique_lock_try_lock called on a CnxUniqueLock that has been moved out of");
 	lock->__owned = trait_call(try_lock, lock->__mutex);
 	return lock->__owned;
 }
@@ -87,6 +91,8 @@ bool cnx_unique_lock_try_lock_for(CnxUniqueLock* restrict lock, CnxDuration dura
 				  "non-timed mutex");
 	}
 
+	cnx_assert(lock->__mutex.m_self != nullptr,
+			   "cnx_unique_lock_try_lock_for called on a CnxUniqueLock that has been moved out of");
 	lock->__owned = trait_call(try_lock_for, lock->__mutex, duration);
 	return lock->__owned;
 }
@@ -103,6 +109,9 @@ bool cnx_unique_lock_try_lock_until(CnxUniqueLock* restrict lock, CnxTimePoint s
 				  "non-timed mutex");
 	}
 
+	cnx_assert(
+		lock->__mutex.m_self != nullptr,
+		"cnx_unique_lock_try_lock_until called on a CnxUniqueLock that has been moved out of");
 	lock->__owned = trait_call(try_lock_until, lock->__mutex, stop_point);
 	return lock->__owned;
 }
@@ -113,6 +122,8 @@ void cnx_unique_lock_unlock(CnxUniqueLock* restrict lock) {
 			"cnx_unique_lock_unlock called on a CnxUniqueLock that has not acquired its mutex");
 	}
 
+	cnx_assert(lock->__mutex.m_self != nullptr,
+			   "cnx_unique_lock_unlock called on a CnxUniqueLock that has been moved out of");
 	trait_call(unlock, lock->__mutex);
 }
 
@@ -127,7 +138,7 @@ bool cnx_unique_lock_owns_lock(CnxUniqueLock* restrict lock) {
 void cnx_unique_lock_free(void* lock) {
 	IGNORE_RESERVED_IDENTIFIER_WARNING_START
 	let_mut __lock = static_cast(CnxUniqueLock*)(lock);
-	if(__lock->__owned) {
+	if(__lock->__owned && __lock->__mutex.m_self != nullptr) {
 		trait_call(unlock, __lock->__mutex);
 	}
 	IGNORE_RESERVED_IDENTIFIER_WARNING_STOP

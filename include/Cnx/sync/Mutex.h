@@ -3,7 +3,7 @@
 /// @brief `CnxMutex` provides several higher-level mutex types similar to those provided in C++'s
 /// `<mutex>`
 /// @version 0.2.0
-/// @date 2022-05-06
+/// @date 2022-05-07
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -29,7 +29,68 @@
 /// @ingroup cnx_sync Synchronization
 /// @{
 /// @defgroup cnx_mutex CnxMutex
-/// `CnxMutex` provides several high-level mutex types similar to those provided in C++'s `<mutex>`
+/// `CnxMutex` provides several high-level mutex types similar to those provided in C++'s `<mutex>`,
+/// to make working with multi-threaded code simpler and easier.
+///
+/// Example:
+/// @code {.c}
+/// // MyThing.h
+/// #include <Cnx/sync/Mutex.h>
+/// static MyType my_very_important_thing;
+/// static CnxMutex* my_thing_mutex;
+///
+/// void init_my_thing(void);
+/// void update_my_thing(u64 value);
+/// u64 get_value_from_my_thing(void);
+///
+/// // MyThing.c
+/// #include <Cnx/Allocators.h>
+/// void init_my_thing(void) {
+/// 	if(my_thing_mutex == nullptr) {
+/// 		my_thing_mutex = cnx_allocator_allocate_t(CnxMutex, DEFAULT_ALLOCATOR);
+/// 		*my_thing_mutex = cnx_mutex_new();
+///
+/// 		cnx_mutex_lock(my_thing_mutex);
+/// 		my_very_important_thing = {
+/// 		// important intialization
+/// 		};
+/// 		cnx_mutex_unlock(my_thing_mutex);
+/// 	}
+/// }
+///
+/// void update_my_thing(u64 value) {
+/// 	cnx_mutex_lock(my_thing_mutex);
+/// 	my_very_important_thing.value = value;
+/// 	cnx_mutex_unlock(my_thing_mutex);
+/// }
+///
+/// u64 get_value_from_my_thing(void) {
+/// 	cnx_mutex_lock(my_thing_mutex);
+/// 	let val = my_very_important_thing.value;
+/// 	cnx_mutex_unlock(my_thing_mutex);
+/// 	return val;
+/// }
+///
+/// /// elsewhere...
+/// /// in thread1-related code
+///
+/// // do some compute intensive task...
+/// // update the value
+/// update_my_thing(new_value);
+///
+/// /// in thread2-related code
+/// my_val = get_value_from_my_thing();
+/// // do something with my_val
+///
+/// let_mut newval = get_value_from_my_thing();
+/// while(newval == my_val) {
+/// 	cnx_this_thread_sleep_for(cnx_milliseconds(100));
+/// 	newval = get_value_from_my_thing();
+/// }
+///
+/// my_val = newval;
+/// // do something with new value
+/// @endcode
 ///@}
 
 #ifndef CNX_MUTEX
@@ -40,18 +101,238 @@
 #include <Cnx/sync/Condvar.h>
 #include <Cnx/time/TimePoint.h>
 
+/// @brief `CnxMutex` is the generic higher-level mutex type provided by Cnx. It is a simple mutex
+/// type suitable for general purpose use (ie, it is not timed, recursive, etc), and is directly
+/// comparable to C++'s `std::mutex`
+///
+/// Example:
+/// @code {.c}
+/// // MyThing.h
+/// #include <Cnx/sync/Mutex.h>
+/// static MyType my_very_important_thing;
+/// static CnxMutex* my_thing_mutex;
+///
+/// void init_my_thing(void);
+/// void update_my_thing(u64 value);
+/// u64 get_value_from_my_thing(void);
+///
+/// // MyThing.c
+/// #include <Cnx/Allocators.h>
+/// void init_my_thing(void) {
+/// 	if(my_thing_mutex == nullptr) {
+/// 		my_thing_mutex = cnx_allocator_allocate_t(CnxMutex, DEFAULT_ALLOCATOR);
+/// 		*my_thing_mutex = cnx_mutex_new();
+///
+/// 		cnx_mutex_lock(my_thing_mutex);
+/// 		my_very_important_thing = {
+/// 		// important intialization
+/// 		};
+/// 		cnx_mutex_unlock(my_thing_mutex);
+/// 	}
+/// }
+///
+/// void update_my_thing(u64 value) {
+/// 	cnx_mutex_lock(my_thing_mutex);
+/// 	my_very_important_thing.value = value;
+/// 	cnx_mutex_unlock(my_thing_mutex);
+/// }
+///
+/// u64 get_value_from_my_thing(void) {
+/// 	cnx_mutex_lock(my_thing_mutex);
+/// 	let val = my_very_important_thing.value;
+/// 	cnx_mutex_unlock(my_thing_mutex);
+/// 	return val;
+/// }
+///
+/// /// elsewhere...
+/// /// in thread1-related code
+///
+/// // do some compute intensive task...
+/// // update the value
+/// update_my_thing(new_value);
+///
+/// /// in thread2-related code
+/// my_val = get_value_from_my_thing();
+/// // do something with my_val
+///
+/// let_mut newval = get_value_from_my_thing();
+/// while(newval == my_val) {
+/// 	cnx_this_thread_sleep_for(cnx_milliseconds(100));
+/// 	newval = get_value_from_my_thing();
+/// }
+///
+/// my_val = newval;
+/// // do something with new value
+/// @endcode
+/// @ingroup cnx_mutex
 typedef struct {
 	IGNORE_RESERVED_IDENTIFIER_WARNING_START
 	CnxBasicMutex __mutex;
 	IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 } CnxMutex;
 
+/// @brief `CnxRecursiveMutex` is a higher-level mutex type, directly comparable to C++'s
+/// std::recursive_mutex`, for use when an algorithm requires that a thread be able to lock the same
+/// mutex multiple times in its control flow. While such an algorithm would cause the thread to
+/// deadlock itself when used with a normal mutex, this is the intended task for a recursive mutex.
+/// For example, if a recursive algorithm requires synchronization using the same mutex at multiple
+/// levels of recursion, and one level of the algorithm can't release the lock before calling the
+/// next, a `CnxRecursiveMutex` would make this type of algorithm possible and prevent the thread
+/// from deadlocking itself.
+///
+/// Example:
+/// @code {.c}
+/// // MyThing.h
+/// #include <Cnx/sync/Mutex.h>
+/// static MyType my_very_important_thing;
+/// static CnxRecursiveMutex* my_thing_mutex;
+///
+/// void init_my_thing(void);
+/// void update_my_thing(u64 value);
+/// u64 get_value_from_my_thing(void);
+///
+/// // MyThing.c
+/// #include <Cnx/Allocators.h>
+/// void init_my_thing(void) {
+/// 	if(my_thing_mutex == nullptr) {
+/// 		my_thing_mutex = cnx_allocator_allocate_t(CnxRecursiveMutex, DEFAULT_ALLOCATOR);
+/// 		*my_thing_mutex = cnx_recursive_mutex_new();
+///
+/// 		cnx_recursive_mutex_lock(my_thing_mutex);
+/// 		my_very_important_thing = {
+/// 		// important intialization
+/// 		};
+/// 		cnx_recursive_mutex_unlock(my_thing_mutex);
+/// 	}
+/// }
+///
+/// void update_my_thing(u64 value) {
+/// 	cnx_mutex_lock(my_thing_mutex);
+/// 	let adjusted_value = static_cast(u64)(4 * value);
+/// 	if(adjusted_value < 46) {
+/// 		// even though we've already acquired the lock on `my_thing_mutex`, and this will try to
+/// 		// acquire it again, that's OK because we're using a recursive mutex
+/// 		update_my_thing(adjusted_value);
+/// 	}
+/// 	else {
+/// 		my_very_important_thing.value = adjusted_value;
+/// 	}
+/// 	cnx_mutex_unlock(my_thing_mutex);
+/// }
+///
+/// u64 get_value_from_my_thing(void) {
+/// 	cnx_mutex_lock(my_thing_mutex);
+/// 	let val = my_very_important_thing.value;
+/// 	cnx_mutex_unlock(my_thing_mutex);
+/// 	return val;
+/// }
+///
+/// /// elsewhere...
+/// /// in thread1-related code
+///
+/// // do some compute intensive task...
+/// // update the value
+/// update_my_thing(new_value);
+///
+/// /// in thread2-related code
+/// my_val = get_value_from_my_thing();
+/// // do something with my_val
+///
+/// let_mut newval = get_value_from_my_thing();
+/// while(newval == my_val) {
+/// 	cnx_this_thread_sleep_for(cnx_milliseconds(100));
+/// 	newval = get_value_from_my_thing();
+/// }
+///
+/// my_val = newval;
+/// // do something with new value
+/// @endcode
+/// @ingroup cnx_mutex
 typedef struct {
 	IGNORE_RESERVED_IDENTIFIER_WARNING_START
 	CnxRecursiveBasicMutex __mutex;
 	IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 } CnxRecursiveMutex;
 
+/// @brief `CnxTimedMutex` is a higher-level mutex type for use when timed backoff of mutex locking
+/// is required, and is directly comparable to C++'s `std::timed_mutex`. It allows for specifying a
+/// timeout, which if reached will cause execution to stop attempting to acquire the lock and signal
+/// failure to the caller, instead of blocking indefinitely until the lock was successfully acquired
+/// like a tradition mutex. For example, if an algorithm needs synchronization, but blocking for
+/// longer than X milliseconds when trying to acquire the lock would be problematic, a
+/// `CnxTimedMutex` would be the appropriate mutex type to use.
+///
+/// Example:
+/// @code {.c}
+/// // MyThing.h
+/// #include <Cnx/sync/Mutex.h>
+/// static MyType my_very_important_thing;
+/// static CnxTimedMutex* my_thing_mutex;
+///
+/// void init_my_thing(void);
+/// bool update_my_thing(u64 value);
+/// u64 get_value_from_my_thing(void);
+///
+/// // MyThing.c
+/// #include <Cnx/Allocators.h>
+/// void init_my_thing(void) {
+/// 	if(my_thing_mutex == nullptr) {
+/// 		my_thing_mutex = cnx_allocator_allocate_t(CnxTimedMutex, DEFAULT_ALLOCATOR);
+/// 		*my_thing_mutex = cnx_timed_mutex_new();
+///
+/// 		cnx_timed_mutex_lock(my_thing_mutex);
+/// 		my_very_important_thing = {
+/// 		// important intialization
+/// 		};
+/// 		cnx_timed_mutex_unlock(my_thing_mutex);
+/// 	}
+/// }
+///
+/// bool update_my_thing(u64 value) {
+///  	// Try to acquire the lock for 50 milliseconds.
+///  	// if we acquire it before the timeout, update the value.
+///  	// Otherwise return `false` to communicate that updating failed
+///  	if(cnx_timed_mutex_try_lock_for(my_thing_mutex), cnx_milliseconds(50)) {
+/// 		my_very_important_thing.value = value;
+/// 		return true;
+/// 	}
+///
+/// 	return false;
+/// }
+///
+/// u64 get_value_from_my_thing(void) {
+/// 	cnx_mutex_lock(my_thing_mutex);
+/// 	let val = my_very_important_thing.value;
+/// 	cnx_mutex_unlock(my_thing_mutex);
+/// 	return val;
+/// }
+///
+/// /// elsewhere...
+/// /// in thread1-related code
+///
+/// loop {
+/// 	// do some compute intensive task...
+///
+/// 	// try to update the value
+/// 	if(!update_my_thing(new_value)) {
+/// 		fprintln(log_file, "INFO: Failed to update value");
+/// 	}
+/// }
+///
+/// /// in thread2-related code
+/// my_val = get_value_from_my_thing();
+/// // do something with my_val
+///
+/// let_mut newval = get_value_from_my_thing();
+/// while(newval == my_val) {
+/// 	cnx_this_thread_sleep_for(cnx_milliseconds(100));
+/// 	newval = get_value_from_my_thing();
+/// }
+///
+/// my_val = newval;
+/// // do something with new value
+/// @endcode
+/// @ingroup cnx_mutex
 typedef struct {
 	IGNORE_RESERVED_IDENTIFIER_WARNING_START
 	CnxMutex __mutex;
@@ -60,6 +341,11 @@ typedef struct {
 	IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 } CnxTimedMutex;
 
+/// @brief `CnxRecursiveTimedMutex` is a higher-level mutex type for use when the properties of both
+/// a recursive and a timed mutex are necessary for the task at hand. It's directly comparable to
+/// C++'s `std::recursive_timed_mutex`. It allows for both specifying a timeout for lock acquisition
+/// as well as recursive lock acquisition on the same thread.
+/// @ingroup cnx_mutex
 typedef struct {
 	IGNORE_RESERVED_IDENTIFIER_WARNING_START
 	CnxMutex __mutex;
@@ -69,27 +355,62 @@ typedef struct {
 	IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 } CnxRecursiveTimedMutex;
 
+/// @brief `cnx_defer_lock_t` is a tag type intended for use with scoped lock guards such as
+/// `CnxUniqueLock` and `CnxSharedLock`, to communicate that the guard should defer locking the
+/// given mutex until requested to do so. This is in contrast to the default behavior, where a
+/// lock guard will acquire the lock upon its construction.
+/// @ingroup cnx_mutex
 typedef struct {
 } cnx_defer_lock_t;
 
+/// @brief A global instantiation of `cnx_defer_lock_t`, provided for convenience
+/// @ingroup cnx_mutex
 static let cnx_defer_lock = (cnx_defer_lock_t){};
 
+/// @brief `cnx_adopt_lock_t` is a tag type intended for use with scoped lock guards such as
+/// `CnxUniqueLock` and `CnxSharedLock`, to communicate that the given mutex has already been locked
+/// and thus the guard does not need to acquire the lock itself. This is in contrast to the default
+/// behavior, where a lock guard will acquire the lock upon its construction.
+/// @ingroup cnx_mutex
 typedef struct {
 } cnx_adopt_lock_t;
 
+/// @brief A global instantiation of `cnx_adopt_lock_t`, provided for convenience
+/// @ingroup cnx_mutex
 static let cnx_adopt_lock = (cnx_adopt_lock_t){};
 
+/// @brief `cnx_try_lock_t` is a tag type intended for use with scoped lock guards such as
+/// `CnxUniqueLock` and `CnxSharedLock`, to communicate that the guard should only attempt to lock
+/// the given mutex (via `try_lock`), and not block if lock acquisition was unsuccessful. This is in
+/// contrast to the default behavior, where a lock guard will unconditionally acquire the lock upon
+/// its construction.
+/// @ingroup cnx_mutex
 typedef struct {
 } cnx_try_lock_t;
 
+/// @brief A global instantiation of `cnx_try_lock_t`, provided for convenience
+/// @ingroup cnx_mutex
 static let cnx_try_lock = (cnx_try_lock_t){};
 
 // clang-format off
 
+IGNORE_RESERVED_IDENTIFIER_WARNING_START
+typedef enum {
+	__CNX_MUTEX_ID_MUTEX = 0,
+	__CNX_MUTEX_ID_RECURSIVE_MUTEX,
+	__CNX_MUTEX_ID_TIMED_MUTEX,
+	__CNX_MUTEX_ID_RECURSIVE_TIMED_MUTEX,
+	__CNX_MUTEX_ID_SHARED_MUTEX,
+	__CNX_MUTEX_ID_SHARED_TIMED_MUTEX
+} __CnxMutexId;
+IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
+
 Trait(
 	/// @brief `CnxMutexInterface` is a uniform interface and Trait implementation that all
 	/// higher-level mutexes (ie not the basic primitives provided in `<Cnx/Thread.h>) meeting
-	/// Cnx's requirements provide.
+	/// Cnx's requirements provide. This interface allows for using the various mutex types provided
+	/// by cnx with other facilities like `CnxUniqueLock` without having to special case on the
+	/// type(s) of the mutex(es) used.
 	///
 	/// @note While all Cnx mutexes provide this interface, only `lock`, `try_lock`, and
 	/// `unlock` are mandatory. `try_lock_for` and `try_lock_until` may not be provided if they
@@ -105,7 +426,9 @@ Trait(
 	__attr(nodiscard)
 	__attr(not_null(1)) bool (*const try_lock_until)(CnxMutexInterface* restrict mutex,
 													 CnxTimePoint stop_point);
-	__attr(not_null(1)) void (*const unlock)(CnxMutexInterface* restrict mutex););
+	__attr(not_null(1)) void (*const unlock)(CnxMutexInterface* restrict mutex);
+	__attr(nodiscard)
+	__attr(not_null(1)) __CnxMutexId (*const type_id)(CnxMutexInterface* restrict mutex));
 
 // clang-format on
 
@@ -326,6 +649,8 @@ __attr(nodiscard) __attr(not_null(1)) bool __cnx_mutex_try_lock(CnxMutexInterfac
 	__DISABLE_IF_NULL(mutex);
 __attr(not_null(1)) void __cnx_mutex_unlock(CnxMutexInterface* restrict mutex)
 	__DISABLE_IF_NULL(mutex);
+__attr(nodiscard) __attr(not_null(1)) __CnxMutexId __cnx_mutex_id(CnxMutexInterface* restrict mutex)
+	__DISABLE_IF_NULL(mutex);
 
 __attr(not_null(1)) void __cnx_recursive_mutex_lock(CnxMutexInterface* restrict mutex)
 	__DISABLE_IF_NULL(mutex);
@@ -334,6 +659,8 @@ __attr(nodiscard)
 		__DISABLE_IF_NULL(mutex);
 __attr(not_null(1)) void __cnx_recursive_mutex_unlock(CnxMutexInterface* restrict mutex)
 	__DISABLE_IF_NULL(mutex);
+__attr(nodiscard) __attr(not_null(1)) __CnxMutexId
+	__cnx_recursive_mutex_id(CnxMutexInterface* restrict mutex) __DISABLE_IF_NULL(mutex);
 
 __attr(not_null(1)) void __cnx_timed_mutex_lock(CnxMutexInterface* restrict mutex)
 	__DISABLE_IF_NULL(mutex);
@@ -350,6 +677,8 @@ __attr(nodiscard)
 		__DISABLE_IF_NULL(mutex);
 __attr(not_null(1)) void __cnx_timed_mutex_unlock(CnxMutexInterface* restrict mutex)
 	__DISABLE_IF_NULL(mutex);
+__attr(nodiscard) __attr(not_null(1)) __CnxMutexId
+	__cnx_timed_mutex_id(CnxMutexInterface* restrict mutex) __DISABLE_IF_NULL(mutex);
 
 __attr(not_null(1)) void __cnx_recursive_timed_mutex_lock(CnxMutexInterface* restrict mutex)
 	__DISABLE_IF_NULL(mutex);
@@ -364,36 +693,42 @@ __attr(nodiscard) __attr(not_null(1)) bool __cnx_recursive_timed_mutex_try_lock_
 	CnxTimePoint stop_point) __DISABLE_IF_NULL(mutex);
 __attr(not_null(1)) void __cnx_recursive_timed_mutex_unlock(CnxMutexInterface* restrict mutex)
 	__DISABLE_IF_NULL(mutex);
+__attr(nodiscard) __attr(not_null(1)) __CnxMutexId
+	__cnx_recursive_timed_mutex_id(CnxMutexInterface* restrict mutex) __DISABLE_IF_NULL(mutex);
 
 __attr(maybe_unused) static ImplTraitFor(CnxMutexInterface,
 										 CnxMutex,
-										 __cnx_mutex_lock,
-										 __cnx_mutex_try_lock,
-										 nullptr,
-										 nullptr,
-										 __cnx_mutex_unlock);
+										 .lock = __cnx_mutex_lock,
+										 .try_lock = __cnx_mutex_try_lock,
+										 .try_lock_for = nullptr,
+										 .try_lock_until = nullptr,
+										 .unlock = __cnx_mutex_unlock,
+										 .type_id = __cnx_mutex_id);
 __attr(maybe_unused) static ImplTraitFor(CnxMutexInterface,
 										 CnxRecursiveMutex,
-										 __cnx_recursive_mutex_lock,
-										 __cnx_recursive_mutex_try_lock,
-										 nullptr,
-										 nullptr,
-										 __cnx_recursive_mutex_unlock);
+										 .lock = __cnx_recursive_mutex_lock,
+										 .try_lock = __cnx_recursive_mutex_try_lock,
+										 .try_lock_for = nullptr,
+										 .try_lock_until = nullptr,
+										 .unlock = __cnx_recursive_mutex_unlock,
+										 .type_id = __cnx_recursive_mutex_id);
 __attr(maybe_unused) static ImplTraitFor(CnxMutexInterface,
 										 CnxTimedMutex,
-										 __cnx_timed_mutex_lock,
-										 __cnx_timed_mutex_try_lock,
-										 __cnx_timed_mutex_try_lock_for,
-										 __cnx_timed_mutex_try_lock_until,
-										 __cnx_timed_mutex_unlock);
+										 .lock = __cnx_timed_mutex_lock,
+										 .try_lock = __cnx_timed_mutex_try_lock,
+										 .try_lock_for = __cnx_timed_mutex_try_lock_for,
+										 .try_lock_until = __cnx_timed_mutex_try_lock_until,
+										 .unlock = __cnx_timed_mutex_unlock,
+										 .type_id = __cnx_timed_mutex_id);
 __attr(maybe_unused) static ImplTraitFor(CnxMutexInterface,
 										 CnxRecursiveTimedMutex,
-										 __cnx_recursive_timed_mutex_lock,
-										 __cnx_recursive_timed_mutex_try_lock,
-										 __cnx_recursive_timed_mutex_try_lock_for,
-										 __cnx_recursive_timed_mutex_try_lock_until,
-										 __cnx_recursive_mutex_unlock);
-
+										 .lock = __cnx_recursive_timed_mutex_lock,
+										 .try_lock = __cnx_recursive_timed_mutex_try_lock,
+										 .try_lock_for = __cnx_recursive_timed_mutex_try_lock_for,
+										 .try_lock_until
+										 = __cnx_recursive_timed_mutex_try_lock_until,
+										 .unlock = __cnx_recursive_mutex_unlock,
+										 .type_id = __cnx_recursive_timed_mutex_id);
 IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 
 #undef __DISABLE_IF_NULL

@@ -26,12 +26,16 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#ifndef CNX_CONDVAR
-#define CNX_CONDVAR
+#include <Cnx/__thread/__thread.h>
 
-#include <Cnx/Def.h>
-#include <Cnx/Thread.h>
-#include <Cnx/time/TimePoint.h>
+#if !___CNX_HAS_NO_THREADS
+
+	#ifndef CNX_CONDVAR
+		#define CNX_CONDVAR
+
+		#include <Cnx/Def.h>
+		#include <Cnx/Thread.h>
+		#include <Cnx/time/TimePoint.h>
 
 typedef struct {
 	IGNORE_RESERVED_IDENTIFIER_WARNING_START
@@ -46,8 +50,8 @@ typedef enum {
 
 struct CnxUniqueLock;
 
-#define __DISABLE_IF_NULL(val) \
-	cnx_disable_if(!(val), "Can't perform a CnxCondvar operation with a nullptr")
+		#define __DISABLE_IF_NULL(val) \
+			cnx_disable_if(!(val), "Can't perform a CnxCondvar operation with a nullptr")
 
 __attr(nodiscard) CnxCondvar cnx_condvar_new(void);
 __attr(not_null(1, 2)) void cnx_condvar_wait(CnxCondvar* restrict condvar,
@@ -68,6 +72,8 @@ __attr(not_null(1)) void cnx_condvar_notify_all(CnxCondvar* restrict condvar)
 	__DISABLE_IF_NULL(condvar);
 __attr(not_null(1)) void cnx_condvar_free(CnxCondvar* restrict condvar) __DISABLE_IF_NULL(condvar);
 
-#undef __DISABLE_IF_NULL
+		#undef __DISABLE_IF_NULL
 
-#endif // CNX_CONDVAR
+	#endif // CNX_CONDVAR
+
+#endif //!___CNX_HAS_NO_THREADS

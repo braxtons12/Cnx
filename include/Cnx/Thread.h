@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Type definitions and function declarations for threading functionality
 /// @version 0.2.2
-/// @date 2022-05-05
+/// @date 2022-05-06
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -131,6 +131,7 @@
 #include <Cnx/Lambda.h>
 #include <Cnx/__thread/__thread.h>
 #include <Cnx/time/Duration.h>
+#include <Cnx/time/TimePoint.h>
 
 #if ___CNX_HAS_NO_THREADS
 	#error Threads not supported on the target platform
@@ -461,7 +462,7 @@ __attr(nodiscard) __attr(not_null(1)) CnxResult
 ///
 /// @param condvar - The condvar to wait on
 /// @param mutex - The mutex associated with the condvar
-/// @param to_wait - The amount of time to wait on the condvasr
+/// @param to_wait - The amount of time to wait on the condvar
 ///
 /// @return `Ok` if successful
 /// @ingroup cnx_thread
@@ -470,6 +471,30 @@ __attr(nodiscard) __attr(not_null(1, 2)) CnxResult
 							   // NOLINTNEXTLINE(readability-non-const-parameter)
 							   CnxBasicMutex* restrict mutex,
 							   CnxDuration to_wait) __DISABLE_IF_NULL(condvar)
+		cnx_disable_if(!mutex, "Can't do a timed wait with a null mutex");
+/// @brief Blocks on the condition variable pointed to by `condvar` until the thread is signalled
+/// by it, or the point in time indicated by `stop_point` time has been reached.
+///
+/// Unlocks the mutex pointed to by `mutex` and blocks on the condition variable pointed to
+/// by `condvar` until the thread is signalled by it, or the time indicated by `stop_point` has
+/// been reached. The mutex is re-locked again before the function returns. The mutex must be locked
+/// by the calling thread prior to calling this.
+///
+/// Waiting on a condition variable can fail.
+/// Returns `Ok` if a signal is received from the condition variable before `to_wait` has elapsed,
+/// otherwise returns an error.
+///
+/// @param condvar - The condvar to wait on
+/// @param mutex - The mutex associated with the condvar
+/// @param stop_point - The point in time to stop waiting on the condvar
+///
+/// @return `Ok` if successful
+/// @ingroup cnx_thread
+__attr(nodiscard) __attr(not_null(1, 2)) CnxResult
+	cnx_basic_condvar_wait_until(CnxBasicCondvar* restrict condvar,
+								 // NOLINTNEXTLINE(readability-non-const-parameter)
+								 CnxBasicMutex* restrict mutex,
+								 CnxTimePoint stop_point) __DISABLE_IF_NULL(condvar)
 		cnx_disable_if(!mutex, "Can't do a timed wait with a null mutex");
 /// @brief Destroys the condition variable pointed to by `condvar`
 ///

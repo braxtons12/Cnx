@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides wrappers for standard C compile-time and runtime asserts and other
 /// custom asserts and assert-like facilities
-/// @version 0.1.2
-/// @date 2022-04-30
+/// @version 0.1.3
+/// @date 2022-05-06
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -68,6 +68,7 @@
 /// @}
 #include <Cnx/BasicTypes.h>
 #include <Cnx/TypeTraits.h>
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -86,6 +87,7 @@
 	#define cnx_panic(error_message)                                                     \
 		({                                                                               \
 			fprintf(stderr, "Panic at %s:%d : %s\n", __FILE__, __LINE__, error_message); \
+			assert(false);                                                               \
 			abort();                                                                     \
 		})
 
@@ -103,7 +105,7 @@ __attr(not_null(2, 3)) void cnx_assert_cstring(bool condition,
 											   const_cstring file,
 											   i64 line);
 
-	// clang-format off
+		// clang-format off
 		
 	/// @brief Asserts that the given condition is `true`.
 	///

@@ -88,6 +88,7 @@ Trait(
 	__attr(not_null(1)) bool (*const try_lock_shared_until)(CnxSharedMutexInterface* restrict mutex,
 													 		CnxTimePoint stop_point);
 	__attr(not_null(1)) void (*const unlock_shared)(CnxSharedMutexInterface* restrict mutex);
+	__attr(not_null(1)) __CnxMutexId (*const type_id)(CnxSharedMutexInterface* restrict mutex);
 );
 
 // clang-format on
@@ -282,6 +283,8 @@ __attr(nodiscard)
 		__DISABLE_IF_NULL(mutex);
 __attr(not_null(1)) void __cnx_shared_mutex_unlock_imutex(CnxMutexInterface* restrict mutex)
 	__DISABLE_IF_NULL(mutex);
+__attr(nodiscard) __attr(not_null(1)) __CnxMutexId
+	__cnx_shared_mutex_id_imutex(CnxMutexInterface* restrict mutex) __DISABLE_IF_NULL(mutex);
 
 __attr(not_null(1)) void __cnx_shared_timed_mutex_lock_imutex(CnxMutexInterface* restrict mutex)
 	__DISABLE_IF_NULL(mutex);
@@ -295,6 +298,8 @@ __attr(nodiscard) __attr(not_null(1)) bool __cnx_shared_timed_mutex_try_lock_unt
 	CnxTimePoint stop_point) __DISABLE_IF_NULL(mutex);
 __attr(not_null(1)) void __cnx_shared_timed_mutex_unlock_imutex(CnxMutexInterface* restrict mutex)
 	__DISABLE_IF_NULL(mutex);
+__attr(nodiscard) __attr(not_null(1)) __CnxMutexId
+	__cnx_shared_timed_mutex_id_imutex(CnxMutexInterface* restrict mutex) __DISABLE_IF_NULL(mutex);
 
 __attr(maybe_unused) static ImplTraitFor(CnxMutexInterface,
 										 CnxSharedMutex,
@@ -302,7 +307,8 @@ __attr(maybe_unused) static ImplTraitFor(CnxMutexInterface,
 										 .try_lock = __cnx_shared_mutex_try_lock_imutex,
 										 .try_lock_for = nullptr,
 										 .try_lock_until = nullptr,
-										 .unlock = __cnx_shared_mutex_unlock_imutex);
+										 .unlock = __cnx_shared_mutex_unlock_imutex,
+										 .type_id = __cnx_shared_mutex_id_imutex);
 __attr(maybe_unused) static ImplTraitFor(CnxMutexInterface,
 										 CnxSharedTimedMutex,
 										 .lock = __cnx_shared_timed_mutex_lock_imutex,
@@ -311,7 +317,8 @@ __attr(maybe_unused) static ImplTraitFor(CnxMutexInterface,
 										 = __cnx_shared_timed_mutex_try_lock_for_imutex,
 										 .try_lock_until
 										 = __cnx_shared_timed_mutex_try_lock_until_imutex,
-										 .unlock = __cnx_shared_timed_mutex_unlock_imutex);
+										 .unlock = __cnx_shared_timed_mutex_unlock_imutex,
+										 .type_id = __cnx_shared_timed_mutex_id_imutex);
 
 __attr(not_null(1)) void __cnx_shared_mutex_lock_ishared(CnxSharedMutexInterface* restrict mutex)
 	__DISABLE_IF_NULL(mutex);
@@ -325,6 +332,8 @@ __attr(nodiscard) __attr(not_null(1)) bool __cnx_shared_mutex_try_lock_shared_is
 	CnxSharedMutexInterface* restrict mutex) __DISABLE_IF_NULL(mutex);
 __attr(not_null(1)) void __cnx_shared_mutex_unlock_shared_ishared(
 	CnxSharedMutexInterface* restrict mutex) __DISABLE_IF_NULL(mutex);
+__attr(nodiscard) __attr(not_null(1)) __CnxMutexId
+	__cnx_shared_mutex_id_ishared(CnxSharedMutexInterface* restrict mutex) __DISABLE_IF_NULL(mutex);
 
 __attr(not_null(1)) void __cnx_shared_timed_mutex_lock_ishared(
 	CnxSharedMutexInterface* restrict mutex) __DISABLE_IF_NULL(mutex);
@@ -350,6 +359,9 @@ __attr(nodiscard) __attr(not_null(1)) bool __cnx_shared_timed_mutex_try_lock_sha
 	CnxTimePoint stop_point) __DISABLE_IF_NULL(mutex);
 __attr(not_null(1)) void __cnx_shared_timed_mutex_unlock_shared_ishared(
 	CnxSharedMutexInterface* restrict mutex) __DISABLE_IF_NULL(mutex);
+__attr(nodiscard) __attr(not_null(1)) __CnxMutexId
+	__cnx_shared_timed_mutex_id_ishared(CnxSharedMutexInterface* restrict mutex)
+		__DISABLE_IF_NULL(mutex);
 
 __attr(maybe_unused) static ImplTraitFor(CnxSharedMutexInterface,
 										 CnxSharedMutex,
@@ -363,7 +375,8 @@ __attr(maybe_unused) static ImplTraitFor(CnxSharedMutexInterface,
 										 = __cnx_shared_mutex_try_lock_shared_ishared,
 										 .try_lock_shared_for = nullptr,
 										 .try_lock_shared_until = nullptr,
-										 .unlock_shared = __cnx_shared_mutex_unlock_shared_ishared);
+										 .unlock_shared = __cnx_shared_mutex_unlock_shared_ishared,
+										 .type_id = __cnx_shared_mutex_id_ishared);
 __attr(maybe_unused) static ImplTraitFor(
 	CnxSharedMutexInterface,
 	CnxSharedTimedMutex,
@@ -376,7 +389,8 @@ __attr(maybe_unused) static ImplTraitFor(
 	.try_lock_shared = __cnx_shared_timed_mutex_try_lock_shared_ishared,
 	.try_lock_shared_for = __cnx_shared_timed_mutex_try_lock_shared_for_ishared,
 	.try_lock_shared_until = __cnx_shared_timed_mutex_try_lock_shared_until_ishared,
-	.unlock_shared = __cnx_shared_timed_mutex_unlock_shared_ishared);
+	.unlock_shared = __cnx_shared_timed_mutex_unlock_shared_ishared,
+	.type_id = __cnx_shared_mutex_id_ishared);
 IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 
 #undef __DISABLE_IF_NULL

@@ -31,13 +31,83 @@
 #include <Cnx/Def.h>
 #include <Cnx/sync/SharedMutex.h>
 
-typedef struct {
+typedef struct CnxSharedLock {
 	IGNORE_RESERVED_IDENTIFIER_WARNING_START
-	CnxSharedMutex* __mutex;
+	CnxSharedMutexInterface __mutex;
 	bool __owned;
 	IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 } CnxSharedLock;
 
 #define SharedLock scoped(cnx_shared_lock_free)
+
+#define __DISABLE_IF_NULL(lock) \
+	cnx_disable_if(!(lock), "Can't perform a CnxSharedLock operation on a nullptr")
+
+#define cnx_shared_lock(...) CONCAT2(__cnx_shared_lock_, PP_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+
+__attr(not_null(1)) void cnx_shared_lock_lock(CnxSharedLock* restrict lock) __DISABLE_IF_NULL(lock);
+__attr(nodiscard) __attr(not_null(1)) bool cnx_shared_lock_try_lock(CnxSharedLock* restrict lock)
+	__DISABLE_IF_NULL(lock);
+__attr(nodiscard)
+	__attr(not_null(1)) bool cnx_shared_lock_try_lock_for(CnxSharedLock* restrict lock,
+														  CnxDuration duration)
+		__DISABLE_IF_NULL(lock) __DISABLE_IF_NULL(lock->__mutex.m_vtable->try_lock_for);
+__attr(nodiscard)
+	__attr(not_null(1)) bool cnx_shared_lock_try_lock_until(CnxSharedLock* restrict lock,
+															CnxTimePoint stop_point)
+		__DISABLE_IF_NULL(lock) __DISABLE_IF_NULL(lock->__mutex.m_vtable->try_lock_until);
+__attr(not_null(1)) void cnx_shared_lock_unlock(CnxSharedLock* restrict lock)
+	__DISABLE_IF_NULL(lock);
+__attr(nodiscard) __attr(not_null(1)) CnxSharedMutexInterface
+	cnx_shared_lock_mutex(CnxSharedLock* restrict lock) __DISABLE_IF_NULL(lock);
+__attr(nodiscard) __attr(not_null(1)) bool cnx_shared_lock_owns_lock(CnxSharedLock* restrict lock)
+	__DISABLE_IF_NULL(lock);
+__attr(not_null(1)) void cnx_shared_lock_free(void* lock) __DISABLE_IF_NULL(lock);
+
+IGNORE_RESERVED_IDENTIFIER_WARNING_START
+#define __cnx_shared_lock_cast(mutex) \
+	_Generic((&(mutex)), 																   		   \
+				const CnxSharedMutex* 				: as_trait(CnxSharedMutexInterface, 		   \
+															   CnxSharedMutex, 					   \
+															   mutex),     						   \
+				CnxSharedMutex* 						: as_trait(CnxSharedMutexInterface, 	   \
+																   CnxSharedMutex, 				   \
+																   mutex),     					   \
+				const CnxRecursiveMutex* 		: as_trait(CnxSharedMutexInterface, 					   \
+														   CnxRecursiveMutex, 					   \
+														   mutex), 								   \
+				CnxRecursiveMutex* 				: as_trait(CnxSharedMutexInterface, 					   \
+														   CnxRecursiveMutex, 					   \
+														   mutex), 								   \
+				const CnxSharedTimedMutex* 			: as_trait(CnxSharedMutexInterface, 		   \
+														   CnxSharedTimedMutex, 				   \
+														   mutex), 								   \
+				CnxSharedTimedMutex* 					: as_trait(CnxSharedMutexInterface, 	   \
+														   CnxSharedTimedMutex, 				   \
+														   mutex))
+
+#define __cnx_shared_lock_1(mutex) __cnx_shared_lock(__cnx_shared_lock_cast(mutex))
+
+#define __cnx_shared_lock_2(mutex, lock_type) \
+	_Generic((&(lock_type)), 																   \
+				const cnx_defer_lock_t* 	: __cnx_shared_lock_deferred, 						   \
+				cnx_defer_lock_t* 			: __cnx_shared_lock_deferred, 						   \
+				const cnx_try_lock_t* 		: __cnx_shared_lock_try, 							   \
+				cnx_try_lock_t* 			: __cnx_shared_lock_try, 							   \
+				const cnx_adopt_lock_t* 	: __cnx_shared_lock_adopt, 							   \
+				cnx_adopt_lock_t* 			: __cnx_shared_lock_adopt) 							   \
+			(__cnx_shared_lock_cast(mutex), lock_type)
+
+__attr(nodiscard) CnxSharedLock __cnx_shared_lock(CnxSharedMutexInterface mutex);
+__attr(nodiscard) CnxSharedLock
+	__cnx_shared_lock_deferred(CnxSharedMutexInterface mutex, cnx_defer_lock_t defer_lock);
+__attr(nodiscard) CnxSharedLock
+	__cnx_shared_lock_try(CnxSharedMutexInterface mutex, cnx_try_lock_t try_lock);
+__attr(nodiscard) CnxSharedLock
+	__cnx_shared_lock_adopt(CnxSharedMutexInterface mutex, cnx_adopt_lock_t adopt_lock);
+
+IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
+
+#undef __DISABLE_IF_NULL
 
 #endif // CNX_SHARED_LOCK
