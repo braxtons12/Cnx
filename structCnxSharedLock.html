@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>CnxUniqueLock struct | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</title>
+  <title>CnxSharedLock struct | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -42,14 +42,14 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          CnxUniqueLock <span class="m-thin">struct</span>
-          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="UniqueLock_8h.html">&lt;include/Cnx/sync/UniqueLock.h&gt;</a></div>
+          CnxSharedLock <span class="m-thin">struct</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="SharedLock_8h.html">&lt;include/Cnx/sync/SharedLock.h&gt;</a></div>
         </h1>
-        <p><code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> provides scoped exclusive locking of any higher-level mutexes (eg <code><a href="structCnxMutex.html" class="m-doc">CnxMutex</a></code>, <code><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a></code>, etc.) provided by Cnx. It allows for a simple, concise way to acquire the exclusive lock on a mutex and ensure that lock is released appropriately when the <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> exits scope.</p>
-<p>To ensure that a <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> is appropriately destroyed when it leaves scope, releasing the lock on its associated mutex, declare it as a <code>UniqueLock</code>.</p><p>A <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> should never be copied, to do so is undefined behavior. A <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> may be moved into a new scope with <code>move</code> (eg. passing it to a function as a parameter), however. If this is done though, the receiving function will need to either move the parameter into a local variable declared as a <code>UniqueLock</code>, or manually unlock the mutex before it returns.</p><p>Example:</p><pre class="m-code"><span class="c1">// MyThing.h</span>
-<span class="cp">#include</span> <span class="cpf">&lt;Cnx/sync/Mutex.h&gt;</span><span class="cp"></span>
+        <p><code><a href="structCnxSharedLock.html" class="m-doc">CnxSharedLock</a></code> provides scoped non-exclusive (shared) locking of higher-level mutexes (eg <code><a href="structCnxSharedMutex.html" class="m-doc">CnxSharedMutex</a></code>, <code><a href="structCnxSharedTimedMutex.html" class="m-doc">CnxSharedTimedMutex</a></code>) provided by Cnx. It allows for a simple, concise way to acquire the shared lock on a mutex and ensure that lock is released appropriately when the <code><a href="structCnxSharedLock.html" class="m-doc">CnxSharedLock</a></code> exits scope.</p>
+<p>To ensure that a <code><a href="structCnxSharedLock.html" class="m-doc">CnxSharedLock</a></code> is appropriately destroyed when it leaves scope, releasing the lock on its associated mutex, declare it as a <code>SharedLock</code>.</p><p>A <code><a href="structCnxSharedLock.html" class="m-doc">CnxSharedLock</a></code> should never be copied, to do so is undefined behavior. A <code><a href="structCnxSharedLock.html" class="m-doc">CnxSharedLock</a></code> may be moved into a new scope with <code>move</code> (eg. passing it to a function as a parameter), however. If this is done though, the receiving function will need to either move the parameter into a local variable declared as a <code>SharedLock</code>, or manually unlock the mutex before it returns.</p><p>Example:</p><pre class="m-code"><span class="c1">// MyThing.h</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/sync/SharedMutex.h&gt;</span><span class="cp"></span>
 <span class="k">static</span> <span class="n">MyType</span> <span class="n">my_very_important_thing</span><span class="p">;</span>
-<span class="k">static</span> <span class="n">CnxMutex</span><span class="o">*</span> <span class="n">my_thing_mutex</span><span class="p">;</span>
+<span class="k">static</span> <span class="n">CnxSharedMutex</span><span class="o">*</span> <span class="n">my_thing_mutex</span><span class="p">;</span>
 
 <span class="kt">void</span> <span class="nf">init_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
 <span class="kt">void</span> <span class="nf">update_my_thing</span><span class="p">(</span><span class="n">u64</span> <span class="n">value</span><span class="p">);</span>
@@ -58,11 +58,12 @@
 <span class="c1">// MyThing.c</span>
 <span class="cp">#include</span> <span class="cpf">&lt;Cnx/Allocators.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;Cnx/sync/UniqueLock.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;Cnx/sync/SharedLock.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;MyThing.h&quot;</span><span class="cp"></span>
 <span class="kt">void</span> <span class="nf">init_my_thing</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span><span class="p">(</span><span class="n">my_thing_mutex</span> <span class="o">==</span> <span class="n">nullptr</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">my_thing_mutex</span> <span class="o">=</span> <span class="n">cnx_allocator_allocate_t</span><span class="p">(</span><span class="n">CnxMutex</span><span class="p">,</span> <span class="n">DEFAULT_ALLOCATOR</span><span class="p">);</span>
-        <span class="o">*</span><span class="n">my_thing_mutex</span> <span class="o">=</span> <span class="n">cnx_mutex_new</span><span class="p">();</span>
+        <span class="n">my_thing_mutex</span> <span class="o">=</span> <span class="n">cnx_allocator_allocate_t</span><span class="p">(</span><span class="n">CnxSharedMutex</span><span class="p">,</span> <span class="n">DEFAULT_ALLOCATOR</span><span class="p">);</span>
+        <span class="o">*</span><span class="n">my_thing_mutex</span> <span class="o">=</span> <span class="n">cnx_shared_mutex_new</span><span class="p">();</span>
 
         <span class="p">{</span>
             <span class="c1">// use a `CnxUniqueLock` to lock `my_thing_mutex`.</span>
@@ -83,9 +84,9 @@
     <span class="c1">// `lock` automatically destroyed at scope end, releasing the lock on `my_thing_mutex`</span>
 <span class="p">}</span>
 
-<span class="n">u64</span> <span class="nf">get_value_from_my_thing</span><span class="p">(</span><span class="n">CnxUniqueLock</span> <span class="n">lock</span><span class="p">)</span> <span class="p">{</span>
+<span class="n">u64</span> <span class="nf">get_value_from_my_thing</span><span class="p">(</span><span class="n">CnxSharedLock</span> <span class="n">lock</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// move lock into lock2 so that the mutex will be unlocked at scope exit</span>
-    <span class="n">__attr</span><span class="p">(</span><span class="n">maybe_unused</span><span class="p">)</span> <span class="n">UniqueLock</span> <span class="n">lock2</span> <span class="o">=</span> <span class="n">move</span><span class="p">(</span><span class="n">lock</span><span class="p">);</span>
+    <span class="n">__attr</span><span class="p">(</span><span class="n">maybe_unused</span><span class="p">)</span> <span class="n">SharedLock</span> <span class="n">lock2</span> <span class="o">=</span> <span class="n">move</span><span class="p">(</span><span class="n">lock</span><span class="p">);</span>
     <span class="n">let</span> <span class="n">val</span> <span class="o">=</span> <span class="n">my_very_important_thing</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
     <span class="k">return</span> <span class="n">val</span><span class="p">;</span>
     <span class="c1">// `lock2` automatically destroyed at scope end, releasing the lock on `my_thing_mutex`</span>
@@ -96,15 +97,15 @@
 <span class="c1">// update the value</span>
 <span class="n">update_my_thing</span><span class="p">(</span><span class="n">new_value</span><span class="p">);</span>
 
-<span class="n">UniqueLock</span> <span class="n">lock1</span> <span class="o">=</span> <span class="n">cnx_unique_lock</span><span class="p">(</span><span class="o">*</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+<span class="n">SharedLock</span> <span class="n">lock1</span> <span class="o">=</span> <span class="n">cnx_shared_lock</span><span class="p">(</span><span class="o">*</span><span class="n">my_thing_mutex</span><span class="p">);</span>
 <span class="n">my_val</span> <span class="o">=</span> <span class="n">get_value_from_my_thing</span><span class="p">(</span><span class="n">move</span><span class="p">(</span><span class="n">lock1</span><span class="p">));</span>
 <span class="c1">// do something with my_val</span>
 
-<span class="n">UniqueLock</span> <span class="n">lock2</span> <span class="o">=</span> <span class="n">cnx_unique_lock</span><span class="p">(</span><span class="o">*</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+<span class="n">SharedLock</span> <span class="n">lock2</span> <span class="o">=</span> <span class="n">cnx_shared_lock</span><span class="p">(</span><span class="o">*</span><span class="n">my_thing_mutex</span><span class="p">);</span>
 <span class="n">let_mut</span> <span class="n">newval</span> <span class="o">=</span> <span class="n">get_value_from_my_thing</span><span class="p">(</span><span class="n">move</span><span class="p">(</span><span class="n">lock2</span><span class="p">));</span>
 <span class="k">while</span><span class="p">(</span><span class="n">newval</span> <span class="o">==</span> <span class="n">my_val</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">cnx_this_thread_sleep_for</span><span class="p">(</span><span class="n">cnx_milliseconds</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
-    <span class="n">UniqueLock</span> <span class="n">lock</span> <span class="o">=</span> <span class="n">cnx_unique_lock</span><span class="p">(</span><span class="o">*</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+    <span class="n">SharedLock</span> <span class="n">lock</span> <span class="o">=</span> <span class="n">cnx_shared_lock</span><span class="p">(</span><span class="o">*</span><span class="n">my_thing_mutex</span><span class="p">);</span>
     <span class="n">newval</span> <span class="o">=</span> <span class="n">get_value_from_my_thing</span><span class="p">(</span><span class="n">move</span><span class="p">(</span><span class="n">lock</span><span class="p">));</span>
 <span class="p">}</span>
 

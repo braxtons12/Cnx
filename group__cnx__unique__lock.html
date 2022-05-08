@@ -185,7 +185,7 @@
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#gaefa420b8e628be4587280a8f57a4bb9c" class="m-doc">cnx_unique_lock</a>(</span><span class="m-doc-wrap">...)</span>
             </dt>
-            <dd>Creates a new <code>cnx_unique_lock</code> associated with the given mutex.</dd>
+            <dd>Creates a new <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> associated with the given mutex.</dd>
           </dl>
         </section>
         <section>
@@ -246,10 +246,12 @@
 <span class="c1">// update the value</span>
 <span class="n">update_my_thing</span><span class="p">(</span><span class="n">new_value</span><span class="p">);</span>
 
-<span class="n">my_val</span> <span class="o">=</span> <span class="n">get_value_from_my_thing</span><span class="p">();</span>
+<span class="n">UniqueLock</span> <span class="n">lock1</span> <span class="o">=</span> <span class="n">cnx_unique_lock</span><span class="p">(</span><span class="o">*</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+<span class="n">my_val</span> <span class="o">=</span> <span class="n">get_value_from_my_thing</span><span class="p">(</span><span class="n">move</span><span class="p">(</span><span class="n">lock1</span><span class="p">));</span>
 <span class="c1">// do something with my_val</span>
 
-<span class="n">let_mut</span> <span class="n">newval</span> <span class="o">=</span> <span class="n">get_value_from_my_thing</span><span class="p">();</span>
+<span class="n">UniqueLock</span> <span class="n">lock2</span> <span class="o">=</span> <span class="n">cnx_unique_lock</span><span class="p">(</span><span class="o">*</span><span class="n">my_thing_mutex</span><span class="p">);</span>
+<span class="n">let_mut</span> <span class="n">newval</span> <span class="o">=</span> <span class="n">get_value_from_my_thing</span><span class="p">(</span><span class="n">move</span><span class="p">(</span><span class="n">lock2</span><span class="p">));</span>
 <span class="k">while</span><span class="p">(</span><span class="n">newval</span> <span class="o">==</span> <span class="n">my_val</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">cnx_this_thread_sleep_for</span><span class="p">(</span><span class="n">cnx_milliseconds</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
     <span class="n">UniqueLock</span> <span class="n">lock</span> <span class="o">=</span> <span class="n">cnx_unique_lock</span><span class="p">(</span><span class="o">*</span><span class="n">my_thing_mutex</span><span class="p">);</span>
@@ -464,7 +466,7 @@
               <span class="m-doc-wrap-bumper">#define <a href="#gaefa420b8e628be4587280a8f57a4bb9c" class="m-doc-self">cnx_unique_lock</a>(</span><span class="m-doc-wrap">...)</span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="UniqueLock_8h.html">&lt;include/Cnx/sync/UniqueLock.h&gt;</a></div>
             </h3>
-            <p>Creates a new <code>cnx_unique_lock</code> associated with the given mutex.</p>
+            <p>Creates a new <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> associated with the given mutex.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -482,7 +484,7 @@
                 </tr>
               </tfoot>
             </table>
-<p>Creates a new <code>cnx_unique_lock</code> associated with the given mutex. If an instance of a tag type is <strong>NOT</strong> given to specify construction behavior, this will block until the exclusive lock is acquired on the given mutex. If an instance of a tag type specifying construction behavior <strong>IS</strong> given, however, then construction will behave according to the given tag type:</p><ul><li>A <code><a href="structcnx__defer__lock__t.html" class="m-doc">cnx_<wbr />defer_<wbr />lock_<wbr />t</a></code>: Construct the <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> without acquiring the lock on the given mutex. The mutex will need to be manually locked (via the unique lock) later</li><li>A <code><a href="structcnx__adopt__lock__t.html" class="m-doc">cnx_<wbr />adopt_<wbr />lock_<wbr />t</a></code>: The lock has already been acquired, so the <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> does not need to acquire it. Behavior will otherwise proceed as if no tag type instance were given.</li><li>A <code><a href="structcnx__try__lock__t.html" class="m-doc">cnx_<wbr />try_<wbr />lock_<wbr />t</a></code>: Attempt to acquire the lock on the given mutex during construction. The <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> will need to be queried as to whether it successfully acquired the lock with <code>cnx_unique_lock_owns_lock</code>, but otherwise behavior will proceed as if no tag type instance were given.</li></ul>
+<p>Creates a new <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> associated with the given mutex. If an instance of a tag type is <strong>NOT</strong> given to specify construction behavior, this will block until the exclusive lock is acquired on the given mutex. If an instance of a tag type specifying construction behavior <strong>IS</strong> given, however, then construction will behave according to the given tag type:</p><ul><li>A <code><a href="structcnx__defer__lock__t.html" class="m-doc">cnx_<wbr />defer_<wbr />lock_<wbr />t</a></code>: Construct the <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> without acquiring the lock on the given mutex. The mutex will need to be manually locked (via the unique lock) later</li><li>A <code><a href="structcnx__adopt__lock__t.html" class="m-doc">cnx_<wbr />adopt_<wbr />lock_<wbr />t</a></code>: The lock has already been acquired, so the <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> does not need to acquire it. Behavior will otherwise proceed as if no tag type instance were given.</li><li>A <code><a href="structcnx__try__lock__t.html" class="m-doc">cnx_<wbr />try_<wbr />lock_<wbr />t</a></code>: Attempt to acquire the lock on the given mutex during construction. The <code><a href="structCnxUniqueLock.html" class="m-doc">CnxUniqueLock</a></code> will need to be queried as to whether it successfully acquired the lock with <code>cnx_unique_lock_owns_lock</code>, but otherwise behavior will proceed as if no tag type instance were given.</li></ul>
           </div></section>
         </section>
       </div>
