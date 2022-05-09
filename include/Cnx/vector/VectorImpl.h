@@ -162,6 +162,7 @@ static const struct CnxVectorIdentifier(VECTOR_T, vtable) CnxVectorIdentifier(VE
 		.clear = CnxVectorIdentifier(VECTOR_T, clear),
 		.push_back = CnxVectorIdentifier(VECTOR_T, push_back),
 		.pop_back = CnxVectorIdentifier(VECTOR_T, pop_back),
+		.pop_front = CnxVectorIdentifier(VECTOR_T, pop_front),
 		.insert = CnxVectorIdentifier(VECTOR_T, insert),
 		.erase = CnxVectorIdentifier(VECTOR_T, erase),
 		.erase_n = CnxVectorIdentifier(VECTOR_T, erase_n),
@@ -490,6 +491,18 @@ VECTOR_STATIC VECTOR_INLINE CnxOption(VECTOR_T)
 	let elem = Some(VECTOR_T, *ptr);
 	*ptr = (VECTOR_T){0};
 	self->m_size--;
+
+	return elem;
+}
+
+VECTOR_STATIC VECTOR_INLINE CnxOption(VECTOR_T)
+	CnxVectorIdentifier(VECTOR_T, pop_front)(CnxVector(VECTOR_T) * restrict self) {
+	if(self->m_size == 0) {
+		return None(VECTOR_T);
+	}
+
+	let elem = Some(VECTOR_T, cnx_vector_front_mut(*self));
+	cnx_vector_erase(*self, 0);
 
 	return elem;
 }

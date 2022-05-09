@@ -180,6 +180,9 @@ __attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
 __attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE CnxOption(VECTOR_T)
 	CnxVectorIdentifier(VECTOR_T, pop_back)(CnxVector(VECTOR_T) * restrict self)
 		___DISABLE_IF_NULL(self);
+__attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE CnxOption(VECTOR_T)
+	CnxVectorIdentifier(VECTOR_T, pop_front)(CnxVector(VECTOR_T) * restrict self)
+		___DISABLE_IF_NULL(self);
 __attr(not_null(1)) VECTOR_STATIC VECTOR_INLINE
 	void CnxVectorIdentifier(VECTOR_T, insert)(CnxVector(VECTOR_T) * restrict self,
 											   VECTOR_T element,
@@ -279,6 +282,7 @@ typedef struct CnxVectorIdentifier(VECTOR_T, vtable) {
 	void (*const clear)(CnxVector(VECTOR_T)* restrict self);
 	void (*const push_back)(CnxVector(VECTOR_T)* restrict self, VECTOR_T element);
 	CnxOption(VECTOR_T) (*const pop_back)(CnxVector(VECTOR_T)* restrict self);
+	CnxOption(VECTOR_T) (*const pop_front)(CnxVector(VECTOR_T)* restrict self);
 	void (*const insert)(CnxVector(VECTOR_T)* restrict self, VECTOR_T element, usize index);
 	void (*const erase)(CnxVector(VECTOR_T)* restrict self, usize index);
 	void (*const erase_n)(CnxVector(VECTOR_T)* restrict self, usize index, usize num_elements);

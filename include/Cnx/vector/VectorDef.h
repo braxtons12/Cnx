@@ -401,7 +401,7 @@
 	/// @param element - The element to append
 	/// @ingroup cnx_vector
 	#define cnx_vector_push_back(self, element) (self).m_vtable->push_back(&(self), (element))
-	/// @brief Removes the last element in the given `CnxVector(T)` and removes it, if the size
+	/// @brief Returns the last element in the given `CnxVector(T)` and removes it, if the size
 	/// is greater than zero.
 	///
 	/// @param self - The `CnxVector(T)` to get the last element from
@@ -409,6 +409,14 @@
 	/// @return `Some(T)` if size > 0, otherwise `None(T)`
 	/// @ingroup cnx_vector
 	#define cnx_vector_pop_back(self) (self).m_vtable->pop_back(&(self))
+	/// @brief Returns the first element in the given `CnxVector(T)` and removes it, if the size
+	/// is greater than zero.
+	///
+	/// @param self - The `CnxVector(T)` to get the last element from
+	///
+	/// @return `Some(T)` if size > 0, otherwise `None(T)`
+	/// @ingroup cnx_vector
+	#define cnx_vector_pop_front(self) (self).m_vtable->pop_back(&(self))
 	/// @brief Inserts the given element at the given index in the given `CnxVector(T)`, moving
 	/// elements backward in the vector if necessary
 	///
