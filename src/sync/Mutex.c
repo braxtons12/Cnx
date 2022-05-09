@@ -3,7 +3,7 @@
 /// @brief `CnxMutex` provides several higher-level mutex types similar to those provided in C++'s
 /// `<mutex>`
 /// @version 0.2.0
-/// @date 2022-05-05
+/// @date 2022-05-09
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -47,6 +47,10 @@ void cnx_mutex_lock(CnxMutex* restrict mutex) {
 
 bool cnx_mutex_try_lock(CnxMutex* restrict mutex) {
 	return cnx_basic_mutex_try_lock(&(mutex->__mutex));
+}
+
+void cnx_mutex_unlock(CnxMutex* restrict mutex) {
+	ignore(cnx_basic_mutex_unlock(&(mutex->__mutex)));
 }
 
 void cnx_mutex_free(CnxMutex* restrict mutex) {
