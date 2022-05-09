@@ -316,7 +316,11 @@
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#gaf60b54def1366b8afd1050a384295d4e" class="m-doc">cnx_vector_pop_back</a>(</span><span class="m-doc-wrap">self)</span>
             </dt>
-            <dd>Removes the last element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> and removes it, if the size is greater than zero.</dd>
+            <dd>Returns the last element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> and removes it, if the size is greater than zero.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7a0e715a58f7369365d03fbc6749c23f" class="m-doc">cnx_vector_pop_front</a>(</span><span class="m-doc-wrap">self)</span>
+            </dt>
+            <dd>Returns the first element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> and removes it, if the size is greater than zero.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga8306834fdcec1970171f0d17fa7a22f4" class="m-doc">cnx_vector_insert</a>(</span><span class="m-doc-wrap">self,
               element,
@@ -1157,7 +1161,31 @@
               <span class="m-doc-wrap-bumper">#define <a href="#gaf60b54def1366b8afd1050a384295d4e" class="m-doc-self">cnx_vector_pop_back</a>(</span><span class="m-doc-wrap">self)</span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
             </h3>
-            <p>Removes the last element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> and removes it, if the size is greater than zero.</p>
+            <p>Returns the last element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> and removes it, if the size is greater than zero.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> to get the last element from</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code><a href="group__cnx__option.html#ga1296d313b4fd1d599cdcc927981a163e" class="m-doc">Some(T)</a></code> if size &gt; 0, otherwise <code><a href="group__cnx__option.html#ga30eb220055330a83fa1af4f637a009be" class="m-doc">None(T)</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga7a0e715a58f7369365d03fbc6749c23f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga7a0e715a58f7369365d03fbc6749c23f" class="m-doc-self">cnx_vector_pop_front</a>(</span><span class="m-doc-wrap">self)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="VectorDef_8h.html">&lt;include/Cnx/vector/VectorDef.h&gt;</a></div>
+            </h3>
+            <p>Returns the first element in the given <code><a href="group__cnx__vector.html#ga20ef1dda4889be96e378b40dfe573619" class="m-doc">CnxVector(T)</a></code> and removes it, if the size is greater than zero.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
