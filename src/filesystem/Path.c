@@ -84,6 +84,7 @@ __attr(always_inline) __attr(nodiscard) __attr(not_null(1)) static inline CnxStr
 	#include <pwd.h>
 	#include <unistd.h>
 	#include <ftw.h>
+	#include <limits.h>
 
 #endif // CNX_PLATFORM_WINDOWS
 
@@ -386,7 +387,7 @@ CnxPath cnx_path_current_executable_file(void) {
 CnxPath cnx_path_current_executable_file(void) {
 	struct stat stat;
 	ignore(lstat(CNX_PROC_EXE_PATH, &stat));
-	let size = stat.st_size;
+	let size = stat.st_size == 0 ? PATH_MAX : stat.st_size;
 
 	let_mut alloc
 		= cnx_allocator_allocate_array_t(char, DEFAULT_ALLOCATOR, static_cast(usize)(size + 1));
