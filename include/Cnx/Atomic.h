@@ -3,8 +3,8 @@
 /// @brief This module provides atomic operations dictated by the C11 standard,
 /// either directly through those provided by the system libc (on NOT Windows) or through an
 /// equivalent implementation (on Windows)
-/// @version 0.2.0
-/// @date 2022-03-22
+/// @version 0.2.1
+/// @date 2022-05-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -35,6 +35,10 @@
 
 #if !CNX_PLATFORM_WINDOWS || CNX_PLATFORM_COMPILER_GCC
 	#include <stdatomic.h>
+
+	#ifndef atomic
+		#define atomic _Atomic
+	#endif // atomic
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////// Extension typedefs for our library ///////////////////////////////////////
