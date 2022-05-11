@@ -224,115 +224,33 @@ CnxCompare cnx_time_point_compare(CnxTimePoint lhs, CnxTimePoint rhs) {
 	return cnx_duration_compare(lhs.time_since_epoch, rhs.time_since_epoch);
 }
 
-static const char digits[100][2] = {
-	{'0', '0'},
-	{'0', '1'},
-	{'0', '2'},
-	{'0', '3'},
-	{'0', '4'},
-	{'0', '5'},
-	{'0', '6'},
-	{'0', '7'},
-	{'0', '8'},
-	{'0', '9'},
-	{'1', '0'},
-	{'1', '1'},
-	{'1', '2'},
-	{'1', '3'},
-	{'1', '4'},
-	{'1', '5'},
-	{'1', '6'},
-	{'1', '7'},
-	{'1', '8'},
-	{'1', '9'},
-	{'2', '0'},
-	{'2', '1'},
-	{'2', '2'},
-	{'2', '3'},
-	{'2', '4'},
-	{'2', '5'},
-	{'2', '6'},
-	{'2', '7'},
-	{'2', '8'},
-	{'2', '9'},
-	{'3', '0'},
-	{'3', '1'},
-	{'3', '2'},
-	{'3', '3'},
-	{'3', '4'},
-	{'3', '5'},
-	{'3', '6'},
-	{'3', '7'},
-	{'3', '8'},
-	{'3', '9'},
-	{'4', '0'},
-	{'4', '1'},
-	{'4', '2'},
-	{'4', '3'},
-	{'4', '4'},
-	{'4', '5'},
-	{'4', '6'},
-	{'4', '7'},
-	{'4', '8'},
-	{'4', '9'},
-	{'5', '0'},
-	{'5', '1'},
-	{'5', '2'},
-	{'5', '3'},
-	{'5', '4'},
-	{'5', '5'},
-	{'5', '6'},
-	{'5', '7'},
-	{'5', '8'},
-	{'5', '9'},
-	{'6', '0'},
-	{'6', '1'},
-	{'6', '2'},
-	{'6', '3'},
-	{'6', '4'},
-	{'6', '5'},
-	{'6', '6'},
-	{'6', '7'},
-	{'6', '8'},
-	{'6', '9'},
-	{'7', '0'},
-	{'7', '1'},
-	{'7', '2'},
-	{'7', '3'},
-	{'7', '4'},
-	{'7', '5'},
-	{'7', '6'},
-	{'7', '7'},
-	{'7', '8'},
-	{'7', '9'},
-	{'8', '0'},
-	{'8', '1'},
-	{'8', '2'},
-	{'8', '3'},
-	{'8', '4'},
-	{'8', '5'},
-	{'8', '6'},
-	{'8', '7'},
-	{'8', '8'},
-	{'8', '9'},
-	{'9', '0'},
-	{'9', '1'},
-	{'9', '2'},
-	{'9', '3'},
-	{'9', '4'},
-	{'9', '5'},
-	{'9', '6'},
-	{'9', '7'},
-	{'9', '8'},
-	{'9', '9'}
-};
-
-__attr(always_inline) __attr(nodiscard) static inline char timepoint_parse_int(int num, int digit) {
-	return static_cast(char)(digit < 2 ? digits[num % 100][digit] // NOLINT
-										 :
-										 digits[num / 100][digit - 2] // NOLINT
-	);
+__attr(always_inline) __attr(nodiscard) static inline const_cstring get_digit_pair(usize value) {
+	return &"0001020304050607080910111213141516171819"
+			"2021222324252627282930313233343536373839"
+			"4041424344454647484950515253545556575859"
+			"6061626364656667686970717273747576777879"
+			"8081828384858687888990919293949596979899"[value * 2];
 }
+
+__attr(always_inline) static inline void timepoint_parse_int(
+	restrict cstring out,
+	u16 num, // NOLINT(bugprone-easily-swappable-parameters
+	u16 size) {
+
+	out += size;
+	while(num >= 100) { // NOLINT
+		out -= 2;
+		cnx_memcpy(char, out, get_digit_pair(num % 100), 2);
+		num /= 100; // NOLINT
+	}
+
+	out -= 2;
+	cnx_memcpy(char, out, get_digit_pair(num), 2);
+}
+
+static const bool cnx_string_is_little_endian
+	= CNX_PLATFORM_LITTLE_ENDIAN || !CNX_PLATFORM_BIG_ENDIAN;
+static const usize cnx_string_len_cap_shift = cnx_string_is_little_endian ? 0U : 1U;
 
 CnxString cnx_time_point_human_readable_format(CnxTimePoint self, CnxAllocator allocator) {
 	if(unlikely(self.locale == CNX_LOCAL_TIME)) {
@@ -345,36 +263,23 @@ CnxString cnx_time_point_human_readable_format(CnxTimePoint self, CnxAllocator a
 	let month = parsed.tm_mon + 1;
 
 	//// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
-	const char memory[20] = {
-		[0] = timepoint_parse_int(year, 2),
-		[1] = timepoint_parse_int(year, 3),
-		[2] = timepoint_parse_int(year, 0),
-		[3] = timepoint_parse_int(year, 1),
-		[4] = '-',
-		[5] = timepoint_parse_int(month, 0),		   // NOLINT
-		[6] = timepoint_parse_int(month, 1),		   // NOLINT
-		[7] = '-',									   // NOLINT
-		[8] = timepoint_parse_int(parsed.tm_mday, 0),  // NOLINT
-		[9] = timepoint_parse_int(parsed.tm_mday, 1),  // NOLINT
-		[10] = '|',									   // NOLINT
-		[11] = timepoint_parse_int(parsed.tm_hour, 0), // NOLINT
-		[12] = timepoint_parse_int(parsed.tm_hour, 1), // NOLINT
-		[13] = ':',									   // NOLINT
-		[14] = timepoint_parse_int(parsed.tm_min, 0),  // NOLINT
-		[15] = timepoint_parse_int(parsed.tm_min, 1),  // NOLINT
-		[16] = ':',									   // NOLINT
-		[17] = timepoint_parse_int(parsed.tm_sec, 0),  // NOLINT
-		[18] = timepoint_parse_int(parsed.tm_sec,
-								   1), // NOLINT
-									   //[19] = ' ',									   // NOLINT
-									   //[20] = '+',									   // NOLINT
-									   //[21] = '0',									   // NOLINT
-									   //[22] = '0',									   // NOLINT
-									   //[23] = '0',									   // NOLINT
-									   //[24] = '0',									   // NOLINT
-	};
+	let_mut str = cnx_string_new_with_capacity_with_allocator(20, allocator);
+	let_mut memory = cnx_string_data(str);
+	str.m_short[CNX_STRING_SHORT_OPTIMIZATION_CAPACITY] = static_cast(u8)(
+		(CNX_STRING_SHORT_OPTIMIZATION_CAPACITY - 20) << cnx_string_len_cap_shift); // NOLINT
+	memory[4] = '-';
+	memory[7] = '-';  // NOLINT
+	memory[10] = '|'; // NOLINT
+	memory[13] = ':'; // NOLINT
+	memory[16] = ':'; // NOLINT
+	timepoint_parse_int(memory, static_cast(u16)(year), 4);
+	timepoint_parse_int(memory + 5, static_cast(u16)(month), 2);		   // NOLINT
+	timepoint_parse_int(memory + 8, static_cast(u16)(parsed.tm_mday), 2);  // NOLINT
+	timepoint_parse_int(memory + 11, static_cast(u16)(parsed.tm_hour), 2); // NOLINT
+	timepoint_parse_int(memory + 14, static_cast(u16)(parsed.tm_min), 2);  // NOLINT
+	timepoint_parse_int(memory + 17, static_cast(u16)(parsed.tm_sec), 2);  // NOLINT
 	//// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
-	return cnx_string_from_cstring_with_allocator(memory, 20, allocator);
+	return str;
 }
 
 CnxString cnx_time_point_format(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {

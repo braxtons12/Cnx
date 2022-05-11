@@ -3,7 +3,7 @@
 /// @brief `CnxMutex` provides several higher-level mutex types similar to those provided in C++'s
 /// `<mutex>`
 /// @version 0.2.0
-/// @date 2022-05-08
+/// @date 2022-05-11
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -468,15 +468,24 @@ Trait(
 	/// @ingroup cnx_mutex
 	CnxMutexInterface,
 	__attr(not_null(1)) void (*const lock)(CnxMutexInterface* restrict mutex);
-	__attr(nodiscard) __attr(not_null(1)) bool (*const try_lock)(CnxMutexInterface* restrict mutex);
+#if CNX_PLATFORM_COMPILER_CLANG
+	__attr(nodiscard) 
+#endif // CNX_PLATFORM_COMPILER_CLANG
+	__attr(not_null(1)) bool (*const try_lock)(CnxMutexInterface* restrict mutex);
+#if CNX_PLATFORM_COMPILER_CLANG
 	__attr(nodiscard)
+#endif // CNX_PLATFORM_COMPILER_CLANG
 	__attr(not_null(1)) bool (*const try_lock_for)(CnxMutexInterface* restrict mutex,
 											 	   CnxDuration duration);
+#if CNX_PLATFORM_COMPILER_CLANG
 	__attr(nodiscard)
+#endif // CNX_PLATFORM_COMPILER_CLANG
 	__attr(not_null(1)) bool (*const try_lock_until)(CnxMutexInterface* restrict mutex,
 													 CnxTimePoint stop_point);
 	__attr(not_null(1)) void (*const unlock)(CnxMutexInterface* restrict mutex);
+#if CNX_PLATFORM_COMPILER_CLANG
 	__attr(nodiscard)
+#endif // CNX_PLATFORM_COMPILER_CLANG
 	__attr(not_null(1)) __CnxMutexId (*const type_id)(CnxMutexInterface* restrict mutex));
 
 // clang-format on

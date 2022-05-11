@@ -3,7 +3,7 @@
 /// @brief `CnxSharedMutex` provides several higher-level reader-writer mutex types similar to those
 /// provided in C++'s `<shared_mutex>`
 /// @version 0.2.0
-/// @date 2022-05-08
+/// @date 2022-05-11
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -374,22 +374,36 @@ Trait(
 	/// @ingroup cnx_shared_mutex
 	CnxSharedMutexInterface,
 	__attr(not_null(1)) void (*const lock)(CnxSharedMutexInterface* restrict mutex);
-	__attr(nodiscard) __attr(not_null(1)) bool (*const try_lock)(
-													CnxSharedMutexInterface* restrict mutex);
+#if CNX_PLATFORM_COMPILER_CLANG
 	__attr(nodiscard)
+#endif // CNX_PLATFORM_COMPILER_CLANG
+	__attr(not_null(1)) bool (*const try_lock)(
+													CnxSharedMutexInterface* restrict mutex);
+#if CNX_PLATFORM_COMPILER_CLANG
+	__attr(nodiscard)
+#endif // CNX_PLATFORM_COMPILER_CLANG
 	__attr(not_null(1)) bool (*const try_lock_for)(CnxSharedMutexInterface* restrict mutex,
 											 	   CnxDuration duration);
+#if CNX_PLATFORM_COMPILER_CLANG
 	__attr(nodiscard)
+#endif // CNX_PLATFORM_COMPILER_CLANG
 	__attr(not_null(1)) bool (*const try_lock_until)(CnxSharedMutexInterface* restrict mutex,
 													 CnxTimePoint stop_point);
 	__attr(not_null(1)) void (*const unlock)(CnxSharedMutexInterface* restrict mutex);
 	__attr(not_null(1)) void (*const lock_shared)(CnxSharedMutexInterface* restrict mutex);
-	__attr(nodiscard) __attr(not_null(1)) bool (*const try_lock_shared)(
-													CnxSharedMutexInterface* restrict mutex);
+#if CNX_PLATFORM_COMPILER_CLANG
 	__attr(nodiscard)
+#endif // CNX_PLATFORM_COMPILER_CLANG
+	__attr(not_null(1)) bool (*const try_lock_shared)(
+													CnxSharedMutexInterface* restrict mutex);
+#if CNX_PLATFORM_COMPILER_CLANG
+	__attr(nodiscard)
+#endif // CNX_PLATFORM_COMPILER_CLANG
 	__attr(not_null(1)) bool (*const try_lock_shared_for)(CnxSharedMutexInterface* restrict mutex,
 											 	   		  CnxDuration duration);
+#if CNX_PLATFORM_COMPILER_CLANG
 	__attr(nodiscard)
+#endif // CNX_PLATFORM_COMPILER_CLANG
 	__attr(not_null(1)) bool (*const try_lock_shared_until)(CnxSharedMutexInterface* restrict mutex,
 													 		CnxTimePoint stop_point);
 	__attr(not_null(1)) void (*const unlock_shared)(CnxSharedMutexInterface* restrict mutex);

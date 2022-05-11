@@ -1,8 +1,8 @@
 /// @file Duration.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides methods for dealing with durations of time
-/// @version 0.1.2
-/// @date 2022-04-30
+/// @version 0.1.3
+/// @date 2022-05-11
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -216,9 +216,41 @@ CnxString cnx_duration_format_with_allocator(const CnxFormat* restrict self,
 										 as_format_t(CnxRatio, _self->period));
 	}
 	else {
-		return cnx_format_with_allocator("{} * {} seconds",
-										 allocator,
-										 _self->count,
-										 as_format_t(CnxRatio, _self->period));
+		if(cnx_ratio_equal(_self->period, cnx_seconds_period)) {
+			return cnx_format_with_allocator("{} seconds", allocator, _self->count);
+		}
+		else if(cnx_ratio_equal(_self->period, cnx_milliseconds_period)) {
+			return cnx_format_with_allocator("{} milliseconds", allocator, _self->count);
+		}
+		else if(cnx_ratio_equal(_self->period, cnx_microseconds_period)) {
+			return cnx_format_with_allocator("{} microseconds", allocator, _self->count);
+		}
+		else if(cnx_ratio_equal(_self->period, cnx_nanoseconds_period)) {
+			return cnx_format_with_allocator("{} nanoseconds", allocator, _self->count);
+		}
+		else if(cnx_ratio_equal(_self->period, cnx_minutes_period)) {
+			return cnx_format_with_allocator("{} minutes", allocator, _self->count);
+		}
+		else if(cnx_ratio_equal(_self->period, cnx_hours_period)) {
+			return cnx_format_with_allocator("{} hours", allocator, _self->count);
+		}
+		else if(cnx_ratio_equal(_self->period, cnx_days_period)) {
+			return cnx_format_with_allocator("{} days", allocator, _self->count);
+		}
+		else if(cnx_ratio_equal(_self->period, cnx_weeks_period)) {
+			return cnx_format_with_allocator("{} weeks", allocator, _self->count);
+		}
+		else if(cnx_ratio_equal(_self->period, cnx_months_period)) {
+			return cnx_format_with_allocator("{} months", allocator, _self->count);
+		}
+		else if(cnx_ratio_equal(_self->period, cnx_years_period)) {
+			return cnx_format_with_allocator("{} years", allocator, _self->count);
+		}
+		else {
+			return cnx_format_with_allocator("{} * {} seconds",
+											 allocator,
+											 _self->count,
+											 as_format_t(CnxRatio, _self->period));
+		}
 	}
 }
