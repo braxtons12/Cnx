@@ -195,6 +195,7 @@ if (CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "clang"
 		-Wno-declaration-after-statement
 		-Wno-pre-c2x-compat
 		-Wno-documentation-unknown-command
+        -Wno-unreachable-code-generic-assoc
 		-Wno-unknown-warning-option
 		)
 	if (WIN32)

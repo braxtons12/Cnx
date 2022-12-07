@@ -2,7 +2,7 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief Path provides various functions for working with filesystem paths
 /// @version 0.2.0
-/// @date 2022-05-04
+/// @date 2022-06-03
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -1338,15 +1338,18 @@ __attr(nodiscard) __attr(not_null(1)) CnxResult
 }
 #endif // CNX_PLATFORM_WINDOWS
 
+// NOLINTNEXTLINE(misc-no-recursion)
 CnxResult cnx_path_remove_directory_string(const CnxPath* restrict path, bool recursive) {
 	return cnx_path_remove_directory_cstring(cnx_string_into_cstring(*path), cnx_string_length(*path), recursive);
 }
 
+// NOLINTNEXTLINE(misc-no-recursion)
 CnxResult cnx_path_remove_directory_stringview(const CnxStringView* restrict path, bool recursive) {
 	CnxScopedString str = cnx_string_from(path);
 	return cnx_path_remove_directory_cstring(cnx_string_into_cstring(str), cnx_string_length(str), recursive);
 }
 
+// NOLINTNEXTLINE(misc-no-recursion)
 CnxResult cnx_path_remove_directory_cstring(const_cstring restrict path, usize path_length, bool recursive) {
 	cnx_assert(cnx_path_is_valid(path), "Path given to cnx_path_remove_directory is invalid");
 

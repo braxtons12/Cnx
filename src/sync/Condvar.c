@@ -3,7 +3,7 @@
 /// @brief `CnxCondvar` provides a higher-level condition variable type similar to that provided in
 /// C++'s `<condition_variable>`
 /// @version 0.2.0
-/// @date 2022-05-07
+/// @date 2022-06-03
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -54,7 +54,11 @@ _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wattributes\""
 		case __CNX_MUTEX_ID_RECURSIVE_MUTEX:
 			{
 				let_mut mtx = static_cast(CnxRecursiveMutex*)(mutex.m_self);
-				return &(mtx->__mutex);
+#if CNX_PLATFORM_WINDOWS
+				return static_cast(CnxBasicMutex*)(&(mtx->__mutex));
+#else
+			return &(mtx->__mutex);
+#endif
 			}
 		case __CNX_MUTEX_ID_TIMED_MUTEX:
 			{
@@ -130,4 +134,4 @@ void cnx_condvar_free(CnxCondvar* restrict condvar) {
 	ignore(cnx_basic_condvar_free(&(condvar->__condvar)));
 }
 
-#endif // !___CNX_HAS_NO_THREADSinclude <Cnx/sync/Condvar.h>
+#endif // !___CNX_HAS_NO_THREADS
