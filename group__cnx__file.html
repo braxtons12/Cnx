@@ -169,11 +169,11 @@
             </dt>
             <dd>Reads up to <code>max_num_bytes</code> bytes from <code>file</code> and writes them to <code>bytes</code>, returning the number of bytes read.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#gaa25271b46ca137cd9f8b2c52dda1b435" class="m-doc">cnx_file_flush</a>(</span><span class="m-doc-wrap"><a href="structCnxFile.html" class="m-doc">CnxFile</a>*restrict file)</span>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__result.html#gae75db0a7127412b9b98576a3766b7f4f" class="m-doc">CnxResult</a> <a href="#gaa25271b46ca137cd9f8b2c52dda1b435" class="m-doc">cnx_file_flush</a>(</span><span class="m-doc-wrap"><a href="structCnxFile.html" class="m-doc">CnxFile</a>*restrict file)</span>
             </dt>
             <dd>Flushes the given <code>file</code>.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> <a href="#ga3d94b35bae481351a6e2e8af8d6c8f7b" class="m-doc">cnx_file_seek</a>(</span><span class="m-doc-wrap"><a href="structCnxFile.html" class="m-doc">CnxFile</a>*restrict file,
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__result.html#gae75db0a7127412b9b98576a3766b7f4f" class="m-doc">CnxResult</a> <a href="#ga3d94b35bae481351a6e2e8af8d6c8f7b" class="m-doc">cnx_file_seek</a>(</span><span class="m-doc-wrap"><a href="structCnxFile.html" class="m-doc">CnxFile</a>*restrict file,
               <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> offset,
               <a href="group__cnx__file.html#ga90d1910e2e52f64b14f88998f53237c1" class="m-doc">CnxFileSeekOrigin</a> origin)</span>
             </dt>
@@ -414,7 +414,7 @@
                 </tr>
               </tfoot>
             </table>
-<p>Reads a line of text from <code>file</code> and returns it in a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p><p>Reads <code>num_chars</code> characters from <code>file</code> and returns them in a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> allocated with the given memory allocator.</p><p>Attempts to read <code>num_chars</code> characters from <code>file</code>, returning the result in a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>. May read less than <code>num_chars</code> characters if <code>EOF</code> is reached. Reading will fail if the <code>file</code> was not opened with read access permissions or for any reason <code>fread</code> or similar libc functions may fail.</p><p>Attempts to read <code>num_chars</code> characters from <code>file</code>, returning the result in a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> allocated with the given memory allocator. May read less than <code>num_chars</code> characters if <code>EOF</code> is reached. Reading will fail if the <code>file</code> was not opened with read access permissions or for any reason <code>fread</code> or similar libc functions may fail.</p><p>Attempts to read a line of text from <code>file</code>, returning the result in a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>. May read less than a line if <code>EOF</code> is reached before a newline is encountered. Reading will fail if the <code>file</code> was not opened with read access permissions or for any reason <code>fread</code> or similar libc functions may fail.</p>
+<p>Reads a line of text from <code>file</code> and returns it in a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code></p><p>Reads <code>num_chars</code> characters from <code>file</code> and returns them in a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> allocated with the given memory allocator.</p><p>Attempts to read <code>num_chars</code> characters from <code>file</code>, returning the result in a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>. May read less than <code>num_chars</code> characters if <code>EOF</code> is reached. Reading will fail if the <code>file</code> was not opened with read access permissions or for any reason <code>fread</code> or similar libc functions may fail.</p><p>Attempts to read <code>num_chars</code> characters from <code>file</code>, returning the result in a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> allocated with the given memory allocator. May read less than <code>num_chars</code> characters if <code>EOF</code> is reached. Reading will fail if the <code>file</code> was not opened with read access permissions or for any reason <code>fread</code> or similar libc functions may fail.</p><p>Attempts to read a line of text from <code>file</code>, returning the result in a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>. May read less than a line if <code>EOF</code> is reached before a newline is encountered. Reading will fail if the <code>file</code> was not opened with read access permissions or for any reason <code>fread</code> or similar libc functions may fail.</p><p>Attempts to read a line of text from <code>file</code>, returning the result in a <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>. May read less than a line if <code>EOF</code> is reached before a newline is encountered. Reading will fail if the <code>file</code> was not opened with read access permissions or for any reason <code>fread</code> or similar libc functions may fail.</p>
           </div></section>
           <section class="m-doc-details" id="ga0fdb86284a83426af57877caba311a26"><div>
             <h3>
@@ -434,7 +434,7 @@
           </div></section>
           <section class="m-doc-details" id="gaa25271b46ca137cd9f8b2c52dda1b435"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaa25271b46ca137cd9f8b2c52dda1b435" class="m-doc-self">cnx_file_flush</a>(</span><span class="m-doc-wrap"><a href="structCnxFile.html" class="m-doc">CnxFile</a>*restrict file)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__result.html#gae75db0a7127412b9b98576a3766b7f4f" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaa25271b46ca137cd9f8b2c52dda1b435" class="m-doc-self">cnx_file_flush</a>(</span><span class="m-doc-wrap"><a href="structCnxFile.html" class="m-doc">CnxFile</a>*restrict file)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
             </h3>
             <p>Flushes the given <code>file</code>.</p>
@@ -459,7 +459,7 @@
           </div></section>
           <section class="m-doc-details" id="ga3d94b35bae481351a6e2e8af8d6c8f7b"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#ga3af94cce233d47bfb0bc43a0cdbc6a0c" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3d94b35bae481351a6e2e8af8d6c8f7b" class="m-doc-self">cnx_file_seek</a>(</span><span class="m-doc-wrap"><a href="structCnxFile.html" class="m-doc">CnxFile</a>*restrict file,
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__result.html#gae75db0a7127412b9b98576a3766b7f4f" class="m-doc">CnxResult</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3d94b35bae481351a6e2e8af8d6c8f7b" class="m-doc-self">cnx_file_seek</a>(</span><span class="m-doc-wrap"><a href="structCnxFile.html" class="m-doc">CnxFile</a>*restrict file,
               <a href="group__types.html#ga85cb35fbe5bf2961d7ad5f26814a91a2" class="m-doc">i64</a> offset,
               <a href="group__cnx__file.html#ga90d1910e2e52f64b14f88998f53237c1" class="m-doc">CnxFileSeekOrigin</a> origin)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="File_8h.html">&lt;include/Cnx/filesystem/File.h&gt;</a></div>
@@ -954,7 +954,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+). Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.5 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+). Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.6 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

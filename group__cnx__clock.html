@@ -199,6 +199,30 @@
             </dt>
             <dd>Returns the locale of the system clock.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="#gac4914b073645628d1a198e383ee488a5" class="m-doc">cnx_steady_clock_now</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns a <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> corresponding to the current time on the steady clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="#ga875eafcdd6cf2a8e3fc6d07788113dd1" class="m-doc">cnx_steady_clock_min_time_point</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the minimum possible <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> able to be associated with the steady clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="#ga719eb61cdc730f8acc932a61bd187f84" class="m-doc">cnx_steady_clock_max_time_point</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the maximum possible <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> able to be associated with the steady clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__clock.html#ga39216fb7dcff92de3a0802683b6607aa" class="m-doc">CnxClockResolution</a> <a href="#gaaca3dc7b57a00a5a134de03be4721859" class="m-doc">cnx_steady_clock_resolution</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the resolution of the steady clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> <a href="#gadec1e860a944f67aee06047ebf3d18b6" class="m-doc">cnx_steady_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the resolution of the steady clock.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#gaba7dfa35a6a117f109eed893b4ba9cc7" class="m-doc">CnxTimePointLocale</a> <a href="#ga502b9a6e9f6d9c0a71ae80b7d126aab6" class="m-doc">cnx_steady_clock_locale</a>(</span><span class="m-doc-wrap">void)</span>
+            </dt>
+            <dd>Returns the locale of the steady clock.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> <a href="#ga90f795bc3bcdbc82937569e98f089d23" class="m-doc">cnx_high_resolution_clock_now</a>(</span><span class="m-doc-wrap">void)</span>
             </dt>
             <dd>Returns a <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> corresponding to the current time on the high resolution clock.</dd>
@@ -287,6 +311,10 @@
               static <a href="group__cnx__def.html#ga045dd54932944d8830380f4596d64446" class="m-doc">let</a> <a href="#ga7e0002477635ce71aa3281229397a460" class="m-doc">cnx_system_clock</a>
             </dt>
             <dd>The system clock.</dd>
+            <dt>
+              static <a href="group__cnx__def.html#ga045dd54932944d8830380f4596d64446" class="m-doc">let</a> <a href="#gabd3caf29288fd11cb9d10310437a0c0b" class="m-doc">cnx_steady_clock</a>
+            </dt>
+            <dd>The monotonic clock.</dd>
             <dt>
               static <a href="group__cnx__def.html#ga045dd54932944d8830380f4596d64446" class="m-doc">let</a> <a href="#ga0507d02d39f12248d77b1fc4836e215b" class="m-doc">cnx_high_resolution_clock</a>
             </dt>
@@ -639,6 +667,96 @@
               </tfoot>
             </table>
           </div></section>
+          <section class="m-doc-details" id="gac4914b073645628d1a198e383ee488a5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gac4914b073645628d1a198e383ee488a5" class="m-doc-self">cnx_steady_clock_now</a>(</span><span class="m-doc-wrap">void)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Clock_8h.html">&lt;include/Cnx/time/Clock.h&gt;</a></div>
+            </h3>
+            <p>Returns a <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> corresponding to the current time on the steady clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The current time on the steady clock</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga875eafcdd6cf2a8e3fc6d07788113dd1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga875eafcdd6cf2a8e3fc6d07788113dd1" class="m-doc-self">cnx_steady_clock_min_time_point</a>(</span><span class="m-doc-wrap">void)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Clock_8h.html">&lt;include/Cnx/time/Clock.h&gt;</a></div>
+            </h3>
+            <p>Returns the minimum possible <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> able to be associated with the steady clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The minimum <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> associatable with the steady clock</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga719eb61cdc730f8acc932a61bd187f84"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga719eb61cdc730f8acc932a61bd187f84" class="m-doc-self">cnx_steady_clock_max_time_point</a>(</span><span class="m-doc-wrap">void)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Clock_8h.html">&lt;include/Cnx/time/Clock.h&gt;</a></div>
+            </h3>
+            <p>Returns the maximum possible <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> able to be associated with the steady clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The maximum <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> associatable with the steady clock</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaaca3dc7b57a00a5a134de03be4721859"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__clock.html#ga39216fb7dcff92de3a0802683b6607aa" class="m-doc">CnxClockResolution</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaaca3dc7b57a00a5a134de03be4721859" class="m-doc-self">cnx_steady_clock_resolution</a>(</span><span class="m-doc-wrap">void)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Clock_8h.html">&lt;include/Cnx/time/Clock.h&gt;</a></div>
+            </h3>
+            <p>Returns the resolution of the steady clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The resolution of the steady clock as a <code>CnxClockResolution</code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gadec1e860a944f67aee06047ebf3d18b6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxRatio.html" class="m-doc">CnxRatio</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gadec1e860a944f67aee06047ebf3d18b6" class="m-doc-self">cnx_steady_clock_resolution_as_ratio</a>(</span><span class="m-doc-wrap">void)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Clock_8h.html">&lt;include/Cnx/time/Clock.h&gt;</a></div>
+            </h3>
+            <p>Returns the resolution of the steady clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The resolution of the steady clock as a <code><a href="structCnxRatio.html" class="m-doc">CnxRatio</a></code> relative to seconds</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga502b9a6e9f6d9c0a71ae80b7d126aab6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="group__cnx__time__point.html#gaba7dfa35a6a117f109eed893b4ba9cc7" class="m-doc">CnxTimePointLocale</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga502b9a6e9f6d9c0a71ae80b7d126aab6" class="m-doc-self">cnx_steady_clock_locale</a>(</span><span class="m-doc-wrap">void)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Clock_8h.html">&lt;include/Cnx/time/Clock.h&gt;</a></div>
+            </h3>
+            <p>Returns the locale of the steady clock.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The locale of the steady clock</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
           <section class="m-doc-details" id="ga90f795bc3bcdbc82937569e98f089d23"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga90f795bc3bcdbc82937569e98f089d23" class="m-doc-self">cnx_high_resolution_clock_now</a>(</span><span class="m-doc-wrap">void)</span></span>
@@ -967,6 +1085,13 @@
             </h3>
             <p>The system clock.</p>
           </div></section>
+          <section class="m-doc-details" id="gabd3caf29288fd11cb9d10310437a0c0b"><div>
+            <h3>
+              static <a href="group__cnx__def.html#ga045dd54932944d8830380f4596d64446" class="m-doc">let</a> <a href="#gabd3caf29288fd11cb9d10310437a0c0b" class="m-doc-self">cnx_steady_clock</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Clock_8h.html">&lt;include/Cnx/time/Clock.h&gt;</a></div>
+            </h3>
+            <p>The monotonic clock.</p>
+          </div></section>
           <section class="m-doc-details" id="ga0507d02d39f12248d77b1fc4836e215b"><div>
             <h3>
               static <a href="group__cnx__def.html#ga045dd54932944d8830380f4596d64446" class="m-doc">let</a> <a href="#ga0507d02d39f12248d77b1fc4836e215b" class="m-doc-self">cnx_high_resolution_clock</a>
@@ -1043,7 +1168,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+). Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.5 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+). Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.6 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>
