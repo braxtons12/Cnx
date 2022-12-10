@@ -45,85 +45,91 @@
 /// // formats x and y as normal decimal format with one significant figure after the decimal point
 /// let formatted = cnx_format("x: {d1}, y: {d1}", x, y);
 /// @endcode
-/// Formatting currently supports the following optional format specifiers:
-/// 1. ```'d'```: standard decimal formatting. Applies to integral types and floating point numbers.
-/// Floating point numbers accept an additional numeric postfix to set the number of digits after
-/// the decimal point.
-/// 2. ```'x'```: lower-case hexadecimal. Applies to integral types.
-/// 3. ```'X'```: upper-case hexadecimal. Applies to integral types.
-/// 4. ```'e'```: Scientific notation. Applies to floating point types. Accepts an additional
-/// numeric postfix to set the number of digits after the decimal point.
+/// Formatting supports custom specifiers within the brackets, "{}". Any character except
+/// curly brackets ('{' and '}') are valid to use for format specifies for custom types.
 ///
-/// The default for integral types is decimal, and the default for floating point numbers is
-/// scientific. The default number of digits after the decimal point for floating point types is 3.
-/// `bool`s are special cased and do not accept a format specifier. They will format directly to
-/// "true" or "false".
+/// Builtin types provide some limited formatting options. For integral types, such as `char`,
+/// `u32`, or pointers, these include options for notation: 'd' (Decimal, ie Base 10), 'x'
+/// (Lower-case Hex), or 'X' (Upper-case Hex). For floating point numbers, such as `f32`, this
+/// include options for notation: 'd' (Decimal) or 'e' (Scientific/Exponential notation), and for
+/// the number of significant figures after the decimal point: a number directly following the
+/// notation specifier, or on its own if no specifier was given. The default for integral types
+/// other than pointer is decimal, for pointers is lower-case hexadecimal, and for pointers is
+/// scientific notation with 3 significant figures after the decimal point. In addition to these
+/// specifiers, builtin types also accept a "Debug" specifier `D`, and `D` should be used as the
+/// standard specifier to indicate a debugging format. All Cnx library types providing a `CnxFormat`
+/// implementation (such as `CnxDuration` or `CnxString`) support the `D` specifier and provide a
+/// debugging format.
 ///
-/// Format allows for extension and composition of formatting for user-defined types by allowing the
-/// implementation of the `CnxFormat` Trait for those types.
+/// Bools are a special case among builtin types, in that they only support the `D` specifier,
+/// even though they are technically integral types. Bools with always format to directly to "true"
+/// or "false".
+///
+/// String formatting is extensible and composable in Cnx because it uses a Trait, `CnxFormat`, to
+/// enable user-defined types to provide their own formatting implementations. This trait provides
+/// the functionality for validating format specifiers and performing string formatting for an
+/// implementing type.
 ///
 /// To provide an implementation of `CnxFormat` for your type, only three functions and the Trait
 /// implementation are required. The functions take the following signatures:
 ///
 /// @code {.c}
-/// CnxFormatContext (*const your_is_specifier_valid)(const CnxFormat* restrict self,
+/// CnxFormatContext (*const is_specifier_valid)(const CnxFormat* restrict self,
 ///                                                   CnxStringView specifier);
-/// CnxString (*const your_format)(const CnxFormat* restrict self, CnxFormatContext context);
-/// CnxString (*const your_format_with_allocator)(const CnxFormat* restrict self,
+/// CnxString (*const format)(const CnxFormat* restrict self, CnxFormatContext context);
+/// CnxString (*const format_with_allocator)(const CnxFormat* restrict self,
 /// 											  CnxFormatContext context,
 /// 											  CnxAllocator allocator);
 /// @endcode
 ///
-/// And providing the Trait implementation is as simple as:
+/// `is_specifier_valid` takes the specifier in the format string, should validate it, and return
+/// the result in a `CnxFormatContext`. A `CnxFormatContext` stores the validation result as well as
+/// up to 32 bytes of aligned storage to store any interim state parsed from the format specifier
+/// necessary for formatting your type. For example, implementations for Cnx types store whether the
+/// debug specifier `D` occurred and other state, such as the number of significant figures to use,
+/// in the case of floating point types. This context will later be passed to your formatting
+/// function in order to format the instance of your type.
 ///
-/// @code {.c}
-/// ImplTraitFor(CnxFormat,
-///              your_type,
-///              your_is_specifier_valid
-///              your_format,
-///              your_format_with_allocator);
-/// @endcode
+/// `format` and `format_with_allocator` use your type (pointed to in the trait object, `self`) and
+/// the `CnxFormatContext` (that was obtained when Cnx called your `is_specifier_valid` function)
+/// to perform the string formatting. This will likely be implemented in terms of another call to
+/// `cnx_format`, formatting the constituent parts of your type. In addition, `format` is generally
+/// implemented in terms of calling `format_with_allocator` with the default Cnx allocator.
 ///
-/// In practice, you will probably be providing this Trait implementation in a header file, so
-/// you'll also probably want to mark it as `static` and `__attr(maybe_unused)
-///
-/// @code {.c}
-/// __attr(maybe_unused) static ImplTraitFor(CnxFormat,
-///                                          your_type,
-///                                          your_is_specifier_valid,
-///                                          your_format,
-///                                          your_format_with_allocator);
-/// @endcode
-///
-/// By default, the conversion to `CnxFormat` is only automatic for builtin types and some extra
-/// types like `CnxString`, and for user-defined types the conversion will have to be made
-/// explicitly by calling `as_format_t(T, x)` on variables of those types. However, automatic
-/// conversions for **specific** user defined types can be enabled by defining a pair of macros
-/// prior to including "CnxFormat.h". First, define @ref CNX_AS_FORMAT_USES_USER_SUPPLIED_TYPES to
-/// `true`. Then, define @ref CNX_AS_FORMAT_USER_SUPPLIED_TYPES to a comma separated list of types
+/// Arguments passed to `cnx_format` must be l-values cast to their `CnxFormat` trait object
+/// representation with `as_format_t(T, value)` or `as_trait(CnxFormat, T, value)`. Cnx will
+/// automatically cast builtin types, cstrings, string-literals, and `CnxString` and `CnxStringView`
+/// to their `CnxFormat` implementation. Generally, other types will need to be cast explicitly,
+/// however, automatic conversions for **specific** user defined types can be enabled by defining a
+/// pair of macros prior to including "CnxFormat.h".
+/// First, define @ref CNX_AS_FORMAT_USES_USER_SUPPLIED_TYPES to `TRUE`.
+/// Then, define @ref CNX_AS_FORMAT_USER_SUPPLIED_TYPES to a comma separated list of types
 /// and their conversions. For example:
+///
 /// @code {.c}
-/// #define CNX_AS_FORMAT_USES_USER_SUPPLIED_TYPES true
+/// #define CNX_AS_FORMAT_USES_USER_SUPPLIED_TYPES TRUE
 /// #define CNX_AS_FORMAT_USER_SUPPLIED_TYPES T* 		: as_format_t(T, x),	\
 /// 										  const T* 	: as_format_t(T2, x), 	\
 /// 										  T2* 		: as_format_t(T2, x), 	\
 /// 										  const T2* : as_format_t(T2, x),
 /// @endcode
+///
 /// where `T` and `T2` are your supplied types. `x` should always be the second argument to the
 /// conversion function (literally always give `x` as the second argument).
 /// `cnx_format(format_string, ...)` automatically applies the `as_format(x)` `_Generic` macro to
-/// all format arguments in the parameter pack to perform the automatic conversion to `CnxFormat`,
-/// and this syntax is necessary to provide valid match arms in the `as_format(x)` macro for that
-/// conversion.
+/// all format arguments in the parameter pack to perform the automatic conversion to `CnxFormat`.
+/// That is why this syntax is necessary for the @ref CNX_AS_FORMAT_USER_SUPPLIED types macro,
+/// to provide valid match arms in the `as_format(x)` macro for that conversion.
 ///
 /// A complete example of implementing and using `CnxFormat`:
+///
 /// @code {.c}
 /// typedef struct Point2D {
 /// 	f32 x;
 /// 	f32 y;
 /// } Point2D;
 ///
-/// #define CNX_AS_FORMAT_USES_USER_SUPPLIED_TYPES true
+/// #define CNX_AS_FORMAT_USES_USER_SUPPLIED_TYPES TRUE
 /// #define CNX_AS_FORMAT_USER_SUPPLIED_TYPES Point2D* 			: as_format_t(Point2D, x), 	\
 /// 										  const Point2D* 	: as_format_t(Point2D, x),
 ///
@@ -140,7 +146,7 @@
 ///                                                                  CnxStringView specifier)
 /// {
 ///     let an_f32 = static_cast(f32)(0.0);
-///     let format_obj = as_format_t(f64, an_f32);
+///     let format_obj = as_format_t(f32, an_f32);
 ///     return trait_call(is_specifier_valid, format_obj, specifier);
 /// }
 ///
@@ -159,18 +165,18 @@
 ///     let exponential = context->is_exponential ? "e" : "";
 ///     let debug = context->is_debug ? "D" : "";
 ///     let num_sig_figs = context->num_sig_figs;
-///     let specifier = cnx_format_with_allocator("{}{}{}",
-///                                               allocator,
-///                                               exponential,
-///                                               num_sig_figs,
-///                                               debug);
+///     CnxScopedString specifier = cnx_format_with_allocator("{}{}{}",
+///                                                           allocator,
+///                                                           exponential,
+///                                                           num_sig_figs,
+///                                                           debug);
 ///     // Then we can forward two copies of the specifier to format to create our format string,
 ///     // which we'll then pass to our actual format call, letting the implementation for f32
 ///     // handle the actual details
-///     let format_str = cnx_format_with_allocator("Point2D: [x: \{{}\}, y: \{{}\}]",
-///                                                allocator,
-///                                                specifier,
-///                                                specifier);
+///     CnxScopedString format_str = cnx_format_with_allocator("Point2D: [x: \{{}\}, y: \{{}\}]",
+///                                                            allocator,
+///                                                            specifier,
+///                                                            specifier);
 /// 	let _self = static_cast(const Point2D*)(self.m_self);
 /// 	return cnx_format_with_allocator(cnx_string_into_cstring(format_str),
 /// 	                                 allocator,
@@ -221,7 +227,6 @@ typedef enum CnxFormatErrorTypes {
 	/// @ingroup format
 	CNX_FORMAT_FEWER_SPECIFIERS_THAN_ARGS
 } CnxFormatErrorTypes;
-
 
 /// @brief `CnxFormatContext` is the context type used to store parsed format specifier state for
 /// passing to the formatting functions `CnxFormat.format` and `CnxFormat.format_with_allocator`.
@@ -359,6 +364,7 @@ __attr(nodiscard) __attr(not_null(1)) CnxString
 				f64* 						: 	as_format_t(f64, x), 					\
 				nullptr_t* 					: 	as_format_t(nullptr_t, x), 				\
 				CnxString* 					: 	as_format_t(CnxString, x), 				\
+				CnxStringView* 				: 	as_format_t(CnxStringView, x), 			\
 				CnxFormat* 					: 	(x), 									\
 				const char (*)[sizeof((x))] :   as_format_t(cstring, x), 				\
 				const char** 				: 	as_format_t(cstring, 					\
@@ -379,6 +385,7 @@ __attr(nodiscard) __attr(not_null(1)) CnxString
 				const f64* 					: 	as_format_t(f64, x), 					\
 				const nullptr_t*			: 	as_format_t(nullptr_t, x), 				\
 				const CnxString*			: 	as_format_t(CnxString, x), 				\
+				const CnxStringView*		: 	as_format_t(CnxStringView, x), 			\
 				CNX_AS_FORMAT_USER_SUPPLIED_TYPES 										\
 				const CnxFormat* 			: 	(x))
 	#else
@@ -411,6 +418,7 @@ __attr(nodiscard) __attr(not_null(1)) CnxString
 				f64* 						: 	as_format_t(f64, x), 					\
 				nullptr_t* 					: 	as_format_t(nullptr_t, x), 				\
 				CnxString* 					: 	as_format_t(CnxString, x), 				\
+				CnxStringView* 				: 	as_format_t(CnxStringView, x), 			\
 				CnxFormat* 					: 	(x), 									\
 				const char (*)[sizeof((x))] :   as_format_t(cstring, x), 				\
 				const char** 				: 	as_format_t(cstring, 					\
@@ -431,6 +439,7 @@ __attr(nodiscard) __attr(not_null(1)) CnxString
 				const f64* 					: 	as_format_t(f64, x), 					\
 				const nullptr_t*			: 	as_format_t(nullptr_t, x), 				\
 				const CnxString*			: 	as_format_t(CnxString, x), 				\
+				const CnxStringView*		: 	as_format_t(CnxStringView, x), 			\
 				const CnxFormat*			: 	(x))
 		// clang-format on
 		#endif // CNX_AS_FORMAT_USES_USER_SUPPLIED_TYPES
@@ -464,6 +473,7 @@ __attr(nodiscard) __attr(not_null(1)) CnxString
 				f64* 						: 	as_format_t(f64, x), 					\
 				nullptr_t* 					: 	as_format_t(nullptr_t, x), 				\
 				CnxString* 					: 	as_format_t(CnxString, x), 				\
+				CnxStringView* 				: 	as_format_t(CnxStringView, x), 		    \
 				CnxFormat* 					: 	(x), 									\
 				const char (*)[sizeof((x))] :   as_format_t(cstring, x), 				\
 				const bool* 				: 	as_format_t(bool, x), 					\
@@ -483,6 +493,7 @@ __attr(nodiscard) __attr(not_null(1)) CnxString
 				const f64* 					: 	as_format_t(f64, x), 					\
 				const nullptr_t*			: 	as_format_t(nullptr_t, x), 				\
 				const CnxString*			: 	as_format_t(CnxString, x), 				\
+				const CnxStringView*		: 	as_format_t(CnxStringView, x), 		    \
 				CNX_AS_FORMAT_USER_SUPPLIED_TYPES 										\
 				const CnxFormat* 			: 	(x))
 	#else
@@ -513,6 +524,7 @@ __attr(nodiscard) __attr(not_null(1)) CnxString
 				f64* 						: 	as_format_t(f64, x), 					\
 				nullptr_t* 					: 	as_format_t(nullptr_t, x), 				\
 				CnxString* 					: 	as_format_t(CnxString, x), 				\
+				CnxStringView* 				: 	as_format_t(CnxStringView, x), 		    \
 				CnxFormat* 					: 	(x), 									\
 				const char (*)[sizeof((x))] :   as_format_t(cstring, x), 				\
 				const char** 				: 	as_format_t(cstring, 					\
@@ -531,6 +543,7 @@ __attr(nodiscard) __attr(not_null(1)) CnxString
 				const f64* 					: 	as_format_t(f64, x), 					\
 				const nullptr_t*			: 	as_format_t(nullptr_t, x), 				\
 				const CnxString*			: 	as_format_t(CnxString, x), 				\
+				const CnxStringView*		: 	as_format_t(CnxStringView, x), 		    \
 				const CnxFormat*			: 	(x))
 		// clang-format on
 		#endif // CNX_AS_FORMAT_USES_USER_SUPPLIED_TYPES
@@ -594,9 +607,10 @@ __attr(nodiscard) __attr(not_null(1)) CnxString
 /// @brief `CnxFormat` is the Trait which allows extensible and composable string formatting
 /// of builtin and user-defined types.
 ///
-/// `CnxFormat` requires an implementation of `format`, to format the associated type with
-/// the default system allocator, and `format_with_allocator`, to format the associated type
-/// with a user-provided allocator.
+/// `CnxFormat` requires an implementation of `is_specifer_valid` to validate and parse the format
+/// specifier corresponding with your type in a call to `cnx_format`, `format`, to format your type
+/// using the default system allocator for allocations, and `format_with_allocator`, to format your
+/// type using a user-provided allocator for allocations.
 ///
 /// To provide an implementation of `CnxFormat` for your type, only three functions and the
 /// Trait implementation are required. The functions take the following signatures:
@@ -637,9 +651,10 @@ Trait(
 /// @brief `CnxFormat` is the Trait which allows extensible and composable string formatting
 /// of builtin and user-defined types.
 ///
-/// `CnxFormat` requires an implementation of `format`, to format the associated type with
-/// the default system allocator, and `format_with_allocator`, to format the associated type
-/// with a user-provided allocator.
+/// `CnxFormat` requires an implementation of `is_specifer_valid` to validate and parse the format
+/// specifier corresponding with your type in a call to `cnx_format`, `format`, to format your type
+/// using the default system allocator for allocations, and `format_with_allocator`, to format your
+/// type using a user-provided allocator for allocations.
 ///
 /// To provide an implementation of `CnxFormat` for your type, only three functions and the
 /// Trait implementation are required. The functions take the following signatures:
@@ -887,7 +902,8 @@ __attr(nodiscard) __attr(not_null(1)) CnxString
 ///
 /// @return a formatted string associated with `self`
 __attr(nodiscard) __attr(not_null(1)) CnxString
-	cnx_format_u8(const CnxFormat* restrict self, CnxFormatContext context) ___DISABLE_IF_NULL(self);
+	cnx_format_u8(const CnxFormat* restrict self, CnxFormatContext context)
+		___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format` for the builtin `u16`
 ///
 /// @param self - The `CnxFormat` Trait object to format
@@ -922,7 +938,8 @@ __attr(nodiscard) __attr(not_null(1)) CnxString
 ///
 /// @return a formatted string associated with `self`
 __attr(nodiscard) __attr(not_null(1)) CnxString
-	cnx_format_i8(const CnxFormat* restrict self, CnxFormatContext context) ___DISABLE_IF_NULL(self);
+	cnx_format_i8(const CnxFormat* restrict self, CnxFormatContext context)
+		___DISABLE_IF_NULL(self);
 /// @brief implementation of `CnxFormat.format` for the builtin `i16`
 ///
 /// @param self - The `CnxFormat` Trait object to format

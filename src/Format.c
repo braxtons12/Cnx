@@ -461,7 +461,7 @@ cnx_format_is_specifier_valid_cstring(__attr(maybe_unused) const CnxFormat* rest
 CnxFormatContext
 cnx_format_is_specifier_valid_bool(__attr(maybe_unused) const CnxFormat* restrict self,
 								   CnxStringView specifier) {
-	return cnx_format_is_specifier_valid_integral(specifier);
+	return cnx_format_is_specifier_valid_generic(specifier);
 }
 
 CnxFormatContext
