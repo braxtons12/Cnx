@@ -255,7 +255,7 @@ typedef struct IntegralContext {
 	bool is_debug;
 } IntegralContext;
 
-__attr(always_inline) __attr(nodiscard) CnxFormatContext
+__attr(nodiscard) static inline CnxFormatContext
 	cnx_format_is_specifier_valid_integral(CnxStringView specifier) {
 	let_mut context = (CnxFormatContext){.is_valid = CNX_FORMAT_SUCCESS};
 	let length = cnx_stringview_length(specifier);
@@ -303,7 +303,7 @@ __attr(always_inline) __attr(nodiscard) CnxFormatContext
 	return context;
 }
 
-__attr(nodiscard) CnxString
+__attr(nodiscard) static inline CnxString
 	// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 	cnx_format_hex(u64 num,
 				   // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
@@ -339,6 +339,7 @@ __attr(nodiscard) CnxString
 		string;
 	});
 }
+
 typedef enum CnxFormatFloatNotation {
 	CNX_FORMAT_FLOAT_NOTATION_DEFAULT,
 	CNX_FORMAT_FLOAT_NOTATION_DECIMAL,
@@ -366,7 +367,7 @@ __attr(nodiscard) __attr(always_inline) static inline usize
 	return current;
 }
 
-__attr(always_inline) __attr(nodiscard) CnxFormatContext
+__attr(nodiscard) static inline CnxFormatContext
 	cnx_format_is_specifier_valid_fp(CnxStringView specifier) {
 	let_mut context = (CnxFormatContext){.is_valid = CNX_FORMAT_SUCCESS};
 	let_mut state = (FloatContext){.is_debug = false,
@@ -427,7 +428,7 @@ typedef struct GenericContext {
 	bool is_debug;
 } GenericContext;
 
-__attr(always_inline) __attr(nodiscard) CnxFormatContext
+__attr(nodiscard) static inline CnxFormatContext
 	cnx_format_is_specifier_valid_generic(CnxStringView specifier) {
 	let_mut context = (CnxFormatContext){.is_valid = CNX_FORMAT_SUCCESS};
 	let_mut state = (GenericContext){.is_debug = false};
