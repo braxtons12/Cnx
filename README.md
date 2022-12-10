@@ -1,5 +1,7 @@
 # Cnx
 
+[![CMake](https://github.com/braxtons12/Cnx/actions/workflows/cmake.yml/badge.svg?branch=master)](https://github.com/braxtons12/Cnx/actions/workflows/cmake.yml)
+
 Cnx is a GNU C (11+) library providing type-safe collections and ergonomic features typical in
 higher-level languages, to C. It aims to be a proof-of-concept view of what a more modern standard
 (or at least widely used base) library could look like in the future if it only had to support C23,
