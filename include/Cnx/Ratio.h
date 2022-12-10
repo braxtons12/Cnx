@@ -1,8 +1,8 @@
 /// @file Ratio.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides lossless methods for dealing with exact fractions
-/// @version 0.1.2
-/// @date 2022-04-30
+/// @version 0.1.3
+/// @date 2022-12-09
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -76,100 +76,68 @@ typedef struct CnxRatio {
 
 	/// @brief SI "atto" as a `CnxRatio`
 	/// @ingroup cnx_ratio
-	#define cnx_atto                                 \
-		(CnxRatio) {                                 \
-			.num = 1LL, .den = 1000000000000000000LL \
-		}
+	#define cnx_atto \
+		(CnxRatio) { .num = 1LL, .den = 1000000000000000000LL }
 	/// @brief SI "femto" as a `CnxRatio`
 	/// @ingroup cnx_ratio
-	#define cnx_femto                             \
-		(CnxRatio) {                              \
-			.num = 1LL, .den = 1000000000000000LL \
-		}
+	#define cnx_femto \
+		(CnxRatio) { .num = 1LL, .den = 1000000000000000LL }
 	/// @brief SI "pico" as a `CnxRatio`
 	/// @ingroup cnx_ratio
-	#define cnx_pico                           \
-		(CnxRatio) {                           \
-			.num = 1LL, .den = 1000000000000LL \
-		}
+	#define cnx_pico \
+		(CnxRatio) { .num = 1LL, .den = 1000000000000LL }
 	/// @brief SI "nano" as a `CnxRatio`
 	/// @ingroup cnx_ratio
-	#define cnx_nano                        \
-		(CnxRatio) {                        \
-			.num = 1LL, .den = 1000000000LL \
-		}
+	#define cnx_nano \
+		(CnxRatio) { .num = 1LL, .den = 1000000000LL }
 	/// @brief SI "micro" as a `CnxRatio`
 	/// @ingroup cnx_ratio
-	#define cnx_micro                    \
-		(CnxRatio) {                     \
-			.num = 1LL, .den = 1000000LL \
-		}
+	#define cnx_micro \
+		(CnxRatio) { .num = 1LL, .den = 1000000LL }
 	/// @brief SI "milli" as a `CnxRatio`
 	/// @ingroup cnx_ratio
-	#define cnx_milli                 \
-		(CnxRatio) {                  \
-			.num = 1LL, .den = 1000LL \
-		}
+	#define cnx_milli \
+		(CnxRatio) { .num = 1LL, .den = 1000LL }
 	/// @brief SI "centi" as a `CnxRatio`
 	/// @ingroup cnx_ratio
-	#define cnx_centi                \
-		(CnxRatio) {                 \
-			.num = 1LL, .den = 100LL \
-		}
+	#define cnx_centi \
+		(CnxRatio) { .num = 1LL, .den = 100LL }
 	/// @brief SI "deci" as a `CnxRatio`
 	/// @ingroup cnx_ratio
-	#define cnx_deci                \
-		(CnxRatio) {                \
-			.num = 1LL, .den = 10LL \
-		}
+	#define cnx_deci \
+		(CnxRatio) { .num = 1LL, .den = 10LL }
 	/// @brief SI "deca" as a `CnxRatio`
 	/// @ingroup cnx_ratio
-	#define cnx_deca                \
-		(CnxRatio) {                \
-			.num = 10LL, .den = 1LL \
-		}
+	#define cnx_deca \
+		(CnxRatio) { .num = 10LL, .den = 1LL }
 	/// @brief SI "hecto" as a `CnxRatio`
 	/// @ingroup cnx_ratio
-	#define cnx_hecto                \
-		(CnxRatio) {                 \
-			.num = 100LL, .den = 1LL \
-		}
+	#define cnx_hecto \
+		(CnxRatio) { .num = 100LL, .den = 1LL }
 	/// @brief SI "kilo" as a `CnxRatio`
 	/// @ingroup cnx_ratio
-	#define cnx_kilo                  \
-		(CnxRatio) {                  \
-			.num = 1000LL, .den = 1LL \
-		}
+	#define cnx_kilo \
+		(CnxRatio) { .num = 1000LL, .den = 1LL }
 	/// @brief SI "mega" as a `CnxRatio`
 	/// @ingroup cnx_ratio
-	#define cnx_mega                     \
-		(CnxRatio) {                     \
-			.num = 1000000LL, .den = 1LL \
-		}
+	#define cnx_mega \
+		(CnxRatio) { .num = 1000000LL, .den = 1LL }
 	/// @brief SI "giga" as a `CnxRatio`
 	/// @ingroup cnx_ratio
-	#define cnx_giga                        \
-		(CnxRatio) {                        \
-			.num = 1000000000LL, .den = 1LL \
-		}
+	#define cnx_giga \
+		(CnxRatio) { .num = 1000000000LL, .den = 1LL }
 	/// @brief SI "tera" as a `CnxRatio`
 	/// @ingroup cnx_ratio
-	#define cnx_tera                           \
-		(CnxRatio) {                           \
-			.num = 1000000000000LL, .den = 1LL \
-		}
+	#define cnx_tera \
+		(CnxRatio) { .num = 1000000000000LL, .den = 1LL }
 	/// @brief SI "peta" as a `CnxRatio`
 	/// @ingroup cnx_ratio
-	#define cnx_peta                              \
-		(CnxRatio) {                              \
-			.num = 1000000000000000LL, .den = 1LL \
-		}
+	#define cnx_peta \
+		(CnxRatio) { .num = 1000000000000000LL, .den = 1LL }
 	/// @brief SI "exa" as a `CnxRatio`
 	/// @ingroup cnx_ratio
-	#define cnx_exa                                  \
-		(CnxRatio) {                                 \
-			.num = 1000000000000000000LL, .den = 1LL \
-		}
+	#define cnx_exa \
+		(CnxRatio) { .num = 1000000000000000000LL, .den = 1LL }
 
 /// @brief Constructs a `CnxRatio`
 ///
@@ -342,27 +310,38 @@ __attr(nodiscard) CnxRatio cnx_ratio_multiply_scalar(CnxRatio ratio, i64 scalar)
 /// @ingroup cnx_ratio
 __attr(nodiscard) CnxRatio cnx_ratio_divide_scalar(CnxRatio ratio, i64 scalar);
 
+/// @brief Implementation of `CnxFormat.is_specifier_valid` for `CnxRatio`
+///
+/// @param self - The `CnxRatio` to format as a `CnxFormat` trait object
+/// @param specifier - The `CnxStringView` viewing the format specifier to validate
+///
+/// @return The `CnxFormatContext` indicating whether specifier was valid and storing the state
+/// holding the format settings and necessary info to format the `CnxRatio`
+__attr(nodiscard) __attr(not_null(1)) CnxFormatContext
+	cnx_ratio_is_specifier_valid(const CnxFormat* restrict self, CnxStringView specifier)
+		cnx_disable_if(!self,
+					   "Can't format a nullptr (self must be a valid CnxRatio cast to CnxFormat)");
 /// @brief Implement `CnxFormat.format` for `CnxRatio`
 ///
 /// @param self - The `CnxRatio` to format
-/// @param specifier - The format specifier
+/// @param context - The `CnxFormatContext` specifying how formatting should be done
 ///
 /// @return `self` formatted as a `CnxString`
 __attr(nodiscard) __attr(not_null(1)) CnxString
-	cnx_ratio_format(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+	cnx_ratio_format(const CnxFormat* restrict self, CnxFormatContext context)
 		cnx_disable_if(!self,
 					   "Can't format a nullptr (self must be a valid CnxRatio cast to CnxFormat)");
 
 /// @brief Implement `CnxFormat.format_with_allocator` for `CnxRatio`
 ///
 /// @param self - The `CnxRatio` to format
-/// @param specifier - The format specifier
+/// @param context - The `CnxFormatContext` specifying how formatting should be done
 /// @param allocator - The allocator to allocate memory for the formatted string with
 ///
 /// @return `self` formatted as a `CnxString`
 __attr(nodiscard) __attr(not_null(1)) CnxString
 	cnx_ratio_format_with_allocator(const CnxFormat* restrict self,
-									CnxFormatSpecifier specifier,
+									CnxFormatContext context,
 									CnxAllocator allocator)
 		cnx_disable_if(!self,
 					   "Can't format a nullptr (self must be a valid CnxRatio cast to CnxFormat)");
@@ -371,6 +350,7 @@ __attr(nodiscard) __attr(not_null(1)) CnxString
 /// @ingroup cnx_ratio
 __attr(maybe_unused) static ImplTraitFor(CnxFormat,
 										 CnxRatio,
+										 cnx_ratio_is_specifier_valid,
 										 cnx_ratio_format,
 										 cnx_ratio_format_with_allocator);
 

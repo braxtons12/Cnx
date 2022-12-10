@@ -10,8 +10,8 @@
 /// 4. Instantiations for Cnx iterators for the typedefs provided in (2) and (3)
 /// 5. Instantiation of `CnxOption(YourType)`, via provided macros (See `CnxOption(T)`)
 ///
-/// @version 0.2.1
-/// @date 2022-05-08
+/// @version 0.2.2
+/// @date 2022-12-09
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -179,18 +179,22 @@ __attr(not_null(1)) ARRAY_STATIC ARRAY_INLINE
 __attr(not_null(1)) ARRAY_STATIC ARRAY_INLINE
 	void CnxArrayIdentifier(ARRAY_T, ARRAY_N, free)(void* restrict self) ___DISABLE_IF_NULL(self);
 
-__attr(nodiscard) __attr(not_null(1)) ARRAY_STATIC ARRAY_INLINE CnxString
-	CnxArrayIdentifier(ARRAY_T, ARRAY_N, format)(const CnxFormat* restrict self,
-												 CnxFormatSpecifier specifier)
+__attr(nodiscard) __attr(not_null(1)) ARRAY_STATIC ARRAY_INLINE CnxFormatContext
+	CnxArrayIdentifier(ARRAY_T, ARRAY_N, is_specifier_valid)(const CnxFormat* restrict self,
+															 CnxStringView specifier)
 		___DISABLE_IF_NULL(self);
 __attr(nodiscard) __attr(not_null(1)) ARRAY_STATIC ARRAY_INLINE CnxString
+	CnxArrayIdentifier(ARRAY_T, ARRAY_N, format)(const CnxFormat* restrict self,
+												 CnxFormatContext context) ___DISABLE_IF_NULL(self);
+__attr(nodiscard) __attr(not_null(1)) ARRAY_STATIC ARRAY_INLINE CnxString
 	CnxArrayIdentifier(ARRAY_T, ARRAY_N, format_with_allocator)(const CnxFormat* restrict self,
-																CnxFormatSpecifier specifier,
+																CnxFormatContext context,
 																CnxAllocator allocator)
 		___DISABLE_IF_NULL(self);
 
 __attr(maybe_unused) static ImplTraitFor(CnxFormat,
 										 CnxArray(ARRAY_T, ARRAY_N),
+										 CnxArrayIdentifier(ARRAY_T, ARRAY_N, is_specifier_valid),
 										 CnxArrayIdentifier(ARRAY_T, ARRAY_N, format),
 										 CnxArrayIdentifier(ARRAY_T,
 															ARRAY_N,

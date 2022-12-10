@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides the function definitions for a template instantiation of
 /// `CnxVector(VECTOR_T)`
-/// @version 0.2.4
-/// @date 2022-05-08
+/// @version 0.2.5
+/// @date 2022-12-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -846,19 +846,49 @@ VECTOR_STATIC VECTOR_INLINE CnxRandomAccessIterator(ConstRef(VECTOR_T))
 	return iter;
 }
 
-VECTOR_STATIC VECTOR_INLINE CnxString CnxVectorIdentifier(VECTOR_T,
-														  format)(const CnxFormat* restrict self,
-																  CnxFormatSpecifier specifier) {
-	return CnxVectorIdentifier(VECTOR_T, format_with_allocator)(self, specifier, DEFAULT_ALLOCATOR);
+typedef struct CnxVectorIdentifier(VECTOR_T, FormatContext) {
+	bool is_debug;
+}
+CnxVectorIdentifier(VECTOR_T, FormatContext);
+
+VECTOR_STATIC VECTOR_INLINE CnxFormatContext CnxVectorIdentifier(VECTOR_T, is_specifier_valid)(
+	__attr(maybe_unused) const CnxFormat* restrict self,
+	CnxStringView specifier) {
+
+	let_mut context = (CnxFormatContext){.is_valid = CNX_FORMAT_SUCCESS};
+	let length = cnx_stringview_length(specifier);
+	let_mut state = (CnxVectorIdentifier(VECTOR_T, FormatContext)){.is_debug = false};
+
+	if(length > 1) {
+		context.is_valid = CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER;
+		return context;
+	}
+
+	if(length == 1) {
+		if(cnx_stringview_at(specifier, 0) != 'D') {
+			context.is_valid = CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER;
+			return context;
+		}
+
+		state.is_debug = true;
+	}
+
+	*(static_cast(CnxVectorIdentifier(VECTOR_T, FormatContext)*)(context.state)) = state;
+	return context;
 }
 
-VECTOR_STATIC VECTOR_INLINE CnxString CnxVectorIdentifier(VECTOR_T, format_with_allocator)(
-	const CnxFormat* restrict self,
-	__attr(maybe_unused) CnxFormatSpecifier specifier,
-	CnxAllocator allocator) {
-	cnx_assert(specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
-				   || specifier.m_type == CNX_FORMAT_TYPE_DEBUG,
-			   "Can only format CnxVector with default or debug format specifier");
+VECTOR_STATIC VECTOR_INLINE CnxString CnxVectorIdentifier(VECTOR_T,
+														  format)(const CnxFormat* restrict self,
+																  CnxFormatContext context) {
+	return CnxVectorIdentifier(VECTOR_T, format_with_allocator)(self, context, DEFAULT_ALLOCATOR);
+}
+
+VECTOR_STATIC VECTOR_INLINE CnxString
+CnxVectorIdentifier(VECTOR_T, format_with_allocator)(const CnxFormat* restrict self,
+													 __attr(maybe_unused) CnxFormatContext context,
+													 CnxAllocator allocator) {
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS,
+			   "Invalid format specifier used to format a " AS_STRING(CnxVector(VECTOR_T)));
 
 	let _self = *static_cast(const CnxVector(VECTOR_T)*)(self->m_self);
 	let size = cnx_vector_size(_self);

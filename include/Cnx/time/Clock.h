@@ -1,8 +1,8 @@
 /// @file Clock.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides methods for operating with system clocks
-/// @version 0.1.2
-/// @date 2022-04-30
+/// @version 0.1.4
+/// @date 2022-12-09
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -252,33 +252,44 @@ __attr(nodiscard) __attr(not_null(1)) CnxRatio
 __attr(nodiscard) __attr(not_null(1)) CnxTimePointLocale
 	cnx_clock_locale(const CnxClock* restrict self) ___DISABLE_IF_NULL(self);
 
+/// @brief Implementation of `CnxFormat.is_specifier_valid` for `CnxClock`
+///
+/// @param self - The `CnxClock` to format as a `CnxFormat` trait object
+/// @param specifier - The `CnxStringView` viewing the format specifier to validate
+///
+/// @return The `CnxFormatContext` indicating whether specifier was valid and storing the state
+/// holding the format settings and necessary info to format the `CnxClock`
+__attr(nodiscard) __attr(not_null(1)) CnxFormatContext
+	cnx_clock_is_specifier_valid(const CnxFormat* restrict self, CnxStringView specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief Implements the allocator un-aware portion of the `CnxFormat` trait for all `CnxClock`s
 ///
 /// @param self - The `CnxFormat` implementor to get the text representation of
-/// @param specifier - The `CnxFormatSpecifier` specifying how to format the text
+/// @param context - The `CnxFormatContext` specifying how formatting should be done
 ///
 /// @return The text representation of `self` as a `CnxString`
 /// @ingroup cnx_clock
 __attr(nodiscard) __attr(not_null(1)) CnxString
-	cnx_clock_format(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+	cnx_clock_format(const CnxFormat* restrict self, CnxFormatContext context)
 		___DISABLE_IF_NULL(self);
 /// @brief Implements the allocator aware portion of the `CnxFormat` trait for all `CnxClock`s
 ///
 /// @param self - The `CnxFormat` implementor to get the text representation of
-/// @param specifier - The `CnxFormatSpecifier` specifying how to format the text
+/// @param context - The `CnxFormatContext` specifying how formatting should be done
 /// @param allocator - The `CnxAllocator` to use for any necessary memory allocation
 ///
 /// @return The text representation of `self` as a `CnxString`
 /// @ingroup cnx_clock
 __attr(nodiscard) __attr(not_null(1)) CnxString
 	cnx_clock_format_with_allocator(const CnxFormat* restrict self,
-									CnxFormatSpecifier specifier,
+									CnxFormatContext context,
 									CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 
 /// @brief Implements the `CnxFormat` trait for `CnxClock`
 /// @ingroup cnx_clock
 __attr(maybe_unused) static ImplTraitFor(CnxFormat,
 										 CnxClock,
+										 cnx_clock_is_specifier_valid,
 										 cnx_clock_format,
 										 cnx_clock_format_with_allocator);
 

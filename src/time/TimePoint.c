@@ -1,8 +1,8 @@
 /// @file TimePoint.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief CnxTimePoint provides functionality for working with specific points in time
-/// @version 0.1.3
-/// @date 2022-04-30
+/// @version 0.1.4
+/// @date 2022-12-09
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -282,19 +282,48 @@ CnxString cnx_time_point_human_readable_format(CnxTimePoint self, CnxAllocator a
 	return str;
 }
 
-CnxString cnx_time_point_format(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {
-	return cnx_time_point_format_with_allocator(self, specifier, DEFAULT_ALLOCATOR);
+typedef struct TimePointContext {
+	bool is_debug;
+} TimePointContext;
+
+CnxFormatContext
+cnx_time_point_is_specifier_valid(__attr(maybe_unused) const CnxFormat* restrict self,
+								  CnxStringView specifier) {
+	let_mut context = (CnxFormatContext){.is_valid = CNX_FORMAT_SUCCESS};
+	let length = cnx_stringview_length(specifier);
+	let_mut state = (TimePointContext){.is_debug = false};
+
+	if(length > 1) {
+		context.is_valid = CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER;
+		return context;
+	}
+
+	if(length == 1) {
+		if(cnx_stringview_at(specifier, 0) != 'D') {
+			context.is_valid = CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER;
+			return context;
+		}
+
+		state.is_debug = true;
+	}
+
+	*(static_cast(TimePointContext*)(context.state)) = state;
+	return context;
+}
+
+CnxString cnx_time_point_format(const CnxFormat* restrict self, CnxFormatContext context) {
+	return cnx_time_point_format_with_allocator(self, context, DEFAULT_ALLOCATOR);
 }
 
 CnxString cnx_time_point_format_with_allocator(const CnxFormat* restrict self,
-											   __attr(maybe_unused) CnxFormatSpecifier specifier,
+											   CnxFormatContext context,
 											   CnxAllocator allocator) {
-	cnx_assert(specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
-				   || specifier.m_type == CNX_FORMAT_TYPE_DEBUG,
-			   "Can only format a CnxTimePoint with default or debug format specifier");
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS,
+			   "Invalid format specifier used to format a CnxTimePoint");
 
+	let state = *(static_cast(const TimePointContext*)(context.state));
 	let _self = static_cast(const CnxTimePoint*)(self->m_self);
-	if(specifier.m_type == CNX_FORMAT_TYPE_DEBUG) {
+	if(state.is_debug) {
 		return cnx_format_with_allocator(
 			AS_STRING(CnxTimePoint) ": [time_since_epoch = {D}, clock = {D}]",
 			allocator,

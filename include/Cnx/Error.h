@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides an extensible type for communicating errors via both error codes and
 /// message strings.
-/// @version 0.2.4
-/// @date 2022-04-30
+/// @version 0.2.5
+/// @date 2022-12-09
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -217,25 +217,39 @@ __attr(nodiscard) __attr(not_null(1)) i64
 		___DISABLE_IF_NULL(self);
 	#endif // CNX_PLATFORM_WINDOWS
 
+	#undef ___DISABLE_IF_NULL
+	#define ___DISABLE_IF_NULL(self) \
+		cnx_disable_if(!(self), "Can't perform an operation with a CnxError that is a nullptr")
+
+/// @brief Implementation of `CnxFormat.is_specifier_valid` for `CnxError`
+///
+/// @param self - The `CnxError` to format as a `CnxFormat` trait object
+/// @param specifier - The `CnxStringView` viewing the format specifier to validate
+///
+/// @return The `CnxFormatContext` indicating whether specifier was valid and storing the state
+/// holding the format settings and necessary info to format the `CnxError`
+__attr(nodiscard) __attr(not_null(1)) CnxFormatContext
+	cnx_error_is_specifier_valid(const CnxFormat* restrict self, CnxStringView specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief Implementation of `CnxFormat.format` for `CnxError`
 ///
 /// @param self - The `CnxError` to format as a `CnxFormat` trait object
-/// @param specifier - The `CnxFormatSpecifier` in the format string. Unused
+/// @param context - The `CnxFormatContext` specifying how formatting should be done
 ///
 /// @return `self` formatted as a `CnxString`
 __attr(nodiscard) __attr(not_null(1)) CnxString
-	cnx_error_format(const CnxFormat* restrict self, CnxFormatSpecifier specifier)
+	cnx_error_format(const CnxFormat* restrict self, CnxFormatContext context)
 		___DISABLE_IF_NULL(self);
 /// @brief Implementation of `CnxFormat.format_with_allocator` for `CnxError`
 ///
 /// @param self - The `CnxError` to format as a `CnxFormat` trait object
-/// @param specifier - The `CnxFormatSpecifier` in the format string. Unused
+/// @param context - The `CnxFormatContext` specifying how formatting should be done
 /// @param allocator - The `CnxAllocator` to allocate the formatted string with
 ///
 /// @return `self` formatted as a `CnxString`
 __attr(nodiscard) __attr(not_null(1)) CnxString
 	cnx_error_format_with_allocator(const CnxFormat* restrict self,
-									CnxFormatSpecifier specifier,
+									CnxFormatContext context,
 									CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 
 /// @brief Implement `CnxFormat` for `CnxError`
@@ -243,6 +257,7 @@ __attr(nodiscard) __attr(not_null(1)) CnxString
 /// @ingroup cnx_error
 __attr(maybe_unused) static ImplTraitFor(CnxFormat,
 										 CnxError,
+										 cnx_error_is_specifier_valid,
 										 cnx_error_format,
 										 cnx_error_format_with_allocator);
 
@@ -256,10 +271,8 @@ __attr(maybe_unused) static ImplTraitFor(CnxErrorCategory,
 
 IGNORE_RESERVED_IDENTIFIER_WARNING_START
 __attr(maybe_unused) static const CnxPosixErrorCategory __cnx_posix_error_category = {};
-__attr(maybe_unused) static const CnxErrorCategory __cnx_posix_category = as_trait(
-	CnxErrorCategory,
-	CnxPosixErrorCategory,
-	__cnx_posix_error_category);
+__attr(maybe_unused) static const CnxErrorCategory __cnx_posix_category
+	= as_trait(CnxErrorCategory, CnxPosixErrorCategory, __cnx_posix_error_category);
 IGNORE_RESERVED_IDENTIFIER_WARNING_STOP
 
 	/// @brief The `CnxErrorCategory` to map POSIX error codes
@@ -281,10 +294,8 @@ __attr(maybe_unused) static ImplTraitFor(CnxErrorCategory,
 
 IGNORE_RESERVED_IDENTIFIER_WARNING_START
 __attr(maybe_unused) static const CnxWin32ErrorCategory __cnx_win32_error_category = {};
-__attr(maybe_unused) static const CnxErrorCategory __cnx_win32_category = as_trait(
-	CnxErrorCategory,
-	CnxWin32ErrorCategory,
-	__cnx_win32_error_category);
+__attr(maybe_unused) static const CnxErrorCategory __cnx_win32_category
+	= as_trait(CnxErrorCategory, CnxWin32ErrorCategory, __cnx_win32_error_category);
 
 		/// @brief The `CnxErrorCategory` to map Win32 error codes
 		///

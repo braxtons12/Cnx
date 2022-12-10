@@ -1,8 +1,8 @@
 /// @file Ratio.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides lossless methods for dealing with exact fractions
-/// @version 0.1.1
-/// @date 2022-04-30
+/// @version 0.1.2
+/// @date 2022-12-09
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -151,19 +151,47 @@ CnxRatio cnx_ratio_divide_scalar(CnxRatio ratio, i64 scalar) {
 	return cnx_ratio_new(ratio.num, ratio.den * scalar);
 }
 
-CnxString cnx_ratio_format(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {
-	return cnx_ratio_format_with_allocator(self, specifier, cnx_allocator_new());
+typedef struct RatioContext {
+	bool is_debug;
+} RatioContext;
+
+CnxFormatContext cnx_ratio_is_specifier_valid(__attr(maybe_unused) const CnxFormat* restrict self,
+											  CnxStringView specifier) {
+	let_mut context = (CnxFormatContext){.is_valid = CNX_FORMAT_SUCCESS};
+	let length = cnx_stringview_length(specifier);
+	let_mut state = (RatioContext){.is_debug = false};
+
+	if(length > 1) {
+		context.is_valid = CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER;
+		return context;
+	}
+
+	if(length == 1) {
+		if(cnx_stringview_at(specifier, 0) != 'D') {
+			context.is_valid = CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER;
+			return context;
+		}
+
+		state.is_debug = true;
+	}
+
+	*(static_cast(RatioContext*)(context.state)) = state;
+	return context;
+}
+
+CnxString cnx_ratio_format(const CnxFormat* restrict self, CnxFormatContext context) {
+	return cnx_ratio_format_with_allocator(self, context, cnx_allocator_new());
 }
 
 CnxString cnx_ratio_format_with_allocator(const CnxFormat* restrict self,
-										  __attr(maybe_unused) CnxFormatSpecifier specifier,
+										  CnxFormatContext context,
 										  CnxAllocator allocator) {
-	cnx_assert(specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
-				   || specifier.m_type == CNX_FORMAT_TYPE_DEBUG,
-			   "Can only format a CnxRatio with default or debug format specifier");
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS,
+			   "Invalid format specifier used to format a CnxRatio");
+	let state = *(static_cast(const RatioContext*)(context.state));
 
 	let _self = static_cast(const CnxRatio*)(self->m_self);
-	if(specifier.m_type == CNX_FORMAT_TYPE_DEBUG) {
+	if(state.is_debug) {
 		return cnx_format_with_allocator(AS_STRING(CnxRatio) ": [num = {D}, den = {D}]",
 										 allocator,
 										 _self->num,

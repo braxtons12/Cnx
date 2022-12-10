@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides the function definitions for a template instantiation of
 /// `CnxArray(ARRAY_T, ARRAY_N)`
-/// @version 0.2.1
-/// @date 2022-05-08
+/// @version 0.2.2
+/// @date 2022-12-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -76,8 +76,8 @@ ARRAY_STATIC ARRAY_INLINE ConstRef(ARRAY_T)
 					   ARRAY_N,
 					   iterator_cnext)(CnxRandomAccessIterator(ConstRef(ARRAY_T)) * restrict self);
 ARRAY_STATIC
-	ARRAY_INLINE ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_cprevious)(
-		CnxRandomAccessIterator(ConstRef(ARRAY_T)) * restrict self);
+ARRAY_INLINE ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_cprevious)(
+	CnxRandomAccessIterator(ConstRef(ARRAY_T)) * restrict self);
 ARRAY_STATIC ARRAY_INLINE ConstRef(ARRAY_T) CnxArrayIdentifier(ARRAY_T, ARRAY_N, iterator_cat)(
 	const CnxRandomAccessIterator(ConstRef(ARRAY_T)) * restrict self,
 	usize index);
@@ -699,22 +699,51 @@ ARRAY_STATIC ARRAY_INLINE CnxRandomAccessIterator(ConstRef(ARRAY_T))
 	return iter;
 }
 
+typedef struct CnxArrayIdentifier(ARRAY_T, ARRAY_N, FormatContext) {
+	bool is_debug;
+}
+CnxArrayIdentifier(ARRAY_T, ARRAY_N, FormatContext);
+
+ARRAY_STATIC ARRAY_INLINE CnxFormatContext CnxArrayIdentifier(ARRAY_T, ARRAY_N, is_specifier_valid)(
+	__attr(maybe_unused) const CnxFormat* restrict self,
+	CnxStringView specifier) {
+	let_mut context = (CnxFormatContext){.is_valid = CNX_FORMAT_SUCCESS};
+	let length = cnx_stringview_length(specifier);
+	let_mut state = (CnxArrayIdentifier(ARRAY_T, ARRAY_N, FormatContext)){.is_debug = false};
+
+	if(length > 1) {
+		context.is_valid = CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER;
+		return context;
+	}
+
+	if(length == 1) {
+		if(cnx_stringview_at(specifier, 0) != 'D') {
+			context.is_valid = CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER;
+			return context;
+		}
+
+		state.is_debug = true;
+	}
+
+	*(static_cast(CnxArrayIdentifier(ARRAY_T, ARRAY_N, FormatContext)*)(context.state)) = state;
+	return context;
+}
+
 ARRAY_STATIC ARRAY_INLINE CnxString CnxArrayIdentifier(ARRAY_T,
 													   ARRAY_N,
 													   format)(const CnxFormat* restrict self,
-															   CnxFormatSpecifier specifier) {
+															   CnxFormatContext context) {
 	return CnxArrayIdentifier(ARRAY_T, ARRAY_N, format_with_allocator)(self,
-																	   specifier,
+																	   context,
 																	   DEFAULT_ALLOCATOR);
 }
 
 ARRAY_STATIC ARRAY_INLINE CnxString CnxArrayIdentifier(ARRAY_T, ARRAY_N, format_with_allocator)(
 	const CnxFormat* restrict self,
-	__attr(maybe_unused) CnxFormatSpecifier specifier,
+	__attr(maybe_unused) CnxFormatContext context,
 	CnxAllocator allocator) {
-	cnx_assert(specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
-				   || specifier.m_type == CNX_FORMAT_TYPE_DEBUG,
-			   "Can only format CnxArray with default or debug format specifier");
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS,
+			   "Invalid format specifier used to format a " AS_STRING(CnxArray(ARRAY_T, ARRAY_N)));
 
 	let _self = *static_cast(const CnxArray(ARRAY_T, ARRAY_N)*)(self->m_self);
 	let size = cnx_array_size(_self);

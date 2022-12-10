@@ -1,8 +1,8 @@
 /// @file String.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides string and stringview types comparable to C++ for Cnx
-/// @version 0.1.6
-/// @date 2022-05-01
+/// @version 0.1.7
+/// @date 2022-12-09
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -1639,7 +1639,7 @@ CnxStringView cnx_stringview_from(restrict const_cstring string, usize index, us
 }
 
 const_char_ptr(cnx_stringview_at)(const CnxStringView* restrict self, usize index) {
-	cnx_assert(index < self->m_length,
+	cnx_assert(index <= self->m_length,
 			   "cnx_stringview_at called with index > length (index out of bounds)");
 	return &(self->m_view[index]);
 }
@@ -1686,19 +1686,25 @@ CnxStringViewIterator cnx_stringview_iterator_new(const CnxStringView* restrict 
 const_char_ref
 cnx_stringview_iterator_next(CnxRandomAccessIterator(const_char_ref) * restrict self) {
 	let _self = static_cast(CnxStringViewIterator*)(self->m_self);
+    let length = (cnx_stringview_length)(_self->m_view);
 
-	let ret = cnx_stringview_at(*(_self->m_view), static_cast(usize)(_self->m_index));
 	_self->m_index++;
-	return ret;
+    if(_self->m_index > static_cast(isize)(length)) {
+        return (cnx_stringview_at)(_self->m_view, length > 0 ? length - 1 : 0);
+    }
+
+	return (cnx_stringview_at)(_self->m_view, static_cast(usize)(_self->m_index));
 }
 
 const_char_ref
 cnx_stringview_iterator_previous(CnxRandomAccessIterator(const_char_ref) * restrict self) {
 	let _self = static_cast(CnxStringViewIterator*)(self->m_self);
 
-	let ret = cnx_stringview_at(*(_self->m_view), static_cast(usize)(_self->m_index));
 	_self->m_index--;
-	return ret;
+    if(_self->m_index < 0) {
+        return (cnx_stringview_at)(_self->m_view, 0);
+    }
+	return (cnx_stringview_at)(_self->m_view, static_cast(usize)(_self->m_index));
 }
 
 const_char_ref
@@ -1706,7 +1712,7 @@ cnx_stringview_iterator_at(const CnxRandomAccessIterator(const_char_ref) * restr
 						   usize index) {
 	let _self = static_cast(const CnxStringViewIterator*)(self->m_self);
 
-	return cnx_stringview_at(*(_self->m_view), index);
+	return (cnx_stringview_at)(_self->m_view, index);
 }
 
 const_char_ref
@@ -1714,7 +1720,7 @@ cnx_stringview_iterator_rat(const CnxRandomAccessIterator(const_char_ref) * rest
 							usize index) {
 	let _self = static_cast(const CnxStringViewIterator*)(self->m_self);
 
-	return cnx_stringview_at(*(_self->m_view),
+	return (cnx_stringview_at)(_self->m_view,
 							 (cnx_stringview_length(*(_self->m_view)) - 1) - index);
 }
 
@@ -1722,7 +1728,7 @@ const_char_ref
 cnx_stringview_iterator_current(const CnxRandomAccessIterator(const_char_ref) * restrict self) {
 	let _self = static_cast(const CnxStringViewIterator*)(self->m_self);
 
-	return cnx_stringview_at(*(_self->m_view), static_cast(usize)(_self->m_index));
+	return (cnx_stringview_at)(_self->m_view, static_cast(usize)(_self->m_index));
 }
 
 bool cnx_stringview_iterator_equals(const CnxRandomAccessIterator(const_char_ref) * restrict self,

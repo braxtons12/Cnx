@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief CnxFormat brings human readable string formatting, similar to C++'s `std::format` and
 /// `fmtlib`, and Rust's std::format, to C.
-/// @version 0.2.4
-/// @date 2022-04-30
+/// @version 0.3.0
+/// @date 2022-12-09
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -243,14 +243,78 @@ __attr(nodiscard) __attr(always_inline) static inline CnxString
 		i64 		: 	cnx_format_decimal_i64)(num, num_digits, allocator)
 // clang-format on
 
+typedef enum CnxFormatIntegralNotation {
+	CNX_FORMAT_UNSIGNED_NOTATION_DEFAULT,
+	CNX_FORMAT_UNSIGNED_NOTATION_DECIMAL,
+	CNX_FORMAT_UNSIGNED_NOTATION_LOWER_HEX,
+	CNX_FORMAT_UNSIGNED_NOTATION_UPPER_HEX
+} CnxFormatIntegralNotation;
+
+typedef struct IntegralContext {
+	CnxFormatIntegralNotation notation;
+	bool is_debug;
+} IntegralContext;
+
+__attr(always_inline) __attr(nodiscard) CnxFormatContext
+	cnx_format_is_specifier_valid_integral(CnxStringView specifier) {
+	let_mut context = (CnxFormatContext){.is_valid = CNX_FORMAT_SUCCESS};
+	let length = cnx_stringview_length(specifier);
+	if(length == 0) {
+		return context;
+	}
+
+	let_mut state
+		= (IntegralContext){.notation = CNX_FORMAT_UNSIGNED_NOTATION_DEFAULT, .is_debug = false};
+	if(length > 2) {
+		context.is_valid = CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER;
+		return context;
+	}
+
+	let first = cnx_stringview_at(specifier, 0);
+	if(first != 'x' && first != 'X' && first != 'd' && first != 'D') {
+		context.is_valid = CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER;
+		return context;
+	}
+
+	if(first == 'x') {
+		state.notation = CNX_FORMAT_UNSIGNED_NOTATION_LOWER_HEX;
+	}
+	else if(first == 'X') {
+		state.notation = CNX_FORMAT_UNSIGNED_NOTATION_UPPER_HEX;
+	}
+	else if(first == 'd') {
+		state.notation = CNX_FORMAT_UNSIGNED_NOTATION_DECIMAL;
+	}
+	else if(first == 'D') {
+		state.is_debug = true;
+	}
+
+	if(length == 2) {
+		let second = cnx_stringview_at(specifier, 1);
+		if(second != 'D') {
+			context.is_valid = CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER;
+			return context;
+		}
+
+		state.is_debug = -true;
+	}
+
+	*(static_cast(IntegralContext*)(context.state)) = state;
+	return context;
+}
+
 __attr(nodiscard) CnxString
 	// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-	cnx_format_hex(u64 num, usize num_digits, CnxFormatTypes type, CnxAllocator allocator) {
+	cnx_format_hex(u64 num,
+				   // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
+				   usize num_digits,
+				   CnxFormatIntegralNotation notation,
+				   CnxAllocator allocator) {
 	let_mut string = cnx_string_new_with_capacity_with_allocator(num_digits + 2, allocator);
 	let_mut gotten_non_zero = false;
 
 	cnx_string_push_back(string, '0');
-	if(type == CNX_FORMAT_TYPE_HEX_LOWER) {
+	if(notation == CNX_FORMAT_UNSIGNED_NOTATION_LOWER_HEX) {
 		cnx_string_push_back(string, 'x');
 		ranged_for(i, 0U, num_digits) {
 			let digit = cnx_get_hex(num, (num_digits - 1) - i);
@@ -275,16 +339,224 @@ __attr(nodiscard) CnxString
 		string;
 	});
 }
+typedef enum CnxFormatFloatNotation {
+	CNX_FORMAT_FLOAT_NOTATION_DEFAULT,
+	CNX_FORMAT_FLOAT_NOTATION_DECIMAL,
+	CNX_FORMAT_FLOAT_NOTATION_SCIENTIFIC
+} CnxFormatFloatNotation;
 
-CnxString cnx_format_bool(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {
-	return cnx_format_bool_with_allocator(self, specifier, cnx_allocator_new());
+typedef struct FloatContext {
+	usize num_sig_figs;
+	CnxFormatFloatNotation notation;
+	bool is_debug;
+} FloatContext;
+
+cnx_static_assert(
+	sizeof(FloatContext) < 32,
+	"Context types can't be larger than the 32-byte state buffer in CnxFormatContext.state");
+
+__attr(nodiscard) __attr(always_inline) static inline usize
+	// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
+	cnx_format_get_num_from_char(char character, usize index, usize current) {
+	let multiplier = static_cast(usize)(1 + index);
+	if(character >= '0' && character <= '9') {
+		return multiplier * current + static_cast(usize)(character - '0');
+	}
+
+	return current;
+}
+
+__attr(always_inline) __attr(nodiscard) CnxFormatContext
+	cnx_format_is_specifier_valid_fp(CnxStringView specifier) {
+	let_mut context = (CnxFormatContext){.is_valid = CNX_FORMAT_SUCCESS};
+	let_mut state = (FloatContext){.is_debug = false,
+								   .notation = CNX_FORMAT_FLOAT_NOTATION_DEFAULT,
+								   .num_sig_figs = CNX_FORMAT_DEFAULT_NUM_SIG_FIGS};
+	*(static_cast(FloatContext*)(context.state)) = state;
+	let length = cnx_stringview_length(specifier);
+	if(length == 0) {
+		return context;
+	}
+
+	let_mut notation = false;
+	let_mut sigfigs = false;
+	let_mut debug = false;
+	let_mut sig_fig_index = static_cast(usize)(0);
+	foreach(character, specifier) {
+		if(character == 'e' || character == 'd') {
+			// notation can only occur once, before sigfig or debug specifiers
+			if(notation || sigfigs || debug) {
+				context.is_valid = CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER;
+				return context;
+			}
+
+			if(character == 'e') {
+				state.notation = CNX_FORMAT_FLOAT_NOTATION_SCIENTIFIC;
+			}
+			else {
+				state.notation = CNX_FORMAT_FLOAT_NOTATION_DECIMAL;
+			}
+			notation = true;
+		}
+		else if(character >= '0' && character <= '9') {
+			// sigfigs can only occur before debug specifiers
+			if(debug) {
+				context.is_valid = CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER;
+				return context;
+			}
+
+			state.num_sig_figs
+				= cnx_format_get_num_from_char(character, sig_fig_index++, state.num_sig_figs);
+			sigfigs = true;
+		}
+		else if(character == 'D') {
+			state.is_debug = true;
+			debug = true;
+		}
+		else {
+			context.is_valid = CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER;
+			return context;
+		}
+	}
+
+	*(static_cast(FloatContext*)(context.state)) = state;
+	return context;
+}
+
+typedef struct GenericContext {
+	bool is_debug;
+} GenericContext;
+
+__attr(always_inline) __attr(nodiscard) CnxFormatContext
+	cnx_format_is_specifier_valid_generic(CnxStringView specifier) {
+	let_mut context = (CnxFormatContext){.is_valid = CNX_FORMAT_SUCCESS};
+	let_mut state = (GenericContext){.is_debug = false};
+	*(static_cast(GenericContext*)(context.state)) = state;
+
+	let length = cnx_stringview_length(specifier);
+	if(length > 1) {
+		context.is_valid = CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER;
+		return context;
+	}
+
+	if(length == 1) {
+		if(cnx_stringview_at(specifier, 0) != 'D') {
+			context.is_valid = CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER;
+			return context;
+		}
+
+		state.is_debug = true;
+	}
+
+	*(static_cast(GenericContext*)(context.state)) = state;
+	return context;
+}
+
+CnxFormatContext
+cnx_format_is_specifier_valid_cstring(__attr(maybe_unused) const CnxFormat* restrict self,
+									  CnxStringView specifier) {
+	return cnx_format_is_specifier_valid_generic(specifier);
+}
+
+CnxFormatContext
+cnx_format_is_specifier_valid_bool(__attr(maybe_unused) const CnxFormat* restrict self,
+								   CnxStringView specifier) {
+	return cnx_format_is_specifier_valid_integral(specifier);
+}
+
+CnxFormatContext
+cnx_format_is_specifier_valid_char(__attr(maybe_unused) const CnxFormat* restrict self,
+								   CnxStringView specifier) {
+	return cnx_format_is_specifier_valid_integral(specifier);
+}
+
+CnxFormatContext
+cnx_format_is_specifier_valid_u8(__attr(maybe_unused) const CnxFormat* restrict self,
+								 CnxStringView specifier) {
+	return cnx_format_is_specifier_valid_integral(specifier);
+}
+
+CnxFormatContext
+cnx_format_is_specifier_valid_u16(__attr(maybe_unused) const CnxFormat* restrict self,
+								  CnxStringView specifier) {
+	return cnx_format_is_specifier_valid_integral(specifier);
+}
+
+CnxFormatContext
+cnx_format_is_specifier_valid_u32(__attr(maybe_unused) const CnxFormat* restrict self,
+								  CnxStringView specifier) {
+	return cnx_format_is_specifier_valid_integral(specifier);
+}
+
+CnxFormatContext
+cnx_format_is_specifier_valid_u64(__attr(maybe_unused) const CnxFormat* restrict self,
+								  CnxStringView specifier) {
+	return cnx_format_is_specifier_valid_integral(specifier);
+}
+
+CnxFormatContext
+cnx_format_is_specifier_valid_i8(__attr(maybe_unused) const CnxFormat* restrict self,
+								 CnxStringView specifier) {
+	return cnx_format_is_specifier_valid_integral(specifier);
+}
+
+CnxFormatContext
+cnx_format_is_specifier_valid_i16(__attr(maybe_unused) const CnxFormat* restrict self,
+								  CnxStringView specifier) {
+	return cnx_format_is_specifier_valid_integral(specifier);
+}
+
+CnxFormatContext
+cnx_format_is_specifier_valid_i32(__attr(maybe_unused) const CnxFormat* restrict self,
+								  CnxStringView specifier) {
+	return cnx_format_is_specifier_valid_integral(specifier);
+}
+
+CnxFormatContext
+cnx_format_is_specifier_valid_i64(__attr(maybe_unused) const CnxFormat* restrict self,
+								  CnxStringView specifier) {
+	return cnx_format_is_specifier_valid_integral(specifier);
+}
+
+CnxFormatContext
+cnx_format_is_specifier_valid_f32(__attr(maybe_unused) const CnxFormat* restrict self,
+								  CnxStringView specifier) {
+	return cnx_format_is_specifier_valid_fp(specifier);
+}
+
+CnxFormatContext
+cnx_format_is_specifier_valid_f64(__attr(maybe_unused) const CnxFormat* restrict self,
+								  CnxStringView specifier) {
+	return cnx_format_is_specifier_valid_fp(specifier);
+}
+
+CnxFormatContext
+cnx_format_is_specifier_valid_ptr(__attr(maybe_unused) const CnxFormat* restrict self,
+								  CnxStringView specifier) {
+	return cnx_format_is_specifier_valid_integral(specifier);
+}
+
+CnxFormatContext
+cnx_format_is_specifier_valid_cnx_string(__attr(maybe_unused) const CnxFormat* restrict self,
+										 CnxStringView specifier) {
+	return cnx_format_is_specifier_valid_generic(specifier);
+}
+
+CnxFormatContext
+cnx_format_is_specifier_valid_cnx_stringview(__attr(maybe_unused) const CnxFormat* restrict self,
+											 CnxStringView specifier) {
+	return cnx_format_is_specifier_valid_generic(specifier);
+}
+
+CnxString cnx_format_bool(const CnxFormat* restrict self, CnxFormatContext context) {
+	return cnx_format_bool_with_allocator(self, context, cnx_allocator_new());
 }
 
 CnxString cnx_format_bool_with_allocator(const CnxFormat* restrict self,
-										 __attr(maybe_unused) CnxFormatSpecifier specifier,
+										 __attr(maybe_unused) CnxFormatContext context,
 										 CnxAllocator allocator) {
-	cnx_assert(specifier.m_type == CNX_FORMAT_TYPE_DEFAULT,
-			   "Can't format bool with custom specifier");
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS,
+			   "Bad format specifier used to format a bool");
 
 	let _self = *static_cast(bool*)(self->m_self);
 	if(_self) {
@@ -295,185 +567,166 @@ CnxString cnx_format_bool_with_allocator(const CnxFormat* restrict self,
 	}
 }
 
-CnxString cnx_format_char(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {
-	return cnx_format_char_with_allocator(self, specifier, cnx_allocator_new());
+CnxString cnx_format_char(const CnxFormat* restrict self, CnxFormatContext context) {
+	return cnx_format_char_with_allocator(self, context, cnx_allocator_new());
 }
 
 CnxString cnx_format_char_with_allocator(const CnxFormat* restrict self,
-										 CnxFormatSpecifier specifier,
+										 CnxFormatContext context,
 										 CnxAllocator allocator) {
-	cnx_assert(specifier.m_type != CNX_FORMAT_TYPE_SCIENTIFIC,
-			   "Cannot format char as scientific notation");
+	let state = *(static_cast(const IntegralContext*)(context.state));
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS,
+			   "Bad format specifier used to format a char");
 
-	if(specifier.m_type == CNX_FORMAT_TYPE_DEFAULT || specifier.m_type == CNX_FORMAT_TYPE_DEBUG) {
+	if(state.is_debug || state.notation == CNX_FORMAT_UNSIGNED_NOTATION_DEFAULT) {
 		return cnx_string_from_cstring_with_allocator(static_cast(const_cstring)(self->m_self),
 													  1,
 													  allocator);
 	}
-	else if(specifier.m_type == CNX_FORMAT_TYPE_DECIMAL) {
+	else if(state.notation == CNX_FORMAT_UNSIGNED_NOTATION_DECIMAL) {
 		let num = *static_cast(const char*)(self->m_self);
 		return cnx_format_decimal(static_cast(u64)(num), NUM_DIGITS_CHAR, allocator);
 	}
 	else {
 		let num = static_cast(u8)(*(static_cast(const char*)(self->m_self)));
-		return cnx_format_hex(num, NUM_HEX_DIGITS_CHAR, specifier.m_type, allocator);
+		return cnx_format_hex(num, NUM_HEX_DIGITS_CHAR, state.notation, allocator);
 	}
 }
 
-CnxString cnx_format_u8(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {
-	return cnx_format_u8_with_allocator(self, specifier, cnx_allocator_new());
+CnxString cnx_format_u8(const CnxFormat* restrict self, CnxFormatContext context) {
+	return cnx_format_u8_with_allocator(self, context, cnx_allocator_new());
 }
 
 CnxString cnx_format_u8_with_allocator(const CnxFormat* restrict self,
-									   CnxFormatSpecifier specifier,
+									   CnxFormatContext context,
 									   CnxAllocator allocator) {
-	cnx_assert(specifier.m_type != CNX_FORMAT_TYPE_SCIENTIFIC,
-			   "Cannot format u8 as scientific notation");
+	let state = *(static_cast(const IntegralContext*)(context.state));
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS, "Bad format specifier used to format a u8");
 
 	let num = *static_cast(const u8*)(self->m_self);
-	return (specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
-			|| specifier.m_type == CNX_FORMAT_TYPE_DECIMAL
-			|| specifier.m_type == CNX_FORMAT_TYPE_DEBUG) ?
+	return (state.notation == CNX_FORMAT_UNSIGNED_NOTATION_DEFAULT
+			|| state.notation == CNX_FORMAT_UNSIGNED_NOTATION_DECIMAL || state.is_debug) ?
 			   cnx_format_decimal(num, NUM_DIGITS_U8, allocator) :
-			   cnx_format_hex(num, NUM_HEX_DIGITS_U8, specifier.m_type, allocator);
+			   cnx_format_hex(num, NUM_HEX_DIGITS_U8, state.notation, allocator);
 }
 
-CnxString cnx_format_u16(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {
-	return cnx_format_u16_with_allocator(self, specifier, cnx_allocator_new());
+CnxString cnx_format_u16(const CnxFormat* restrict self, CnxFormatContext context) {
+	return cnx_format_u16_with_allocator(self, context, cnx_allocator_new());
 }
 
 CnxString cnx_format_u16_with_allocator(const CnxFormat* restrict self,
-										CnxFormatSpecifier specifier,
+										CnxFormatContext context,
 										CnxAllocator allocator) {
-	cnx_assert(specifier.m_type != CNX_FORMAT_TYPE_SCIENTIFIC,
-			   "Cannot format u16 as scientific notation");
+	let state = *(static_cast(const IntegralContext*)(context.state));
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS, "Bad format specifier used to format a u16");
 
 	let num = *static_cast(const u16*)(self->m_self);
-	return (specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
-			|| specifier.m_type == CNX_FORMAT_TYPE_DECIMAL
-			|| specifier.m_type == CNX_FORMAT_TYPE_DEBUG) ?
+	return (state.notation == CNX_FORMAT_UNSIGNED_NOTATION_DEFAULT
+			|| state.notation == CNX_FORMAT_UNSIGNED_NOTATION_DECIMAL || state.is_debug) ?
 			   cnx_format_decimal(num, NUM_DIGITS_U16, allocator) :
-			   cnx_format_hex(num, NUM_HEX_DIGITS_U16, specifier.m_type, allocator);
+			   cnx_format_hex(num, NUM_HEX_DIGITS_U16, state.notation, allocator);
 }
 
-CnxString cnx_format_u32(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {
-	return cnx_format_u32_with_allocator(self, specifier, cnx_allocator_new());
+CnxString cnx_format_u32(const CnxFormat* restrict self, CnxFormatContext context) {
+	return cnx_format_u32_with_allocator(self, context, cnx_allocator_new());
 }
 
 CnxString cnx_format_u32_with_allocator(const CnxFormat* restrict self,
-										CnxFormatSpecifier specifier,
+										CnxFormatContext context,
 										CnxAllocator allocator) {
-	cnx_assert(specifier.m_type != CNX_FORMAT_TYPE_SCIENTIFIC,
-			   "Cannot format u32 as scientific notation");
+	let state = *(static_cast(const IntegralContext*)(context.state));
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS, "Bad format specifier used to format a u32");
 
 	let num = *static_cast(const u32*)(self->m_self);
-	return (specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
-			|| specifier.m_type == CNX_FORMAT_TYPE_DECIMAL
-			|| specifier.m_type == CNX_FORMAT_TYPE_DEBUG) ?
+	return (state.notation == CNX_FORMAT_UNSIGNED_NOTATION_DEFAULT
+			|| state.notation == CNX_FORMAT_UNSIGNED_NOTATION_DECIMAL || state.is_debug) ?
 			   cnx_format_decimal(num, NUM_DIGITS_U32, allocator) :
-			   cnx_format_hex(num, NUM_HEX_DIGITS_U32, specifier.m_type, allocator);
+			   cnx_format_hex(num, NUM_HEX_DIGITS_U32, state.notation, allocator);
 }
 
-CnxString cnx_format_u64(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {
-	return cnx_format_u64_with_allocator(self, specifier, cnx_allocator_new());
+CnxString cnx_format_u64(const CnxFormat* restrict self, CnxFormatContext context) {
+	return cnx_format_u64_with_allocator(self, context, cnx_allocator_new());
 }
 
 CnxString cnx_format_u64_with_allocator(const CnxFormat* restrict self,
-										CnxFormatSpecifier specifier,
+										CnxFormatContext context,
 										CnxAllocator allocator) {
-	cnx_assert(specifier.m_type != CNX_FORMAT_TYPE_SCIENTIFIC,
-			   "Cannot format u64 as scientific notation");
+	let state = *(static_cast(const IntegralContext*)(context.state));
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS, "Bad format specifier used to format a u64");
 
 	let num = *static_cast(const u64*)(self->m_self);
-	return (specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
-			|| specifier.m_type == CNX_FORMAT_TYPE_DECIMAL
-			|| specifier.m_type == CNX_FORMAT_TYPE_DEBUG) ?
+	return (state.notation == CNX_FORMAT_UNSIGNED_NOTATION_DEFAULT
+			|| state.notation == CNX_FORMAT_UNSIGNED_NOTATION_DECIMAL || state.is_debug) ?
 			   cnx_format_decimal(num, NUM_DIGITS_U64, allocator) :
-			   cnx_format_hex(num, NUM_HEX_DIGITS_U64, specifier.m_type, allocator);
+			   cnx_format_hex(num, NUM_HEX_DIGITS_U64, state.notation, allocator);
 }
 
-CnxString cnx_format_i8(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {
-	return cnx_format_i8_with_allocator(self, specifier, cnx_allocator_new());
+CnxString cnx_format_i8(const CnxFormat* restrict self, CnxFormatContext context) {
+	return cnx_format_i8_with_allocator(self, context, cnx_allocator_new());
 }
 
 CnxString cnx_format_i8_with_allocator(const CnxFormat* restrict self,
-									   CnxFormatSpecifier specifier,
+									   CnxFormatContext context,
 									   CnxAllocator allocator) {
-	cnx_assert(specifier.m_type != CNX_FORMAT_TYPE_SCIENTIFIC,
-			   "Cannot format i8 as scientific notation");
+	let state = *(static_cast(const IntegralContext*)(context.state));
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS, "Bad format specifier used to format a i8");
 
 	let num = *static_cast(const i8*)(self->m_self);
-	return (specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
-			|| specifier.m_type == CNX_FORMAT_TYPE_DECIMAL
-			|| specifier.m_type == CNX_FORMAT_TYPE_DEBUG) ?
+	return (state.notation == CNX_FORMAT_UNSIGNED_NOTATION_DEFAULT
+			|| state.notation == CNX_FORMAT_UNSIGNED_NOTATION_DECIMAL || state.is_debug) ?
 			   cnx_format_decimal(num, NUM_DIGITS_I8, allocator) :
-			   cnx_format_hex(static_cast(u64)(num),
-							  NUM_HEX_DIGITS_I8,
-							  specifier.m_type,
-							  allocator);
+			   cnx_format_hex(static_cast(u64)(num), NUM_HEX_DIGITS_I8, state.notation, allocator);
 }
 
-CnxString cnx_format_i16(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {
-	return cnx_format_i16_with_allocator(self, specifier, cnx_allocator_new());
+CnxString cnx_format_i16(const CnxFormat* restrict self, CnxFormatContext context) {
+	return cnx_format_i16_with_allocator(self, context, cnx_allocator_new());
 }
 
 CnxString cnx_format_i16_with_allocator(const CnxFormat* restrict self,
-										CnxFormatSpecifier specifier,
+										CnxFormatContext context,
 										CnxAllocator allocator) {
-	cnx_assert(specifier.m_type != CNX_FORMAT_TYPE_SCIENTIFIC,
-			   "Cannot format i16 as scientific notation");
+	let state = *(static_cast(const IntegralContext*)(context.state));
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS, "Bad format specifier used to format a i16");
 
 	let num = *static_cast(const i16*)(self->m_self);
-	return (specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
-			|| specifier.m_type == CNX_FORMAT_TYPE_DECIMAL
-			|| specifier.m_type == CNX_FORMAT_TYPE_DEBUG) ?
+	return (state.notation == CNX_FORMAT_UNSIGNED_NOTATION_DEFAULT
+			|| state.notation == CNX_FORMAT_UNSIGNED_NOTATION_DECIMAL || state.is_debug) ?
 			   cnx_format_decimal(num, NUM_DIGITS_I16, allocator) :
-			   cnx_format_hex(static_cast(u64)(num),
-							  NUM_HEX_DIGITS_I16,
-							  specifier.m_type,
-							  allocator);
+			   cnx_format_hex(static_cast(u64)(num), NUM_HEX_DIGITS_I16, state.notation, allocator);
 }
 
-CnxString cnx_format_i32(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {
-	return cnx_format_i32_with_allocator(self, specifier, cnx_allocator_new());
+CnxString cnx_format_i32(const CnxFormat* restrict self, CnxFormatContext context) {
+	return cnx_format_i32_with_allocator(self, context, cnx_allocator_new());
 }
 
 CnxString cnx_format_i32_with_allocator(const CnxFormat* restrict self,
-										CnxFormatSpecifier specifier,
+										CnxFormatContext context,
 										CnxAllocator allocator) {
-	cnx_assert(specifier.m_type != CNX_FORMAT_TYPE_SCIENTIFIC,
-			   "Cannot format i32 as scientific notation");
+	let state = *(static_cast(const IntegralContext*)(context.state));
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS, "Bad format specifier used to format a i32");
 
 	let num = *static_cast(const i32*)(self->m_self);
-	return (specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
-			|| specifier.m_type == CNX_FORMAT_TYPE_DECIMAL
-			|| specifier.m_type == CNX_FORMAT_TYPE_DEBUG) ?
+	return (state.notation == CNX_FORMAT_UNSIGNED_NOTATION_DEFAULT
+			|| state.notation == CNX_FORMAT_UNSIGNED_NOTATION_DECIMAL || state.is_debug) ?
 			   cnx_format_decimal(num, NUM_DIGITS_I32, allocator) :
-			   cnx_format_hex(static_cast(u64)(num),
-							  NUM_HEX_DIGITS_I32,
-							  specifier.m_type,
-							  allocator);
+			   cnx_format_hex(static_cast(u64)(num), NUM_HEX_DIGITS_I32, state.notation, allocator);
 }
 
-CnxString cnx_format_i64(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {
-	return cnx_format_i64_with_allocator(self, specifier, cnx_allocator_new());
+CnxString cnx_format_i64(const CnxFormat* restrict self, CnxFormatContext context) {
+	return cnx_format_i64_with_allocator(self, context, cnx_allocator_new());
 }
 
 CnxString cnx_format_i64_with_allocator(const CnxFormat* restrict self,
-										CnxFormatSpecifier specifier,
+										CnxFormatContext context,
 										CnxAllocator allocator) {
-	cnx_assert(specifier.m_type != CNX_FORMAT_TYPE_SCIENTIFIC,
-			   "Cannot format i64 as scientific notation");
+	let state = *(static_cast(const IntegralContext*)(context.state));
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS, "Bad format specifier used to format a i64");
 
 	let num = *static_cast(const i64*)(self->m_self);
-	return (specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
-			|| specifier.m_type == CNX_FORMAT_TYPE_DECIMAL
-			|| specifier.m_type == CNX_FORMAT_TYPE_DEBUG) ?
+	return (state.notation == CNX_FORMAT_UNSIGNED_NOTATION_DEFAULT
+			|| state.notation == CNX_FORMAT_UNSIGNED_NOTATION_DECIMAL || state.is_debug) ?
 			   cnx_format_decimal(num, NUM_DIGITS_I64, allocator) :
-			   cnx_format_hex(static_cast(u64)(num),
-							  NUM_HEX_DIGITS_I64,
-							  specifier.m_type,
-							  allocator);
+			   cnx_format_hex(static_cast(u64)(num), NUM_HEX_DIGITS_I64, state.notation, allocator);
 }
 
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
@@ -547,143 +800,128 @@ __attr(nodiscard) CnxString
 }
 
 __attr(nodiscard) __attr(always_inline) static inline CnxString
-	cnx_format_f64_with_allocator__(f64 num, CnxFormatSpecifier specifier, CnxAllocator allocator) {
+	cnx_format_f64_with_allocator__(f64 num, CnxFormatContext context, CnxAllocator allocator) {
+	let state = *(static_cast(const FloatContext*)(context.state));
 	let_mut exponent_base_2 = 0;
 	ignore(frexp(num, &exponent_base_2));
 	let exponent = static_cast(i64)(static_cast(f32)(exponent_base_2) * LN_2 / LN_10);
-	return (specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
-			|| specifier.m_type == CNX_FORMAT_TYPE_SCIENTIFIC
-			|| specifier.m_type == CNX_FORMAT_TYPE_DEBUG) ?
+	return (state.notation == CNX_FORMAT_FLOAT_NOTATION_DEFAULT
+			|| state.notation == CNX_FORMAT_FLOAT_NOTATION_SCIENTIFIC || state.is_debug) ?
 			   cnx_format_f64_scientific(num / powers_of_10[exponent],
 										 exponent,
-										 specifier.m_num_sig_figs,
+										 state.num_sig_figs,
 										 allocator) :
-			   cnx_format_f64_decimal(num, exponent, specifier.m_num_sig_figs, allocator);
+			   cnx_format_f64_decimal(num, exponent, state.num_sig_figs, allocator);
 }
 
-CnxString cnx_format_f32(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {
-	return cnx_format_f32_with_allocator(self, specifier, cnx_allocator_new());
+CnxString cnx_format_f32(const CnxFormat* restrict self, CnxFormatContext context) {
+	return cnx_format_f32_with_allocator(self, context, cnx_allocator_new());
 }
 
 CnxString cnx_format_f32_with_allocator(const CnxFormat* restrict self,
-										CnxFormatSpecifier specifier,
+										CnxFormatContext context,
 										CnxAllocator allocator) {
-	cnx_assert(specifier.m_type != CNX_FORMAT_TYPE_HEX_LOWER
-				   && specifier.m_type != CNX_FORMAT_TYPE_HEX_UPPER,
-			   "Cannot format f32 as hex");
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS, "Bad format specifier used to format a f32");
 
 	let num = *static_cast(const f32*)(self->m_self);
-	return cnx_format_f64_with_allocator__(num, specifier, allocator);
+	return cnx_format_f64_with_allocator__(num, context, allocator);
 }
 
-CnxString cnx_format_f64(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {
-	return cnx_format_f64_with_allocator(self, specifier, cnx_allocator_new());
+CnxString cnx_format_f64(const CnxFormat* restrict self, CnxFormatContext context) {
+	return cnx_format_f64_with_allocator(self, context, cnx_allocator_new());
 }
 
 CnxString cnx_format_f64_with_allocator(const CnxFormat* restrict self,
-										CnxFormatSpecifier specifier,
+										CnxFormatContext context,
 										CnxAllocator allocator) {
-	cnx_assert(specifier.m_type != CNX_FORMAT_TYPE_HEX_LOWER
-				   && specifier.m_type != CNX_FORMAT_TYPE_HEX_UPPER,
-			   "Cannot format f64 as hex");
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS, "Bad format specifier used to format a f64");
 
 	let num = *static_cast(const f64*)(self->m_self);
-	return cnx_format_f64_with_allocator__(num, specifier, allocator);
+	return cnx_format_f64_with_allocator__(num, context, allocator);
 }
 
-CnxString cnx_format_ptr(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {
-	return cnx_format_ptr_with_allocator(self, specifier, cnx_allocator_new());
+CnxString cnx_format_ptr(const CnxFormat* restrict self, CnxFormatContext context) {
+	return cnx_format_ptr_with_allocator(self, context, cnx_allocator_new());
 }
 
 CnxString cnx_format_ptr_with_allocator(const CnxFormat* restrict self,
-										CnxFormatSpecifier specifier,
+										CnxFormatContext context,
 										CnxAllocator allocator) {
-	cnx_assert(specifier.m_type != CNX_FORMAT_TYPE_DECIMAL
-				   && specifier.m_type != CNX_FORMAT_TYPE_SCIENTIFIC,
-			   "Cannot format a pointer as decimal number or scientific notation");
+	let state = *(static_cast(const IntegralContext*)(context.state));
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS,
+			   "Bad format specifier used to format a pointer");
 
-	let num = static_cast(usize)(static_cast(void*)(self->m_self));
-	let_mut string = cnx_string_new_with_capacity_with_allocator(2 + NUM_HEX_DIGITS_PTR, allocator);
-
-	if(specifier.m_type == CNX_FORMAT_TYPE_DEFAULT || specifier.m_type == CNX_FORMAT_TYPE_HEX_LOWER
-	   || specifier.m_type == CNX_FORMAT_TYPE_DEBUG)
-	{
-		cnx_string_append(string, "0x");
-		ranged_for(i, 0U, NUM_HEX_DIGITS_PTR) {
-			cnx_string_push_back(
-				string,
-				cnx_num_to_hex_lower(cnx_get_hex(num, (NUM_HEX_DIGITS_PTR - 1) - i)));
-		}
-	}
-	else {
-		cnx_string_append(string, "0X");
-		ranged_for(i, 0U, NUM_HEX_DIGITS_PTR) {
-			cnx_string_push_back(
-				string,
-				cnx_num_to_hex_upper(cnx_get_hex(num, (NUM_HEX_DIGITS_PTR - 1) - i)));
-		}
-	}
-	return string;
+	let num = static_cast(usize)(static_cast(const void*)(self->m_self));
+	return (state.notation == CNX_FORMAT_UNSIGNED_NOTATION_DECIMAL) ?
+			   cnx_format_decimal(num, NUM_DIGITS_I64, allocator) :
+			   cnx_format_hex(static_cast(u64)(num), NUM_HEX_DIGITS_I64, state.notation, allocator);
 }
 
-CnxString cnx_format_cnx_string(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {
-	ignore(specifier);
-
-	let string = static_cast(const CnxString*)(self->m_self);
-	return cnx_string_clone(*string);
+CnxString cnx_format_cnx_string(const CnxFormat* restrict self, CnxFormatContext context) {
+	return cnx_format_cnx_string_with_allocator(self, context, cnx_allocator_new());
 }
 
 CnxString cnx_format_cnx_string_with_allocator(const CnxFormat* restrict self,
-											   CnxFormatSpecifier specifier,
+											   CnxFormatContext context,
 											   CnxAllocator allocator) {
-	ignore(specifier);
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS,
+			   "Bad format specifier used to format a CnxString");
 
+	let state = *(static_cast(const GenericContext*)(context.state));
 	let string = static_cast(const CnxString*)(self->m_self);
+	let_mut str = cnx_string_into_cstring(*string);
+	if(state.is_debug) {
+		let length = cnx_string_length(*string);
+		let capacity = cnx_string_capacity(*string);
+		return cnx_format_with_allocator(
+			AS_STRING(CnxString) ": [length: {}, capacity: {}, data: {}]",
+			allocator,
+			length,
+			capacity,
+			str);
+	}
+
 	return cnx_string_clone_with_allocator(*string, allocator);
 }
 
-CnxString cnx_format_cnx_stringview(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {
-	ignore(specifier);
-
-	let view = static_cast(const CnxStringView*)(self->m_self);
-	return cnx_string_from(view);
+CnxString cnx_format_cnx_stringview(const CnxFormat* restrict self, CnxFormatContext context) {
+	return cnx_format_cnx_stringview_with_allocator(self, context, cnx_allocator_new());
 }
 
 CnxString cnx_format_cnx_stringview_with_allocator(const CnxFormat* restrict self,
-												   CnxFormatSpecifier specifier,
+												   CnxFormatContext context,
 												   CnxAllocator allocator) {
-	ignore(specifier);
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS,
+			   "Bad format specifier used to format a CnxStringView");
 
-	let view = static_cast(const CnxStringView*)(self->m_self);
-	return cnx_string_from_with_allocator(view, allocator);
+	let state = *(static_cast(const GenericContext*)(context.state));
+	let string = static_cast(const CnxStringView*)(self->m_self);
+	let_mut str = cnx_stringview_into_cstring(*string);
+	if(state.is_debug) {
+		let length = cnx_stringview_length(*string);
+		return cnx_format_with_allocator(AS_STRING(CnxStringView) ": [length: {}, data: {}]",
+										 allocator,
+										 length,
+										 str);
+	}
+
+	return cnx_string_from_with_allocator(string, allocator);
 }
 
-CnxString cnx_format_cstring(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {
-	ignore(specifier);
-
-	let string = static_cast(const_cstring)(self->m_self);
-	return cnx_string_from(string);
+CnxString cnx_format_cstring(const CnxFormat* restrict self, CnxFormatContext context) {
+	return cnx_format_cstring_with_allocator(self, context, cnx_allocator_new());
 }
 
 CnxString cnx_format_cstring_with_allocator(const CnxFormat* restrict self,
-											CnxFormatSpecifier specifier,
+											__attr(maybe_unused) CnxFormatContext context,
 											CnxAllocator allocator) {
-	ignore(specifier);
-
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS,
+			   "Bad format specifier used to format a CnxStringView");
 	let string = static_cast(const_cstring)(self->m_self);
 	return cnx_string_from_with_allocator(string, allocator);
 }
 
-typedef enum CnxFormatErrorTypes {
-	CNX_FORMAT_SUCCESS = 0,
-	CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER,
-	CNX_FORMAT_INVALID_CLOSING_BRACE_LOCATION,
-	CNX_FORMAT_UNCLOSED_SPECIFIER,
-	CNX_FORMAT_MORE_SPECIFIERS_THAN_ARGS,
-	CNX_FORMAT_FEWER_SPECIFIERS_THAN_ARGS
-} CnxFormatErrorTypes;
-
-Enum(CnxFormatVariant, (Substring, CnxStringView), (Specifier, CnxFormatSpecifier));
+Enum(CnxFormatVariant, (Substring, CnxStringView), (Specifier, CnxStringView));
 
 typedef CnxFormatVariant* Ref(CnxFormatVariant);
 typedef const CnxFormatVariant* ConstRef(CnxFormatVariant);
@@ -747,16 +985,9 @@ __attr(nodiscard) __attr(not_null(1)) __attr(always_inline) static inline CnxFor
 	return *elem;
 }
 
-// clang-format off
-#define cnx_format_pair_from(x) _Generic(&(x), \
-		CnxFormatSpecifier* 			: 	cnx_format_pair_from_specifier, 	\
-		const CnxFormatSpecifier* 		: 	cnx_format_pair_from_specifier, 	\
-		CnxStringView* 					: 	cnx_format_pair_from_stringview, 	\
-		const CnxStringView* 			: cnx_format_pair_from_stringview)(x)
-//clang-format on
-
-__attr(nodiscard) __attr(returns_not_null) const_cstring cnx_format_category_get_message(
-		__attr(maybe_unused) const CnxErrorCategory* restrict self, i64 error_code) {
+__attr(nodiscard) __attr(returns_not_null) const_cstring
+	cnx_format_category_get_message(__attr(maybe_unused) const CnxErrorCategory* restrict self,
+									i64 error_code) {
 	if(error_code == CNX_FORMAT_SUCCESS) {
 		return "No error: Formatting successful";
 	}
@@ -778,90 +1009,61 @@ __attr(nodiscard) __attr(returns_not_null) const_cstring cnx_format_category_get
 	unreachable();
 }
 
-__attr(nodiscard) i64 cnx_format_category_get_last_error(
-		__attr(maybe_unused) const CnxErrorCategory* restrict self) {
+__attr(nodiscard) i64
+	cnx_format_category_get_last_error(__attr(maybe_unused) const CnxErrorCategory* restrict self) {
 	return 0;
 }
 
-typedef struct CnxFormatErrorCategory {} CnxFormatErrorCategory;
+typedef struct CnxFormatErrorCategory {
+} CnxFormatErrorCategory;
 
+#if CNX_PLATFORM_COMPILER_CLANG
+	#define IGNORE_UNUSED_BUT_SET_WARNING_START \
+		_Pragma("GCC diagnostic push")          \
+			_Pragma("GCC diagnostic ignored \"-Wunused-but-set-variable\"")
+	#define IGNORE_UNUSED_BUT_SET_WARNING_STOP _Pragma("GCC diagnostic pop")
+#else
+	#define IGNORE_UNUSED_BUT_SET_WARNING_START
+	#define IGNORE_UNUSED_BUT_SET_WARNING_STOP
+#endif // CNX_PLATFORM_COMPILER_CLANG
 __attr(maybe_unused) static ImplTraitFor(CnxErrorCategory,
-									 CnxFormatErrorCategory,
-									 cnx_format_category_get_message,
-									 cnx_format_category_get_last_error);
+										 CnxFormatErrorCategory,
+										 cnx_format_category_get_message,
+										 cnx_format_category_get_last_error);
 
 __attr(maybe_unused) static const CnxFormatErrorCategory cnx_format_error_category = {};
 
-__attr(maybe_unused) static let cnx_format_category = as_trait(CnxErrorCategory,
-														   CnxFormatErrorCategory,
-														   cnx_format_error_category);
+__attr(maybe_unused) static let cnx_format_category
+	= as_trait(CnxErrorCategory, CnxFormatErrorCategory, cnx_format_error_category);
 
-__attr(nodiscard) __attr(not_null(1)) __attr(always_inline)
-static inline usize cnx_format_get_num_sig_figs_from_substring(
-									restrict const_cstring format_string,
-									// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-									usize length,
-									usize start_index)
-{
-	let_mut multiplier = 1;
-	let_mut num_figs = 0U;
-	let_mut num_digits = 0U;
-	let_mut first = start_index - 1;
-	let_mut last = start_index - 1;
-	ranged_for(i, start_index, length) {
-		if(format_string[i] == '}') {
-			break;
-		}
-		else if(format_string[i] >= '0' && format_string[i] <= '9') {
-			num_digits++;
-			last = i;
-			if(first < start_index) {
-				first = i;
-			}
-			else {
-				multiplier *= 10; // NOLINT
-			}
-		}
-	}
-
-	if(first < start_index) {
-		return CNX_FORMAT_DEFAULT_NUM_SIG_FIGS;
-	}
-
-	ranged_for(i, first, last + 1) {
-		num_figs += static_cast(u32)(multiplier * (format_string[i] - '0'));
-		multiplier /= 10; // NOLINT
-	}
-
-	return num_figs;
-}
-
-__attr(nodiscard) bool cnx_format_is_char_valid_in_specifier(char character) {
-	return character == CNX_FORMAT_TYPE_DECIMAL || character == CNX_FORMAT_TYPE_HEX_LOWER
-		   || character == CNX_FORMAT_TYPE_HEX_UPPER || character == CNX_FORMAT_TYPE_SCIENTIFIC
-		   || character == CNX_FORMAT_TYPE_DEBUG || (character >= '0' && character <= '9');
-}
-
-
-static let format_variant_data = (CnxCollectionData(CnxVector(CnxFormatVariant))) {
-.m_constructor = cnx_format_variant_new,
-.m_destructor = cnx_format_variant_free,
-.m_copy_constructor = cnx_format_variant_clone};
+static let format_variant_data = (CnxCollectionData(CnxVector(CnxFormatVariant))){
+	.m_constructor = cnx_format_variant_new,
+	.m_destructor = cnx_format_variant_free,
+	.m_copy_constructor = cnx_format_variant_clone};
 
 __attr(nodiscard) __attr(not_null(1)) CnxResult(CnxVector(CnxFormatVariant))
-	cnx_format_parse_and_validate_format_string(restrict const_cstring format_string, // NOLINT
-											// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-											usize length,
-											__attr(maybe_unused) usize num_args,
-											CnxAllocator allocator)
-{
+	// NOLINTNEXTLINE(readability-function-cognitive-complexity)
+	cnx_format_parse_and_validate_format_string(
+		restrict const_cstring format_string,
+		// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
+		usize length,
+		__attr(maybe_unused) usize num_args,
+		CnxAllocator allocator) {
 	let_mut vec = cnx_vector_new_with_capacity_allocator_and_collection_data(CnxFormatVariant,
-			num_args * 2, allocator, &format_variant_data);
+																			 num_args * 2,
+																			 allocator,
+																			 &format_variant_data);
 
+#if CNX_PLATFORM_DEBUG
 	let_mut in_specifier = false;
-	let_mut pushed_specifier = false;
+#endif // CNX_PLATFORM_DEBUG
+	IGNORE_UNUSED_BUT_SET_WARNING_START
+	// NOLINTNEXTLINE(clang-analyzer-deadcode.DeadStores)
 	let_mut num_open = 0U;
+	// NOLINTNEXTLINE(clang-analyzer-deadcode.DeadStores)
 	let_mut num_close = 0U;
+	IGNORE_UNUSED_BUT_SET_WARNING_STOP
+
 	let_mut start_index = 0U;
 	ranged_for(i, 0U, length) {
 		if(format_string[i] == '{') {
@@ -871,29 +1073,27 @@ __attr(nodiscard) __attr(not_null(1)) CnxResult(CnxVector(CnxFormatVariant))
 						   cnx_error_new(CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER,
 										 cnx_format_category));
 			}
-			else
-#endif // CNX_PLATFORM_DEBUG
-			if(i > 0) {
-				if(format_string[i - 1] != '\\') {
-					in_specifier = true;
-					pushed_specifier = false;
-					num_open++;
-					let view = cnx_stringview_from(format_string, start_index, i - start_index);
-					cnx_vector_push_back(vec,
-									 Substring(view));
-				}
-			}
 			else {
-				in_specifier = true;
+#endif // CNX_PLATFORM_DEBUG
+				if(i > 0) {
+					if(format_string[i - 1] != '\\') {
+						let view = cnx_stringview_from(format_string, start_index, i - start_index);
+						cnx_vector_push_back(vec, Substring(view));
+					}
+				}
 				num_open++;
+				start_index = i + 1;
+#if CNX_PLATFORM_DEBUG
+				in_specifier = true;
 			}
+#endif // CNX_PLATFORM_DEBUG
 		}
 		else if(format_string[i] == '}') {
 #if CNX_PLATFORM_DEBUG
-			if(!in_specifier) {
-				return Err(CnxVector(CnxFormatVariant),
-						   cnx_error_new(CNX_FORMAT_INVALID_CLOSING_BRACE_LOCATION,
-										 cnx_format_category));
+			if(!in_specifier && format_string[i - 1] != '\\') {
+				return Err(
+					CnxVector(CnxFormatVariant),
+					cnx_error_new(CNX_FORMAT_INVALID_CLOSING_BRACE_LOCATION, cnx_format_category));
 			}
 			else if(format_string[i - 1] == '\\') {
 				return Err(CnxVector(CnxFormatVariant),
@@ -901,81 +1101,20 @@ __attr(nodiscard) __attr(not_null(1)) CnxResult(CnxVector(CnxFormatVariant))
 										 cnx_format_category));
 			}
 			else {
-				if(!pushed_specifier) {
-					cnx_vector_push_back(vec,
-										 Specifier(((CnxFormatSpecifier){
-											 .m_type = CNX_FORMAT_TYPE_DEFAULT,
-											 .m_num_sig_figs = CNX_FORMAT_DEFAULT_NUM_SIG_FIGS})));
-				}
-				in_specifier = false;
+				cnx_vector_push_back(
+					vec,
+					Specifier(cnx_stringview_from(format_string, start_index, i - start_index)));
 				num_close++;
 				start_index = i + 1;
 			}
-#else  // CNX_PLATFORM_DEBUG
-			if(!pushed_specifier) {
-				cnx_vector_push_back(vec,
-									 Specifier(((CnxFormatSpecifier){
-										 .m_type = CNX_FORMAT_TYPE_DEFAULT,
-										 .m_num_sig_figs = CNX_FORMAT_DEFAULT_NUM_SIG_FIGS})));
-			}
 			in_specifier = false;
+#else  // CNX_PLATFORM_DEBUG
+			cnx_vector_push_back(
+				vec,
+				Specifier(cnx_stringview_from(format_string, start_index, i - start_index)));
 			num_close++;
 			start_index = i + 1;
 #endif // CNX_PLATFORM_DEBUG
-		}
-		else if(in_specifier) {
-#if CNX_PLATFORM_DEBUG
-			if(!cnx_format_is_char_valid_in_specifier(format_string[i])) {
-				return Err(CnxVector(CnxFormatVariant),
-						   cnx_error_new(CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER,
-										 cnx_format_category));
-			}
-#endif // CNX_PLATFORM_DEBUG
-
-			if(format_string[i] == CNX_FORMAT_TYPE_DECIMAL) {
-				cnx_vector_push_back(
-					vec,
-					Specifier(((CnxFormatSpecifier){
-						.m_type = CNX_FORMAT_TYPE_DECIMAL,
-						.m_num_sig_figs = cnx_format_get_num_sig_figs_from_substring(format_string,
-																					 length,
-																					 i + 1)})));
-				pushed_specifier = true;
-			}
-			else if(format_string[i] == CNX_FORMAT_TYPE_HEX_LOWER) {
-				cnx_vector_push_back(
-					vec,
-					Specifier(((CnxFormatSpecifier){.m_type = CNX_FORMAT_TYPE_HEX_LOWER,
-															   .m_num_sig_figs = 0})));
-				pushed_specifier = true;
-			}
-			else if(format_string[i] == CNX_FORMAT_TYPE_HEX_UPPER) {
-				cnx_vector_push_back(
-					vec,
-					Specifier(((CnxFormatSpecifier){.m_type = CNX_FORMAT_TYPE_HEX_UPPER,
-															   .m_num_sig_figs = 0})));
-				pushed_specifier = true;
-			}
-			else if(format_string[i] == CNX_FORMAT_TYPE_SCIENTIFIC) {
-				cnx_vector_push_back(
-					vec,
-					Specifier(((CnxFormatSpecifier){
-						.m_type = CNX_FORMAT_TYPE_SCIENTIFIC,
-						.m_num_sig_figs = cnx_format_get_num_sig_figs_from_substring(format_string,
-																					 length,
-																					 i + 1)})));
-				pushed_specifier = true;
-			}
-			else if(format_string[i] == CNX_FORMAT_TYPE_DEBUG) {
-				cnx_vector_push_back(
-					vec,
-					Specifier(((CnxFormatSpecifier){
-						.m_type = CNX_FORMAT_TYPE_DEBUG,
-						.m_num_sig_figs = cnx_format_get_num_sig_figs_from_substring(format_string,
-																					 length,
-																					 i + 1)})));
-				pushed_specifier = true;
-			}
 		}
 	}
 
@@ -1005,9 +1144,10 @@ __attr(nodiscard) __attr(not_null(1)) CnxResult(CnxVector(CnxFormatVariant))
 		cnx_vector_push_back(vec, Substring(view));
 		Ok(CnxVector(CnxFormatVariant), vec);
 	}) :
-										   Ok(CnxVector(CnxFormatVariant), vec);
+										 Ok(CnxVector(CnxFormatVariant), vec);
 }
 
+// NOLINTNEXTLINE(readability-function-cognitive-complexity, misc-no-recursion)
 CnxString(cnx_format_with_allocator)(restrict const_cstring format_string,
 									 CnxAllocator allocator,
 									 usize num_args,
@@ -1019,7 +1159,7 @@ CnxString(cnx_format_with_allocator)(restrict const_cstring format_string,
 	return string;
 }
 
-// NOLINTNEXTLINE(readability-function-cognitive-complexity)
+// NOLINTNEXTLINE(readability-function-cognitive-complexity, misc-no-recursion)
 CnxString(cnx_vformat_with_allocator)(restrict const_cstring format_string,
 									  CnxAllocator allocator,
 									  usize num_args,
@@ -1044,14 +1184,17 @@ CnxString(cnx_vformat_with_allocator)(restrict const_cstring format_string,
 	// tradeof between performance and memory usage
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
 	let_mut initial_size = static_cast(usize)(cnx_vector_size(format_variants) * 10U);
-foreach_ref(elem, format_variants) {
-	match_let(*elem, Substring, str) {
-		initial_size += str.m_length;
+	foreach_ref(elem, format_variants) {
+		match_let(*elem, Substring, str) {
+			initial_size += str.m_length;
+		}
 	}
-}
 
 	CnxScopedString string = cnx_string_new_with_capacity_with_allocator(initial_size, allocator);
 
+#if CNX_PLATFORM_DEBUG
+	let_mut spec_index = static_cast(usize)(0);
+#endif
 	foreach(elem, format_variants) {
 		match(elem) {
 			variant(Substring, view) {
@@ -1059,8 +1202,24 @@ foreach_ref(elem, format_variants) {
 			}
 			variant(Specifier, specifier) {
 				let format = va_arg(list, CnxFormat); // NOLINT(clang-analyzer-valist.Uninitialized)
+				let context = trait_call(is_specifier_valid, format, specifier);
+#if CNX_PLATFORM_DEBUG
+				if(context.is_valid != CNX_FORMAT_SUCCESS) {
+					let_mut error_message
+						= cnx_format_category_get_message(&cnx_format_category, context.is_valid);
+					CnxScopedString message = cnx_format_with_allocator(
+						"Invalid specifier used for specifier {} in format string\n{}",
+						allocator,
+						spec_index,
+						error_message);
+					cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS,
+							   cnx_string_into_cstring(message));
+					cnx_panic(error_message);
+				}
+				spec_index++;
+#endif
 				CnxScopedString formatted
-						   = trait_call(format_with_allocator, format, specifier, allocator);
+					= trait_call(format_with_allocator, format, context, allocator);
 				cnx_string_append(string, &formatted);
 			}
 		}

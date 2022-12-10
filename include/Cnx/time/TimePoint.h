@@ -1,8 +1,8 @@
 /// @file TimePoint.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief CnxTimePoint provides functionality for working with specific points in time
-/// @version 0.1.3
-/// @date 2022-04-30
+/// @version 0.1.4
+/// @date 2022-12-09
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -336,32 +336,48 @@ bool cnx_time_point_greater_than_or_equal(CnxTimePoint lhs, CnxTimePoint rhs);
 /// @ingroup cnx_time_point
 CnxCompare cnx_time_point_compare(CnxTimePoint lhs, CnxTimePoint rhs);
 
+	#define ___DISABLE_IF_NULL(self) \
+		cnx_disable_if(!(self), "Can't perform an operation with a CnxTimePoint that is a nullptr")
+/// @brief Implementation of `CnxFormat.is_specifier_valid` for `CnxTimePoint`
+///
+/// @param self - The `CnxTimePoint` to format as a `CnxFormat` trait object
+/// @param specifier - The `CnxStringView` viewing the format specifier to validate
+///
+/// @return The `CnxFormatContext` indicating whether specifier was valid and storing the state
+/// holding the format settings and necessary info to format the `CnxTimePoint`
+__attr(nodiscard) __attr(not_null(1)) CnxFormatContext
+	cnx_time_point_is_specifier_valid(const CnxFormat* restrict self, CnxStringView specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief Implements the allocator-unaware part of the `CnxFormat` trait for `CnxTimePoint`
 ///
 /// @param self - The `CnxTimePoint` to format, as its `CnxFormat` trait representation
-/// @param specifier - The format specifier representing how to format `self`. Should be unused/left
-/// default in the format string
+/// @param context - The `CnxFormatContext` specifying how formatting should be done
 ///
 /// @return `self` formatted as a `CnxString`
 /// @ingroup cnx_time_point
-CnxString cnx_time_point_format(const CnxFormat* restrict self, CnxFormatSpecifier specifier);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_time_point_format(const CnxFormat* restrict self, CnxFormatContext context)
+		___DISABLE_IF_NULL(self);
 /// @brief Implements the allocator-aware part of the `CnxFormat` trait for `CnxTimePoint`
 ///
 /// @param self - The `CnxTimePoint` to format, as its `CnxFormat` trait representation
-/// @param specifier - The format specifier representing how to format `self`. Should be unused/left
-/// default in the format string
+/// @param context - The `CnxFormatContext` specifying how formatting should be done
 /// @param allocator - The `CnxAllocator` to allocate memory with
 ///
 /// @return `self` formatted as a `CnxString`
 /// @ingroup cnx_time_point
-CnxString cnx_time_point_format_with_allocator(const CnxFormat* restrict self,
-											   CnxFormatSpecifier specifier,
-											   CnxAllocator allocator);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_time_point_format_with_allocator(const CnxFormat* restrict self,
+										 CnxFormatContext context,
+										 CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 
 /// @brief Implements the `CnxFormat` trait for `CnxTimePoint`
 /// @ingroup cnx_time_point
 __attr(maybe_unused) static ImplTraitFor(CnxFormat,
 										 CnxTimePoint,
+										 cnx_time_point_is_specifier_valid,
 										 cnx_time_point_format,
 										 cnx_time_point_format_with_allocator);
+
+	#undef ___DISABLE_IF_NULL
 #endif // CNX_TIME_POINT

@@ -224,11 +224,11 @@ TEST(CnxString, substring) {
 TEST(CnxString, stringview_of) {
 	let_mut string = cnx_string_from("This is a test test test");
 	let view = cnx_string_stringview_of(string, 8, 6);
-	TEST_ASSERT(0 == memcmp(cnx_stringview_at(view, 0), "a test", 6));
+	TEST_ASSERT(0 == memcmp(&cnx_stringview_at(view, 0), "a test", 6));
 	TEST_ASSERT_EQUAL(cnx_stringview_length(view), 6);
 
 	let view2 = cnx_string_stringview_of(string, 15, 9);
-	TEST_ASSERT(0 == memcmp(cnx_stringview_at(view2, 0), "test test", 9));
+	TEST_ASSERT(0 == memcmp(&cnx_stringview_at(view2, 0), "test test", 9));
 	TEST_ASSERT_EQUAL(cnx_stringview_length(view2), 9);
 
 	cnx_string_free(string);

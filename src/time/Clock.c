@@ -1,8 +1,8 @@
 /// @file Clock.c
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides methods for operating with system clocks
-/// @version 0.1.3
-/// @date 2022-04-30
+/// @version 0.1.4
+/// @date 2022-12-09
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -145,11 +145,13 @@ CnxTimePoint __cnx_system_clock_max_time_point(const CnxClock* restrict self) {
 		self);
 }
 
-CnxClockResolution __cnx_system_clock_resolution(__attr(maybe_unused) const CnxClock* restrict self) {
+CnxClockResolution
+__cnx_system_clock_resolution(__attr(maybe_unused) const CnxClock* restrict self) {
 	return CNX_CLOCK_MICROSECONDS;
 }
 
-CnxRatio __cnx_system_clock_resolution_as_ratio(__attr(maybe_unused) const CnxClock* restrict self) {
+CnxRatio
+__cnx_system_clock_resolution_as_ratio(__attr(maybe_unused) const CnxClock* restrict self) {
 	return cnx_microseconds_period;
 }
 
@@ -157,8 +159,9 @@ CnxTimePointLocale __cnx_system_clock_locale(__attr(maybe_unused) const CnxClock
 	return CNX_LOCAL_TIME;
 }
 
-CnxString __cnx_system_clock_format_with_allocator(__attr(maybe_unused) const CnxClock* restrict self,
-												   CnxAllocator allocator) {
+CnxString
+__cnx_system_clock_format_with_allocator(__attr(maybe_unused) const CnxClock* restrict self,
+										 CnxAllocator allocator) {
 	return cnx_string_from_with_allocator("CnxClock: cnx_system_clock", allocator);
 }
 
@@ -261,11 +264,13 @@ CnxTimePoint __cnx_steady_clock_max_time_point(const CnxClock* restrict self) {
 		CNX_UNKNOWN_TIME);
 }
 
-CnxClockResolution __cnx_steady_clock_resolution(__attr(maybe_unused) const CnxClock* restrict self) {
+CnxClockResolution
+__cnx_steady_clock_resolution(__attr(maybe_unused) const CnxClock* restrict self) {
 	return CNX_CLOCK_NANOSECONDS;
 }
 
-CnxRatio __cnx_steady_clock_resolution_as_ratio(__attr(maybe_unused) const CnxClock* restrict self) {
+CnxRatio
+__cnx_steady_clock_resolution_as_ratio(__attr(maybe_unused) const CnxClock* restrict self) {
 	return cnx_nanoseconds_period;
 }
 
@@ -273,8 +278,9 @@ CnxTimePointLocale __cnx_steady_clock_locale(__attr(maybe_unused) const CnxClock
 	return CNX_UNKNOWN_TIME;
 }
 
-CnxString __cnx_steady_clock_format_with_allocator(__attr(maybe_unused) const CnxClock* restrict self,
-												   CnxAllocator allocator) {
+CnxString
+__cnx_steady_clock_format_with_allocator(__attr(maybe_unused) const CnxClock* restrict self,
+										 CnxAllocator allocator) {
 	return cnx_string_from_with_allocator("CnxClock: cnx_steady_clock", allocator);
 }
 
@@ -493,7 +499,8 @@ CnxTimePoint __cnx_local_clock_max_time_point(__attr(maybe_unused) const CnxCloc
 #endif
 }
 
-CnxClockResolution __cnx_local_clock_resolution(__attr(maybe_unused) const CnxClock* restrict self) {
+CnxClockResolution
+__cnx_local_clock_resolution(__attr(maybe_unused) const CnxClock* restrict self) {
 	return trait_call(resolution, cnx_system_clock);
 }
 
@@ -509,8 +516,9 @@ CnxString __cnx_local_clock_format(const CnxClock* restrict self) {
 	return __cnx_local_clock_format_with_allocator(self, DEFAULT_ALLOCATOR);
 }
 
-CnxString __cnx_local_clock_format_with_allocator(__attr(maybe_unused) const CnxClock* restrict self,
-												  CnxAllocator allocator) {
+CnxString
+__cnx_local_clock_format_with_allocator(__attr(maybe_unused) const CnxClock* restrict self,
+										CnxAllocator allocator) {
 	return cnx_string_from_with_allocator("CnxClock: cnx_local_clock", allocator);
 }
 
@@ -562,18 +570,44 @@ CnxTimePointLocale cnx_clock_locale(const CnxClock* restrict self) {
 	return trait_call(locale, *self);
 }
 
-CnxString cnx_clock_format(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {
-	return cnx_clock_format_with_allocator(self, specifier, DEFAULT_ALLOCATOR);
+typedef struct ClockContext {
+	bool is_debug;
+} ClockContext;
+
+CnxFormatContext cnx_clock_is_specifier_valid(__attr(maybe_unused) const CnxFormat* restrict self,
+											  CnxStringView specifier) {
+	let_mut context = (CnxFormatContext){.is_valid = CNX_FORMAT_SUCCESS};
+	let length = cnx_stringview_length(specifier);
+	let_mut state = (ClockContext){.is_debug = false};
+
+	if(length > 1) {
+		context.is_valid = CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER;
+		return context;
+	}
+
+	if(length == 1) {
+		if(cnx_stringview_at(specifier, 0) != 'D') {
+			context.is_valid = CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER;
+			return context;
+		}
+
+		state.is_debug = true;
+	}
+
+	*(static_cast(ClockContext*)(context.state)) = state;
+	return context;
+}
+
+CnxString cnx_clock_format(const CnxFormat* restrict self, CnxFormatContext context) {
+	return cnx_clock_format_with_allocator(self, context, DEFAULT_ALLOCATOR);
 }
 
 CnxString cnx_clock_format_with_allocator(const CnxFormat* restrict self,
-										  __attr(maybe_unused) CnxFormatSpecifier specifier,
+										  __attr(maybe_unused) CnxFormatContext context,
 										  CnxAllocator allocator) {
-	cnx_assert(specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
-				   || specifier.m_type == CNX_FORMAT_TYPE_DEBUG,
-			   "Can only format a CnxClock with default or debug format specifier");
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS,
+			   "Invalid format specifier used to format a CnxClock");
 
 	let _self = static_cast(const CnxClock*)(self->m_self);
-
 	return trait_call(format_with_allocator, *_self, allocator);
 }

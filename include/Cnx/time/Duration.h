@@ -1,8 +1,8 @@
 /// @file Duration.h
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides methods for dealing with durations of time
-/// @version 0.1.2
-/// @date 2022-04-30
+/// @version 0.1.3
+/// @date 2022-12-09
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -56,64 +56,44 @@ typedef struct CnxDuration {
 
 	/// @brief Period representing nanoseconds for `CnxDuration` and other time-related facilities
 	/// @ingroup cnx_duration
-	#define cnx_nanoseconds_period          \
-		(CnxRatio) {                        \
-			.num = 1LL, .den = 1000000000LL \
-		}
+	#define cnx_nanoseconds_period \
+		(CnxRatio) { .num = 1LL, .den = 1000000000LL }
 	/// @brief Period representing microseconds for `CnxDuration` and other time-related facilities
 	/// @ingroup cnx_duration
-	#define cnx_microseconds_period      \
-		(CnxRatio) {                     \
-			.num = 1LL, .den = 1000000LL \
-		}
+	#define cnx_microseconds_period \
+		(CnxRatio) { .num = 1LL, .den = 1000000LL }
 	/// @brief Period representing milliseconds for `CnxDuration` and other time-related facilities
 	/// @ingroup cnx_duration
-	#define cnx_milliseconds_period   \
-		(CnxRatio) {                  \
-			.num = 1LL, .den = 1000LL \
-		}
+	#define cnx_milliseconds_period \
+		(CnxRatio) { .num = 1LL, .den = 1000LL }
 	/// @brief Period representing seconds for `CnxDuration` and other time-related facilities
 	/// @ingroup cnx_duration
-	#define cnx_seconds_period     \
-		(CnxRatio) {               \
-			.num = 1LL, .den = 1LL \
-		}
+	#define cnx_seconds_period \
+		(CnxRatio) { .num = 1LL, .den = 1LL }
 	/// @brief Period representing minutes for `CnxDuration` and other time-related facilities
 	/// @ingroup cnx_duration
-	#define cnx_minutes_period      \
-		(CnxRatio) {                \
-			.num = 60LL, .den = 1LL \
-		}
+	#define cnx_minutes_period \
+		(CnxRatio) { .num = 60LL, .den = 1LL }
 	/// @brief Period representing hours for `CnxDuration` and other time-related facilities
 	/// @ingroup cnx_duration
-	#define cnx_hours_period          \
-		(CnxRatio) {                  \
-			.num = 3600LL, .den = 1LL \
-		}
+	#define cnx_hours_period \
+		(CnxRatio) { .num = 3600LL, .den = 1LL }
 	/// @brief Period representing days for `CnxDuration` and other time-related facilities
 	/// @ingroup cnx_duration
-	#define cnx_days_period            \
-		(CnxRatio) {                   \
-			.num = 86400LL, .den = 1LL \
-		}
+	#define cnx_days_period \
+		(CnxRatio) { .num = 86400LL, .den = 1LL }
 	/// @brief Period representing weeks for `CnxDuration` and other time-related facilities
 	/// @ingroup cnx_duration
-	#define cnx_weeks_period            \
-		(CnxRatio) {                    \
-			.num = 604800LL, .den = 1LL \
-		}
+	#define cnx_weeks_period \
+		(CnxRatio) { .num = 604800LL, .den = 1LL }
 	/// @brief Period representing months for `CnxDuration` and other time-related facilities
 	/// @ingroup cnx_duration
-	#define cnx_months_period            \
-		(CnxRatio) {                     \
-			.num = 2629746LL, .den = 1LL \
-		}
+	#define cnx_months_period \
+		(CnxRatio) { .num = 2629746LL, .den = 1LL }
 	/// @brief Period representing years for `CnxDuration` and other time-related facilities
 	/// @ingroup cnx_duration
-	#define cnx_years_period              \
-		(CnxRatio) {                      \
-			.num = 31556952LL, .den = 1LL \
-		}
+	#define cnx_years_period \
+		(CnxRatio) { .num = 31556952LL, .den = 1LL }
 
 /// @brief Valid periods for `CnxDuration` and other time-related facilities
 /// @ingroup cnx_duration
@@ -381,32 +361,49 @@ bool cnx_duration_greater_than_or_equal(CnxDuration lhs, CnxDuration rhs);
 /// @ingroup cnx_duration
 CnxCompare cnx_duration_compare(CnxDuration lhs, CnxDuration rhs);
 
+	#define ___DISABLE_IF_NULL(self) \
+		cnx_disable_if(!(self), "Can't perform an operation with a CnxDuration that is a nullptr")
+
+/// @brief Implementation of `CnxFormat.is_specifier_valid` for `CnxDuration`
+///
+/// @param self - The `CnxDuration` to format as a `CnxFormat` trait object
+/// @param specifier - The `CnxStringView` viewing the format specifier to validate
+///
+/// @return The `CnxFormatContext` indicating whether specifier was valid and storing the state
+/// holding the format settings and necessary info to format the `CnxDuration`
+__attr(nodiscard) __attr(not_null(1)) CnxFormatContext
+	cnx_duration_is_specifier_valid(const CnxFormat* restrict self, CnxStringView specifier)
+		___DISABLE_IF_NULL(self);
 /// @brief Implements the allocator-unaware part of the `CnxFormat` trait for `CnxDuration`
 ///
 /// @param self - The `CnxDuration` to format, as its `CnxFormat` trait representation
-/// @param specifier - The format specifier representing how to format `self`. Should be unused/left
+/// @param context - The `CnxFormatContext` specifying how formatting should be done
 /// default in the format string
 ///
 /// @return `self` formatted as a `CnxString`
 /// @ingroup cnx_duration
-CnxString cnx_duration_format(const CnxFormat* restrict self, CnxFormatSpecifier specifier);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_duration_format(const CnxFormat* restrict self, CnxFormatContext context)
+		___DISABLE_IF_NULL(self);
 /// @brief Implements the allocator-aware part of the `CnxFormat` trait for `CnxDuration`
 ///
 /// @param self - The `CnxDuration` to format, as its `CnxFormat` trait representation
-/// @param specifier - The format specifier representing how to format `self`. Should be unused/left
-/// default in the format string
+/// @param context - The `CnxFormatContext` specifying how formatting should be done
 /// @param allocator - The `CnxAllocator` to allocate memory with
 ///
 /// @return `self` formatted as a `CnxString`
 /// @ingroup cnx_duration
-CnxString cnx_duration_format_with_allocator(const CnxFormat* restrict self,
-											 CnxFormatSpecifier specifier,
-											 CnxAllocator allocator);
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_duration_format_with_allocator(const CnxFormat* restrict self,
+									   CnxFormatContext context,
+									   CnxAllocator allocator) ___DISABLE_IF_NULL(self);
 
 /// @brief Implements the `CnxFormat` trait for `CnxDuration`
 /// @ingroup cnx_duration
 __attr(maybe_unused) static ImplTraitFor(CnxFormat,
 										 CnxDuration,
+										 cnx_duration_is_specifier_valid,
 										 cnx_duration_format,
 										 cnx_duration_format_with_allocator);
+	#undef ___DISABLE_IF_NULL
 #endif // CNX_DURATION

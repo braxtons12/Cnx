@@ -2,8 +2,8 @@
 /// @author Braxton Salyer <braxtonsalyer@gmail.com>
 /// @brief This module provides an extensible type for communicating errors via both error codes and
 /// message strings.
-/// @version 0.2.2
-/// @date 2022-05-01
+/// @version 0.2.5
+/// @date 2022-12-08
 ///
 /// MIT License
 /// @copyright Copyright (c) 2022 Braxton Salyer <braxtonsalyer@gmail.com>
@@ -34,33 +34,36 @@
 #include <Cnx/Error.h>
 #include <string.h>
 
-CnxError cnx_error_new(i64 error_code, CnxErrorCategory error_category) {
+__attr(nodiscard) CnxError cnx_error_new(i64 error_code, CnxErrorCategory error_category) {
 	return (CnxError){.m_error_code = error_code, .m_error_category = error_category};
 }
 
-i64 cnx_error_code(const CnxError* restrict self) {
+__attr(nodiscard) __attr(not_null(1)) i64 cnx_error_code(const CnxError* restrict self) {
 	return self->m_error_code;
 }
 
-const_cstring cnx_error_message(const CnxError* restrict self) {
+__attr(nodiscard) __attr(not_null(1)) __attr(returns_nonnull) const_cstring
+	cnx_error_message(const CnxError* restrict self) {
 	return cnx_error_category_get_message(self->m_error_category, self->m_error_code);
 }
 
-const_cstring cnx_error_category_get_message(CnxErrorCategory self, i64 error_code) {
+__attr(nodiscard) __attr(returns_nonnull) const_cstring
+	cnx_error_category_get_message(CnxErrorCategory self, i64 error_code) {
 	return trait_call(message, self, error_code);
 }
 
-i64 cnx_error_category_get_last_error(CnxErrorCategory self) {
+__attr(nodiscard) i64 cnx_error_category_get_last_error(CnxErrorCategory self) {
 	return trait_call(get_last_error, self);
 }
 
-const_cstring
-cnx_posix_category_get_message(__attr(maybe_unused) const CnxErrorCategory* restrict self,
-							   i64 error_code) {
+__attr(nodiscard) __attr(not_null(1)) __attr(returns_nonnull) const_cstring
+	cnx_posix_category_get_message(__attr(maybe_unused) const CnxErrorCategory* restrict self,
+								   i64 error_code) {
 	return strerror(narrow_cast(int)(error_code));
 }
 
-i64 cnx_posix_category_get_last_error(__attr(maybe_unused) const CnxErrorCategory* restrict self) {
+__attr(nodiscard) __attr(not_null(1)) i64
+	cnx_posix_category_get_last_error(__attr(maybe_unused) const CnxErrorCategory* restrict self) {
 	return errno;
 }
 
@@ -110,22 +113,52 @@ i64 cnx_win32_category_get_last_error(__attr(maybe_unused) const CnxErrorCategor
 }
 #endif
 
-CnxString cnx_error_format(const CnxFormat* restrict self, CnxFormatSpecifier specifier) {
-	return cnx_error_format_with_allocator(self, specifier, cnx_allocator_new());
+typedef struct ErrorContext {
+	bool is_debug;
+} ErrorContext;
+
+__attr(nodiscard) __attr(not_null(1)) CnxFormatContext
+	cnx_error_is_specifier_valid(__attr(maybe_unused) const CnxFormat* restrict self,
+								 CnxStringView specifier) {
+	let_mut context = (CnxFormatContext){.is_valid = CNX_FORMAT_SUCCESS};
+	let length = cnx_stringview_length(specifier);
+	let_mut state = (ErrorContext){.is_debug = false};
+
+    if(length > 1) {
+        context.is_valid = CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER;
+        return context;
+    }
+
+	if(length == 1) {
+		if(cnx_stringview_at(specifier, 0) != 'D') {
+			context.is_valid = CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER;
+			return context;
+		}
+
+		state.is_debug = true;
+	}
+
+	*(static_cast(ErrorContext*)(context.state)) = state;
+	return context;
 }
 
-CnxString cnx_error_format_with_allocator(const CnxFormat* restrict self,
-										  __attr(maybe_unused) CnxFormatSpecifier specifier,
-										  CnxAllocator allocator) {
-	cnx_assert(specifier.m_type == CNX_FORMAT_TYPE_DEFAULT
-				   || specifier.m_type == CNX_FORMAT_TYPE_DEBUG,
-			   "Can only format CnxError with default or debug format specifier");
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_error_format(const CnxFormat* restrict self, CnxFormatContext context) {
+	return cnx_error_format_with_allocator(self, context, cnx_allocator_new());
+}
 
+__attr(nodiscard) __attr(not_null(1)) CnxString
+	cnx_error_format_with_allocator(const CnxFormat* restrict self,
+									CnxFormatContext context,
+									CnxAllocator allocator) {
+	cnx_assert(context.is_valid == CNX_FORMAT_SUCCESS, "Invalid format specifier used to format a CnxError");
+
+	let state = *(static_cast(const ErrorContext*)(context.state));
 	let _self = static_cast(const CnxError*)(self->m_self);
 	CnxScopedString message = cnx_string_from_with_allocator(
 		trait_call(message, _self->m_error_category, _self->m_error_code),
 		allocator);
-	if(specifier.m_type == CNX_FORMAT_TYPE_DEBUG) {
+	if(state.is_debug) {
 		return cnx_format_with_allocator(
 			AS_STRING(CnxError) ": [error_code: {x}, error_message: {}]",
 			allocator,

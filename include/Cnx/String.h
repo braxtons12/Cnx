@@ -2487,7 +2487,7 @@ __attr(nodiscard) __attr(not_null(1)) CnxRandomAccessIteratorconst_char_ref
 ///
 /// @return a const reference to the character at `index` in `self
 /// @ingroup cnx_stringview
-#define cnx_stringview_at(self, index) cnx_stringview_at(&(self), index)
+#define cnx_stringview_at(self, index) *(cnx_stringview_at(&(self), index))
 /// @brief Returns the current length of the given `CnxStringView`
 ///
 /// @param self - The `CnxStringView` to get the length of
