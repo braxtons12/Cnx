@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>CnxFormatSpecifier struct | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</title>
+  <title>CnxFormatContext struct | Cnx A Proof-of-Concept For A Modern Standard Library for GNU C (11+)</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -42,35 +42,10 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          CnxFormatSpecifier <span class="m-thin">struct</span>
+          CnxFormatContext <span class="m-thin">struct</span>
           <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Format_8h.html">&lt;include/Cnx/Format.h&gt;</a></div>
         </h1>
-        <p><code><a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a></code> provides a method for passing format specifiers to other steps in the formatting process</p>
-        <nav class="m-block m-default">
-          <h3>Contents</h3>
-          <ul>
-            <li>
-              Reference
-              <ul>
-                <li><a href="#pub-attribs">Public variables</a></li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
-<p><code><a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a></code> is used internally by the builtin format implementations, and can be used by custom implementations, to communicate the required formatting method to the associated formatting functions</p>
-        <section id="pub-attribs">
-          <h2><a href="#pub-attribs">Public variables</a></h2>
-          <dl class="m-doc">
-            <dt id="a76a4f99f6c02bb7704266923c8c916d1">
-              <a href="group__format.html#gae264fe3305b69bdf39e4ff6cbb68d93c" class="m-doc">CnxFormatTypes</a> <a href="#a76a4f99f6c02bb7704266923c8c916d1" class="m-doc-self">m_type</a>
-            </dt>
-            <dd>The type of the format specifier.</dd>
-            <dt id="af36384f567cf08f25be252ee4a210c3a">
-              <a href="group__types.html#ga5148c9c1252e19e12def2814f71690e3" class="m-doc">usize</a> <a href="#af36384f567cf08f25be252ee4a210c3a" class="m-doc-self">m_num_sig_figs</a>
-            </dt>
-            <dd>The number of significant figures after the decimal point, if the specifier is for a floating point type.</dd>
-          </dl>
-        </section>
+        <p><code><a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a></code> is the context type used to store parsed format specifier state for passing to the formatting functions <code>CnxFormat.format</code> and <code>CnxFormat.format_with_allocator</code>.</p>
       </div>
     </div>
   </div>

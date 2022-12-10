@@ -59,7 +59,7 @@
             </li>
           </ul>
         </nav>
-<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.2.4</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-04-30</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.2.5</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-12-09</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
         <section id="nested-classes">
           <h2><a href="#nested-classes">Classes</a></h2>
           <dl class="m-doc">
@@ -118,21 +118,27 @@
             </dt>
             <dd>Returns the error code for the last reported POSIX error.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a7fb714b22ab38000b81437eb40df7fb1" class="m-doc">cnx_error_format</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
-              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+              <span class="m-doc-wrap-bumper"><a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a> <a href="#a3b58d13341ac725a506fbe4212eb12a4" class="m-doc">cnx_error_is_specifier_valid</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxStringView.html" class="m-doc">CnxStringView</a> specifier)</span>
+            </dt>
+            <dd>Implementation of <code>CnxFormat.is_specifier_valid</code> for <code><a href="structCnxError.html" class="m-doc">CnxError</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#a4a13e00ea2ed0d4af89cb24490e40061" class="m-doc">cnx_error_format</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a> context)</span>
             </dt>
             <dd>Implementation of <code>CnxFormat.format</code> for <code><a href="structCnxError.html" class="m-doc">CnxError</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#adce78a61b32fd6939efd27fe235ed319" class="m-doc">cnx_error_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
-              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#aeebf22ecd8878cdfab5a7bd9f7b4c88c" class="m-doc">cnx_error_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a> context,
               <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
             </dt>
             <dd>Implementation of <code>CnxFormat.format_with_allocator</code> for <code><a href="structCnxError.html" class="m-doc">CnxError</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">static  <a href="group__cnx__error.html#gaafecaa1b546f4d421b737c405a2e4e13" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <span class="m-doc-wrap-bumper">static  <a href="group__cnx__error.html#ga291e71241c8e836536ba8f176d3f06c5" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
               <a href="structCnxError.html" class="m-doc">CnxError</a>,
-              <a href="Error_8h.html#a7fb714b22ab38000b81437eb40df7fb1" class="m-doc">cnx_<wbr />error_<wbr />format</a>,
-              <a href="Error_8h.html#adce78a61b32fd6939efd27fe235ed319" class="m-doc">cnx_<wbr />error_<wbr />format_<wbr />with_<wbr />allocator</a>)</span>
+              <a href="Error_8h.html#a3b58d13341ac725a506fbe4212eb12a4" class="m-doc">cnx_<wbr />error_<wbr />is_<wbr />specifier_<wbr />valid</a>,
+              <a href="Error_8h.html#a4a13e00ea2ed0d4af89cb24490e40061" class="m-doc">cnx_<wbr />error_<wbr />format</a>,
+              <a href="Error_8h.html#aeebf22ecd8878cdfab5a7bd9f7b4c88c" class="m-doc">cnx_<wbr />error_<wbr />format_<wbr />with_<wbr />allocator</a>)</span>
             </dt>
             <dd>Implement <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for <code><a href="structCnxError.html" class="m-doc">CnxError</a></code></dd>
           </dl>
@@ -156,10 +162,38 @@
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a7fb714b22ab38000b81437eb40df7fb1"><div>
+          <section class="m-doc-details" id="a3b58d13341ac725a506fbe4212eb12a4"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7fb714b22ab38000b81437eb40df7fb1" class="m-doc-self">cnx_error_format</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
-              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3b58d13341ac725a506fbe4212eb12a4" class="m-doc-self">cnx_error_is_specifier_valid</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxStringView.html" class="m-doc">CnxStringView</a> specifier)</span></span>
+            </h3>
+            <p>Implementation of <code>CnxFormat.is_specifier_valid</code> for <code><a href="structCnxError.html" class="m-doc">CnxError</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxError.html" class="m-doc">CnxError</a></code> to format as a <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait object</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> viewing the format specifier to validate</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The <code><a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a></code> indicating whether specifier was valid and storing the state holding the format settings and necessary info to format the <code><a href="structCnxError.html" class="m-doc">CnxError</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4a13e00ea2ed0d4af89cb24490e40061"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4a13e00ea2ed0d4af89cb24490e40061" class="m-doc-self">cnx_error_format</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a> context)</span></span>
             </h3>
             <p>Implementation of <code>CnxFormat.format</code> for <code><a href="structCnxError.html" class="m-doc">CnxError</a></code></p>
             <table class="m-table m-fullwidth m-flat">
@@ -172,8 +206,8 @@
                   <td>- The <code><a href="structCnxError.html" class="m-doc">CnxError</a></code> to format as a <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait object</td>
                 </tr>
                 <tr>
-                  <td>specifier</td>
-                  <td>- The <code><a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a></code> in the format string. Unused</td>
+                  <td>context</td>
+                  <td>- The <code><a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a></code> specifying how formatting should be done</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -184,10 +218,10 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="adce78a61b32fd6939efd27fe235ed319"><div>
+          <section class="m-doc-details" id="aeebf22ecd8878cdfab5a7bd9f7b4c88c"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adce78a61b32fd6939efd27fe235ed319" class="m-doc-self">cnx_error_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
-              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aeebf22ecd8878cdfab5a7bd9f7b4c88c" class="m-doc-self">cnx_error_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a> context,
               <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span></span>
             </h3>
             <p>Implementation of <code>CnxFormat.format_with_allocator</code> for <code><a href="structCnxError.html" class="m-doc">CnxError</a></code></p>
@@ -201,8 +235,8 @@
                   <td>- The <code><a href="structCnxError.html" class="m-doc">CnxError</a></code> to format as a <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait object</td>
                 </tr>
                 <tr>
-                  <td>specifier</td>
-                  <td>- The <code><a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a></code> in the format string. Unused</td>
+                  <td>context</td>
+                  <td>- The <code><a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a></code> specifying how formatting should be done</td>
                 </tr>
                 <tr>
                   <td>allocator</td>

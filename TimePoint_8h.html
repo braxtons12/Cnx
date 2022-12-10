@@ -59,7 +59,7 @@
             </li>
           </ul>
         </nav>
-<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.1.3</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-04-30</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+<aside class="m-note m-default"><h4>Author</h4><p>Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><aside class="m-note m-default"><h4>Version</h4><p>0.1.4</p></aside><aside class="m-note m-default"><h4>Date</h4><p>2022-12-09</p></aside><p>MIT License</p><aside class="m-note m-default"><h4>Copyright</h4><p>Copyright (c) 2022 Braxton Salyer <a href="mailto:braxtonsalyer@gmail.com">braxtonsalyer@gmail.com</a></p></aside><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
         <section id="nested-classes">
           <h2><a href="#nested-classes">Classes</a></h2>
           <dl class="m-doc">
@@ -229,24 +229,61 @@
             </dt>
             <dd>Performs a three-way comparison of <code>lhs</code> to <code>rhs</code>, determining how <code>lhs</code> mathematically relates to <code>rhs</code>. Converts to the precision of the most precise of the two prior to comparison.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__time__point.html#ga51efd03eadb961fb771253e213514839" class="m-doc">cnx_time_point_format</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
-              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+              <span class="m-doc-wrap-bumper"><a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a> <a href="#a591919314f600aa3079dbed5d38c0b52" class="m-doc">cnx_time_point_is_specifier_valid</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxStringView.html" class="m-doc">CnxStringView</a> specifier)</span>
+            </dt>
+            <dd>Implementation of <code>CnxFormat.is_specifier_valid</code> for <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__time__point.html#ga10be640098c4fdcdd1dbb8da70c41269" class="m-doc">cnx_time_point_format</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a> context)</span>
             </dt>
             <dd>Implements the allocator-unaware part of the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__time__point.html#gaf10b3f458f1071dda4c90577e41aa30f" class="m-doc">cnx_time_point_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
-              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="group__cnx__time__point.html#ga0726f1ae7bbfdea84e8bde0d8d510a90" class="m-doc">cnx_time_point_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a> context,
               <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
             </dt>
             <dd>Implements the allocator-aware part of the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">static  <a href="group__cnx__time__point.html#gafc1493b71a16a5e2f4b75cdea9c84cd3" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <span class="m-doc-wrap-bumper">static  <a href="group__cnx__time__point.html#ga33428a9338a7a2e68d3ba621b25af9bf" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
               <a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a>,
-              <a href="group__cnx__time__point.html#ga51efd03eadb961fb771253e213514839" class="m-doc">cnx_<wbr />time_<wbr />point_<wbr />format</a>,
-              <a href="group__cnx__time__point.html#gaf10b3f458f1071dda4c90577e41aa30f" class="m-doc">cnx_<wbr />time_<wbr />point_<wbr />format_<wbr />with_<wbr />allocator</a>)</span>
+              <a href="TimePoint_8h.html#a591919314f600aa3079dbed5d38c0b52" class="m-doc">cnx_<wbr />time_<wbr />point_<wbr />is_<wbr />specifier_<wbr />valid</a>,
+              <a href="group__cnx__time__point.html#ga10be640098c4fdcdd1dbb8da70c41269" class="m-doc">cnx_<wbr />time_<wbr />point_<wbr />format</a>,
+              <a href="group__cnx__time__point.html#ga0726f1ae7bbfdea84e8bde0d8d510a90" class="m-doc">cnx_<wbr />time_<wbr />point_<wbr />format_<wbr />with_<wbr />allocator</a>)</span>
             </dt>
             <dd>Implements the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code></dd>
           </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a591919314f600aa3079dbed5d38c0b52"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a591919314f600aa3079dbed5d38c0b52" class="m-doc-self">cnx_time_point_is_specifier_valid</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxStringView.html" class="m-doc">CnxStringView</a> specifier)</span></span>
+            </h3>
+            <p>Implementation of <code>CnxFormat.is_specifier_valid</code> for <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code></p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">self</td>
+                  <td>- The <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code> to format as a <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait object</td>
+                </tr>
+                <tr>
+                  <td>specifier</td>
+                  <td>- The <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> viewing the format specifier to validate</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The <code><a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a></code> indicating whether specifier was valid and storing the state holding the format settings and necessary info to format the <code><a href="structCnxTimePoint.html" class="m-doc">CnxTimePoint</a></code></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
         </section>
       </div>
     </div>

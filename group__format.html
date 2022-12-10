@@ -60,39 +60,77 @@
 <p>Cnx&#x27;s formatting API creates a composable, ergonomic, human-readable way to format data into strings for storage or I/O.</p><p>The interface and functionality is similar to C++&#x27;s <code>std::format</code>, and the popular <code>fmtlib</code> it&#x27;s derived from, and Rust&#x27;s <code>std::format</code>. Example:</p><pre class="m-code"><span class="n">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0F</span><span class="p">;</span>
 <span class="n">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">1.0F</span><span class="p">;</span>
 <span class="c1">// formats x and y as normal decimal format with one significant figure after the decimal point</span>
-<span class="n">let</span> <span class="n">formatted</span> <span class="o">=</span> <span class="n">cnx_format</span><span class="p">(</span><span class="s">&quot;x: {d1}, y: {d1}&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span></pre><p>Formatting currently supports the following optional format specifiers:</p><ol><li><code>&#x27;d&#x27;</code>: standard decimal formatting. Applies to integral types and floating point numbers. Floating point numbers accept an additional numeric postfix to set the number of digits after the decimal point.</li><li><code>&#x27;x&#x27;</code>: lower-case hexadecimal. Applies to integral types.</li><li><code>&#x27;X&#x27;</code>: upper-case hexadecimal. Applies to integral types.</li><li><code>&#x27;e&#x27;</code>: Scientific notation. Applies to floating point types. Accepts an additional numeric postfix to set the number of digits after the decimal point.</li></ol><p>The default for integral types is decimal, and the default for floating point numbers is scientific. The default number of digits after the decimal point for floating point types is 3. <code>bool</code>s are special cased and do not accept a format specifier. They will format directly to &quot;true&quot; or &quot;false&quot;.</p><p>Format allows for extension and composition of formatting for user-defined types by allowing the implementation of the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> Trait for those types.</p><p>To provide an implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for your type, only two functions and the Trait implementation are required. The functions take the following signatures:</p><pre class="m-code"><span class="n">CnxString</span> <span class="p">(</span><span class="o">*</span><span class="k">const</span> <span class="n">your_format</span><span class="p">)(</span><span class="k">const</span> <span class="n">CnxFormat</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">self</span><span class="p">,</span> <span class="n">CnxFormatSpecifier</span> <span class="n">specifier</span><span class="p">);</span>
-<span class="n">CnxString</span> <span class="p">(</span><span class="o">*</span><span class="k">const</span> <span class="n">your_format_with_allocator</span><span class="p">)(</span><span class="k">const</span> <span class="n">CnxFormat</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">self</span><span class="p">,</span>
-                                              <span class="n">CnxFormatSpecifier</span> <span class="n">specifier</span><span class="p">,</span>
-                                              <span class="n">CnxAllocator</span> <span class="n">allocator</span><span class="p">);</span></pre><p>And providing the Trait implementation is as simple as:</p><pre class="m-code"><span class="n">ImplTraitFor</span><span class="p">(</span><span class="n">CnxFormat</span><span class="p">,</span> <span class="n">your_type</span><span class="p">,</span> <span class="n">your_format</span><span class="p">,</span> <span class="n">your_format_with_allocator</span><span class="p">);</span></pre><p>In practice, you will probably be providing this Trait implementation in a header file, so you&#x27;ll also probably want to mark it as <code>static</code> and `__attr(maybe_unused)</p><pre class="m-code"><span class="n">__attr</span><span class="p">(</span><span class="n">maybe_unused</span><span class="p">)</span> <span class="k">static</span> <span class="n">ImplTraitFor</span><span class="p">(</span><span class="n">CnxFormat</span><span class="p">,</span> <span class="n">your_type</span><span class="p">,</span> <span class="n">your_format</span><span class="p">,</span>
-<span class="n">your_format_with_allocator</span><span class="p">);</span></pre><p>By default, the conversion to <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> is only automatic for builtin types and some extra types like <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>, and for user-defined types the conversion will have to be made explicitly by calling <code><a href="group__format.html#ga0755f0dd16e73aac58e4f1c104d1d40b" class="m-doc">as_<wbr />format_<wbr />t(T, x)</a></code> on variables of those types. However, automatic conversions for <strong>specific</strong> user defined types can be enabled by defining a pair of macros prior to including &quot;CnxFormat.h&quot;. First, define <a href="group__format.html#ga5925dbdf44de36d4aa611d39616f24bb" class="m-doc">CNX_<wbr />AS_<wbr />FORMAT_<wbr />USES_<wbr />USER_<wbr />SUPPLIED_<wbr />TYPES</a> to <code>true</code>. Then, define <a href="group__format.html#gab945b0e130ada3c43b297945f1786047" class="m-doc">CNX_<wbr />AS_<wbr />FORMAT_<wbr />USER_<wbr />SUPPLIED_<wbr />TYPES</a> to a comma separated list of types and their conversions. For example:</p><pre class="m-code"><span class="cp">#define CNX_AS_FORMAT_USES_USER_SUPPLIED_TYPES true</span>
+<span class="n">let</span> <span class="n">formatted</span> <span class="o">=</span> <span class="n">cnx_format</span><span class="p">(</span><span class="s">&quot;x: {d1}, y: {d1}&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span></pre><p>Formatting supports custom specifiers within the brackets, &quot;{}&quot;. Any character except curly brackets (&#x27;{&#x27; and &#x27;}&#x27;) are valid to use for format specifies for custom types.</p><p>Builtin types provide some limited formatting options. For integral types, such as <code>char</code>, <code>u32</code>, or pointers, these include options for notation: &#x27;d&#x27; (Decimal, ie Base 10), &#x27;x&#x27; (Lower-case Hex), or &#x27;X&#x27; (Upper-case Hex). For floating point numbers, such as <code>f32</code>, this include options for notation: &#x27;d&#x27; (Decimal) or &#x27;e&#x27; (Scientific/Exponential notation), and for the number of significant figures after the decimal point: a number directly following the notation specifier, or on its own if no specifier was given. The default for integral types other than pointer is decimal, for pointers is lower-case hexadecimal, and for pointers is scientific notation with 3 significant figures after the decimal point. In addition to these specifiers, builtin types also accept a &quot;Debug&quot; specifier <code>D</code>, and <code>D</code> should be used as the standard specifier to indicate a debugging format. All Cnx library types providing a <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation (such as <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> or <code><a href="structCnxString.html" class="m-doc">CnxString</a></code>) support the <code>D</code> specifier and provide a debugging format.</p><p>Bools are a special case among builtin types, in that they only support the <code>D</code> specifier, even though they are technically integral types. Bools with always format to directly to &quot;true&quot; or &quot;false&quot;.</p><p>String formatting is extensible and composable in Cnx because it uses a Trait, <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code>, to enable user-defined types to provide their own formatting implementations. This trait provides the functionality for validating format specifiers and performing string formatting for an implementing type.</p><p>To provide an implementation of <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> for your type, only three functions and the Trait implementation are required. The functions take the following signatures:</p><pre class="m-code"><span class="n">CnxFormatContext</span> <span class="p">(</span><span class="o">*</span><span class="k">const</span> <span class="n">is_specifier_valid</span><span class="p">)(</span><span class="k">const</span> <span class="n">CnxFormat</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">self</span><span class="p">,</span>
+                                                  <span class="n">CnxStringView</span> <span class="n">specifier</span><span class="p">);</span>
+<span class="n">CnxString</span> <span class="p">(</span><span class="o">*</span><span class="k">const</span> <span class="n">format</span><span class="p">)(</span><span class="k">const</span> <span class="n">CnxFormat</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">self</span><span class="p">,</span> <span class="n">CnxFormatContext</span> <span class="n">context</span><span class="p">);</span>
+<span class="n">CnxString</span> <span class="p">(</span><span class="o">*</span><span class="k">const</span> <span class="n">format_with_allocator</span><span class="p">)(</span><span class="k">const</span> <span class="n">CnxFormat</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">self</span><span class="p">,</span>
+                                              <span class="n">CnxFormatContext</span> <span class="n">context</span><span class="p">,</span>
+                                              <span class="n">CnxAllocator</span> <span class="n">allocator</span><span class="p">);</span></pre><p><code>is_specifier_valid</code> takes the specifier in the format string, should validate it, and return the result in a <code><a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a></code>. A <code><a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a></code> stores the validation result as well as up to 32 bytes of aligned storage to store any interim state parsed from the format specifier necessary for formatting your type. For example, implementations for Cnx types store whether the debug specifier <code>D</code> occurred and other state, such as the number of significant figures to use, in the case of floating point types. This context will later be passed to your formatting function in order to format the instance of your type.</p><p><code>format</code> and <code>format_with_allocator</code> use your type (pointed to in the trait object, <code>self</code>) and the <code><a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a></code> (that was obtained when Cnx called your <code>is_specifier_valid</code> function) to perform the string formatting. This will likely be implemented in terms of another call to <code>cnx_format</code>, formatting the constituent parts of your type. In addition, <code>format</code> is generally implemented in terms of calling <code>format_with_allocator</code> with the default Cnx allocator.</p><p>Arguments passed to <code>cnx_format</code> must be l-values cast to their <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait object representation with <code><a href="group__format.html#ga0755f0dd16e73aac58e4f1c104d1d40b" class="m-doc">as_<wbr />format_<wbr />t(T, value)</a></code> or <code><a href="group__traits.html#gada8fa8140ec78372b040e158b14f490f" class="m-doc">as_<wbr />trait(CnxFormat, T, value)</a></code>. Cnx will automatically cast builtin types, cstrings, string-literals, and <code><a href="structCnxString.html" class="m-doc">CnxString</a></code> and <code><a href="structCnxStringView.html" class="m-doc">CnxStringView</a></code> to their <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> implementation. Generally, other types will need to be cast explicitly, however, automatic conversions for <strong>specific</strong> user defined types can be enabled by defining a pair of macros prior to including &quot;CnxFormat.h&quot;. First, define <a href="group__format.html#ga5925dbdf44de36d4aa611d39616f24bb" class="m-doc">CNX_<wbr />AS_<wbr />FORMAT_<wbr />USES_<wbr />USER_<wbr />SUPPLIED_<wbr />TYPES</a> to <code>TRUE</code>. Then, define <a href="group__format.html#gab945b0e130ada3c43b297945f1786047" class="m-doc">CNX_<wbr />AS_<wbr />FORMAT_<wbr />USER_<wbr />SUPPLIED_<wbr />TYPES</a> to a comma separated list of types and their conversions. For example:</p><pre class="m-code"><span class="cp">#define CNX_AS_FORMAT_USES_USER_SUPPLIED_TYPES TRUE</span>
 <span class="cp">#define CNX_AS_FORMAT_USER_SUPPLIED_TYPES T*        : as_format_t(T, x),    \</span>
 <span class="cp">                                          const T*  : as_format_t(T2, x),   \</span>
 <span class="cp">                                          T2*       : as_format_t(T2, x),   \</span>
-<span class="cp">                                          const T2* : as_format_t(T2, x),</span></pre><p>where <code>T</code> and <code>T2</code> are your supplied types. <code>x</code> should always be the second argument to the conversion function (literally always give <code>x</code> as the second argument). <code><a href="group__format.html#ga8875030a5ae8a1d926bbac6e184c6791" class="m-doc">cnx_<wbr />format(format_<wbr />string, ...)</a></code> automatically applies the <code><a href="group__format.html#ga1f1f5d22f6179041556466971eb4bb61" class="m-doc">as_<wbr />format(x)</a></code> <code>_Generic</code> macro to all format arguments in the parameter pack to perform the automatic conversion to <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code>, and this syntax is necessary to provide valid match arms in the <code><a href="group__format.html#ga1f1f5d22f6179041556466971eb4bb61" class="m-doc">as_<wbr />format(x)</a></code> macro for that conversion.</p><p>A complete example of implementing and using <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code>:</p><pre class="m-code"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">Point2D</span> <span class="p">{</span>
-    <span class="kt">float</span> <span class="n">x</span><span class="p">;</span>
-    <span class="kt">float</span> <span class="n">y</span><span class="p">;</span>
+<span class="cp">                                          const T2* : as_format_t(T2, x),</span></pre><p>where <code>T</code> and <code>T2</code> are your supplied types. <code>x</code> should always be the second argument to the conversion function (literally always give <code>x</code> as the second argument). <code><a href="group__format.html#ga8875030a5ae8a1d926bbac6e184c6791" class="m-doc">cnx_<wbr />format(format_<wbr />string, ...)</a></code> automatically applies the <code><a href="group__format.html#ga1f1f5d22f6179041556466971eb4bb61" class="m-doc">as_<wbr />format(x)</a></code> <code>_Generic</code> macro to all format arguments in the parameter pack to perform the automatic conversion to <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code>. That is why this syntax is necessary for the CNX_AS_FORMAT_USER_SUPPLIED types macro, to provide valid match arms in the <code><a href="group__format.html#ga1f1f5d22f6179041556466971eb4bb61" class="m-doc">as_<wbr />format(x)</a></code> macro for that conversion.</p><p>A complete example of implementing and using <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code>:</p><pre class="m-code"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">Point2D</span> <span class="p">{</span>
+    <span class="n">f32</span> <span class="n">x</span><span class="p">;</span>
+    <span class="n">f32</span> <span class="n">y</span><span class="p">;</span>
 <span class="p">}</span> <span class="n">Point2D</span><span class="p">;</span>
 
-<span class="cp">#define CNX_AS_FORMAT_USES_USER_SUPPLIED_TYPES true</span>
+<span class="cp">#define CNX_AS_FORMAT_USES_USER_SUPPLIED_TYPES TRUE</span>
 <span class="cp">#define CNX_AS_FORMAT_USER_SUPPLIED_TYPES Point2D*          : as_format_t(Point2D, x),  \</span>
 <span class="cp">                                          const Point2D*    : as_format_t(Point2D, x),</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;Cnx/Format.h&gt;</span><span class="cp"></span>
 
+<span class="c1">// `specifier` will be a string view over the characters making up the format specifier.</span>
+<span class="c1">// For example, in the specifier `{e}`, `specifier` would view `e`.</span>
+<span class="c1">// For this example, we&#39;ll make `d` (for decimal/normal notation) or `e`</span>
+<span class="c1">// (for scientific/exponential notation) followed by a number (ie `4` or `10`, for the number of</span>
+<span class="c1">// significant figures) a valid specifier, and anything else invalid.</span>
+<span class="c1">// This is the same set of options available to floating point numbers, so we can just forward</span>
+<span class="c1">// our implementation to that one.</span>
+<span class="kr">inline</span> <span class="k">static</span> <span class="n">CnxFormatContext</span> <span class="nf">point2d_is_format_specifier_valid</span><span class="p">(</span><span class="k">const</span> <span class="n">CnxFormat</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">self</span><span class="p">,</span>
+                                                                 <span class="n">CnxStringView</span> <span class="n">specifier</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">let</span> <span class="n">an_f32</span> <span class="o">=</span> <span class="n">static_cast</span><span class="p">(</span><span class="n">f32</span><span class="p">)(</span><span class="mf">0.0</span><span class="p">);</span>
+    <span class="n">let</span> <span class="n">format_obj</span> <span class="o">=</span> <span class="n">as_format_t</span><span class="p">(</span><span class="n">f32</span><span class="p">,</span> <span class="n">an_f32</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">trait_call</span><span class="p">(</span><span class="n">is_specifier_valid</span><span class="p">,</span> <span class="n">format_obj</span><span class="p">,</span> <span class="n">specifier</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">Point2DFormatContext</span> <span class="p">{</span>
+    <span class="kt">bool</span> <span class="n">is_exponential</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">is_debug</span><span class="p">;</span>
+    <span class="n">u32</span> <span class="n">num_sig_figs</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">Point2DFormatContext</span><span class="p">;</span>
+
 <span class="kr">inline</span> <span class="k">static</span> <span class="n">CnxString</span> <span class="nf">point2d_format_with_allocator</span><span class="p">(</span><span class="k">const</span> <span class="n">CnxFormat</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">self</span><span class="p">,</span>
-                                                      <span class="n">CnxFormatSpecifier</span> <span class="n">specifier</span><span class="p">,</span>
+                                                      <span class="n">CnxFormatContext</span> <span class="n">context</span><span class="p">,</span>
                                                       <span class="n">CnxAllocator</span> <span class="n">allocator</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// we won&#39;t user the specifier for our implementation, so ignore it.</span>
-    <span class="c1">// As an alternative, we could use the specifier to determine how we should format</span>
-    <span class="c1">// the `x` and `y` coordinates (decimal, scientific, number of sig figs, etc), but that</span>
-    <span class="c1">// would be beyond the scope of this simple example.</span>
-    <span class="n">ignore</span><span class="p">(</span><span class="n">specifier</span><span class="p">);</span>
+    <span class="c1">// first we create our interim format string to use as the specifier for formatting</span>
+    <span class="c1">// x and y</span>
+    <span class="n">let</span> <span class="n">context</span> <span class="o">=</span> <span class="n">static_cast</span><span class="p">(</span><span class="k">const</span> <span class="n">Point2DFormatContext</span><span class="o">*</span><span class="p">)(</span><span class="n">context</span><span class="p">.</span><span class="n">data</span><span class="p">);</span>
+    <span class="n">let</span> <span class="n">exponential</span> <span class="o">=</span> <span class="n">context</span><span class="o">-&gt;</span><span class="n">is_exponential</span> <span class="o">?</span> <span class="s">&quot;e&quot;</span> <span class="o">:</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+    <span class="n">let</span> <span class="n">debug</span> <span class="o">=</span> <span class="n">context</span><span class="o">-&gt;</span><span class="n">is_debug</span> <span class="o">?</span> <span class="s">&quot;D&quot;</span> <span class="o">:</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+    <span class="n">let</span> <span class="n">num_sig_figs</span> <span class="o">=</span> <span class="n">context</span><span class="o">-&gt;</span><span class="n">num_sig_figs</span><span class="p">;</span>
+    <span class="n">CnxScopedString</span> <span class="n">specifier</span> <span class="o">=</span> <span class="n">cnx_format_with_allocator</span><span class="p">(</span><span class="s">&quot;{}{}{}&quot;</span><span class="p">,</span>
+                                                          <span class="n">allocator</span><span class="p">,</span>
+                                                          <span class="n">exponential</span><span class="p">,</span>
+                                                          <span class="n">num_sig_figs</span><span class="p">,</span>
+                                                          <span class="n">debug</span><span class="p">);</span>
+    <span class="c1">// Then we can forward two copies of the specifier to format to create our format string,</span>
+    <span class="c1">// which we&#39;ll then pass to our actual format call, letting the implementation for f32</span>
+    <span class="c1">// handle the actual details</span>
+    <span class="n">CnxScopedString</span> <span class="n">format_str</span> <span class="o">=</span> <span class="n">cnx_format_with_allocator</span><span class="p">(</span><span class="s">&quot;Point2D: [x: \{{}\}, y: \{{}\}]&quot;</span><span class="p">,</span>
+                                                           <span class="n">allocator</span><span class="p">,</span>
+                                                           <span class="n">specifier</span><span class="p">,</span>
+                                                           <span class="n">specifier</span><span class="p">);</span>
     <span class="n">let</span> <span class="n">_self</span> <span class="o">=</span> <span class="n">static_cast</span><span class="p">(</span><span class="k">const</span> <span class="n">Point2D</span><span class="o">*</span><span class="p">)(</span><span class="n">self</span><span class="p">.</span><span class="n">m_self</span><span class="p">);</span>
-    <span class="k">return</span> <span class="n">cnx_format_with_allocator</span><span class="p">(</span><span class="s">&quot;Point2D: [x: {}, y: {}]&quot;</span><span class="p">,</span> <span class="n">allocator</span><span class="p">,</span> <span class="n">_self</span><span class="o">-&gt;</span><span class="n">x</span><span class="p">,</span> <span class="n">_self</span><span class="o">-&gt;</span><span class="n">y</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">cnx_format_with_allocator</span><span class="p">(</span><span class="n">cnx_string_into_cstring</span><span class="p">(</span><span class="n">format_str</span><span class="p">),</span>
+                                     <span class="n">allocator</span><span class="p">,</span>
+                                     <span class="n">_self</span><span class="o">-&gt;</span><span class="n">x</span><span class="p">,</span>
+                                     <span class="n">_self</span><span class="o">-&gt;</span><span class="n">y</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="kr">inline</span> <span class="k">static</span> <span class="n">CnxString</span> <span class="nf">point2d_format</span><span class="p">(</span><span class="k">const</span> <span class="n">CnxFormat</span><span class="o">*</span> <span class="kr">restrict</span> <span class="n">self</span><span class="p">,</span>
-                                       <span class="n">CnxFormatSpecifier</span> <span class="n">specifier</span><span class="p">)</span> <span class="p">{</span>
+                                       <span class="n">CnxStringView</span> <span class="n">specifier</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="n">point2d_format_with_allocator</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">specifier</span><span class="p">,</span> <span class="n">cnx_allocator_new</span><span class="p">());</span>
 <span class="p">}</span>
 
@@ -107,10 +145,6 @@
           <h2><a href="#nested-classes">Classes</a></h2>
           <dl class="m-doc">
             <dt>
-              struct <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a>
-            </dt>
-            <dd><code><a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a></code> provides a method for passing format specifiers to other steps in the formatting process</dd>
-            <dt>
               struct <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>
             </dt>
             <dd></dd>
@@ -120,36 +154,36 @@
           <h2><a href="#enum-members">Enums</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">enum <a href="#gae264fe3305b69bdf39e4ff6cbb68d93c" class="m-doc">CnxFormatTypes</a> { </span><span class="m-doc-wrap"><a href="#ggae264fe3305b69bdf39e4ff6cbb68d93cab625a80530e2bb085bce11e56fae3650" class="m-doc">CNX_FORMAT_TYPE_DEFAULT</a> = 0,
-              <a href="#ggae264fe3305b69bdf39e4ff6cbb68d93ca9cd78671f3d6e2fdb0862012410939a9" class="m-doc">CNX_FORMAT_TYPE_DECIMAL</a> = &#x27;d&#x27;,
-              <a href="#ggae264fe3305b69bdf39e4ff6cbb68d93caca33426fb3e8a383ebadcfec61c44692" class="m-doc">CNX_FORMAT_TYPE_HEX_LOWER</a> = &#x27;x&#x27;,
-              <a href="#ggae264fe3305b69bdf39e4ff6cbb68d93ca1738caa10730bc1438991c6b50eafafe" class="m-doc">CNX_FORMAT_TYPE_HEX_UPPER</a> = &#x27;X&#x27;,
-              <a href="#ggae264fe3305b69bdf39e4ff6cbb68d93ca8ba19fffbeced403198ce3177e531bc3" class="m-doc">CNX_FORMAT_TYPE_SCIENTIFIC</a> = &#x27;e&#x27;,
-              <a href="#ggae264fe3305b69bdf39e4ff6cbb68d93ca3a67b5b7635f652e26673fe695ddeb31" class="m-doc">CNX_FORMAT_TYPE_DEBUG</a> = &#x27;D&#x27; }</span>
+              <span class="m-doc-wrap-bumper">enum <a href="#gab624c781acaee9132b8fd47e44056283" class="m-doc">CnxFormatErrorTypes</a> { </span><span class="m-doc-wrap"><a href="#ggab624c781acaee9132b8fd47e44056283a7ab1a3d99c22d9efe516f96f621b15af" class="m-doc">CNX_FORMAT_SUCCESS</a> = 0,
+              <a href="#ggab624c781acaee9132b8fd47e44056283a5505d549d2a8c17489bafc5cd57209ed" class="m-doc">CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER</a>,
+              <a href="#ggab624c781acaee9132b8fd47e44056283adc3e2dce4e4b72aadd416319c3712e72" class="m-doc">CNX_FORMAT_INVALID_CLOSING_BRACE_LOCATION</a>,
+              <a href="#ggab624c781acaee9132b8fd47e44056283a6f00b07e80b5eb5df314feb6518d2022" class="m-doc">CNX_FORMAT_UNCLOSED_SPECIFIER</a>,
+              <a href="#ggab624c781acaee9132b8fd47e44056283add6e1352c87b0cae76227d0dfc217b3c" class="m-doc">CNX_FORMAT_MORE_SPECIFIERS_THAN_ARGS</a>,
+              <a href="#ggab624c781acaee9132b8fd47e44056283abcb34fbcd03fc559b020a80c4961cd62" class="m-doc">CNX_FORMAT_FEWER_SPECIFIERS_THAN_ARGS</a> }</span>
             </dt>
-            <dd>Cnx string formatting valid format specifiers.</dd>
+            <dd>Specifies possible errors that could occur when parsing a format specifier.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">enum <a href="#gade856cbeeadf9370b3ebadfbf9bf9147" class="m-doc">CnxFormatDefaults</a> { </span><span class="m-doc-wrap"><a href="#ggade856cbeeadf9370b3ebadfbf9bf9147a6a0a474a347c2b96b825223aafca7991" class="m-doc">CNX_FORMAT_DEFAULT_NUM_SIG_FIGS</a> = 3 }</span>
+            </dt>
+            <dd>Default values for various formatting parameters for Cnx string formatting.</dd>
           </dl>
         </section>
         <section id="typedef-members">
           <h2><a href="#typedef-members">Typedefs</a></h2>
           <dl class="m-doc">
             <dt>
-              using <a href="#ga2abb454ba8815a3d39b4bd102922e30d" class="m-doc">CnxFormatTypes</a> = enum <a href="group__format.html#gae264fe3305b69bdf39e4ff6cbb68d93c" class="m-doc">CnxFormatTypes</a>
+              using <a href="#ga78afbf084d1e36629f45cc9191b9ce9e" class="m-doc">CnxFormatErrorTypes</a> = enum <a href="group__format.html#gab624c781acaee9132b8fd47e44056283" class="m-doc">CnxFormatErrorTypes</a>
             </dt>
-            <dd>Cnx string formatting valid format specifiers.</dd>
+            <dd>Specifies possible errors that could occur when parsing a format specifier.</dd>
             <dt>
-              using <a href="#ga2ccb146d36f74378d678a79a9ff41d0d" class="m-doc">CnxFormatSpecifier</a> = struct <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a>
+              using <a href="#ga3e558b4add16de9aaf9b5ab4fd74f5c4" class="m-doc">CnxFormatDefaults</a> = enum <a href="group__format.html#gade856cbeeadf9370b3ebadfbf9bf9147" class="m-doc">CnxFormatDefaults</a>
             </dt>
-            <dd><code><a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a></code> provides a method for passing format specifiers to other steps in the formatting process</dd>
+            <dd>Default values for various formatting parameters for Cnx string formatting.</dd>
           </dl>
         </section>
         <section id="define-members">
           <h2><a href="#define-members">Defines</a></h2>
           <dl class="m-doc">
-            <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga1771c4af779d4261b19fd43bb8256f70" class="m-doc">CNX_FORMAT_DEFAULT_NUM_SIG_FIGS</a></span>
-            </dt>
-            <dd>The default number of significant figures for floating point formatting.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga0755f0dd16e73aac58e4f1c104d1d40b" class="m-doc">as_format_t</a>(</span><span class="m-doc-wrap">T,
               x)</span>
@@ -195,44 +229,96 @@
         </section>
         <section>
           <h2>Enum documentation</h2>
-          <section class="m-doc-details" id="gae264fe3305b69bdf39e4ff6cbb68d93c"><div>
+          <section class="m-doc-details" id="gab624c781acaee9132b8fd47e44056283"><div>
             <h3>
-              enum <a href="#gae264fe3305b69bdf39e4ff6cbb68d93c" class="m-doc-self">CnxFormatTypes</a>
+              enum <a href="#gab624c781acaee9132b8fd47e44056283" class="m-doc-self">CnxFormatErrorTypes</a>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Format_8h.html">&lt;include/Cnx/Format.h&gt;</a></div>
             </h3>
-            <p>Cnx string formatting valid format specifiers.</p>
-<p>Formatting currently supports the following optional format specifiers:</p><ol><li><code>&#x27;d&#x27;</code>: standard decimal formatting. Applies to integral types and floating point numbers. Floating point numbers accept an additional numeric postfix to set the number of digits after the decimal point.</li><li><code>&#x27;x&#x27;</code>: lower-case hexadecimal. Applies to integral types.</li><li><code>&#x27;X&#x27;</code>: upper-case hexadecimal. Applies to integral types.</li><li><code>&#x27;e&#x27;</code>: Scientific notation. Applies to floating point types. Accepts an additional numeric postfix to set the number of digits after the decimal point.</li></ol><ol><li><code>&#x27;D&#x27;</code>: Debug formatting. For numeric types, this is identical to the default formatting. For other types, this should be used to request formatting in a structural representation instead of a human-presentable one</li></ol><p>The default for integral types is decimal, and the default for floating point numbers is scientific. The default number of digits after the decimal point for floating point types is 3. <code>bool</code>s are special cased and do not accept a format specifier. They will format directly to &quot;true&quot; or &quot;false&quot;.</p>
+            <p>Specifies possible errors that could occur when parsing a format specifier.</p>
+            <table class="m-table m-fullwidth m-flat m-doc">
+              <thead><tr><th style="width: 1%">Enumerators</th><th></th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><a href="#ggab624c781acaee9132b8fd47e44056283a7ab1a3d99c22d9efe516f96f621b15af" class="m-doc-self" id="ggab624c781acaee9132b8fd47e44056283a7ab1a3d99c22d9efe516f96f621b15af">CNX_FORMAT_SUCCESS</a></td>
+                  <td>
+                  <p>No error, the specifier is valid.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#ggab624c781acaee9132b8fd47e44056283a5505d549d2a8c17489bafc5cd57209ed" class="m-doc-self" id="ggab624c781acaee9132b8fd47e44056283a5505d549d2a8c17489bafc5cd57209ed">CNX_FORMAT_BAD_SPECIFIER_INVALID_CHAR_IN_SPECIFIER</a></td>
+                  <td>
+                  <p>An invalid character occurred in the specifier sequence.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#ggab624c781acaee9132b8fd47e44056283adc3e2dce4e4b72aadd416319c3712e72" class="m-doc-self" id="ggab624c781acaee9132b8fd47e44056283adc3e2dce4e4b72aadd416319c3712e72">CNX_FORMAT_INVALID_CLOSING_BRACE_LOCATION</a></td>
+                  <td>
+                  <p>A closing specifier brace occurred in an invalid location.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#ggab624c781acaee9132b8fd47e44056283a6f00b07e80b5eb5df314feb6518d2022" class="m-doc-self" id="ggab624c781acaee9132b8fd47e44056283a6f00b07e80b5eb5df314feb6518d2022">CNX_FORMAT_UNCLOSED_SPECIFIER</a></td>
+                  <td>
+                  <p>An unclosed format specifier (ie <code>&quot;{e3&quot;</code>) was given.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#ggab624c781acaee9132b8fd47e44056283add6e1352c87b0cae76227d0dfc217b3c" class="m-doc-self" id="ggab624c781acaee9132b8fd47e44056283add6e1352c87b0cae76227d0dfc217b3c">CNX_FORMAT_MORE_SPECIFIERS_THAN_ARGS</a></td>
+                  <td>
+                  <p>More format specifiers were given in the format string than there were arguments to be formatted.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#ggab624c781acaee9132b8fd47e44056283abcb34fbcd03fc559b020a80c4961cd62" class="m-doc-self" id="ggab624c781acaee9132b8fd47e44056283abcb34fbcd03fc559b020a80c4961cd62">CNX_FORMAT_FEWER_SPECIFIERS_THAN_ARGS</a></td>
+                  <td>
+                  <p>Fewer format specifiers were given in the format string than there were arguments to be formatted.</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gade856cbeeadf9370b3ebadfbf9bf9147"><div>
+            <h3>
+              enum <a href="#gade856cbeeadf9370b3ebadfbf9bf9147" class="m-doc-self">CnxFormatDefaults</a>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Format_8h.html">&lt;include/Cnx/Format.h&gt;</a></div>
+            </h3>
+            <p>Default values for various formatting parameters for Cnx string formatting.</p>
+            <table class="m-table m-fullwidth m-flat m-doc">
+              <thead><tr><th style="width: 1%">Enumerators</th><th></th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><a href="#ggade856cbeeadf9370b3ebadfbf9bf9147a6a0a474a347c2b96b825223aafca7991" class="m-doc-self" id="ggade856cbeeadf9370b3ebadfbf9bf9147a6a0a474a347c2b96b825223aafca7991">CNX_FORMAT_DEFAULT_NUM_SIG_FIGS</a></td>
+                  <td>
+                  <p>The default number of significant figures for floating point formatting.</p>
+<pre>By default, Cnx floating point formatting provides 3 significant figures after the
+decimal point in formatted output
+@ingroup format 
+</pre>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div></section>
         </section>
         <section>
           <h2>Typedef documentation</h2>
-          <section class="m-doc-details" id="ga2abb454ba8815a3d39b4bd102922e30d"><div>
+          <section class="m-doc-details" id="ga78afbf084d1e36629f45cc9191b9ce9e"><div>
             <h3>
-              typedef enum <a href="group__format.html#gae264fe3305b69bdf39e4ff6cbb68d93c" class="m-doc">CnxFormatTypes</a> <a href="#ga2abb454ba8815a3d39b4bd102922e30d" class="m-doc-self">CnxFormatTypes</a>
+              typedef enum <a href="group__format.html#gab624c781acaee9132b8fd47e44056283" class="m-doc">CnxFormatErrorTypes</a> <a href="#ga78afbf084d1e36629f45cc9191b9ce9e" class="m-doc-self">CnxFormatErrorTypes</a>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Format_8h.html">&lt;include/Cnx/Format.h&gt;</a></div>
             </h3>
-            <p>Cnx string formatting valid format specifiers.</p>
-<p>Formatting currently supports the following optional format specifiers:</p><ol><li><code>&#x27;d&#x27;</code>: standard decimal formatting. Applies to integral types and floating point numbers. Floating point numbers accept an additional numeric postfix to set the number of digits after the decimal point.</li><li><code>&#x27;x&#x27;</code>: lower-case hexadecimal. Applies to integral types.</li><li><code>&#x27;X&#x27;</code>: upper-case hexadecimal. Applies to integral types.</li><li><code>&#x27;e&#x27;</code>: Scientific notation. Applies to floating point types. Accepts an additional numeric postfix to set the number of digits after the decimal point.</li></ol><ol><li><code>&#x27;D&#x27;</code>: Debug formatting. For numeric types, this is identical to the default formatting. For other types, this should be used to request formatting in a structural representation instead of a human-presentable one</li></ol><p>The default for integral types is decimal, and the default for floating point numbers is scientific. The default number of digits after the decimal point for floating point types is 3. <code>bool</code>s are special cased and do not accept a format specifier. They will format directly to &quot;true&quot; or &quot;false&quot;.</p>
+            <p>Specifies possible errors that could occur when parsing a format specifier.</p>
           </div></section>
-          <section class="m-doc-details" id="ga2ccb146d36f74378d678a79a9ff41d0d"><div>
+          <section class="m-doc-details" id="ga3e558b4add16de9aaf9b5ab4fd74f5c4"><div>
             <h3>
-              typedef struct <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> <a href="#ga2ccb146d36f74378d678a79a9ff41d0d" class="m-doc-self">CnxFormatSpecifier</a>
+              typedef enum <a href="group__format.html#gade856cbeeadf9370b3ebadfbf9bf9147" class="m-doc">CnxFormatDefaults</a> <a href="#ga3e558b4add16de9aaf9b5ab4fd74f5c4" class="m-doc-self">CnxFormatDefaults</a>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Format_8h.html">&lt;include/Cnx/Format.h&gt;</a></div>
             </h3>
-            <p><code><a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a></code> provides a method for passing format specifiers to other steps in the formatting process</p>
-<p><code><a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a></code> is used internally by the builtin format implementations, and can be used by custom implementations, to communicate the required formatting method to the associated formatting functions</p>
+            <p>Default values for various formatting parameters for Cnx string formatting.</p>
           </div></section>
         </section>
         <section>
           <h2>Define documentation</h2>
-          <section class="m-doc-details" id="ga1771c4af779d4261b19fd43bb8256f70"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga1771c4af779d4261b19fd43bb8256f70" class="m-doc-self">CNX_FORMAT_DEFAULT_NUM_SIG_FIGS</a></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Format_8h.html">&lt;include/Cnx/Format.h&gt;</a></div>
-            </h3>
-            <p>The default number of significant figures for floating point formatting.</p>
-<p>By default, Cnx floating point formatting provides 3 significant figures after the decimal point in formatted output</p>
-          </div></section>
           <section class="m-doc-details" id="ga0755f0dd16e73aac58e4f1c104d1d40b"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga0755f0dd16e73aac58e4f1c104d1d40b" class="m-doc-self">as_format_t</a>(</span><span class="m-doc-wrap">T,

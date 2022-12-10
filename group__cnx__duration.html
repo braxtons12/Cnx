@@ -176,21 +176,22 @@
             </dt>
             <dd>Performs a three-way comparison of <code>lhs</code> to <code>rhs</code>, determining how <code>lhs</code> mathematically relates to <code>rhs</code>.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#gaad2a6022fa311731f540b66d3fbdff00" class="m-doc">cnx_duration_format</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
-              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#ga1103149f0d7750ebae4ea52891ab3020" class="m-doc">cnx_duration_format</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a> context)</span>
             </dt>
             <dd>Implements the allocator-unaware part of the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#gaadbc64a4978bfd7d996f9eedcd062cb5" class="m-doc">cnx_duration_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
-              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> <a href="#ga8d67c882b203a0b5141ab963f9be2ced" class="m-doc">cnx_duration_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a> context,
               <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span>
             </dt>
             <dd>Implements the allocator-aware part of the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">static  <a href="#ga4992eea3de15e6b0abf2cfe53b206488" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <span class="m-doc-wrap-bumper">static  <a href="#gaa121aa16738ba6d4237a70ce5e7255be" class="m-doc">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
               <a href="structCnxDuration.html" class="m-doc">CnxDuration</a>,
-              <a href="group__cnx__duration.html#gaad2a6022fa311731f540b66d3fbdff00" class="m-doc">cnx_<wbr />duration_<wbr />format</a>,
-              <a href="group__cnx__duration.html#gaadbc64a4978bfd7d996f9eedcd062cb5" class="m-doc">cnx_<wbr />duration_<wbr />format_<wbr />with_<wbr />allocator</a>)</span>
+              <a href="Duration_8h.html#a877ab85cbac016a1e6fcf643ffe43612" class="m-doc">cnx_<wbr />duration_<wbr />is_<wbr />specifier_<wbr />valid</a>,
+              <a href="group__cnx__duration.html#ga1103149f0d7750ebae4ea52891ab3020" class="m-doc">cnx_<wbr />duration_<wbr />format</a>,
+              <a href="group__cnx__duration.html#ga8d67c882b203a0b5141ab963f9be2ced" class="m-doc">cnx_<wbr />duration_<wbr />format_<wbr />with_<wbr />allocator</a>)</span>
             </dt>
             <dd>Implements the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code></dd>
           </dl>
@@ -863,10 +864,10 @@
             </table>
 <p>Performs a three-way comparison of <code>lhs</code> to <code>rhs</code> by comparing them in the most precise period of the two. For example, if <code>lhs</code>&#x27;s period is <code>cnx_milliseconds_period</code> and <code>rhs</code>&#x27;s period is <code>cnx_seconds_period</code>, <code>rhs</code> will be converted to a <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> in <code>cnx_milliseconds_period</code> before the comparison.</p>
           </div></section>
-          <section class="m-doc-details" id="gaad2a6022fa311731f540b66d3fbdff00"><div>
+          <section class="m-doc-details" id="ga1103149f0d7750ebae4ea52891ab3020"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaad2a6022fa311731f540b66d3fbdff00" class="m-doc-self">cnx_duration_format</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
-              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga1103149f0d7750ebae4ea52891ab3020" class="m-doc-self">cnx_duration_format</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a> context)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
             </h3>
             <p>Implements the allocator-unaware part of the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code></p>
@@ -880,8 +881,8 @@
                   <td>- The <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to format, as its <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait representation</td>
                 </tr>
                 <tr>
-                  <td>specifier</td>
-                  <td>- The format specifier representing how to format <code>self</code>. Should be unused/left default in the format string</td>
+                  <td>context</td>
+                  <td>- The <code><a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a></code> specifying how formatting should be done default in the format string</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -892,10 +893,10 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="gaadbc64a4978bfd7d996f9eedcd062cb5"><div>
+          <section class="m-doc-details" id="ga8d67c882b203a0b5141ab963f9be2ced"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaadbc64a4978bfd7d996f9eedcd062cb5" class="m-doc-self">cnx_duration_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
-              <a href="structCnxFormatSpecifier.html" class="m-doc">CnxFormatSpecifier</a> specifier,
+              <span class="m-doc-wrap-bumper"><a href="structCnxString.html" class="m-doc">CnxString</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga8d67c882b203a0b5141ab963f9be2ced" class="m-doc-self">cnx_duration_format_with_allocator</a>(</span><span class="m-doc-wrap">const <a href="structCnxFormat.html" class="m-doc">CnxFormat</a>*restrict self,
+              <a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a> context,
               <a href="structCnxAllocator.html" class="m-doc">CnxAllocator</a> allocator)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
             </h3>
@@ -910,8 +911,8 @@
                   <td>- The <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code> to format, as its <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait representation</td>
                 </tr>
                 <tr>
-                  <td>specifier</td>
-                  <td>- The format specifier representing how to format <code>self</code>. Should be unused/left default in the format string</td>
+                  <td>context</td>
+                  <td>- The <code><a href="structCnxFormatContext.html" class="m-doc">CnxFormatContext</a></code> specifying how formatting should be done</td>
                 </tr>
                 <tr>
                   <td>allocator</td>
@@ -926,12 +927,13 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga4992eea3de15e6b0abf2cfe53b206488"><div>
+          <section class="m-doc-details" id="gaa121aa16738ba6d4237a70ce5e7255be"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga4992eea3de15e6b0abf2cfe53b206488" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
+              <span class="m-doc-wrap-bumper">static  </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaa121aa16738ba6d4237a70ce5e7255be" class="m-doc-self">ImplTraitFor</a>(</span><span class="m-doc-wrap"><a href="structCnxFormat.html" class="m-doc">CnxFormat</a>,
               <a href="structCnxDuration.html" class="m-doc">CnxDuration</a>,
-              <a href="group__cnx__duration.html#gaad2a6022fa311731f540b66d3fbdff00" class="m-doc">cnx_<wbr />duration_<wbr />format</a>,
-              <a href="group__cnx__duration.html#gaadbc64a4978bfd7d996f9eedcd062cb5" class="m-doc">cnx_<wbr />duration_<wbr />format_<wbr />with_<wbr />allocator</a>)</span></span>
+              <a href="Duration_8h.html#a877ab85cbac016a1e6fcf643ffe43612" class="m-doc">cnx_<wbr />duration_<wbr />is_<wbr />specifier_<wbr />valid</a>,
+              <a href="group__cnx__duration.html#ga1103149f0d7750ebae4ea52891ab3020" class="m-doc">cnx_<wbr />duration_<wbr />format</a>,
+              <a href="group__cnx__duration.html#ga8d67c882b203a0b5141ab963f9be2ced" class="m-doc">cnx_<wbr />duration_<wbr />format_<wbr />with_<wbr />allocator</a>)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="Duration_8h.html">&lt;include/Cnx/time/Duration.h&gt;</a></div>
             </h3>
             <p>Implements the <code><a href="structCnxFormat.html" class="m-doc">CnxFormat</a></code> trait for <code><a href="structCnxDuration.html" class="m-doc">CnxDuration</a></code></p>
